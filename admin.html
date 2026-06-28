@@ -493,8 +493,9 @@ function toggleTstPhotoVis(i){
 }
 function updateN(){
   var n=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]').filter(function(x){return !x.read;}).length;
+  var t=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]').filter(function(x){return !x.approved;}).length;
   document.getElementById('inqN').textContent=n||'';
-  document.getElementById('tstN').textContent='';
+  document.getElementById('tstN').textContent=t||'';
 }
 
 /* == 갤러리 == */
@@ -803,8 +804,4 @@ async function clr(key,label){
   if(key==='pbs_inquiries')loadInq();
   if(key==='pbs_testimonials')loadTst();
   if(key==='pbs_gallery_config')renderGal();
-  if(key==='pbs_global_config'){_glbTemp={};renderGlb();}
-  toast(label+' 초기화 완료');
-}
-function toast(msg){
-  var t=d
+  if(ke
