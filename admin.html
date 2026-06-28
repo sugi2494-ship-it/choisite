@@ -117,6 +117,20 @@ a{text-decoration:none;color:inherit}
   z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .4s;
   opacity:0;pointer-events:none}
 @media(max-width:600px){.pg{grid-template-columns:repeat(2,1fr)}.gg{grid-template-columns:1fr}.pane{padding:14px}}
+/* ── DASHBOARD ── */
+.dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px 24px;border-bottom:1px solid var(--ln)}
+@media(max-width:600px){.dashboard{grid-template-columns:repeat(2,1fr);padding:12px 14px}}
+.dc{background:rgba(255,255,255,.04);border:1px solid var(--ln);border-radius:14px;
+  padding:14px 16px;cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.dc:hover{background:rgba(255,255,255,.08);border-color:rgba(230,0,126,.3)}
+.dc-icon{font-size:22px;margin-bottom:6px}
+.dc-label{font-size:11px;color:rgba(255,255,255,.45);font-weight:700;margin-bottom:8px}
+.dc-num{font-size:28px;font-weight:900;color:#fff;line-height:1}
+.dc-sub{font-size:11px;margin-top:5px;color:rgba(255,255,255,.4)}
+.dc-badge{position:absolute;top:10px;right:10px;background:var(--pk);color:#fff;
+  font-size:10px;font-weight:900;padding:2px 7px;border-radius:999px;min-width:20px;text-align:center}
+.dc-badge:empty{display:none}
+.dc.alert{border-color:rgba(230,0,126,.5);background:rgba(230,0,126,.06)}
 </style>
 </head>
 <body>
@@ -142,6 +156,36 @@ a{text-decoration:none;color:inherit}
     <div class="tr">
       <a href="index.html" class="bbtn">← 메인으로</a>
       <button class="obtn" onclick="logout()">로그아웃</button>
+    </div>
+  </div>
+
+  <!-- 대시보드 요약 -->
+  <div class="dashboard">
+    <div class="dc" id="dc-inq" onclick="tab('inq',document.querySelector('.tb'))">
+      <div class="dc-icon">📩</div>
+      <div class="dc-label">문의</div>
+      <div class="dc-num" id="dc-inq-total">0</div>
+      <div class="dc-sub" id="dc-inq-sub">미확인 0건</div>
+      <span class="dc-badge" id="dc-inq-badge"></span>
+    </div>
+    <div class="dc" id="dc-tst" onclick="tab('tst',document.querySelectorAll('.tb')[1])">
+      <div class="dc-icon">💬</div>
+      <div class="dc-label">소감</div>
+      <div class="dc-num" id="dc-tst-total">0</div>
+      <div class="dc-sub" id="dc-tst-sub">미승인 0건</div>
+      <span class="dc-badge" id="dc-tst-badge"></span>
+    </div>
+    <div class="dc" id="dc-gal" onclick="tab('gal',document.querySelectorAll('.tb')[2])">
+      <div class="dc-icon">🖼</div>
+      <div class="dc-label">갤러리</div>
+      <div class="dc-num" id="dc-gal-total">0</div>
+      <div class="dc-sub">사진</div>
+    </div>
+    <div class="dc" id="dc-glb" onclick="tab('glb',document.querySelectorAll('.tb')[3])">
+      <div class="dc-icon">🌏</div>
+      <div class="dc-label">글로벌 사진</div>
+      <div class="dc-num" id="dc-glb-total">0</div>
+      <div class="dc-sub">사진</div>
     </div>
   </div>
 
@@ -492,10 +536,28 @@ function toggleTstPhotoVis(i){
   localStorage.setItem('pbs_testimonials',JSON.stringify(arr));loadTst();
 }
 function updateN(){
-  var n=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]').filter(function(x){return !x.read;}).length;
-  var t=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]').filter(function(x){return !x.approved;}).length;
-  document.getElementById('inqN').textContent=n||'';
-  document.getElementById('tstN').textContent=t||'';
+  var inqs=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
+  var tsts=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
+  var galCfg=JSON.parse(localStorage.getItem('pbs_gallery_config')||'null');
+  var gals=galCfg&&galCfg.items?galCfg.items:DGAL;
+  var glbCfg=JSON.parse(localStorage.getItem('pbs_global_config')||'null');
+  var glbs=glbCfg&&glbCfg.photos?glbCfg.photos:[];
+  var unreadInq=inqs.filter(function(x){return !x.read;}).length;
+  var unpubTst=tsts.filter(function(x){return !x.approved;}).length;
+  // 탭 배지
+  document.getElementById('inqN').textContent=unreadInq||'';
+  document.getElementById('tstN').textContent=unpubTst||'';
+  // 대시보드 카드
+  document.getElementById('dc-inq-total').textContent=inqs.length;
+  document.getElementById('dc-inq-sub').textContent='미확인 '+unreadInq+'건';
+  document.getElementById('dc-inq-badge').textContent=unreadInq||'';
+  document.getElementById('dc-inq').classList.toggle('alert',unreadInq>0);
+  document.getElementById('dc-tst-total').textContent=tsts.length;
+  document.getElementById('dc-tst-sub').textContent='미승인 '+unpubTst+'건';
+  document.getElementById('dc-tst-badge').textContent=unpubTst||'';
+  document.getElementById('dc-tst').classList.toggle('alert',unpubTst>0);
+  document.getElementById('dc-gal-total').textContent=gals.length;
+  document.getElementById('dc-glb-total').textContent=glbs.length;
 }
 
 /* == 갤러리 == */
@@ -726,82 +788,4 @@ function loadBannerCfg(){
   var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'null');
   if(!b)return;
   document.getElementById('bannerOn').checked=b.visible||false;
-  if(b.title){document.getElementById('bannerTitle').value=b.title;document.getElementById('bannerTitlePreview').textContent=b.title;}
-  if(b.src){document.getElementById('bannerPreview').style.display='block';document.getElementById('bannerImg').src=b.src;}
-}
-function saveBannerTitle(){
-  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
-  var title=document.getElementById('bannerTitle').value;
-  b.title=title;
-  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
-  supaConfigSave('event_banner',b);
-  document.getElementById('bannerTitlePreview').textContent=title;
-}
-function loadBannerFile(inp){
-  var f=inp.files[0];if(!f)return;
-  compressImg(f,1200,0.85,function(dataUrl){
-    var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
-    b.src=dataUrl;
-    localStorage.setItem('pbs_event_banner',JSON.stringify(b));
-    supaConfigSave('event_banner',b);
-    document.getElementById('bannerPreview').style.display='block';
-    document.getElementById('bannerImg').src=dataUrl;
-    toast('배너 이미지 선택! 체크 후 저장하세요');
-  });inp.value='';
-}
-function saveBanner(){
-  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
-  b.visible=document.getElementById('bannerOn').checked;
-  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
-  supaConfigSave('event_banner',b);
-  toast(b.visible?'배너 표시 ON · 메인 새로고침 후 반영':'배너 숨김 OFF');
-}
-function clearBanner(){
-  var b={};
-  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
-  supaConfigSave('event_banner',b);
-  document.getElementById('bannerPreview').style.display='none';
-  document.getElementById('bannerOn').checked=false;
-  document.getElementById('bannerTitle').value='';
-  document.getElementById('bannerTitlePreview').textContent='';
-  toast('배너 삭제');
-}
-function loadCfg(){
-  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
-  if(s.igHandle)document.getElementById('ig').value=s.igHandle;
-  if(s.yt1Url)document.getElementById('yt1').value=s.yt1Url;
-  if(s.yt2Url)document.getElementById('yt2').value=s.yt2Url;
-  loadBannerCfg();
-}
-function saveIg(){
-  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
-  s.igHandle=document.getElementById('ig').value.trim().replace('@','');
-  localStorage.setItem('pbs_settings',JSON.stringify(s));
-  supaConfigSave('settings',s);
-  toast('Instagram 저장! 메인 새로고침 후 반영');
-}
-function saveYt(){
-  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
-  s.yt1Url=document.getElementById('yt1').value.trim();
-  s.yt2Url=document.getElementById('yt2').value.trim();
-  localStorage.setItem('pbs_settings',JSON.stringify(s));
-  supaConfigSave('settings',s);
-  toast('YouTube 링크 저장! 메인 새로고침 후 반영');
-}
-async function clr(key,label){
-  if(!confirm(label+' 전체 삭제?'))return;
-  localStorage.removeItem(key);
-  // Supabase 삭제
-  if(key==='pbs_inquiries'){
-    await supaFetch('pbs_inquiries?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
-  }else if(key==='pbs_testimonials'){
-    await supaFetch('pbs_testimonials?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
-  }else if(key==='pbs_gallery_config'){
-    supaConfigSave('gallery_config',null);
-  }else if(key==='pbs_global_config'){
-    supaConfigSave('global_config',null);
-  }
-  if(key==='pbs_inquiries')loadInq();
-  if(key==='pbs_testimonials')loadTst();
-  if(key==='pbs_gallery_config')renderGal();
-  if(ke
+  if(b.title){document.getElementById('bannerTitle').value=b.title;document.getElementById('bannerTitlePre
