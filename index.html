@@ -120,7 +120,10 @@
     }
     .logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
     .logo img{height:38px;width:auto;max-width:none;flex-shrink:0;object-fit:contain;display:block;filter:brightness(0) invert(1)}
-    @media(max-width:480px){.logo img{height:30px}}
+    @media(max-width:760px){
+      .logo img{height:30px}
+      .admin-btn-text{display:none}
+    }
     .logo-text{font-size:13px;font-weight:900;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
     .nav-right{display:flex;align-items:center;gap:20px}
     .menu{display:flex;gap:18px;align-items:center;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.78)}
@@ -671,7 +674,7 @@
           <button data-lang="hi"><span class="flag">🇮🇳</span> हिन्दी</button>
         </div>
       </div>
-      <a href="admin.html" title="관리자 페이지" style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;letter-spacing:.05em;color:rgba(255,255,255,.45);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:rgba(255,255,255,.05);transition:all .2s" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(230,0,126,.5)';this.style.background='rgba(230,0,126,.12)'" onmouseout="this.style.color='rgba(255,255,255,.45)';this.style.borderColor='rgba(255,255,255,.15)';this.style.background='rgba(255,255,255,.05)'">⚙ ADMIN</a>
+      <a href="admin.html" title="관리자 페이지" style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;letter-spacing:.05em;color:rgba(255,255,255,.45);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:rgba(255,255,255,.05);transition:all .2s" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(230,0,126,.5)';this.style.background='rgba(230,0,126,.12)'" onmouseout="this.style.color='rgba(255,255,255,.45)';this.style.borderColor='rgba(255,255,255,.15)';this.style.background='rgba(255,255,255,.05)'">⚙<span class="admin-btn-text"> ADMIN</span></a>
       <button class="burger" id="burger">☰</button>
     </div>
   </nav>
@@ -2134,4 +2137,4 @@ function dlFile(url, fname) {
 
 </body>
 </html>
-                                                                                          
+      
