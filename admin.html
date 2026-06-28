@@ -116,10 +116,24 @@ a{text-decoration:none;color:inherit}
   padding:11px 26px;border-radius:999px;font-size:13px;font-weight:700;
   z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .4s;
   opacity:0;pointer-events:none}
+/* ── STORE ── */
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px}
+@media(max-width:600px){.store-grid{grid-template-columns:repeat(2,1fr)}}
+.store-card{background:rgba(255,255,255,.05);border:1px solid var(--ln);border-radius:14px;overflow:hidden;position:relative}
+.store-card.hidden{opacity:.45}
+.store-img{width:100%;height:150px;object-fit:cover;background:#111128;display:block}
+.store-img-empty{width:100%;height:150px;background:#111128;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:13px}
+.store-info{padding:12px 14px}
+.store-name{font-size:14px;font-weight:900;margin-bottom:4px}
+.store-desc{font-size:11px;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:8px}
+.store-price{font-size:16px;font-weight:900;color:var(--pk)}
+.store-btns{display:flex;gap:6px;padding:0 14px 14px;flex-wrap:wrap}
+.store-add-form{background:rgba(255,255,255,.04);border:1px solid var(--ln);border-radius:14px;padding:18px;margin-bottom:18px}
+.store-add-form .ir{margin-bottom:10px}
 @media(max-width:600px){.pg{grid-template-columns:repeat(2,1fr)}.gg{grid-template-columns:1fr}.pane{padding:14px}}
 /* ── DASHBOARD ── */
-.dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px 24px;border-bottom:1px solid var(--ln)}
-@media(max-width:600px){.dashboard{grid-template-columns:repeat(2,1fr);padding:12px 14px}}
+.dashboard{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:16px 24px;border-bottom:1px solid var(--ln)}
+@media(max-width:600px){.dashboard{grid-template-columns:repeat(3,1fr);padding:12px 14px}}
 .dc{background:rgba(255,255,255,.04);border:1px solid var(--ln);border-radius:14px;
   padding:14px 16px;cursor:pointer;transition:.18s;position:relative;overflow:hidden}
 .dc:hover{background:rgba(255,255,255,.08);border-color:rgba(230,0,126,.3)}
@@ -187,6 +201,12 @@ a{text-decoration:none;color:inherit}
       <div class="dc-num" id="dc-glb-total">0</div>
       <div class="dc-sub">사진</div>
     </div>
+    <div class="dc" id="dc-str" onclick="tab('str',document.querySelectorAll('.tb')[4])">
+      <div class="dc-icon">🛍</div>
+      <div class="dc-label">스토어</div>
+      <div class="dc-num" id="dc-str-total">0</div>
+      <div class="dc-sub">등록 상품</div>
+    </div>
   </div>
 
   <div class="tabs">
@@ -194,6 +214,7 @@ a{text-decoration:none;color:inherit}
     <button class="tb" onclick="tab('tst',this)">💬 소감 <span class="bdn" id="tstN"></span></button>
     <button class="tb" onclick="tab('gal',this)">🖼 갤러리</button>
     <button class="tb" onclick="tab('glb',this)">🌏 글로벌 사진</button>
+    <button class="tb" onclick="tab('str',this)">🛍 스토어 <span class="bdn" id="strN"></span></button>
     <button class="tb" onclick="tab('cfg',this)">⚙ 설정</button>
   </div>
 
@@ -216,6 +237,26 @@ a{text-decoration:none;color:inherit}
       <button id="supaRefreshBtn" class="sbtn" style="margin-left:auto;background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(255,255,255,.18)" onclick="refreshFromSupa()">🔄 DB 새로고침</button>
     </div>
     <div id="ts-list"></div>
+  </div>
+
+  <!-- 스토어 -->
+  <div class="pane" id="p-str">
+    <div class="st">🛍 스토어 상품 관리</div>
+    <div class="hint">상품을 등록하면 메인 페이지 컬러샵 섹션에 표시됩니다.</div>
+    <div class="store-add-form">
+      <div class="st" style="font-size:13px;border:none;padding-bottom:8px;margin-bottom:12px">+ 새 상품 추가</div>
+      <div style="margin-bottom:12px">
+        <button class="sbtn" style="background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(255,255,255,.18);font-size:12px" onclick="document.getElementById('storeImgFile').click()">📷 사진 선택</button>
+        <input type="file" id="storeImgFile" accept="image/*" style="display:none" onchange="previewStoreImg(this)">
+        <div id="storeImgPreview" style="margin-top:10px;display:none"><img id="storeImgThumb" style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:2px solid rgba(230,0,126,.4)"></div>
+      </div>
+      <div class="ir"><label>상품명</label><input type="text" id="storeName" placeholder="예: 퍼스널컬러 드레이프 세트"></div>
+      <div class="ir"><label>설명</label><input type="text" id="storeDesc" placeholder="예: 전문가용 퍼스널컬러 진단 드레이프"></div>
+      <div class="ir"><label>가격</label><input type="text" id="storePrice" placeholder="예: 120,000원 또는 문의"></div>
+      <button class="sbtn" onclick="addStoreItem()">+ 상품 추가</button>
+    </div>
+    <div class="sr" id="str-stat"></div>
+    <div class="store-grid" id="str-list"></div>
   </div>
 
   <!-- 갤러리 -->
@@ -410,6 +451,7 @@ function tab(id,btn){
   if(id==='gal')renderGal();
   if(id==='glb')renderGlb();
   if(id==='cfg')loadCfg();
+  if(id==='str')loadStore();
 }
 function selAll(type,checked){
   document.querySelectorAll('.cb-'+type).forEach(function(cb){cb.checked=checked;});
@@ -432,7 +474,7 @@ function loadInq(){
     var chips=[];
     if(x.phone)chips.push('📱 '+x.phone);
     if(x.contact&&!x.phone)chips.push('📞 '+x.contact);
-    if(x.email)chips.push('✉ '+x.email);
+    if(x.email)chips.push('<a href="mailto:'+x.email+'" style="color:inherit;text-decoration:underline;cursor:pointer">✉ '+x.email+'</a>');
     if(x.country)chips.push('🌍 '+x.country);
     if(x.sns)chips.push('📲 '+x.sns);
     if(x.org)chips.push('🏢 '+x.org);
@@ -443,15 +485,15 @@ function loadInq(){
       +(x.read?'':'<span class="new">NEW</span>')
       +(x.replied?'<span class="badge-replied">✓ 답변완료</span>':'')
       +'</div><div class="btn-row"><span class="cm">'+ds+'</span>'
-      +'<button class="rbtn'+(x.replied?' on':'')+'" onclick="toggleReply('+i+')">'
-      +(x.replied?'✓ 답변완료':'📧 답변하기')+'</button>'
+      +(x.email?'<a href="mailto:'+x.email+'" class="rbtn" style="text-decoration:none">📧 메일</a>':'')
+      +'<button class="'+(x.read?'rbtn on':'rbtn')+'" onclick="toggleRead('+i+')">'+(x.read?'✓ 확인':'확인')+'</button>'
+      +'<button class="pbtn'+(x.replied?' on':'')+'" onclick="toggleReply('+i+')">'+(x.replied?'✓ 답변완료':'답변완료')+'</button>'
       +'<button class="dbtn" onclick="delInq('+i+')">삭제</button>'
       +'</div></div>'
       +(chips.length?'<div class="info-row">'+chips.map(function(c){return '<span class="info-chip">'+c+'</span>';}).join('')+'</div>':'')
       +'<div class="msg-box">'+x.msg+'</div></div>';
   }).join('');
-  arr.forEach(function(x){x.read=true;});
-  localStorage.setItem('pbs_inquiries',JSON.stringify(arr));updateN();
+  updateN();
 }
 function delInq(i){
   if(!confirm('삭제?'))return;
@@ -468,6 +510,12 @@ function delSelInq(){
   idxs.forEach(function(i){arr.splice(i,1);});
   localStorage.setItem('pbs_inquiries',JSON.stringify(arr));
   document.getElementById('iqSelAll').checked=false;loadInq();
+}
+function toggleRead(i){
+  var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
+  if(!arr[i])return;
+  arr[i].read=!arr[i].read;
+  localStorage.setItem('pbs_inquiries',JSON.stringify(arr));loadInq();
 }
 function toggleReply(i){
   var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
@@ -573,6 +621,9 @@ function updateN(){
   document.getElementById('dc-tst').classList.toggle('alert',unpubTst>0);
   document.getElementById('dc-gal-total').textContent=gals.length;
   document.getElementById('dc-glb-total').textContent=glbs.length;
+  var strs=getStore();
+  document.getElementById('dc-str-total').textContent=strs.length;
+  document.getElementById('strN').textContent=strs.filter(function(x){return x.visible!==false;}).length||'';
 }
 
 /* == 갤러리 == */
@@ -718,64 +769,4 @@ function renderGlb(){
             posKey:'pos'+i,pos:merged['pos'+i]||'center center',isExtra:false};
   });
   extras.forEach(function(ex,ei){
-    items.push({src:ex.src,label:ex.label||('추가사진 '+(ei+1)),key:'ex'+ei,
-                posKey:'posex'+ei,pos:ex.objPos||'center center',isExtra:true,exIdx:ei});
-  });
-  var hasPending=Object.keys(_glbTemp).length>0;
-  var grid=document.getElementById('glbGrid');
-  grid.innerHTML=items.map(function(item,i){
-    var delBtn=item.isExtra
-      ?'<button style="padding:3px 9px;border-radius:999px;background:rgba(255,60,60,.15);border:1px solid rgba(255,100,100,.3);color:#ff8080;font-size:11px;cursor:pointer" onclick="delGlbExtra('+item.exIdx+')">삭제</button>'
-      :'';
-    var posGrid=_GPOS.map(function(p){
-      var act=p.p===item.pos;
-      return '<button title="'+p.p+'" onclick="setGlbPos(\''+item.posKey+'\','+i+',\''+p.p+'\')"'
-        +' style="width:26px;height:26px;border-radius:4px;font-size:11px;border:1px solid rgba(255,255,255,'+(act?'.6':'.12')+');'
-        +'background:'+(act?'var(--pk)':'rgba(255,255,255,.05)')+';color:#fff;cursor:pointer">'+p.l+'</button>';
-    }).join('');
-    return '<div class="gpw">'
-      +'<img src="'+item.src+'" id="glbi'+i+'" style="object-position:'+item.pos+'" onerror="this.style.opacity=\'.1\'">'
-      +'<div class="gpl"><span>'+item.label+'</span><div style="display:flex;gap:5px">'
-      +'<button class="gcb" onclick="document.getElementById(\'gfi'+i+'\').click()">변경</button>'
-      +delBtn+'</div></div>'
-      +'<div style="padding:8px 10px;border-top:1px solid rgba(255,255,255,.07)">'
-      +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:5px;font-weight:700">📍 위치 조정 (저장 전 미리보기)</div>'
-      +'<div style="display:grid;grid-template-columns:repeat(3,26px);gap:3px">'+posGrid+'</div></div>'
-      +'<input type="file" id="gfi'+i+'" accept="image/*" style="display:none" onchange="chgGlb(\''+item.key+'\','+i+',this)"></div>';
-  }).join('');
-  grid.innerHTML+='<div style="border:2px dashed rgba(255,255,255,.15);border-radius:12px;min-height:100px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.4);font-size:13px;font-weight:700;margin-top:4px" onclick="document.getElementById(\'glbNewFile\').click()">+ 새 사진 추가</div>';
-  /* 미저장 안내 배너 */
-  var notice=document.getElementById('glbNotice');
-  if(hasPending){
-    if(!notice){notice=document.createElement('div');notice.id='glbNotice';
-      notice.style.cssText='background:rgba(230,0,126,.12);border:1px solid rgba(230,0,126,.3);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:700;color:var(--pk);margin-top:12px';
-      grid.parentNode.insertBefore(notice,grid.nextSibling);}
-    notice.textContent='⚠ 미저장 변경사항 있음 — 위 ✓ 저장 버튼을 눌러야 메인에 반영됩니다';
-  }else if(notice){notice.remove();}
-}
-function chgGlb(key,idx,inp){
-  var f=inp.files[0];if(!f)return;
-  compressImg(f,900,0.82,function(dataUrl){
-    _glbTemp[key]=dataUrl; /* 임시만, localStorage 저장 X */
-    var el=document.getElementById('glbi'+idx);
-    if(el){el.src=dataUrl;el.style.opacity='1';}
-    renderGlb();
-    toast('사진 선택됨 — ✓ 저장 버튼 클릭 시 메인에 반영');
-  });inp.value='';
-}
-function setGlbPos(posKey,idx,pos){
-  _glbTemp[posKey]=pos;
-  var el=document.getElementById('glbi'+idx);
-  if(el)el.style.objectPosition=pos;
-  renderGlb();
-}
-function addGlbPic(inp){
-  var f=inp.files[0];if(!f)return;
-  compressImg(f,900,0.82,function(dataUrl){
-    var c=_glbMerge();
-    var extras=c.extra||[];
-    extras.push({src:dataUrl,label:'추가사진 '+(extras.length+1),objPos:'center center'});
-    c.extra=extras;
-    localStorage.setItem('pbs_global_config',JSON.stringify(c));
-    supaConfigSave('global_config',c);
-    _glbTemp={};renderGlb();toast('새 사진 추가!');
+    items.push({src:ex.src,label:ex.label||('추가사진 '+(ei+1
