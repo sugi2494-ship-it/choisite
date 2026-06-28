@@ -335,8 +335,12 @@ function supaConfigSave(key,value){
   var h=Object.assign({'Prefer':'resolution=merge-duplicates'},SUPA_H);
   fetch(SUPA_URL+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:h,body:JSON.stringify({key:key,value:value,updated_at:new Date().toISOString()})}).catch(function(e){console.warn('supaConfigSave',e);});
 }
-function supaUpdateRow(table,id,data){
-  supaFetch(table+'?id=eq.'+id,{method:'PATCH',body:JSON.stringify(data)}).catch(function(e){console.warn(e);});
+async function supaUpdateRow(table,id,data){
+  try{
+    var r=await supaFetch(table+'?id=eq.'+id,{method:'PATCH',body:JSON.stringify(data),extraH:{'Prefer':'return=minimal'}});
+    if(!r.ok){var txt=await r.text();console.error('supaUpdateRow 실패:',r.status,txt);toast('DB 업데이트 실패 ('+r.status+')');return false;}
+    return true;
+  }catch(e){console.error('supaUpdateRow 오류:',e);toast('DB 연결 오류');return false;}
 }
 function supaDeleteRow(table,id){
   supaFetch(table+'?id=eq.'+id,{method:'DELETE'}).catch(function(e){console.warn(e);});
@@ -524,12 +528,20 @@ function delSelTst(){
   localStorage.setItem('pbs_testimonials',JSON.stringify(arr));
   document.getElementById('tstSelAll').checked=false;loadTst();
 }
-function toggleTstPub(i){
+async function toggleTstPub(i){
   var arr=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
   if(!arr[i])return;
-  arr[i].approved=!arr[i].approved;
-  if(arr[i]._id)supaUpdateRow('pbs_testimonials',arr[i]._id,{approved:arr[i].approved});
-  localStorage.setItem('pbs_testimonials',JSON.stringify(arr));loadTst();
+  var newVal=!arr[i].approved;
+  if(!arr[i]._id){
+    toast('ID 없음 — 🔄 DB 새로고침 후 다시 시도해주세요');return;
+  }
+  var ok=await supaUpdateRow('pbs_testimonials',arr[i]._id,{approved:newVal});
+  if(ok){
+    arr[i].approved=newVal;
+    localStorage.setItem('pbs_testimonials',JSON.stringify(arr));
+    toast(newVal?'✅ 게시 완료! 메인 페이지에 표시됩니다':'숨김 처리됨');
+    loadTst();updateN();
+  }
 }
 function toggleTstPhotoVis(i){
   var arr=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
@@ -767,19 +779,3 @@ function addGlbPic(inp){
     localStorage.setItem('pbs_global_config',JSON.stringify(c));
     supaConfigSave('global_config',c);
     _glbTemp={};renderGlb();toast('새 사진 추가!');
-  });inp.value='';
-}
-function delGlbExtra(ei){
-  if(!confirm('삭제?'))return;
-  var c=getGlbCfg();
-  var extras=c.extra||[];extras.splice(ei,1);c.extra=extras;
-  localStorage.setItem('pbs_global_config',JSON.stringify(c));
-  supaConfigSave('global_config',c);
-  _glbTemp={};renderGlb();toast('삭제');
-}
-function saveGlb(){
-  var merged=_glbMerge();
-  localStorage.setItem('pbs_global_config',JSON.stringify(merged));
-  supaConfigSave('global_config',merged);
-  _glbTemp={};renderGlb();
-  toast('글로벌 사진 저장 완료! 메인 새
