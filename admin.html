@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PBS COLOR LAB - 관리자</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#080810;color:#fff;min-height:100vh}
+a{text-decoration:none;color:inherit}
+:root{--pk:#E6007E;--gd:#C8A870;--ln:rgba(255,255,255,.1);--dk:#16162A}
+#L{display:flex;align-items:center;justify-content:center;min-height:100vh;
+  background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(230,0,126,.15),transparent)}
+.lb{background:rgba(255,255,255,.04);border:1px solid var(--ln);border-radius:28px;
+  padding:48px 40px;text-align:center;max-width:380px;width:90%}
+.ll{font-size:13px;font-weight:900;color:var(--gd);letter-spacing:.14em;margin-bottom:28px}
+.lb h2{font-size:24px;font-weight:900;margin-bottom:8px}
+.lb>p{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:28px}
+#pw{width:100%;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.07);
+  border:2px solid rgba(255,255,255,.15);color:#fff;font-size:22px;font-weight:900;
+  text-align:center;letter-spacing:.4em;outline:none;margin-bottom:14px}
+#pw:focus{border-color:var(--pk)}
+.lbtn{width:100%;padding:14px;border-radius:999px;background:linear-gradient(135deg,#FF2D9B,#E6007E);
+  color:#fff;font-weight:900;font-size:15px;border:none;cursor:pointer}
+.lerr{color:#ff6b8a;font-size:13px;margin-top:10px;min-height:18px}
+#A{display:none}
+.topbar{background:rgba(8,8,16,.95);border-bottom:1px solid var(--ln);padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.tl{font-size:13px;font-weight:900;color:var(--gd);letter-spacing:.08em}
+.tr{display:flex;gap:8px}
+.bbtn{padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.15);font-size:12px;font-weight:700;cursor:pointer;color:#fff}
+.obtn{padding:7px 14px;border-radius:999px;background:rgba(230,0,126,.12);
+  border:1px solid rgba(230,0,126,.3);font-size:12px;font-weight:700;cursor:pointer;color:var(--pk)}
+.tabs{display:flex;gap:4px;padding:18px 24px 0;border-bottom:1px solid var(--ln);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tb{padding:9px 16px;border-radius:12px 12px 0 0;border:1px solid transparent;border-bottom:none;
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.45);font-size:13px;font-weight:700;
+  cursor:pointer;white-space:nowrap;transition:.18s}
+.tb:hover{color:#fff;background:rgba(255,255,255,.09)}
+.tb.on{background:var(--dk);color:#fff;border-color:var(--ln)}
+.bdn{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;
+  border-radius:999px;background:var(--pk);font-size:10px;font-weight:900;padding:0 4px;margin-left:5px}
+.bdn:empty{display:none}
+.pane{padding:24px;max-width:1000px;display:none}
+.pane.on{display:block}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--ln);border-radius:14px;
+  padding:18px 18px 18px 44px;margin-bottom:10px;position:relative}
+.card.unread{border-color:rgba(230,0,126,.4)}
+.card.replied{border-color:rgba(0,200,100,.3)}
+.card.hi{opacity:.5}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;gap:10px}
+.cn{font-size:14px;font-weight:900;flex:1}
+.cm{font-size:10px;color:rgba(255,255,255,.35);white-space:nowrap}
+.ct{font-size:13px;line-height:1.6;color:rgba(255,255,255,.78)}
+.info-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.info-chip{font-size:11px;background:rgba(255,255,255,.07);padding:3px 9px;border-radius:6px;color:rgba(255,255,255,.65)}
+.msg-box{margin-top:10px;padding:10px 14px;background:rgba(255,255,255,.03);
+  border-left:3px solid var(--pk);border-radius:0 8px 8px 0;font-size:13px;line-height:1.65;color:rgba(255,255,255,.85)}
+.new{font-size:10px;background:var(--pk);padding:2px 7px;border-radius:999px;margin-left:6px}
+.badge-replied{font-size:10px;background:rgba(0,200,100,.25);color:#60ff90;padding:2px 7px;border-radius:999px;margin-left:6px}
+.btn-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0}
+.dbtn{padding:5px 12px;border-radius:999px;border:1px solid rgba(255,100,100,.3);
+  background:rgba(255,100,100,.08);color:#ff9090;font-size:11px;cursor:pointer;white-space:nowrap}
+.rbtn{padding:5px 12px;border-radius:999px;border:1px solid rgba(0,200,100,.3);
+  background:rgba(0,200,100,.08);color:#50e080;font-size:11px;cursor:pointer;white-space:nowrap}
+.rbtn.on{background:rgba(0,200,100,.22);border-color:rgba(0,200,100,.6)}
+.pbtn{padding:5px 12px;border-radius:999px;border:1px solid rgba(100,160,255,.3);
+  background:rgba(100,160,255,.08);color:#8ab4ff;font-size:11px;cursor:pointer;white-space:nowrap}
+.pbtn.on{background:rgba(100,160,255,.22);border-color:rgba(100,160,255,.6);color:#fff}
+.cb-wrap{position:absolute;top:18px;left:14px}
+.cb-wrap input{accent-color:var(--pk);width:16px;height:16px;cursor:pointer}
+.bulk-bar{display:flex;align-items:center;gap:10px;padding:8px 0;margin-bottom:6px;flex-wrap:wrap}
+.bulk-bar label{font-size:12px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;cursor:pointer}
+.bulk-bar input[type=checkbox]{accent-color:var(--pk);width:15px;height:15px}
+.sr{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.sc{background:rgba(255,255,255,.05);border:1px solid var(--ln);border-radius:12px;
+  padding:12px 18px;text-align:center;min-width:80px}
+.sc .n{font-size:26px;font-weight:900;color:var(--pk)}
+.sc .l{font-size:10px;color:rgba(255,255,255,.4);margin-top:3px}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:16px}
+.pi{position:relative;border-radius:12px;overflow:hidden;border:2px solid rgba(0,200,100,.4)}
+.pi.hi{border-color:rgba(255,80,80,.4)}
+.pi img{width:100%;height:130px;object-fit:cover;display:block;transition:.3s}
+.pi.hi img{opacity:.3;filter:grayscale(.7)}
+.ps{position:absolute;top:6px;left:6px;font-size:9px;font-weight:900;padding:2px 7px;
+  border-radius:999px;background:rgba(0,180,80,.9);color:#fff}
+.pi.hi .ps{background:rgba(200,50,50,.9)}
+.pi-btns{position:absolute;top:6px;right:6px;display:flex;gap:4px}
+.pt{width:28px;height:28px;border-radius:50%;border:none;cursor:pointer;font-size:14px;
+  background:rgba(0,180,80,.9);display:flex;align-items:center;justify-content:center}
+.pi.hi .pt{background:rgba(0,120,200,.9)}
+.pdel{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;font-size:12px;
+  background:rgba(180,30,30,.85);color:#fff;display:flex;align-items:center;justify-content:center}
+.pc{position:absolute;bottom:0;left:0;right:0;padding:6px 8px;
+  background:linear-gradient(transparent,rgba(0,0,0,.9));font-size:10px;font-weight:700}
+.gg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.gpw{border-radius:12px;overflow:hidden;border:1px solid var(--ln)}
+.gpw img{width:100%;height:150px;object-fit:cover;display:block;background:#111128}
+.gpl{padding:9px 12px;display:flex;align-items:center;justify-content:space-between}
+.gpl span{font-size:11px;color:rgba(255,255,255,.45);font-weight:700}
+.gcb{padding:5px 12px;border-radius:999px;background:var(--pk);border:none;
+  color:#fff;font-size:11px;font-weight:700;cursor:pointer}
+.ir{margin-bottom:12px}
+.ir label{display:block;font-size:12px;color:rgba(255,255,255,.45);margin-bottom:5px;font-weight:700}
+.ir input{width:100%;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);color:#fff;font-size:13px;outline:none}
+.ir input:focus{border-color:var(--pk)}
+.sbtn{padding:9px 22px;border-radius:999px;background:linear-gradient(135deg,#7B2D8B,#E6007E);
+  color:#fff;font-size:13px;font-weight:900;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(230,0,126,.4)}
+.st{font-size:15px;font-weight:900;padding-bottom:10px;border-bottom:1px solid var(--ln);margin-bottom:16px}
+.hint{font-size:11px;color:rgba(255,255,255,.3);line-height:1.7;margin-bottom:14px;padding:8px 12px;
+  background:rgba(255,255,255,.03);border-radius:8px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#7B2D8B,#E6007E);color:#fff;
+  padding:11px 26px;border-radius:999px;font-size:13px;font-weight:700;
+  z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .4s;
+  opacity:0;pointer-events:none}
+@media(max-width:600px){.pg{grid-template-columns:repeat(2,1fr)}.gg{grid-template-columns:1fr}.pane{padding:14px}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="L">
+  <div class="lb">
+    <div class="ll">PBS COLOR LAB</div>
+    <h2>관리자 로그인</h2>
+    <p>4자리 비밀번호를 입력하세요</p>
+    <input type="tel" id="pw" maxlength="4" placeholder="••••" autocomplete="off"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+      onkeydown="if(event.key==='Enter')login()">
+    <button class="lbtn" onclick="login()">로그인</button>
+    <div class="lerr" id="err"></div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="A">
+  <div class="topbar">
+    <div class="tl">⚙ PBS COLOR LAB 관리자</div>
+    <div class="tr">
+      <a href="index.html" class="bbtn">← 메인으로</a>
+      <button class="obtn" onclick="logout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tb on" onclick="tab('inq',this)">📩 문의 <span class="bdn" id="inqN"></span></button>
+    <button class="tb" onclick="tab('tst',this)">💬 소감 <span class="bdn" id="tstN"></span></button>
+    <button class="tb" onclick="tab('gal',this)">🖼 갤러리</button>
+    <button class="tb" onclick="tab('glb',this)">🌏 글로벌 사진</button>
+    <button class="tb" onclick="tab('cfg',this)">⚙ 설정</button>
+  </div>
+
+  <!-- 문의 -->
+  <div class="pane on" id="p-inq">
+    <div class="sr" id="iq-stat"></div>
+    <div class="bulk-bar">
+      <label><input type="checkbox" id="iqSelAll" onchange="selAll('inq',this.checked)"> 전체선택</label>
+      <button class="dbtn" onclick="delSelInq()">🗑 선택 삭제</button>
+    </div>
+    <div id="iq-list"></div>
+  </div>
+
+  <!-- 소감 -->
+  <div class="pane" id="p-tst">
+    <div class="sr" id="ts-stat"></div>
+    <div class="bulk-bar">
+      <label><input type="checkbox" id="tstSelAll" onchange="selAll('tst',this.checked)"> 전체선택</label>
+      <button class="dbtn" onclick="delSelTst()">🗑 선택 삭제</button>
+    </div>
+    <div id="ts-list"></div>
+  </div>
+
+  <!-- 갤러리 -->
+  <div class="pane" id="p-gal">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:8px">
+      <div class="st" style="border:none;padding:0;margin:0">🖼 갤러리 사진 관리</div>
+      <div style="display:flex;gap:8px">
+        <button class="sbtn" style="background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(255,255,255,.18)"
+          onclick="document.getElementById('galFile').click()">+ 추가</button>
+        <button class="sbtn" onclick="saveGal()">✓ 저장</button>
+      </div>
+    </div>
+    <div class="hint">👁 = 노출중 (클릭→숨김) &nbsp;|&nbsp; 🙈 = 숨김중 (클릭→노출) &nbsp;|&nbsp; 🗑 = 삭제 — 저장 후 메인 새로고침 필요</div>
+
+    <!-- 사진 업로드 폼 -->
+    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;margin-bottom:16px">
+      <p style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:10px;font-weight:600">📤 새 사진 추가</p>
+      <button onclick="document.getElementById('galFile').click()"
+        style="width:100%;padding:9px;background:rgba(255,255,255,.1);border:1px dashed rgba(255,255,255,.25);
+        border-radius:8px;color:rgba(255,255,255,.7);font-size:13px;cursor:pointer">
+        📁 사진 선택하기 (여러 장 가능)
+      </button>
+      <!-- 스테이징 영역 (사진 선택 후 표시) -->
+      <div id="galStaging" style="display:none;margin-top:12px">
+        <p style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px">선택된 사진 — 설명과 태그 입력 후 추가하기 클릭</p>
+        <div id="galStagingList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
+        <button onclick="confirmGalAdd()"
+          style="width:100%;padding:10px;border-radius:999px;background:linear-gradient(135deg,#7B2D8B,#E6007E);
+          color:#fff;font-size:13px;font-weight:900;border:none;cursor:pointer">✓ 갤러리에 추가하기</button>
+      </div>
+    </div>
+
+    <input type="file" id="galFile" accept="image/*" multiple style="display:none" onchange="stageGalPics(this)">
+    <div class="pg" id="galGrid"></div>
+    <div style="text-align:center;margin-top:20px">
+      <button onclick="resetGal()" style="background:none;border:1px solid rgba(255,255,255,.12);
+        color:rgba(255,255,255,.35);padding:7px 18px;border-radius:999px;cursor:pointer;font-size:12px">초기화</button>
+    </div>
+  </div>
+
+  <!-- 글로벌 사진 -->
+  <div class="pane" id="p-glb">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:8px">
+      <div class="st" style="border:none;padding:0;margin:0">🌏 글로벌 섹션 사진</div>
+      <button class="sbtn" onclick="saveGlb()">✓ 저장</button>
+    </div>
+    <div class="hint">📷 '변경' 버튼으로 사진 교체 → 저장 후 메인 새로고침 후 반영됩니다</div>
+    <input type="file" id="glbNewFile" accept="image/*" style="display:none" onchange="addGlbPic(this)">
+    <div class="gg" id="glbGrid"></div>
+    <div style="text-align:center;margin-top:20px">
+      <button onclick="resetGlb()" style="background:none;border:1px solid rgba(255,255,255,.12);
+        color:rgba(255,255,255,.35);padding:7px 18px;border-radius:999px;cursor:pointer;font-size:12px">초기화</button>
+    </div>
+  </div>
+
+  <!-- 설정 -->
+  <div class="pane" id="p-cfg">
+    <div class="st">⚙ 설정</div>
+    <div class="card" style="margin-bottom:14px;padding-left:18px">
+      <div class="ir"><label>Instagram 핸들 (@제외)</label><input id="ig" placeholder="pbscolorlab"></div>
+      <button class="sbtn" onclick="saveIg()">저장</button>
+    </div>
+    <div class="card" style="margin-bottom:14px;padding-left:18px">
+      <div class="ir"><label>YouTube 링크 1</label><input id="yt1" placeholder="https://youtube.com/..."></div>
+      <div class="ir"><label>YouTube 링크 2</label><input id="yt2" placeholder="https://youtube.com/..."></div>
+      <button class="sbtn" onclick="saveYt()">저장</button>
+    </div>
+    <div class="card" style="margin-bottom:14px;padding-left:18px">
+      <p style="font-size:13px;font-weight:700;margin-bottom:12px">🎉 이벤트 배너</p>
+      <div class="ir" style="margin-bottom:8px">
+        <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;flex-direction:row">
+          <input type="checkbox" id="bannerOn" onchange="saveBanner()" style="width:18px;height:18px;accent-color:var(--pk)">
+          <span style="font-size:13px;color:rgba(255,255,255,.7)">배너 메인 페이지 표시</span>
+        </label>
+      </div>
+      <div class="ir" style="margin-bottom:8px">
+        <label>행사명 (배너 위 텍스트)</label>
+        <input id="bannerTitle" type="text" placeholder="예: 2025 K-BEAUTY 글로벌 페스티벌" maxlength="40" oninput="saveBannerTitle()">
+      </div>
+      <div id="bannerPreview" style="display:none;margin:10px 0;position:relative">
+        <img id="bannerImg" style="width:100%;border-radius:8px;max-height:130px;object-fit:cover">
+        <div id="bannerTitlePreview" style="position:absolute;bottom:8px;left:12px;right:12px;font-size:13px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8)"></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+        <button class="sbtn" onclick="document.getElementById('bannerFile').click()">📷 배너 이미지 선택</button>
+        <button class="dbtn" onclick="clearBanner()">배너 삭제</button>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:8px">행사·이벤트 배너를 메인 상단에 표시합니다. 저장 후 메인 새로고침 필요.</div>
+      <input type="file" id="bannerFile" accept="image/*" style="display:none" onchange="loadBannerFile(this)">
+    </div>
+    <div class="card" style="padding-left:18px">
+      <p style="font-size:13px;font-weight:700;margin-bottom:12px">데이터 초기화</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="dbtn" onclick="clr('pbs_inquiries','문의')">문의 삭제</button>
+        <button class="dbtn" onclick="clr('pbs_testimonials','소감')">소감 삭제</button>
+        <button class="dbtn" onclick="clr('pbs_gallery_config','갤러리')">갤러리 초기화</button>
+        <button class="dbtn" onclick="clr('pbs_global_config','글로벌사진')">글로벌사진 초기화</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+var PW='8808';
+var logged=false;
+/* ── Supabase 연동 ── */
+var SUPA_URL='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+var SUPA_H={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
+function supaFetch(path,opts){
+  var h=Object.assign({},SUPA_H,opts&&opts.extraH||{});
+  return fetch(SUPA_URL+'/rest/v1/'+path,Object.assign({headers:h},opts||{}));
+}
+function supaConfigSave(key,value){
+  var h=Object.assign({'Prefer':'resolution=merge-duplicates'},SUPA_H);
+  fetch(SUPA_URL+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:h,body:JSON.stringify({key:key,value:value,updated_at:new Date().toISOString()})}).catch(function(e){console.warn('supaConfigSave',e);});
+}
+function supaUpdateRow(table,id,data){
+  supaFetch(table+'?id=eq.'+id,{method:'PATCH',body:JSON.stringify(data)}).catch(function(e){console.warn(e);});
+}
+function supaDeleteRow(table,id){
+  supaFetch(table+'?id=eq.'+id,{method:'DELETE'}).catch(function(e){console.warn(e);});
+}
+async function supaLoad(){
+  try{
+    var h={headers:SUPA_H};
+    // 문의 로드
+    var r=await supaFetch('pbs_inquiries?select=*&order=created_at.desc');
+    if(r.ok){var d=await r.json();
+      localStorage.setItem('pbs_inquiries',JSON.stringify(d.map(function(x){return{
+        _id:x.id,name:x.name||'',phone:x.phone||'',email:x.email||'',
+        country:x.country||'',org:x.org||'',sns:x.sns||'',msg:x.msg||'',
+        date:x.created_at,read:false,replied:false
+      };})));
+    }
+    // 소감 로드
+    var r2=await supaFetch('pbs_testimonials?select=*&order=created_at.desc');
+    if(r2.ok){var d2=await r2.json();
+      localStorage.setItem('pbs_testimonials',JSON.stringify(d2.map(function(x){return{
+        _id:x.id,name:x.name||'',msg:x.msg||'',star:x.star||5,date:x.date||'',
+        photo:x.photo||null,photoVisible:x.photo_visible!==false,approved:x.approved||false
+      };})));
+    }
+    // 사이트 설정 로드
+    var r3=await supaFetch('pbs_site_config?select=*');
+    if(r3.ok){var d3=await r3.json();
+      d3.forEach(function(c){if(c.key&&c.value)localStorage.setItem('pbs_'+c.key,JSON.stringify(c.value));});
+    }
+  }catch(e){console.warn('supaLoad error:',e);}
+}
+
+
+function login(){
+  var v=document.getElementById('pw').value.replace(/\s/g,'');
+  if(v===PW){
+    logged=true;localStorage.setItem('pbsAuth','1');
+    document.getElementById('L').style.display='none';
+    document.getElementById('A').style.display='block';
+    init();
+  }else{
+    document.getElementById('err').textContent='비밀번호 오류 (입력: '+v+')';
+  }
+}
+function logout(){localStorage.removeItem('pbsAuth');location.reload();}
+async function init(){await supaLoad();loadInq();loadTst();updateN();}
+
+window.addEventListener('DOMContentLoaded',function(){
+  if(localStorage.getItem('pbsAuth')==='1'){
+    document.getElementById('L').style.display='none';
+    document.getElementById('A').style.display='block';init();
+  }
+  document.getElementById('pw').focus();
+});
+
+function tab(id,btn){
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on');});
+  document.getElementById('p-'+id).classList.add('on');btn.classList.add('on');
+  if(id==='gal')renderGal();
+  if(id==='glb')renderGlb();
+  if(id==='cfg')loadCfg();
+}
+function selAll(type,checked){
+  document.querySelectorAll('.cb-'+type).forEach(function(cb){cb.checked=checked;});
+}
+
+/* == 문의 == */
+function loadInq(){
+  var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
+  var nr=arr.filter(function(x){return !x.read;}).length;
+  var rp=arr.filter(function(x){return x.replied;}).length;
+  document.getElementById('iq-stat').innerHTML=
+    '<div class="sc"><div class="n">'+arr.length+'</div><div class="l">전체</div></div>'
+    +'<div class="sc"><div class="n">'+nr+'</div><div class="l">미확인</div></div>'
+    +'<div class="sc"><div class="n">'+rp+'</div><div class="l">답변완료</div></div>';
+  var l=document.getElementById('iq-list');
+  if(!arr.length){l.innerHTML='<p style="text-align:center;padding:30px;color:rgba(255,255,255,.3)">문의 없음</p>';return;}
+  l.innerHTML=arr.map(function(x,i){
+    var dt=x.date?new Date(x.date):new Date();
+    var ds=dt.toLocaleDateString('ko')+' '+dt.toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit'});
+    var chips=[];
+    if(x.phone)chips.push('📱 '+x.phone);
+    if(x.contact&&!x.phone)chips.push('📞 '+x.contact);
+    if(x.email)chips.push('✉ '+x.email);
+    if(x.country)chips.push('🌍 '+x.country);
+    if(x.sns)chips.push('📲 '+x.sns);
+    if(x.org)chips.push('🏢 '+x.org);
+    var cls='card'+(x.read?'':' unread')+(x.replied?' replied':'');
+    return '<div class="'+cls+'" id="iq'+i+'">'
+      +'<label class="cb-wrap"><input type="checkbox" class="cb-inq" data-idx="'+i+'"></label>'
+      +'<div class="ch"><div class="cn">'+x.name
+      +(x.read?'':'<span class="new">NEW</span>')
+      +(x.replied?'<span class="badge-replied">✓ 답변완료</span>':'')
+      +'</div><div class="btn-row"><span class="cm">'+ds+'</span>'
+      +'<button class="rbtn'+(x.replied?' on':'')+'" onclick="toggleReply('+i+')">'
+      +(x.replied?'✓ 답변완료':'📧 답변하기')+'</button>'
+      +'<button class="dbtn" onclick="delInq('+i+')">삭제</button>'
+      +'</div></div>'
+      +(chips.length?'<div class="info-row">'+chips.map(function(c){return '<span class="info-chip">'+c+'</span>';}).join('')+'</div>':'')
+      +'<div class="msg-box">'+x.msg+'</div></div>';
+  }).join('');
+  arr.forEach(function(x){x.read=true;});
+  localStorage.setItem('pbs_inquiries',JSON.stringify(arr));updateN();
+}
+function delInq(i){
+  if(!confirm('삭제?'))return;
+  var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
+  if(arr[i]&&arr[i]._id)supaDeleteRow('pbs_inquiries',arr[i]._id);
+  arr.splice(i,1);localStorage.setItem('pbs_inquiries',JSON.stringify(arr));loadInq();
+}
+function delSelInq(){
+  var cbs=document.querySelectorAll('.cb-inq:checked');
+  if(!cbs.length){toast('선택된 항목 없음');return;}
+  if(!confirm(cbs.length+'개 삭제?'))return;
+  var idxs=Array.from(cbs).map(function(cb){return parseInt(cb.dataset.idx);}).sort(function(a,b){return b-a;});
+  var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
+  idxs.forEach(function(i){arr.splice(i,1);});
+  localStorage.setItem('pbs_inquiries',JSON.stringify(arr));
+  document.getElementById('iqSelAll').checked=false;loadInq();
+}
+function toggleReply(i){
+  var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
+  if(!arr[i])return;arr[i].replied=!arr[i].replied;
+  localStorage.setItem('pbs_inquiries',JSON.stringify(arr));loadInq();
+}
+
+/* == 소감 == */
+function loadTst(){
+  var arr=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
+  var pub=arr.filter(function(x){return x.approved;}).length;
+  document.getElementById('ts-stat').innerHTML=
+    '<div class="sc"><div class="n">'+arr.length+'</div><div class="l">전체</div></div>'
+    +'<div class="sc"><div class="n">'+pub+'</div><div class="l">게시중</div></div>';
+  var l=document.getElementById('ts-list');
+  if(!arr.length){l.innerHTML='<p style="text-align:center;padding:30px;color:rgba(255,255,255,.3)">소감 없음</p>';return;}
+  l.innerHTML=arr.map(function(x,i){
+    var isApproved=x.approved===true;
+    var photoVis=x.photoVisible!==false;
+    var dt=x.date?new Date(x.date):new Date();
+    var ds='';
+    try{ds=dt.toLocaleDateString('ko')+' '+dt.toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit'});}catch(e){ds=x.date||'';}
+    var photoHtml='';
+    if(x.photo){
+      photoHtml='<div style="margin-top:10px;display:flex;align-items:center;gap:10px">'
+        +'<img src="'+x.photo+'" style="width:70px;height:70px;object-fit:cover;border-radius:8px;border:2px solid '+(photoVis?'rgba(230,0,126,.5)':'rgba(255,255,255,.15)')+';">'
+        +'<button style="padding:4px 12px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.2);background:'+(photoVis?'rgba(230,0,126,.2)':'rgba(255,255,255,.05)')+';color:'+(photoVis?'var(--pk)':'rgba(255,255,255,.4)')+';cursor:pointer" onclick="toggleTstPhotoVis('+i+')">'+(photoVis?'📷 사진 공개':'📷 사진 비공개')+'</button>'
+        +'</div>';
+    }
+    return '<div class="card'+(isApproved?'':' hi')+'">'
+      +'<label class="cb-wrap"><input type="checkbox" class="cb-tst" data-idx="'+i+'"></label>'
+      +'<div class="ch"><div class="cn">'+x.name
+      +' <span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.4)">'+(x.role||'')+'</span></div>'
+      +'<div class="btn-row"><span class="cm">'+ds+'</span>'
+      +'<button class="pbtn'+(isApproved?' on':'')+'" onclick="toggleTstPub('+i+')">'+(isApproved?'👁 게시중':'숨김')+'</button>'
+      +'<button class="dbtn" onclick="delTst('+i+')">삭제</button>'
+      +'</div></div>'
+      +'<div class="ct" style="margin-top:8px">"'+(x.msg||x.text||'')+(x.star?(' &nbsp;'+'★'.repeat(x.star)):'')+'</div>'
+      +photoHtml+'</div>';
+  }).join('');
+}
+function delTst(i){
+  if(!confirm('삭제?'))return;
+  var arr=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
+  if(arr[i]&&arr[i]._id)supaDeleteRow('pbs_testimonials',arr[i]._id);
+  arr.splice(i,1);localStorage.setItem('pbs_testimonials',JSON.stringify(arr));loadTst();
+}
+function delSelTst(){
+  var cbs=document.querySelectorAll('.cb-tst:checked');
+  if(!cbs.length){toast('선택된 항목 없음');return;}
+  if(!confirm(cbs.length+'개 삭제?'))return;
+  var idxs=Array.from(cbs).map(function(cb){return parseInt(cb.dataset.idx);}).sort(function(a,b){return b-a;});
+  var arr=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
+  idxs.forEach(function(i){arr.splice(i,1);});
+  localStorage.setItem('pbs_testimonials',JSON.stringify(arr));
+  document.getElementById('tstSelAll').checked=false;loadTst();
+}
+function toggleTstPub(i){
+  var arr=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
+  if(!arr[i])return;
+  arr[i].approved=!arr[i].approved;
+  if(arr[i]._id)supaUpdateRow('pbs_testimonials',arr[i]._id,{approved:arr[i].approved});
+  localStorage.setItem('pbs_testimonials',JSON.stringify(arr));loadTst();
+}
+function toggleTstPhotoVis(i){
+  var arr=JSON.parse(localStorage.getItem('pbs_testimonials')||'[]');
+  if(!arr[i])return;
+  arr[i].photoVisible=(arr[i].photoVisible===false);
+  if(arr[i]._id)supaUpdateRow('pbs_testimonials',arr[i]._id,{photo_visible:arr[i].photoVisible});
+  localStorage.setItem('pbs_testimonials',JSON.stringify(arr));loadTst();
+}
+function updateN(){
+  var n=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]').filter(function(x){return !x.read;}).length;
+  document.getElementById('inqN').textContent=n||'';
+  document.getElementById('tstN').textContent='';
+}
+
+/* == 갤러리 == */
+var DGAL=[
+  {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/KakaoTalk_20251008_163931686_10.jpg',tag:'강의',caption:'퍼스널컬러 강의 현장',isDefault:true},
+  {src:'최해숙프로필자동화만들기/생생투데이방송/KakaoTalk_20251027_135308334.jpg',tag:'KBS',caption:'KBS 방송 출연',isDefault:true},
+  {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/두바이.jpg',tag:'Global',caption:'두바이 글로벌 강연',isDefault:true},
+  {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/강의대강당.jpg',tag:'강의',caption:'대규모 강의 현장',isDefault:true},
+  {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/교사연수.jpg',tag:'연수',caption:'교사 연수 강의',isDefault:true},
+  {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/공무원연수.jpg',tag:'연수',caption:'공무원 연수 강의',isDefault:true},
+  {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/작가초청강연.jpg',tag:'강연',caption:'작가 초청 강연',isDefault:true},
+  {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/협약식.jpg',tag:'협약',caption:'업무 협약식',isDefault:true}
+];
+function getGalCfg(){
+  var c=JSON.parse(localStorage.getItem('pbs_gallery_config')||'null');
+  if(!c)c={items:DGAL.map(function(g){return Object.assign({},g,{visible:true});})};
+  c.items.forEach(function(it){if('isD' in it&&!('isDefault' in it)){it.isDefault=it.isD;delete it.isD;}});
+  return c;
+}
+function renderGal(){
+  var cfg=getGalCfg();var g=document.getElementById('galGrid');
+  g.innerHTML=cfg.items.map(function(p,i){
+    var v=p.visible!==false;
+    return '<div class="pi'+(v?'':' hi')+'">'
+      +'<img src="'+p.src+'" alt="'+p.caption+'" onerror="this.style.opacity=\'.08\'">'
+      +'<span class="ps">'+(v?'노출':'숨김')+'</span>'
+      +'<div class="pi-btns">'
+      +'<button class="pt" onclick="togGal('+i+')" title="'+(v?'클릭→숨김':'클릭→노출')+'">'+(v?'👁':'🙈')+'</button>'
+      +'<button class="pdel" onclick="delGalP('+i+')" title="삭제">🗑</button>'
+      +'</div><div class="pc">'+p.caption+'</div></div>';
+  }).join('')||'<p style="padding:30px;color:rgba(255,255,255,.3)">사진 없음</p>';
+}
+function togGal(i){
+  var c=getGalCfg();c.items[i].visible=!(c.items[i].visible!==false);
+  localStorage.setItem('pbs_gallery_config',JSON.stringify(c));renderGal();
+}
+function delGalP(i){
+  if(!confirm('삭제하시겠습니까?'))return;
+  var c=getGalCfg();c.items.splice(i,1);
+  localStorage.setItem('pbs_gallery_config',JSON.stringify(c));renderGal();
+}
+function compressImg(file,maxW,quality,cb){
+  var r=new FileReader();
+  r.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas');
+      var w=img.width,h=img.height;
+      if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      cb(c.toDataURL('image/jpeg',quality));
+    };
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+var _galStaged=[];
+function stageGalPics(inp){
+  var files=Array.from(inp.files);if(!files.length)return;
+  _galStaged=[];
+  var list=document.getElementById('galStagingList');
+  list.innerHTML='<p style="font-size:11px;color:rgba(255,255,255,.35);padding:6px">압축 중...</p>';
+  document.getElementById('galStaging').style.display='block';
+  var done=0;var total=files.length;
+  files.forEach(function(f,idx){
+    compressImg(f,900,0.78,function(dataUrl){
+      var baseName=f.name.replace(/\.[^.]+$/,'');
+      _galStaged.push({src:dataUrl,caption:baseName,tag:'강의'});
+      done++;
+      if(done===total){
+        list.innerHTML=_galStaged.map(function(s,i){
+          return '<div style="display:flex;align-items:center;gap:8px;padding:6px;background:rgba(255,255,255,.04);border-radius:8px">'
+            +'<img src="'+s.src+'" style="width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0">'
+            +'<input placeholder="사진 설명" maxlength="30" value="'+s.caption+'" oninput="_galStaged['+i+'].caption=this.value"'
+            +' style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 10px;color:#fff;font-size:12px;outline:none">'
+            +'<input placeholder="태그" maxlength="10" value="'+s.tag+'" oninput="_galStaged['+i+'].tag=this.value"'
+            +' style="width:70px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 8px;color:#fff;font-size:12px;outline:none">'
+            +'</div>';
+        }).join('');
+      }
+    });
+  });inp.value='';
+}
+function confirmGalAdd(){
+  if(!_galStaged.length)return;
+  var c=getGalCfg();
+  _galStaged.forEach(function(s){
+    c.items.push({src:s.src,tag:s.tag||'신규',caption:s.caption||'사진',visible:true,isDefault:false});
+  });
+  localStorage.setItem('pbs_gallery_config',JSON.stringify(c));
+  supaConfigSave('gallery_config',c);
+  var count=_galStaged.length;
+  _galStaged=[];
+  document.getElementById('galStaging').style.display='none';
+  renderGal();toast(count+'장 갤러리에 추가 완료!');
+}
+function addGalPics(inp){stageGalPics(inp);}
+function saveGal(){localStorage.setItem('pbs_gallery_config',JSON.stringify(getGalCfg()));toast('갤러리 저장! 메인 새로고침 후 반영');}
+function resetGal(){if(!confirm('초기화?'))return;localStorage.removeItem('pbs_gallery_config');renderGal();}
+
+/* == 글로벌 사진 == */
+var DGLB=[
+  {label:'슬롯1 (왼쪽위)',src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/두바이.jpg'},
+  {label:'슬롯2 (오른쪽위)',src:'최해숙프로필자동화만들기/두바이사진/KakaoTalk_20250816_152418842_01.jpg'},
+  {label:'슬롯3 (왼쪽아래)',src:'최해숙프로필자동화만들기/두바이사진/KakaoTalk_20250816_152418842_02.jpg'},
+  {label:'슬롯4 (오른쪽아래)',src:'최해숙프로필자동화만들기/두바이사진/QAM00265.jpg'}
+];
+function getGlbCfg(){return JSON.parse(localStorage.getItem('pbs_global_config')||'null')||{};}
+
+/* 글로벌 사진 임시 변경사항 (저장 전 preview 전용) */
+var _glbTemp={};
+function _glbMerge(){
+  var c=getGlbCfg();
+  var m=JSON.parse(JSON.stringify(c));
+  Object.keys(_glbTemp).forEach(function(k){
+    if(k.indexOf('posex')===0){
+      var ei=parseInt(k.replace('posex',''));
+      if(m.extra&&m.extra[ei])m.extra[ei].objPos=_glbTemp[k];
+    }else if(k.indexOf('pos')===0){
+      m[k]=_glbTemp[k];
+    }else if(k.indexOf('ex')===0){
+      var ei2=parseInt(k.replace('ex',''));
+      if(m.extra&&m.extra[ei2])m.extra[ei2].src=_glbTemp[k];
+      else{if(!m.extra)m.extra=[];if(!m.extra[ei2])m.extra[ei2]={};m.extra[ei2].src=_glbTemp[k];}
+    }else{
+      m[k]=_glbTemp[k];
+    }
+  });
+  return m;
+}
+var _GPOS=[
+  {l:'↖',p:'left top'},{l:'↑',p:'center top'},{l:'↗',p:'right top'},
+  {l:'←',p:'left center'},{l:'●',p:'center center'},{l:'→',p:'right center'},
+  {l:'↙',p:'left bottom'},{l:'↓',p:'center bottom'},{l:'↘',p:'right bottom'}
+];
+function renderGlb(){
+  var merged=_glbMerge();
+  var extras=merged.extra||[];
+  var items=DGLB.map(function(d,i){
+    return {src:merged['img'+i]||d.src,label:d.label,key:'img'+i,
+            posKey:'pos'+i,pos:merged['pos'+i]||'center center',isExtra:false};
+  });
+  extras.forEach(function(ex,ei){
+    items.push({src:ex.src,label:ex.label||('추가사진 '+(ei+1)),key:'ex'+ei,
+                posKey:'posex'+ei,pos:ex.objPos||'center center',isExtra:true,exIdx:ei});
+  });
+  var hasPending=Object.keys(_glbTemp).length>0;
+  var grid=document.getElementById('glbGrid');
+  grid.innerHTML=items.map(function(item,i){
+    var delBtn=item.isExtra
+      ?'<button style="padding:3px 9px;border-radius:999px;background:rgba(255,60,60,.15);border:1px solid rgba(255,100,100,.3);color:#ff8080;font-size:11px;cursor:pointer" onclick="delGlbExtra('+item.exIdx+')">삭제</button>'
+      :'';
+    var posGrid=_GPOS.map(function(p){
+      var act=p.p===item.pos;
+      return '<button title="'+p.p+'" onclick="setGlbPos(\''+item.posKey+'\','+i+',\''+p.p+'\')"'
+        +' style="width:26px;height:26px;border-radius:4px;font-size:11px;border:1px solid rgba(255,255,255,'+(act?'.6':'.12')+');'
+        +'background:'+(act?'var(--pk)':'rgba(255,255,255,.05)')+';color:#fff;cursor:pointer">'+p.l+'</button>';
+    }).join('');
+    return '<div class="gpw">'
+      +'<img src="'+item.src+'" id="glbi'+i+'" style="object-position:'+item.pos+'" onerror="this.style.opacity=\'.1\'">'
+      +'<div class="gpl"><span>'+item.label+'</span><div style="display:flex;gap:5px">'
+      +'<button class="gcb" onclick="document.getElementById(\'gfi'+i+'\').click()">변경</button>'
+      +delBtn+'</div></div>'
+      +'<div style="padding:8px 10px;border-top:1px solid rgba(255,255,255,.07)">'
+      +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:5px;font-weight:700">📍 위치 조정 (저장 전 미리보기)</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(3,26px);gap:3px">'+posGrid+'</div></div>'
+      +'<input type="file" id="gfi'+i+'" accept="image/*" style="display:none" onchange="chgGlb(\''+item.key+'\','+i+',this)"></div>';
+  }).join('');
+  grid.innerHTML+='<div style="border:2px dashed rgba(255,255,255,.15);border-radius:12px;min-height:100px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.4);font-size:13px;font-weight:700;margin-top:4px" onclick="document.getElementById(\'glbNewFile\').click()">+ 새 사진 추가</div>';
+  /* 미저장 안내 배너 */
+  var notice=document.getElementById('glbNotice');
+  if(hasPending){
+    if(!notice){notice=document.createElement('div');notice.id='glbNotice';
+      notice.style.cssText='background:rgba(230,0,126,.12);border:1px solid rgba(230,0,126,.3);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:700;color:var(--pk);margin-top:12px';
+      grid.parentNode.insertBefore(notice,grid.nextSibling);}
+    notice.textContent='⚠ 미저장 변경사항 있음 — 위 ✓ 저장 버튼을 눌러야 메인에 반영됩니다';
+  }else if(notice){notice.remove();}
+}
+function chgGlb(key,idx,inp){
+  var f=inp.files[0];if(!f)return;
+  compressImg(f,900,0.82,function(dataUrl){
+    _glbTemp[key]=dataUrl; /* 임시만, localStorage 저장 X */
+    var el=document.getElementById('glbi'+idx);
+    if(el){el.src=dataUrl;el.style.opacity='1';}
+    renderGlb();
+    toast('사진 선택됨 — ✓ 저장 버튼 클릭 시 메인에 반영');
+  });inp.value='';
+}
+function setGlbPos(posKey,idx,pos){
+  _glbTemp[posKey]=pos;
+  var el=document.getElementById('glbi'+idx);
+  if(el)el.style.objectPosition=pos;
+  renderGlb();
+}
+function addGlbPic(inp){
+  var f=inp.files[0];if(!f)return;
+  compressImg(f,900,0.82,function(dataUrl){
+    var c=_glbMerge();
+    var extras=c.extra||[];
+    extras.push({src:dataUrl,label:'추가사진 '+(extras.length+1),objPos:'center center'});
+    c.extra=extras;
+    localStorage.setItem('pbs_global_config',JSON.stringify(c));
+    supaConfigSave('global_config',c);
+    _glbTemp={};renderGlb();toast('새 사진 추가!');
+  });inp.value='';
+}
+function delGlbExtra(ei){
+  if(!confirm('삭제?'))return;
+  var c=getGlbCfg();
+  var extras=c.extra||[];extras.splice(ei,1);c.extra=extras;
+  localStorage.setItem('pbs_global_config',JSON.stringify(c));
+  supaConfigSave('global_config',c);
+  _glbTemp={};renderGlb();toast('삭제');
+}
+function saveGlb(){
+  var merged=_glbMerge();
+  localStorage.setItem('pbs_global_config',JSON.stringify(merged));
+  supaConfigSave('global_config',merged);
+  _glbTemp={};renderGlb();
+  toast('글로벌 사진 저장 완료! 메인 새로고침 후 반영');
+}
+function resetGlb(){if(!confirm('초기화?'))return;localStorage.removeItem('pbs_global_config');_glbTemp={};renderGlb();}
+
+/* == 설정 == */
+function loadBannerCfg(){
+  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'null');
+  if(!b)return;
+  document.getElementById('bannerOn').checked=b.visible||false;
+  if(b.title){document.getElementById('bannerTitle').value=b.title;document.getElementById('bannerTitlePreview').textContent=b.title;}
+  if(b.src){document.getElementById('bannerPreview').style.display='block';document.getElementById('bannerImg').src=b.src;}
+}
+function saveBannerTitle(){
+  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
+  var title=document.getElementById('bannerTitle').value;
+  b.title=title;
+  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+  supaConfigSave('event_banner',b);
+  document.getElementById('bannerTitlePreview').textContent=title;
+}
+function loadBannerFile(inp){
+  var f=inp.files[0];if(!f)return;
+  compressImg(f,1200,0.85,function(dataUrl){
+    var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
+    b.src=dataUrl;
+    localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+    supaConfigSave('event_banner',b);
+    document.getElementById('bannerPreview').style.display='block';
+    document.getElementById('bannerImg').src=dataUrl;
+    toast('배너 이미지 선택! 체크 후 저장하세요');
+  });inp.value='';
+}
+function saveBanner(){
+  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
+  b.visible=document.getElementById('bannerOn').checked;
+  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+  supaConfigSave('event_banner',b);
+  toast(b.visible?'배너 표시 ON · 메인 새로고침 후 반영':'배너 숨김 OFF');
+}
+function clearBanner(){
+  var b={};
+  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+  supaConfigSave('event_banner',b);
+  document.getElementById('bannerPreview').style.display='none';
+  document.getElementById('bannerOn').checked=false;
+  document.getElementById('bannerTitle').value='';
+  document.getElementById('bannerTitlePreview').textContent='';
+  toast('배너 삭제');
+}
+function loadCfg(){
+  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
+  if(s.igHandle)document.getElementById('ig').value=s.igHandle;
+  if(s.yt1Url)document.getElementById('yt1').value=s.yt1Url;
+  if(s.yt2Url)document.getElementById('yt2').value=s.yt2Url;
+  loadBannerCfg();
+}
+function saveIg(){
+  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
+  s.igHandle=document.getElementById('ig').value.trim().replace('@','');
+  localStorage.setItem('pbs_settings',JSON.stringify(s));
+  supaConfigSave('settings',s);
+  toast('Instagram 저장! 메인 새로고침 후 반영');
+}
+function saveYt(){
+  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
+  s.yt1Url=document.getElementById('yt1').value.trim();
+  s.yt2Url=document.getElementById('yt2').value.trim();
+  localStorage.setItem('pbs_settings',JSON.stringify(s));
+  supaConfigSave('settings',s);
+  toast('YouTube 링크 저장! 메인 새로고침 후 반영');
+}
+async function clr(key,label){
+  if(!confirm(label+' 전체 삭제?'))return;
+  localStorage.removeItem(key);
+  // Supabase 삭제
+  if(key==='pbs_inquiries'){
+    await supaFetch('pbs_inquiries?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
+  }else if(key==='pbs_testimonials'){
+    await supaFetch('pbs_testimonials?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
+  }else if(key==='pbs_gallery_config'){
+    supaConfigSave('gallery_config',null);
+  }else if(key==='pbs_global_config'){
+    supaConfigSave('global_config',null);
+  }
+  if(key==='pbs_inquiries')loadInq();
+  if(key==='pbs_testimonials')loadTst();
+  if(key==='pbs_gallery_config')renderGal();
+  if(key==='pbs_global_config'){_glbTemp={};renderGlb();}
+  toast(label+' 초기화 완료');
+}
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._to);t._to=setTimeout(function(){t.classList.remove('show');},2800);
+}
+function compressImg(file,maxW,quality,cb){
+  var r=new FileReader();
+  r.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas');
+      var w=img.width,h=img.height;
+      if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      cb(c.toDataURL('image/jpeg',quality));
+    };
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+</script>
+</body>
+</html>
