@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#3D2F90">
+<title>컬러강점 자가진단 48문항 | PBS COLOR LAB</title>
+<meta name="description" content="책 『컬러강점』 공식 자가진단 48문항 온라인판. RED·YELLOW·GREEN·BLUE 4가지 엔진 중 나의 1순위·2순위 엔진을 확인하세요.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --brand-navy:#232E87;--brand-indigo:#3D2F90;--brand-violet:#522F97;--brand-purple:#7030A0;
+  --brand-gradient:linear-gradient(135deg,#232E87 0%,#3D2F90 30%,#522F97 60%,#7030A0 100%);
+  --engine-red:#FF3366;--engine-yellow:#F5A623;--engine-green:#00A878;--engine-blue:#0077B6;
+  --bg-page:#FBFAFE;--bg-surface:#FFFFFF;
+  --text-primary:#1C1A2E;--text-secondary:#524F6A;--text-muted:#8A87A6;
+  --border-default:rgba(82,47,151,0.14);
+  --shadow-md:0 4px 12px rgba(35,46,135,0.08),0 2px 4px rgba(35,46,135,0.04);
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg-page);color:var(--text-primary);line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.screen{display:none}
+.screen.active{display:block}
+.section{padding:36px 0 60px}
+.card{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:20px;padding:26px 22px;box-shadow:var(--shadow-md);margin-bottom:18px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--brand-purple);text-transform:uppercase;margin-bottom:6px}
+h1{font-size:26px;font-weight:900;line-height:1.35}
+h2{font-size:20px;font-weight:900;margin-bottom:6px}
+.sub{font-size:13.5px;color:var(--text-secondary);margin-bottom:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:14px;font-family:var(--font);font-weight:800;cursor:pointer;transition:.18s}
+.btn-primary{background:var(--brand-gradient);color:#fff;font-size:15.5px;padding:15px 28px}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{background:none;border:1.5px solid var(--border-default);color:var(--text-secondary);font-size:13px;padding:10px 18px}
+.btn-lg{width:100%;font-size:16px;padding:16px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;font-weight:800;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border-default);border-radius:12px;font-family:var(--font);font-size:14px;background:#fff;color:var(--text-primary)}
+.field textarea{min-height:90px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.grid2{grid-template-columns:1fr}}
+.req{color:var(--engine-red)}
+.opt{color:var(--text-muted);font-weight:500;font-size:11px}
+.hero{background:var(--brand-gradient);color:#fff;border-radius:24px;padding:40px 28px;text-align:center;margin-top:24px}
+.hero .book{display:inline-block;background:rgba(255,255,255,.15);border-radius:999px;padding:6px 16px;font-size:12px;font-weight:800;letter-spacing:.06em;margin-bottom:14px}
+.hero p{font-size:14px;opacity:.9;margin-top:10px}
+.progress-outer{position:sticky;top:0;z-index:50;background:var(--bg-page);padding:10px 0 8px}
+.progress-track{height:8px;background:#EAE6F5;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:var(--brand-gradient);border-radius:999px;transition:.3s}
+.progress-label{font-size:11.5px;color:var(--text-muted);text-align:right;margin-top:4px;font-weight:700}
+.engine-head{display:flex;align-items:center;gap:10px;margin:26px 0 12px}
+.engine-dot{width:14px;height:14px;border-radius:50%}
+.engine-head b{font-size:16px}
+.engine-head span{font-size:12.5px;color:var(--text-muted)}
+.q-card{background:#fff;border:1.5px solid var(--border-default);border-radius:16px;padding:16px 16px 14px;margin-bottom:10px}
+.q-card.answered{border-color:var(--brand-purple);background:#FBF9FF}
+.q-text{font-size:14.5px;font-weight:600;margin-bottom:12px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale button{padding:10px 0;border:1.5px solid var(--border-default);background:#fff;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:800;color:var(--text-secondary);cursor:pointer}
+.scale button.on{background:var(--brand-purple);border-color:var(--brand-purple);color:#fff}
+.scale-legend{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-muted);margin-top:4px}
+.sticky-cta{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg-page) 30%);padding:16px 0 20px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bar-label{width:70px;font-size:13px;font-weight:900}
+.bar-track{flex:1;height:26px;background:#F0EDF9;border-radius:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:8px;display:flex;align-items:center;padding-left:10px;color:#fff;font-size:12px;font-weight:800;min-width:44px;transition:width .8s}
+.bar-score{width:56px;text-align:right;font-size:13px;font-weight:800}
+.result-hero{border-radius:22px;padding:30px 24px;color:#fff;text-align:center;margin-bottom:18px}
+.result-hero .rank{font-size:12px;font-weight:800;letter-spacing:.1em;opacity:.85}
+.result-hero h2{font-size:30px;margin:6px 0 2px}
+.result-hero .subtitle{font-size:15px;font-weight:700;opacity:.92}
+.result-hero .band{display:inline-block;margin-top:12px;background:rgba(255,255,255,.18);border-radius:999px;padding:6px 16px;font-size:12.5px;font-weight:800}
+.desc-line{font-size:14.5px;color:var(--text-secondary);margin-bottom:10px;padding-left:14px;border-left:3px solid var(--border-default)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips span{border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700}
+.upsell{background:linear-gradient(135deg,#FBF9FF,#F2EDFC);border:1.5px solid var(--border-default);border-radius:18px;padding:20px;text-align:center}
+.upsell b{font-size:15px}
+.upsell p{font-size:13px;color:var(--text-secondary);margin:8px 0 14px}
+.pdf-cta{background:#F5F2FC;border:1.5px dashed var(--brand-purple);border-radius:14px;padding:14px;text-align:center;font-size:13px;color:var(--brand-purple);font-weight:700}
+.star-row span{cursor:pointer}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:var(--text-primary);color:#fff;font-size:13.5px;font-weight:700;padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:99}
+.toast.show{opacity:1}
+.footer{padding:26px 0 40px;text-align:center;font-size:11.5px;color:var(--text-muted)}
+.print-only{display:none}
+@media print{
+  body{background:#fff}
+  .no-print{display:none !important}
+  .print-only{display:block}
+  .card{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 인트로 ===== -->
+<section id="screen-intro" class="screen active">
+  <div class="wrap section">
+    <div class="hero">
+      <div class="book">📖 책 『컬러강점』 공식 자가진단</div>
+      <h1>내 안의 4가지 엔진을<br>만나는 시간</h1>
+      <p>RED · YELLOW · GREEN · BLUE<br>48문항으로 나의 1순위 · 2순위 엔진을 확인하세요.</p>
+      <button class="btn btn-primary" style="margin-top:22px;background:#fff;color:var(--brand-purple);" onclick="show('info')">무료 진단 시작하기 →</button>
+      <p style="font-size:11.5px;opacity:.75;margin-top:12px">약 5분 소요 · 무료</p>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <h2 style="font-size:15px;">진단 전 안내</h2>
+      <p class="sub" style="margin:8px 0 0;">이 진단은 학술적 심리검사나 임상 진단 도구가 아니라, 십 년 넘게 강의·컨설팅 현장에서 정리해 온 자기 이해를 위한 진단입니다.<br><b>좋은 답을 찾지 말고, 솔직한 답을 찾으세요.</b> 한 문항에 5초를 넘기지 마세요 — 진단은 머리가 아니라 마음이 먼저 반응하는 패턴을 따라가는 일입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 기본 정보 ===== -->
+<section id="screen-info" class="screen">
+  <div class="wrap section">
+    <a style="font-size:13px;color:var(--text-muted);cursor:pointer;" onclick="show('intro')">← 처음으로</a>
+    <div class="card" style="margin-top:12px;">
+      <div class="eyebrow">Step 1 / 3</div>
+      <h2>기본 정보</h2>
+      <p class="sub">통계 분석에만 사용됩니다. 이름은 선택 입력입니다.</p>
+      <div class="grid2">
+        <div class="field">
+          <label>이름 <span class="opt">(선택)</span></label>
+          <input id="f-name" type="text" placeholder="실명 또는 닉네임" maxlength="20">
+        </div>
+        <div class="field">
+          <label>성별 <span class="opt">(선택)</span></label>
+          <select id="f-gender"><option value="">선택 안 함</option><option value="F">여성</option><option value="M">남성</option></select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>직업군 <span class="req">*</span></label>
+          <select id="f-jobgroup">
+            <option value="">선택하세요</option>
+            <option value="mgmt">경영·관리</option><option value="sales_mkt">영업·마케팅</option><option value="office_admin">사무·행정</option>
+            <option value="edu">교육·강의</option><option value="counsel_welfare">상담·복지</option><option value="it_tech">IT·기술·연구</option>
+            <option value="medical">의료·보건</option><option value="art_design">예술·디자인</option><option value="service_retail">서비스·판매</option>
+            <option value="production">생산·현장</option><option value="student">학생</option><option value="homemaker_etc">주부·기타</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>연령대 <span class="req">*</span></label>
+          <select id="f-age">
+            <option value="">선택하세요</option>
+            <option value="10s">10대</option><option value="20s">20대</option><option value="30s">30대</option>
+            <option value="40s">40대</option><option value="50s">50대</option><option value="60s+">60대 이상</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>이메일 <span class="opt">(선택)</span></label>
+        <input id="f-email" type="email" placeholder="결과 안내를 원하시면 입력하세요" maxlength="60">
+      </div>
+      <label style="display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text-secondary);cursor:pointer;margin-top:4px;">
+        <input id="f-consent" type="checkbox" style="width:auto;margin-top:3px;flex-shrink:0;">
+        <span>입력하신 정보와 진단 결과는 <b>개인을 식별할 수 없는 통계 형태</b>로 연구, 교육 콘텐츠, 도서·보도자료 제작에 활용될 수 있습니다. 이에 동의합니다. <span class="req">*</span></span>
+      </label>
+      <label style="display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text-secondary);cursor:pointer;margin-top:8px;">
+        <input id="f-mkconsent" type="checkbox" style="width:auto;margin-top:3px;flex-shrink:0;">
+        <span>(선택) PBS COLOR LAB의 진단 리포트와 교육 소식을 이메일로 받는 것에 동의합니다.</span>
+      </label>
+      <button class="btn btn-primary btn-lg" style="margin-top:20px;" onclick="goQuiz()">48문항 시작 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 진단 ===== -->
+<section id="screen-quiz" class="screen">
+  <div class="wrap" style="padding-bottom:40px;">
+    <div class="progress-outer no-print">
+      <div class="progress-track"><div id="p-fill" class="progress-fill"></div></div>
+      <div id="p-label" class="progress-label">0 / 48</div>
+    </div>
+    <p class="sub" style="margin-top:6px;">각 문항이 평소 내 모습에 얼마나 가까운지 선택하세요.<br><b>1점</b> 거의 그렇지 않다 · <b>3점</b> 보통이다 · <b>5점</b> 매우 그렇다</p>
+    <div id="quiz-body"></div>
+    <div class="sticky-cta">
+      <button id="btn-result" class="btn btn-primary btn-lg" onclick="goResult()" disabled>결과 확인하기 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 결과 ===== -->
+<section id="screen-result" class="screen">
+  <div class="wrap section" id="result-body"></div>
+</section>
+
+<div id="toast" class="toast"></div>
+<div class="footer">Powered by <b>PBS COLOR LAB</b> · 책 『컬러강점』 공식 자가진단</div>
+
+<script>
+/* ============ 데이터 (책 『컬러강점』 원문) ============ */
+const ENGINES = {
+  RED: {
+    name:'RED', sub:'추진하는 힘', power:'속도가 동력이다', hex:'#FF3366',
+    oneline:'앞으로 밀고 나가는 엔진',
+    desc:[
+      'RED는 목표를 향해 움직인다. 멈춰 있는 시간을 견디기 어렵다. 답이 없는 자리에서는 답을 만들고, 결정이 미뤄지는 순간에는 결론을 끌어내고 싶어 한다.',
+      'RED는 결과를 중요하게 여긴다. 결과가 분명하면 힘든 과정도 견딜 수 있다. 마감이 있어야 집중이 잘 되고, 목표가 있어야 힘이 난다.',
+      'RED는 세상을 움직이게 하는 추진력이다.'
+    ],
+    shadow:'RED의 추진력에는 압박이라는 그림자가 따라온다. 나는 자연스럽게 움직였을 뿐인데, 옆 사람은 숨이 찰 수 있다.',
+    gears:'R1 도전 · R2 열정 · R3 완결'
+  },
+  YELLOW: {
+    name:'YELLOW', sub:'펼치는 힘', power:'기쁨이 동력이다', hex:'#F5A623',
+    oneline:'사람과 가능성을 펼치는 엔진',
+    desc:[
+      'YELLOW는 좋은 것과 좋은 사람을 연결한다. 가라앉은 분위기를 살리고, 곁에 있는 사람을 환하게 만든다.',
+      'YELLOW는 사람을 먼저 본다. 일을 시작할 때도 "누구와 함께할까"를 먼저 떠올린다. 좋은 자료를 보면 공유하고 싶고, 좋은 사람이 있으면 연결하고 싶다.',
+      'YELLOW는 사람 사이에 불을 켜는 사람이다.'
+    ],
+    shadow:'YELLOW의 밝음은 때때로 산만함으로 보인다. 다른 사람의 안부는 잘 챙기지만, 정작 자기 안부는 자주 놓친다.',
+    gears:'Y1 발견 · Y2 공감 · Y3 창의'
+  },
+  GREEN: {
+    name:'GREEN', sub:'안정 · 평화의 힘', power:'책임감이 동력이다', hex:'#00A878',
+    oneline:'관계와 평온함을 지키는 엔진',
+    desc:[
+      'GREEN은 비어 있는 곳을 본다. 빠진 사람을 본다. 말하지 못하는 마음을 본다. 아무도 하지 않는 일을 그냥 지나치지 못한다.',
+      'GREEN은 끝까지 듣는다. 그래서 GREEN의 한마디는 가볍지 않다. GREEN의 인연은 깊고 오래간다.',
+      'GREEN은 천천히 가지만 멀리 간다. 공동체를 받치는 사람이다.'
+    ],
+    shadow:'GREEN의 따뜻함은 때때로 침묵이 된다. 공동체의 평화를 위해 자기 한마디를 자주 삼킨다.',
+    gears:'G1 배려 · G2 평화 · G3 밸런스'
+  },
+  BLUE: {
+    name:'BLUE', sub:'논리 · 분석의 힘', power:'근거가 동력이다', hex:'#0077B6',
+    oneline:'근거와 구조를 세우는 엔진',
+    desc:[
+      'BLUE는 사실과 구조를 먼저 본다. 분위기보다 원칙을 보고, 감정보다 흐름을 본다.',
+      'BLUE는 쉽게 움직이지 않는다. 납득되어야 움직인다. 하지만 한 번 결정하면 쉽게 흔들리지 않는다.',
+      'BLUE는 꼭 필요한 순간, 가장 단단한 한마디를 한다. 흔들리는 결정을 단단하게 받치는 힘이다.'
+    ],
+    shadow:'BLUE의 정확함은 때때로 차가움으로 느껴진다. 마음이 없어서 논리적인 것이 아니라, 마음이 있기 때문에 정확해지고 싶어 한다.',
+    gears:'B1 신뢰 · B2 분석 · B3 체계'
+  }
+};
+const QUESTIONS = {
+  RED: [
+    '나는 일이 막혀 있을 때 "일단 시작하자"는 말이 먼저 나온다.',
+    '나는 결정이 빠른 편이다.',
+    '나는 경쟁 상황에 놓이면 오히려 또렷해진다.',
+    '나는 목표가 분명할 때 가장 살아 있다고 느낀다.',
+    '나는 회의에서 결론을 빨리 내고 싶어 한다.',
+    '나는 어려운 일을 만나면 도전 의욕이 먼저 생긴다.',
+    '나는 결과로 평가받는 일이 답답하지 않다.',
+    '나는 누구도 손들지 않을 때 먼저 손드는 편이다.',
+    '나는 속도가 느린 회의가 가장 답답하다.',
+    '나는 일이 끝나면 다음 일을 자연스럽게 떠올린다.',
+    '나는 마감이 정해지면 오히려 집중이 잘 된다.',
+    '나는 "어떻게든 되게 만든다"는 마음이 강한 편이다.'
+  ],
+  YELLOW: [
+    '나는 사람을 만나면 에너지가 차오른다.',
+    '나는 분위기가 가라앉으면 자연스럽게 풀어 주려 한다.',
+    '나는 처음 만난 사람과도 금세 편해진다.',
+    '나는 새로운 아이디어가 떠오르면 곧장 누군가에게 이야기한다.',
+    '나는 사람들 앞에 서는 일이 부담스럽지 않다.',
+    '나는 일보다 사람이 먼저 보인다.',
+    '나는 좋은 것을 보면 누군가에게 알리고 싶어진다.',
+    '나는 누군가의 가능성을 발견하면 응원하고 싶어진다.',
+    '나는 "나 덕분에 분위기가 좋아졌다"는 말을 들을 때 가장 기쁘다.',
+    '나는 칭찬과 응원이 자연스럽게 입에서 나온다.',
+    '나는 한곳에 오래 머무르는 것이 답답하다.',
+    '나는 작은 변화에도 마음이 잘 움직인다.'
+  ],
+  GREEN: [
+    '나는 사람들의 표정 변화를 빨리 알아채는 편이다.',
+    '나는 다른 사람의 이야기를 끝까지 듣는 것이 어렵지 않다.',
+    '나는 다툼이 있는 곳에서 먼저 마음이 무거워진다.',
+    '나는 변화가 잦은 환경보다 안정된 환경에서 힘이 난다.',
+    '나는 한 사람을 오래 챙기는 일이 자연스럽다.',
+    '나는 약속한 일은 가볍게 어기지 않는다.',
+    '나는 갈등이 생기면 양쪽의 마음을 함께 보려 한다.',
+    '나는 관계와 환경의 불안정이 보이면 그냥 지나치기 어렵다.',
+    '나는 누군가가 힘들어 보이면 먼저 다가가 안부를 묻는다.',
+    '나는 묵묵히 자리를 지키는 사람이라는 말을 듣는다.',
+    '나는 오래된 관계를 소중히 여긴다.',
+    '나는 결정이 빠른 상황에서 잠시 멈춰 서는 편이다.'
+  ],
+  BLUE: [
+    '나는 결정을 내리기 전에 자료를 한 번 더 들여다본다.',
+    '나는 흐릿한 문제를 또렷하게 정리하는 것이 즐겁다.',
+    '나는 회의에서 말은 적게 하지만, 한마디는 무게 있게 한다.',
+    '나는 "왜?"라는 질문이 자주 떠오른다.',
+    '나는 감정보다 사실이 먼저 정리되어야 마음이 편하다.',
+    '나는 일이 어긋났을 때 원인을 끝까지 파고드는 편이다.',
+    '나는 혼자 깊이 몰입하는 시간이 회복이 된다.',
+    '나는 한 가지 주제를 길게 파고들 때 살아 있다고 느낀다.',
+    '나는 즉흥적인 결정보다 검토된 결정을 신뢰한다.',
+    '나는 근거가 분명하지 않으면 쉽게 동의하지 않는다.',
+    '나는 일을 시작하기 전에 전체 구조를 먼저 그린다.',
+    '나는 "정확하다"는 평가를 가장 좋은 칭찬으로 듣는다.'
+  ]
+};
+const BANDS = [
+  {min:50, range:'50~60점', label:'매우 강한 엔진', desc:'평소 가장 자주 살아나는 색이며, 당신 색의 핵심입니다.'},
+  {min:38, range:'38~49점', label:'강한 엔진', desc:'자주 쓰는 색이며, 의식하면 더 또렷하게 성장합니다.'},
+  {min:25, range:'25~37점', label:'보통 엔진', desc:'상황에 따라 켜지는 색이며, 잠재력으로 남아 있습니다.'},
+  {min:12, range:'12~24점', label:'잠긴 엔진', desc:'낮다고 없는 것이 아니라, 아직 회전이 느린 색입니다.'}
+];
+const ORDER = ['RED','YELLOW','GREEN','BLUE'];
+
+/* ============ Supabase ============ */
+const SB_URL = 'https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+let DB=null, DBREADY=false;
+try{
+  if(window.supabase && window.supabase.createClient){
+    DB = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:false}});
+    DBREADY = true;
+  }
+}catch(e){ console.warn('[book48] supabase init 실패', e); }
+
+/* ============ 상태 ============ */
+const STATE = { user:{}, answers:{}, result:null, recordId:null, _saved:false, startTs:Date.now() };
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('show'),2400);
+}
+function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ============ 기본정보 → 진단 ============ */
+function goQuiz(){
+  const jg=document.getElementById('f-jobgroup');
+  const age=document.getElementById('f-age').value;
+  if(!jg.value){ toast('직업군을 선택해주세요'); return; }
+  if(!age){ toast('연령대를 선택해주세요'); return; }
+  if(!document.getElementById('f-consent').checked){ toast('통계 활용 동의에 체크해주세요'); return; }
+  STATE.user={
+    name:document.getElementById('f-name').value.trim(),
+    gender:document.getElementById('f-gender').value||null,
+    jobGroup:jg.value,
+    jobGroupLabel:jg.selectedOptions[0].text,
+    ageBand:age,
+    email:document.getElementById('f-email').value.trim(),
+    consent:true,
+    mkConsent:document.getElementById('f-mkconsent').checked
+  };
+  if(!document.getElementById('quiz-body').dataset.built) buildQuiz();
+  show('quiz');
+}
+function buildQuiz(){
+  let h='', n=0;
+  ORDER.forEach(ek=>{
+    const E=ENGINES[ek];
+    h+=`<div class="engine-head"><div class="engine-dot" style="background:${E.hex}"></div><b style="color:${E.hex}">${E.name}</b><span>— ${E.sub}</span></div>`;
+    QUESTIONS[ek].forEach((q,i)=>{
+      const id=ek+'_'+i; n++;
+      h+=`<div class="q-card" id="qc-${id}">
+        <div class="q-text"><span style="color:${E.hex};font-weight:900;">${String(n).padStart(2,'0')}</span> &nbsp;${esc(q)}</div>
+        <div class="scale">${[1,2,3,4,5].map(v=>`<button type="button" onclick="setAns('${id}',${v},this)">${v}</button>`).join('')}</div>
+        <div class="scale-legend"><span>거의 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>`;
+    });
+  });
+  const body=document.getElementById('quiz-body');
+  body.innerHTML=h; body.dataset.built='1';
+}
+function setAns(id,v,btn){
+  STATE.answers[id]=v;
+  const row=btn.parentElement;
+  row.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('qc-'+id).classList.add('answered');
+  const done=Object.keys(STATE.answers).length;
+  document.getElementById('p-fill').style.width=(done/48*100)+'%';
+  document.getElementById('p-label').textContent=done+' / 48';
+  document.getElementById('btn-result').disabled = done<48;
+  // 다음 미응답 문항으로 스크롤
+  if(done<48){
+    const next=document.querySelector('.q-card:not(.answered)');
+    if(next) setTimeout(()=>next.scrollIntoView({behavior:'smooth',block:'center'}),180);
+  }
+}
+
+/* ============ 결과 ============ */
+function bandOf(score){ for(const b of BANDS){ if(score>=b.min) return b; } return BANDS[3]; }
+function goResult(){
+  if(Object.keys(STATE.answers).length<48){ toast('아직 응답하지 않은 문항이 있습니다'); return; }
+  const sums={};
+  ORDER.forEach(ek=>{ sums[ek]=0; QUESTIONS[ek].forEach((q,i)=>{ sums[ek]+=STATE.answers[ek+'_'+i]||0; }); });
+  const ranked=[...ORDER].sort((a,b)=>sums[b]-sums[a]);
+  STATE.result={ sums, first:ranked[0], second:ranked[1] };
+  renderResult();
+  show('result');
+  saveRecord();
+}
+function renderResult(){
+  const r=STATE.result, E1=ENGINES[r.first], E2=ENGINES[r.second];
+  const b1=bandOf(r.sums[r.first]);
+  let h=`<div class="result-hero" style="background:linear-gradient(135deg,${E1.hex}CC,${E1.hex})">
+    <div class="rank">나의 1순위 엔진</div>
+    <h2>${E1.name}</h2>
+    <div class="subtitle">${E1.sub} · ${E1.power}</div>
+    <div class="band">${r.sums[r.first]}점 / 60 · ${b1.label}</div>
+  </div>`;
+  h+=`<div class="card"><h2 style="font-size:16px;">4가지 엔진 점수</h2><div style="margin-top:14px;">`;
+  ORDER.forEach(ek=>{
+    const E=ENGINES[ek], s=r.sums[ek], pct=Math.round((s-12)/48*100);
+    h+=`<div class="bar-row"><div class="bar-label" style="color:${E.hex}">${E.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(pct,8)}%;background:${E.hex}">${s}점</div></div>
+      <div class="bar-score">${bandOf(s).label.slice(0,2)}</div></div>`;
+  });
+  h+=`<p style="font-size:11.5px;color:var(--text-muted);margin-top:8px;">점수의 높낮이는 좋고 나쁨이 아닙니다. 높은 색은 자주 살아나는 엔진이고, 낮은 색은 덜 꺼내 쓰는 엔진일 뿐입니다.</p></div>`;
+  h+=`<div class="card">
+    <div class="eyebrow" style="color:${E1.hex}">1순위 · ${E1.name} — ${E1.oneline}</div>
+    ${E1.desc.map(d=>`<div class="desc-line" style="border-color:${E1.hex}55">${d}</div>`).join('')}
+    <div class="desc-line" style="border-color:#ccc;color:var(--text-muted);font-size:13px;">그림자 — ${E1.shadow}</div>
+    <div class="chips"><span style="background:${E1.hex}18;color:${E1.hex}">${E1.gears}</span></div>
+  </div>`;
+  h+=`<div class="card">
+    <div class="eyebrow" style="color:${E2.hex}">2순위 · ${E2.name} — ${E2.oneline}</div>
+    <div class="desc-line" style="border-color:${E2.hex}55">${E2.desc[0]}</div>
+    <div class="chips"><span style="background:${E2.hex}18;color:${E2.hex}">${E2.gears}</span></div>
+  </div>`;
+  h+=`<div class="card"><h2 style="font-size:15px;">점수 해석</h2>
+    <table style="width:100%;font-size:13px;margin-top:8px;border-collapse:collapse;">
+      ${BANDS.map(b=>`<tr style="border-bottom:1px solid var(--border-default)"><td style="padding:8px 6px;font-weight:800;white-space:nowrap;">${b.range}</td><td style="padding:8px 6px;font-weight:800;white-space:nowrap;">${b.label}</td><td style="padding:8px 6px;color:var(--text-secondary)">${b.desc}</td></tr>`).join('')}
+    </table></div>`;
+  // 설문 + PDF
+  h+=`<div class="card no-print" id="survey-card">
+    <div class="eyebrow">30초 설문</div>
+    <h2 style="font-size:16px;">설문에 응해주시면 결과를 PDF로 저장할 수 있어요</h2>
+    <div class="field" style="margin-top:12px;">
+      <label>현재 하고 계신 일(학업·살림 포함)에 얼마나 만족하시나요? <span class="req">*</span></label>
+      <div class="scale" id="sat-scale">${[1,2,3,4,5].map(v=>`<button type="button" onclick="setSat(${v},this)">${v}</button>`).join('')}</div>
+      <div class="scale-legend"><span>매우 불만족</span><span>매우 만족</span></div>
+    </div>
+    <div class="field"><label>별점</label>
+      <div class="star-row" id="star-row" style="font-size:30px;letter-spacing:4px;user-select:none;">
+        ${[1,2,3,4,5].map(n=>`<span onclick="setStar(${n})" data-star="${n}" style="color:#E3DFF0;">★</span>`).join('')}
+      </div>
+    </div>
+    <div class="field"><label>한 줄 소감 <span class="req">*</span></label>
+      <textarea id="r-feedback" placeholder="예: 내가 왜 그렇게 행동했는지 이해가 됐어요." oninput="onFeedback()"></textarea>
+    </div>
+    <div id="pdf-zone"><div class="pdf-cta">✍️ 만족도와 소감을 입력하면 PDF 저장 버튼이 활성화됩니다.</div></div>
+  </div>`;
+  // 업셀
+  h+=`<div class="upsell no-print">
+    <b>더 깊이 보고 싶다면 — 정식 60문항 진단</b>
+    <p>48문항이 나의 엔진(색)을 확인하는 첫 거울이라면,<br>정식 60문항 진단은 <b>12가지 컬러강점 기어</b>까지 확인하는 전문 리포트입니다.<br>60문항 진단은 교육·강의와 공식 강사를 통해 받을 수 있습니다.</p>
+    <a class="btn btn-ghost" href="https://pbscolor-6.vercel.app/" target="_blank" rel="noopener">정식 진단 알아보기 →</a>
+  </div>`;
+  h+=`<div id="print-feedback" class="print-only"></div>`;
+  h+=`<div class="no-print" style="text-align:center;margin-top:16px;"><button class="btn btn-ghost" onclick="location.reload()">🔄 다시 진단하기</button></div>`;
+  document.getElementById('result-body').innerHTML=h;
+}
+
+/* ============ 설문 · PDF ============ */
+let _sat=null,_star=0;
+function setSat(v,btn){ _sat=v; const row=btn.parentElement; row.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); onFeedback(); }
+function setStar(n){ _star=n; document.querySelectorAll('#star-row span').forEach(s=>{ s.style.color=(+s.dataset.star<=n)?'#F5A623':'#E3DFF0'; }); }
+function onFeedback(){
+  const v=document.getElementById('r-feedback').value.trim();
+  const zone=document.getElementById('pdf-zone');
+  if(v.length>=5 && _sat){
+    zone.innerHTML=`<button class="btn btn-primary btn-lg" onclick="savePdf()">📄 결과를 PDF로 저장하기</button>
+      <p style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:8px;">인쇄 창에서 "PDF로 저장"을 선택하세요.</p>`;
+  }else{
+    zone.innerHTML=`<div class="pdf-cta">✍️ 만족도와 소감을 입력하면 PDF 저장 버튼이 활성화됩니다.</div>`;
+  }
+}
+async function savePdf(){
+  const v=document.getElementById('r-feedback').value.trim();
+  if(v.length<5||!_sat){ toast('만족도와 소감을 입력해주세요'); return; }
+  await updateSurvey();
+  await saveReview(v,_star||5);
+  const pf=document.getElementById('print-feedback');
+  if(pf){ pf.innerHTML=`<div class="card"><h2 style="font-size:15px;">나의 소감</h2><p style="font-size:13px;white-space:pre-wrap;">${esc(v)}</p></div>`; }
+  setTimeout(()=>window.print(),300);
+}
+
+/* ============ 저장 ============ */
+async function saveRecord(){
+  if(STATE._saved||!DBREADY) return;
+  STATE._saved=true;
+  const r=STATE.result,u=STATE.user;
+  try{
+    const {data,error}=await DB.from('pbs_records').insert({
+      test_type:'book_48', entry_path:'book48', is_premium:false, code_id:null,
+      user_name:u.name||null, user_gender:u.gender, user_email:u.email||null,
+      user_consent:true, marketing_consent:!!u.mkConsent,
+      job_group:u.jobGroup, age_band:u.ageBand,
+      answers:STATE.answers, scores:{engines:r.sums, job_group:u.jobGroupLabel},
+      top_engine:r.first, second_engine:r.second, top_gear:null,
+      duration_sec:Math.max(1,Math.round((Date.now()-STATE.startTs)/1000)),
+      lang:'ko', device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop',
+      referrer:document.referrer?document.referrer.slice(0,200):null,
+      inst_name:'최해숙', inst_org:'PBS COLOR LAB'
+    }).select('id').single();
+    if(error) throw error;
+    STATE.recordId=data?.id;
+  }catch(e){ console.warn('[book48] 저장 실패',e); }
+}
+async function updateSurvey(){
+  if(!DBREADY||!STATE.recordId) return;
+  try{
+    await DB.from('pbs_records').update({ job_satisfaction:_sat }).eq('id',STATE.recordId);
+  }catch(e){ console.warn('[book48] 설문 업데이트 실패',e); }
+}
+async function saveReview(text,stars){
+  if(!DBREADY) return;
+  try{
+    await DB.from('pbs_reviews').insert({
+      name:STATE.user.name||'익명', stars:stars||5, text:text,
+      record_id:STATE.recordId||null, is_visible:true, is_featured:false,
+      center_slug:'book48'
+    });
+  }catch(e){ console.warn('[book48] 소감 저장 실패',e); }
+}
+</script>
+</body>
+</html>
