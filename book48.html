@@ -82,6 +82,9 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
 .upsell p{font-size:13px;color:var(--text-secondary);margin:8px 0 14px}
 .pdf-cta{background:#F5F2FC;border:1.5px dashed var(--brand-purple);border-radius:14px;padding:14px;text-align:center;font-size:13px;color:var(--brand-purple);font-weight:700}
 .star-row span{cursor:pointer}
+.cheer{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%) scale(.8);background:#fff;border:2px solid var(--brand-purple);color:var(--brand-purple);font-weight:900;font-size:15.5px;padding:16px 28px;border-radius:20px;box-shadow:0 12px 40px rgba(35,46,135,.25);opacity:0;pointer-events:none;transition:.25s;z-index:98;text-align:center}
+.cheer.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.cheer .big{font-size:36px;display:block;margin-bottom:4px}
 .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:var(--text-primary);color:#fff;font-size:13.5px;font-weight:700;padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:99}
 .toast.show{opacity:1}
 .footer{padding:26px 0 40px;text-align:center;font-size:11.5px;color:var(--text-muted)}
@@ -127,8 +130,8 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
           <input id="f-name" type="text" placeholder="실명 또는 닉네임" maxlength="20">
         </div>
         <div class="field">
-          <label>성별 <span class="opt">(선택)</span></label>
-          <select id="f-gender"><option value="">선택 안 함</option><option value="F">여성</option><option value="M">남성</option></select>
+          <label>성별 <span class="req">*</span></label>
+          <select id="f-gender"><option value="">선택하세요</option><option value="F">여성</option><option value="M">남성</option></select>
         </div>
       </div>
       <div class="grid2">
@@ -153,7 +156,8 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
       </div>
       <div class="field">
         <label>이메일 <span class="opt">(선택)</span></label>
-        <input id="f-email" type="email" placeholder="결과 안내를 원하시면 입력하세요" maxlength="60">
+        <input id="f-email" type="email" placeholder="메일 주소를 입력해주세요" maxlength="60">
+        <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">향후 PBS컬러랩의 자료 수신에 동의하시면 메일 주소를 입력해주세요.</div>
       </div>
       <label style="display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text-secondary);cursor:pointer;margin-top:4px;">
         <input id="f-consent" type="checkbox" style="width:auto;margin-top:3px;flex-shrink:0;">
@@ -188,6 +192,7 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
   <div class="wrap section" id="result-body"></div>
 </section>
 
+<div id="cheer" class="cheer no-print"></div>
 <div id="toast" class="toast"></div>
 <div class="footer">Powered by <b>PBS COLOR LAB</b> · 책 『컬러강점』 공식 자가진단</div>
 
@@ -333,9 +338,14 @@ function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>
 function goQuiz(){
   const jg=document.getElementById('f-jobgroup');
   const age=document.getElementById('f-age').value;
+  const gender=document.getElementById('f-gender').value;
+  if(!gender){ toast('성별을 선택해주세요'); return; }
   if(!jg.value){ toast('직업군을 선택해주세요'); return; }
   if(!age){ toast('연령대를 선택해주세요'); return; }
   if(!document.getElementById('f-consent').checked){ toast('통계 활용 동의에 체크해주세요'); return; }
+  const _mk=document.getElementById('f-mkconsent').checked;
+  const _email=document.getElementById('f-email').value.trim();
+  if(_mk && !_email){ toast('자료 수신에 동의하셨어요 — 메일 주소를 입력해주세요'); return; }
   STATE.user={
     name:document.getElementById('f-name').value.trim(),
     gender:document.getElementById('f-gender').value||null,
@@ -376,11 +386,33 @@ function setAns(id,v,btn){
   document.getElementById('p-fill').style.width=(done/48*100)+'%';
   document.getElementById('p-label').textContent=done+' / 48';
   document.getElementById('btn-result').disabled = done<48;
-  // 다음 미응답 문항으로 스크롤
+  // 응원 메시지 (6문항마다)
+  if(done%6===0) cheer(done);
+  // 아래쪽의 다음 문항으로만 부드럽게 이동 (위로 튀지 않게)
   if(done<48){
-    const next=document.querySelector('.q-card:not(.answered)');
-    if(next) setTimeout(()=>next.scrollIntoView({behavior:'smooth',block:'center'}),180);
+    let next=document.getElementById('qc-'+id).nextElementSibling;
+    while(next && !(next.classList && next.classList.contains('q-card') && !next.classList.contains('answered'))){
+      next=next.nextElementSibling;
+    }
+    if(next) setTimeout(()=>next.scrollIntoView({behavior:'smooth',block:'nearest'}),150);
   }
+}
+const CHEERS={
+  6:['🏃‍♀️','좋은 출발이에요!'],
+  12:['🌸','벌써 12문항 — 잘하고 있어요!'],
+  18:['🦋','리듬 탔어요, 그대로 쭉!'],
+  24:['💪','절반 완주! 대단해요'],
+  30:['🌷','후반전 시작 — 화이팅!'],
+  36:['🏃‍♀️💨','거의 다 왔어요!'],
+  42:['🦋','마지막 한 구간!'],
+  48:['🎉','완주! 이제 결과를 확인하세요']
+};
+function cheer(done){
+  const c=CHEERS[done]; if(!c) return;
+  const el=document.getElementById('cheer');
+  el.innerHTML='<span class="big">'+c[0]+'</span>'+c[1];
+  el.classList.add('show');
+  clearTimeout(el._tm); el._tm=setTimeout(()=>el.classList.remove('show'),1600);
 }
 
 /* ============ 결과 ============ */
