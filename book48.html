@@ -105,10 +105,35 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
 .footer{padding:26px 0 40px;text-align:center;font-size:11.5px;color:var(--text-muted)}
 .print-only{display:none}
 @media print{
-  body{background:#fff}
-  .no-print{display:none !important}
+  @page{size:A4;margin:14mm 12mm}
+  html,body{background:#fff !important}
+  body{font-size:11.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .no-print,.progress-outer,.sticky-cta,.cheer,.toast,.footer,.upsell,#survey-card{display:none !important}
+  .wrap{max-width:100%;padding:0}
+  .section{padding:0}
+  .card{box-shadow:none;border:1px solid #ddd;border-radius:8px;padding:12px 14px;margin-bottom:8px;page-break-inside:avoid}
+  .result-hero{border-radius:10px;padding:16px;page-break-inside:avoid}
+  .result-hero h2{font-size:22px}
+  h2{font-size:14px}
+  .interp h3{font-size:12px;margin:10px 0 4px}
+  .interp ul li,.para,.desc-line{font-size:10.5px;margin-bottom:2px}
+  .desc-line{padding-left:10px;margin-bottom:6px}
+  .value-item{padding:6px 8px;margin-bottom:4px;page-break-inside:avoid}
+  .value-item .vt{font-size:11px}
+  .value-item .vd{font-size:10px}
+  .value-item .vb{font-size:9.5px}
+  .heal-item{padding:6px 8px}
+  .heal-item .hl{font-size:10.5px}
+  .heal-item .hd{font-size:9.5px}
+  .affirm{font-size:11px;padding:6px;margin-bottom:3px}
+  .keyman{padding:8px 10px;font-size:10.5px;border-radius:8px}
+  .bar-row{margin-bottom:4px}
+  .bar-track{height:16px}
+  .bar-fill{font-size:9px;padding-left:6px}
+  .bar-label{font-size:11px}
+  .bar-score{font-size:10px}
+  .chips span{font-size:9.5px;padding:2px 8px}
   .print-only{display:block}
-  .card{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}
 }
 </style>
 </head>
@@ -647,7 +672,8 @@ function goResult(){
 function renderResult(){
   const r=STATE.result, E1=ENGINES[r.first], E2=ENGINES[r.second];
   const b1=bandOf(r.sums[r.first]);
-  let h=`<div class="result-hero" style="background:linear-gradient(135deg,${E1.hex}CC,${E1.hex})">
+  let h=`<div class="print-only" style="text-align:center;margin-bottom:8px;"><b style="font-size:16px;">PBS 컬러강점 자가진단 결과</b><div style="font-size:10px;color:#666;">${esc(STATE.user.name||'')} ${new Date().toISOString().slice(0,10)} · PBS COLOR LAB</div></div>`;
+  h+=`<div class="result-hero" style="background:linear-gradient(135deg,${E1.hex}CC,${E1.hex})">
     <div class="rank">나의 1순위 엔진</div>
     <h2>${E1.name}</h2>
     <div class="subtitle">${E1.sub} · ${E1.power}</div>
@@ -661,16 +687,21 @@ function renderResult(){
       <div class="bar-score">${bandOf(s).label.slice(0,2)}</div></div>`;
   });
   h+=`<p style="font-size:11.5px;color:var(--text-muted);margin-top:8px;">점수의 높낮이는 좋고 나쁨이 아닙니다. 높은 색은 자주 살아나는 엔진이고, 낮은 색은 덜 꺼내 쓰는 엔진일 뿐입니다.</p></div>`;
-  h+=`<div class="card">
-    <div class="eyebrow" style="color:${E1.hex}">1순위 · ${E1.name} — ${E1.oneline}</div>
-    ${E1.desc.map(d=>`<div class="desc-line" style="border-color:${E1.hex}55">${d}</div>`).join('')}
-    <div class="desc-line" style="border-color:#ccc;color:var(--text-muted);font-size:13px;">그림자 — ${E1.shadow}</div>
-    <div class="chips"><span style="background:${E1.hex}18;color:${E1.hex}">${E1.gears}</span></div>
-  </div>`;
-  h+=`<div class="card">
-    <div class="eyebrow" style="color:${E2.hex}">2순위 · ${E2.name} — ${E2.oneline}</div>
-    <div class="desc-line" style="border-color:${E2.hex}55">${E2.desc[0]}</div>
-    <div class="chips"><span style="background:${E2.hex}18;color:${E2.hex}">${E2.gears}</span></div>
+  h+=`<div class="card"><h2 style="font-size:16px;">강점 조합 — 1순위 × 2순위</h2>
+    <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:140px;background:${E1.hex}12;border:1.5px solid ${E1.hex}44;border-radius:14px;padding:14px;text-align:center;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:800;">1순위 엔진</div>
+        <div style="font-size:20px;font-weight:900;color:${E1.hex}">${E1.name}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${E1.sub} · ${r.sums[r.first]}점</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:${E2.hex}12;border:1.5px solid ${E2.hex}44;border-radius:14px;padding:14px;text-align:center;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:800;">2순위 엔진</div>
+        <div style="font-size:20px;font-weight:900;color:${E2.hex}">${E2.name}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${E2.sub} · ${r.sums[r.second]}점</div>
+      </div>
+    </div>
+    <p class="para" style="margin-top:12px;"><b style="color:${E1.hex}">${E1.name}</b> — ${E1.oneline}이 당신의 중심 동력이고, <b style="color:${E2.hex}">${E2.name}</b> — ${E2.oneline}이 그 뒤를 받칩니다.</p>
+    <div class="desc-line" style="border-color:#ccc;color:var(--text-muted);font-size:12.5px;">2순위 그림자 참고 — ${E2.shadow}</div>
   </div>`;
   // ==== 상세 강점 해석 (현장진단 수준) ====
   const ed=ENGINE_DATA[r.first], ex=ENGINE_EXTRA[r.first];
@@ -714,7 +745,8 @@ function renderResult(){
   // 설문 + PDF
   h+=`<div class="card no-print" id="survey-card">
     <div class="eyebrow">30초 설문</div>
-    <h2 style="font-size:16px;">설문에 응해주시면 결과를 PDF로 저장할 수 있어요</h2>
+    <h2 style="font-size:16px;">오늘 진단, 어떠셨나요?</h2>
+    <p class="sub">설문과 소감을 남겨주시면 결과를 PDF로 저장할 수 있어요. 통계는 익명으로 활용됩니다.</p>
     <div class="field" style="margin-top:12px;">
       <label>현재 하고 계신 일(학업·살림 포함)에 얼마나 만족하시나요? <span class="req">*</span></label>
       <div class="scale" id="sat-scale">${[1,2,3,4,5].map(v=>`<button type="button" onclick="setSat(${v},this)">${v}</button>`).join('')}</div>
