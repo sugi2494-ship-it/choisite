@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#3D2F90">
+<title>컬러강점 자가진단 48문항 | PBS COLOR LAB</title>
+<meta name="description" content="책 『컬러강점』 공식 자가진단 48문항 온라인판. RED·YELLOW·GREEN·BLUE 4가지 엔진 중 나의 1순위·2순위 엔진을 확인하세요.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --brand-navy:#232E87;--brand-indigo:#3D2F90;--brand-violet:#522F97;--brand-purple:#7030A0;
+  --brand-gradient:linear-gradient(135deg,#232E87 0%,#3D2F90 30%,#522F97 60%,#7030A0 100%);
+  --engine-red:#FF3366;--engine-yellow:#F5A623;--engine-green:#00A878;--engine-blue:#0077B6;
+  --bg-page:#FBFAFE;--bg-surface:#FFFFFF;
+  --text-primary:#1C1A2E;--text-secondary:#524F6A;--text-muted:#8A87A6;
+  --border-default:rgba(82,47,151,0.14);
+  --shadow-md:0 4px 12px rgba(35,46,135,0.08),0 2px 4px rgba(35,46,135,0.04);
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg-page);color:var(--text-primary);line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.screen{display:none}
+.screen.active{display:block}
+.section{padding:36px 0 60px}
+.card{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:20px;padding:26px 22px;box-shadow:var(--shadow-md);margin-bottom:18px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--brand-purple);text-transform:uppercase;margin-bottom:6px}
+h1{font-size:26px;font-weight:900;line-height:1.35}
+h2{font-size:20px;font-weight:900;margin-bottom:6px}
+.sub{font-size:13.5px;color:var(--text-secondary);margin-bottom:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:14px;font-family:var(--font);font-weight:800;cursor:pointer;transition:.18s}
+.btn-primary{background:var(--brand-gradient);color:#fff;font-size:15.5px;padding:15px 28px}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{background:none;border:1.5px solid var(--border-default);color:var(--text-secondary);font-size:13px;padding:10px 18px}
+.btn-lg{width:100%;font-size:16px;padding:16px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;font-weight:800;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border-default);border-radius:12px;font-family:var(--font);font-size:14px;background:#fff;color:var(--text-primary)}
+.field textarea{min-height:90px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.grid2{grid-template-columns:1fr}}
+.req{color:var(--engine-red)}
+.opt{color:var(--text-muted);font-weight:500;font-size:11px}
+.hero{background:var(--brand-gradient);color:#fff;border-radius:24px;padding:40px 28px;text-align:center;margin-top:24px}
+.hero .book{display:inline-block;background:rgba(255,255,255,.15);border-radius:999px;padding:6px 16px;font-size:12px;font-weight:800;letter-spacing:.06em;margin-bottom:14px}
+.hero p{font-size:14px;opacity:.9;margin-top:10px}
+.progress-outer{position:sticky;top:0;z-index:50;background:var(--bg-page);padding:10px 0 8px}
+.progress-track{height:8px;background:#EAE6F5;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:var(--brand-gradient);border-radius:999px;transition:.3s}
+.progress-label{font-size:11.5px;color:var(--text-muted);text-align:right;margin-top:4px;font-weight:700}
+.engine-head{display:flex;align-items:center;gap:10px;margin:26px 0 12px}
+.engine-dot{width:14px;height:14px;border-radius:50%}
+.engine-head b{font-size:16px}
+.engine-head span{font-size:12.5px;color:var(--text-muted)}
+.q-card{background:#fff;border:1.5px solid var(--border-default);border-radius:16px;padding:16px 16px 14px;margin-bottom:10px}
+.q-card.answered{border-color:var(--brand-purple);background:#FBF9FF}
+.q-text{font-size:14.5px;font-weight:600;margin-bottom:12px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale button{padding:10px 0;border:1.5px solid var(--border-default);background:#fff;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:800;color:var(--text-secondary);cursor:pointer}
+.scale button.on{background:var(--brand-purple);border-color:var(--brand-purple);color:#fff}
+.scale-legend{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-muted);margin-top:4px}
+.sticky-cta{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg-page) 30%);padding:16px 0 20px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bar-label{width:70px;font-size:13px;font-weight:900}
+.bar-track{flex:1;height:26px;background:#F0EDF9;border-radius:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:8px;display:flex;align-items:center;padding-left:10px;color:#fff;font-size:12px;font-weight:800;min-width:44px;transition:width .8s}
+.bar-score{width:56px;text-align:right;font-size:13px;font-weight:800}
+.result-hero{border-radius:22px;padding:30px 24px;color:#fff;text-align:center;margin-bottom:18px}
+.result-hero .rank{font-size:12px;font-weight:800;letter-spacing:.1em;opacity:.85}
+.result-hero h2{font-size:30px;margin:6px 0 2px}
+.result-hero .subtitle{font-size:15px;font-weight:700;opacity:.92}
+.result-hero .band{display:inline-block;margin-top:12px;background:rgba(255,255,255,.18);border-radius:999px;padding:6px 16px;font-size:12.5px;font-weight:800}
+.desc-line{font-size:14.5px;color:var(--text-secondary);margin-bottom:10px;padding-left:14px;border-left:3px solid var(--border-default)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips span{border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700}
+.upsell{background:linear-gradient(135deg,#FBF9FF,#F2EDFC);border:1.5px solid var(--border-default);border-radius:18px;padding:20px;text-align:center}
+.upsell b{font-size:15px}
+.upsell p{font-size:13px;color:var(--text-secondary);margin:8px 0 14px}
+.pdf-cta{background:#F5F2FC;border:1.5px dashed var(--brand-purple);border-radius:14px;padding:14px;text-align:center;font-size:13px;color:var(--brand-purple);font-weight:700}
+.star-row span{cursor:pointer}
+.interp h3{font-size:14px;font-weight:900;margin:20px 0 8px;color:var(--brand-indigo)}
+.interp ul{padding-left:18px;margin:0}
+.interp ul li{font-size:13.5px;color:var(--text-secondary);margin-bottom:5px}
+.para{font-size:13.5px;color:var(--text-secondary)}
+.value-item{background:#FBF9FF;border:1px solid var(--border-default);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.value-item .vt{font-size:13.5px;font-weight:900}
+.value-item .vd{font-size:12.5px;color:var(--text-secondary);margin-top:3px}
+.value-item .vb{font-size:11.5px;color:var(--brand-purple);margin-top:6px;line-height:1.5}
+.heal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:520px){.heal-grid{grid-template-columns:1fr}}
+.heal-item{background:#FBF9FF;border:1px solid var(--border-default);border-radius:12px;padding:10px 12px}
+.heal-item .hl{font-size:12.5px;font-weight:900}
+.heal-item .hd{font-size:12px;color:var(--text-secondary);margin-top:2px}
+.affirm{font-size:13.5px;font-weight:700;color:var(--brand-purple);background:#F5F2FC;border-radius:12px;padding:10px 14px;margin-bottom:6px;text-align:center}
+.keyman{background:var(--brand-gradient);color:#fff;border-radius:14px;padding:14px 16px;font-size:13px;margin-top:14px;line-height:1.6}
+.cheer{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%) scale(.8);background:#fff;border:2px solid var(--brand-purple);color:var(--brand-purple);font-weight:900;font-size:15.5px;padding:16px 28px;border-radius:20px;box-shadow:0 12px 40px rgba(35,46,135,.25);opacity:0;pointer-events:none;transition:.25s;z-index:98;text-align:center}
+.cheer.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.cheer .big{font-size:36px;display:block;margin-bottom:4px}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:var(--text-primary);color:#fff;font-size:13.5px;font-weight:700;padding:12px 22px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:99}
+.toast.show{opacity:1}
+.footer{padding:26px 0 40px;text-align:center;font-size:11.5px;color:var(--text-muted)}
+.print-only{display:none}
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  html,body{background:#fff !important}
+  body{font-size:11.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .no-print,.progress-outer,.sticky-cta,.cheer,.toast,.footer,.upsell,#survey-card{display:none !important}
+  .wrap{max-width:100%;padding:0}
+  .section{padding:0}
+  .card{box-shadow:none;border:1px solid #ddd;border-radius:8px;padding:12px 14px;margin-bottom:8px;page-break-inside:avoid}
+  .result-hero{border-radius:10px;padding:16px;page-break-inside:avoid}
+  .result-hero h2{font-size:22px}
+  h2{font-size:14px}
+  .interp h3{font-size:12px;margin:10px 0 4px}
+  .interp ul li,.para,.desc-line{font-size:10.5px;margin-bottom:2px}
+  .desc-line{padding-left:10px;margin-bottom:6px}
+  .value-item{padding:6px 8px;margin-bottom:4px;page-break-inside:avoid}
+  .value-item .vt{font-size:11px}
+  .value-item .vd{font-size:10px}
+  .value-item .vb{font-size:9.5px}
+  .heal-item{padding:6px 8px}
+  .heal-item .hl{font-size:10.5px}
+  .heal-item .hd{font-size:9.5px}
+  .affirm{font-size:11px;padding:6px;margin-bottom:3px}
+  .keyman{padding:8px 10px;font-size:10.5px;border-radius:8px}
+  .bar-row{margin-bottom:4px}
+  .bar-track{height:16px}
+  .bar-fill{font-size:9px;padding-left:6px}
+  .bar-label{font-size:11px}
+  .bar-score{font-size:10px}
+  .chips span{font-size:9.5px;padding:2px 8px}
+  .print-only{display:block}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 인트로 ===== -->
+<section id="screen-intro" class="screen active">
+  <div class="wrap section">
+    <div class="hero">
+      <div class="book">📖 책 『컬러강점』 공식 자가진단</div>
+      <h1>내 안의 4가지 엔진을<br>만나는 시간</h1>
+      <div style="display:flex;justify-content:center;gap:16px;margin:20px 0 6px;flex-wrap:wrap;">
+        <div style="text-align:center;"><div style="width:54px;height:54px;border-radius:50%;background:#FF3366;box-shadow:0 6px 20px rgba(255,51,102,.55);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10.5px;color:#fff;">RED</div><div style="font-size:11.5px;margin-top:6px;opacity:.9;">추진</div></div>
+        <div style="text-align:center;"><div style="width:54px;height:54px;border-radius:50%;background:#F5A623;box-shadow:0 6px 20px rgba(245,166,35,.55);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:9px;color:#fff;">YELLOW</div><div style="font-size:11.5px;margin-top:6px;opacity:.9;">펼침</div></div>
+        <div style="text-align:center;"><div style="width:54px;height:54px;border-radius:50%;background:#00A878;box-shadow:0 6px 20px rgba(0,168,120,.55);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:9.5px;color:#fff;">GREEN</div><div style="font-size:11.5px;margin-top:6px;opacity:.9;">안정</div></div>
+        <div style="text-align:center;"><div style="width:54px;height:54px;border-radius:50%;background:#0077B6;box-shadow:0 6px 20px rgba(0,119,182,.55);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;color:#fff;">BLUE</div><div style="font-size:11.5px;margin-top:6px;opacity:.9;">논리</div></div>
+      </div>
+      <p>48문항으로 나의 1순위 · 2순위 엔진을 확인하세요.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px;max-width:340px;margin-left:auto;margin-right:auto;">
+        <button class="btn btn-primary" style="background:#fff;color:var(--brand-purple);" onclick="startFlow('quiz')">직접 풀기 (48문항) →</button>
+        <button class="btn btn-primary" style="background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.55);" onclick="startFlow('input')">책 점수 입력 →</button>
+      </div>
+      <p style="font-size:11.5px;opacity:.75;margin-top:12px">직접 풀기 약 5분 소요 · 무료 &nbsp;|&nbsp; 책 점수 입력: 종이진단 결과 바로 확인</p>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <h2 style="font-size:15px;">이 진단의 근거</h2>
+      <p class="sub" style="margin:8px 0 0;">이 진단은 <b>칼 융(C. G. Jung)의 심리유형론</b>, <b>막스 뤼셔(Max Lüscher)의 색채심리학</b>, <b>DISC 행동유형 이론</b>을 바탕으로 설계하고, 10년 넘게 강의·컨설팅 현장에서 <b>1만 명 이상</b>을 만나며 다듬어 온 컬러 퍼스널리티 진단입니다. 결과 해석에는 자기결정성 이론 등 심리학 연구 근거가 함께 제시됩니다.</p>
+      <p class="sub" style="margin:10px 0 0;"><b>좋은 답을 찾지 말고, 솔직한 답을 찾으세요.</b> 한 문항에 5초를 넘기지 마세요 — 진단은 머리가 아니라 마음이 먼저 반응하는 패턴을 따라가는 일입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 기본 정보 ===== -->
+<section id="screen-info" class="screen">
+  <div class="wrap section">
+    <a style="font-size:13px;color:var(--text-muted);cursor:pointer;" onclick="show('intro')">← 처음으로</a>
+    <div class="card" style="margin-top:12px;">
+      <div class="eyebrow">Step 1 / 3</div>
+      <h2>기본 정보</h2>
+      <p class="sub" id="info-mode-hint">통계 분석에만 사용됩니다. 이름은 선택 입력입니다.</p>
+      <div class="grid2">
+        <div class="field">
+          <label>이름 <span class="opt">(선택)</span></label>
+          <input id="f-name" type="text" placeholder="실명 또는 닉네임" maxlength="20">
+        </div>
+        <div class="field">
+          <label>성별 <span class="req">*</span></label>
+          <select id="f-gender"><option value="">선택하세요</option><option value="F">여성</option><option value="M">남성</option></select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>직업군 <span class="req">*</span></label>
+          <select id="f-jobgroup">
+            <option value="">선택하세요</option>
+            <option value="mgmt">경영·관리</option><option value="sales_mkt">영업·마케팅</option><option value="office_admin">사무·행정</option>
+            <option value="edu">교육·강의</option><option value="counsel_welfare">상담·복지</option><option value="it_tech">IT·기술·연구</option>
+            <option value="medical">의료·보건</option><option value="art_design">예술·디자인</option><option value="service_retail">서비스·판매</option>
+            <option value="production">생산·현장</option><option value="student">학생</option><option value="homemaker_etc">주부·기타</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>연령대 <span class="req">*</span></label>
+          <select id="f-age">
+            <option value="">선택하세요</option>
+            <option value="10s">10대</option><option value="20s">20대</option><option value="30s">30대</option>
+            <option value="40s">40대</option><option value="50s">50대</option><option value="60s+">60대 이상</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>이메일 <span class="opt">(선택)</span></label>
+        <input id="f-email" type="email" placeholder="메일 주소를 입력해주세요" maxlength="60">
+        <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">향후 PBS컬러랩의 자료 수신에 동의하시면 메일 주소를 입력해주세요.</div>
+      </div>
+      <label style="display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text-secondary);cursor:pointer;margin-top:4px;">
+        <input id="f-consent" type="checkbox" style="width:auto;margin-top:3px;flex-shrink:0;">
+        <span>입력하신 정보와 진단 결과는 <b>개인을 식별할 수 없는 통계 형태</b>로 연구, 교육 콘텐츠, 도서·보도자료 제작에 활용될 수 있습니다. 이에 동의합니다. <span class="req">*</span></span>
+      </label>
+      <label style="display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text-secondary);cursor:pointer;margin-top:8px;">
+        <input id="f-mkconsent" type="checkbox" style="width:auto;margin-top:3px;flex-shrink:0;">
+        <span>(선택) PBS COLOR LAB의 진단 리포트와 교육 소식을 이메일로 받는 것에 동의합니다.</span>
+      </label>
+      <button class="btn btn-primary btn-lg" style="margin-top:20px;" onclick="submitInfo()">다음 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 책 점수 입력 ===== -->
+<section id="screen-score" class="screen">
+  <div class="wrap section">
+    <a style="font-size:13px;color:var(--text-muted);cursor:pointer;" onclick="show('info')">← 기본 정보</a>
+    <div class="card" style="margin-top:12px;">
+      <div class="eyebrow">Step 2 / 2</div>
+      <h2>책 점수 입력</h2>
+      <p class="sub">책 『컬러강점』 종이진단에서 계산한 <b>4가지 엔진(색)별 합계 점수</b>를 그대로 입력하세요.</p>
+      <p class="sub" style="margin-top:6px;">각 색은 12문항이며, 문항마다 1~5점입니다. 따라서 <b>각 색의 합계는 12~60점</b> 사이입니다.</p>
+      <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px;">
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#FF3366;display:inline-block;"></span>
+            <b style="color:#FF3366;">RED</b><span style="font-size:11.5px;color:var(--text-muted);">추진</span>
+          </span>
+          <input id="score-RED" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#F5A623;display:inline-block;"></span>
+            <b style="color:#F5A623;">YELLOW</b><span style="font-size:11.5px;color:var(--text-muted);">펼침</span>
+          </span>
+          <input id="score-YELLOW" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#00A878;display:inline-block;"></span>
+            <b style="color:#00A878;">GREEN</b><span style="font-size:11.5px;color:var(--text-muted);">안정</span>
+          </span>
+          <input id="score-GREEN" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#0077B6;display:inline-block;"></span>
+            <b style="color:#0077B6;">BLUE</b><span style="font-size:11.5px;color:var(--text-muted);">논리</span>
+          </span>
+          <input id="score-BLUE" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+      </div>
+      <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">※ 각 색의 12문항 합계를 입력합니다. 예: RED 문항 12개의 점수를 모두 더한 값(12~60).</p>
+      <button class="btn btn-primary btn-lg" style="margin-top:18px;" onclick="goScoreResult()">결과 보기 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 진단 ===== -->
+<section id="screen-quiz" class="screen">
+  <div class="wrap" style="padding-bottom:40px;">
+    <div class="progress-outer no-print">
+      <div class="progress-track"><div id="p-fill" class="progress-fill"></div></div>
+      <div id="p-label" class="progress-label">0 / 48</div>
+    </div>
+    <p class="sub" style="margin-top:6px;">각 문항이 평소 내 모습에 얼마나 가까운지 선택하세요.<br><b>1점</b> 거의 그렇지 않다 · <b>3점</b> 보통이다 · <b>5점</b> 매우 그렇다</p>
+    <div id="quiz-body"></div>
+    <div class="sticky-cta">
+      <button id="btn-result" class="btn btn-primary btn-lg" onclick="goResult()" disabled>결과 확인하기 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 결과 ===== -->
+<section id="screen-result" class="screen">
+  <div class="wrap section" id="result-body"></div>
+</section>
+
+<div id="cheer" class="cheer no-print"></div>
+<div id="toast" class="toast"></div>
+<div class="footer">Powered by <b>PBS COLOR LAB</b> · 책 『컬러강점』 공식 자가진단</div>
+
+<script>
+/* ============ 데이터 (책 『컬러강점』 원문) ============ */
+const ENGINES = {
+  RED: {
+    name:'RED', sub:'추진하는 힘', power:'속도가 동력이다', hex:'#FF3366',
+    oneline:'앞으로 밀고 나가는 엔진',
+    desc:[
+      'RED는 목표를 향해 움직인다. 멈춰 있는 시간을 견디기 어렵다. 답이 없는 자리에서는 답을 만들고, 결정이 미뤄지는 순간에는 결론을 끌어내고 싶어 한다.',
+      'RED는 결과를 중요하게 여긴다. 결과가 분명하면 힘든 과정도 견딜 수 있다. 마감이 있어야 집중이 잘 되고, 목표가 있어야 힘이 난다.',
+      'RED는 세상을 움직이게 하는 추진력이다.'
+    ],
+    shadow:'RED의 추진력에는 압박이라는 그림자가 따라온다. 나는 자연스럽게 움직였을 뿐인데, 옆 사람은 숨이 찰 수 있다.',
+    gears:'R1 도전 · R2 열정 · R3 완결'
+  },
+  YELLOW: {
+    name:'YELLOW', sub:'펼치는 힘', power:'기쁨이 동력이다', hex:'#F5A623',
+    oneline:'사람과 가능성을 펼치는 엔진',
+    desc:[
+      'YELLOW는 좋은 것과 좋은 사람을 연결한다. 가라앉은 분위기를 살리고, 곁에 있는 사람을 환하게 만든다.',
+      'YELLOW는 사람을 먼저 본다. 일을 시작할 때도 "누구와 함께할까"를 먼저 떠올린다. 좋은 자료를 보면 공유하고 싶고, 좋은 사람이 있으면 연결하고 싶다.',
+      'YELLOW는 사람 사이에 불을 켜는 사람이다.'
+    ],
+    shadow:'YELLOW의 밝음은 때때로 산만함으로 보인다. 다른 사람의 안부는 잘 챙기지만, 정작 자기 안부는 자주 놓친다.',
+    gears:'Y1 발견 · Y2 공감 · Y3 창의'
+  },
+  GREEN: {
+    name:'GREEN', sub:'안정 · 평화의 힘', power:'책임감이 동력이다', hex:'#00A878',
+    oneline:'관계와 평온함을 지키는 엔진',
+    desc:[
+      'GREEN은 비어 있는 곳을 본다. 빠진 사람을 본다. 말하지 못하는 마음을 본다. 아무도 하지 않는 일을 그냥 지나치지 못한다.',
+      'GREEN은 끝까지 듣는다. 그래서 GREEN의 한마디는 가볍지 않다. GREEN의 인연은 깊고 오래간다.',
+      'GREEN은 천천히 가지만 멀리 간다. 공동체를 받치는 사람이다.'
+    ],
+    shadow:'GREEN의 따뜻함은 때때로 침묵이 된다. 공동체의 평화를 위해 자기 한마디를 자주 삼킨다.',
+    gears:'G1 배려 · G2 평화 · G3 밸런스'
+  },
+  BLUE: {
+    name:'BLUE', sub:'논리 · 분석의 힘', power:'근거가 동력이다', hex:'#0077B6',
+    oneline:'근거와 구조를 세우는 엔진',
+    desc:[
+      'BLUE는 사실과 구조를 먼저 본다. 분위기보다 원칙을 보고, 감정보다 흐름을 본다.',
+      'BLUE는 쉽게 움직이지 않는다. 납득되어야 움직인다. 하지만 한 번 결정하면 쉽게 흔들리지 않는다.',
+      'BLUE는 꼭 필요한 순간, 가장 단단한 한마디를 한다. 흔들리는 결정을 단단하게 받치는 힘이다.'
+    ],
+    shadow:'BLUE의 정확함은 때때로 차가움으로 느껴진다. 마음이 없어서 논리적인 것이 아니라, 마음이 있기 때문에 정확해지고 싶어 한다.',
+    gears:'B1 신뢰 · B2 분석 · B3 체계'
+  }
+};
+const QUESTIONS = {
+  RED: [
+    '나는 일이 막혀 있을 때 "일단 시작하자"는 말이 먼저 나온다.',
+    '나는 결정이 빠른 편이다.',
+    '나는 경쟁 상황에 놓이면 오히려 또렷해진다.',
+    '나는 목표가 분명할 때 가장 살아 있다고 느낀다.',
+    '나는 회의에서 결론을 빨리 내고 싶어 한다.',
+    '나는 어려운 일을 만나면 도전 의욕이 먼저 생긴다.',
+    '나는 결과로 평가받는 일이 답답하지 않다.',
+    '나는 누구도 손들지 않을 때 먼저 손드는 편이다.',
+    '나는 속도가 느린 회의가 가장 답답하다.',
+    '나는 일이 끝나면 다음 일을 자연스럽게 떠올린다.',
+    '나는 마감이 정해지면 오히려 집중이 잘 된다.',
+    '나는 "어떻게든 되게 만든다"는 마음이 강한 편이다.'
+  ],
+  YELLOW: [
+    '나는 사람을 만나면 에너지가 차오른다.',
+    '나는 분위기가 가라앉으면 자연스럽게 풀어 주려 한다.',
+    '나는 처음 만난 사람과도 금세 편해진다.',
+    '나는 새로운 아이디어가 떠오르면 곧장 누군가에게 이야기한다.',
+    '나는 사람들 앞에 서는 일이 부담스럽지 않다.',
+    '나는 일보다 사람이 먼저 보인다.',
+    '나는 좋은 것을 보면 누군가에게 알리고 싶어진다.',
+    '나는 누군가의 가능성을 발견하면 응원하고 싶어진다.',
+    '나는 "나 덕분에 분위기가 좋아졌다"는 말을 들을 때 가장 기쁘다.',
+    '나는 칭찬과 응원이 자연스럽게 입에서 나온다.',
+    '나는 한곳에 오래 머무르는 것이 답답하다.',
+    '나는 작은 변화에도 마음이 잘 움직인다.'
+  ],
+  GREEN: [
+    '나는 사람들의 표정 변화를 빨리 알아채는 편이다.',
+    '나는 다른 사람의 이야기를 끝까지 듣는 것이 어렵지 않다.',
+    '나는 다툼이 있는 곳에서 먼저 마음이 무거워진다.',
+    '나는 변화가 잦은 환경보다 안정된 환경에서 힘이 난다.',
+    '나는 한 사람을 오래 챙기는 일이 자연스럽다.',
+    '나는 약속한 일은 가볍게 어기지 않는다.',
+    '나는 갈등이 생기면 양쪽의 마음을 함께 보려 한다.',
+    '나는 관계와 환경의 불안정이 보이면 그냥 지나치기 어렵다.',
+    '나는 누군가가 힘들어 보이면 먼저 다가가 안부를 묻는다.',
+    '나는 묵묵히 자리를 지키는 사람이라는 말을 듣는다.',
+    '나는 오래된 관계를 소중히 여긴다.',
+    '나는 결정이 빠른 상황에서 잠시 멈춰 서는 편이다.'
+  ],
+  BLUE: [
+    '나는 결정을 내리기 전에 자료를 한 번 더 들여다본다.',
+    '나는 흐릿한 문제를 또렷하게 정리하는 것이 즐겁다.',
+    '나는 회의에서 말은 적게 하지만, 한마디는 무게 있게 한다.',
+    '나는 "왜?"라는 질문이 자주 떠오른다.',
+    '나는 감정보다 사실이 먼저 정리되어야 마음이 편하다.',
+    '나는 일이 어긋났을 때 원인을 끝까지 파고드는 편이다.',
+    '나는 혼자 깊이 몰입하는 시간이 회복이 된다.',
+    '나는 한 가지 주제를 길게 파고들 때 살아 있다고 느낀다.',
+    '나는 즉흥적인 결정보다 검토된 결정을 신뢰한다.',
+    '나는 근거가 분명하지 않으면 쉽게 동의하지 않는다.',
+    '나는 일을 시작하기 전에 전체 구조를 먼저 그린다.',
+    '나는 "정확하다"는 평가를 가장 좋은 칭찬으로 듣는다.'
+  ]
+};
+const BANDS = [
+  {min:50, range:'50~60점', label:'매우 강한 엔진', desc:'평소 가장 자주 살아나는 색이며, 당신 색의 핵심입니다.'},
+  {min:38, range:'38~49점', label:'강한 엔진', desc:'자주 쓰는 색이며, 의식하면 더 또렷하게 성장합니다.'},
+  {min:25, range:'25~37점', label:'보통 엔진', desc:'상황에 따라 켜지는 색이며, 잠재력으로 남아 있습니다.'},
+  {min:12, range:'12~24점', label:'잠긴 엔진', desc:'낮다고 없는 것이 아니라, 아직 회전이 느린 색입니다.'}
+];
+const ORDER = ['RED','YELLOW','GREEN','BLUE'];
+
+/* ==== 상세 해석 데이터 (책 컬러강점 · 현장진단과 동일 엔진) ==== */
+const ENGINE_DATA = {
+  RED: {
+    name:'RED 추진 엔진', shortName:'추진', subtitle:'외향형 · 행동형 · 일·성과 중심',
+    color:'#FF3366', colorDark:'#D11A4D', colorSoft:'#FF6B8A', glow:'rgba(255,107,138,0.45)',
+    quote:'되는지 안 되는지는 해봐야 안다',
+    tags:['외향형','일·성과 중심','행동 우선','결과 지향','추진력','도전 정신','목표 집중'],
+    strengths:['빠른 의사결정과 즉각적 실행력','어떤 환경에서도 목표를 향해 돌진하는 추진력','도전적 상황에서 오히려 폭발하는 에너지','결과를 만들어내는 강한 집중력','상황을 주도하는 리더십'],
+    jobs:['창업·스타트업 경영, 기업가 정신','영업·마케팅·비즈니스 개발','프로젝트 매니지먼트 / PM','스포츠·경쟁 분야, 군·경찰·소방','이벤트 기획 및 실행 리더'],
+    communication:'직접적이고 명확하게 말하며 결론부터 이야기. 빙빙 돌리는 표현을 답답해하고 빠른 응답과 실행을 선호. 회의는 짧고 굵게.',
+    stress:['결정이 미뤄지거나 실행이 막힐 때','지나치게 꼼꼼하거나 완벽주의적 환경','성과가 인정받지 못할 때','팀이 소극적이거나 추진력이 부족할 때'],
+    romance:'열정적이고 직접적으로 감정을 표현. 좋아하면 적극적으로 다가가고 관계에서도 리더십. 빠르고 솔직한 관계를 선호하며 함께 목표를 향해 나아가는 파트너십을 중시.',
+    conflict:'문제를 직면하고 정면 돌파. 즉각 해결을 선호하며, 때로는 너무 강하게 밀어붙여 상대를 압도할 수 있음. 갈등 후 빠르게 잊고 다음으로.',
+    values:[
+      {title:'성취와 도전', detail:'새로운 기록을 세우고 자기 한계를 시험할 때 가장 큰 에너지를 얻습니다. 평탄한 성공보다 의미 있는 시도 자체에서 자기 가치를 확인합니다.', basis:'자기결정성 이론(Deci & Ryan, 2000)의 세 가지 기본 심리욕구 중 <b>유능감(competence)</b> 욕구와 직결됩니다. 자기 능력을 확장하는 경험이 내재 동기와 웰빙의 핵심이라는 SDT의 주장과 일치하며, McClelland(1961)의 성취동기 이론, Csikszentmihalyi의 몰입(Flow) 개념과도 닿아 있습니다.'},
+      {title:'자유', detail:'스스로 결정하고 실행하는 자율성이 가장 중요한 동력입니다. 지시·통제·꼼꼼한 절차가 많을수록 동기가 빠르게 식습니다.', basis:'SDT의 <b>자율성(autonomy)</b> 욕구가 매우 강한 프로필입니다. Ryan & Deci(2017)는 행동의 주체가 자신이라고 느낄 때 내재 동기와 심리적 웰빙이 극대화된다고 보았습니다. DISC의 D(Dominance), Big5의 외향성-Activity facet, MBTI의 ETJ 성향 핵심 동인과 일치합니다.'},
+      {title:'인정', detail:'노력과 결과에 대한 명확한 평가가 동기를 유지시켜 줍니다. 두루뭉술한 칭찬보다 "무엇을 어떻게 잘했는지"가 보이는 피드백이 필요합니다.', basis:'McClelland(1985)의 성취동기 이론에 따르면 성취 동기가 강한 개인은 즉각적·구체적 피드백을 통해 동기를 유지합니다. Big5의 외향성과 Achievement Striving(Costa & McCrae, 1992) 하위 특질과도 연관되며, 변혁적 리더십에서 말하는 "Contingent Reward(조건적 보상)" 작동 원리이기도 합니다.'}
+    ],
+    growth:[
+      {title:'100%가 아니어도 괜찮다는 것을 인정하기', detail:'완벽주의를 동력으로 활용하되, 그것이 자신과 팀을 갉아먹지 않도록 "충분히 좋음"의 기준을 함께 두는 것이 장기 성과로 이어집니다.', basis:'Stoeber & Otto(2006)는 완벽주의를 <b>적응적·부적응적</b>으로 구분했고, 부적응적 완벽주의는 번아웃·우울과 강한 정적 상관을 보입니다(Maslach Burnout Inventory 연구). Simon(1956)의 satisficing 개념과 Winnicott(1953)의 "good enough(충분히 좋음)" 개념이 대표적 처방입니다.'},
+      {title:'팀원의 페이스를 배려하는 여유 갖기', detail:'추진력의 그림자는 "내 속도가 기본값"이라는 가정입니다. 다른 사람의 학습 곡선과 회복 시간을 함께 설계할 때 팀 성과가 지속됩니다.', basis:'Bass(1985)의 <b>변혁적 리더십</b> 4요소 중 "Individualized Consideration(개별적 배려)" 차원이 추진형 리더가 가장 약한 영역으로 보고됩니다. Goleman(1995)의 정서지능 중 "사회적 인식(social awareness)" 역량과 직접 연결됩니다.'},
+      {title:'감정을 나누는 관계의 깊이 경험하기', detail:'성과 관계만으로는 채워지지 않는 영역이 있습니다. 감정을 표현하고 받는 경험은 추진형의 장기 회복력을 결정합니다.', basis:'SDT의 세 번째 욕구인 <b>관계성(relatedness)</b>에 해당합니다. Pennebaker(1997)는 정서 표현 억제가 장기적으로 심혈관·면역계 부담을 가중시킨다는 점을 실증했고, Bowlby의 애착 이론은 안전 기지(secure base)가 성인기 회복탄력성의 토대임을 보여줍니다.'}
+    ],
+    healing:[
+      {emoji:'운', label:'운동·스포츠', desc:'몸을 움직여 에너지 발산'},
+      {emoji:'러', label:'사이클·달리기', desc:'속도감 있는 야외 활동'},
+      {emoji:'경', label:'경쟁적 게임', desc:'승부의 짜릿함 충전'},
+      {emoji:'프', label:'새 프로젝트 시작', desc:'시작 자체가 회복'},
+      {emoji:'여', label:'즉흥 여행', desc:'예측 불가능의 자유'},
+      {emoji:'음', label:'에너지 음악', desc:'템포 빠른 음악 감상'}
+    ],
+    affirmations:[
+      '나의 추진력과 행동력은 세상을 움직이는 강력한 힘이다',
+      '나는 도전할 때 가장 빛나며, 그것이 나의 본질이다',
+      '나의 열정은 주변 사람들에게 영감과 에너지를 준다'
+    ],
+    synergyWith:'BLUE', conflictWith:'GREEN'
+  },
+  YELLOW: {
+    name:'YELLOW 관계 엔진', shortName:'관계', subtitle:'외향형 · 표현형 · 사람·과정 중심',
+    color:'#F5A623', colorDark:'#D88300', colorSoft:'#FFD166', glow:'rgba(255,209,102,0.45)',
+    quote:'함께하면 더 커진다',
+    tags:['외향형','사람·과정 중심','표현 우선','영향력 지향','소통·연결','공감 능력','긍정 에너지'],
+    strengths:['사람들을 자연스럽게 연결하고 모이게 하는 능력','따뜻한 공감과 소통으로 신뢰를 쌓는 힘','밝고 긍정적인 에너지로 분위기를 바꾸는 영향력','창의적 아이디어를 생동감 있게 표현','네트워크 확장 — 누구와도 친해지는 사회성'],
+    jobs:['교육·강의·코칭·멘토링','홍보·PR·브랜드 마케팅','방송·유튜브·크리에이터','이벤트·행사 기획 및 진행','커뮤니티 매니저·커뮤니케이션 전문가'],
+    communication:'이야기로 소통하고 감정과 경험을 나누는 것을 즐김. 유머와 따뜻함으로 분위기를 부드럽게 만들고 상대가 편안하도록 배려. 산만해 보이지만 핵심을 잡아냄.',
+    stress:['혼자 고립되거나 소통이 단절될 때','차갑고 비판적인 분위기의 환경','창의적 표현이 억압될 때','반복적이고 단조로운 업무가 계속될 때'],
+    romance:'표현이 풍부하고 낭만적. 감정을 아낌없이 드러내며 함께하는 시간의 분위기·느낌을 중요시. 파트너를 특별하게 느끼게 해주는 것을 잘함.',
+    conflict:'갈등을 대화와 공감으로 풀려 함. 관계 회복을 최우선. 때로는 갈등을 피하기 위해 자신의 불만을 삼키는 경향.',
+    values:[
+      {title:'연결', detail:'사람들과의 깊은 유대감이 삶의 의미를 만듭니다. 혼자 이루는 성공보다 함께 만든 경험에서 더 큰 충족을 느낍니다.', basis:'자기결정성 이론(Deci & Ryan, 2000)의 <b>관계성(relatedness)</b> 욕구가 가장 강하게 나타나는 프로필입니다. Baumeister & Leary(1995)의 "belonging hypothesis(소속 가설)"는 깊은 관계 욕구가 인간의 근본 동기임을 보여주며, Big5의 외향성(Extraversion)과 친화성(Agreeableness)이 동시에 높은 패턴이 관찰됩니다.'},
+      {title:'표현', detail:'자신을 창의적으로 드러낼 때 가장 살아 있다고 느낍니다. 정해진 틀을 따르는 일보다 자기 색을 입힐 수 있는 일에서 동기가 생깁니다.', basis:'Rogers(1961)의 <b>자기실현(self-actualization)</b> 경향성과 진정성(authenticity) 이론에 따르면, 자기를 표현할 때 심리적 일치감(congruence)을 경험합니다. Big5의 Openness(경험 개방성) 중 미적 감수성·창의성 facet, MBTI의 ENFP/ENFJ 성향과 일치합니다.'},
+      {title:'영향력', detail:'세상에 긍정적인 변화를 만들어내는 것이 핵심 가치입니다. 작은 것이라도 누군가의 마음을 움직였다는 피드백이 강력한 보상이 됩니다.', basis:'Bandura(1997)의 <b>자기효능감(self-efficacy)</b> 이론에서, 타인에게 긍정적 영향을 주는 경험은 자기효능감을 강화하는 가장 강력한 원천 중 하나입니다. Bass(1985) 변혁적 리더십의 "Inspirational Motivation(영감적 동기부여)" 차원과 직접 연결됩니다.'}
+    ],
+    growth:[
+      {title:'깊이 있는 실행력과 마무리 습관 기르기', detail:'아이디어와 시작에 강한 만큼, 끝까지 끌고 가는 근육이 약할 수 있습니다. 작은 단위로 완결 경험을 쌓는 것이 회복의 출발점입니다.', basis:'Big5의 <b>성실성(Conscientiousness)</b> 중 "Industriousness(근면성)" facet이 상대적으로 낮은 경향이 나타납니다. Gollwitzer(1999)의 <b>실행 의도(implementation intention)</b> 연구는 "언제·어디서·어떻게"를 미리 정해 두는 것이 마무리 확률을 2~3배 높인다고 보고합니다.'},
+      {title:'경계 설정 — 나의 에너지도 소중히 하기', detail:'모든 사람에게 좋은 사람이 되려는 시도는 결국 자신을 소진시킵니다. "내 에너지의 한계를 인정하기"가 관계의 질을 오히려 높입니다.', basis:'Hochschild(1983)의 <b>정서노동(emotional labor)</b> 이론은 타인 감정을 지속적으로 우선시할 때 정서 소진이 발생함을 보여줍니다. Neff(2003)의 <b>자기자비(self-compassion)</b> 연구는 자기를 돌보는 태도가 번아웃 예방의 핵심 변인임을 실증합니다.'},
+      {title:'혼자만의 시간을 통해 내면 충전하기', detail:'외향형도 회복을 위해 "혼자의 시간"이 필요합니다. 표현하지 않은 자기 생각이 쌓일 공간을 의식적으로 만들어 주세요.', basis:'Cain(2012)과 Brian Little의 <b>"restorative niche(회복 장소)"</b> 개념은 모든 성격 유형이 자기 본성을 회복하는 시간을 필요로 한다고 봅니다. Kaplan(1995)의 <b>주의 회복 이론(Attention Restoration Theory)</b>은 자연·고요 속에서 인지·정서 자원이 충전됨을 보여줍니다.'}
+    ],
+    healing:[
+      {emoji:'노', label:'노래·가요', desc:'감정을 목소리로 풀기'},
+      {emoji:'창', label:'창작 활동', desc:'그림·공예 자기 표현'},
+      {emoji:'수', label:'친구와 수다', desc:'대화로 충전되는 시간'},
+      {emoji:'쇼', label:'쇼핑·구경', desc:'시각적 자극 흡수'},
+      {emoji:'파', label:'파티·모임', desc:'사람 속에서 에너지'},
+      {emoji:'사', label:'사진·영상', desc:'순간 포착의 즐거움'}
+    ],
+    affirmations:[
+      '나의 따뜻한 에너지는 사람들의 삶을 밝게 비추는 빛이다',
+      '나는 사람들을 연결하고 함께 성장하게 만드는 특별한 능력이 있다',
+      '나의 긍정 에너지는 환경을 바꾸고 가능성을 여는 힘이다'
+    ],
+    synergyWith:'GREEN', conflictWith:'BLUE'
+  },
+  GREEN: {
+    name:'GREEN 조화 엔진', shortName:'조화', subtitle:'내향형 · 배려형 · 사람·과정 중심',
+    color:'#00A878', colorDark:'#007D5C', colorSoft:'#06D6A0', glow:'rgba(6,214,160,0.45)',
+    quote:'오래 함께 가는 것이 가장 강하다',
+    tags:['내향형','사람·과정 중심','배려 우선','지속·안정 지향','공동체 의식','신뢰 관계','성장 지향'],
+    strengths:['사람들을 진심으로 배려하고 돕는 따뜻한 마음','한번 맺은 관계를 오래도록 지키는 신뢰와 충성','팀의 조화와 균형을 유지하는 안정적 역할','꾸준하고 성실하게 성장을 추구하는 인내심','깊이 있는 경청과 공감으로 상대를 치유'],
+    jobs:['교사·교육자·상담사·사회복지사','의료·간호·치료·재활 분야','인사·조직 문화 담당자 (HR)','NGO·비영리·사회적 기업','조직 내 팀 서포터·프로젝트 조율자'],
+    communication:'부드럽고 신중한 언어. 상대방의 감정을 먼저 헤아림. 말보다 행동으로 보여주며 직접적 대립보다 중재와 합의를 선호. 깊은 1:1 대화 편안.',
+    stress:['주변이 자꾸 변하고 불안정할 때','갈등이 해결되지 않고 방치될 때','지나치게 경쟁적이고 냉정한 환경','자신의 노력과 배려가 무시될 때'],
+    romance:'깊고 안정적인 관계 추구. 파트너를 세심하게 배려하고 신뢰를 쌓아감. 자극보다는 평온, 흥분보다는 안정에서 사랑을 느끼며 헌신적.',
+    conflict:'갈등을 최대한 피하려 하지만 불가피할 때는 차분하게 풀어냄. 상대의 입장을 충분히 들은 후 해결책을 찾으며 관계 회복을 최우선.',
+    values:[
+      {title:'조화', detail:'사람들이 함께 평화롭게 공존하는 환경을 만드는 것이 가장 중요합니다. 갈등을 줄이고 신뢰가 흐르는 공간에서 가장 안정적으로 기능합니다.', basis:'Big5의 <b>친화성(Agreeableness)</b> 중 협력성(Cooperation)·겸손(Modesty) facet이 매우 높은 프로필입니다. Hofstede의 문화 차원 중 집단주의(collectivism) 가치와 정렬되며, Tomasello(2009)의 진화심리학 연구는 협력이 인간의 적응적 핵심 전략임을 보여줍니다.'},
+      {title:'성장', detail:'한 번에 큰 변화를 만들기보다 꾸준히 더 나은 사람이 되어가는 여정 자체를 즐깁니다. 작은 성장의 누적이 깊은 자기 신뢰로 이어집니다.', basis:'Dweck(2006)의 <b>성장 마인드셋(growth mindset)</b> — "능력은 노력으로 발달한다"는 신념 — 의 전형적 표현입니다. Aristotle의 <b>에우다이모니아(eudaimonia)</b> 개념인 덕(virtue)의 점진적 함양과도 닿아 있으며, SDT의 유능감 욕구를 점진적·누적적 방식으로 충족하는 패턴입니다.'},
+      {title:'신뢰', detail:'한번 맺은 관계의 일관성과 진심이 가장 중요한 자산입니다. 빠른 친밀감보다 시간이 쌓인 관계에서 깊은 안정을 느낍니다.', basis:'Bowlby의 <b>애착 이론(attachment theory)</b>과 Ainsworth의 안전 애착 연구는 일관성과 예측 가능성이 안전 애착의 토대임을 보여줍니다. Putnam(2000)의 <b>사회적 자본(social capital)</b> 이론에서 신뢰는 공동체의 가장 핵심적 자원입니다.'}
+    ],
+    growth:[
+      {title:'자신의 욕구와 감정도 솔직하게 표현하기', detail:'타인을 우선하는 습관은 큰 강점이지만, 자기 욕구를 침묵시키는 패턴은 장기적으로 우울·소진의 원인이 됩니다.', basis:'Jack(1991)의 <b>자기침묵 이론(self-silencing theory)</b>은 자기 욕구를 억압하는 패턴이 우울 증상과 강한 정적 상관을 보임을 실증합니다. SDT의 자율성(autonomy) 욕구가 만성적으로 충족되지 않을 때 웰빙이 저하된다는 Ryan & Deci(2017)의 연구와도 일치합니다.'},
+      {title:'때로는 거절할 수 있는 용기 키우기', detail:'모든 요청을 받아들이는 것이 친절이 아닙니다. 자기 한계를 지키는 거절이 오히려 관계를 건강하게 만듭니다.', basis:'Alberti & Emmons(1970)의 <b>적극성(assertiveness) 훈련</b> 모델은 거절을 자기존중의 표현으로 정의합니다. Figley(1995)의 <b>공감 피로(compassion fatigue)</b> 연구는 돌봄·배려가 강한 사람일수록 의식적 경계 설정이 필수임을 보여줍니다.'},
+      {title:'변화를 두려움이 아닌 성장의 기회로', detail:'안정 추구는 강점이지만, 모든 변화를 위협으로 보면 새로운 가능성을 놓치게 됩니다. "이번에는 무엇을 배울 수 있을까"의 질문으로 전환해 보세요.', basis:'Dweck(2006)의 <b>성장 마인드셋</b>은 변화를 위협이 아닌 학습의 기회로 재정의합니다. Kolb(1984)의 <b>경험학습 사이클(Experiential Learning Cycle)</b>은 구체적 경험 → 성찰 → 개념화 → 실험의 순환에서 변화 자체가 학습의 동력임을 보여줍니다.'}
+    ],
+    healing:[
+      {emoji:'산', label:'자연 산책', desc:'녹지에서의 회복'},
+      {emoji:'책', label:'독서·일기', desc:'조용한 사색의 시간'},
+      {emoji:'식', label:'식물 가꾸기', desc:'생명을 돌보는 평온'},
+      {emoji:'차', label:'차·명상', desc:'느린 호흡의 충전'},
+      {emoji:'요', label:'요가·스트레칭', desc:'몸과 마음의 균형'},
+      {emoji:'반', label:'반려동물', desc:'무조건적 사랑 교환'}
+    ],
+    affirmations:[
+      '나의 배려와 따뜻함은 세상을 더 좋은 곳으로 만드는 힘이다',
+      '나는 천천히, 그러나 확실하게 성장하고 있으며 그것으로 충분하다',
+      '나의 조화로운 에너지는 공동체를 하나로 묶는 보이지 않는 힘이다'
+    ],
+    synergyWith:'YELLOW', conflictWith:'RED'
+  },
+  BLUE: {
+    name:'BLUE 분석 엔진', shortName:'분석', subtitle:'내향형 · 사고형 · 일·성과 중심',
+    color:'#0077B6', colorDark:'#005A8C', colorSoft:'#4CC9F0', glow:'rgba(76,201,240,0.45)',
+    quote:'제대로 하지 않을 거라면 하지 않는 게 낫다',
+    tags:['내향형','일·성과 중심','분석 우선','정확성 지향','논리적 사고','체계화 능력','완벽주의'],
+    strengths:['복잡한 데이터를 분석해 핵심을 도출하는 논리력','정밀하고 체계적인 계획 수립과 실행 능력','깊이 있는 연구와 탐구를 즐기는 학습 능력','품질과 정확도에 대한 높은 기준과 완벽성','직관과 논리를 결합한 독창적 통찰력'],
+    jobs:['데이터 사이언티스트·AI·IT 개발자','연구원·학자·박사·전문 분야 전문가','전략 컨설턴트·경영 분석가','의사·법조인·회계사·세무사','철학·인문학·심층 저술 분야'],
+    communication:'정확하고 논리적인 언어. 사실과 근거를 바탕으로 이야기. 감정적 대화보다 구체적·실질적 내용 선호. 말보다 글로 소통할 때 편안.',
+    stress:['불완전하거나 부정확한 정보로 일해야 할 때','감정적이고 비논리적인 의사결정 환경','준비 없이 즉흥적으로 해야 하는 상황','자신의 기준을 계속 낮추도록 강요받을 때'],
+    romance:'천천히, 신중하게 관계를 발전. 감정 표현이 서툴러 보일 수 있지만 사랑하는 사람을 위해 깊고 진지한 헌신. 지적인 대화 가능한 파트너 선호.',
+    conflict:'감정보다 논리로 갈등을 분석하고 해결책을 찾음. 즉각적 반응보다 충분히 생각한 후 차분하게 대응. 때로는 논리를 앞세우다 상대의 감정을 놓침.',
+    values:[
+      {title:'정확성', detail:'올바른 정보와 완성도 높은 결과물에 대한 기준이 일을 움직이는 동력입니다. 대충 넘어가는 것보다 한 번에 제대로 하는 것이 마음 편합니다.', basis:'Big5의 <b>성실성(Conscientiousness)</b> 중 질서(Order)·신중(Deliberation)·완벽주의(Perfectionism) facet이 높은 프로필입니다. Cacioppo & Petty(1982)의 <b>인지 욕구(Need for Cognition)</b> 척도에서 높은 점수를 보이는 사람들과 사고 패턴이 유사합니다.'},
+      {title:'깊이', detail:'표면적 답이 아닌 본질·원인·구조를 이해할 때 만족합니다. 얕은 합의나 빠른 결론보다 끝까지 파고드는 사고에서 의미를 찾습니다.', basis:'Big5의 <b>경험 개방성(Openness)</b> 중 지적 호기심(Intellect) facet이 높게 나타납니다. Dweck의 <b>숙달 지향(mastery orientation)</b>과 일치하며, Csikszentmihalyi의 몰입(Flow)이 "도전이 능력을 약간 상회할 때" 발생하는 메커니즘과도 연결됩니다.'},
+      {title:'자율', detail:'자기 방식으로 탐구할 자유가 가장 중요합니다. 외부의 지나친 간섭이나 즉흥적 의사결정 요구가 가장 큰 스트레스원입니다.', basis:'자기결정성 이론(Deci & Ryan, 2000)의 <b>자율성(autonomy)</b> 욕구가 매우 강한 프로필입니다. Deci(1971)의 고전적 실험은 외적 보상·통제가 내재 동기를 오히려 약화시킨다는 점을 실증했고, 분석형은 이 효과에 특히 민감합니다.'}
+    ],
+    growth:[
+      {title:'"완벽"보다 "충분히 좋음"의 기준 넓히기', detail:'완벽주의는 품질의 무기이지만, 자신을 향할 때는 실행을 막는 족쇄가 됩니다. "이 단계에서는 70%면 출시한다"는 명시적 기준이 필요합니다.', basis:'Stoeber & Otto(2006)의 <b>적응적·부적응적 완벽주의</b> 구분에서, 자기지향적 완벽주의가 가장 번아웃·우울과 강한 상관을 보입니다. Simon(1956)의 <b>satisficing(만족 추구)</b> 개념은 "최적"이 아닌 "충분히 좋은" 해법으로도 합리적 의사결정이 가능함을 보여줍니다.'},
+      {title:'감정을 논리만큼 소중히 여기는 연습', detail:'감정은 논리의 반대가 아니라 의사결정의 또 다른 정보원입니다. 자신과 상대의 감정 신호를 데이터로 받아들이는 훈련이 도움이 됩니다.', basis:'Mayer & Salovey(1990)와 Goleman(1995)의 <b>정서지능(Emotional Intelligence)</b> 이론은 정서가 합리적 의사결정에 필수 입력임을 보여줍니다. Damasio(1994)의 <b>somatic marker hypothesis(신체 표지 가설)</b>는 정서 신호가 없으면 합리적 판단도 마비됨을 신경과학적으로 증명했습니다.'},
+      {title:'빠른 실행과 피드백을 통한 반복 학습', detail:'완벽한 분석 후 실행이 아니라, 작게 실행 → 피드백 → 수정의 사이클을 짧게 돌리는 것이 분석형의 강점을 가장 잘 활용하는 방식입니다.', basis:'Ries(2011)의 <b>린 스타트업(Lean Startup)</b> 방법론의 build-measure-learn 사이클이 핵심 처방입니다. Boyd의 <b>OODA loop(관찰-방향설정-결정-행동)</b>도 같은 원리로, 분석형이 빠지기 쉬운 <b>분석 마비(analysis paralysis)</b> 예방에 효과적입니다.'}
+    ],
+    healing:[
+      {emoji:'독', label:'심층 독서·연구', desc:'몰입의 즐거움'},
+      {emoji:'퍼', label:'퍼즐·전략 게임', desc:'논리의 유희'},
+      {emoji:'클', label:'클래식·재즈', desc:'정제된 음악 감상'},
+      {emoji:'글', label:'글쓰기·저널', desc:'생각을 정리하는 행위'},
+      {emoji:'사', label:'혼자 산책·사색', desc:'고요한 자기 대화'},
+      {emoji:'명', label:'명상·마음챙김', desc:'마음의 노이즈 정리'}
+    ],
+    affirmations:[
+      '나의 분석력과 논리적 사고는 세상에서 가장 복잡한 문제를 푸는 열쇠다',
+      '완벽을 추구하는 나의 기준이 세상의 질을 높인다',
+      '나의 직관과 통찰은 보이지 않는 것을 보게 해주는 특별한 재능이다'
+    ],
+    synergyWith:'RED', conflictWith:'YELLOW'
+  }
+};
+const ENGINE_EXTRA = {
+  RED: {
+    workStress:['결정이 미뤄지고 실행이 막힐 때','결론 없이 반복되는 회의, 지나친 보고·승인 절차','변화 없이 같은 일을 반복해야 하는 자리','성과가 눈에 보이지 않거나 인정받지 못할 때'],
+    workCope:'마감과 목표를 명확히 세우고 "언제까지"를 먼저 정하세요. 결과가 보이는 일에 에너지를 집중하고, 단순 반복 업무는 시스템화하거나 위임하면 답답함이 크게 줄어듭니다.',
+    relStress:'RED는 일이 멈춰 있을 때 가장 불안합니다. 상대의 느린 속도가 답답하게 느껴지고, 정작 내 빠른 속도는 상대에게 "재촉"이나 압박으로 전해질 수 있습니다.',
+    relCope:'말이 짧아지고 목소리 톤이 올라가는 순간, 잠시 멈춰 "내가 너무 빠른가?"를 확인하세요. 결정을 재촉하기 전에 "왜 지금 가야 하는지"를 한 박자 설명하면 상대가 함께 움직입니다.',
+    commStyle:'결론부터, 직접적으로 소통합니다. 빠른 응답과 실행을 선호하고 회의는 짧고 굵게. 핵심·마감·기대 결과를 명확히 전달할 때 신뢰가 쌓입니다.',
+    interpersonal:'상대의 신중함을 "느리다"가 아니라 "나중에 문제가 없도록 기준을 확인하는 힘"으로 번역해 보세요. RED의 속도와 상대의 신중함이 만나면 강력한 보완 조합이 됩니다.',
+    keyman:'RED 키맨 — 아무도 첫발을 떼지 못할 때 "우선 작게 해보자"며 정체된 공기를 바꾸는 사람. 일이 자꾸 미뤄지는 팀에 반드시 필요한 흐름의 열쇠입니다.',
+    shadow:'추진력이 과하면 압박이 됩니다. 속도를 없앨 필요는 없습니다. 속도에 잠시의 여유와 설명을 더하면 됩니다.',
+    jobsDetail:['영업·비즈니스 개발, 신규 사업 추진','창업·스타트업 경영, 프로젝트 리딩','행사 총괄·현장 운영, 캠페인 실행','위기 대응·조직 변화가 필요한 자리']
+  },
+  YELLOW: {
+    workStress:['반응이 없는 환경, 혼자 오래 반복 정리하는 일','사람과의 교류가 거의 없는 닫힌 구조','새 아이디어를 낼 수 없는 경직된 조직','"안 돼", "쓸데없는 생각"이라는 말을 들을 때'],
+    workCope:'벌여 놓은 일이 많아지지 않도록, 아이디어를 결과로 남기는 구조(마감·체크리스트·협업자)를 곁에 두세요. 사람과 반응이 오가는 자리에서 에너지를 충전하세요.',
+    relStress:'YELLOW는 가능성이 닫힐 때 불안합니다. 거절이나 부정적 반응에 힘이 빠지고, 인정과 공감이 없으면 쉽게 지칩니다.',
+    relCope:'모두가 나처럼 열려 있지는 않다는 것을 기억하세요. 상대의 신중함을 "찬물"이 아니라 "완성도를 높여주는 브레이크"로 받아들이면 관계가 훨씬 편해집니다.',
+    commStyle:'따뜻하고 표현이 풍부한 소통. 이야기와 감정으로 사람의 마음을 움직입니다. 상대의 반응과 공감을 자주 확인하며 분위기를 밝게 살립니다.',
+    interpersonal:'가능성을 열어 사람을 움직이는 힘. 조용히 조율하는 사람을 "소극적"이 아니라 "관계의 온도를 지키는 사람"으로 보면 서로를 보완하게 됩니다.',
+    keyman:'YELLOW 키맨 — 분위기가 닫힌 팀에서 "이건 다른 방식으로 보여줄 수 있지 않을까요?"라며 가능성과 사람 사이의 연결을 다시 여는 사람.',
+    shadow:'확장이 과하면 산만함이 됩니다. 가능성을 결과로 남겨 아이디어가 흩어지지 않게 하세요.',
+    jobsDetail:['마케팅·홍보·브랜딩·콘텐츠 기획','고객 경험·커뮤니티 운영','교육 진행·강의·네트워킹','스타트업 기획 등 사람의 마음을 움직이는 일']
+  },
+  GREEN: {
+    workStress:['경계 없이 감정 노동을 계속해야 하는 일','자기 돌봄 없이 타인의 문제만 받아내야 하는 자리','"좋은 사람"으로만 버텨야 하는 환경','급격한 변화나 경쟁이 과열된 분위기'],
+    workCope:'따뜻함과 함께 경계와 회복의 구조를 세우세요. 모두를 품으려 하지 말고 "사람을 살리면서도 나 자신을 지킬 수 있는가"를 기준으로 역할을 조정하세요.',
+    relStress:'GREEN은 관계가 흔들릴 때 불안합니다. 불편한 표정, 쌓인 감정, 차가운 분위기에 마음이 먼저 반응해 스스로를 소진하기 쉽습니다.',
+    relCope:'갈등을 혼자 떠안지 말고, 배려 안에 기준을 세우세요. "나도 살고 우리도 사는 길"을 찾을 때 관계가 오래 갑니다. 때로는 거절도 관계를 지키는 방법입니다.',
+    commStyle:'경청과 공감 중심의 부드러운 소통. 상대가 편안하도록 먼저 살피고 맞춰줍니다. 분위기를 안정시키고 갈등의 온도를 낮춥니다.',
+    interpersonal:'관계가 무너지지 않도록 바닥을 받치는 사람. 계속 아이디어를 던지는 사람을 "산만"이 아니라 "가능성을 여는 사람"으로 번역하면 시너지가 납니다.',
+    keyman:'GREEN 키맨 — 갈등이 쌓인 팀에서 말로 드러나지 않은 마음을 먼저 알아차리고, 관계가 무너지기 전에 온도를 조절하는 사람.',
+    shadow:'배려가 과하면 자기희생이나 회피가 됩니다. 배려 안에 기준을 세워 스스로를 함께 지키세요.',
+    jobsDetail:['상담·코칭·교육 운영','고객 케어·복지·돌봄','조직문화·HR·중재','커뮤니티 관리 등 사람을 안정시키는 일']
+  },
+  BLUE: {
+    workStress:['기준 없이 계속 바뀌는 지시','충분히 검토할 시간 없이 빠른 반응만 요구하는 일','정리되지 않은 채 무조건 실행하라는 분위기','즉흥적이고 감정적인 환경'],
+    workCope:'생각하고 정리할 시간과 기준을 세울 권한을 확보하세요. 쌓아온 것을 구조·매뉴얼로 남기면 강점이 빛납니다. 완벽 대신 "충분히 좋음"의 기준도 함께 두세요.',
+    relStress:'BLUE는 기준이 흐릿할 때 불안합니다. 근거 없는 결정과 정리되지 않은 절차에 마음이 불편하고, 분석이 과하면 상대에게 "지적"으로 비칠 수 있습니다.',
+    relCope:'분석에 온도를 더하세요. 옳고 그름을 따지기 전에 상대의 감정을 먼저 인정하면 정확함이 사람에게 닿습니다. 완벽하지 않은 상대도 있는 그대로 받아들여 보세요.',
+    commStyle:'논리와 근거 중심의 정확한 소통. 감정보다 사실에 신뢰를 둡니다. 기준과 순서가 분명할 때 안심하고, 근거를 제시할 때 설득력이 커집니다.',
+    interpersonal:'기준과 구조로 신뢰를 만드는 사람. 빠른 사람을 "무모하다"가 아니라 "멈춘 일을 움직이는 사람"으로 번역하면 서로의 약점을 메웁니다.',
+    keyman:'BLUE 키맨 — 혼란이 반복되는 팀에서 흩어진 말을 정리하고 "기준을 이렇게 정리해 볼까요?"로 구조를 세우는 사람.',
+    shadow:'기준이 과하면 완벽주의나 지적이 됩니다. 분석에 온도를 더해 기준이 사람에게 닿게 하세요.',
+    jobsDetail:['연구·분석·기획','교육 커리큘럼·매뉴얼 제작','시스템 구축·품질관리·데이터 정리','전문 컨설팅 등 기준과 구조를 세우는 일']
+  }
+};
+
+
+/* ============ Supabase ============ */
+const SB_URL = 'https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+let DB=null, DBREADY=false;
+try{
+  if(window.supabase && window.supabase.createClient){
+    DB = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:false}});
+    DBREADY = true;
+  }
+}catch(e){ console.warn('[book48] supabase init 실패', e); }
+
+/* ============ 상태 ============ */
+const STATE = { user:{}, answers:{}, result:null, recordId:null, _saved:false, startTs:Date.now(), mode:'quiz' };
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('show'),2400);
+}
+function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ============ 방식 선택 (직접 풀기 vs 책 점수 입력) ============ */
+function startFlow(mode){
+  STATE.mode = (mode==='input') ? 'input' : 'quiz';
+  // 정보 화면 안내 문구를 모드에 맞게 갱신
+  const hint=document.getElementById('info-mode-hint');
+  if(hint){
+    hint.textContent = (STATE.mode==='input')
+      ? '책 종이진단에서 계산한 4개 엔진 점수를 다음 화면에서 입력합니다.'
+      : '통계 분석에만 사용됩니다. 이름은 선택 입력입니다.';
+  }
+  show('info');
+}
+
+/* ============ 기본정보 캡처(공용) ============ */
+function captureUser(){
+  const jg=document.getElementById('f-jobgroup');
+  const age=document.getElementById('f-age').value;
+  const gender=document.getElementById('f-gender').value;
+  if(!gender){ toast('성별을 선택해주세요'); return false; }
+  if(!jg.value){ toast('직업군을 선택해주세요'); return false; }
+  if(!age){ toast('연령대를 선택해주세요'); return false; }
+  if(!document.getElementById('f-consent').checked){ toast('통계 활용 동의에 체크해주세요'); return false; }
+  const _mk=document.getElementById('f-mkconsent').checked;
+  const _email=document.getElementById('f-email').value.trim();
+  if(_mk && !_email){ toast('자료 수신에 동의하셨어요 — 메일 주소를 입력해주세요'); return false; }
+  STATE.user={
+    name:document.getElementById('f-name').value.trim(),
+    gender:document.getElementById('f-gender').value||null,
+    jobGroup:jg.value,
+    jobGroupLabel:jg.selectedOptions[0].text,
+    ageBand:age,
+    email:document.getElementById('f-email').value.trim(),
+    consent:true,
+    mkConsent:document.getElementById('f-mkconsent').checked
+  };
+  return true;
+}
+
+/* ============ 기본정보 제출 → 모드별 분기 ============ */
+function submitInfo(){
+  if(!captureUser()) return;
+  if(STATE.mode==='input'){ show('score'); return; }
+  goQuiz();
+}
+
+/* ============ 기본정보 → 진단(직접 풀기) ============ */
+function goQuiz(){
+  if(!document.getElementById('quiz-body').dataset.built) buildQuiz();
+  show('quiz');
+}
+function buildQuiz(){
+  let h='', n=0;
+  ORDER.forEach(ek=>{
+    const E=ENGINES[ek];
+    h+=`<div class="engine-head"><div class="engine-dot" style="background:${E.hex}"></div><b style="color:${E.hex}">${E.name}</b><span>— ${E.sub}</span></div>`;
+    QUESTIONS[ek].forEach((q,i)=>{
+      const id=ek+'_'+i; n++;
+      h+=`<div class="q-card" id="qc-${id}">
+        <div class="q-text"><span style="color:${E.hex};font-weight:900;">${String(n).padStart(2,'0')}</span> &nbsp;${esc(q)}</div>
+        <div class="scale">${[1,2,3,4,5].map(v=>`<button type="button" onclick="setAns('${id}',${v},this)">${v}</button>`).join('')}</div>
+        <div class="scale-legend"><span>거의 그렇지 않다</span><span>매우 그렇다</span></div>
+      </div>`;
+    });
+  });
+  const body=document.getElementById('quiz-body');
+  body.innerHTML=h; body.dataset.built='1';
+}
+function setAns(id,v,btn){
+  STATE.answers[id]=v;
+  const row=btn.parentElement;
+  row.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('qc-'+id).classList.add('answered');
+  const done=Object.keys(STATE.answers).length;
+  document.getElementById('p-fill').style.width=(done/48*100)+'%';
+  document.getElementById('p-label').textContent=done+' / 48';
+  document.getElementById('btn-result').disabled = done<48;
+  // 응원 메시지 (6문항마다)
+  if(done%6===0) cheer(done);
+  // 아래쪽의 다음 문항으로만 부드럽게 이동 (위로 튀지 않게)
+  if(done<48){
+    let next=document.getElementById('qc-'+id).nextElementSibling;
+    while(next && !(next.classList && next.classList.contains('q-card') && !next.classList.contains('answered'))){
+      next=next.nextElementSibling;
+    }
+    if(next) setTimeout(()=>next.scrollIntoView({behavior:'smooth',block:'nearest'}),150);
+  }
+}
+const CHEERS={
+  6:['🏃‍♀️','좋은 출발이에요!'],
+  12:['🌸','벌써 12문항 — 잘하고 있어요!'],
+  18:['🦋','리듬 탔어요, 그대로 쭉!'],
+  24:['💪','절반 완주! 대단해요'],
+  30:['🌷','후반전 시작 — 화이팅!'],
+  36:['🏃‍♀️💨','거의 다 왔어요!'],
+  42:['🦋','마지막 한 구간!'],
+  48:['🎉','완주! 이제 결과를 확인하세요']
+};
+function cheer(done){
+  const c=CHEERS[done]; if(!c) return;
+  const el=document.getElementById('cheer');
+  el.innerHTML='<span class="big">'+c[0]+'</span>'+c[1];
+  el.classList.add('show');
+  clearTimeout(el._tm); el._tm=setTimeout(()=>el.classList.remove('show'),1600);
+}
+
+/* ============ 결과 ============ */
+function bandOf(score){ for(const b of BANDS){ if(score>=b.min) return b; } return BANDS[3]; }
+function goResult(){
+  if(Object.keys(STATE.answers).length<48){ toast('아직 응답하지 않은 문항이 있습니다'); return; }
+  const sums={};
+  ORDER.forEach(ek=>{ sums[ek]=0; QUESTIONS[ek].forEach((q,i)=>{ sums[ek]+=STATE.answers[ek+'_'+i]||0; }); });
+  const ranked=[...ORDER].sort((a,b)=>sums[b]-sums[a]);
+  STATE.result={ sums, first:ranked[0], second:ranked[1] };
+  renderResult();
+  show('result');
+  saveRecord();
+}
+/* ============ 책 점수 직접 입력 → 결과 ============ */
+function goScoreResult(){
+  const sums={};
+  for(const ek of ORDER){
+    const el=document.getElementById('score-'+ek);
+    const raw=el?el.value.trim():'';
+    if(raw===''){ toast(ENGINES[ek].name+' 점수를 입력해주세요'); if(el) el.focus(); return; }
+    const v=Number(raw);
+    if(!Number.isFinite(v)||!Number.isInteger(v)||v<12||v>60){
+      toast(ENGINES[ek].name+' 점수는 12~60 사이 정수로 입력해주세요'); if(el) el.focus(); return;
+    }
+    sums[ek]=v;
+  }
+  const ranked=[...ORDER].sort((a,b)=>sums[b]-sums[a]);
+  STATE.result={ sums, first:ranked[0], second:ranked[1] };
+  renderResult();
+  show('result');
+  saveRecord();
+}
+function renderResult(){
+  const r=STATE.result, E1=ENGINES[r.first], E2=ENGINES[r.second];
+  const b1=bandOf(r.sums[r.first]);
+  let h=`<div class="print-only" style="text-align:center;margin-bottom:8px;"><b style="font-size:16px;">PBS 컬러강점 자가진단 결과</b><div style="font-size:10px;color:#666;">${esc(STATE.user.name||'')} ${new Date().toISOString().slice(0,10)} · PBS COLOR LAB</div></div>`;
+  h+=`<div class="result-hero" style="background:linear-gradient(135deg,${E1.hex}CC,${E1.hex})">
+    <div class="rank">나의 1순위 엔진</div>
+    <h2>${E1.name}</h2>
+    <div class="subtitle">${E1.sub} · ${E1.power}</div>
+    <div class="band">${r.sums[r.first]}점 / 60 · ${b1.label}</div>
+  </div>`;
+  h+=`<div class="card"><h2 style="font-size:16px;">4가지 엔진 점수</h2><div style="margin-top:14px;">`;
+  ORDER.forEach(ek=>{
+    const E=ENGINES[ek], s=r.sums[ek], pct=Math.round((s-12)/48*100);
+    h+=`<div class="bar-row"><div class="bar-label" style="color:${E.hex}">${E.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(pct,8)}%;background:${E.hex}">${s}점</div></div>
+      <div class="bar-score">${bandOf(s).label.slice(0,2)}</div></div>`;
+  });
+  h+=`<p style="font-size:11.5px;color:var(--text-muted);margin-top:8px;">점수의 높낮이는 좋고 나쁨이 아닙니다. 높은 색은 자주 살아나는 엔진이고, 낮은 색은 덜 꺼내 쓰는 엔진일 뿐입니다.</p></div>`;
+  h+=`<div class="card"><h2 style="font-size:16px;">강점 조합 — 1순위 × 2순위</h2>
+    <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:140px;background:${E1.hex}12;border:1.5px solid ${E1.hex}44;border-radius:14px;padding:14px;text-align:center;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:800;">1순위 엔진</div>
+        <div style="font-size:20px;font-weight:900;color:${E1.hex}">${E1.name}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${E1.sub} · ${r.sums[r.first]}점</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:${E2.hex}12;border:1.5px solid ${E2.hex}44;border-radius:14px;padding:14px;text-align:center;">
+        <div style="font-size:11px;color:var(--text-muted);font-weight:800;">2순위 엔진</div>
+        <div style="font-size:20px;font-weight:900;color:${E2.hex}">${E2.name}</div>
+        <div style="font-size:12px;color:var(--text-secondary);">${E2.sub} · ${r.sums[r.second]}점</div>
+      </div>
+    </div>
+    <p class="para" style="margin-top:12px;"><b style="color:${E1.hex}">${E1.name}</b> — ${E1.oneline}이 당신의 중심 동력이고, <b style="color:${E2.hex}">${E2.name}</b> — ${E2.oneline}이 그 뒤를 받칩니다.</p>
+    <div class="desc-line" style="border-color:#ccc;color:var(--text-muted);font-size:12.5px;">2순위 그림자 참고 — ${E2.shadow}</div>
+  </div>`;
+  // ==== 상세 강점 해석 (현장진단 수준) ====
+  const ed=ENGINE_DATA[r.first], ex=ENGINE_EXTRA[r.first];
+  h+=`<div class="card interp">
+    <div class="eyebrow" style="color:${E1.hex}">Deep Interpretation</div>
+    <h2>${ed.name} — 상세 강점 해석</h2>
+    <p class="sub" style="margin-top:4px;">"${ed.quote}"</p>
+    <div class="chips">${ed.tags.map(t=>`<span style="background:${E1.hex}18;color:${E1.hex}">#${t}</span>`).join('')}</div>
+    <h3>핵심 강점</h3><ul>${ed.strengths.map(s=>`<li>${s}</li>`).join('')}</ul>
+    <h3>추천 진로·직무</h3><ul>${ed.jobs.map(s=>`<li>${s}</li>`).join('')}</ul>
+    <h3>소통 스타일</h3><p class="para">${ed.communication}</p>
+    <h3>스트레스 요인</h3><ul>${ed.stress.map(s=>`<li>${s}</li>`).join('')}</ul>
+    <h3>관계 패턴</h3><p class="para">${ed.romance}</p>
+    <h3>갈등 대처 방식</h3><p class="para">${ed.conflict}</p>
+    <h3>나를 움직이는 핵심 가치 <span style="font-weight:600;font-size:11px;color:var(--text-muted)">(심리학 근거 포함)</span></h3>
+    ${ed.values.map(v=>`<div class="value-item"><div class="vt">${v.title}</div><div class="vd">${v.detail}</div><div class="vb">📖 ${v.basis}</div></div>`).join('')}
+    <h3>성장 포인트</h3>
+    ${ed.growth.map(v=>`<div class="value-item"><div class="vt">${v.title}</div><div class="vd">${v.detail}</div></div>`).join('')}
+    <h3>회복·자기충전 방법</h3>
+    <div class="heal-grid">${ed.healing.map(hl=>`<div class="heal-item"><div class="hl">${hl.label}</div><div class="hd">${hl.desc}</div></div>`).join('')}</div>
+    <h3>나를 위한 자기확언</h3>
+    ${ed.affirmations.map(a=>`<div class="affirm">" ${a} "</div>`).join('')}
+  </div>`;
+  h+=`<div class="card interp">
+    <div class="eyebrow" style="color:${E1.hex}">Work &amp; Relationships</div>
+    <h2>${ed.shortName||ed.name} 유형의 업무·관계 심화</h2>
+    <h3>💼 업무 스트레스 요인</h3><ul>${(ex.workStress||[]).map(s=>`<li>${s}</li>`).join('')}</ul>
+    <h3>💡 업무 스트레스 대처법</h3><p class="para">${ex.workCope||''}</p>
+    <h3>❤️ 대인관계에서의 불안</h3><p class="para">${ex.relStress||''}</p>
+    <h3>🤝 관계 대처법</h3><p class="para">${ex.relCope||''}</p>
+    <h3>💬 소통 유형</h3><p class="para">${ex.commStyle||''}</p>
+    <h3>👥 대인관계 — 다름을 보완으로</h3><p class="para">${ex.interpersonal||''}</p>
+    <div class="keyman">🔑 <b>나의 키맨(Key Man) 역할</b> — ${ex.keyman||''}</div>
+    <h3>⚠️ 강점이 과할 때 (그림자)</h3><p class="para">${ex.shadow||''}</p>
+    <h3>🎯 도움이 되는 직무</h3><ul>${(ex.jobsDetail||[]).map(s=>`<li>${s}</li>`).join('')}</ul>
+  </div>`;
+  h+=`<div class="card"><h2 style="font-size:15px;">점수 해석</h2>
+    <table style="width:100%;font-size:13px;margin-top:8px;border-collapse:collapse;">
+      ${BANDS.map(b=>`<tr style="border-bottom:1px solid var(--border-default)"><td style="padding:8px 6px;font-weight:800;white-space:nowrap;">${b.range}</td><td style="padding:8px 6px;font-weight:800;white-space:nowrap;">${b.label}</td><td style="padding:8px 6px;color:var(--text-secondary)">${b.desc}</td></tr>`).join('')}
+    </table></div>`;
+  // 설문 + PDF
+  h+=`<div class="card no-print" id="survey-card">
+    <div class="eyebrow">30초 설문</div>
+    <h2 style="font-size:16px;">오늘 진단, 어떠셨나요?</h2>
+    <p class="sub">설문�
