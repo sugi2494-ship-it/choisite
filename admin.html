@@ -769,4 +769,253 @@ function renderGlb(){
             posKey:'pos'+i,pos:merged['pos'+i]||'center center',isExtra:false};
   });
   extras.forEach(function(ex,ei){
-    items.push({src:ex.src,label:ex.label||('추가사진 '+(ei+1
+    items.push({src:ex.src,label:ex.label||('추가사진 '+(ei+1)),key:'ex'+ei,
+                posKey:'posex'+ei,pos:ex.objPos||'center center',isExtra:true,exIdx:ei});
+  });
+  var hasPending=Object.keys(_glbTemp).length>0;
+  var grid=document.getElementById('glbGrid');
+  grid.innerHTML=items.map(function(item,i){
+    var delBtn=item.isExtra
+      ?'<button style="padding:3px 9px;border-radius:999px;background:rgba(255,60,60,.15);border:1px solid rgba(255,100,100,.3);color:#ff8080;font-size:11px;cursor:pointer" onclick="delGlbExtra('+item.exIdx+')">삭제</button>'
+      :'';
+    var posGrid=_GPOS.map(function(p){
+      var act=p.p===item.pos;
+      return '<button title="'+p.p+'" onclick="setGlbPos(\''+item.posKey+'\','+i+',\''+p.p+'\')"'
+        +' style="width:26px;height:26px;border-radius:4px;font-size:11px;border:1px solid rgba(255,255,255,'+(act?'.6':'.12')+');'
+        +'background:'+(act?'var(--pk)':'rgba(255,255,255,.05)')+';color:#fff;cursor:pointer">'+p.l+'</button>';
+    }).join('');
+    return '<div class="gpw">'
+      +'<img src="'+item.src+'" id="glbi'+i+'" style="object-position:'+item.pos+'" onerror="this.style.opacity=\'.1\'">'
+      +'<div class="gpl"><span>'+item.label+'</span><div style="display:flex;gap:5px">'
+      +'<button class="gcb" onclick="document.getElementById(\'gfi'+i+'\').click()">변경</button>'
+      +delBtn+'</div></div>'
+      +'<div style="padding:8px 10px;border-top:1px solid rgba(255,255,255,.07)">'
+      +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:5px;font-weight:700">📍 위치 조정 (저장 전 미리보기)</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(3,26px);gap:3px">'+posGrid+'</div></div>'
+      +'<input type="file" id="gfi'+i+'" accept="image/*" style="display:none" onchange="chgGlb(\''+item.key+'\','+i+',this)"></div>';
+  }).join('');
+  grid.innerHTML+='<div style="border:2px dashed rgba(255,255,255,.15);border-radius:12px;min-height:100px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.4);font-size:13px;font-weight:700;margin-top:4px" onclick="document.getElementById(\'glbNewFile\').click()">+ 새 사진 추가</div>';
+  /* 미저장 안내 배너 */
+  var notice=document.getElementById('glbNotice');
+  if(hasPending){
+    if(!notice){notice=document.createElement('div');notice.id='glbNotice';
+      notice.style.cssText='background:rgba(230,0,126,.12);border:1px solid rgba(230,0,126,.3);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:700;color:var(--pk);margin-top:12px';
+      grid.parentNode.insertBefore(notice,grid.nextSibling);}
+    notice.textContent='⚠ 미저장 변경사항 있음 — 위 ✓ 저장 버튼을 눌러야 메인에 반영됩니다';
+  }else if(notice){notice.remove();}
+}
+function chgGlb(key,idx,inp){
+  var f=inp.files[0];if(!f)return;
+  compressImg(f,900,0.82,function(dataUrl){
+    _glbTemp[key]=dataUrl; /* 임시만, localStorage 저장 X */
+    var el=document.getElementById('glbi'+idx);
+    if(el){el.src=dataUrl;el.style.opacity='1';}
+    renderGlb();
+    toast('사진 선택됨 — ✓ 저장 버튼 클릭 시 메인에 반영');
+  });inp.value='';
+}
+function setGlbPos(posKey,idx,pos){
+  _glbTemp[posKey]=pos;
+  var el=document.getElementById('glbi'+idx);
+  if(el)el.style.objectPosition=pos;
+  renderGlb();
+}
+function addGlbPic(inp){
+  var f=inp.files[0];if(!f)return;
+  compressImg(f,900,0.82,function(dataUrl){
+    var c=_glbMerge();
+    var extras=c.extra||[];
+    extras.push({src:dataUrl,label:'추가사진 '+(extras.length+1),objPos:'center center'});
+    c.extra=extras;
+    localStorage.setItem('pbs_global_config',JSON.stringify(c));
+    supaConfigSave('global_config',c);
+    _glbTemp={};renderGlb();toast('새 사진 추가!');
+  });inp.value='';
+}
+function delGlbExtra(ei){
+  if(!confirm('삭제?'))return;
+  var c=getGlbCfg();
+  var extras=c.extra||[];extras.splice(ei,1);c.extra=extras;
+  localStorage.setItem('pbs_global_config',JSON.stringify(c));
+  supaConfigSave('global_config',c);
+  _glbTemp={};renderGlb();toast('삭제');
+}
+function saveGlb(){
+  var merged=_glbMerge();
+  localStorage.setItem('pbs_global_config',JSON.stringify(merged));
+  supaConfigSave('global_config',merged);
+  _glbTemp={};renderGlb();
+  toast('글로벌 사진 저장 완료! 메인 새로고침 후 반영');
+}
+function resetGlb(){if(!confirm('초기화?'))return;localStorage.removeItem('pbs_global_config');_glbTemp={};renderGlb();}
+
+/* == 설정 == */
+function loadBannerCfg(){
+  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'null');
+  if(!b)return;
+  document.getElementById('bannerOn').checked=b.visible||false;
+  if(b.title){document.getElementById('bannerTitle').value=b.title;document.getElementById('bannerTitlePreview').textContent=b.title;}
+  if(b.src){document.getElementById('bannerPreview').style.display='block';document.getElementById('bannerImg').src=b.src;}
+}
+function saveBannerTitle(){
+  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
+  var title=document.getElementById('bannerTitle').value;
+  b.title=title;
+  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+  supaConfigSave('event_banner',b);
+  document.getElementById('bannerTitlePreview').textContent=title;
+}
+function loadBannerFile(inp){
+  var f=inp.files[0];if(!f)return;
+  compressImg(f,1200,0.85,function(dataUrl){
+    var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
+    b.src=dataUrl;
+    localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+    supaConfigSave('event_banner',b);
+    document.getElementById('bannerPreview').style.display='block';
+    document.getElementById('bannerImg').src=dataUrl;
+    toast('배너 이미지 선택! 체크 후 저장하세요');
+  });inp.value='';
+}
+function saveBanner(){
+  var b=JSON.parse(localStorage.getItem('pbs_event_banner')||'{}');
+  b.visible=document.getElementById('bannerOn').checked;
+  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+  supaConfigSave('event_banner',b);
+  toast(b.visible?'배너 표시 ON · 메인 새로고침 후 반영':'배너 숨김 OFF');
+}
+function clearBanner(){
+  var b={};
+  localStorage.setItem('pbs_event_banner',JSON.stringify(b));
+  supaConfigSave('event_banner',b);
+  document.getElementById('bannerPreview').style.display='none';
+  document.getElementById('bannerOn').checked=false;
+  document.getElementById('bannerTitle').value='';
+  document.getElementById('bannerTitlePreview').textContent='';
+  toast('배너 삭제');
+}
+function loadCfg(){
+  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
+  if(s.igHandle)document.getElementById('ig').value=s.igHandle;
+  if(s.yt1Url)document.getElementById('yt1').value=s.yt1Url;
+  if(s.yt2Url)document.getElementById('yt2').value=s.yt2Url;
+  loadBannerCfg();
+}
+function saveIg(){
+  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
+  s.igHandle=document.getElementById('ig').value.trim().replace('@','');
+  localStorage.setItem('pbs_settings',JSON.stringify(s));
+  supaConfigSave('settings',s);
+  toast('Instagram 저장! 메인 새로고침 후 반영');
+}
+function saveYt(){
+  var s=JSON.parse(localStorage.getItem('pbs_settings')||'{}');
+  s.yt1Url=document.getElementById('yt1').value.trim();
+  s.yt2Url=document.getElementById('yt2').value.trim();
+  localStorage.setItem('pbs_settings',JSON.stringify(s));
+  supaConfigSave('settings',s);
+  toast('YouTube 링크 저장! 메인 새로고침 후 반영');
+}
+async function clr(key,label){
+  if(!confirm(label+' 전체 삭제?'))return;
+  localStorage.removeItem(key);
+  // Supabase 삭제
+  if(key==='pbs_inquiries'){
+    await supaFetch('pbs_inquiries?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
+  }else if(key==='pbs_testimonials'){
+    await supaFetch('pbs_testimonials?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
+  }else if(key==='pbs_gallery_config'){
+    supaConfigSave('gallery_config',null);
+  }else if(key==='pbs_global_config'){
+    supaConfigSave('global_config',null);
+  }
+  if(key==='pbs_inquiries')loadInq();
+  if(key==='pbs_testimonials')loadTst();
+  if(key==='pbs_gallery_config')renderGal();
+  if(key==='pbs_global_config'){_glbTemp={};renderGlb();}
+  toast(label+' 초기화 완료');
+}
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._to);t._to=setTimeout(function(){t.classList.remove('show');},2800);
+}
+function compressImg(file,maxW,quality,cb){
+  var r=new FileReader();
+  r.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas');
+      var w=img.width,h=img.height;
+      if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      cb(c.toDataURL('image/jpeg',quality));
+    };
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+/* == 스토어 == */
+var _storeImgData=null;
+function previewStoreImg(input){
+  if(!input.files||!input.files[0])return;
+  compressImg(input.files[0],800,0.85,function(data){
+    _storeImgData=data;
+    document.getElementById('storeImgPreview').style.display='block';
+    document.getElementById('storeImgThumb').src=data;
+  });
+}
+function getStore(){return JSON.parse(localStorage.getItem('pbs_store')||'[]');}
+function saveStoreLS(arr){localStorage.setItem('pbs_store',JSON.stringify(arr));supaConfigSave('store',arr);}
+function loadStore(){
+  var arr=getStore();
+  document.getElementById('str-stat').innerHTML=
+    '<div class="sc"><div class="n">'+arr.length+'</div><div class="l">전체 상품</div></div>'
+    +'<div class="sc"><div class="n">'+arr.filter(function(x){return x.visible!==false;}).length+'</div><div class="l">판매중</div></div>';
+  var l=document.getElementById('str-list');
+  if(!arr.length){l.innerHTML='<p style="text-align:center;padding:30px;color:rgba(255,255,255,.3)">등록된 상품 없음</p>';updateN();return;}
+  l.innerHTML=arr.map(function(x,i){
+    var vis=x.visible!==false;
+    return '<div class="store-card'+(vis?'':' hidden')+'">'
+      +(x.photo?'<img class="store-img" src="'+x.photo+'">'
+        :'<div class="store-img-empty">사진 없음</div>')
+      +'<div class="store-info">'
+      +'<div class="store-name">'+x.name+'</div>'
+      +(x.desc?'<div class="store-desc">'+x.desc+'</div>':'')
+      +(x.price?'<div class="store-price">'+x.price+'</div>':'')
+      +'</div>'
+      +'<div class="store-btns">'
+      +'<button class="pbtn'+(vis?' on':'')+'" onclick="toggleStoreVis('+i+')">'+(vis?'👁 판매중':'숨김')+'</button>'
+      +'<button class="dbtn" onclick="delStoreItem('+i+')">삭제</button>'
+      +'</div></div>';
+  }).join('');
+  updateN();
+}
+function addStoreItem(){
+  var name=document.getElementById('storeName').value.trim();
+  if(!name){toast('상품명을 입력해주세요');return;}
+  var arr=getStore();
+  arr.push({name:name,desc:document.getElementById('storeDesc').value.trim(),price:document.getElementById('storePrice').value.trim(),photo:_storeImgData||null,visible:true,id:Date.now()});
+  saveStoreLS(arr);
+  document.getElementById('storeName').value='';
+  document.getElementById('storeDesc').value='';
+  document.getElementById('storePrice').value='';
+  document.getElementById('storeImgPreview').style.display='none';
+  _storeImgData=null;
+  document.getElementById('storeImgFile').value='';
+  toast('상품 추가 완료!');loadStore();
+}
+function delStoreItem(i){
+  if(!confirm('삭제?'))return;
+  var arr=getStore();arr.splice(i,1);saveStoreLS(arr);loadStore();
+}
+function toggleStoreVis(i){
+  var arr=getStore();if(!arr[i])return;
+  arr[i].visible=arr[i].visible===false;
+  saveStoreLS(arr);loadStore();
+}
+</script>
+</body>
+</html>

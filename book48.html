@@ -104,10 +104,16 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
 .toast.show{opacity:1}
 .footer{padding:26px 0 40px;text-align:center;font-size:11.5px;color:var(--text-muted)}
 .print-only{display:none}
+.print-header{display:none}
 @media print{
-  @page{size:A4;margin:14mm 12mm}
+  @page{size:A4;margin:18mm 16mm}
   html,body{background:#fff !important}
-  body{font-size:11.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .print-header{display:block !important;text-align:center;border-bottom:2px solid #232E87;padding-bottom:10px;margin-bottom:14px}
+  .print-header .ph-title{font-size:19px;font-weight:900;color:#232E87}
+  .print-header .ph-sub{font-size:11px;color:#666;margin-top:3px}
+  .card{margin-bottom:10px;padding:14px 16px}
+  .section{padding:0;margin:0}
   .no-print,.progress-outer,.sticky-cta,.cheer,.toast,.footer,.upsell,#survey-card{display:none !important}
   .wrap{max-width:100%;padding:0}
   .section{padding:0}
@@ -152,8 +158,11 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
         <div style="text-align:center;"><div style="width:54px;height:54px;border-radius:50%;background:#0077B6;box-shadow:0 6px 20px rgba(0,119,182,.55);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;color:#fff;">BLUE</div><div style="font-size:11.5px;margin-top:6px;opacity:.9;">논리</div></div>
       </div>
       <p>48문항으로 나의 1순위 · 2순위 엔진을 확인하세요.</p>
-      <button class="btn btn-primary" style="margin-top:22px;background:#fff;color:var(--brand-purple);" onclick="show('info')">무료 진단 시작하기 →</button>
-      <p style="font-size:11.5px;opacity:.75;margin-top:12px">약 5분 소요 · 무료</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px;max-width:340px;margin-left:auto;margin-right:auto;">
+        <button class="btn btn-primary" style="background:#fff;color:var(--brand-purple);" onclick="startFlow('quiz')">직접 풀기 (48문항) →</button>
+        <button class="btn btn-primary" style="background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.55);" onclick="startFlow('input')">책 점수 입력 →</button>
+      </div>
+      <p style="font-size:11.5px;opacity:.75;margin-top:12px">직접 풀기 약 5분 소요 · 무료 &nbsp;|&nbsp; 책 점수 입력: 종이진단 결과 바로 확인</p>
     </div>
     <div class="card" style="margin-top:18px;">
       <h2 style="font-size:15px;">이 진단의 근거</h2>
@@ -170,7 +179,7 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
     <div class="card" style="margin-top:12px;">
       <div class="eyebrow">Step 1 / 3</div>
       <h2>기본 정보</h2>
-      <p class="sub">통계 분석에만 사용됩니다. 이름은 선택 입력입니다.</p>
+      <p class="sub" id="info-mode-hint">통계 분석에만 사용됩니다. 이름은 선택 입력입니다.</p>
       <div class="grid2">
         <div class="field">
           <label>이름 <span class="opt">(선택)</span></label>
@@ -214,7 +223,52 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
         <input id="f-mkconsent" type="checkbox" style="width:auto;margin-top:3px;flex-shrink:0;">
         <span>(선택) PBS COLOR LAB의 진단 리포트와 교육 소식을 이메일로 받는 것에 동의합니다.</span>
       </label>
-      <button class="btn btn-primary btn-lg" style="margin-top:20px;" onclick="goQuiz()">48문항 시작 →</button>
+      <button class="btn btn-primary btn-lg" style="margin-top:20px;" onclick="submitInfo()">다음 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 책 점수 입력 ===== -->
+<section id="screen-score" class="screen">
+  <div class="wrap section">
+    <a style="font-size:13px;color:var(--text-muted);cursor:pointer;" onclick="show('info')">← 기본 정보</a>
+    <div class="card" style="margin-top:12px;">
+      <div class="eyebrow">Step 2 / 2</div>
+      <h2>책 점수 입력</h2>
+      <p class="sub">책 『컬러강점』 종이진단에서 계산한 <b>4가지 엔진(색)별 합계 점수</b>를 그대로 입력하세요.</p>
+      <p class="sub" style="margin-top:6px;">각 색은 12문항이며, 문항마다 1~5점입니다. 따라서 <b>각 색의 합계는 12~60점</b> 사이입니다.</p>
+      <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px;">
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#FF3366;display:inline-block;"></span>
+            <b style="color:#FF3366;">RED</b><span style="font-size:11.5px;color:var(--text-muted);">추진</span>
+          </span>
+          <input id="score-RED" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#F5A623;display:inline-block;"></span>
+            <b style="color:#F5A623;">YELLOW</b><span style="font-size:11.5px;color:var(--text-muted);">펼침</span>
+          </span>
+          <input id="score-YELLOW" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#00A878;display:inline-block;"></span>
+            <b style="color:#00A878;">GREEN</b><span style="font-size:11.5px;color:var(--text-muted);">안정</span>
+          </span>
+          <input id="score-GREEN" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;min-width:120px;">
+            <span style="width:14px;height:14px;border-radius:50%;background:#0077B6;display:inline-block;"></span>
+            <b style="color:#0077B6;">BLUE</b><span style="font-size:11.5px;color:var(--text-muted);">논리</span>
+          </span>
+          <input id="score-BLUE" type="number" inputmode="numeric" min="12" max="60" step="1" placeholder="12~60" style="flex:1;">
+        </div>
+      </div>
+      <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">※ 각 색의 12문항 합계를 입력합니다. 예: RED 문항 12개의 점수를 모두 더한 값(12~60).</p>
+      <button class="btn btn-primary btn-lg" style="margin-top:18px;" onclick="goScoreResult()">결과 보기 →</button>
     </div>
   </div>
 </section>
@@ -564,7 +618,7 @@ try{
 }catch(e){ console.warn('[book48] supabase init 실패', e); }
 
 /* ============ 상태 ============ */
-const STATE = { user:{}, answers:{}, result:null, recordId:null, _saved:false, startTs:Date.now() };
+const STATE = { user:{}, answers:{}, result:null, recordId:null, _saved:false, startTs:Date.now(), mode:'quiz' };
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+id).classList.add('active');
@@ -576,18 +630,31 @@ function toast(msg){
 }
 function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* ============ 기본정보 → 진단 ============ */
-function goQuiz(){
+/* ============ 방식 선택 (직접 풀기 vs 책 점수 입력) ============ */
+function startFlow(mode){
+  STATE.mode = (mode==='input') ? 'input' : 'quiz';
+  // 정보 화면 안내 문구를 모드에 맞게 갱신
+  const hint=document.getElementById('info-mode-hint');
+  if(hint){
+    hint.textContent = (STATE.mode==='input')
+      ? '책 종이진단에서 계산한 4개 엔진 점수를 다음 화면에서 입력합니다.'
+      : '통계 분석에만 사용됩니다. 이름은 선택 입력입니다.';
+  }
+  show('info');
+}
+
+/* ============ 기본정보 캡처(공용) ============ */
+function captureUser(){
   const jg=document.getElementById('f-jobgroup');
   const age=document.getElementById('f-age').value;
   const gender=document.getElementById('f-gender').value;
-  if(!gender){ toast('성별을 선택해주세요'); return; }
-  if(!jg.value){ toast('직업군을 선택해주세요'); return; }
-  if(!age){ toast('연령대를 선택해주세요'); return; }
-  if(!document.getElementById('f-consent').checked){ toast('통계 활용 동의에 체크해주세요'); return; }
+  if(!gender){ toast('성별을 선택해주세요'); return false; }
+  if(!jg.value){ toast('직업군을 선택해주세요'); return false; }
+  if(!age){ toast('연령대를 선택해주세요'); return false; }
+  if(!document.getElementById('f-consent').checked){ toast('통계 활용 동의에 체크해주세요'); return false; }
   const _mk=document.getElementById('f-mkconsent').checked;
   const _email=document.getElementById('f-email').value.trim();
-  if(_mk && !_email){ toast('자료 수신에 동의하셨어요 — 메일 주소를 입력해주세요'); return; }
+  if(_mk && !_email){ toast('자료 수신에 동의하셨어요 — 메일 주소를 입력해주세요'); return false; }
   STATE.user={
     name:document.getElementById('f-name').value.trim(),
     gender:document.getElementById('f-gender').value||null,
@@ -598,6 +665,18 @@ function goQuiz(){
     consent:true,
     mkConsent:document.getElementById('f-mkconsent').checked
   };
+  return true;
+}
+
+/* ============ 기본정보 제출 → 모드별 분기 ============ */
+function submitInfo(){
+  if(!captureUser()) return;
+  if(STATE.mode==='input'){ show('score'); return; }
+  goQuiz();
+}
+
+/* ============ 기본정보 → 진단(직접 풀기) ============ */
+function goQuiz(){
   if(!document.getElementById('quiz-body').dataset.built) buildQuiz();
   show('quiz');
 }
@@ -669,10 +748,30 @@ function goResult(){
   show('result');
   saveRecord();
 }
+/* ============ 책 점수 직접 입력 → 결과 ============ */
+function goScoreResult(){
+  const sums={};
+  for(const ek of ORDER){
+    const el=document.getElementById('score-'+ek);
+    const raw=el?el.value.trim():'';
+    if(raw===''){ toast(ENGINES[ek].name+' 점수를 입력해주세요'); if(el) el.focus(); return; }
+    const v=Number(raw);
+    if(!Number.isFinite(v)||!Number.isInteger(v)||v<12||v>60){
+      toast(ENGINES[ek].name+' 점수는 12~60 사이 정수로 입력해주세요'); if(el) el.focus(); return;
+    }
+    sums[ek]=v;
+  }
+  const ranked=[...ORDER].sort((a,b)=>sums[b]-sums[a]);
+  STATE.result={ sums, first:ranked[0], second:ranked[1] };
+  renderResult();
+  show('result');
+  saveRecord();
+}
 function renderResult(){
   const r=STATE.result, E1=ENGINES[r.first], E2=ENGINES[r.second];
   const b1=bandOf(r.sums[r.first]);
   let h=`<div class="print-only" style="text-align:center;margin-bottom:8px;"><b style="font-size:16px;">PBS 컬러강점 자가진단 결과</b><div style="font-size:10px;color:#666;">${esc(STATE.user.name||'')} ${new Date().toISOString().slice(0,10)} · PBS COLOR LAB</div></div>`;
+  h+=`<div class="print-header"><div class="ph-title">컬러강점 48문항 진단 결과</div><div class="ph-sub">PBS COLOR LAB · ${new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} · pbscolor.com</div></div>`;
   h+=`<div class="result-hero" style="background:linear-gradient(135deg,${E1.hex}CC,${E1.hex})">
     <div class="rank">나의 1순위 엔진</div>
     <h2>${E1.name}</h2>
@@ -766,7 +865,8 @@ function renderResult(){
   h+=`<div class="upsell no-print">
     <b>더 깊이 보고 싶다면 — 정식 60문항 진단</b>
     <p>48문항이 나의 엔진(색)을 확인하는 첫 거울이라면,<br>정식 60문항 진단은 <b>12가지 컬러강점 기어</b>까지 확인하는 전문 리포트입니다.<br>60문항 진단은 교육·강의와 공식 강사를 통해 받을 수 있습니다.</p>
-    <a class="btn btn-ghost" href="https://pbscolor-6.vercel.app/" target="_blank" rel="noopener">정식 진단 알아보기 →</a>
+    <a href="https://pbscolor-6.vercel.app/" target="_blank" rel="noopener"
+       style="display:block;margin-top:14px;padding:16px 20px;border-radius:14px;font-weight:900;font-size:16px;text-align:center;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--brand-purple,#5B4FC7),#7B68EE);box-shadow:0 8px 22px rgba(35,46,135,.28);">🔍 정식 진단 알아보기 →</a>
   </div>`;
   h+=`<div id="print-feedback" class="print-only"></div>`;
   h+=`<div class="no-print" style="text-align:center;margin-top:16px;"><button class="btn btn-ghost" onclick="location.reload()">🔄 다시 진단하기</button></div>`;
@@ -807,7 +907,7 @@ async function saveRecord(){
   const r=STATE.result,u=STATE.user;
   try{
     const {data,error}=await DB.from('pbs_records').insert({
-      test_type:'book_48', entry_path:'book48', is_premium:false, code_id:null,
+      test_type:'book_48', entry_path:(STATE.mode==='input'?'book48_input':'book48'), is_premium:false, code_id:null,
       user_name:u.name||null, user_gender:u.gender, user_email:u.email||null,
       user_consent:true, marketing_consent:!!u.mkConsent,
       job_group:u.jobGroup, age_band:u.ageBand,
