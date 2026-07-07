@@ -106,36 +106,37 @@ h2{font-size:20px;font-weight:900;margin-bottom:6px}
 .print-only{display:none}
 .print-header{display:none}
 @media print{
-  @page{size:A4;margin:18mm 16mm}
-  html,body{background:#fff !important}
-  body{font-size:12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:A4;margin:15mm 13mm}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;box-sizing:border-box}
+  html,body{background:#fff !important;width:auto !important}
+  body{font-size:12px}
+  .no-print,.progress-outer,.sticky-cta,.cheer,.toast,.footer,.upsell,#survey-card{display:none !important}
+  .wrap{max-width:100% !important;width:100% !important;padding:0 !important;margin:0 !important}
+  .section{padding:0;margin:0}
+  img,video{max-width:100% !important}
   .print-header{display:block !important;text-align:center;border-bottom:2px solid #232E87;padding-bottom:10px;margin-bottom:14px}
   .print-header .ph-title{font-size:19px;font-weight:900;color:#232E87}
   .print-header .ph-sub{font-size:11px;color:#666;margin-top:3px}
-  .card{margin-bottom:10px;padding:14px 16px}
-  .section{padding:0;margin:0}
-  .no-print,.progress-outer,.sticky-cta,.cheer,.toast,.footer,.upsell,#survey-card{display:none !important}
-  .wrap{max-width:100%;padding:0}
-  .section{padding:0}
-  .card{box-shadow:none;border:1px solid #ddd;border-radius:8px;padding:12px 14px;margin-bottom:8px;page-break-inside:avoid}
-  .result-hero{border-radius:10px;padding:16px;page-break-inside:avoid}
+  .card{box-shadow:none;border:1px solid #ddd;border-radius:8px;padding:12px 14px;margin-bottom:10px;page-break-inside:auto}
+  .result-hero{border-radius:10px;padding:16px;page-break-inside:avoid;page-break-after:avoid}
   .result-hero h2{font-size:22px}
-  h2{font-size:14px}
-  .interp h3{font-size:12px;margin:10px 0 4px}
+  h2{font-size:14px;page-break-after:avoid}
+  .interp h3{font-size:12px;margin:10px 0 4px;page-break-after:avoid}
   .interp ul li,.para,.desc-line{font-size:10.5px;margin-bottom:2px}
   .desc-line{padding-left:10px;margin-bottom:6px}
+  .grid2,.heal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
   .value-item{padding:6px 8px;margin-bottom:4px;page-break-inside:avoid}
   .value-item .vt{font-size:11px}
   .value-item .vd{font-size:10px}
   .value-item .vb{font-size:9.5px}
-  .heal-item{padding:6px 8px}
+  .heal-item{padding:6px 8px;page-break-inside:avoid}
   .heal-item .hl{font-size:10.5px}
   .heal-item .hd{font-size:9.5px}
-  .affirm{font-size:11px;padding:6px;margin-bottom:3px}
-  .keyman{padding:8px 10px;font-size:10.5px;border-radius:8px}
-  .bar-row{margin-bottom:4px}
+  .affirm{font-size:11px;padding:6px;margin-bottom:3px;page-break-inside:avoid}
+  .keyman{padding:8px 10px;font-size:10.5px;border-radius:8px;page-break-inside:avoid}
+  .bar-row{margin-bottom:4px;page-break-inside:avoid}
   .bar-track{height:16px}
-  .bar-fill{font-size:9px;padding-left:6px}
+  .bar-fill{font-size:9px;padding-left:6px;min-width:36px}
   .bar-label{font-size:11px}
   .bar-score{font-size:10px}
   .chips span{font-size:9.5px;padding:2px 8px}
@@ -770,8 +771,7 @@ function goScoreResult(){
 function renderResult(){
   const r=STATE.result, E1=ENGINES[r.first], E2=ENGINES[r.second];
   const b1=bandOf(r.sums[r.first]);
-  let h=`<div class="print-only" style="text-align:center;margin-bottom:8px;"><b style="font-size:16px;">PBS 컬러강점 자가진단 결과</b><div style="font-size:10px;color:#666;">${esc(STATE.user.name||'')} ${new Date().toISOString().slice(0,10)} · PBS COLOR LAB</div></div>`;
-  h+=`<div class="print-header"><div class="ph-title">컬러강점 48문항 진단 결과</div><div class="ph-sub">PBS COLOR LAB · ${new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} · pbscolor.com</div></div>`;
+  let h=`<div class="print-header"><div class="ph-title">컬러강점 48문항 진단 결과</div><div class="ph-sub">${esc(STATE.user.name||'')} · ${new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'})} · PBS COLOR LAB · pbscolor.com</div></div>`;
   h+=`<div class="result-hero" style="background:linear-gradient(135deg,${E1.hex}CC,${E1.hex})">
     <div class="rank">나의 1순위 엔진</div>
     <h2>${E1.name}</h2>
