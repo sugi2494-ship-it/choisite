@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>통합 관리자 · PBS컬러랩</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root{--pink:#E14B8A;--pink-deep:#C33A72;--pink-soft:#FBE9F0;--ink:#2B2230;--muted:#8A7E86;--line:#EADCE3;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:#F7F3F5;color:var(--ink);}
+  button{cursor:pointer;font-family:inherit;font-weight:700;border-radius:10px;border:none;font-size:14px;}
+  .btn-x{background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:#fff;padding:10px 16px;box-shadow:0 4px 12px rgba(197,58,114,.25);}
+  .btn-x:disabled{opacity:.5;}
+  .btn-ghost{background:#fff;color:var(--pink-deep);border:1px solid var(--line);padding:9px 14px;}
+  .btn-sm{padding:6px 12px;font-size:13px;}
+  .btn-danger{background:#fff;color:#C0392B;border:1px solid #F0D4D4;padding:6px 12px;font-size:13px;}
+
+  /* 로그인 */
+  .login{max-width:360px;margin:80px auto;background:#fff;border-radius:18px;padding:34px 28px;box-shadow:0 12px 40px rgba(197,58,114,.10);text-align:center;}
+  .login .lock{width:64px;height:64px;border-radius:50%;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:28px;}
+  .login h2{margin:0 0 6px;font-size:20px;}
+  .login p{color:var(--muted);font-size:14px;margin:0 0 20px;}
+  .login input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;margin-bottom:12px;}
+  .login input:focus{outline:none;border-color:var(--pink);}
+  .login button{width:100%;padding:14px;font-size:16px;}
+  .login .err{color:#C0392B;font-size:13px;min-height:18px;margin-top:10px;}
+
+  /* 레이아웃 */
+  .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:10;}
+  .topbar h1{font-size:17px;margin:0;font-weight:800;}
+  .topbar h1 span{color:var(--pink);}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 20px 0;flex-wrap:wrap;}
+  .tab{background:#fff;border:1px solid var(--line);color:var(--muted);padding:10px 16px;border-radius:100px;white-space:nowrap;font-size:14px;}
+  .tab.active{background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:#fff;border-color:transparent;}
+  .tab .badge{display:inline-block;background:#fff;color:var(--pink-deep);border-radius:100px;font-size:11px;padding:1px 7px;margin-left:6px;font-weight:800;}
+  .tab.active .badge{background:rgba(255,255,255,.3);color:#fff;}
+  .pane{display:none;padding:18px 20px 60px;}
+  .pane.active{display:block;}
+  .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .bar .cnt{font-size:14px;color:var(--muted);}
+  .bar .cnt b{color:var(--pink-deep);font-size:16px;}
+
+  .tablewrap{background:#fff;border-radius:14px;overflow:auto;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+  table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;}
+  th{background:var(--pink-soft);color:var(--pink-deep);text-align:left;padding:11px 13px;font-weight:800;position:sticky;top:0;}
+  td{padding:10px 13px;border-top:1px solid #F2E9EE;vertical-align:top;white-space:pre-wrap;max-width:280px;}
+  tr:hover td{background:#FCF6F9;}
+  .empty{padding:50px;text-align:center;color:var(--muted);}
+  .no{color:var(--muted);font-weight:700;}
+  .pill{display:inline-block;padding:3px 10px;border-radius:100px;font-size:12px;font-weight:800;}
+  .pill.pub{background:#EAF7EE;color:#1E7A44;}
+  .pill.pend{background:#FFF3E0;color:#B26A00;}
+
+  /* 카드형 (후기/자료/글) */
+  .cardlist{display:grid;gap:12px;}
+  .item{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);}
+  .item .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+  .item .who{font-weight:800;}
+  .item .body{font-size:14px;white-space:pre-wrap;color:#443b42;}
+  .item .date{color:var(--muted);font-size:12px;margin-top:6px;}
+  .item .acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .stars{color:#FFB400;font-size:13px;}
+
+  /* 폼 */
+  .form{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin-bottom:18px;}
+  .form h3{margin:0 0 14px;font-size:16px;}
+  .form label{display:block;font-size:13px;font-weight:700;margin:0 0 6px;}
+  .form .field{margin-bottom:14px;}
+  .form input,.form textarea,.form select{width:100%;font-size:14px;font-family:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:#FFFDFE;}
+  .form input:focus,.form textarea:focus,.form select:focus{outline:none;border-color:var(--pink);}
+  .form textarea{resize:vertical;min-height:90px;}
+  .form .msg{font-size:13px;margin-top:8px;display:none;}
+  .form .msg.ok{color:#1E7A44;display:block;}
+  .form .msg.err{color:#C0392B;display:block;}
+  .hidden{display:none;}
+</style>
+</head>
+<body>
+  <!-- 로그인 -->
+  <div class="login" id="loginBox">
+    <div class="lock">🔒</div>
+    <h2>통합 관리자</h2>
+    <p>관리자 비밀번호를 입력하세요</p>
+    <input type="password" id="pw" placeholder="비밀번호" autocomplete="current-password" />
+    <button class="btn-x" id="loginBtn">확인</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+
+  <!-- 대시보드 -->
+  <div id="app" class="hidden">
+    <div class="topbar">
+      <h1>PBS컬러랩 <span>통합 관리자</span></h1>
+      <button class="btn-ghost" id="reloadBtn">전체 새로고침</button>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-t="apps">신청자 <span class="badge" id="b_apps">0</span></button>
+      <button class="tab" data-t="qs">질문 <span class="badge" id="b_qs">0</span></button>
+      <button class="tab" data-t="rev">후기 <span class="badge" id="b_rev">0</span></button>
+      <button class="tab" data-t="mat">자료 <span class="badge" id="b_mat">0</span></button>
+      <button class="tab" data-t="post">글·공지 <span class="badge" id="b_post">0</span></button>
+    </div>
+
+    <!-- 신청자 -->
+    <div class="pane active" id="pane_apps">
+      <div class="bar"><span class="cnt">총 <b id="cnt_apps">0</b>명</span><button class="btn-x" id="xlsxApps">📥 엑셀 다운로드</button></div>
+      <div class="tablewrap"><table><thead><tr><th>No</th><th>접수일시</th><th>이름</th><th>연락처</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead><tbody id="tb_apps"></tbody></table><div class="empty" id="e_apps" style="display:none;">아직 신청이 없습니다.</div></div>
+    </div>
+
+    <!-- 질문 -->
+    <div class="pane" id="pane_qs">
+      <div class="bar"><span class="cnt">총 <b id="cnt_qs">0</b>건</span><button class="btn-x" id="xlsxQs">📥 엑셀 다운로드</button></div>
+      <div class="cardlist" id="list_qs"></div>
+      <div class="empty" id="e_qs" style="display:none;">아직 질문이 없습니다.</div>
+    </div>
+
+    <!-- 후기 -->
+    <div class="pane" id="pane_rev">
+      <div class="bar"><span class="cnt">총 <b id="cnt_rev">0</b>건 · 공개 <b id="cnt_rev_pub">0</b></span></div>
+      <div class="cardlist" id="list_rev"></div>
+      <div class="empty" id="e_rev" style="display:none;">아직 후기가 없습니다.</div>
+    </div>
+
+    <!-- 자료 -->
+    <div class="pane" id="pane_mat">
+      <div class="form">
+        <h3>➕ 자료 올리기</h3>
+        <div class="field"><label>제목 *</label><input id="m_title" placeholder="예) 웹페이지 제작 프롬프트 모음" /></div>
+        <div class="field"><label>설명</label><input id="m_desc" placeholder="간단한 설명 (선택)" /></div>
+        <div class="field"><label>종류</label>
+          <select id="m_kind">
+            <option value="prompt">✨ 프롬프트 (텍스트 · 복사용)</option>
+            <option value="file">📄 파일 (업로드 · 다운로드)</option>
+            <option value="link">🔗 링크 (외부 주소)</option>
+          </select>
+        </div>
+        <div class="field" id="wrap_prompt"><label>프롬프트 내용</label><textarea id="m_content" placeholder="교육생이 복사해서 쓸 프롬프트를 붙여넣으세요"></textarea></div>
+        <div class="field hidden" id="wrap_link"><label>링크 주소</label><input id="m_link" placeholder="https://..." /></div>
+        <div class="field hidden" id="wrap_file"><label>파일 선택</label><input type="file" id="m_file" /></div>
+        <button class="btn-x" id="matAdd">자료 등록</button>
+        <div class="msg" id="matMsg"></div>
+      </div>
+      <div class="bar"><span class="cnt">등록된 자료 <b id="cnt_mat">0</b>개</span></div>
+      <div class="cardlist" id="list_mat"></div>
+    </div>
+
+    <!-- 글/공지 -->
+    <div class="pane" id="pane_post">
+      <div class="form">
+        <h3>✍️ 글 · 공지 작성</h3>
+        <div class="field"><label>제목 *</label><input id="p_title" placeholder="공지 제목" /></div>
+        <div class="field"><label>내용 *</label><textarea id="p_content" placeholder="내용을 입력하세요"></textarea></div>
+        <button class="btn-x" id="postAdd">게시하기</button>
+        <div class="msg" id="postMsg"></div>
+      </div>
+      <div class="bar"><span class="cnt">등록된 글 <b id="cnt_post">0</b>개</span></div>
+      <div class="cardlist" id="list_post"></div>
+    </div>
+  </div>
+
+<script>
+  const SUPABASE_URL="https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
+  const FN=SUPABASE_URL+"/functions/v1/admin";
+  const ANON="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+  let PW="";
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s||"").replace(/[<>]/g,"");
+  function fmt(iso){if(!iso)return"";const d=new Date(iso);const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;}
+  function fmtd(iso){if(!iso)return"";const d=new Date(iso);const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())}`;}
+
+  async function api(action,payload){
+    const r=await fetch(FN,{method:"POST",headers:{Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify({password:PW,action,payload:payload||{}})});
+    if(r.status===401)throw new Error("401");
+    return r.json();
+  }
+
+  let DATA={apps:[],qs:[],rev:[],mat:[],post:[]};
+
+  async function loadAll(){
+    const [a,q,rv,m,p]=await Promise.all([api("applications"),api("questions"),api("reviews"),api("materials"),api("posts")]);
+    DATA.apps=a.rows||[];DATA.qs=q.rows||[];DATA.rev=rv.rows||[];DATA.mat=m.rows||[];DATA.post=p.rows||[];
+    renderApps();renderQs();renderRev();renderMat();renderPost();
+    $("b_apps").textContent=DATA.apps.length;$("b_qs").textContent=DATA.qs.length;
+    $("b_rev").textContent=DATA.rev.length;$("b_mat").textContent=DATA.mat.length;$("b_post").textContent=DATA.post.length;
+  }
+
+  /* 신청자 */
+  function renderApps(){
+    const rows=DATA.apps;$("cnt_apps").textContent=rows.length;$("e_apps").style.display=rows.length?"none":"block";
+    $("tb_apps").innerHTML=rows.map((r,i)=>`<tr><td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td><td>${esc(r.name)}</td><td>${esc(r.phone)}</td><td>${esc(r.birthdate)}</td><td>${esc(r.job)}</td><td>${esc(r.ai_level)}</td><td>${esc(r.reason)}</td><td>${esc(r.want_to_make)}</td><td>${esc(r.message)}</td></tr>`).join("");
+  }
+  /* 질문 */
+  function renderQs(){
+    const rows=DATA.qs;$("cnt_qs").textContent=rows.length;$("e_qs").style.display=rows.length?"none":"block";
+    $("list_qs").innerHTML=rows.map(r=>`<div class="item"><div class="top"><span class="who">${esc(r.name)||"익명"}</span><span class="date">${fmt(r.created_at)}</span></div><div class="body">${esc(r.content)}</div></div>`).join("");
+  }
+  /* 후기 */
+  function renderRev(){
+    const rows=DATA.rev;const pub=rows.filter(r=>r.status==="published").length;
+    $("cnt_rev").textContent=rows.length;$("cnt_rev_pub").textContent=pub;$("e_rev").style.display=rows.length?"none":"block";
+    $("list_rev").innerHTML=rows.map(r=>{
+      const isPub=r.status==="published";
+      return `<div class="item"><div class="top"><span class="who">${esc(r.name)||"익명"} <span class="stars">${"★".repeat(r.rating||5)}</span></span><span class="pill ${isPub?'pub':'pend'}">${isPub?'공개중':'대기'}</span></div><div class="body">${esc(r.content)}</div><div class="date">${fmt(r.created_at)}</div><div class="acts">${isPub?`<button class="btn-ghost btn-sm" onclick="revSet('${r.id}','pending')">숨기기</button>`:`<button class="btn-x btn-sm" onclick="revSet('${r.id}','published')">공개하기</button>`}<button class="btn-danger" onclick="revDel('${r.id}')">삭제</button></div></div>`;
+    }).join("");
+  }
+  window.revSet=async(id,status)=>{await api("set_review_status",{id,status});await loadAll();};
+  window.revDel=async(id)=>{if(confirm("이 후기를 삭제할까요?")){await api("delete_review",{id});await loadAll();}};
+
+  /* 자료 */
+  function renderMat(){
+    const rows=DATA.mat;$("cnt_mat").textContent=rows.length;
+    $("list_mat").innerHTML=rows.map(r=>{
+      const isPub=r.is_published;const icon=r.kind==="file"?"📄":r.kind==="link"?"🔗":"✨";
+      let sub=r.kind==="file"?(r.file_url?`<a href="${r.file_url}" target="_blank">파일 열기</a>`:""):r.kind==="link"?esc(r.content):"(프롬프트)";
+      return `<div class="item"><div class="top"><span class="who">${icon} ${esc(r.title)}</span><span class="pill ${isPub?'pub':'pend'}">${isPub?'공개중':'숨김'}</span></div>${r.description?`<div class="body">${esc(r.description)}</div>`:""}<div class="date">${sub} · ${fmtd(r.created_at)}</div><div class="acts"><button class="btn-ghost btn-sm" onclick="matPub('${r.id}',${!isPub})">${isPub?'숨기기':'공개'}</button><button class="btn-danger" onclick="matDel('${r.id}')">삭제</button></div></div>`;
+    }).join("");
+  }
+  window.matPub=async(id,v)=>{await api("set_material_published",{id,is_published:v});await loadAll();};
+  window.matDel=async(id)=>{if(confirm("이 자료를 삭제할까요?")){await api("delete_material",{id});await loadAll();}};
+
+  /* 글 */
+  function renderPost(){
+    const rows=DATA.post;$("cnt_post").textContent=rows.length;
+    $("list_post").innerHTML=rows.map(r=>{
+      const isPub=r.is_published;
+      return `<div class="item"><div class="top"><span class="who">${esc(r.title)}</span><span class="pill ${isPub?'pub':'pend'}">${isPub?'공개중':'숨김'}</span></div><div class="body">${esc(r.content)}</div><div class="date">${fmtd(r.created_at)}</div><div class="acts"><button class="btn-ghost btn-sm" onclick="postPub('${r.id}',${!isPub})">${isPub?'숨기기':'공개'}</button><button class="btn-danger" onclick="postDel('${r.id}')">삭제</button></div></div>`;
+    }).join("");
+  }
+  window.postPub=async(id,v)=>{await api("set_post_published",{id,is_published:v});await loadAll();};
+  window.postDel=async(id)=>{if(confirm("이 글을 삭제할까요?")){await api("delete_post",{id});await loadAll();}};
+
+  /* 자료 등록 폼 */
+  $("m_kind").addEventListener("change",e=>{
+    const k=e.target.value;
+    $("wrap_prompt").classList.toggle("hidden",k!=="prompt");
+    $("wrap_link").classList.toggle("hidden",k!=="link");
+    $("wrap_file").classList.toggle("hidden",k!=="file");
+  });
+  function fileToB64(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result.split(",")[1]);fr.onerror=rej;fr.readAsDataURL(file);});}
+  $("matAdd").addEventListener("click",async()=>{
+    const title=$("m_title").value.trim();const kind=$("m_kind").value;const msg=$("matMsg");
+    msg.className="msg";
+    if(!title){msg.className="msg err";msg.textContent="제목을 입력하세요.";return;}
+    const payload={title,description:$("m_desc").value.trim(),kind};
+    try{
+      $("matAdd").disabled=true;$("matAdd").textContent="등록 중...";
+      if(kind==="prompt")payload.content=$("m_content").value;
+      else if(kind==="link")payload.content=$("m_link").value.trim();
+      else if(kind==="file"){const f=$("m_file").files[0];if(!f){throw new Error("파일을 선택하세요.");}payload.file_b64=await fileToB64(f);payload.file_name=f.name;payload.mime=f.type;}
+      const r=await api("create_material",payload);
+      if(r.error)throw new Error(r.error);
+      $("m_title").value="";$("m_desc").value="";$("m_content").value="";$("m_link").value="";$("m_file").value="";
+      msg.className="msg ok";msg.textContent="자료가 등록되었습니다.";
+      await loadAll();
+    }catch(e){msg.className="msg err";msg.textContent=e.message||"등록 실패";}
+    finally{$("matAdd").disabled=false;$("matAdd").textContent="자료 등록";}
+  });
+
+  /* 글 작성 */
+  $("postAdd").addEventListener("click",async()=>{
+    const title=$("p_title").value.trim();const content=$("p_content").value.trim();const msg=$("postMsg");msg.className="msg";
+    if(!title||!content){msg.className="msg err";msg.textContent="제목과 내용을 입력하세요.";return;}
+    try{$("postAdd").disabled=true;$("postAdd").textContent="게시 중...";
+      await api("create_post",{title,content});
+      $("p_title").value="";$("p_content").value="";msg.className="msg ok";msg.textContent="게시되었습니다.";await loadAll();
+    }catch(e){msg.className="msg err";msg.textContent="게시 실패";}
+    finally{$("postAdd").disabled=false;$("postAdd").textContent="게시하기";}
+  });
+
+  /* 엑셀 */
+  function toXlsx(rows,cols,name){
+    if(!rows.length){alert("다운로드할 내용이 없습니다.");return;}
+    const data=rows.map((r,i)=>{const o={};cols.forEach(c=>o[c.h]=c.f?c.f(r,i,rows):r[c.k]||"");return o;});
+    const ws=XLSX.utils.json_to_sheet(data);const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,name);
+    XLSX.writeFile(wb,`PBS_${name}_${new Date().toISOString().slice(0,10)}.xlsx`);
+  }
+  $("xlsxApps").addEventListener("click",()=>toXlsx(DATA.apps,[
+    {h:"No",f:(r,i,a)=>a.length-i},{h:"접수일시",f:r=>fmt(r.created_at)},{h:"이름",k:"name"},{h:"연락처",k:"phone"},{h:"생년월일",k:"birthdate"},{h:"직업",k:"job"},{h:"AI수준",k:"ai_level"},{h:"신청이유",k:"reason"},{h:"만들고싶은것",k:"want_to_make"},{h:"하고싶은말",k:"message"}
+  ],"신청자"));
+  $("xlsxQs").addEventListener("click",()=>toXlsx(DATA.qs,[
+    {h:"No",f:(r,i,a)=>a.length-i},{h:"등록일시",f:r=>fmt(r.created_at)},{h:"이름",k:"name"},{h:"질문내용",k:"content"}
+  ],"질문"));
+
+  /* 탭 전환 */
+  $("tabs").addEventListener("click",e=>{
+    const t=e.target.closest(".tab");if(!t)return;
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".pane").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");$("pane_"+t.dataset.t).classList.add("active");
+  });
+
+  /* 로그인 */
+  async function doLogin(){
+    const pw=$("pw").value.trim();if(!pw){$("loginErr").textContent="비밀번호를 입력하세요.";return;}
+    $("loginBtn").disabled=true;$("loginBtn").textContent="확인 중...";$("loginErr").textContent="";
+    PW=pw;
+    try{
+      await loadAll();
+      $("loginBox").style.display="none";$("app").classList.remove("hidden");
+    }catch(e){$("loginErr").textContent=e.message==="401"?"비밀번호가 올바르지 않습니다.":"불러오기 실패";PW="";}
+    finally{$("loginBtn").disabled=false;$("loginBtn").textContent="확인";}
+  }
+  $("loginBtn").addEventListener("click",doLogin);
+  $("pw").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
+  $("reloadBtn").addEventListener("click",async()=>{$("reloadBtn").textContent="불러오는 중...";try{await loadAll();}catch(e){}finally{$("reloadBtn").textContent="전체 새로고침";}});
+</script>
+</body>
+</html>

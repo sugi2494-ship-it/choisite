@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>소식 · 공지 · PBS컬러랩</title>
+<style>
+  :root{--pink:#E14B8A;--pink-deep:#C33A72;--ink:#2B2230;--muted:#8A7E86;--line:#F0D9E3;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:#FDF5F7;color:var(--ink);line-height:1.75;}
+  .wrap{max-width:620px;margin:0 auto;padding:0 20px 60px;}
+  header{text-align:center;padding:48px 20px 24px;}
+  .kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:3px;color:var(--pink);background:#fff;border:1px solid var(--line);padding:7px 16px;border-radius:100px;margin-bottom:16px;}
+  h1{font-size:27px;font-weight:900;margin:0;}
+  .post{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;border:1px solid var(--line);box-shadow:0 8px 24px rgba(197,58,114,.06);}
+  .post h2{font-size:19px;margin:0 0 6px;font-weight:800;}
+  .post .date{color:var(--muted);font-size:12px;margin-bottom:12px;}
+  .post .body{font-size:15px;white-space:pre-wrap;}
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;}
+  .backlink{display:block;text-align:center;margin-top:22px;color:var(--pink-deep);font-weight:700;text-decoration:none;font-size:14px;}
+</style>
+</head>
+<body>
+  <header>
+    <span class="kicker">NEWS · NOTICE</span>
+    <h1>소식 · 공지</h1>
+  </header>
+  <div class="wrap">
+    <div id="list"><div class="empty">불러오는 중...</div></div>
+    <a class="backlink" href="신청페이지_index.html">← 원데이 클래스 신청 페이지로</a>
+  </div>
+<script>
+  const SUPABASE_URL="https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
+  const ANON="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+  function fmt(iso){const d=new Date(iso);const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())}`;}
+  (async()=>{
+    try{
+      const r=await fetch(`${SUPABASE_URL}/rest/v1/posts?select=*&is_published=eq.true&order=created_at.desc`,{headers:{apikey:ANON,Authorization:"Bearer "+ANON}});
+      const rows=await r.json();const el=document.getElementById("list");
+      if(!rows.length){el.innerHTML='<div class="empty">아직 등록된 소식이 없습니다.</div>';return;}
+      el.innerHTML=rows.map(p=>`<div class="post"><h2>${(p.title||"").replace(/[<>]/g,"")}</h2><div class="date">${fmt(p.created_at)}</div><div class="body">${(p.content||"").replace(/[<>]/g,"")}</div></div>`).join("");
+    }catch(e){document.getElementById("list").innerHTML='<div class="empty">불러오지 못했습니다.</div>';}
+  })();
+</script>
+</body>
+</html>

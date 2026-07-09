@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>질문 남기기 · PBS컬러랩</title>
+<style>
+  :root{--pink:#E14B8A;--pink-deep:#C33A72;--ink:#2B2230;--muted:#8A7E86;--line:#F0D9E3;--pink-soft:#FBE9F0;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:#FDF5F7;color:var(--ink);line-height:1.7;}
+  .wrap{max-width:560px;margin:0 auto;padding:0 20px 60px;}
+  header{text-align:center;padding:48px 20px 28px;}
+  .kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:3px;color:var(--pink);background:#fff;border:1px solid var(--line);padding:7px 16px;border-radius:100px;margin-bottom:16px;}
+  h1{font-size:27px;font-weight:900;margin:0 0 8px;}
+  .sub{color:var(--muted);font-size:14px;margin:0;}
+  .card{background:#fff;border-radius:18px;padding:26px 24px;box-shadow:0 12px 34px rgba(197,58,114,.10);border:1px solid #fff;}
+  label{display:block;font-size:14px;font-weight:700;margin:0 0 7px;}
+  input,textarea{width:100%;font-size:15px;font-family:inherit;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:#FFFDFE;}
+  input:focus,textarea:focus{outline:none;border-color:var(--pink);}
+  textarea{resize:vertical;min-height:120px;}
+  .field{margin-bottom:18px;}
+  button{width:100%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:#fff;font-size:16px;font-weight:800;padding:16px;border-radius:13px;box-shadow:0 8px 18px rgba(197,58,114,.28);}
+  button:disabled{opacity:.6;}
+  .msg{margin-top:12px;padding:12px;border-radius:10px;font-size:14px;display:none;}
+  .msg.ok{background:#EAF7EE;color:#1E7A44;display:block;}
+  .msg.err{background:#FDECEC;color:#C0392B;display:block;}
+  .done{display:none;text-align:center;padding:16px 6px;}
+  .done .em{font-size:44px;}
+  .done h2{margin:8px 0;font-size:20px;}
+  .done p{color:var(--muted);font-size:14px;}
+  .done button{max-width:220px;margin:14px auto 0;}
+  .backlink{display:block;text-align:center;margin-top:22px;color:var(--pink-deep);font-weight:700;text-decoration:none;font-size:14px;}
+</style>
+</head>
+<body>
+  <header>
+    <span class="kicker">Q &amp; A</span>
+    <h1>질문 남기기</h1>
+    <p class="sub">강의 중 궁금한 점이나 신청 이유를 자유롭게 남겨주세요.</p>
+  </header>
+  <div class="wrap">
+    <div class="card" id="card">
+      <form id="f">
+        <div class="field"><label>이름 / 닉네임</label><input name="name" placeholder="예) 홍길동 (선택)" /></div>
+        <div class="field"><label>질문 내용 <span style="color:var(--pink)">*</span></label><textarea name="content" required placeholder="궁금한 점, 신청 이유, 배우고 싶은 것 등을 적어주세요"></textarea></div>
+        <button type="submit" id="btn">질문 보내기</button>
+        <div class="msg" id="msg"></div>
+      </form>
+      <div class="done" id="done">
+        <div class="em">🙌</div>
+        <h2>질문이 전달되었습니다</h2>
+        <p>강의 중 또는 개별적으로 답변드리겠습니다. 감사합니다!</p>
+        <button onclick="location.reload()">질문 하나 더 남기기</button>
+      </div>
+    </div>
+    <a class="backlink" href="신청페이지_index.html">← 원데이 클래스 신청 페이지로</a>
+  </div>
+<script>
+  const SUPABASE_URL="https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
+  const ANON="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+  const f=document.getElementById("f"),btn=document.getElementById("btn"),msg=document.getElementById("msg");
+  f.addEventListener("submit",async e=>{
+    e.preventDefault();msg.className="msg";msg.style.display="none";
+    const data=Object.fromEntries(new FormData(f).entries());
+    if(!data.content.trim()){msg.className="msg err";msg.textContent="질문 내용을 입력해 주세요.";return;}
+    btn.disabled=true;btn.textContent="보내는 중...";
+    try{
+      const r=await fetch(`${SUPABASE_URL}/rest/v1/questions`,{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({name:data.name||null,content:data.content})});
+      if(!r.ok)throw new Error(await r.text());
+      f.style.display="none";document.getElementById("done").style.display="block";
+    }catch(err){msg.className="msg err";msg.textContent="전송 중 오류가 발생했습니다. 다시 시도해 주세요.";btn.disabled=false;btn.textContent="질문 보내기";}
+  });
+</script>
+</body>
+</html>

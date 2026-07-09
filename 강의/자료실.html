@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>교육 자료실 · PBS컬러랩</title>
+<style>
+  :root{--pink:#E14B8A;--pink-deep:#C33A72;--pink-soft:#FBE9F0;--ink:#2B2230;--muted:#8A7E86;--line:#F0D9E3;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:#FDF5F7;color:var(--ink);line-height:1.7;}
+  .wrap{max-width:620px;margin:0 auto;padding:0 20px 60px;}
+  header{text-align:center;padding:48px 20px 24px;}
+  .kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:3px;color:var(--pink);background:#fff;border:1px solid var(--line);padding:7px 16px;border-radius:100px;margin-bottom:16px;}
+  h1{font-size:27px;font-weight:900;margin:0 0 8px;}
+  .sub{color:var(--muted);font-size:14px;margin:0;}
+  .mat{background:#fff;border-radius:16px;padding:20px;margin-bottom:14px;border:1px solid var(--line);box-shadow:0 8px 24px rgba(197,58,114,.06);}
+  .mat .h{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .mat .ic{flex:0 0 42px;height:42px;border-radius:11px;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;font-size:22px;}
+  .mat .t{font-size:16px;font-weight:800;}
+  .mat .d{color:var(--muted);font-size:13.5px;margin:2px 0 12px 52px;}
+  .prompt{background:#FAF3F6;border:1px dashed var(--line);border-radius:12px;padding:14px;font-size:14px;white-space:pre-wrap;margin:0 0 10px;font-family:ui-monospace,Menlo,monospace;}
+  .act{display:flex;gap:8px;flex-wrap:wrap;}
+  .btn{cursor:pointer;text-decoration:none;font-weight:800;font-size:14px;padding:11px 18px;border-radius:10px;border:none;}
+  .btn-p{background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:#fff;}
+  .btn-g{background:#fff;color:var(--pink-deep);border:1px solid var(--line);}
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;}
+  .backlink{display:block;text-align:center;margin-top:22px;color:var(--pink-deep);font-weight:700;text-decoration:none;font-size:14px;}
+</style>
+</head>
+<body>
+  <header>
+    <span class="kicker">DOWNLOAD · 자료실</span>
+    <h1>교육 자료실</h1>
+    <p class="sub">강의에 사용한 프롬프트·자료를 다운로드하세요.</p>
+  </header>
+  <div class="wrap">
+    <div id="list"><div class="empty">불러오는 중...</div></div>
+    <a class="backlink" href="신청페이지_index.html">← 원데이 클래스 신청 페이지로</a>
+  </div>
+<script>
+  const SUPABASE_URL="https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
+  const ANON="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+  const esc=s=>String(s||"").replace(/[<>]/g,"");
+  function card(m){
+    const icon=m.kind==="file"?"📄":m.kind==="link"?"🔗":"✨";
+    let act="";
+    if(m.kind==="file"&&m.file_url) act=`<a class="btn btn-p" href="${m.file_url}" target="_blank" rel="noopener" download>⬇ 다운로드</a>`;
+    else if(m.kind==="link"&&m.content) act=`<a class="btn btn-p" href="${esc(m.content)}" target="_blank" rel="noopener">🔗 열기</a>`;
+    let promptBlock="";
+    if(m.kind==="prompt"&&m.content){
+      promptBlock=`<pre class="prompt" id="p_${m.id}">${esc(m.content)}</pre>`;
+      act=`<button class="btn btn-p" onclick="copyP('${m.id}',this)">📋 프롬프트 복사</button>`;
+    }
+    return `<div class="mat"><div class="h"><div class="ic">${icon}</div><div class="t">${esc(m.title)}</div></div>${m.description?`<div class="d">${esc(m.description)}</div>`:""}${promptBlock}<div class="act" style="margin-left:${m.kind==='prompt'?'0':'52px'}">${act}</div></div>`;
+  }
+  window.copyP=function(id,btn){
+    const t=document.getElementById("p_"+id).innerText;
+    navigator.clipboard.writeText(t).then(()=>{btn.textContent="✅ 복사됨!";setTimeout(()=>btn.textContent="📋 프롬프트 복사",1500);});
+  };
+  (async()=>{
+    try{
+      const r=await fetch(`${SUPABASE_URL}/rest/v1/materials?select=*&is_published=eq.true&order=created_at.desc`,{headers:{apikey:ANON,Authorization:"Bearer "+ANON}});
+      const rows=await r.json();const el=document.getElementById("list");
+      if(!rows.length){el.innerHTML='<div class="empty">아직 등록된 자료가 없습니다.</div>';return;}
+      el.innerHTML=rows.map(card).join("");
+    }catch(e){document.getElementById("list").innerHTML='<div class="empty">불러오지 못했습니다.</div>';}
+  })();
+</script>
+</body>
+</html>

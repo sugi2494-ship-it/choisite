@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>수강 후기 · PBS컬러랩</title>
+<style>
+  :root{--pink:#E14B8A;--pink-deep:#C33A72;--pink-soft:#FBE9F0;--ink:#2B2230;--muted:#8A7E86;--line:#F0D9E3;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:#FDF5F7;color:var(--ink);line-height:1.7;}
+  .wrap{max-width:600px;margin:0 auto;padding:0 20px 60px;}
+  header{text-align:center;padding:48px 20px 28px;}
+  .kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:3px;color:var(--pink);background:#fff;border:1px solid var(--line);padding:7px 16px;border-radius:100px;margin-bottom:16px;}
+  h1{font-size:27px;font-weight:900;margin:0 0 8px;}
+  .sub{color:var(--muted);font-size:14px;margin:0;}
+  .card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(197,58,114,.08);margin-bottom:18px;border:1px solid #fff;}
+  .card h2{font-size:18px;margin:0 0 14px;font-weight:800;}
+  label{display:block;font-size:14px;font-weight:700;margin:0 0 7px;}
+  input,textarea{width:100%;font-size:15px;font-family:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#FFFDFE;}
+  input:focus,textarea:focus{outline:none;border-color:var(--pink);}
+  textarea{resize:vertical;min-height:96px;}
+  .field{margin-bottom:16px;}
+  .stars{display:flex;gap:6px;font-size:30px;cursor:pointer;}
+  .stars span{color:#E5D2DC;transition:transform .1s;}
+  .stars span.on{color:#FFB400;}
+  .stars span:hover{transform:scale(1.15);}
+  button{width:100%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:#fff;font-size:16px;font-weight:800;padding:15px;border-radius:13px;box-shadow:0 8px 18px rgba(197,58,114,.28);}
+  button:disabled{opacity:.6;}
+  .msg{margin-top:12px;padding:12px;border-radius:10px;font-size:14px;display:none;}
+  .msg.ok{background:#EAF7EE;color:#1E7A44;display:block;}
+  .msg.err{background:#FDECEC;color:#C0392B;display:block;}
+  .review{background:#fff;border-radius:16px;padding:20px;margin-bottom:14px;border:1px solid var(--line);}
+  .review .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .review .who{font-weight:800;}
+  .review .st{color:#FFB400;font-size:14px;letter-spacing:1px;}
+  .review .body{font-size:15px;white-space:pre-wrap;}
+  .review .date{color:var(--muted);font-size:12px;margin-top:8px;}
+  .empty{text-align:center;color:var(--muted);padding:30px;}
+  .list-title{font-size:16px;font-weight:800;margin:28px 4px 14px;}
+  .backlink{display:block;text-align:center;margin-top:24px;color:var(--pink-deep);font-weight:700;text-decoration:none;font-size:14px;}
+</style>
+</head>
+<body>
+  <header>
+    <span class="kicker">REVIEW</span>
+    <h1>수강 후기</h1>
+    <p class="sub">강의를 들으신 후 소감을 남겨주세요. 확인 후 공개됩니다 💗</p>
+  </header>
+  <div class="wrap">
+    <div class="card">
+      <h2>후기 작성</h2>
+      <form id="f">
+        <div class="field"><label>이름 / 닉네임</label><input name="name" placeholder="예) 김지영 / 익명 가능" /></div>
+        <div class="field">
+          <label>별점</label>
+          <div class="stars" id="stars">
+            <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+          </div>
+        </div>
+        <div class="field"><label>후기 내용 <span style="color:var(--pink)">*</span></label><textarea name="content" required placeholder="강의를 들은 소감을 자유롭게 적어주세요"></textarea></div>
+        <button type="submit" id="btn">후기 남기기</button>
+        <div class="msg" id="msg"></div>
+      </form>
+    </div>
+
+    <div class="list-title">💬 먼저 남겨주신 후기</div>
+    <div id="list"><div class="empty">후기를 불러오는 중...</div></div>
+
+    <a class="backlink" href="신청페이지_index.html">← 원데이 클래스 신청하러 가기</a>
+  </div>
+
+<script>
+  const SUPABASE_URL="https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
+  const ANON="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+  let rating=5;
+  const starEls=[...document.querySelectorAll("#stars span")];
+  function paint(){starEls.forEach(s=>s.classList.toggle("on",+s.dataset.v<=rating));}
+  starEls.forEach(s=>s.addEventListener("click",()=>{rating=+s.dataset.v;paint();}));
+  paint();
+
+  function fmt(iso){const d=new Date(iso);const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())}`;}
+  async function load(){
+    try{
+      const r=await fetch(`${SUPABASE_URL}/rest/v1/reviews?select=*&status=eq.published&order=created_at.desc`,{headers:{apikey:ANON,Authorization:"Bearer "+ANON}});
+      const rows=await r.json();
+      const el=document.getElementById("list");
+      if(!rows.length){el.innerHTML='<div class="empty">아직 공개된 후기가 없습니다. 첫 후기를 남겨주세요!</div>';return;}
+      el.innerHTML=rows.map(v=>`<div class="review"><div class="top"><span class="who">${(v.name||"익명")}</span><span class="st">${"★".repeat(v.rating||5)}</span></div><div class="body">${(v.content||"").replace(/[<>]/g,"")}</div><div class="date">${fmt(v.created_at)}</div></div>`).join("");
+    }catch(e){document.getElementById("list").innerHTML='<div class="empty">후기를 불러오지 못했습니다.</div>';}
+  }
+  load();
+
+  const f=document.getElementById("f"),btn=document.getElementById("btn"),msg=document.getElementById("msg");
+  f.addEventListener("submit",async e=>{
+    e.preventDefault();msg.className="msg";msg.style.display="none";
+    const data=Object.fromEntries(new FormData(f).entries());
+    if(!data.content.trim()){msg.className="msg err";msg.textContent="후기 내용을 입력해 주세요.";return;}
+    btn.disabled=true;btn.textContent="제출 중...";
+    try{
+      const r=await fetch(`${SUPABASE_URL}/rest/v1/reviews`,{method:"POST",headers:{apikey:ANON,Authorization:"Bearer "+ANON,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({name:data.name||null,rating:rating,content:data.content,status:"pending"})});
+      if(!r.ok)throw new Error(await r.text());
+      f.reset();rating=5;paint();
+      msg.className="msg ok";msg.textContent="소중한 후기 감사합니다! 대표 확인 후 공개됩니다 💗";
+    }catch(err){msg.className="msg err";msg.textContent="제출 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";}
+    finally{btn.disabled=false;btn.textContent="후기 남기기";}
+  });
+</script>
+</body>
+</html>
