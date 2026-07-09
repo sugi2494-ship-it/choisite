@@ -215,6 +215,7 @@ a{text-decoration:none;color:inherit}
     <button class="tb" onclick="tab('gal',this)">🖼 갤러리</button>
     <button class="tb" onclick="tab('glb',this)">🌏 글로벌 사진</button>
     <button class="tb" onclick="tab('str',this)">🛍 스토어 <span class="bdn" id="strN"></span></button>
+    <button class="tb" onclick="tab('res',this)">📁 자료·강의</button>
     <button class="tb" onclick="tab('cfg',this)">⚙ 설정</button>
   </div>
 
@@ -310,6 +311,20 @@ a{text-decoration:none;color:inherit}
       <button onclick="resetGlb()" style="background:none;border:1px solid rgba(255,255,255,.12);
         color:rgba(255,255,255,.35);padding:7px 18px;border-radius:999px;cursor:pointer;font-size:12px">초기화</button>
     </div>
+  </div>
+
+  <!-- 자료·강의 -->
+  <div class="pane" id="p-res">
+    <div class="st">📁 자료실 <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.45)">담당자용 · 프로필·강의기획안 (홈페이지 자료실에 표시)</span></div>
+    <div id="resList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <button class="sbtn" style="margin-top:14px" onclick="saveRes()">✓ 자료실 저장</button>
+
+    <div class="st" style="margin-top:30px">🎓 강의실 <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.45)">교육생·강사 과정 (강의실 페이지에 표시)</span></div>
+    <div id="clsList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <button class="sbtn" style="margin-top:14px" onclick="saveCls()">✓ 강의실 저장</button>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:12px;line-height:1.6">· <b>PDF 업로드</b>를 누르면 파일이 서버에 올라가고 링크가 자동으로 채워집니다.<br>· 저장 후 홈페이지/강의실을 새로고침하면 반영됩니다.<br>· 교육생 자료 = 수강생이 받는 공개자료, 강사 강의안 = 비밀번호(8808)로 열리는 강의 슬라이드.</p>
+    <input type="file" id="pdfFile" accept="application/pdf,.pdf" style="display:none">
+    <div id="upState" style="font-size:12.5px;font-weight:700;margin-top:8px;color:#7ED0A5"></div>
   </div>
 
   <!-- 설정 -->
@@ -452,6 +467,7 @@ function tab(id,btn){
   if(id==='glb')renderGlb();
   if(id==='cfg')loadCfg();
   if(id==='str')loadStore();
+  if(id==='res')renderRes();
 }
 function selAll(type,checked){
   document.querySelectorAll('.cb-'+type).forEach(function(cb){cb.checked=checked;});
@@ -1016,6 +1032,110 @@ function toggleStoreVis(i){
   arr[i].visible=arr[i].visible===false;
   saveStoreLS(arr);loadStore();
 }
+/* ===== 자료·강의 관리 (자료실 resources_config / 강의실 classes_config) ===== */
+var RES_DEFAULT=[
+ {id:"profile",icon:"👤",title:"전체 프로필 PDF",desc:"대표 이력·강의·글로벌 레퍼런스 통합본",url:"downloads/최해숙_대표_프로필.html"},
+ {id:"personalcolor",icon:"🎨",title:"퍼스널컬러 강의기획안",desc:"이미지메이킹 전문 과정 기획안",url:"downloads/퍼스널컬러_강의기획안.html"},
+ {id:"skeleton",icon:"🏋",title:"골격분석 강의기획안",desc:"이미지스타일링 전문 강의 기획안",url:"downloads/골격분석_강의기획안.html"},
+ {id:"colorstrength",icon:"💎",title:"컬러강점 강의기획안",desc:"강점 기반 소통·조직활성화 강의 기획안",url:"downloads/컬러강점_강의기획안.html"},
+ {id:"colortherapy",icon:"🌈",title:"컬러테라피 강의기획안",desc:"컬러 힐링 전문 강의 기획안",url:"downloads/컬러테라피_강의기획안.html"},
+ {id:"future",icon:"🌟",title:"퇴직예정자 미래설계 기획안",desc:"생애설계·인생 후반전 전문 강의",url:"downloads/미래설계_교육기획안.html"},
+ {id:"cert",icon:"🎓",title:"전문가 자격과정 기획안",desc:"퍼스널컬러·골격분석 전문가 양성과정",url:"downloads/전문가자격과정_강의기획안.html"}
+];
+var CLS_DEFAULT=[
+ {id:"personalcolor",icon:"🎨",title:"퍼스널컬러",desc:"퍼스널컬러 진단·이미지메이킹",tags:["진단","이미지"],page:"퍼스널컬러.html",student_url:"",teacher_url:""},
+ {id:"skeleton",icon:"🏋",title:"골격분석",desc:"골격유형별 스타일링",tags:["스타일링"],page:"course.html?c=skeleton",student_url:"",teacher_url:""},
+ {id:"colorstrength",icon:"💎",title:"컬러강점",desc:"컬러강점 기반 소통·조직활성화",tags:["소통","팀빌딩"],page:"course.html?c=colorstrength",student_url:"",teacher_url:""},
+ {id:"colortherapy",icon:"🌈",title:"컬러테라피",desc:"컬러 힐링·마음 회복",tags:["힐링"],page:"course.html?c=colortherapy",student_url:"",teacher_url:""},
+ {id:"future",icon:"🌟",title:"퇴직예정자 미래설계",desc:"생애설계·인생 후반전",tags:["생애설계","시니어"],page:"course.html?c=future",student_url:"",teacher_url:""},
+ {id:"cert",icon:"🎓",title:"전문가 자격과정",desc:"퍼스널컬러·골격분석 전문가 양성",tags:["자격과정"],page:"course.html?c=cert",student_url:"",teacher_url:""}
+];
+var _resItems=[], _clsItems=[], _pdfTarget=null;
+function _esc(v){return (v==null?'':String(v)).replace(/"/g,'&quot;');}
+function _fld(label,id,val){return '<div class="ir"><label>'+label+'</label><input id="'+id+'" value="'+_esc(val)+'"></div>';}
+function _uploadBtn(target){return '<button class="sbtn" style="background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(255,255,255,.18);font-size:12px;padding:8px 12px" onclick="pickPdf(\''+target+'\')">📎 PDF 업로드</button>';}
+
+function renderRes(){
+  supaFetch('pbs_site_config?key=eq.resources_config&select=value').then(function(r){return r.json();}).then(function(rows){
+    _resItems=(rows&&rows[0]&&rows[0].value&&rows[0].value.length)?rows[0].value:RES_DEFAULT;
+    var h='';
+    _resItems.forEach(function(it,i){
+      h+='<div class="card" style="padding:14px 16px">'
+        +'<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><input id="res_icon_'+i+'" value="'+_esc(it.icon)+'" style="width:52px;text-align:center;font-size:18px"><b style="opacity:.85">'+_esc(it.title)+'</b></div>'
+        +_fld('제목','res_title_'+i,it.title)
+        +_fld('설명','res_desc_'+i,it.desc)
+        +'<div class="ir"><label>링크 / PDF</label><input id="res_url_'+i+'" value="'+_esc(it.url)+'"></div>'
+        +'<div style="margin-top:6px">'+_uploadBtn('res_url_'+i)+'</div>'
+        +'</div>';
+    });
+    document.getElementById('resList').innerHTML=h;
+  });
+  if(!_clsItems.length) renderCls();
+}
+function renderCls(){
+  supaFetch('pbs_site_config?key=eq.classes_config&select=value').then(function(r){return r.json();}).then(function(rows){
+    _clsItems=(rows&&rows[0]&&rows[0].value&&rows[0].value.length)?rows[0].value:CLS_DEFAULT;
+    var h='';
+    _clsItems.forEach(function(it,i){
+      h+='<div class="card" style="padding:14px 16px">'
+        +'<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><input id="cls_icon_'+i+'" value="'+_esc(it.icon)+'" style="width:52px;text-align:center;font-size:18px"><b style="opacity:.85">'+_esc(it.title)+'</b></div>'
+        +_fld('과정명','cls_title_'+i,it.title)
+        +_fld('설명','cls_desc_'+i,it.desc)
+        +'<div class="ir"><label>🎒 교육생 자료(공개) 링크</label><input id="cls_student_'+i+'" value="'+_esc(it.student_url)+'"></div>'
+        +'<div style="margin:6px 0">'+_uploadBtn('cls_student_'+i)+'</div>'
+        +'<div class="ir"><label>🎤 강사 강의안(비번) 링크</label><input id="cls_teacher_'+i+'" value="'+_esc(it.teacher_url)+'"></div>'
+        +'<div style="margin-top:6px">'+_uploadBtn('cls_teacher_'+i)+'</div>'
+        +'</div>';
+    });
+    document.getElementById('clsList').innerHTML=h;
+  });
+}
+function saveRes(){
+  var arr=_resItems.map(function(it,i){
+    return {id:it.id,icon:(document.getElementById('res_icon_'+i)||{}).value||it.icon,
+      title:(document.getElementById('res_title_'+i)||{}).value||'',
+      desc:(document.getElementById('res_desc_'+i)||{}).value||'',
+      url:(document.getElementById('res_url_'+i)||{}).value||''};
+  });
+  supaConfigSave('resources_config',arr);
+  localStorage.setItem('pbs_resources_config',JSON.stringify(arr));
+  _resItems=arr; toast('자료실 저장 완료! 홈페이지 새로고침 시 반영');
+}
+function saveCls(){
+  var arr=_clsItems.map(function(it,i){
+    return {id:it.id,icon:(document.getElementById('cls_icon_'+i)||{}).value||it.icon,
+      title:(document.getElementById('cls_title_'+i)||{}).value||'',
+      desc:(document.getElementById('cls_desc_'+i)||{}).value||'',
+      tags:it.tags||[], page:it.page||('course.html?c='+it.id),
+      student_url:(document.getElementById('cls_student_'+i)||{}).value||'',
+      teacher_url:(document.getElementById('cls_teacher_'+i)||{}).value||''};
+  });
+  supaConfigSave('classes_config',arr);
+  localStorage.setItem('pbs_classes_config',JSON.stringify(arr));
+  _clsItems=arr; toast('강의실 저장 완료! 강의실 새로고침 시 반영');
+}
+function pickPdf(target){_pdfTarget=target;var fi=document.getElementById('pdfFile');fi.value='';fi.click();}
+(function(){
+  var fi=document.getElementById('pdfFile');
+  if(fi) fi.addEventListener('change',function(){
+    var file=fi.files&&fi.files[0]; if(!file||!_pdfTarget)return;
+    var us=document.getElementById('upState'); us.style.color='#E7C15B'; us.textContent='업로드 중… '+file.name;
+    var safe=file.name.replace(/[^\w.\-가-힣]/g,'_');
+    var path='자료_'+Date.now()+'_'+safe;
+    fetch(SUPA_URL+'/storage/v1/object/site/'+encodeURIComponent(path),{
+      method:'POST',
+      headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':file.type||'application/pdf','x-upsert':'true'},
+      body:file
+    }).then(function(r){
+      if(r.ok){
+        var url=SUPA_URL+'/storage/v1/object/public/site/'+encodeURIComponent(path);
+        var el=document.getElementById(_pdfTarget); if(el) el.value=url;
+        us.style.color='#7ED0A5'; us.textContent='✓ 업로드 완료 — 링크가 채워졌습니다. 저장을 눌러주세요.';
+      }else{ r.text().then(function(t){us.style.color='#F2A0A0';us.textContent='업로드 실패: '+t;}); }
+    }).catch(function(e){us.style.color='#F2A0A0';us.textContent='업로드 오류: '+e;});
+  });
+})();
+
 </script>
 </body>
 </html>
