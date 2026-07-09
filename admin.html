@@ -145,6 +145,19 @@ a{text-decoration:none;color:inherit}
   font-size:10px;font-weight:900;padding:2px 7px;border-radius:999px;min-width:20px;text-align:center}
 .dc-badge:empty{display:none}
 .dc.alert{border-color:rgba(230,0,126,.5);background:rgba(230,0,126,.06)}
+
+/* ── 좌측 목록형(사이드바) 관리자 레이아웃 ── */
+.workspace{display:flex;align-items:stretch;gap:0}
+.tabs{flex-direction:column;gap:6px;padding:16px 12px;border-bottom:none;border-right:1px solid var(--ln);min-width:210px;max-width:210px;overflow-x:visible;overflow-y:auto}
+.tb{display:flex;align-items:center;gap:8px;width:100%;justify-content:flex-start;text-align:left;border-radius:10px;border:1px solid transparent;padding:13px 14px;font-size:14px}
+.tb.on{background:var(--dk);color:#fff;border-color:var(--ln)}
+.content{flex:1;min-width:0}
+.content .pane{max-width:920px}
+@media(max-width:760px){
+  .workspace{flex-direction:column}
+  .tabs{flex-direction:row;min-width:0;max-width:none;overflow-x:auto;border-right:none;border-bottom:1px solid var(--ln);padding:12px}
+  .tb{width:auto}
+}
 </style>
 </head>
 <body>
@@ -209,6 +222,7 @@ a{text-decoration:none;color:inherit}
     </div>
   </div>
 
+  <div class="workspace">
   <div class="tabs">
     <button class="tb on" onclick="tab('inq',this)">📩 문의 <span class="bdn" id="inqN"></span></button>
     <button class="tb" onclick="tab('tst',this)">💬 소감 <span class="bdn" id="tstN"></span></button>
@@ -218,6 +232,7 @@ a{text-decoration:none;color:inherit}
     <button class="tb" onclick="tab('res',this)">📁 자료·강의</button>
     <button class="tb" onclick="tab('cfg',this)">⚙ 설정</button>
   </div>
+  <div class="content">
 
   <!-- 문의 -->
   <div class="pane on" id="p-inq">
@@ -370,6 +385,8 @@ a{text-decoration:none;color:inherit}
         <button class="dbtn" onclick="clr('pbs_gallery_config','갤러리')">갤러리 초기화</button>
         <button class="dbtn" onclick="clr('pbs_global_config','글로벌사진')">글로벌사진 초기화</button>
       </div>
+    </div>
+  </div>
     </div>
   </div>
 </div>
