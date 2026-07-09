@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>강의 | 최해숙 · PBS COLOR LAB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#2A2621;--ink-soft:#6B6157;--line:#EAE2D6;--cream:#FBF7F1;--paper:#FFFFFF;--gold:#B18B4F;--gold-deep:#8C6B37;--pink:#D0247E;--shadow:0 12px 40px rgba(120,95,55,.10)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Noto Sans KR",sans-serif;color:var(--ink);background:var(--cream);line-height:1.75}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:0;z-index:50;background:rgba(251,247,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brand{font-family:"Noto Serif KR",serif;font-weight:900;font-size:17px;color:var(--gold-deep);text-decoration:none}
+  .back{font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:none;border:1px solid var(--line);padding:7px 13px;border-radius:999px;background:#fff}
+  .hero{text-align:center;padding:46px 20px 8px}
+  .hero .ic{font-size:46px}
+  .hero h1{font-family:"Noto Serif KR",serif;font-size:30px;font-weight:900;margin:10px 0 6px}
+  .hero p{color:var(--ink-soft);font-size:15px}
+  .sec{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px 22px;margin:18px 0;box-shadow:var(--shadow)}
+  .sec h2{font-family:"Noto Serif KR",serif;font-size:19px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .sec .sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:16px}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14.5px;text-decoration:none;border:none;border-radius:12px;padding:13px 22px;cursor:pointer}
+  .btn-primary{background:linear-gradient(135deg,var(--pink),#7A1F6B);color:#fff}
+  .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#fff}
+  .btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .muted{color:var(--ink-soft);font-size:13.5px;background:#F7F1E7;border:1px dashed var(--line);border-radius:12px;padding:14px 16px}
+  .pwrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .pwrow input{flex:1;min-width:160px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:15px}
+  .pwmsg{font-size:13px;font-weight:700;margin-top:8px}.pwmsg.ok{color:#2E8B57}.pwmsg.err{color:var(--pink)}
+  .unlocked{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.unlocked.show{display:block}
+  .slides{display:flex;gap:10px;flex-wrap:wrap}
+  .bd-form{display:flex;flex-direction:column;gap:10px}
+  .bd-form input,.bd-form textarea{padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit}
+  .bd-kinds{display:flex;gap:8px}
+  .bd-kbtn{flex:1;padding:9px;border:1px solid var(--line);background:#fff;border-radius:10px;font-weight:700;color:var(--ink-soft);cursor:pointer}
+  .bd-kbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .bd-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}
+  .bd-tag{font-size:11px;font-weight:800;color:#fff;border-radius:999px;padding:2px 9px}.bd-tag.q{background:var(--pink)}.bd-tag.c{background:var(--gold)}
+  .foot{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:30px 20px 40px}
+  .foot a{color:var(--gold-deep);font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="brand" href="index.html">PBS COLOR LAB · 강의실</a>
+    <a class="back" href="index.html">← 과정 목록</a>
+  </div></div>
+
+  <header class="hero">
+    <div class="ic" id="cIcon">📘</div>
+    <h1 id="cTitle">강의</h1>
+    <p id="cDesc"></p>
+  </header>
+
+  <main class="wrap">
+    <!-- 교육생 자료 -->
+    <section class="sec">
+      <h2>🎒 교육생 자료 받기</h2>
+      <div class="sub">수업에서 사용하는 공개 자료를 받아가세요.</div>
+      <div id="studentArea"><div class="muted">자료 준비 중입니다. 강사에게 문의해 주세요.</div></div>
+    </section>
+
+    <!-- 강사 강의모드 -->
+    <section class="sec">
+      <h2>🎤 강사 강의모드</h2>
+      <div class="sub">강사 전용입니다. 비밀번호를 입력하면 강의 슬라이드를 이 화면에서 바로 엽니다. (USB 불필요)</div>
+      <div class="pwrow">
+        <input type="password" id="pw" placeholder="강사 비밀번호" onkeydown="if(event.key==='Enter')tryUnlock()">
+        <button class="btn btn-gold" onclick="tryUnlock()">열기</button>
+      </div>
+      <div class="pwmsg" id="pwmsg"></div>
+      <div class="unlocked" id="unlocked">
+        <div id="teacherArea"><div class="muted">등록된 강의안이 없습니다. 관리자 페이지에서 강의안 PDF를 업로드하세요.</div></div>
+      </div>
+    </section>
+
+    <!-- 질문·소감 -->
+    <section class="sec">
+      <h2>💬 수업 질문 · 소감</h2>
+      <div class="sub">궁금한 점이나 소감을 남겨주세요. 강사 승인 후 함께 표시됩니다.</div>
+      <div class="bd-form">
+        <div class="bd-kinds">
+          <button type="button" class="bd-kbtn active" data-kind="질문" onclick="bdKind(this)">질문</button>
+          <button type="button" class="bd-kbtn" data-kind="소감" onclick="bdKind(this)">소감</button>
+        </div>
+        <input id="bdName" type="text" placeholder="이름 (익명 가능)" maxlength="20">
+        <textarea id="bdMsg" rows="3" placeholder="내용을 입력하세요"></textarea>
+        <button class="btn btn-primary" onclick="bdSubmit()" style="align-self:flex-start">남기기 →</button>
+        <div class="pwmsg" id="bdStat"></div>
+      </div>
+      <div id="bdFeed"></div>
+    </section>
+  </main>
+
+  <div class="foot">© PBS COLOR LAB · 최해숙 Maria Choi · <a href="index.html">강의실</a> · <a href="/">브랜드 허브</a></div>
+
+<script>
+var SUPA_URL='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+var H={apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
+var LECTURE_PW='8808';
+var bdKindVal='질문';
+function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function qs(k){return new URLSearchParams(location.search).get(k)||'';}
+var COURSE=qs('c');
+var course=null;
+
+fetch(SUPA_URL+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H})
+ .then(function(r){return r.json();})
+ .then(function(rows){
+   var items=(rows&&rows[0]&&rows[0].value)||[];
+   course=items.filter(function(x){return x.id===COURSE;})[0]||null;
+   if(!course){document.getElementById('cTitle').textContent='과정을 찾을 수 없습니다';document.getElementById('cDesc').innerHTML='<a href="index.html">← 강의실로 돌아가기</a>';return;}
+   document.getElementById('cIcon').textContent=course.icon||'📘';
+   document.getElementById('cTitle').textContent=course.title||'강의';
+   document.getElementById('cDesc').textContent=course.desc||'';
+   document.title=(course.title||'강의')+' | 최해숙 · PBS COLOR LAB';
+   if(course.student_url){
+     document.getElementById('studentArea').innerHTML='<a class="btn btn-primary" href="'+esc(course.student_url)+'" target="_blank" rel="noopener">📥 강의 자료 받기 →</a>';
+   }
+ }).catch(function(e){});
+
+function tryUnlock(){
+  var v=document.getElementById('pw').value.trim();
+  var msg=document.getElementById('pwmsg');
+  if(v===LECTURE_PW){
+    document.getElementById('unlocked').classList.add('show');
+    msg.className='pwmsg ok';msg.textContent='✓ 잠금 해제되었습니다.';
+    if(course&&course.teacher_url){
+      document.getElementById('teacherArea').innerHTML='<div class="slides"><a class="btn btn-gold" href="'+esc(course.teacher_url)+'" target="_blank" rel="noopener">📊 강의 슬라이드 열기 →</a></div>';
+    }
+  }else{msg.className='pwmsg err';msg.textContent='비밀번호가 올바르지 않습니다.';}
+}
+
+function bdKind(el){bdKindVal=el.dataset.kind;document.querySelectorAll('.bd-kbtn').forEach(function(b){b.classList.remove('active');});el.classList.add('active');}
+function bdSubmit(){
+  var name=document.getElementById('bdName').value.trim()||'익명';
+  var msg=document.getElementById('bdMsg').value.trim();
+  var st=document.getElementById('bdStat');
+  if(!msg){st.className='pwmsg err';st.textContent='내용을 입력해주세요.';return;}
+  var tag=course?('['+(course.title||COURSE)+'] '):'';
+  fetch(SUPA_URL+'/rest/v1/class_board',{method:'POST',headers:Object.assign({Prefer:'return=minimal'},H),body:JSON.stringify({name:name,kind:bdKindVal,message:tag+msg,approved:false})})
+  .then(function(r){if(r.ok){document.getElementById('bdMsg').value='';st.className='pwmsg ok';st.textContent='✓ 등록됐어요! 강사 승인 후 게시됩니다.';bdLoad();setTimeout(function(){st.textContent='';},3000);}else{st.className='pwmsg err';st.textContent='오류가 발생했어요. 다시 시도해주세요.';}});
+}
+function bdLoad(){
+  fetch(SUPA_URL+'/rest/v1/class_board?select=*&approved=eq.true&order=created_at.desc&limit=50',{headers:H})
+  .then(function(r){return r.json();}).then(function(rows){
+    if(!rows)return;var f=document.getElementById('bdFeed');
+    f.innerHTML=rows.map(function(x){
+      var q=x.kind==='질문';
+      return '<div class="bd-item"><span class="bd-tag '+(q?'q':'c')+'">'+esc(x.kind)+'</span> <b>'+esc(x.name||'익명')+'</b><div style="margin-top:6px;white-space:pre-wrap">'+esc(x.message)+'</div></div>';
+    }).join('');
+  });
+}
+bdLoad();
+</script>
+</body>
+</html>

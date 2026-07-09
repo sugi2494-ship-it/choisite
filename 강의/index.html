@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<base href="/강의/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>퍼스널컬러 강의 | 최해숙 · PBS COLOR LAB</title>
+<title>강의실 | 최해숙 · PBS COLOR LAB</title>
+<meta name="description" content="최해숙 PBS COLOR LAB 강의실 — 퍼스널컬러·골격분석·컬러강점·컬러테라피·미래설계·전문가 자격과정 교육생 자료 및 강의 진행">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -16,482 +16,87 @@
     --shadow:0 12px 40px rgba(120,95,55,.10);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:"Noto Sans KR",sans-serif;color:var(--ink);background:var(--cream);line-height:1.75;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
-  .serif{font-family:"Noto Serif KR",serif}
-  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
-  header{position:sticky;top:0;z-index:40;background:rgba(251,247,241,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
-  .brand{font-weight:900;letter-spacing:.02em;font-size:15px}
-  .brand b{color:var(--gold-deep)}
-  .brand small{display:block;font-size:10px;color:var(--ink-soft);letter-spacing:.22em;font-weight:500;margin-top:1px}
-  .nav-links{display:flex;gap:18px;font-size:14px;font-weight:500}
-  .nav-links a{color:var(--ink-soft)}
-  .nav-links a:hover{color:var(--gold-deep)}
-  .hero{padding:56px 0 40px}
-  .hero-grid{display:grid;grid-template-columns:1.5fr .9fr;gap:40px;align-items:center}
-  .eyebrow{color:var(--pink);font-weight:700;letter-spacing:.2em;font-size:12.5px;margin-bottom:16px}
-  .hero h1{font-family:"Noto Serif KR",serif;font-size:44px;line-height:1.2;font-weight:900;letter-spacing:-.02em}
-  .hero h1 span{color:var(--gold-deep)}
-  .hero .who{margin-top:12px;font-size:15px;color:var(--ink-soft)}
-  .hero p.lead{margin-top:20px;font-size:16px;color:#4A423A;max-width:520px}
-  .hero .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:15px;padding:13px 22px;border-radius:12px;border:1px solid var(--gold);transition:.2s;cursor:pointer}
-  .btn-primary{background:var(--gold);color:#fff;border-color:var(--gold)}
-  .btn-primary:hover{background:var(--gold-deep);border-color:var(--gold-deep)}
-  .btn-ghost{background:transparent;color:var(--gold-deep)}
-  .btn-ghost:hover{background:#F2E9DA}
-  .portrait{border-radius:16px;overflow:hidden;aspect-ratio:4/5;box-shadow:var(--shadow);border:1px solid var(--line);background:#fff}
-  .portrait img{width:100%;height:100%;object-fit:cover;object-position:center top}
-  section.blk{padding:46px 0;border-top:1px solid var(--line)}
-  .sec-head{margin-bottom:26px}
-  .sec-tag{color:var(--gold-deep);font-weight:700;letter-spacing:.18em;font-size:12px;margin-bottom:8px}
-  h2.title{font-family:"Noto Serif KR",serif;font-size:27px;font-weight:900;letter-spacing:-.01em}
-  .sec-sub{color:var(--ink-soft);font-size:15px;margin-top:6px}
-  .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:34px;align-items:start}
-  .about-text p{color:#4A423A;font-size:15.5px;margin-bottom:14px}
-  .facts{list-style:none;margin-top:18px;display:grid;gap:9px}
-  .facts li{display:flex;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
-  .facts .k{flex:none;width:74px;color:var(--gold-deep);font-weight:800;font-size:13.5px}
-  .facts .v{color:var(--ink);font-size:13.5px}
-  .about-photos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .about-photos figure{margin:0;border-radius:13px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff}
-  .about-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
-  .about-photos figcaption{font-size:11.5px;color:var(--ink-soft);text-align:center;padding:8px 4px;background:var(--paper)}
-  .bb-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
-  .books2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .bookcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
-  .bookcover{position:relative;width:100%;aspect-ratio:3/4;background:#F2E9DA}
-  .bookcover img{width:100%;height:100%;object-fit:cover;display:block}
-  .cover-fb{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:18px 16px;color:#fff}
-  .cover-fb .ct{font-family:"Noto Serif KR",serif;font-weight:900;font-size:21px;line-height:1.3}
-  .cover-fb .ca{font-size:12.5px;opacity:.9}
-  .cover1{background:linear-gradient(160deg,#8C6B37,#B18B4F)}
-  .cover2{background:linear-gradient(160deg,#B0246F,#D0247E)}
-  .bookcard .bmeta{padding:12px 14px}
-  .bookcard b{display:block;font-size:14.5px;font-weight:800}
-  .bookcard small{color:var(--ink-soft);font-size:12px}
-  .cast{display:grid;gap:12px}
-  .castphotos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .castphotos img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:13px;border:1px solid var(--line);box-shadow:var(--shadow)}
-  .castlist{list-style:none;display:grid;gap:8px}
-  .castlist li{display:flex;gap:11px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-size:13.5px}
-  .castlist .badge{flex:none;font-size:11px;font-weight:800;color:#fff;background:var(--pink);padding:3px 9px;border-radius:999px}
-  .videos{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-  .vid{display:block}
-  .vframe{position:relative;width:100%;height:0;padding-bottom:56.25%;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#000}
-  .vframe img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .vframe .playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;background:rgba(208,36,126,.92);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;padding-left:4px;box-shadow:0 6px 20px rgba(0,0,0,.4);transition:.2s}
-  .vid:hover .playbtn{transform:translate(-50%,-50%) scale(1.08);background:var(--pink)}
-  .vid b{display:block;margin-top:12px;font-size:15px;font-weight:700}
-  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  .card{display:flex;align-items:center;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:18px 20px;transition:.18s}
-  .card:hover{border-color:var(--gold);box-shadow:var(--shadow);transform:translateY(-2px)}
-  .card .ic{width:46px;height:46px;flex:none;border-radius:11px;background:#F4ECDD;display:flex;align-items:center;justify-content:center;font-size:22px}
-  .card b{display:block;font-size:15.5px;font-weight:700}
-  .card small{color:var(--ink-soft);font-size:12.5px}
-  .card .dl{margin-left:auto;flex:none;font-size:13px;font-weight:800;color:#fff;background:var(--gold);padding:9px 14px;border-radius:9px;transition:.18s}
-  .card .dl:hover{background:var(--gold-deep)}
-  .card.soon{opacity:.72}
-  .card.soon .dl{background:#C9BEAD}
-  .lockbox{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow)}
-  .lockrow{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-  .lock-ic{width:48px;height:48px;border-radius:12px;background:#F4ECDD;display:flex;align-items:center;justify-content:center;font-size:24px}
-  .lockbox h3{font-size:19px;font-weight:800}
-  .lockbox p.desc{color:var(--ink-soft);font-size:14px}
-  .pwrow{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
-  .pwrow input{flex:1;min-width:180px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;font-size:15px;font-family:inherit;background:var(--cream)}
-  .pwrow input:focus{outline:none;border-color:var(--gold)}
-  .pwmsg{margin-top:10px;font-size:13.5px;min-height:18px}
-  .pwmsg.err{color:var(--pink)}
-  .pwmsg.ok{color:#2E8B57}
-  .unlocked{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
-  .unlocked.show{display:block}
-  .lecbtns{display:flex;gap:10px;flex-wrap:wrap}
-  .examcard{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:linear-gradient(120deg,#8C6B37,#D0247E);border-radius:20px;padding:30px 34px;color:#fff;box-shadow:var(--shadow)}
-  .examcard .sec-tag{color:#F6E7C8}
-  .examcard h2{font-family:"Noto Serif KR",serif;font-size:25px;font-weight:900;margin:2px 0 6px}
-  .examcard p{font-size:14.5px;color:#F3E7D9;max-width:460px}
-  .examcard .btn{background:#fff;color:#8C1E5A;border-color:#fff;font-size:16px;padding:15px 26px}
-  .examcard .btn:hover{background:#FDF0F6}
-  .board-form{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin-bottom:22px}
-  .board-row1{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
-  .bd-input{flex:1;min-width:160px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;background:var(--cream)}
-  .bd-kind{display:flex;gap:6px}
-  .bd-kbtn{padding:10px 16px;border:1px solid var(--line);border-radius:10px;background:transparent;font-family:inherit;font-weight:700;font-size:14px;color:var(--ink-soft);cursor:pointer}
-  .bd-kbtn.active{background:var(--gold);color:#fff;border-color:var(--gold)}
-  .bd-textarea{width:100%;min-height:80px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;background:var(--cream);resize:vertical;margin-bottom:12px}
-  .bd-input:focus,.bd-textarea:focus{outline:none;border-color:var(--gold)}
-  .bd-msg{margin-left:12px;font-size:13px}
-  .bd-adminbar{display:flex;justify-content:flex-end;margin-bottom:10px}
-  .bd-adminlink{font-size:12.5px;color:var(--ink-soft);cursor:pointer;border:1px solid var(--line);padding:6px 12px;border-radius:8px;background:transparent}
-  .bd-adminlink:hover{border-color:var(--gold);color:var(--gold-deep)}
-  .bd-item.pending{border-style:dashed;background:#FBF3E7}
-  .bd-admin{display:flex;align-items:center;gap:10px;margin-top:10px}
-  .bd-abtn{font-size:12px;font-weight:800;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;color:#fff}
-  .bd-abtn.show{background:#2E8B57}.bd-abtn.hide{background:#B0857A}
-  .bd-state{font-size:11.5px;font-weight:700}
-  .bd-state.on{color:#2E8B57}.bd-state.off{color:var(--gold-deep)}
-  .board-feed{display:grid;gap:10px}
-  .bd-item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-  .bd-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-  .bd-tag{font-size:11px;font-weight:800;color:#fff;padding:2px 9px;border-radius:999px}
-  .bd-tag.q{background:var(--pink)}.bd-tag.c{background:var(--gold)}
-  .bd-name{font-weight:700;font-size:13.5px}
-  .bd-time{margin-left:auto;font-size:11.5px;color:var(--ink-soft)}
-  .bd-text{font-size:14.5px;color:var(--ink);white-space:pre-wrap;word-break:break-word}
-  .bd-empty{color:var(--ink-soft);font-size:14px;text-align:center;padding:20px}
-  .review{display:grid;grid-template-columns:1fr auto;gap:26px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px 28px;box-shadow:var(--shadow)}
-  .review h3{font-size:20px;font-weight:800;margin-bottom:6px}
-  .review p{color:var(--ink-soft);font-size:14.5px;margin-bottom:16px}
-  .qr{text-align:center}
-  .qr img{width:150px;height:150px;border-radius:12px;border:1px solid var(--line);background:#fff;padding:7px}
-  .qr small{display:block;color:var(--ink-soft);font-size:11.5px;margin-top:8px}
-  footer{background:#2A2621;color:#EBE3D6;padding:40px 0 34px;margin-top:6px}
-  footer .fgrid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:22px}
-  footer h4{color:var(--gold);font-family:"Noto Serif KR",serif;font-size:19px;margin-bottom:6px}
-  footer p{font-size:13.5px;color:#B7AD9E}
-  footer .fl{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
-  footer .fl a{border:1px solid rgba(255,255,255,.16);border-radius:9px;padding:8px 14px;font-size:13px;color:#E5D9C4}
-  footer .fl a:hover{background:var(--gold);color:#2A2621;border-color:var(--gold)}
-  .copy{margin-top:26px;font-size:12px;color:#7C7264;text-align:center}
-  @media(max-width:820px){
-    .hero-grid{grid-template-columns:1fr}
-    .portrait{max-width:260px;order:-1}
-    .hero h1{font-size:34px}
-    .about-grid,.bb-grid,.videos,.cards{grid-template-columns:1fr}
-    .review{grid-template-columns:1fr;text-align:center}
-    .qr{margin:0 auto}
-    .nav-links{display:none}
-  }
+  body{font-family:"Noto Sans KR",sans-serif;color:var(--ink);background:var(--cream);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:0;z-index:50;background:rgba(251,247,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-family:"Noto Serif KR",serif;font-weight:900;font-size:18px;color:var(--gold-deep);text-decoration:none}
+  .brand small{font-weight:500;color:var(--ink-soft);font-size:12px;margin-left:6px}
+  .home-link{font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:none;border:1px solid var(--line);padding:7px 14px;border-radius:999px;background:#fff}
+  .hero{text-align:center;padding:54px 20px 30px}
+  .hero .eyebrow{font-family:"Noto Serif KR",serif;letter-spacing:.28em;font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase}
+  .hero h1{font-family:"Noto Serif KR",serif;font-size:34px;font-weight:900;margin:12px 0 10px;line-height:1.3}
+  .hero h1 span{color:var(--pink)}
+  .hero p{color:var(--ink-soft);font-size:15.5px;max-width:640px;margin:0 auto}
+  .modes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0 6px}
+  .mode-chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:13.5px;font-weight:700;box-shadow:var(--shadow)}
+  .mode-chip b{color:var(--gold-deep)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:26px 0 10px}
+  @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:27px}}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .course{display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px 20px 18px;text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:transform .16s ease,box-shadow .16s ease,border-color .16s}
+  .course:hover{transform:translateY(-4px);box-shadow:0 20px 46px rgba(120,95,55,.18);border-color:var(--gold)}
+  .course .ic{font-size:34px;line-height:1;margin-bottom:12px}
+  .course h3{font-family:"Noto Serif KR",serif;font-size:19px;font-weight:900;margin-bottom:6px}
+  .course p{font-size:13.5px;color:var(--ink-soft);flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 14px}
+  .tag{font-size:11px;font-weight:700;color:var(--gold-deep);background:#F4ECDD;border-radius:999px;padding:3px 10px}
+  .enter{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-weight:800;font-size:14px;color:#fff;background:linear-gradient(135deg,var(--pink),#7A1F6B);padding:10px 18px;border-radius:999px}
+  .foot{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:34px 20px 40px;border-top:1px solid var(--line);margin-top:24px}
+  .foot a{color:var(--gold-deep);font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap nav">
-    <div class="brand">최해숙 <b>PERSONAL COLOR</b><small>PBS COLOR LAB</small></div>
-    <nav class="nav-links">
-      <a href="#about">강사소개</a>
-      <a href="#media">저서·방송</a>
-      <a href="#download">공개 자료</a>
-      <a href="#videos">영상</a>
-      <a href="#exam">자격시험</a>
-      <a href="#lecture">강의안</a>
-      <a href="#board">질문·소감</a>
-      <a href="#review">후기</a>
-    </nav>
-  </div>
-</header>
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow">PERSONAL COLOR · 전문가 강의</div>
-      <h1>나에게 어울리는 색을 찾는<br><span>퍼스널컬러</span> 강의</h1>
-      <div class="who serif">최해숙 · PBS COLOR LAB 대표 · 색채 전문가</div>
-      <p class="lead">사계절 퍼스널컬러 진단부터 이미지메이킹까지, 색으로 나를 표현하는 법을 배웁니다. 아래에서 강의 자료를 받고, 강의가 끝나면 후기를 남겨주세요.</p>
-      <div class="cta">
-        <a href="#download" class="btn btn-primary">📥 강의 자료 받기</a>
-        <a href="#exam" class="btn btn-ghost">📝 자격시험 응시</a>
-        <a href="#lecture" class="btn btn-ghost">🔒 최해숙 강의안</a>
-      </div>
-    </div>
-    <div class="portrait">
-      <img src="assets/profile.jpg" alt="최해숙 대표" onerror="this.parentNode.style.display='none'">
-    </div>
-  </div>
-</section>
-<section class="blk" id="about">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-tag">INSTRUCTOR</div>
-      <h2 class="title">강사 소개 — 최해숙 (Maria Choi)</h2>
-      <div class="sec-sub">색으로 희망을 선물하는 색채 전문가 · PBS COLOR LAB 대표</div>
-    </div>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>컬러테라피·퍼스널컬러 이미지메이킹·컬러강점을 아우르는 색채 전문가이자 글로벌 스피커, 작가입니다. 색이 가진 힘으로 사람들에게 자신감과 희망을 전합니다.</p>
-        <p>두바이·아부다비에서 K-Beauty 퍼스널컬러를 세계에 알리고, KOTRA·AICI를 통해 글로벌 교육 네트워크를 구축하고 있습니다. 공공기관·기업·대학·글로벌 현장에서 검증된 강의를 이어가고 있습니다.</p>
-        <ul class="facts">
-          <li><span class="k">전문분야</span><span class="v">퍼스널컬러 진단 · 골격분석 스타일링 · 컬러강점 소통</span></li>
-          <li><span class="k">글로벌</span><span class="v">두바이·아부다비 K-Beauty · KOTRA · AICI 네트워크</span></li>
-          <li><span class="k">방송·출연</span><span class="v">KBS 생생투데이 · 인물초대석 등 다수</span></li>
-          <li><span class="k">저서</span><span class="v">『상처도 스펙이다』 · 『색과 숫자의 기적』(번역)</span></li>
-        </ul>
-        <a class="btn btn-ghost" href="../downloads/최해숙_대표_프로필.html" target="_blank" style="margin-top:18px">📄 강사 프로필 자세히 보기 →</a>
-      </div>
-      <div class="about-photos">
-        <figure><img src="assets/global1.jpg" alt="두바이 강연" onerror="this.parentNode.style.display='none'"><figcaption>두바이 글로벌 강연</figcaption></figure>
-        <figure><img src="assets/global2.jpg" alt="글로벌 협약식" onerror="this.parentNode.style.display='none'"><figcaption>글로벌 교육 협약</figcaption></figure>
-        <figure><img src="assets/global3.jpg" alt="아부다비 활동" onerror="this.parentNode.style.display='none'"><figcaption>아부다비 K-Beauty</figcaption></figure>
-        <figure><img src="assets/lecture3.jpg" alt="작가 초청 강연" onerror="this.parentNode.style.display='none'"><figcaption>작가 초청 강연</figcaption></figure>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="blk" id="media">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-tag">BOOKS &amp; MEDIA</div>
-      <h2 class="title">저서 &amp; 방송활동</h2>
-      <div class="sec-sub">글과 방송으로도 색의 메시지를 전하는 최해숙 대표입니다.</div>
-    </div>
-    <div class="bb-grid">
-      <div class="books2">
-        <div class="bookcard">
-          <div class="bookcover">
-            <img src="assets/book1.png" alt="상처도 스펙이다" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="cover-fb cover1" style="display:none"><span class="ct">상처도<br>스펙이다</span><span class="ca">최해숙 지음</span></div>
-          </div>
-          <div class="bmeta"><b>상처도 스펙이다</b><small>삶의 무게를 견디는 이들에게 보내는 희망 메시지</small><br>
-            <a href="https://product.kyobobook.co.kr/detail/S000001907183" target="_blank" style="font-size:12px;color:var(--gold-deep);font-weight:700">교보문고에서 보기 →</a></div>
-        </div>
-        <div class="bookcard">
-          <div class="bookcover">
-            <img src="assets/book2.png" alt="색과 숫자의 기적" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="cover-fb cover2" style="display:none"><span class="ct">색과<br>숫자의 기적</span><span class="ca">루이스 헤이 원작 · 최해숙 번역</span></div>
-          </div>
-          <div class="bmeta"><b>색과 숫자의 기적</b><small>나에게 맞는 우주의 진동을 찾는 컬러 &amp; 숫자 자기계발서</small><br>
-            <a href="https://product.kyobobook.co.kr/detail/S000210778295" target="_blank" style="font-size:12px;color:var(--gold-deep);font-weight:700">교보문고에서 보기 →</a></div>
-        </div>
-      </div>
-      <div class="cast">
-        <div class="castphotos">
-          <img src="assets/broadcast1.jpg" alt="방송 출연 장면 1" onerror="this.style.display='none'">
-          <img src="assets/broadcast2.jpg" alt="방송 출연 장면 2" onerror="this.style.display='none'">
-        </div>
-        <ul class="castlist">
-          <li><span class="badge">TV</span> 방송 출연 — 개인 색채 맞춤 전문가로 소개</li>
-          <li><span class="badge">TV</span> KBS 아침마당 출연</li>
-          <li><span class="badge">TV</span> KBS 생생투데이 · 인물초대석 등 다수 출연</li>
-          <li><span class="badge">YouTube</span> PBS COLOR LAB 공식 채널 운영</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="blk" id="download">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-tag">DOWNLOAD</div>
-      <h2 class="title">공개 자료 다운로드</h2>
-      <div class="sec-sub">수강생 누구나 자유롭게 받아가실 수 있는 자료입니다.</div>
-    </div>
-    <div class="cards" id="pubCards">
-      <a class="card" data-file="자료/공개/여성옷.pdf" href="자료/공개/여성옷.pdf" download>
-        <span class="ic">👗</span>
-        <span><b>퍼스널컬러 여성옷</b><small>계절 유형별 여성 의상 가이드</small></span>
-        <span class="dl">받기</span>
-      </a>
-      <a class="card" data-file="자료/공개/추천화장품.pdf" href="자료/공개/추천화장품.pdf" download>
-        <span class="ic">💄</span>
-        <span><b>추천 화장품</b><small>퍼스널컬러별 추천 코스메틱</small></span>
-        <span class="dl">받기</span>
-      </a>
-      <a class="card" data-file="자료/공개/4계절컬러.pdf" href="자료/공개/4계절컬러.pdf" download>
-        <span class="ic">🎨</span>
-        <span><b>4계절 컬러</b><small>봄·여름·가을·겨울 색상표</small></span>
-        <span class="dl">받기</span>
-      </a>
-      <a class="card" data-file="자료/공개/남성옷.pdf" href="자료/공개/남성옷.pdf" download>
-        <span class="ic">👔</span>
-        <span><b>퍼스널컬러 남성옷</b><small>계절 유형별 남성 의상 가이드</small></span>
-        <span class="dl">받기</span>
-      </a>
-    </div>
-  </div>
-</section>
-<section class="blk" id="videos">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-tag">VIDEO</div>
-      <h2 class="title">영상으로 배우는 퍼스널컬러</h2>
-      <div class="sec-sub">이미지를 클릭하면 유튜브에서 영상이 재생됩니다.</div>
-    </div>
-    <div class="videos">
-      <a class="vid" href="https://www.youtube.com/watch?v=r91hCSsGIlg" target="_blank">
-        <div class="vframe">
-          <img src="https://img.youtube.com/vi/r91hCSsGIlg/hqdefault.jpg" alt="퍼스널컬러 4계절 분류">
-          <span class="playbtn">▶</span>
-        </div>
-        <b>퍼스널컬러 4계절 분류, 어렵다구?</b>
-      </a>
-      <a class="vid" href="https://www.youtube.com/watch?v=U8lYQfpU-gc" target="_blank">
-        <div class="vframe">
-          <img src="https://img.youtube.com/vi/U8lYQfpU-gc/hqdefault.jpg" alt="웜톤 쿨톤 구별 방법">
-          <span class="playbtn">▶</span>
-        </div>
-        <b>웜톤·쿨톤 구별 방법</b>
-      </a>
-    </div>
-  </div>
-</section>
-<section class="blk" id="exam">
-  <div class="wrap">
-    <div class="examcard">
-      <div>
-        <div class="sec-tag">CERTIFICATE EXAM</div>
-        <h2>퍼스널컬러 자격시험 응시하기</h2>
-        <p>K-BEAUTY 퍼스널컬러 스타일리스트 자격시험에 온라인으로 응시하고, 결과를 바로 확인하세요.</p>
-      </div>
-      <a class="btn" href="https://personalcolor-exam.vercel.app" target="_blank">📝 응시하러 가기 →</a>
-    </div>
-  </div>
-</section>
-<section class="blk" id="lecture">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-tag">LECTURE</div>
-      <h2 class="title">강의안 (비공개)</h2>
-    </div>
-    <div class="lockbox">
-      <div class="lockrow">
-        <div class="lock-ic">🔒</div>
-        <div>
-          <h3>퍼스널컬러 강사용 슬라이드 (3종)</h3>
-          <p class="desc">자격과정용 · 특강용 · 남자용 — 비밀번호를 입력하세요.</p>
-        </div>
-      </div>
-      <div class="pwrow">
-        <input type="password" id="pw" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')tryUnlock()">
-        <button class="btn btn-primary" onclick="tryUnlock()">열기</button>
-      </div>
-      <div class="pwmsg" id="pwmsg"></div>
-      <div class="unlocked" id="unlocked">
-        <div class="lecbtns">
-          <a class="btn btn-primary" href="자료/퍼스널컬러_자격과정.pdf" target="_blank">📊 자격과정용</a>
-          <a class="btn btn-primary" href="자료/퍼스널컬러_특강.pdf" target="_blank">📊 특강용</a>
-          <a class="btn btn-primary" href="자료/퍼스널컬러_남자.pdf" target="_blank">📊 남자용</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="blk" id="board">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-tag">LIVE BOARD</div>
-      <h2 class="title">수업 질문 · 소감</h2>
-      <div class="sec-sub">수업 중 궁금한 점이나 소감을 남겨주세요. 남긴 글은 강사 승인 후 함께 표시됩니다.</div>
-    </div>
-    <div class="board-form">
-      <div class="board-row1">
-        <input id="bdName" class="bd-input" placeholder="이름(선택)" maxlength="20">
-        <div class="bd-kind">
-          <button type="button" class="bd-kbtn active" data-kind="질문" onclick="bdSetKind(this)">질문</button>
-          <button type="button" class="bd-kbtn" data-kind="소감" onclick="bdSetKind(this)">소감</button>
-        </div>
-      </div>
-      <textarea id="bdMsg" class="bd-textarea" placeholder="내용을 입력하세요" maxlength="1000"></textarea>
-      <button class="btn btn-primary" onclick="bdSubmit()">남기기 →</button>
-      <span class="bd-msg" id="bdStatus"></span>
-    </div>
-    <div class="bd-adminbar"><button class="bd-adminlink" id="bdAdminBtn" onclick="bdAdminToggle()">관리자</button></div>
-    <div class="board-feed" id="bdFeed"><div class="bd-empty">불러오는 중…</div></div>
-  </div>
-</section>
+  <div class="top"><div class="wrap">
+    <a class="brand" href="/">PBS COLOR LAB<small>강의실</small></a>
+    <a class="home-link" href="/">← 브랜드 허브</a>
+  </div></div>
 
-<section class="blk" id="review">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-tag">REVIEW</div>
-      <h2 class="title">강의 후기 남기기</h2>
-      <div class="sec-sub">QR을 스캔하거나 버튼을 눌러 별점·소감을 남겨주세요. 검토 후 홈페이지에 게시됩니다.</div>
+  <header class="hero">
+    <div class="eyebrow">Class Room</div>
+    <h1>최해숙 <span>강의실</span></h1>
+    <p>수강 중인 과정을 선택하세요. 교육생은 강의 자료를 바로 받아가고, 강사는 USB 없이 이 화면에서 강의를 진행합니다.</p>
+    <div class="modes">
+      <span class="mode-chip">🎒 <b>교육생</b> · 강의 자료 받기</span>
+      <span class="mode-chip">🎤 <b>강사</b> · 강의모드 바로 열기</span>
     </div>
-    <div class="review">
-      <div>
-        <h3>오늘 강의 어떠셨나요?</h3>
-        <p>여러분의 소중한 한마디가 다음 강의를 더 좋게 만듭니다. 별점과 소감을 남겨주세요.</p>
-        <a class="btn btn-primary" href="https://pbscolor.com/#testimonials" target="_blank">✍️ 후기 작성하러 가기 →</a>
-      </div>
-      <div class="qr">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=https%3A%2F%2Fpbscolor.com%2F%23testimonials" alt="후기 QR코드">
-        <small>📱 휴대폰으로 스캔</small>
-      </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid" id="courseGrid">
+      <a class="course" href="퍼스널컬러.html"><div class="ic">🎨</div><h3>퍼스널컬러</h3><p>퍼스널컬러 진단·이미지메이킹</p><div class="tags"><span class="tag">진단</span><span class="tag">이미지</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="course.html?c=skeleton"><div class="ic">🏋</div><h3>골격분석</h3><p>골격유형별 스타일링</p><div class="tags"><span class="tag">스타일링</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="course.html?c=colorstrength"><div class="ic">💎</div><h3>컬러강점</h3><p>컬러강점 기반 소통·조직활성화</p><div class="tags"><span class="tag">소통</span><span class="tag">팀빌딩</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="course.html?c=colortherapy"><div class="ic">🌈</div><h3>컬러테라피</h3><p>컬러 힐링·마음 회복</p><div class="tags"><span class="tag">힐링</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="course.html?c=future"><div class="ic">🌟</div><h3>퇴직예정자 미래설계</h3><p>생애설계·인생 후반전</p><div class="tags"><span class="tag">생애설계</span><span class="tag">시니어</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="course.html?c=cert"><div class="ic">🎓</div><h3>전문가 자격과정</h3><p>퍼스널컬러·골격분석 전문가 양성</p><div class="tags"><span class="tag">자격과정</span></div><span class="enter">입장 →</span></a>
     </div>
+  </main>
+
+  <div class="foot">
+    © PBS COLOR LAB · 최해숙 Maria Choi &nbsp;·&nbsp; 문의 <a href="tel:+821042857997">+82-10-4285-7997</a><br>
+    <a href="/">브랜드 허브 홈으로</a>
   </div>
-</section>
-<footer>
-  <div class="wrap fgrid">
-    <div>
-      <h4>PBS COLOR LAB</h4>
-      <p>색으로 희망을 선물하는 색채 전문가 최해숙 (Maria Choi)</p>
-      <p>퍼스널컬러 · 골격진단 스타일링 · 컬러강점 · 글로벌 K-Beauty</p>
-    </div>
-    <div>
-      <div class="fl">
-        <a href="https://pbscolor.com" target="_blank">🌐 pbscolor.com</a>
-        <a href="https://www.instagram.com/pbscolor_ceo" target="_blank">📸 Instagram</a>
-        <a href="https://www.youtube.com/channel/UCNytdhe17jo4-uChJbR9hWw" target="_blank">▶ YouTube</a>
-      </div>
-    </div>
-  </div>
-  <div class="copy">© PBS COLOR LAB · 퍼스널컬러 강의 페이지</div>
-</footer>
+
 <script>
-  var LECTURE_PW = "8808";
-  function tryUnlock(){
-    var v=document.getElementById('pw').value.trim();
-    var msg=document.getElementById('pwmsg');
-    var box=document.getElementById('unlocked');
-    if(v===LECTURE_PW){
-      box.classList.add('show');
-      msg.className='pwmsg ok'; msg.textContent='✓ 잠금 해제되었습니다.';
-    }else{
-      box.classList.remove('show');
-      msg.className='pwmsg err'; msg.textContent='비밀번호가 올바르지 않습니다.';
-    }
-  }
-  document.querySelectorAll('#pubCards .card').forEach(function(c){
-    var f=c.getAttribute('data-file');
-    fetch(f,{method:'HEAD'}).then(function(r){
-      if(!r.ok){ c.classList.add('soon'); c.querySelector('.dl').textContent='준비중'; c.removeAttribute('href'); }
-    }).catch(function(){});
-  });
-
-  /* ===== 수업 질문·소감 실시간 게시판 (Supabase) ===== */
-  var SB_URL="https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
-  var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8";
-  var SB_H={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY};
-  var bdKind="질문";
-  var bdAdmin=false;
-  function bdSetKind(el){bdKind=el.getAttribute('data-kind');document.querySelectorAll('.bd-kbtn').forEach(function(b){b.classList.remove('active');});el.classList.add('active');}
-  function bdEsc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  function bdTime(t){try{var d=new Date(t);var h=d.getHours(),m=d.getMinutes();return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;}catch(e){return '';}}
-  function bdAdminToggle(){
-    if(bdAdmin){bdAdmin=false;document.getElementById('bdAdminBtn').textContent='관리자';bdLoad();return;}
-    var p=prompt('관리자 비밀번호를 입력하세요');
-    if(p==='8808'){bdAdmin=true;document.getElementById('bdAdminBtn').textContent='관리자 해제';bdLoad();}
-    else if(p!==null){alert('비밀번호가 올바르지 않습니다.');}
-  }
-  function bdApprove(id,val){
-    fetch(SB_URL+"/rest/v1/class_board?id=eq."+id,{method:"PATCH",headers:Object.assign({'Content-Type':'application/json',Prefer:'return=minimal'},SB_H),body:JSON.stringify({approved:val})})
-    .then(function(r){ if(r.ok) bdLoad(); });
-  }
-  function bdLoad(){
-    fetch(SB_URL+"/rest/v1/class_board?select=*&order=created_at.desc&limit=100",{headers:SB_H})
-    .then(function(r){return r.json();}).then(function(rows){
-      var f=document.getElementById('bdFeed'); if(!f||!rows)return;
-      var list=bdAdmin?rows:rows.filter(function(x){return x.approved;});
-      if(!list.length){f.innerHTML='<div class="bd-empty">'+(bdAdmin?'글이 없습니다.':'아직 게시된 글이 없어요.')+'</div>';return;}
-      f.innerHTML=list.map(function(x){
-        var q=x.kind==='질문';
-        var adm=bdAdmin?('<div class="bd-admin">'+(x.approved?'<button class="bd-abtn hide" onclick="bdApprove('+x.id+',false)">숨김</button>':'<button class="bd-abtn show" onclick="bdApprove('+x.id+',true)">게시</button>')+'<span class="bd-state '+(x.approved?'on':'off')+'">'+(x.approved?'게시중':'대기중')+'</span></div>'):'';
-        return '<div class="bd-item'+(bdAdmin&&!x.approved?' pending':'')+'"><div class="bd-top"><span class="bd-tag '+(q?'q':'c')+'">'+(q?'질문':'소감')+'</span><span class="bd-name">'+bdEsc(x.name||'익명')+'</span><span class="bd-time">'+bdTime(x.created_at)+'</span></div><div class="bd-text">'+bdEsc(x.message)+'</div>'+adm+'</div>';
-      }).join('');
-    }).catch(function(){});
-  }
-  function bdSubmit(){
-    var msg=document.getElementById('bdMsg').value.trim();
-    var name=document.getElementById('bdName').value.trim();
-    var st=document.getElementById('bdStatus');
-    if(!msg){st.style.color='#D0247E';st.textContent='내용을 입력해주세요.';return;}
-    st.style.color='#6B6157';st.textContent='보내는 중…';
-    fetch(SB_URL+"/rest/v1/class_board",{method:"POST",headers:Object.assign({'Content-Type':'application/json'},SB_H),body:JSON.stringify({name:name||null,kind:bdKind,message:msg})})
-    .then(function(r){ if(r.ok){document.getElementById('bdMsg').value='';st.style.color='#2E8B57';st.textContent='✓ 등록됐어요! 강사 승인 후 게시됩니다.';bdLoad();setTimeout(function(){st.textContent='';},3000);} else {st.style.color='#D0247E';st.textContent='오류가 발생했어요. 다시 시도해주세요.';}})
-    .catch(function(){st.style.color='#D0247E';st.textContent='네트워크 오류가 발생했어요.';});
-  }
-  if(document.getElementById('bdFeed')){ bdLoad(); setInterval(bdLoad,8000); }
+/* 강의실 과정 목록 — Supabase 설정으로 덮어쓰기(없으면 정적 기본값 유지) */
+var SUPA_URL='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+fetch(SUPA_URL+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}})
+ .then(function(r){return r.json();})
+ .then(function(rows){
+   if(!rows||!rows.length||!rows[0].value||!rows[0].value.length)return;
+   var items=rows[0].value;
+   var grid=document.getElementById('courseGrid');
+   grid.innerHTML=items.map(function(it){
+     var page=it.page||('course.html?c='+(it.id||''));
+     var tags=(it.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
+     return '<a class="course" href="'+esc(page)+'"><div class="ic">'+(it.icon||'📘')+'</div>'
+       +'<h3>'+esc(it.title||'')+'</h3><p>'+esc(it.desc||'')+'</p>'
+       +'<div class="tags">'+tags+'</div><span class="enter">입장 →</span></a>';
+   }).join('');
+ }).catch(function(e){});
 </script>
 </body>
 </html>
