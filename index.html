@@ -730,7 +730,7 @@
       <div class="hero-actions">
         <a class="btn primary" href="downloads/최해숙_대표_프로필.html" target="_blank" rel="noopener" data-i18n="hero.btn1">📄 프로필 다운로드</a>
         <a class="btn gold" href="#downloads" data-i18n="hero.btn2">📚 강의기획안 보기</a>
-        <a class="btn outline" href="#contact" data-i18n="hero.btn3">✉ 강의 문의</a>
+        <a class="btn outline" href="#qaboard" data-i18n="hero.btn3">💬 질문·소감 작성</a>
       </div>
     </div>
   </div>
@@ -902,7 +902,7 @@
   <div class="wrap">
     <div style="text-align:center;margin-bottom:8px">
       <div class="sec-label">Download Center</div>
-      <h2 data-i18n="dl.title">자료실 <span class="g">바로 다운로드</span></h2>
+      <h2 data-i18n="dl.title">교육담당자 <span class="g">기획안 다운받기</span></h2>
       <p class="subdesc" style="margin:0 auto;margin-top:10px" data-i18n="dl.desc">강의 담당자용 자료입니다. 대표 프로필과 과정별 강의기획안 PDF를 바로 다운로드하세요. (교육생·수강 자료는 상단 &lsquo;강의실 입장&rsquo;에서 이용하세요)</p>
     </div>
     <div class="dl-grid" id="dlGrid">
@@ -1324,6 +1324,86 @@
 </section>
 
 <!-- ═══ CONTACT ═══ -->
+<!-- ═══ 수업 질문·소감 (LIVE BOARD) ═══ -->
+<section style="padding:90px 22px" id="qaboard">
+  <style>
+    #qaboard .qb-kind{flex:1;padding:11px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:14px;font-weight:800;cursor:pointer}
+    #qaboard .qb-kind.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+    #qaboard .qb-item{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+    #qaboard .qb-tag{font-size:11px;font-weight:900;color:#fff;border-radius:999px;padding:2px 9px}
+    #qaboard .qb-tag.q{background:var(--pink)}#qaboard .qb-tag.c{background:#B18B4F}
+    #qaboard .qb-course{font-size:11px;font-weight:800;color:var(--pink);background:rgba(230,0,126,.12);border:1px solid rgba(230,0,126,.3);border-radius:999px;padding:2px 9px}
+  </style>
+  <div class="wrap" style="max-width:760px">
+    <div style="text-align:center;margin-bottom:22px">
+      <div class="sec-label">Live Board</div>
+      <h2>수업 <span class="g">질문 · 소감</span></h2>
+      <p class="subdesc" style="margin:10px auto 0">교육과정과 이름(예명 가능)을 적고 질문이나 소감을 남겨주세요. 강사 승인 후 게시됩니다.</p>
+    </div>
+    <div style="background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:18px;padding:20px">
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <button type="button" class="qb-kind on" id="qbBtnQ" onclick="qbKind('질문')">질문</button>
+        <button type="button" class="qb-kind" id="qbBtnC" onclick="qbKind('소감')">소감</button>
+      </div>
+      <select id="qbCourse" class="tf-input" style="margin-bottom:10px">
+        <option value="">교육과정 선택</option>
+        <option>퍼스널컬러</option>
+        <option>골격분석</option>
+        <option>컬러강점</option>
+        <option>컬러테라피</option>
+        <option>퇴직예정자 미래설계</option>
+        <option>전문가 자격과정</option>
+        <option>기타</option>
+      </select>
+      <input id="qbName" class="tf-input" type="text" placeholder="이름 (예명 가능)" maxlength="24" style="margin-bottom:10px">
+      <textarea id="qbMsg" class="tf-input" rows="3" placeholder="내용을 입력하세요" style="margin-bottom:12px;resize:vertical"></textarea>
+      <button class="btn primary" style="width:100%;justify-content:center" onclick="qbSubmit()">남기기 →</button>
+      <p id="qbStat" style="text-align:center;font-size:13px;font-weight:800;margin-top:10px;display:none"></p>
+    </div>
+    <div id="qbFeed" style="margin-top:18px;display:flex;flex-direction:column;gap:10px"></div>
+  </div>
+</section>
+<script>
+(function(){
+  var U='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+  var H={apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'};
+  var kind='질문';
+  function esc(x){return (x||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function fmt(t){try{var d=new Date(t);function z(n){return(n<10?'0':'')+n;}return d.getFullYear()+'.'+z(d.getMonth()+1)+'.'+z(d.getDate())+' '+z(d.getHours())+':'+z(d.getMinutes());}catch(e){return '';}}
+  window.qbKind=function(k){kind=k;document.getElementById('qbBtnQ').classList.toggle('on',k==='질문');document.getElementById('qbBtnC').classList.toggle('on',k==='소감');};
+  window.qbSubmit=function(){
+    var course=document.getElementById('qbCourse').value;
+    var name=(document.getElementById('qbName').value||'').trim()||'익명';
+    var msg=(document.getElementById('qbMsg').value||'').trim();
+    var st=document.getElementById('qbStat');st.style.display='block';
+    if(!course){st.style.color='#FF6BB0';st.textContent='교육과정을 선택해주세요.';return;}
+    if(!msg){st.style.color='#FF6BB0';st.textContent='내용을 입력해주세요.';return;}
+    st.style.color='#E7C15B';st.textContent='등록 중…';
+    fetch(U+'/rest/v1/class_board',{method:'POST',headers:Object.assign({Prefer:'return=minimal'},H),body:JSON.stringify({name:name,kind:kind,message:msg,course:course,approved:false})})
+    .then(function(r){if(r.ok){document.getElementById('qbMsg').value='';st.style.color='#7ED0A5';st.textContent='✓ 등록됐어요! 강사 승인 후 게시됩니다.';qbLoad();setTimeout(function(){st.style.display='none';},3500);}else{st.style.color='#FF6BB0';st.textContent='오류가 발생했어요. 다시 시도해주세요.';}})
+    .catch(function(){st.style.color='#FF6BB0';st.textContent='오류가 발생했어요.';});
+  };
+  function qbLoad(){
+    fetch(U+'/rest/v1/class_board?select=*&approved=eq.true&order=created_at.desc&limit=100',{headers:H})
+    .then(function(r){return r.json();}).then(function(rows){
+      var f=document.getElementById('qbFeed');if(!f)return;
+      if(!rows||!rows.length){f.innerHTML='';return;}
+      f.innerHTML=rows.map(function(x){
+        var q=x.kind==='질문';
+        var course=x.course?'<span class="qb-course">'+esc(x.course)+'</span>':'';
+        return '<div class="qb-item"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
+          +'<span class="qb-tag '+(q?'q':'c')+'">'+esc(x.kind||'')+'</span>'+course
+          +'<b style="font-size:14px">'+esc(x.name||'익명')+'</b>'
+          +'<span style="margin-left:auto;font-size:12px;color:rgba(255,255,255,.4)">'+fmt(x.created_at)+'</span></div>'
+          +'<div style="margin-top:7px;white-space:pre-wrap;color:rgba(255,255,255,.85)">'+esc(x.message)+'</div></div>';
+      }).join('');
+    }).catch(function(){});
+  }
+  window.qbLoad=qbLoad; qbLoad();
+})();
+</script>
+
 <section class="contact" id="contact">
   <div class="wrap">
     <div class="contact-inner">
@@ -1456,7 +1536,7 @@ ko:{
   "stat.years":"강의 경력","stat.globe":"글로벌","stat.globesub":"글로벌 진출국","stat.kbs":"방송 출연","stat.books":"방송·저서",
   "nav.shop":"컬러샵",
   "shop.title":"컬러 교구 · <span class=\"g\">K-Beauty 컬러샵</span>","shop.desc":"퍼스널컬러 교육 전용 교구 및 K-Beauty 코스메틱 — 전문가가 직접 큐레이션한 컬러 제품을 만나보세요","shop.p1name":"퍼스널컬러 드레이프 세트","shop.p1desc":"전문가용 퍼스널컬러 진단 드레이프 — PBS COLOR LAB 인증","shop.p2cat":"PBS 컬러강점 진단","shop.p2name":"컬러강점 진단 키트","shop.p2desc":"PBS 컬러강점 검사 공식 교재 및 워크북 — 창시자 최해숙 직강 인증","shop.p3name":"K-Beauty 컬러 코스메틱","shop.p3desc":"퍼스널컬러 전문가 큐레이션 K-Beauty 코스메틱 — 해외 수출 인증 제품","shop.inquiry":"문의 주문","shop.order":"주문하기","shop.soon":"준비중","shop.notice":"🔒 온라인 스토어 오픈 준비중 · 주문 및 문의:","cc.phone.btn":"📱 +82-10-4285-7997","cc.profile.btn":"📄 프로필 다운로드","cc.global.btn":"🌏 글로벌 문의",
-  "hero.btn1":"📄 프로필 다운로드","hero.btn2":"📚 강의기획안 보기","hero.btn3":"✉ 교육 문의하기",
+  "hero.btn1":"📄 프로필 다운로드","hero.btn2":"📚 강의기획안 보기","hero.btn3":"💬 질문·소감 작성",
   "hero.name":"최해숙 Maria Choi","hero.role":"PBS COLOR LAB CEO · 교육전략가 · 글로벌 강연가",
   "marquee":"KBS 방송 출연 | 두바이·아부다비 글로벌 강연 | 대구가톨릭대 교수 | AICI KC 부회장 | 현대자동차·HD현대 교육 | 퍼스널컬러 전문가 | 저서 출간 | AI 자동화 교육 | 꿈파쇼 회장",
   "about.title":"컬러로 브랜드를 디자인하다",
@@ -1480,7 +1560,7 @@ ko:{
   "prog.p5t":"대학교 취업캠프","prog.p5d":"취업 이미지메이킹, 자기소개서 브랜딩, 면접 이미지, 자기이해",
   "prog.p6t":"교사·공무원 연수","prog.p6d":"학생 이해, 민원·조직소통, 스트레스 관리, 강점 기반 커뮤니케이션",
   "gallery.title":"현장 <span class=\"g\">활동사진</span>","gal.g1":"퍼스널컬러 강의 현장","gal.g3":"KBS 방송 출연","gal.g4":"방송 현장","gal.g5":"이미지메이킹 강의",
-  "dl.title":"자료실","dl.desc":"강의 담당자용 자료입니다. 대표 프로필과 과정별 강의기획안 PDF를 바로 다운로드하세요. (교육생·수강 자료는 상단 &lsquo;강의실 입장&rsquo;에서 이용하세요)",
+  "dl.title":"교육담당자 기획안 다운받기","dl.desc":"강의 담당자용 자료입니다. 대표 프로필과 과정별 강의기획안 PDF를 바로 다운로드하세요. (교육생·수강 자료는 상단 &lsquo;강의실 입장&rsquo;에서 이용하세요)",
   "dl.c1t":"전체 프로필 PDF","dl.c1d":"대표 이력·강의·글로벌 레퍼런스 통합본",
   "dl.c2t":"퍼스널컬러 강의기획안","dl.c2d":"이미지메이킹 전문 과정 기획안",
   "dl.c3t":"골격분석 강의기획안","dl.c3d":"이미지스타일링 전문 강의 기획안",
