@@ -636,6 +636,20 @@
     .star-rating{display:flex;justify-content:center;gap:8px;margin-bottom:16px}
     .star{font-size:36px;color:rgba(255,255,255,.2);cursor:pointer;transition:.15s;user-select:none}
     .star.active,.star:hover{color:#FFD700;text-shadow:0 0 12px rgba(255,215,0,.5)}
+    /* 화면표시용 접속 QR 배지 */
+    .qr-badge{position:fixed;right:18px;bottom:18px;z-index:9000;background:#fff;border-radius:14px;padding:9px 9px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;box-shadow:0 12px 32px rgba(0,0,0,.4);cursor:pointer;border:1px solid rgba(230,0,126,.3);transition:transform .15s}
+    .qr-badge:hover{transform:translateY(-2px)}
+    .qr-badge img{border-radius:6px;display:block;width:96px;height:96px}
+    .qr-badge .lb{font-size:11px;font-weight:800;color:#16162A;text-align:center;line-height:1.35}
+    .qr-badge .lb b{color:#E6007E}
+    .qr-big{position:fixed;inset:0;z-index:10001;background:rgba(8,8,16,.88);display:none;align-items:center;justify-content:center;cursor:pointer}
+    .qr-big.show{display:flex}
+    .qr-big .inner{background:#fff;border-radius:20px;padding:28px 30px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .qr-big .inner img{width:300px;height:300px;border-radius:10px;display:block;margin:0 auto}
+    .qr-big .inner p{margin-top:14px;font-size:16px;font-weight:800;color:#16162A}
+    .qr-big .inner span{display:block;font-size:13px;color:#6b6b7a;margin-top:2px}
+    @media(max-width:768px){.qr-badge{display:none}}
+    @media print{.qr-badge{display:none}}
   </style>
 </head>
 <body>
@@ -1346,6 +1360,19 @@
     </div>
   </div>
 </section>
+
+<!-- 화면표시용 접속 QR (데스크톱/프로젝터 전용, 폰에서는 숨김) -->
+<div class="qr-badge" onclick="document.getElementById('qrBig').classList.add('show')" title="폰으로 스캔해 접속">
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=https%3A%2F%2Fpbscolor.com" alt="pbscolor.com 접속 QR" loading="lazy">
+  <div class="lb">📱 폰으로 <b>바로 접속</b><br>스캔하세요</div>
+</div>
+<div class="qr-big" id="qrBig" onclick="this.classList.remove('show')">
+  <div class="inner">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data=https%3A%2F%2Fpbscolor.com" alt="pbscolor.com 접속 QR">
+    <p>스캔하면 폰에서 바로 열립니다</p>
+    <span>pbscolor.com</span>
+  </div>
+</div>
 
 </main>
 
