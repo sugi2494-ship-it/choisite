@@ -408,6 +408,14 @@ function supaConfigSave(key,value){
   var h=Object.assign({'Prefer':'resolution=merge-duplicates'},SUPA_H);
   fetch(SUPA_URL+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:h,body:JSON.stringify({key:key,value:value,updated_at:new Date().toISOString()})}).catch(function(e){console.warn('supaConfigSave',e);});
 }
+function saveConfig(key,value,label){
+  localStorage.setItem('pbs_'+key,JSON.stringify(value));
+  var h=Object.assign({'Prefer':'resolution=merge-duplicates'},SUPA_H);
+  toast('저장 중…');
+  fetch(SUPA_URL+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:h,body:JSON.stringify({key:key,value:value,updated_at:new Date().toISOString()})})
+   .then(function(r){ if(r.ok){toast('✓ '+label+' 저장 완료!');alert('✓ '+label+' 저장 완료!\n\n홈페이지·강의실을 새로고침하면 반영됩니다.');} else {r.text().then(function(t){alert('❌ 저장 실패\n'+t);});} })
+   .catch(function(e){alert('❌ 저장 오류\n'+e);});
+}
 async function supaUpdateRow(table,id,data){
   try{
     var r=await supaFetch(table+'?id=eq.'+id,{method:'PATCH',body:JSON.stringify(data),extraH:{'Prefer':'return=minimal'}});
@@ -756,7 +764,7 @@ function confirmGalAdd(){
   renderGal();toast(count+'장 갤러리에 추가 완료!');
 }
 function addGalPics(inp){stageGalPics(inp);}
-function saveGal(){localStorage.setItem('pbs_gallery_config',JSON.stringify(getGalCfg()));toast('갤러리 저장! 메인 새로고침 후 반영');}
+function saveGal(){saveConfig('gallery_config',getGalCfg(),'갤러리');}
 function resetGal(){if(!confirm('초기화?'))return;localStorage.removeItem('pbs_gallery_config');renderGal();}
 
 /* == 글로벌 사진 == */
@@ -875,10 +883,8 @@ function delGlbExtra(ei){
 }
 function saveGlb(){
   var merged=_glbMerge();
-  localStorage.setItem('pbs_global_config',JSON.stringify(merged));
-  supaConfigSave('global_config',merged);
   _glbTemp={};renderGlb();
-  toast('글로벌 사진 저장 완료! 메인 새로고침 후 반영');
+  saveConfig('global_config',merged,'글로벌 사진');
 }
 function resetGlb(){if(!confirm('초기화?'))return;localStorage.removeItem('pbs_global_config');_glbTemp={};renderGlb();}
 
@@ -1108,7 +1114,9 @@ function renderCls(){
         +'<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><input id="cls_icon_'+i+'" value="'+_esc(it.icon)+'" style="width:52px;text-align:center;font-size:18px"><b style="opacity:.85">'+_esc(it.title)+'</b></div>'
         +_fld('과정명','cls_title_'+i,it.title)
         +_fld('설명','cls_desc_'+i,it.desc)
-        +_fileRow('📥 강의 배포용 자료','cls_student_'+i,it.student_url,'교육생이 다운로드')
+        +_fileRow('📥 강의 배포용 자료 1','cls_student_'+i,it.student_url,'교육생이 다운로드')
+        +_fileRow('📥 강의 배포용 자료 2 (선택)','cls_student2_'+i,it.student_url2,'')
+        +_fileRow('📥 강의 배포용 자료 3 (선택)','cls_student3_'+i,it.student_url3,'')
         +_fileRow('🔒 강의안','cls_teacher_'+i,it.teacher_url,'강사 전용 · 비번 8808')
         +'</div>';
     });
@@ -1122,9 +1130,7 @@ function saveRes(){
       desc:(document.getElementById('res_desc_'+i)||{}).value||'',
       url:(document.getElementById('res_url_'+i)||{}).value||''};
   });
-  supaConfigSave('resources_config',arr);
-  localStorage.setItem('pbs_resources_config',JSON.stringify(arr));
-  _resItems=arr; toast('자료실 저장 완료! 홈페이지 새로고침 시 반영');
+  _resItems=arr; saveConfig('resources_config',arr,'자료실');
 }
 function saveCls(){
   var arr=_clsItems.map(function(it,i){
@@ -1133,11 +1139,11 @@ function saveCls(){
       desc:(document.getElementById('cls_desc_'+i)||{}).value||'',
       tags:it.tags||[], page:it.page||('course.html?c='+it.id),
       student_url:(document.getElementById('cls_student_'+i)||{}).value||'',
+      student_url2:(document.getElementById('cls_student2_'+i)||{}).value||'',
+      student_url3:(document.getElementById('cls_student3_'+i)||{}).value||'',
       teacher_url:(document.getElementById('cls_teacher_'+i)||{}).value||''};
   });
-  supaConfigSave('classes_config',arr);
-  localStorage.setItem('pbs_classes_config',JSON.stringify(arr));
-  _clsItems=arr; toast('강의실 저장 완료! 강의실 새로고침 시 반영');
+  _clsItems=arr; saveConfig('classes_config',arr,'강의실');
 }
 function pickPdf(target){_pdfTarget=target;var fi=document.getElementById('pdfFile');fi.value='';fi.click();}
 (function(){
@@ -1145,8 +1151,8 @@ function pickPdf(target){_pdfTarget=target;var fi=document.getElementById('pdfFi
   if(fi) fi.addEventListener('change',function(){
     var file=fi.files&&fi.files[0]; if(!file||!_pdfTarget)return;
     var us=document.getElementById('upState'); us.style.color='#E7C15B'; us.textContent='업로드 중… '+file.name;
-    var safe=file.name.replace(/[^\w.\-가-힣]/g,'_');
-    var path='자료_'+Date.now()+'_'+safe;
+    var ext=(file.name.match(/\.[A-Za-z0-9]+$/)||['.pdf'])[0].toLowerCase();
+    var path='uploads/pbs_'+Date.now()+ext;
     fetch(SUPA_URL+'/storage/v1/object/site/'+encodeURIComponent(path),{
       method:'POST',
       headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':file.type||'application/pdf','x-upsert':'true'},
