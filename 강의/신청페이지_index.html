@@ -50,6 +50,15 @@
   .infobar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
   .chip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13px;min-width:90px;}
   .chip b{display:block;color:var(--pink-deep);font-size:15px;margin-top:2px;}
+  .datechip{background:#fff;border:2px solid var(--pink);border-radius:14px;padding:10px 20px;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;}
+  .datechip b{display:block;font-size:18px;color:var(--pink-deep);margin-top:2px;letter-spacing:0;}
+  .session-group{display:grid;gap:10px;}
+  .session-opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:border .15s,background .15s;}
+  .session-opt:hover{border-color:var(--pink);}
+  .session-opt input{width:20px;height:20px;accent-color:var(--pink);margin:0;flex:0 0 auto;}
+  .session-opt.sel{border-color:var(--pink);background:var(--pink-soft);}
+  .session-opt .si b{font-size:15px;}
+  .session-opt .si small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;}
 
   /* CTA 버튼 */
   .cta{
@@ -211,7 +220,12 @@
         <div class="chip">준비물<b>노트북</b></div>
         <div class="chip">모집<b>선착순 8명</b></div>
       </div>
-      <div style="margin-top:30px;">
+      <div class="infobar" style="margin-top:12px;">
+        <div class="datechip">1회차<b>7/17 (금)</b></div>
+        <div class="datechip">2회차<b>8/1 (토)</b></div>
+      </div>
+      <p class="lead2" style="margin-top:12px;font-size:13.5px;">두 날짜 중 원하는 회차를 골라 신청하세요 · 매 회차 10:00–15:00</p>
+      <div style="margin-top:24px;">
         <a href="#apply" class="cta">지금 신청하기 →</a>
       </div>
     </div>
@@ -365,6 +379,13 @@
 
         <form id="applyForm">
           <div class="field">
+            <label>신청 회차 <span class="req">*</span></label>
+            <div class="session-group">
+              <label class="session-opt"><input type="radio" name="session" value="1회차 · 7/17(금) 10:00-15:00" /><span class="si"><b>1회차 · 7월 17일 (금)</b><small>10:00 – 15:00 · 울산 실시간 현장</small></span></label>
+              <label class="session-opt"><input type="radio" name="session" value="2회차 · 8/1(토) 10:00-15:00" /><span class="si"><b>2회차 · 8월 1일 (토)</b><small>10:00 – 15:00 · 울산 실시간 현장</small></span></label>
+            </div>
+          </div>
+          <div class="field">
             <label>이름 <span class="req">*</span></label>
             <input type="text" name="name" required placeholder="성함을 입력해 주세요" />
           </div>
@@ -469,10 +490,24 @@
   const btn = document.getElementById("submitBtn");
   const errMsg = document.getElementById("errMsg");
 
+  // 회차 선택 카드 하이라이트
+  document.querySelectorAll(".session-opt input").forEach(r => {
+    r.addEventListener("change", () => {
+      document.querySelectorAll(".session-opt").forEach(o => o.classList.remove("sel"));
+      if (r.checked) r.closest(".session-opt").classList.add("sel");
+    });
+  });
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     errMsg.style.display = "none";
     const data = Object.fromEntries(new FormData(form).entries());
+    if (!data.session) {
+      errMsg.textContent = "신청 회차(7/17 또는 8/1)를 선택해 주세요.";
+      errMsg.style.display = "block";
+      document.getElementById("apply").scrollIntoView({ behavior: "smooth" });
+      return;
+    }
     if (!data.name.trim() || !data.phone.trim()) {
       errMsg.textContent = "이름과 연락처는 필수 입력입니다.";
       errMsg.style.display = "block";

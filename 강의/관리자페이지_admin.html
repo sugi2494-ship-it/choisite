@@ -104,7 +104,7 @@
     <!-- 신청자 -->
     <div class="pane active" id="pane_apps">
       <div class="bar"><span class="cnt">총 <b id="cnt_apps">0</b>명</span><button class="btn-x" id="xlsxApps">📥 엑셀 다운로드</button></div>
-      <div class="tablewrap"><table><thead><tr><th>No</th><th>접수일시</th><th>이름</th><th>연락처</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead><tbody id="tb_apps"></tbody></table><div class="empty" id="e_apps" style="display:none;">아직 신청이 없습니다.</div></div>
+      <div class="tablewrap"><table><thead><tr><th>No</th><th>접수일시</th><th>회차</th><th>이름</th><th>연락처</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead><tbody id="tb_apps"></tbody></table><div class="empty" id="e_apps" style="display:none;">아직 신청이 없습니다.</div></div>
     </div>
 
     <!-- 질문 -->
@@ -187,7 +187,7 @@
   /* 신청자 */
   function renderApps(){
     const rows=DATA.apps;$("cnt_apps").textContent=rows.length;$("e_apps").style.display=rows.length?"none":"block";
-    $("tb_apps").innerHTML=rows.map((r,i)=>`<tr><td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td><td>${esc(r.name)}</td><td>${esc(r.phone)}</td><td>${esc(r.birthdate)}</td><td>${esc(r.job)}</td><td>${esc(r.ai_level)}</td><td>${esc(r.reason)}</td><td>${esc(r.want_to_make)}</td><td>${esc(r.message)}</td></tr>`).join("");
+    $("tb_apps").innerHTML=rows.map((r,i)=>`<tr><td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td><td><b style="color:#C33A72">${esc(r.session)}</b></td><td>${esc(r.name)}</td><td>${esc(r.phone)}</td><td>${esc(r.birthdate)}</td><td>${esc(r.job)}</td><td>${esc(r.ai_level)}</td><td>${esc(r.reason)}</td><td>${esc(r.want_to_make)}</td><td>${esc(r.message)}</td></tr>`).join("");
   }
   /* 질문 */
   function renderQs(){
@@ -276,7 +276,7 @@
     XLSX.writeFile(wb,`PBS_${name}_${new Date().toISOString().slice(0,10)}.xlsx`);
   }
   $("xlsxApps").addEventListener("click",()=>toXlsx(DATA.apps,[
-    {h:"No",f:(r,i,a)=>a.length-i},{h:"접수일시",f:r=>fmt(r.created_at)},{h:"이름",k:"name"},{h:"연락처",k:"phone"},{h:"생년월일",k:"birthdate"},{h:"직업",k:"job"},{h:"AI수준",k:"ai_level"},{h:"신청이유",k:"reason"},{h:"만들고싶은것",k:"want_to_make"},{h:"하고싶은말",k:"message"}
+    {h:"No",f:(r,i,a)=>a.length-i},{h:"접수일시",f:r=>fmt(r.created_at)},{h:"회차",k:"session"},{h:"이름",k:"name"},{h:"연락처",k:"phone"},{h:"생년월일",k:"birthdate"},{h:"직업",k:"job"},{h:"AI수준",k:"ai_level"},{h:"신청이유",k:"reason"},{h:"만들고싶은것",k:"want_to_make"},{h:"하고싶은말",k:"message"}
   ],"신청자"));
   $("xlsxQs").addEventListener("click",()=>toXlsx(DATA.qs,[
     {h:"No",f:(r,i,a)=>a.length-i},{h:"등록일시",f:r=>fmt(r.created_at)},{h:"이름",k:"name"},{h:"질문내용",k:"content"}
