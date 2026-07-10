@@ -6,7 +6,7 @@
 <title>통합 관리자 · PBS컬러랩</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-  :root{--pink:#E14B8A;--pink-deep:#C33A72;--pink-soft:#FBE9F0;--ink:#2B2230;--muted:#8A7E86;--line:#EADCE3;}
+  :root{--pink:#E14B8A;--pink-deep:#C33A72;--pink-soft:#FBE9F0;--ink:#2B2230;--muted:#8A7E86;--line:#EADCE3;--dark:#221820;}
   *{box-sizing:border-box;}
   body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:#F7F3F5;color:var(--ink);}
   button{cursor:pointer;font-family:inherit;font-weight:700;border-radius:10px;border:none;font-size:14px;}
@@ -26,33 +26,42 @@
   .login button{width:100%;padding:14px;font-size:16px;}
   .login .err{color:#C0392B;font-size:13px;min-height:18px;margin-top:10px;}
 
-  /* 레이아웃 */
-  .topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:10;}
-  .topbar h1{font-size:17px;margin:0;font-weight:800;}
-  .topbar h1 span{color:var(--pink);}
-  .tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 20px 0;flex-wrap:wrap;}
-  .tab{background:#fff;border:1px solid var(--line);color:var(--muted);padding:10px 16px;border-radius:100px;white-space:nowrap;font-size:14px;}
-  .tab.active{background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:#fff;border-color:transparent;}
-  .tab .badge{display:inline-block;background:#fff;color:var(--pink-deep);border-radius:100px;font-size:11px;padding:1px 7px;margin-left:6px;font-weight:800;}
-  .tab.active .badge{background:rgba(255,255,255,.3);color:#fff;}
-  .pane{display:none;padding:18px 20px 60px;}
+  /* 레이아웃 : 좌측 세로 사이드바 */
+  .layout{display:flex;min-height:100vh;}
+  .side{width:210px;flex:0 0 210px;background:var(--dark);color:#fff;padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px;}
+  .side .brand{font-size:16px;font-weight:800;padding:6px 10px 16px;line-height:1.4;}
+  .side .brand span{color:#FF9DC4;display:block;font-size:13px;font-weight:600;margin-top:2px;}
+  .navitem{display:flex;align-items:center;justify-content:space-between;gap:8px;background:transparent;color:#D9C9D2;text-align:left;width:100%;padding:13px 14px;border-radius:12px;font-size:15px;font-weight:700;}
+  .navitem:hover{background:rgba(255,255,255,.08);color:#fff;}
+  .navitem.active{background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:#fff;}
+  .navitem .badge{background:rgba(255,255,255,.2);color:#fff;border-radius:100px;font-size:11px;padding:2px 8px;font-weight:800;}
+  .side .reload{margin-top:auto;background:rgba(255,255,255,.1);color:#fff;padding:11px;border-radius:10px;}
+
+  .main{flex:1;min-width:0;}
+  .pane{display:none;padding:22px 24px 60px;}
   .pane.active{display:block;}
-  .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+  .pane h2.pt{font-size:20px;margin:0 0 4px;font-weight:800;}
+  .bar{display:flex;justify-content:space-between;align-items:center;margin:14px 0;flex-wrap:wrap;gap:10px;}
   .bar .cnt{font-size:14px;color:var(--muted);}
   .bar .cnt b{color:var(--pink-deep);font-size:16px;}
+  .bar .rgroup{display:flex;gap:8px;flex-wrap:wrap;}
 
   .tablewrap{background:#fff;border-radius:14px;overflow:auto;box-shadow:0 4px 18px rgba(0,0,0,.05);}
   table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;}
-  th{background:var(--pink-soft);color:var(--pink-deep);text-align:left;padding:11px 13px;font-weight:800;position:sticky;top:0;}
-  td{padding:10px 13px;border-top:1px solid #F2E9EE;vertical-align:top;white-space:pre-wrap;max-width:280px;}
+  th{background:var(--pink-soft);color:var(--pink-deep);text-align:left;padding:11px 12px;font-weight:800;position:sticky;top:0;}
+  td{padding:10px 12px;border-top:1px solid #F2E9EE;vertical-align:top;white-space:pre-wrap;max-width:280px;}
   tr:hover td{background:#FCF6F9;}
+  td.chkcell,th.chkcell{text-align:center;width:38px;}
+  input[type=checkbox]{width:17px;height:17px;accent-color:var(--pink);cursor:pointer;}
   .empty{padding:50px;text-align:center;color:var(--muted);}
   .no{color:var(--muted);font-weight:700;}
   .pill{display:inline-block;padding:3px 10px;border-radius:100px;font-size:12px;font-weight:800;}
   .pill.pub{background:#EAF7EE;color:#1E7A44;}
   .pill.pend{background:#FFF3E0;color:#B26A00;}
+  .sms{display:inline-block;text-decoration:none;background:#fff;border:1px solid var(--pink);color:var(--pink-deep);font-weight:800;font-size:12px;padding:6px 10px;border-radius:9px;margin:2px 3px 2px 0;white-space:nowrap;}
+  .sms:hover{background:var(--pink-soft);}
+  .sms.b{background:var(--pink);color:#fff;}
 
-  /* 카드형 (후기/자료/글) */
   .cardlist{display:grid;gap:12px;}
   .item{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);}
   .item .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
@@ -62,7 +71,6 @@
   .item .acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
   .stars{color:#FFB400;font-size:13px;}
 
-  /* 폼 */
   .form{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.05);margin-bottom:18px;}
   .form h3{margin:0 0 14px;font-size:16px;}
   .form label{display:block;font-size:13px;font-weight:700;margin:0 0 6px;}
@@ -74,6 +82,15 @@
   .form .msg.ok{color:#1E7A44;display:block;}
   .form .msg.err{color:#C0392B;display:block;}
   .hidden{display:none;}
+  .hint{font-size:12.5px;color:var(--muted);margin:10px 0 0;}
+
+  @media(max-width:720px){
+    .layout{flex-direction:column;}
+    .side{width:100%;flex:none;height:auto;position:sticky;top:0;flex-direction:row;overflow-x:auto;gap:6px;padding:10px;z-index:20;}
+    .side .brand{display:none;}
+    .side .reload{margin:0;flex:0 0 auto;}
+    .navitem{width:auto;white-space:nowrap;padding:10px 12px;}
+  }
 </style>
 </head>
 <body>
@@ -89,72 +106,90 @@
 
   <!-- 대시보드 -->
   <div id="app" class="hidden">
-    <div class="topbar">
-      <h1>PBS컬러랩 <span>통합 관리자</span></h1>
-      <button class="btn-ghost" id="reloadBtn">전체 새로고침</button>
-    </div>
-    <div class="tabs" id="tabs">
-      <button class="tab active" data-t="apps">신청자 <span class="badge" id="b_apps">0</span></button>
-      <button class="tab" data-t="qs">질문 <span class="badge" id="b_qs">0</span></button>
-      <button class="tab" data-t="rev">후기 <span class="badge" id="b_rev">0</span></button>
-      <button class="tab" data-t="mat">자료 <span class="badge" id="b_mat">0</span></button>
-      <button class="tab" data-t="post">글·공지 <span class="badge" id="b_post">0</span></button>
-    </div>
+    <div class="layout">
+      <!-- 좌측 세로 사이드바 -->
+      <aside class="side">
+        <div class="brand">PBS컬러랩<span>통합 관리자</span></div>
+        <button class="navitem active" data-t="apps">📝 신청자 <span class="badge" id="b_apps">0</span></button>
+        <button class="navitem" data-t="qs">🙋 질문 <span class="badge" id="b_qs">0</span></button>
+        <button class="navitem" data-t="rev">💗 후기 <span class="badge" id="b_rev">0</span></button>
+        <button class="navitem" data-t="mat">📄 자료 <span class="badge" id="b_mat">0</span></button>
+        <button class="navitem" data-t="post">📢 글·공지 <span class="badge" id="b_post">0</span></button>
+        <button class="reload" id="reloadBtn">↻ 전체 새로고침</button>
+      </aside>
 
-    <!-- 신청자 -->
-    <div class="pane active" id="pane_apps">
-      <div class="bar"><span class="cnt">총 <b id="cnt_apps">0</b>명</span><button class="btn-x" id="xlsxApps">📥 엑셀 다운로드</button></div>
-      <div class="tablewrap"><table><thead><tr><th>No</th><th>접수일시</th><th>회차</th><th>이름</th><th>연락처</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead><tbody id="tb_apps"></tbody></table><div class="empty" id="e_apps" style="display:none;">아직 신청이 없습니다.</div></div>
-    </div>
-
-    <!-- 질문 -->
-    <div class="pane" id="pane_qs">
-      <div class="bar"><span class="cnt">총 <b id="cnt_qs">0</b>건</span><button class="btn-x" id="xlsxQs">📥 엑셀 다운로드</button></div>
-      <div class="cardlist" id="list_qs"></div>
-      <div class="empty" id="e_qs" style="display:none;">아직 질문이 없습니다.</div>
-    </div>
-
-    <!-- 후기 -->
-    <div class="pane" id="pane_rev">
-      <div class="bar"><span class="cnt">총 <b id="cnt_rev">0</b>건 · 공개 <b id="cnt_rev_pub">0</b></span></div>
-      <div class="cardlist" id="list_rev"></div>
-      <div class="empty" id="e_rev" style="display:none;">아직 후기가 없습니다.</div>
-    </div>
-
-    <!-- 자료 -->
-    <div class="pane" id="pane_mat">
-      <div class="form">
-        <h3>➕ 자료 올리기</h3>
-        <div class="field"><label>제목 *</label><input id="m_title" placeholder="예) 웹페이지 제작 프롬프트 모음" /></div>
-        <div class="field"><label>설명</label><input id="m_desc" placeholder="간단한 설명 (선택)" /></div>
-        <div class="field"><label>종류</label>
-          <select id="m_kind">
-            <option value="prompt">✨ 프롬프트 (텍스트 · 복사용)</option>
-            <option value="file">📄 파일 (업로드 · 다운로드)</option>
-            <option value="link">🔗 링크 (외부 주소)</option>
-          </select>
+      <main class="main">
+        <!-- 신청자 -->
+        <div class="pane active" id="pane_apps">
+          <h2 class="pt">📝 신청자 관리</h2>
+          <div class="bar">
+            <span class="cnt">총 <b id="cnt_apps">0</b>명 <span id="selinfo" style="color:var(--muted);font-size:13px;"></span></span>
+            <div class="rgroup">
+              <button class="btn-danger" id="delSel">🗑 선택 삭제</button>
+              <button class="btn-x" id="xlsxApps">📥 엑셀 다운로드</button>
+            </div>
+          </div>
+          <p class="hint">📱 문자 버튼은 휴대폰에서 누르면 문자앱이 열리고, PC에서는 문구가 자동 복사됩니다. 앞의 네모칸을 체크한 뒤 ‘선택 삭제’로 지울 수 있어요.</p>
+          <div class="tablewrap"><table>
+            <thead><tr><th class="chkcell"><input type="checkbox" id="chkAll" /></th><th>No</th><th>접수일시</th><th>회차</th><th>이름</th><th>연락처</th><th>문자 발송</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead>
+            <tbody id="tb_apps"></tbody>
+          </table><div class="empty" id="e_apps" style="display:none;">아직 신청이 없습니다.</div></div>
         </div>
-        <div class="field" id="wrap_prompt"><label>프롬프트 내용</label><textarea id="m_content" placeholder="교육생이 복사해서 쓸 프롬프트를 붙여넣으세요"></textarea></div>
-        <div class="field hidden" id="wrap_link"><label>링크 주소</label><input id="m_link" placeholder="https://..." /></div>
-        <div class="field hidden" id="wrap_file"><label>파일 선택</label><input type="file" id="m_file" /></div>
-        <button class="btn-x" id="matAdd">자료 등록</button>
-        <div class="msg" id="matMsg"></div>
-      </div>
-      <div class="bar"><span class="cnt">등록된 자료 <b id="cnt_mat">0</b>개</span></div>
-      <div class="cardlist" id="list_mat"></div>
-    </div>
 
-    <!-- 글/공지 -->
-    <div class="pane" id="pane_post">
-      <div class="form">
-        <h3>✍️ 글 · 공지 작성</h3>
-        <div class="field"><label>제목 *</label><input id="p_title" placeholder="공지 제목" /></div>
-        <div class="field"><label>내용 *</label><textarea id="p_content" placeholder="내용을 입력하세요"></textarea></div>
-        <button class="btn-x" id="postAdd">게시하기</button>
-        <div class="msg" id="postMsg"></div>
-      </div>
-      <div class="bar"><span class="cnt">등록된 글 <b id="cnt_post">0</b>개</span></div>
-      <div class="cardlist" id="list_post"></div>
+        <!-- 질문 -->
+        <div class="pane" id="pane_qs">
+          <h2 class="pt">🙋 질문 관리</h2>
+          <div class="bar"><span class="cnt">총 <b id="cnt_qs">0</b>건</span><button class="btn-x" id="xlsxQs">📥 엑셀 다운로드</button></div>
+          <div class="cardlist" id="list_qs"></div>
+          <div class="empty" id="e_qs" style="display:none;">아직 질문이 없습니다.</div>
+        </div>
+
+        <!-- 후기 -->
+        <div class="pane" id="pane_rev">
+          <h2 class="pt">💗 후기 관리</h2>
+          <div class="bar"><span class="cnt">총 <b id="cnt_rev">0</b>건 · 공개 <b id="cnt_rev_pub">0</b></span></div>
+          <div class="cardlist" id="list_rev"></div>
+          <div class="empty" id="e_rev" style="display:none;">아직 후기가 없습니다.</div>
+        </div>
+
+        <!-- 자료 -->
+        <div class="pane" id="pane_mat">
+          <h2 class="pt">📄 자료 관리</h2>
+          <div class="form">
+            <h3>➕ 자료 올리기</h3>
+            <div class="field"><label>제목 *</label><input id="m_title" placeholder="예) 웹페이지 제작 프롬프트 모음" /></div>
+            <div class="field"><label>설명</label><input id="m_desc" placeholder="간단한 설명 (선택)" /></div>
+            <div class="field"><label>종류</label>
+              <select id="m_kind">
+                <option value="prompt">✨ 프롬프트 (텍스트 · 복사용)</option>
+                <option value="file">📄 파일 (업로드 · 다운로드)</option>
+                <option value="link">🔗 링크 (외부 주소)</option>
+              </select>
+            </div>
+            <div class="field" id="wrap_prompt"><label>프롬프트 내용</label><textarea id="m_content" placeholder="교육생이 복사해서 쓸 프롬프트를 붙여넣으세요"></textarea></div>
+            <div class="field hidden" id="wrap_link"><label>링크 주소</label><input id="m_link" placeholder="https://..." /></div>
+            <div class="field hidden" id="wrap_file"><label>파일 선택</label><input type="file" id="m_file" /></div>
+            <button class="btn-x" id="matAdd">자료 등록</button>
+            <div class="msg" id="matMsg"></div>
+          </div>
+          <div class="bar"><span class="cnt">등록된 자료 <b id="cnt_mat">0</b>개</span></div>
+          <div class="cardlist" id="list_mat"></div>
+        </div>
+
+        <!-- 글/공지 -->
+        <div class="pane" id="pane_post">
+          <h2 class="pt">📢 글 · 공지 작성</h2>
+          <div class="form">
+            <h3>✍️ 새 글 작성</h3>
+            <div class="field"><label>제목 *</label><input id="p_title" placeholder="공지 제목" /></div>
+            <div class="field"><label>내용 *</label><textarea id="p_content" placeholder="내용을 입력하세요"></textarea></div>
+            <button class="btn-x" id="postAdd">게시하기</button>
+            <div class="msg" id="postMsg"></div>
+          </div>
+          <div class="bar"><span class="cnt">등록된 글 <b id="cnt_post">0</b>개</span></div>
+          <div class="cardlist" id="list_post"></div>
+        </div>
+      </main>
     </div>
   </div>
 
@@ -176,6 +211,34 @@
 
   let DATA={apps:[],qs:[],rev:[],mat:[],post:[]};
 
+  /* ===== 문자 템플릿 ===== */
+  function msgConfirm(r){
+    const name=(r.name||"").trim()||"신청자";
+    const s=r.session||"신청하신 회차";
+    return `[PBS컬러랩] ${name}님, 원데이 클래스 신청이 확인되었습니다.\n`+
+      `아래 계좌로 입금해 주시면, 입금 확인 후 1일 이내에 '강의 확정 안내' 문자를 보내드립니다. 이 확정 문자를 받으셔야 최종 확정됩니다.\n`+
+      `▶ 교육비 : 295,000원\n`+
+      `▶ 입금계좌 : 카카오뱅크 3333-14-5173594 (예금주 최해숙)\n`+
+      `▶ 신청 회차 : ${s}\n`+
+      `문의 010-4285-7997`;
+  }
+  function msgVenue(r){
+    const name=(r.name||"").trim()||"신청자";
+    const s=r.session||"신청하신 회차";
+    return `[PBS컬러랩] ${name}님, 신청하신 강의가 확정(접수 완료)되었습니다.\n`+
+      `▶ 일시 : ${s}\n`+
+      `▶ 시간 : 10:00 ~ 15:00\n`+
+      `▶ 장소 : 울산 (○○○ — 장소명을 입력하세요)\n`+
+      `▶ 준비물 : 노트북\n`+
+      `반갑게 뵙겠습니다! 문의 010-4285-7997`;
+  }
+  function smsHref(phone,body){return "sms:"+String(phone||"").replace(/[^0-9]/g,"")+"?body="+encodeURIComponent(body);}
+  window.copyMsg=function(type,id,ev){
+    const r=DATA.apps.find(x=>x.id===id); if(!r)return;
+    const body=type==="c"?msgConfirm(r):msgVenue(r);
+    navigator.clipboard&&navigator.clipboard.writeText(body);
+  };
+
   async function loadAll(){
     const [a,q,rv,m,p]=await Promise.all([api("applications"),api("questions"),api("reviews"),api("materials"),api("posts")]);
     DATA.apps=a.rows||[];DATA.qs=q.rows||[];DATA.rev=rv.rows||[];DATA.mat=m.rows||[];DATA.post=p.rows||[];
@@ -187,8 +250,32 @@
   /* 신청자 */
   function renderApps(){
     const rows=DATA.apps;$("cnt_apps").textContent=rows.length;$("e_apps").style.display=rows.length?"none":"block";
-    $("tb_apps").innerHTML=rows.map((r,i)=>`<tr><td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td><td><b style="color:#C33A72">${esc(r.session)}</b></td><td>${esc(r.name)}</td><td>${esc(r.phone)}</td><td>${esc(r.birthdate)}</td><td>${esc(r.job)}</td><td>${esc(r.ai_level)}</td><td>${esc(r.reason)}</td><td>${esc(r.want_to_make)}</td><td>${esc(r.message)}</td></tr>`).join("");
+    if($("chkAll"))$("chkAll").checked=false;updateSel();
+    $("tb_apps").innerHTML=rows.map((r,i)=>{
+      const c=smsHref(r.phone,msgConfirm(r)), v=smsHref(r.phone,msgVenue(r));
+      const smsCell=`<a class="sms b" href="${c}" onclick="copyMsg('c','${r.id}')">① 확정·계좌</a><a class="sms" href="${v}" onclick="copyMsg('v','${r.id}')">② 장소안내</a>`;
+      return `<tr><td class="chkcell"><input type="checkbox" class="chk" value="${r.id}" onchange="updateSel()"></td>`+
+        `<td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td>`+
+        `<td><b style="color:#C33A72">${esc(r.session)}</b></td><td>${esc(r.name)}</td>`+
+        `<td>${esc(r.phone)}</td><td>${smsCell}</td>`+
+        `<td>${esc(r.birthdate)}</td><td>${esc(r.job)}</td><td>${esc(r.ai_level)}</td>`+
+        `<td>${esc(r.reason)}</td><td>${esc(r.want_to_make)}</td><td>${esc(r.message)}</td></tr>`;
+    }).join("");
   }
+  window.updateSel=function(){
+    const n=document.querySelectorAll(".chk:checked").length;
+    $("selinfo").textContent=n?`· ${n}개 선택됨`:"";
+  };
+  $("chkAll").addEventListener("change",e=>{document.querySelectorAll(".chk").forEach(c=>c.checked=e.target.checked);updateSel();});
+  $("delSel").addEventListener("click",async()=>{
+    const ids=[...document.querySelectorAll(".chk:checked")].map(c=>c.value);
+    if(!ids.length){alert("삭제할 신청자를 앞의 네모칸으로 선택하세요.");return;}
+    if(!confirm(`선택한 ${ids.length}명의 신청 기록을 삭제할까요? 되돌릴 수 없습니다.`))return;
+    $("delSel").disabled=true;$("delSel").textContent="삭제 중...";
+    try{for(const id of ids){await api("delete_application",{id});}await loadAll();}
+    catch(e){alert("삭제 실패");}finally{$("delSel").disabled=false;$("delSel").textContent="🗑 선택 삭제";}
+  });
+
   /* 질문 */
   function renderQs(){
     const rows=DATA.qs;$("cnt_qs").textContent=rows.length;$("e_qs").style.display=rows.length?"none":"block";
@@ -229,7 +316,7 @@
   window.postPub=async(id,v)=>{await api("set_post_published",{id,is_published:v});await loadAll();};
   window.postDel=async(id)=>{if(confirm("이 글을 삭제할까요?")){await api("delete_post",{id});await loadAll();}};
 
-  /* 자료 등록 폼 */
+  /* 자료 폼 */
   $("m_kind").addEventListener("change",e=>{
     const k=e.target.value;
     $("wrap_prompt").classList.toggle("hidden",k!=="prompt");
@@ -238,20 +325,18 @@
   });
   function fileToB64(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result.split(",")[1]);fr.onerror=rej;fr.readAsDataURL(file);});}
   $("matAdd").addEventListener("click",async()=>{
-    const title=$("m_title").value.trim();const kind=$("m_kind").value;const msg=$("matMsg");
-    msg.className="msg";
+    const title=$("m_title").value.trim();const kind=$("m_kind").value;const msg=$("matMsg");msg.className="msg";
     if(!title){msg.className="msg err";msg.textContent="제목을 입력하세요.";return;}
     const payload={title,description:$("m_desc").value.trim(),kind};
     try{
       $("matAdd").disabled=true;$("matAdd").textContent="등록 중...";
       if(kind==="prompt")payload.content=$("m_content").value;
       else if(kind==="link")payload.content=$("m_link").value.trim();
-      else if(kind==="file"){const f=$("m_file").files[0];if(!f){throw new Error("파일을 선택하세요.");}payload.file_b64=await fileToB64(f);payload.file_name=f.name;payload.mime=f.type;}
+      else if(kind==="file"){const f=$("m_file").files[0];if(!f)throw new Error("파일을 선택하세요.");payload.file_b64=await fileToB64(f);payload.file_name=f.name;payload.mime=f.type;}
       const r=await api("create_material",payload);
       if(r.error)throw new Error(r.error);
       $("m_title").value="";$("m_desc").value="";$("m_content").value="";$("m_link").value="";$("m_file").value="";
-      msg.className="msg ok";msg.textContent="자료가 등록되었습니다.";
-      await loadAll();
+      msg.className="msg ok";msg.textContent="자료가 등록되었습니다.";await loadAll();
     }catch(e){msg.className="msg err";msg.textContent=e.message||"등록 실패";}
     finally{$("matAdd").disabled=false;$("matAdd").textContent="자료 등록";}
   });
@@ -282,10 +367,10 @@
     {h:"No",f:(r,i,a)=>a.length-i},{h:"등록일시",f:r=>fmt(r.created_at)},{h:"이름",k:"name"},{h:"질문내용",k:"content"}
   ],"질문"));
 
-  /* 탭 전환 */
-  $("tabs").addEventListener("click",e=>{
-    const t=e.target.closest(".tab");if(!t)return;
-    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  /* 사이드바 전환 */
+  document.querySelector(".side").addEventListener("click",e=>{
+    const t=e.target.closest(".navitem");if(!t)return;
+    document.querySelectorAll(".navitem").forEach(x=>x.classList.remove("active"));
     document.querySelectorAll(".pane").forEach(x=>x.classList.remove("active"));
     t.classList.add("active");$("pane_"+t.dataset.t).classList.add("active");
   });
@@ -293,17 +378,14 @@
   /* 로그인 */
   async function doLogin(){
     const pw=$("pw").value.trim();if(!pw){$("loginErr").textContent="비밀번호를 입력하세요.";return;}
-    $("loginBtn").disabled=true;$("loginBtn").textContent="확인 중...";$("loginErr").textContent="";
-    PW=pw;
-    try{
-      await loadAll();
-      $("loginBox").style.display="none";$("app").classList.remove("hidden");
-    }catch(e){$("loginErr").textContent=e.message==="401"?"비밀번호가 올바르지 않습니다.":"불러오기 실패";PW="";}
+    $("loginBtn").disabled=true;$("loginBtn").textContent="확인 중...";$("loginErr").textContent="";PW=pw;
+    try{await loadAll();$("loginBox").style.display="none";$("app").classList.remove("hidden");}
+    catch(e){$("loginErr").textContent=e.message==="401"?"비밀번호가 올바르지 않습니다.":"불러오기 실패";PW="";}
     finally{$("loginBtn").disabled=false;$("loginBtn").textContent="확인";}
   }
   $("loginBtn").addEventListener("click",doLogin);
   $("pw").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
-  $("reloadBtn").addEventListener("click",async()=>{$("reloadBtn").textContent="불러오는 중...";try{await loadAll();}catch(e){}finally{$("reloadBtn").textContent="전체 새로고침";}});
+  $("reloadBtn").addEventListener("click",async()=>{$("reloadBtn").textContent="불러오는 중...";try{await loadAll();}catch(e){}finally{$("reloadBtn").textContent="↻ 전체 새로고침";}});
 </script>
 </body>
 </html>
