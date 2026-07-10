@@ -780,7 +780,7 @@
         <div class="sec-label">About</div>
         <h2 data-i18n="about.title">컬러로 브랜드를<br><span class="g">디자인하다</span></h2>
         <blockquote class="quote" data-i18n="about.quote">"당신은 이미 특별합니다. 컬러는 그 특별함을 발견하고, 교육은 그 가능성을 실제 변화로 연결하는 도구입니다."</blockquote>
-        <div class="bio-list">
+        <div class="bio-list" id="bioList">
           <div class="bio-item"><span class="ico">🎨</span><p><b data-i18n="bio.b1t">PBS COLOR LAB 대표</b><br><span data-i18n="bio.b1d">K-Beauty 퍼스널컬러·이미지전략 교육 기관 운영</span></p></div>
           <div class="bio-item"><span class="ico">🎓</span><p><b data-i18n="bio.b2t">대구가톨릭대학교 대학원 뷰티케어학과 외래교수</b><br><span data-i18n="bio.b2d">대학원 뷰티케어전공 강의 및 연구</span></p></div>
           <div class="bio-item"><span class="ico">🌏</span><p><b data-i18n="bio.b3t">AICI KC CHAPTER VP · 글로벌 무역사절단</b><br><span data-i18n="bio.b3d">국제 이미지컨설턴트 협회 한국지부 부회장 · 심천·광저우·두바이·아부다비·하노이·말레이시아·호치민 등 글로벌 무역사절단 참가</span></p></div>
@@ -1490,6 +1490,15 @@ var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 var SUPA_H={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
 function supaFetch(path,opts){return fetch(SUPA_URL+'/rest/v1/'+path,Object.assign({headers:SUPA_H},opts||{}));}
 /* 자료실(담당자용) 동적 렌더 — 설정 없으면 정적 기본값 유지 */
+function renderAbout(){
+  var el=document.getElementById('bioList'); if(!el) return;
+  var items=null; try{items=JSON.parse(localStorage.getItem('pbs_about_config')||'null');}catch(e){}
+  if(!items||!items.length) return;
+  function e(x){return (x==null?'':String(x)).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  el.innerHTML=items.map(function(it){
+    return '<div class="bio-item"><span class="ico">'+(it.icon||'•')+'</span><p><b>'+e(it.title)+'</b><br><span>'+e(it.desc)+'</span></p></div>';
+  }).join('');
+}
 function renderResources(){
   var grid=document.getElementById('dlGrid'); if(!grid) return;
   var items=null; try{items=JSON.parse(localStorage.getItem('pbs_resources_config')||'null');}catch(e){}
@@ -1505,6 +1514,7 @@ function renderResources(){
   supaFetch('pbs_site_config?select=*').then(function(r){return r.json();}).then(function(rows){
     rows.forEach(function(c){if(c.key&&c.value!==null)localStorage.setItem('pbs_'+c.key,JSON.stringify(c.value));});
     renderResources();
+    renderAbout();
     // 갤러리 갱신
     applyAdminImages();
     // 글로벌 사진
