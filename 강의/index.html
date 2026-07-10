@@ -64,12 +64,12 @@
 
   <main class="wrap">
     <div class="grid" id="courseGrid">
-      <a class="course" href="퍼스널컬러.html"><div class="ic">🎨</div><h3>퍼스널컬러</h3><p>퍼스널컬러 진단·이미지메이킹</p><div class="tags"><span class="tag">진단</span><span class="tag">이미지</span></div><span class="enter">입장 →</span></a>
-      <a class="course" href="course.html?c=skeleton"><div class="ic">🏋</div><h3>골격분석</h3><p>골격유형별 스타일링</p><div class="tags"><span class="tag">스타일링</span></div><span class="enter">입장 →</span></a>
-      <a class="course" href="course.html?c=colorstrength"><div class="ic">💎</div><h3>컬러강점</h3><p>컬러강점 기반 소통·조직활성화</p><div class="tags"><span class="tag">소통</span><span class="tag">팀빌딩</span></div><span class="enter">입장 →</span></a>
-      <a class="course" href="course.html?c=colortherapy"><div class="ic">🌈</div><h3>컬러테라피</h3><p>컬러 힐링·마음 회복</p><div class="tags"><span class="tag">힐링</span></div><span class="enter">입장 →</span></a>
-      <a class="course" href="course.html?c=future"><div class="ic">🌟</div><h3>퇴직예정자 미래설계</h3><p>생애설계·인생 후반전</p><div class="tags"><span class="tag">생애설계</span><span class="tag">시니어</span></div><span class="enter">입장 →</span></a>
-      <a class="course" href="course.html?c=cert"><div class="ic">🎓</div><h3>전문가 자격과정</h3><p>퍼스널컬러·골격분석 전문가 양성</p><div class="tags"><span class="tag">자격과정</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="/강의/퍼스널컬러.html"><div class="ic">🎨</div><h3>퍼스널컬러</h3><p>퍼스널컬러 진단·이미지메이킹</p><div class="tags"><span class="tag">진단</span><span class="tag">이미지</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="/강의/course.html?c=skeleton"><div class="ic">🏋</div><h3>골격분석</h3><p>골격유형별 스타일링</p><div class="tags"><span class="tag">스타일링</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="/강의/course.html?c=colorstrength"><div class="ic">💎</div><h3>컬러강점</h3><p>컬러강점 기반 소통·조직활성화</p><div class="tags"><span class="tag">소통</span><span class="tag">팀빌딩</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="/강의/course.html?c=colortherapy"><div class="ic">🌈</div><h3>컬러테라피</h3><p>컬러 힐링·마음 회복</p><div class="tags"><span class="tag">힐링</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="/강의/course.html?c=future"><div class="ic">🌟</div><h3>퇴직예정자 미래설계</h3><p>생애설계·인생 후반전</p><div class="tags"><span class="tag">생애설계</span><span class="tag">시니어</span></div><span class="enter">입장 →</span></a>
+      <a class="course" href="/강의/course.html?c=cert"><div class="ic">🎓</div><h3>전문가 자격과정</h3><p>퍼스널컬러·골격분석 전문가 양성</p><div class="tags"><span class="tag">자격과정</span></div><span class="enter">입장 →</span></a>
     </div>
   </main>
 
@@ -91,6 +91,7 @@ fetch(SUPA_URL+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{he
    var grid=document.getElementById('courseGrid');
    grid.innerHTML=items.map(function(it){
      var page=it.page||('course.html?c='+(it.id||''));
+     if(page.charAt(0)!=='/') page='/강의/'+page;
      var tags=(it.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
      return '<a class="course" href="'+esc(page)+'"><div class="ic">'+(it.icon||'📘')+'</div>'
        +'<h3>'+esc(it.title||'')+'</h3><p>'+esc(it.desc||'')+'</p>'
