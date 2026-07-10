@@ -68,6 +68,12 @@
   </header>
 
   <main class="wrap">
+    <!-- 강의 기획안 -->
+    <section class="sec" id="proposal" style="display:none">
+      <h2>📋 강의 기획안</h2>
+      <div class="sub">담당자용 강의 기획안(제안서)입니다.</div>
+      <div id="proposalArea"></div>
+    </section>
     <!-- 교육생 강의자료 받기 (그날 날짜 비번) -->
     <section class="sec" id="download">
       <h2>🎒 교육생 강의자료 받기</h2>
@@ -136,6 +142,16 @@
       </div>
       <div id="rvFeed"></div>
     </section>
+    <!-- 운영자 관리 -->
+    <style>#manage .mrow{margin-bottom:14px}#manage .mrow label{display:block;font-size:13px;font-weight:800;color:var(--soft);margin-bottom:5px}#manage .mrow input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit}#manage .mbtns{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}</style>
+    <section class="sec" id="manage">
+      <h2>⚙ 운영자 관리 <span style="font-size:12px;font-weight:400;color:var(--soft)">(강사·운영자 전용)</span></h2>
+      <div class="sub">비밀번호를 입력하면 이 과정의 기획안·교육생자료·강의안 등을 바로 올리고 수정할 수 있습니다.</div>
+      <div class="pwrow"><input type="password" id="mpw" placeholder="운영자 비밀번호" onkeydown="if(event.key==='Enter')mUnlock()"><button class="btn btn-primary" onclick="mUnlock()">열기</button></div>
+      <div class="pwmsg" id="mpwmsg"></div>
+      <div class="unlocked" id="mUnlocked"><div id="mEditor"></div></div>
+      <input type="file" id="mFile" style="display:none">
+    </section>
   </main>
 
   <div class="foot">© PBS COLOR LAB · 최해숙 Maria Choi · <a href="index.html">강의실</a> · <a href="/">브랜드 허브</a></div>
@@ -151,17 +167,20 @@ function pad(n){return (n<10?'0':'')+n;}
 function todayPW(){var d=new Date();return pad(d.getMonth()+1)+pad(d.getDate());}
 function ytId(u){var m=(u||'').match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:'';}
 var COURSE=qs('c'), course=null, kind='질문', star=5;
+var allItems=[], courseIdx=-1, MANAGE_PW='8808', _mTarget=null;
 
 fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H})
  .then(function(r){return r.json();})
  .then(function(rows){
    var items=(rows&&rows[0]&&rows[0].value)||[];
+   allItems=items; courseIdx=items.map(function(x){return x.id;}).indexOf(COURSE);
    course=items.filter(function(x){return x.id===COURSE;})[0]||null;
    if(!course){document.getElementById('cTitle').textContent='과정을 찾을 수 없습니다';document.getElementById('cDesc').innerHTML='<a href="index.html">← 강의실로</a>';return;}
    document.getElementById('cIcon').textContent=course.icon||'📘';
    document.getElementById('cTitle').textContent=course.title||'강의';
    document.getElementById('cDesc').textContent=course.desc||'';
    document.title=(course.title||'강의')+' | 최해숙 · PBS COLOR LAB';
+   if(course.proposal_url){document.getElementById('proposal').style.display='';document.getElementById('proposalArea').innerHTML='<a class="btn btn-gold" href="'+esc(course.proposal_url)+'" target="_blank" rel="noopener">📋 강의 기획안 보기 / 다운로드 →</a>';}
    // 자격시험
    if(course.exam_url){document.getElementById('exam').style.display='';document.getElementById('examArea').innerHTML='<a class="btn btn-red" href="'+esc(course.exam_url)+'" target="_blank" rel="noopener">📝 자격시험 응시하러 가기 →</a>';}
    // 영상
@@ -221,6 +240,55 @@ function rvLoad(){loadAll(function(){render(_rows,'rvFeed',['후기']);});}
 (function(){var s=document.getElementById('stars');s.querySelectorAll('span').forEach(function(sp){sp.onclick=function(){star=+sp.dataset.v;s.querySelectorAll('span').forEach(function(x){x.classList.toggle('on',+x.dataset.v<=star);});};sp.click&&0;});
   // 기본 5점 표시
   s.querySelectorAll('span').forEach(function(x){x.classList.add('on');});})();
+function mUnlock(){
+  var v=document.getElementById('mpw').value.trim();var msg=document.getElementById('mpwmsg');
+  if(v!==MANAGE_PW){msg.className='pwmsg err';msg.textContent='비밀번호가 올바르지 않습니다.';return;}
+  document.getElementById('mUnlocked').classList.add('show');msg.className='pwmsg ok';msg.textContent='✓ 열렸습니다. 아래에서 자료를 올리고 저장하세요.';
+  renderManage();
+}
+function mRow(label,id,val,hint){
+  return '<div class="mrow"><label>'+label+(hint?' <span style="opacity:.55;font-size:12px;font-weight:400">'+hint+'</span>':'')+'</label>'
+    +'<input id="'+id+'" value="'+esc(val||'')+'" placeholder="파일을 올리면 링크가 자동으로 채워집니다">'
+    +'<div class="mbtns"><button class="btn btn-gold" style="padding:9px 14px;font-size:13px" onclick="mPick(\''+id+'\')">📎 파일 올리기</button>'
+    +'<button type="button" class="btn" style="padding:9px 14px;font-size:13px;background:#f3e3ea;color:#C0247E" onclick="document.getElementById(\''+id+'\').value=\'\'">🗑 비우기</button>'
+    +(val?'<a href="'+esc(val)+'" target="_blank" rel="noopener" style="font-size:12px;color:#2E8B57;font-weight:700;align-self:center;text-decoration:none">📄 현재 파일</a>':'')+'</div></div>';
+}
+function renderManage(){
+  var c=course||{};
+  document.getElementById('mEditor').innerHTML=
+    mRow('📋 강의 기획안','m_proposal',c.proposal_url,'담당자용')
+    +mRow('🎒 교육생 자료 1','m_student',c.student_url,'교육생 다운로드')
+    +mRow('🎒 교육생 자료 2','m_student2',c.student_url2,'선택')
+    +mRow('🎒 교육생 자료 3','m_student3',c.student_url3,'선택')
+    +mRow('🔒 강사 강의안','m_teacher',c.teacher_url,'비번 8808로 열림')
+    +'<div class="mrow"><label>📝 자격시험 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_exam" value="'+esc(c.exam_url||'')+'" placeholder="자격시험 페이지 주소"></div>'
+    +'<div class="mrow"><label>🎬 영상(유튜브) 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_video" value="'+esc(c.video_url||'')+'" placeholder="유튜브 주소"></div>'
+    +'<button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px" onclick="saveManage()">✓ 이 과정 저장</button>'
+    +'<div class="pwmsg" id="mSaveMsg" style="text-align:center;margin-top:8px"></div>';
+}
+function mPick(id){_mTarget=id;var fi=document.getElementById('mFile');fi.value='';fi.click();}
+function saveManage(){
+  if(courseIdx<0){alert('과정을 찾을 수 없습니다.');return;}
+  function v(id){return (document.getElementById(id)||{}).value||'';}
+  var it=Object.assign({},allItems[courseIdx],{
+    proposal_url:v('m_proposal'),student_url:v('m_student'),student_url2:v('m_student2'),student_url3:v('m_student3'),
+    teacher_url:v('m_teacher'),exam_url:v('m_exam'),video_url:v('m_video')});
+  allItems[courseIdx]=it; course=it;
+  var msg=document.getElementById('mSaveMsg');msg.className='pwmsg';msg.textContent='저장 중…';
+  fetch(U+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:Object.assign({Prefer:'resolution=merge-duplicates'},H),body:JSON.stringify({key:'classes_config',value:allItems,updated_at:new Date().toISOString()})})
+   .then(function(r){if(r.ok){msg.className='pwmsg ok';msg.textContent='✓ 저장 완료!';alert('✓ 저장 완료!\n\n이 과정의 자료가 반영됐습니다. 새로고침하면 학생 화면에도 보입니다.');}else{r.text().then(function(t){alert('저장 실패: '+t);});}})
+   .catch(function(e){alert('저장 오류: '+e);});
+}
+(function(){var fi=document.getElementById('mFile');if(!fi)return;fi.addEventListener('change',function(){
+  var file=fi.files&&fi.files[0];if(!file||!_mTarget)return;
+  var el=document.getElementById(_mTarget);var old=el.value;el.value='업로드 중… '+file.name;
+  var ext=(file.name.match(/\.[A-Za-z0-9]+$/)||['.pdf'])[0].toLowerCase();
+  var path='uploads/cls_'+Date.now()+ext;
+  fetch(U+'/storage/v1/object/site/'+encodeURIComponent(path),{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':file.type||'application/octet-stream','x-upsert':'true'},body:file})
+   .then(function(r){if(r.ok){el.value=U+'/storage/v1/object/public/site/'+encodeURIComponent(path);}else{el.value=old;r.text().then(function(t){alert('업로드 실패: '+t);});}})
+   .catch(function(e){el.value=old;alert('업로드 오류: '+e);});
+});})();
+
 </script>
 </body>
 </html>
