@@ -1070,7 +1070,18 @@ var CLS_DEFAULT=[
 var _resItems=[], _clsItems=[], _pdfTarget=null;
 function _esc(v){return (v==null?'':String(v)).replace(/"/g,'&quot;');}
 function _fld(label,id,val){return '<div class="ir"><label>'+label+'</label><input id="'+id+'" value="'+_esc(val)+'"></div>';}
-function _uploadBtn(target){return '<button class="sbtn" style="background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(255,255,255,.18);font-size:12px;padding:8px 12px" onclick="pickPdf(\''+target+'\')">📎 PDF 업로드</button>';}
+function _uploadBtn(target){return '<button class="sbtn" style="background:rgba(255,255,255,.1);box-shadow:none;border:1px solid rgba(255,255,255,.18);font-size:12px;padding:8px 12px" onclick="pickPdf(\''+target+'\')">📎 파일 올리기</button>';}
+
+function _fileRow(label,id,val,hint){
+  var cur = val ? '<a href="'+_esc(val)+'" target="_blank" rel="noopener" style="font-size:12px;color:#7ED0A5;text-decoration:none;font-weight:700">📄 현재 파일 보기</a>' : '<span style="font-size:12px;opacity:.4">등록된 파일 없음</span>';
+  return '<div class="ir"><label>'+label+(hint?' <span style="font-weight:400;opacity:.5;font-size:11px">'+hint+'</span>':'')+'</label>'
+    +'<input id="'+id+'" value="'+_esc(val)+'" placeholder="파일을 올리면 링크가 자동으로 채워집니다">'
+    +'<div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap">'
+    +_uploadBtn(id)
+    +'<button class="sbtn" style="background:rgba(230,0,126,.12);box-shadow:none;border:1px solid rgba(230,0,126,.4);color:#FF9BC8;font-size:12px;padding:8px 12px" onclick="clearFile(\''+id+'\')">🗑 내리기</button>'
+    +cur+'</div></div>';
+}
+function clearFile(id){var el=document.getElementById(id);if(el)el.value='';var us=document.getElementById('upState');if(us){us.style.color='#E7C15B';us.textContent='파일을 내렸습니다. 저장을 눌러야 실제 반영됩니다.';}}
 
 function renderRes(){
   supaFetch('pbs_site_config?key=eq.resources_config&select=value').then(function(r){return r.json();}).then(function(rows){
@@ -1081,8 +1092,7 @@ function renderRes(){
         +'<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><input id="res_icon_'+i+'" value="'+_esc(it.icon)+'" style="width:52px;text-align:center;font-size:18px"><b style="opacity:.85">'+_esc(it.title)+'</b></div>'
         +_fld('제목','res_title_'+i,it.title)
         +_fld('설명','res_desc_'+i,it.desc)
-        +'<div class="ir"><label>링크 / PDF</label><input id="res_url_'+i+'" value="'+_esc(it.url)+'"></div>'
-        +'<div style="margin-top:6px">'+_uploadBtn('res_url_'+i)+'</div>'
+        +_fileRow('기획안 PDF / 링크','res_url_'+i,it.url,'')
         +'</div>';
     });
     document.getElementById('resList').innerHTML=h;
@@ -1098,10 +1108,8 @@ function renderCls(){
         +'<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><input id="cls_icon_'+i+'" value="'+_esc(it.icon)+'" style="width:52px;text-align:center;font-size:18px"><b style="opacity:.85">'+_esc(it.title)+'</b></div>'
         +_fld('과정명','cls_title_'+i,it.title)
         +_fld('설명','cls_desc_'+i,it.desc)
-        +'<div class="ir"><label>🎒 교육생 자료(공개) 링크</label><input id="cls_student_'+i+'" value="'+_esc(it.student_url)+'"></div>'
-        +'<div style="margin:6px 0">'+_uploadBtn('cls_student_'+i)+'</div>'
-        +'<div class="ir"><label>🎤 강사 강의안(비번) 링크</label><input id="cls_teacher_'+i+'" value="'+_esc(it.teacher_url)+'"></div>'
-        +'<div style="margin-top:6px">'+_uploadBtn('cls_teacher_'+i)+'</div>'
+        +_fileRow('📥 강의 배포용 자료','cls_student_'+i,it.student_url,'교육생이 다운로드')
+        +_fileRow('🔒 강의안','cls_teacher_'+i,it.teacher_url,'강사 전용 · 비번 8808')
         +'</div>';
     });
     document.getElementById('clsList').innerHTML=h;
