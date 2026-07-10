@@ -826,16 +826,17 @@ function renderGlb(){
         +'background:'+(act?'var(--pk)':'rgba(255,255,255,.05)')+';color:#fff;cursor:pointer">'+p.l+'</button>';
     }).join('');
     return '<div class="gpw">'
-      +'<img src="'+item.src+'" id="glbi'+i+'" style="object-position:'+item.pos+'" onerror="this.style.opacity=\'.1\'">'
+      +'<img src="'+item.src+'" id="glbi'+i+'" data-pk="'+item.posKey+'" data-i="'+i+'" draggable="false" style="object-position:'+item.pos+';cursor:grab;touch-action:none" onerror="this.style.opacity=\'.1\'">'
       +'<div class="gpl"><span>'+item.label+'</span><div style="display:flex;gap:5px">'
       +'<button class="gcb" onclick="document.getElementById(\'gfi'+i+'\').click()">변경</button>'
       +delBtn+'</div></div>'
       +'<div style="padding:8px 10px;border-top:1px solid rgba(255,255,255,.07)">'
-      +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:5px;font-weight:700">📍 위치 조정 (저장 전 미리보기)</div>'
+      +'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:5px;font-weight:700">📍 사진을 끌어서 위치 맞추기 (또는 아래 화살표)</div>'
       +'<div style="display:grid;grid-template-columns:repeat(3,26px);gap:3px">'+posGrid+'</div></div>'
       +'<input type="file" id="gfi'+i+'" accept="image/*" style="display:none" onchange="chgGlb(\''+item.key+'\','+i+',this)"></div>';
   }).join('');
   grid.innerHTML+='<div style="border:2px dashed rgba(255,255,255,.15);border-radius:12px;min-height:100px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.4);font-size:13px;font-weight:700;margin-top:4px" onclick="document.getElementById(\'glbNewFile\').click()">+ 새 사진 추가</div>';
+  attachGlbDrag();
   /* 미저장 안내 배너 */
   var notice=document.getElementById('glbNotice');
   if(hasPending){
@@ -854,6 +855,18 @@ function chgGlb(key,idx,inp){
     renderGlb();
     toast('사진 선택됨 — ✓ 저장 버튼 클릭 시 메인에 반영');
   });inp.value='';
+}
+function attachGlbDrag(){
+  document.querySelectorAll('#glbGrid img[data-pk]').forEach(function(img){
+    if(img._di)return; img._di=1;
+    var drag=false,sx,sy,ox,oy;
+    function parse(){var m=(img.style.objectPosition||'50% 50%').match(/(-?\d+(?:\.\d+)?)%\s+(-?\d+(?:\.\d+)?)%/);return m?[+m[1],+m[2]]:[50,50];}
+    img.addEventListener('pointerdown',function(e){drag=true;try{img.setPointerCapture(e.pointerId);}catch(_){}var pp=parse();ox=pp[0];oy=pp[1];sx=e.clientX;sy=e.clientY;img.style.cursor='grabbing';e.preventDefault();});
+    img.addEventListener('pointermove',function(e){if(!drag)return;var w=img.clientWidth||300,h=img.clientHeight||200;var nx=Math.max(0,Math.min(100,ox-(e.clientX-sx)/w*100));var ny=Math.max(0,Math.min(100,oy-(e.clientY-sy)/h*100));img._p=nx.toFixed(1)+'% '+ny.toFixed(1)+'%';img.style.objectPosition=img._p;});
+    function end(){if(!drag)return;drag=false;img.style.cursor='grab';if(img._p){_glbTemp[img.dataset.pk]=img._p;renderGlb();}}
+    img.addEventListener('pointerup',end);img.addEventListener('pointercancel',end);
+    img.addEventListener('lostpointercapture',end);
+  });
 }
 function setGlbPos(posKey,idx,pos){
   _glbTemp[posKey]=pos;
