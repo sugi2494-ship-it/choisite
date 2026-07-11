@@ -77,9 +77,9 @@
     <!-- 교육생 강의자료 받기 (그날 날짜 비번) -->
     <section class="sec" id="download">
       <h2>🎒 교육생 강의자료 받기</h2>
-      <div class="sub">오늘 날짜 4자리(월일, 예: 0710)를 입력하면 강의 자료가 열립니다.</div>
+      <div class="sub">강사가 알려준 비밀번호를 입력하면 강의 자료가 열립니다.</div>
       <div class="pwrow">
-        <input type="password" id="spw" inputmode="numeric" placeholder="오늘 날짜 (월일 4자리)" onkeydown="if(event.key==='Enter')sUnlock()">
+        <input type="password" id="spw" inputmode="numeric" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')sUnlock()">
         <button class="btn btn-primary" onclick="sUnlock()">열기</button>
       </div>
       <div class="pwmsg" id="spwmsg"></div>
@@ -180,7 +180,7 @@ fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H
    document.getElementById('cTitle').textContent=course.title||'강의';
    document.getElementById('cDesc').textContent=course.desc||'';
    document.title=(course.title||'강의')+' | 최해숙 · PBS COLOR LAB';
-   if(course.proposal_url){document.getElementById('proposal').style.display='';document.getElementById('proposalArea').innerHTML='<a class="btn btn-gold" href="'+esc(course.proposal_url)+'" target="_blank" rel="noopener">📋 강의 기획안 보기 / 다운로드 →</a>';}
+   if(course.proposal_url){var pu=course.proposal_url;if(pu.indexOf('http')!==0&&pu.charAt(0)!=='/')pu='/'+pu;document.getElementById('proposal').style.display='';document.getElementById('proposalArea').innerHTML='<a class="btn btn-gold" href="'+esc(pu)+'" target="_blank" rel="noopener">📋 강의 기획안 보기 / 다운로드 →</a>';}
    // 자격시험
    if(course.exam_url){document.getElementById('exam').style.display='';document.getElementById('examArea').innerHTML='<a class="btn btn-red" href="'+esc(course.exam_url)+'" target="_blank" rel="noopener">📝 자격시험 응시하러 가기 →</a>';}
    // 영상
@@ -193,9 +193,9 @@ function sUnlock(){
   if(v===todayPW()){
     document.getElementById('sUnlocked').classList.add('show');msg.className='pwmsg ok';msg.textContent='✓ 열렸습니다.';
     var a=document.getElementById('studentArea');
-    var urls=course?[course.student_url,course.student_url2,course.student_url3].filter(function(u){return u;}):[];
-    a.innerHTML=urls.length?urls.map(function(u,ix){return '<a class="btn btn-primary" style="margin:4px 8px 4px 0" href="'+esc(u)+'" target="_blank" rel="noopener">📥 강의 자료 '+(urls.length>1?(ix+1)+' ':'')+'받기 →</a>';}).join(''):'<div class="muted">자료 준비 중입니다. 강사에게 문의해 주세요.</div>';
-  }else{msg.className='pwmsg err';msg.textContent='날짜가 올바르지 않습니다. (오늘 월일 4자리)';}
+    var pairs=course?[{u:course.student_url,l:course.student_label},{u:course.student_url2,l:course.student_label2},{u:course.student_url3,l:course.student_label3}].filter(function(x){return x.u;}):[];
+    a.innerHTML=pairs.length?pairs.map(function(x,ix){var nm=x.l||('강의 자료 '+(ix+1));return '<a class="btn btn-primary" style="margin:4px 8px 4px 0" href="'+esc(x.u)+'" target="_blank" rel="noopener">📥 '+esc(nm)+' 받기 →</a>';}).join(''):'<div class="muted">자료 준비 중입니다. 강사에게 문의해 주세요.</div>';
+  }else{msg.className='pwmsg err';msg.textContent='비밀번호가 올바르지 않습니다.';}
 }
 function tUnlock(){
   var v=document.getElementById('tpw').value.trim();var msg=document.getElementById('tpwmsg');
@@ -253,13 +253,21 @@ function mRow(label,id,val,hint){
     +'<button type="button" class="btn" style="padding:9px 14px;font-size:13px;background:#f3e3ea;color:#C0247E" onclick="document.getElementById(\''+id+'\').value=\'\'">🗑 비우기</button>'
     +(val?'<a href="'+esc(val)+'" target="_blank" rel="noopener" style="font-size:12px;color:#2E8B57;font-weight:700;align-self:center;text-decoration:none">📄 현재 파일</a>':'')+'</div></div>';
 }
+function mStudentRow(no,labelId,urlId,labelVal,urlVal){
+  return '<div class="mrow" style="background:rgba(0,0,0,.02);border:1px solid var(--line);border-radius:12px;padding:12px"><label>🎒 교육생 자료 '+no+' <span style="opacity:.55;font-size:12px;font-weight:400">이름 + 파일</span></label>'
+    +'<input id="'+labelId+'" value="'+esc(labelVal||'')+'" placeholder="자료 이름 (예: 여성옷 가이드 — 버튼에 표시됩니다)" style="margin-bottom:8px">'
+    +'<input id="'+urlId+'" value="'+esc(urlVal||'')+'" placeholder="파일을 올리면 링크가 자동으로 채워집니다">'
+    +'<div class="mbtns"><button class="btn btn-gold" style="padding:9px 14px;font-size:13px" onclick="mPick(\''+urlId+'\')">📎 파일 올리기</button>'
+    +'<button type="button" class="btn" style="padding:9px 14px;font-size:13px;background:#f3e3ea;color:#C0247E" onclick="document.getElementById(\''+urlId+'\').value=\'\'">🗑 비우기</button>'
+    +(urlVal?'<a href="'+esc(urlVal)+'" target="_blank" rel="noopener" style="font-size:12px;color:#2E8B57;font-weight:700;align-self:center;text-decoration:none">📄 현재 파일</a>':'')+'</div></div>';
+}
 function renderManage(){
   var c=course||{};
   document.getElementById('mEditor').innerHTML=
     mRow('📋 강의 기획안','m_proposal',c.proposal_url,'담당자용')
-    +mRow('🎒 교육생 자료 1','m_student',c.student_url,'교육생 다운로드')
-    +mRow('🎒 교육생 자료 2','m_student2',c.student_url2,'선택')
-    +mRow('🎒 교육생 자료 3','m_student3',c.student_url3,'선택')
+    +mStudentRow(1,'m_slabel','m_student',c.student_label,c.student_url)
+    +mStudentRow(2,'m_slabel2','m_student2',c.student_label2,c.student_url2)
+    +mStudentRow(3,'m_slabel3','m_student3',c.student_label3,c.student_url3)
     +mRow('🔒 강사 강의안','m_teacher',c.teacher_url,'비번 8808로 열림')
     +'<div class="mrow"><label>📝 자격시험 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_exam" value="'+esc(c.exam_url||'')+'" placeholder="자격시험 페이지 주소"></div>'
     +'<div class="mrow"><label>🎬 영상(유튜브) 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_video" value="'+esc(c.video_url||'')+'" placeholder="유튜브 주소"></div>'
@@ -272,6 +280,7 @@ function saveManage(){
   function v(id){return (document.getElementById(id)||{}).value||'';}
   var it=Object.assign({},allItems[courseIdx],{
     proposal_url:v('m_proposal'),student_url:v('m_student'),student_url2:v('m_student2'),student_url3:v('m_student3'),
+    student_label:v('m_slabel'),student_label2:v('m_slabel2'),student_label3:v('m_slabel3'),
     teacher_url:v('m_teacher'),exam_url:v('m_exam'),video_url:v('m_video')});
   allItems[courseIdx]=it; course=it;
   var msg=document.getElementById('mSaveMsg');msg.className='pwmsg';msg.textContent='저장 중…';
