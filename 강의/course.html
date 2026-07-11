@@ -56,7 +56,7 @@
     <a class="brand" href="index.html">PBS COLOR LAB · 강의실</a>
     <div class="nav">
       <a href="#download">교육생 자료</a><a href="#exam">자격시험</a><a href="#lecture">강의안</a>
-      <a href="#video">영상</a><a href="#board">질문·소감</a><a href="#review">후기</a>
+      <a href="#video">영상</a><a href="#board">질문·소감·후기</a>
     </div>
     <a class="back" href="index.html">← 과정 목록</a>
   </div></div>
@@ -114,33 +114,21 @@
 
     <!-- 수업 질문·소감 -->
     <section class="sec" id="board">
-      <h2>💬 수업 질문 · 소감</h2>
-      <div class="sub">궁금한 점이나 소감을 남겨주세요. 강사 승인 후 함께 표시됩니다.</div>
+      <h2>💬 질문 · 소감 · 후기</h2>
+      <div class="sub">궁금한 점·소감·후기를 남겨주세요. 강사 승인 후 함께 표시됩니다.</div>
       <div class="bd-form">
         <div class="bd-kinds">
           <button type="button" class="bd-kbtn active" data-k="질문" onclick="bdKind('질문')">질문</button>
           <button type="button" class="bd-kbtn" data-k="소감" onclick="bdKind('소감')">소감</button>
+          <button type="button" class="bd-kbtn" data-k="후기" onclick="bdKind('후기')">후기</button>
         </div>
+        <div class="stars" id="stars" style="display:none"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div>
         <input id="bdName" type="text" placeholder="이름 (예명 가능)" maxlength="24">
         <textarea id="bdMsg" rows="3" placeholder="내용을 입력하세요"></textarea>
-        <button class="btn btn-primary" onclick="bdSubmit('board')" style="align-self:flex-start">남기기 →</button>
+        <button class="btn btn-primary" onclick="bdSubmit()" style="align-self:flex-start">남기기 →</button>
         <div class="pwmsg" id="bdStat"></div>
       </div>
       <div id="bdFeed"></div>
-    </section>
-
-    <!-- 강의 후기 -->
-    <section class="sec" id="review">
-      <h2>⭐ 강의 후기 남기기</h2>
-      <div class="sub">강의가 끝난 후 후기를 남겨주세요. 강사 승인 후 표시됩니다.</div>
-      <div class="bd-form">
-        <div class="stars" id="stars"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div>
-        <input id="rvName" type="text" placeholder="이름 (예명 가능)" maxlength="24">
-        <textarea id="rvMsg" rows="3" placeholder="후기를 남겨주세요"></textarea>
-        <button class="btn btn-gold" onclick="rvSubmit()" style="align-self:flex-start">후기 남기기 →</button>
-        <div class="pwmsg" id="rvStat"></div>
-      </div>
-      <div id="rvFeed"></div>
     </section>
     <!-- 운영자 관리 -->
     <style>#manage .mrow{margin-bottom:14px}#manage .mrow label{display:block;font-size:13px;font-weight:800;color:var(--soft);margin-bottom:5px}#manage .mrow input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit}#manage .mbtns{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}</style>
@@ -185,7 +173,7 @@ fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H
    if(course.exam_url){document.getElementById('exam').style.display='';document.getElementById('examArea').innerHTML='<a class="btn btn-red" href="'+esc(course.exam_url)+'" target="_blank" rel="noopener">📝 자격시험 응시하러 가기 →</a>';}
    // 영상
    if(course.video_url){var id=ytId(course.video_url);document.getElementById('video').style.display='';document.getElementById('videoArea').innerHTML=id?('<div class="video-embed"><iframe src="https://www.youtube.com/embed/'+id+'" allowfullscreen loading="lazy"></iframe></div>'):('<a class="btn btn-primary" href="'+esc(course.video_url)+'" target="_blank" rel="noopener">▶ 영상 보기 →</a>');}
-   bdLoad(); rvLoad();
+   bdLoad();
  }).catch(function(e){});
 
 function sUnlock(){
@@ -205,7 +193,7 @@ function tUnlock(){
     a.innerHTML=(course&&course.teacher_url)?('<a class="btn btn-gold" href="'+esc(course.teacher_url)+'" target="_blank" rel="noopener">📊 강의 슬라이드 열기 →</a>'):'<div class="muted">등록된 강의안이 없습니다. 관리자에서 업로드하세요.</div>';
   }else{msg.className='pwmsg err';msg.textContent='비밀번호가 올바르지 않습니다.';}
 }
-function bdKind(k){kind=k;document.querySelectorAll('#board .bd-kbtn').forEach(function(b){b.classList.toggle('active',b.dataset.k===k);});}
+function bdKind(k){kind=k;document.querySelectorAll('#board .bd-kbtn').forEach(function(b){b.classList.toggle('active',b.dataset.k===k);});var st=document.getElementById('stars');if(st)st.style.display=(k==='후기')?'block':'none';var mm=document.getElementById('bdMsg');if(mm)mm.placeholder=(k==='후기')?'후기를 남겨주세요':'내용을 입력하세요';}
 function post(obj,stEl,after){
   var st=document.getElementById(stEl);st.textContent='등록 중…';st.className='pwmsg';
   fetch(U+'/rest/v1/class_board',{method:'POST',headers:Object.assign({Prefer:'return=minimal'},H),body:JSON.stringify(obj)})
@@ -216,14 +204,8 @@ function bdSubmit(){
   var name=(document.getElementById('bdName').value||'').trim()||'익명';
   var msg=(document.getElementById('bdMsg').value||'').trim();
   if(!msg){document.getElementById('bdStat').className='pwmsg err';document.getElementById('bdStat').textContent='내용을 입력해주세요.';return;}
-  post({name:name,kind:kind,message:msg,course:course?course.title:COURSE,approved:false},'bdStat',function(){document.getElementById('bdMsg').value='';bdLoad();});
-}
-function rvSubmit(){
-  var name=(document.getElementById('rvName').value||'').trim()||'익명';
-  var msg=(document.getElementById('rvMsg').value||'').trim();
-  if(!msg){document.getElementById('rvStat').className='pwmsg err';document.getElementById('rvStat').textContent='후기를 입력해주세요.';return;}
-  var stars='★'.repeat(star)+'☆'.repeat(5-star);
-  post({name:name,kind:'후기',message:stars+' '+msg,course:course?course.title:COURSE,approved:false},'rvStat',function(){document.getElementById('rvMsg').value='';rvLoad();});
+  var body=msg; if(kind==='후기'){body='★'.repeat(star)+'☆'.repeat(5-star)+' '+msg;}
+  post({name:name,kind:kind,message:body,course:course?course.title:COURSE,approved:false},'bdStat',function(){document.getElementById('bdMsg').value='';bdLoad();});
 }
 function render(rows,el,kinds){
   var f=document.getElementById(el);if(!f)return;
@@ -235,8 +217,7 @@ function render(rows,el,kinds){
 }
 var _rows=[];
 function loadAll(cb){fetch(U+'/rest/v1/class_board?select=*&approved=eq.true&order=created_at.desc&limit=100',{headers:H}).then(function(r){return r.json();}).then(function(rows){_rows=rows||[];cb();});}
-function bdLoad(){loadAll(function(){render(_rows,'bdFeed',['질문','소감']);});}
-function rvLoad(){loadAll(function(){render(_rows,'rvFeed',['후기']);});}
+function bdLoad(){loadAll(function(){render(_rows,'bdFeed',['질문','소감','후기']);});}
 (function(){var s=document.getElementById('stars');s.querySelectorAll('span').forEach(function(sp){sp.onclick=function(){star=+sp.dataset.v;s.querySelectorAll('span').forEach(function(x){x.classList.toggle('on',+x.dataset.v<=star);});};sp.click&&0;});
   // 기본 5점 표시
   s.querySelectorAll('span').forEach(function(x){x.classList.add('on');});})();
@@ -298,12 +279,12 @@ function mLoadPosts(){
 }
 function mApprove(id,val){
   fetch(U+'/rest/v1/class_board?id=eq.'+id,{method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},H),body:JSON.stringify({approved:val})})
-   .then(function(r){if(r.ok){mLoadPosts();bdLoad();rvLoad();}});
+   .then(function(r){if(r.ok){mLoadPosts();bdLoad();}});
 }
 function mDelPost(id){
   if(!confirm('이 글을 삭제할까요? 되돌릴 수 없습니다.'))return;
   fetch(U+'/rest/v1/class_board?id=eq.'+id,{method:'DELETE',headers:Object.assign({Prefer:'return=minimal'},H)})
-   .then(function(r){if(r.ok){mLoadPosts();bdLoad();rvLoad();}});
+   .then(function(r){if(r.ok){mLoadPosts();bdLoad();}});
 }
 
 function mPick(id){_mTarget=id;var fi=document.getElementById('mFile');fi.value='';fi.click();}
