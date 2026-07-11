@@ -227,7 +227,7 @@ function rvSubmit(){
 }
 function render(rows,el,kinds){
   var f=document.getElementById(el);if(!f)return;
-  var list=(rows||[]).filter(function(x){return kinds.indexOf(x.kind)>=0;});
+  var list=(rows||[]).filter(function(x){return kinds.indexOf(x.kind)>=0 && x.course===(course&&course.title);});
   f.innerHTML=list.map(function(x){
     var cls=x.kind==='질문'?'q':(x.kind==='후기'?'r':'c');
     return '<div class="bd-item"><span class="bd-tag '+cls+'">'+esc(x.kind)+'</span> <b>'+esc(x.name||'익명')+'</b><div style="margin-top:6px;white-space:pre-wrap">'+esc(x.message)+'</div></div>';
@@ -272,8 +272,40 @@ function renderManage(){
     +'<div class="mrow"><label>📝 자격시험 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_exam" value="'+esc(c.exam_url||'')+'" placeholder="자격시험 페이지 주소"></div>'
     +'<div class="mrow"><label>🎬 영상(유튜브) 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_video" value="'+esc(c.video_url||'')+'" placeholder="유튜브 주소"></div>'
     +'<button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px" onclick="saveManage()">✓ 이 과정 저장</button>'
-    +'<div class="pwmsg" id="mSaveMsg" style="text-align:center;margin-top:8px"></div>';
+    +'<div class="pwmsg" id="mSaveMsg" style="text-align:center;margin-top:8px"></div>'
+    +'<div style="border-top:1px solid var(--line);margin-top:22px;padding-top:16px"><h2 style="font-size:17px;margin:0 0 4px">💬 이 과정 질문·소감·후기 관리</h2><div class="sub" style="margin-bottom:12px">\'게시\'를 눌러야 학생 화면에 보입니다.</div><div id="mPosts">불러오는 중…</div></div>';
+  mLoadPosts();
 }
+function mLoadPosts(){
+  var t=course?course.title:COURSE;
+  fetch(U+'/rest/v1/class_board?select=*&course=eq.'+encodeURIComponent(t)+'&order=created_at.desc&limit=200',{headers:H})
+  .then(function(r){return r.json();}).then(function(rows){
+    var el=document.getElementById('mPosts');if(!el)return;
+    if(!rows||!rows.length){el.innerHTML='<div class="muted">아직 등록된 글이 없습니다.</div>';return;}
+    el.innerHTML=rows.map(function(x){
+      var cls=x.kind==='질문'?'q':(x.kind==='후기'?'r':'c');
+      var actBtn=x.approved
+        ?'<button type="button" class="btn" style="padding:6px 13px;font-size:12.5px;background:#eee;color:#555" onclick="mApprove('+x.id+',false)">숨김</button>'
+        :'<button type="button" class="btn btn-gold" style="padding:6px 13px;font-size:12.5px" onclick="mApprove('+x.id+',true)">게시</button>';
+      return '<div class="bd-item" style="'+(x.approved?'':'border:1.5px dashed var(--pink)')+'">'
+        +'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="bd-tag '+cls+'">'+esc(x.kind)+'</span> <b>'+esc(x.name||'익명')+'</b>'
+        +'<span style="margin-left:auto;font-size:12px;font-weight:700;color:'+(x.approved?'#2E8B57':'#C0247E')+'">'+(x.approved?'● 게시중':'○ 대기중')+'</span></div>'
+        +'<div style="margin-top:6px;white-space:pre-wrap">'+esc(x.message)+'</div>'
+        +'<div style="display:flex;gap:6px;margin-top:9px">'+actBtn
+        +'<button type="button" class="btn" style="padding:6px 13px;font-size:12.5px;background:#f3e3ea;color:#C0247E" onclick="mDelPost('+x.id+')">삭제</button></div></div>';
+    }).join('');
+  }).catch(function(){});
+}
+function mApprove(id,val){
+  fetch(U+'/rest/v1/class_board?id=eq.'+id,{method:'PATCH',headers:Object.assign({Prefer:'return=minimal'},H),body:JSON.stringify({approved:val})})
+   .then(function(r){if(r.ok){mLoadPosts();bdLoad();rvLoad();}});
+}
+function mDelPost(id){
+  if(!confirm('이 글을 삭제할까요? 되돌릴 수 없습니다.'))return;
+  fetch(U+'/rest/v1/class_board?id=eq.'+id,{method:'DELETE',headers:Object.assign({Prefer:'return=minimal'},H)})
+   .then(function(r){if(r.ok){mLoadPosts();bdLoad();rvLoad();}});
+}
+
 function mPick(id){_mTarget=id;var fi=document.getElementById('mFile');fi.value='';fi.click();}
 function saveManage(){
   if(courseIdx<0){alert('과정을 찾을 수 없습니다.');return;}
