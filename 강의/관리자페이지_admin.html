@@ -63,6 +63,15 @@
   .sms{display:inline-block;text-decoration:none;background:#fff;border:1px solid var(--pink);color:var(--pink-deep);font-weight:800;font-size:12px;padding:6px 10px;border-radius:9px;margin:2px 3px 2px 0;white-space:nowrap;}
   .sms:hover{background:var(--pink-soft);}
   .sms.b{background:var(--pink);color:#fff;}
+  /* 문자 모달 */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center;padding:20px;}
+  .modalbox{background:#fff;border-radius:18px;padding:24px;max-width:470px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.28);}
+  .modalbox h3{margin:0 0 4px;font-size:19px;}
+  .modalbox .mto{color:var(--muted);font-size:13px;margin:0 0 12px;font-weight:700;}
+  .modalbox textarea{width:100%;min-height:210px;font-size:14px;font-family:inherit;line-height:1.65;padding:14px;border:1.5px solid var(--line);border-radius:12px;background:#FAF3F6;resize:vertical;color:var(--ink);}
+  .modalbox .mrow{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+  .modalbox .mrow>*{flex:1;text-align:center;padding:13px;text-decoration:none;}
+  .modalbox .mhint{font-size:12px;color:var(--muted);margin:14px 0 0;line-height:1.7;}
 
   .cardlist{display:grid;gap:12px;}
   .item{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05);}
@@ -194,6 +203,21 @@
         </div>
       </main>
     </div>
+
+    <!-- 문자 발송 모달 -->
+    <div id="smsModal" class="modal">
+      <div class="modalbox">
+        <h3>📱 문자 발송</h3>
+        <p class="mto" id="smsTo"></p>
+        <textarea id="smsText" readonly></textarea>
+        <div class="mrow">
+          <button class="btn-x" id="smsCopyBtn" onclick="smsCopy()">📋 문구 복사하기</button>
+          <a class="btn-x" id="smsSend" href="#">📲 문자앱으로 보내기</a>
+          <button class="btn-ghost" onclick="smsClose()">닫기</button>
+        </div>
+        <p class="mhint">💻 PC에서는 <b>문구 복사하기</b>를 누른 뒤 카카오톡·문자 등에 붙여넣어 보내세요.<br>📱 휴대폰에서는 <b>문자앱으로 보내기</b>를 누르면 번호와 문구가 자동 입력됩니다. (장소는 문구에서 직접 수정하세요)</p>
+      </div>
+    </div>
   </div>
 
 <script>
@@ -236,11 +260,23 @@
       `반갑게 뵙겠습니다! 문의 010-4285-7997`;
   }
   function smsHref(phone,body){return "sms:"+String(phone||"").replace(/[^0-9]/g,"")+"?body="+encodeURIComponent(body);}
-  window.copyMsg=function(type,id,ev){
+  const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  window.openSms=function(type,id){
     const r=DATA.apps.find(x=>x.id===id); if(!r)return;
     const body=type==="c"?msgConfirm(r):msgVenue(r);
-    navigator.clipboard&&navigator.clipboard.writeText(body);
+    $("smsText").value=body;
+    $("smsTo").textContent=(r.name||"이름없음")+" · "+(r.phone||"");
+    const link=$("smsSend");
+    link.href=smsHref(r.phone,body);
+    link.style.display=isMobile?"inline-block":"none";
+    $("smsModal").style.display="flex";
   };
+  window.smsCopy=function(){
+    const t=$("smsText");t.select();t.setSelectionRange(0,99999);
+    try{navigator.clipboard.writeText(t.value);}catch(e){document.execCommand("copy");}
+    const b=$("smsCopyBtn");b.textContent="✅ 복사되었어요!";setTimeout(()=>b.textContent="📋 문구 복사하기",1600);
+  };
+  window.smsClose=function(){$("smsModal").style.display="none";};
 
   async function loadAll(){
     const [a,q,rv,m,p]=await Promise.all([api("applications"),api("questions"),api("reviews"),api("materials"),api("posts")]);
@@ -255,8 +291,7 @@
     const rows=DATA.apps;$("cnt_apps").textContent=rows.length;$("e_apps").style.display=rows.length?"none":"block";
     if($("chkAll"))$("chkAll").checked=false;updateSel();
     $("tb_apps").innerHTML=rows.map((r,i)=>{
-      const c=smsHref(r.phone,msgConfirm(r)), v=smsHref(r.phone,msgVenue(r));
-      const smsCell=`<a class="sms b" href="${c}" onclick="copyMsg('c','${r.id}')">① 확정·계좌</a><a class="sms" href="${v}" onclick="copyMsg('v','${r.id}')">② 장소안내</a>`;
+      const smsCell=`<button class="sms b" onclick="openSms('c','${r.id}')">① 확정·계좌</button><button class="sms" onclick="openSms('v','${r.id}')">② 장소안내</button>`;
       return `<tr><td class="chkcell"><input type="checkbox" class="chk" value="${r.id}" onchange="updateSel()"></td>`+
         `<td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td>`+
         `<td><b style="color:#C33A72">${esc(r.session)}</b></td><td>${esc(r.name)}</td>`+
