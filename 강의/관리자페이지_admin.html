@@ -255,12 +255,18 @@
   function msgVenue(r){
     const name=(r.name||"").trim()||"신청자";
     const s=r.session||"신청하신 회차";
-    return `[PBS컬러랩] ${name}님, 신청하신 강의가 확정(접수 완료)되었습니다.\n`+
+    return `[PBS컬러랩] ${name}님,\n`+
+      `신청하신 [강사 웹페이지 만들기] 강의가 확정(접수 완료)되었습니다.\n\n`+
       `▶ 일시 : ${s}\n`+
       `▶ 시간 : 10:00 ~ 15:00\n`+
-      `▶ 장소 : 울산 (○○○ — 장소명을 입력하세요)\n`+
-      `▶ 준비물 : 노트북\n`+
-      `반갑게 뵙겠습니다! 문의 010-4285-7997`;
+      `▶ 장소 : 울산 PBS컬러랩\n`+
+      `   (울산 중구 종가6길 8-18 럭키빌딩 704호\n`+
+      `    · 건물 1층 및 지하 주차장 1시간 지원)\n`+
+      `▶ 준비물 : 노트북\n\n`+
+      `반갑게 뵙겠습니다!\n`+
+      `10분 전 착석 바랍니다.\n`+
+      `감사합니다.\n\n`+
+      `문의 010-4285-7997`;
   }
   function smsHref(phone,body){return "sms:"+String(phone||"").replace(/[^0-9]/g,"")+"?body="+encodeURIComponent(body);}
   const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
