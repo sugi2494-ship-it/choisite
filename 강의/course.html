@@ -182,7 +182,7 @@ function sUnlock(){
     document.getElementById('sUnlocked').classList.add('show');msg.className='pwmsg ok';msg.textContent='✓ 열렸습니다.';
     var a=document.getElementById('studentArea');
     var pairs=course?[{u:course.student_url,l:course.student_label},{u:course.student_url2,l:course.student_label2},{u:course.student_url3,l:course.student_label3}].filter(function(x){return x.u;}):[];
-    a.innerHTML=pairs.length?pairs.map(function(x,ix){var nm=x.l||('강의 자료 '+(ix+1));return '<a class="btn btn-primary" style="margin:4px 8px 4px 0" href="'+esc(x.u)+'" target="_blank" rel="noopener">📥 '+esc(nm)+' 받기 →</a>';}).join(''):'<div class="muted">자료 준비 중입니다. 강사에게 문의해 주세요.</div>';
+    a.innerHTML=pairs.length?pairs.map(function(x,ix){var nm=x.l||('강의 자료 '+(ix+1));var isW=/\.html?(\?|$)/i.test(x.u);var icon=isW?'📂':'📥';var verb=isW?'열기':'받기';return '<a class="btn btn-primary" style="margin:4px 8px 4px 0" href="'+esc(x.u)+'" target="_blank" rel="noopener">'+icon+' '+esc(nm)+' '+verb+' →</a>';}).join(''):'<div class="muted">자료 준비 중입니다. 강사에게 문의해 주세요.</div>';
   }else{msg.className='pwmsg err';msg.textContent='비밀번호가 올바르지 않습니다.';}
 }
 function tUnlock(){
