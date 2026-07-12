@@ -63,6 +63,10 @@
   .sms{display:inline-block;text-decoration:none;background:#fff;border:1px solid var(--pink);color:var(--pink-deep);font-weight:800;font-size:12px;padding:6px 10px;border-radius:9px;margin:2px 3px 2px 0;white-space:nowrap;}
   .sms:hover{background:var(--pink-soft);}
   .sms.b{background:var(--pink);color:#fff;}
+  .stchip{display:inline-block;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:11.5px;font-weight:800;padding:5px 9px;border-radius:100px;margin:2px 3px 2px 0;cursor:pointer;white-space:nowrap;}
+  .stchip.c1{background:#FFE9B8;color:#8a5a00;border-color:#FFD98A;}
+  .stchip.c2{background:#CFE6FF;color:#0b5aa5;border-color:#A9D2FF;}
+  .stchip.c3{background:#C7EFD5;color:#1E7A44;border-color:#9FE0B6;}
   /* 문자 모달 */
   .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center;padding:20px;}
   .modalbox{background:#fff;border-radius:18px;padding:24px;max-width:470px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.28);}
@@ -143,9 +147,9 @@
               <button class="btn-x" id="xlsxApps">📥 엑셀 다운로드</button>
             </div>
           </div>
-          <p class="hint">📱 문자 버튼은 휴대폰에서 누르면 문자앱이 열리고, PC에서는 문구가 자동 복사됩니다. 앞의 네모칸을 체크한 뒤 ‘선택 삭제’로 지울 수 있어요.</p>
+          <p class="hint">🟡 계좌안내 보냄 · 🔵 입금확인 · 🟢 장소안내 보냄 순으로 <b>줄 색이 바뀝니다</b>. 문자를 보내면(발송/복사) ‘계좌안내·장소안내’가 자동 체크되고, <b>입금확인</b>은 입금되면 직접 눌러 표시하세요. 각 표시는 눌러서 켜고 끌 수 있어요. 앞 네모칸 체크 후 ‘선택 삭제’로 삭제됩니다.</p>
           <div class="tablewrap"><table>
-            <thead><tr><th class="chkcell"><input type="checkbox" id="chkAll" /></th><th>No</th><th>접수일시</th><th>회차</th><th>이름</th><th>연락처</th><th>문자 발송</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead>
+            <thead><tr><th class="chkcell"><input type="checkbox" id="chkAll" /></th><th>No</th><th>접수일시</th><th>회차</th><th>이름</th><th>연락처</th><th>진행 상태</th><th>문자 발송</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead>
             <tbody id="tb_apps"></tbody>
           </table><div class="empty" id="e_apps" style="display:none;">아직 신청이 없습니다.</div></div>
         </div>
@@ -218,7 +222,7 @@
           <a class="btn-x" id="smsSend" href="#">📲 문자앱으로 보내기</a>
           <button class="btn-ghost" onclick="smsClose()">닫기</button>
         </div>
-        <p class="mhint"><b>📤 바로 발송</b>은 Solapi 연동 후 사용할 수 있습니다(문자·카카오). 연동 전에는 <b>문구 복사하기</b>로 카카오톡·문자에 붙여넣어 보내세요. 장소 등은 문구에서 바로 수정할 수 있어요.</p>
+        <p class="mhint"><b>📤 바로 발송</b>: 클릭하면 문자가 즉시 나갑니다(비용 차감). <b>📋 문구 복사하기</b>: PC/폰 연결 문자앱에 붙여넣어 무료 발송. <b>둘 중 무엇을 눌러도 자동으로 '보냄' 표시</b>되어 목록 색이 바뀝니다. 장소 등은 문구에서 바로 수정 가능해요.</p>
       </div>
     </div>
   </div>
@@ -274,11 +278,12 @@
   }
   function smsHref(phone,body){return "sms:"+String(phone||"").replace(/[^0-9]/g,"")+"?body="+encodeURIComponent(body);}
   const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-  let curSms={to:"",name:""};
+  let curSms={to:"",name:"",type:"",id:""};
+  function markSent(){ if(!curSms.id)return; const f=curSms.type==="c"?"sent_confirm":"sent_venue"; toggleFlag(curSms.id,f,true); }
   window.openSms=function(type,id){
     const r=DATA.apps.find(x=>x.id===id); if(!r)return;
     const body=type==="c"?msgConfirm(r):msgVenue(r);
-    curSms={to:r.phone||"",name:r.name||""};
+    curSms={to:r.phone||"",name:r.name||"",type:type,id:id};
     $("smsText").value=body;
     $("smsTo").textContent=(r.name||"이름없음")+" · "+(r.phone||"");
     const link=$("smsSend");
@@ -295,14 +300,15 @@
       const r=await fetch(SUPABASE_URL+"/functions/v1/send-sms",{method:"POST",headers:{Authorization:"Bearer "+ANON,"Content-Type":"application/json"},body:JSON.stringify({password:PW,to,text})});
       const j=await r.json();
       if(j.error){alert("발송 실패: "+j.error);}
-      else{alert("✅ 문자가 발송되었습니다.");smsClose();}
+      else{alert("✅ 문자가 발송되었습니다.");markSent();smsClose();}
     }catch(e){alert("발송 중 오류가 발생했습니다.");}
     finally{b.disabled=false;b.textContent="📤 지금 바로 문자 발송";}
   };
   window.smsCopy=function(){
     const t=$("smsText");t.select();t.setSelectionRange(0,99999);
     try{navigator.clipboard.writeText(t.value);}catch(e){document.execCommand("copy");}
-    const b=$("smsCopyBtn");b.textContent="✅ 복사되었어요!";setTimeout(()=>b.textContent="📋 문구 복사하기",1600);
+    const b=$("smsCopyBtn");b.textContent="✅ 복사되었어요! (보냄 표시됨)";setTimeout(()=>b.textContent="📋 문구 복사하기",1800);
+    markSent();
   };
   window.smsClose=function(){$("smsModal").style.display="none";};
 
@@ -320,14 +326,21 @@
     if($("chkAll"))$("chkAll").checked=false;updateSel();
     $("tb_apps").innerHTML=rows.map((r,i)=>{
       const smsCell=`<button class="sms b" onclick="openSms('c','${r.id}')">① 확정·계좌</button><button class="sms" onclick="openSms('v','${r.id}')">② 장소안내</button>`;
-      return `<tr><td class="chkcell"><input type="checkbox" class="chk" value="${r.id}" onchange="updateSel()"></td>`+
+      const chip=(f,label,cls)=>`<button class="stchip ${r[f]?cls:''}" onclick="toggleFlag('${r.id}','${f}',${!r[f]})">${r[f]?'✔ ':''}${label}</button>`;
+      const statusCell=chip('sent_confirm','계좌안내','c1')+chip('paid','입금확인','c2')+chip('sent_venue','장소안내','c3');
+      return `<tr style="background:${rowBg(r)}"><td class="chkcell"><input type="checkbox" class="chk" value="${r.id}" onchange="updateSel()"></td>`+
         `<td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td>`+
         `<td><b style="color:#C33A72">${esc(r.session)}</b></td><td>${esc(r.name)}</td>`+
-        `<td>${esc(r.phone)}</td><td>${smsCell}</td>`+
+        `<td>${esc(r.phone)}</td><td>${statusCell}</td><td>${smsCell}</td>`+
         `<td>${esc(r.birthdate)}</td><td>${esc(r.job)}</td><td>${esc(r.ai_level)}</td>`+
         `<td>${esc(r.reason)}</td><td>${esc(r.want_to_make)}</td><td>${esc(r.message)}</td></tr>`;
     }).join("");
   }
+  function rowBg(r){ if(r.sent_venue)return '#EAF9EF'; if(r.paid)return '#EAF2FF'; if(r.sent_confirm)return '#FFF7E6'; return '#fff'; }
+  window.toggleFlag=async(id,field,value)=>{
+    const r=DATA.apps.find(x=>x.id===id); if(r)r[field]=value; renderApps();
+    try{await api('set_flag',{id,field,value});}catch(e){alert('상태 저장 실패');}
+  };
   window.updateSel=function(){
     const n=document.querySelectorAll(".chk:checked").length;
     $("selinfo").textContent=n?`· ${n}개 선택됨`:"";
