@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롬프트 교실 | 최해숙 · PBS COLOR LAB</title>
+<meta name="description" content="최해숙 대표가 모은 실전 AI 프롬프트 모음 — 책 원고, 마케팅, 웹페이지, 강의, SNS, 업무 자동화까지 복사해서 바로 쓰세요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2A2621; --ink-soft:#6B6157; --line:#EAE2D6;
+    --cream:#FBF7F1; --paper:#FFFFFF;
+    --gold:#B18B4F; --gold-deep:#8C6B37; --pink:#D0247E; --pink-deep:#7A1F6B;
+    --shadow:0 12px 40px rgba(120,95,55,.10);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Noto Sans KR",sans-serif;color:var(--ink);background:var(--cream);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px}
+  .top{position:sticky;top:0;z-index:50;background:rgba(251,247,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-family:"Noto Serif KR",serif;font-weight:900;font-size:18px;color:var(--gold-deep);text-decoration:none}
+  .brand small{font-weight:500;color:var(--ink-soft);font-size:12px;margin-left:6px}
+  .home-link{font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:none;border:1px solid var(--line);padding:7px 14px;border-radius:999px;background:#fff}
+  .hero{text-align:center;padding:48px 20px 20px}
+  .hero .eyebrow{font-family:"Noto Serif KR",serif;letter-spacing:.28em;font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase}
+  .hero h1{font-family:"Noto Serif KR",serif;font-size:33px;font-weight:900;margin:12px 0 10px;line-height:1.3}
+  .hero h1 span{color:var(--pink)}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:600px;margin:0 auto}
+  .search{max-width:520px;margin:22px auto 6px;position:relative}
+  .search input{width:100%;border:1px solid var(--line);background:#fff;border-radius:999px;padding:13px 18px;font-size:15px;font-family:inherit;box-shadow:var(--shadow)}
+  .search input:focus{outline:none;border-color:var(--gold)}
+  .catnav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px auto 4px;max-width:760px}
+  .catnav a{font-size:13px;font-weight:700;color:var(--gold-deep);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;text-decoration:none;transition:.15s}
+  .catnav a:hover{border-color:var(--gold);background:#F4ECDD}
+  main{padding-bottom:20px}
+  .cat{margin-top:38px;scroll-margin-top:72px}
+  .cat-h{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+  .cat-h .ci{font-size:26px}
+  .cat-h h2{font-family:"Noto Serif KR",serif;font-size:22px;font-weight:900}
+  .cat-h .cnt{margin-left:auto;font-size:12px;color:var(--ink-soft);background:#F4ECDD;border-radius:999px;padding:3px 11px;font-weight:700}
+  .pcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;margin-bottom:14px;box-shadow:var(--shadow)}
+  .pcard .ph{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+  .pcard h3{font-size:16px;font-weight:800;flex:1;line-height:1.4}
+  .copy-btn{flex:0 0 auto;font-weight:800;font-size:13px;color:#fff;background:linear-gradient(135deg,var(--pink),var(--pink-deep));border:none;border-radius:999px;padding:9px 16px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .copy-btn:hover{filter:brightness(1.07)}
+  .copy-btn.done{background:linear-gradient(135deg,#2E8B57,#1f6b41)}
+  .pbody{white-space:pre-wrap;background:#FBF8F3;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-size:14px;color:#3a342d;font-family:"Noto Sans KR",sans-serif}
+  .empty{text-align:center;color:#9a948d;padding:40px 20px;font-size:14.5px}
+  .foot{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:34px 20px 40px;border-top:1px solid var(--line);margin-top:30px}
+  .foot a{color:var(--gold-deep);font-weight:700;text-decoration:none}
+  /* 운영자 관리 */
+  .manage{max-width:900px;margin:26px auto 0}
+  .mtoggle{display:block;margin:0 auto;font-size:13px;font-weight:700;color:var(--ink-soft);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 18px;cursor:pointer}
+  .mpanel{display:none;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:14px;box-shadow:var(--shadow)}
+  .mpanel.open{display:block}
+  .mpanel h3{font-family:"Noto Serif KR",serif;font-size:18px;margin-bottom:6px}
+  .mpanel .hint{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  .mpw{display:flex;gap:8px;margin-bottom:8px}
+  .mpw input{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:15px;font-family:inherit}
+  .btn{font-weight:800;font-size:14px;color:#fff;background:linear-gradient(135deg,var(--pink),var(--pink-deep));border:none;border-radius:10px;padding:10px 18px;cursor:pointer}
+  .btn.ghost{background:#fff;color:var(--gold-deep);border:1px solid var(--line)}
+  .btn.sm{padding:7px 12px;font-size:12.5px;border-radius:8px}
+  .btn.del{background:#F4ECDD;color:#C0247E}
+  #editor{margin-top:8px}
+  .ecat{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px;background:#FBF8F3}
+  .ecat-top{display:flex;gap:8px;margin-bottom:10px}
+  .ecat-top input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:15px;font-weight:700;font-family:inherit}
+  .erow{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px}
+  .erow input{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;margin-bottom:6px}
+  .erow textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13.5px;font-family:inherit;min-height:74px;resize:vertical}
+  .erow .erow-b{display:flex;justify-content:flex-end;margin-top:6px}
+  .mmsg{font-size:13.5px;font-weight:700;margin-left:10px}
+</style>
+</head>
+<body>
+  <div class="top"><div class="wrap">
+    <a class="brand" href="/">PBS COLOR LAB<small>프롬프트 교실</small></a>
+    <a class="home-link" href="/강의/">← 강의실</a>
+  </div></div>
+
+  <header class="hero">
+    <div class="eyebrow">Prompt Class</div>
+    <h1>최해숙 <span>프롬프트 교실</span></h1>
+    <p>실전에서 바로 쓰는 AI 프롬프트 모음입니다. 카드의 <b>복사</b>를 눌러 ChatGPT·Claude에 붙여넣고, [ ] 부분만 내 상황에 맞게 바꿔 쓰세요.</p>
+    <div class="search"><input id="q" type="text" placeholder="🔎 프롬프트 검색 (예: 블로그, 상세페이지, 퇴고)" oninput="render()"></div>
+  </header>
+
+  <nav class="catnav" id="catnav"></nav>
+
+  <main class="wrap" id="list"></main>
+
+  <div class="wrap manage">
+    <button class="mtoggle" onclick="toggleManage()">⚙ 운영자 관리 (프롬프트 추가·수정)</button>
+    <div class="mpanel" id="mpanel">
+      <h3>⚙ 운영자 관리</h3>
+      <div class="hint">비밀번호를 입력하면 프롬프트를 직접 추가·수정·삭제할 수 있습니다.</div>
+      <div class="mpw">
+        <input id="mpw" type="password" placeholder="관리 비밀번호" onkeydown="if(event.key==='Enter')mUnlock()">
+        <button class="btn" onclick="mUnlock()">열기</button>
+      </div>
+      <div id="mpwmsg" class="mmsg"></div>
+      <div id="mEditor" style="display:none">
+        <div id="editor"></div>
+        <button class="btn ghost sm" onclick="addCat()">+ 카테고리 추가</button>
+        <div style="margin-top:16px;display:flex;align-items:center;gap:10px">
+          <button class="btn" onclick="saveAll()">💾 저장하기</button>
+          <span id="saveMsg" class="mmsg"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    © PBS COLOR LAB · 최해숙 Maria Choi &nbsp;·&nbsp; 문의 <a href="tel:+821042857997">+82-10-4285-7997</a><br>
+    <a href="/강의/">강의실로 돌아가기</a> &nbsp;·&nbsp; <a href="/">브랜드 허브 홈</a>
+  </div>
+
+<script>
+var SUPA_URL='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+var MANAGE_PW='8808';
+function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+/* 기본 예시 프롬프트 (관리자에서 저장하면 이 값 대신 저장본이 표시됩니다) */
+var DEFAULT_PROMPTS=[
+ {icon:"✍️",cat:"책 · 원고",items:[
+   {title:"책 목차 초안 잡기",body:"너는 베스트셀러 실용서 편집자야. 아래 주제로 책 한 권의 목차를 만들어줘.\n\n- 주제: [책 주제]\n- 독자: [타깃 독자]\n- 전하고 싶은 핵심 메시지: [핵심 메시지]\n\n조건: 5~7개 장(章)으로 나누고, 각 장마다 소제목 3~4개와 한 줄 요약을 함께 제시해줘."},
+   {title:"원고 퇴고 (문장 다듬기)",body:"아래 글을 자연스럽고 읽기 쉬운 한국어로 퇴고해줘.\n\n- 의미는 그대로 유지\n- 중복·군더더기 표현 삭제\n- 어색한 번역투와 피동형 정리\n- 문장이 너무 길면 끊어서\n\n원문:\n[여기에 원고 붙여넣기]"},
+   {title:"서문(프롤로그) 쓰기",body:"내 책의 서문을 따뜻하고 진솔한 어조로 써줘.\n\n- 책 주제: [주제]\n- 내가 이 책을 쓴 계기: [계기]\n- 독자가 얻어갈 것: [기대효과]\n\n분량은 A4 한 장 정도, 첫 문장은 독자의 마음을 붙잡는 문장으로 시작해줘."}
+ ]},
+ {icon:"📣",cat:"마케팅 · 홍보",items:[
+   {title:"강의 홍보 카피 3종",body:"아래 강의를 홍보할 문구를 3가지 버전으로 써줘. (감성형 / 실용형 / 긴급형)\n\n- 강의명: [강의명]\n- 대상: [수강 대상]\n- 핵심 혜택: [배우면 좋은 점]\n- 일정/장소: [일정]\n\n각 버전은 3줄 이내, 마지막 줄에 행동 유도 문구(신청하기 등)를 넣어줘."},
+   {title:"상세페이지 문구",body:"내 강의/서비스 상세페이지 문구를 만들어줘.\n\n- 상품: [상품/강의명]\n- 이런 분께 필요: [고객의 고민 3가지]\n- 이 강의만의 차별점: [차별점]\n\n구성: (1) 후킹 헤드라인 (2) 공감되는 문제 제기 (3) 해결책 소개 (4) 얻는 결과 (5) 신청 유도. 각 섹션 소제목 포함."},
+   {title:"카드뉴스 6장 기획",body:"인스타 카드뉴스 6장 분량으로 아래 주제를 구성해줘.\n\n- 주제: [주제]\n- 톤: 친근하고 전문적\n\n각 장마다 '큰 문구 1줄 + 설명 1~2줄'로, 1장은 표지, 마지막 장은 팔로우/문의 유도로 만들어줘."}
+ ]},
+ {icon:"🌐",cat:"웹페이지 · 랜딩",items:[
+   {title:"강사 소개 페이지 문구",body:"1인 강사/프리랜서용 소개(About) 페이지 문구를 써줘.\n\n- 이름/직함: [이름, 직함]\n- 주요 경력: [경력 3~4개]\n- 강의/서비스 분야: [분야]\n- 브랜드 한 줄 메시지: [슬로건]\n\n신뢰감 있으면서 따뜻한 어조로, 3문단 정도로 정리해줘."},
+   {title:"랜딩페이지 섹션 구성",body:"내 서비스 랜딩페이지의 섹션 구성을 짜줘.\n\n- 서비스: [서비스명]\n- 목표: [문의? 신청? 구매?]\n\n히어로 → 문제공감 → 해결책 → 후기 → 자주묻는질문 → 신청 순으로, 각 섹션에 넣을 헤드라인과 핵심 문장을 제안해줘."},
+   {title:"자주 묻는 질문(FAQ) 만들기",body:"아래 서비스의 예상 FAQ 8개를 질문-답변 형식으로 만들어줘.\n\n- 서비스: [서비스/강의명]\n- 대상: [고객]\n\n답변은 신뢰감 있게, 각 2~3문장으로. 가격·환불·준비물 관련 질문도 포함해줘."}
+ ]},
+ {icon:"🎓",cat:"강의 · 교육",items:[
+   {title:"강의계획서(커리큘럼)",body:"아래 강의의 커리큘럼을 만들어줘.\n\n- 강의명: [강의명]\n- 총 시간: [예: 하루 5시간]\n- 대상 수준: [입문/실무]\n\n차시별로 (제목 / 학습목표 / 주요 내용 / 실습)을 표 형태로 정리해줘."},
+   {title:"실습 워크시트 문항",body:"수강생용 실습 워크시트 문항을 만들어줘.\n\n- 주제: [수업 주제]\n- 목적: 배운 내용을 스스로 적용해보게 하기\n\n생각을 정리하는 질문 5개 + 직접 작성/실습 과제 3개로 구성해줘."},
+   {title:"강의 마무리 퀴즈",body:"오늘 배운 내용을 점검하는 퀴즈 5문항을 만들어줘.\n\n- 주제: [주제]\n\n객관식 3개 + 단답형 2개, 정답과 간단한 해설도 함께 줘."}
+ ]},
+ {icon:"📱",cat:"SNS · 콘텐츠",items:[
+   {title:"인스타 캡션 + 해시태그",body:"인스타그램 게시물 캡션을 써줘.\n\n- 내용: [무엇을 올리는지]\n- 톤: [따뜻/전문/유쾌 중 택]\n\n첫 줄은 시선을 끄는 후킹 문장, 본문 3~4줄, 마지막에 행동유도 1줄. 관련 해시태그 10개도 붙여줘."},
+   {title:"블로그 글 초안",body:"아래 주제로 블로그 글을 써줘.\n\n- 주제: [주제]\n- 독자: [타깃]\n- 키워드: [노출되고 싶은 검색어]\n\n제목 3개 후보 + 소제목이 있는 본문(1000자 내외) + 마무리 요약. 검색에 잘 걸리게 키워드를 자연스럽게 녹여줘."},
+   {title:"유튜브 쇼츠 대본",body:"60초 유튜브 쇼츠 대본을 써줘.\n\n- 주제: [주제]\n\n(0~3초) 강한 후킹 → (본문) 핵심 3가지 → (마지막) 구독 유도. 화면 자막용으로 짧고 리듬감 있게."}
+ ]},
+ {icon:"🤖",cat:"업무 자동화 · 문서",items:[
+   {title:"정중한 이메일 작성",body:"아래 상황에 맞는 정중한 이메일을 써줘.\n\n- 받는 사람: [예: 교육 담당자]\n- 목적: [문의/제안/일정조율]\n- 꼭 담을 내용: [핵심 내용]\n\n제목 + 본문으로, 간결하고 예의 바르게 써줘."},
+   {title:"강의 제안서 개요",body:"기관에 보낼 강의 제안서 개요를 만들어줘.\n\n- 강의 주제: [주제]\n- 대상 기관: [기관 유형]\n- 시간/규모: [예: 2시간, 30명]\n\n구성: 강의 목적 / 기대효과 / 커리큘럼 요약 / 강사 소개 / 진행 방식. 각 항목 핵심만 정리해줘."},
+   {title:"견적·안내문 초안",body:"고객에게 보낼 안내문을 써줘.\n\n- 서비스/강의: [내용]\n- 금액/일정: [조건]\n- 신청 방법: [방법]\n\n표 없이 읽기 쉬운 문단으로, 마지막에 문의 연락처 안내를 넣어줘."}
+ ]},
+ {icon:"💬",cat:"고객 응대 · 상담",items:[
+   {title:"문의 답변 템플릿",body:"고객 문의에 대한 답변을 친절하게 써줘.\n\n- 문의 내용: [고객이 물어본 것]\n- 안내할 사실: [정확한 정보]\n\n공감 → 답변 → 다음 안내 순으로, 따뜻하지만 명확하게."},
+   {title:"후기 요청 메시지",body:"수강생에게 보낼 후기 요청 메시지를 써줘.\n\n- 강의명: [강의명]\n- 후기 남길 곳: [링크/방법]\n\n부담스럽지 않게, 감사 인사와 함께 2~3문장으로. 어떤 점을 적으면 좋은지 살짝 가이드도 넣어줘."}
+ ]}
+];
+
+var PROMPTS=DEFAULT_PROMPTS;
+
+function slug(i){return 'cat'+i;}
+function render(){
+  var q=(document.getElementById('q').value||'').trim().toLowerCase();
+  var nav=document.getElementById('catnav'), list=document.getElementById('list');
+  var navHtml='', out='', shown=0;
+  PROMPTS.forEach(function(c,ci){
+    var items=(c.items||[]).filter(function(it){
+      if(!q)return true;
+      return ((it.title||'')+' '+(it.body||'')+' '+(c.cat||'')).toLowerCase().indexOf(q)>=0;
+    });
+    if(!items.length)return;
+    shown+=items.length;
+    navHtml+='<a href="#'+slug(ci)+'">'+(c.icon||'📌')+' '+esc(c.cat)+'</a>';
+    out+='<section class="cat" id="'+slug(ci)+'"><div class="cat-h"><span class="ci">'+(c.icon||'📌')+'</span><h2>'+esc(c.cat)+'</h2><span class="cnt">'+items.length+'개</span></div>';
+    items.forEach(function(it){
+      var bid='b_'+Math.random().toString(36).slice(2,9);
+      out+='<div class="pcard"><div class="ph"><h3>'+esc(it.title)+'</h3>'
+        +'<button class="copy-btn" onclick="copyP(this,\''+bid+'\')">복사</button></div>'
+        +'<div class="pbody" id="'+bid+'">'+esc(it.body)+'</div></div>';
+    });
+    out+='</section>';
+  });
+  nav.innerHTML= q? '' : navHtml;
+  list.innerHTML= shown? out : '<div class="empty">검색 결과가 없습니다.</div>';
+}
+function copyP(btn,id){
+  var el=document.getElementById(id); if(!el)return;
+  var txt=el.innerText;
+  function ok(){var o=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1400);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fallback(txt,ok);});}
+  else fallback(txt,ok);
+}
+function fallback(txt,ok){var t=document.createElement('textarea');t.value=txt;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');ok();}catch(e){alert('복사가 지원되지 않는 브라우저입니다.');}document.body.removeChild(t);}
+
+/* 설정 로드 */
+fetch(SUPA_URL+'/rest/v1/pbs_site_config?key=eq.prompts_config&select=value',{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}})
+ .then(function(r){return r.json();})
+ .then(function(rows){
+   if(rows&&rows.length&&rows[0].value&&rows[0].value.length){PROMPTS=rows[0].value;}
+   render();
+ }).catch(function(){render();});
+
+/* ── 운영자 관리 ── */
+function toggleManage(){document.getElementById('mpanel').classList.toggle('open');}
+function mUnlock(){
+  var v=document.getElementById('mpw').value.trim(), msg=document.getElementById('mpwmsg');
+  if(v===MANAGE_PW){msg.textContent='';document.getElementById('mEditor').style.display='block';buildEditor();}
+  else{msg.style.color='#C0247E';msg.textContent='비밀번호가 올바르지 않습니다.';}
+}
+function buildEditor(){
+  var ed=document.getElementById('editor'); ed.innerHTML='';
+  PROMPTS.forEach(function(c,ci){ ed.appendChild(catNode(c,ci)); });
+}
+function catNode(c,ci){
+  var box=document.createElement('div'); box.className='ecat'; box.dataset.ci=ci;
+  var top=document.createElement('div'); top.className='ecat-top';
+  top.innerHTML='<input placeholder="아이콘" style="flex:0 0 60px;text-align:center" value="'+esc(c.icon||'')+'" data-f="icon">'
+    +'<input placeholder="카테고리 이름" value="'+esc(c.cat||'')+'" data-f="cat">'
+    +'<button class="btn del sm" type="button">카테고리 삭제</button>';
+  top.querySelector('.del').onclick=function(){box.remove();};
+  box.appendChild(top);
+  var rows=document.createElement('div'); rows.className='erows';
+  (c.items||[]).forEach(function(it){ rows.appendChild(rowNode(it)); });
+  box.appendChild(rows);
+  var add=document.createElement('button'); add.className='btn ghost sm'; add.type='button'; add.textContent='+ 프롬프트 추가';
+  add.onclick=function(){ rows.appendChild(rowNode({title:'',body:''})); };
+  box.appendChild(add);
+  return box;
+}
+function rowNode(it){
+  var r=document.createElement('div'); r.className='erow';
+  var ti=document.createElement('input'); ti.placeholder='프롬프트 제목'; ti.value=it.title||''; ti.dataset.f='title';
+  var ta=document.createElement('textarea'); ta.placeholder='프롬프트 내용'; ta.value=it.body||''; ta.dataset.f='body';
+  var b=document.createElement('div'); b.className='erow-b';
+  var del=document.createElement('button'); del.className='btn del sm'; del.type='button'; del.textContent='삭제'; del.onclick=function(){r.remove();};
+  b.appendChild(del); r.appendChild(ti); r.appendChild(ta); r.appendChild(b);
+  return r;
+}
+function addCat(){ document.getElementById('editor').appendChild(catNode({icon:'📌',cat:'새 카테고리',items:[{title:'',body:''}]}, 'new')); }
+function collect(){
+  var out=[];
+  document.querySelectorAll('#editor .ecat').forEach(function(box){
+    var icon=box.querySelector('[data-f=icon]').value.trim();
+    var cat=box.querySelector('[data-f=cat]').value.trim();
+    if(!cat)return;
+    var items=[];
+    box.querySelectorAll('.erow').forEach(function(r){
+      var t=r.querySelector('[data-f=title]').value.trim();
+      var b=r.querySelector('[data-f=body]').value.trim();
+      if(t||b)items.push({title:t,body:b});
+    });
+    out.push({icon:icon||'📌',cat:cat,items:items});
+  });
+  return out;
+}
+function saveAll(){
+  var data=collect(), msg=document.getElementById('saveMsg');
+  msg.style.color='#6B6157'; msg.textContent='저장 중…';
+  fetch(SUPA_URL+'/rest/v1/pbs_site_config',{
+    method:'POST',
+    headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates,return=minimal'},
+    body:JSON.stringify({key:'prompts_config',value:data})
+  }).then(function(r){
+    if(r.ok){PROMPTS=data;render();msg.style.color='#2E8B57';msg.textContent='✓ 저장 완료! 페이지에 반영되었습니다.';}
+    else{r.text().then(function(t){msg.style.color='#C0247E';msg.textContent='저장 실패: '+t.slice(0,120);});}
+  }).catch(function(e){msg.style.color='#C0247E';msg.textContent='저장 실패: '+e;});
+}
+</script>
+</body>
+</html>
