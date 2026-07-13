@@ -613,10 +613,27 @@ const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 let DB=null, DBREADY=false;
 try{
   if(window.supabase && window.supabase.createClient){
-    DB = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:false}});
+    DB = window.supabase.createClient(SB_URL, SB_KEY, {auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      storageKey:'pbs_book48_anon_auth'
+    }});
     DBREADY = true;
   }
 }catch(e){ console.warn('[book48] supabase init 실패', e); }
+async function ensureAnonSession(){
+  if(!DBREADY) return false;
+  try{
+    const {data:{session}}=await DB.auth.getSession();
+    if(session) return true;
+    const {error}=await DB.auth.signInAnonymously();
+    if(error) throw error;
+    return true;
+  }catch(e){
+    console.warn('[book48] 익명 인증 실패',e);
+    return false;
+  }
+}
 
 /* ============ 상태 ============ */
 const STATE = { user:{}, answers:{}, result:null, recordId:null, _saved:false, startTs:Date.now(), mode:'quiz' };
@@ -903,6 +920,7 @@ async function savePdf(){
 /* ============ 저장 ============ */
 async function saveRecord(){
   if(STATE._saved||!DBREADY) return;
+  if(!await ensureAnonSession()) return;
   STATE._saved=true;
   const r=STATE.result,u=STATE.user;
   try{
