@@ -425,11 +425,11 @@
           </div>
           <div class="field">
             <label>만들고 싶은 것</label>
-            <textarea name="want_to_make" placeholder="어떤 웹페이지를 갖고 싶으신가요? (예: 강사 프로필, 강의 소개, 온라인 명함 등)"></textarea>
+            <textarea name="want_to_make" placeholder="최대한 구체적으로 자세하게 적어주세요. 이미 시도해본 것, 지금 불편한 점, 해결하고 싶은 점도 좋아요. (예: 강사 프로필 + 강의 소개 + 수강 신청까지 한 페이지에)"></textarea>
           </div>
           <div class="field">
             <label>하고 싶은 말</label>
-            <textarea name="message" placeholder="대표님께 남기고 싶은 말이 있다면 적어주세요"></textarea>
+            <textarea name="message" placeholder="과정과 관련해 하고 싶은 말이나 궁금한 점이 있으면 적어주세요"></textarea>
           </div>
 
           <div class="field">
@@ -438,9 +438,9 @@
               <h4>1. 신청 및 확정</h4>
               신청 후 안내된 계좌로 수강료를 입금하시면 접수되며, 입금 확인 후 1일 이내 발송되는 <b>‘강의 확정 안내’</b>를 받으셔야 최종 확정됩니다. 소수 정예(선착순 8명)로 정원 마감 시 조기 종료될 수 있습니다.
               <h4>2. 환불 규정 (교육 시작일 기준)</h4>
-              · 7일 전까지 : <b>전액 환불</b><br>
-              · 3~6일 전 : 수강료의 <b>50% 환불</b><br>
-              · 2일 전 ~ 당일 및 불참 : <b>환불 불가</b><br>
+              · 2일 전까지 : <b>70% 환불</b><br>
+              · 1일 전 : <b>50% 환불</b><br>
+              · 당일 및 불참 : <b>환불 불가</b><br>
               ※ 천재지변 또는 주최 측 사정으로 폐강 시 전액 환불됩니다.
               <h4>3. 수업 안내</h4>
               · 준비물 : 노트북 필수 (미지참 시 실습 진행이 어렵습니다)<br>
@@ -472,30 +472,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 빠른 메뉴 -->
-  <section style="padding-top:10px;">
-    <div class="wrap">
-      <div class="center"><span class="kicker">MENU</span><h2 class="title" style="font-size:22px;">교육생 · 수강생 메뉴</h2></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
-        <a href="자료실.html" style="text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center;box-shadow:0 6px 18px rgba(197,58,114,.06);">
-          <div style="font-size:28px;">📄</div><div style="font-weight:800;margin-top:6px;">교육 자료실</div><div style="font-size:12.5px;color:var(--muted);">프롬프트·자료 다운로드</div>
-        </a>
-        <a href="후기.html" style="text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center;box-shadow:0 6px 18px rgba(197,58,114,.06);">
-          <div style="font-size:28px;">💗</div><div style="font-weight:800;margin-top:6px;">수강 후기</div><div style="font-size:12.5px;color:var(--muted);">후기 보기·남기기</div>
-        </a>
-        <a href="질문.html" style="text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center;box-shadow:0 6px 18px rgba(197,58,114,.06);">
-          <div style="font-size:28px;">🙋</div><div style="font-weight:800;margin-top:6px;">질문하기</div><div style="font-size:12.5px;color:var(--muted);">궁금한 점 남기기</div>
-        </a>
-        <a href="소식.html" style="text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center;box-shadow:0 6px 18px rgba(197,58,114,.06);">
-          <div style="font-size:28px;">📢</div><div style="font-weight:800;margin-top:6px;">소식·공지</div><div style="font-size:12.5px;color:var(--muted);">새 소식 확인</div>
-        </a>
-      </div>
-      <a href="관리자페이지_admin.html" style="display:block;text-decoration:none;margin-top:12px;background:var(--dark);color:#fff;border-radius:14px;padding:16px;text-align:center;font-weight:800;">
-        🔒 관리자 페이지 <span style="font-weight:600;opacity:.7;font-size:13px;">(대표 전용 · 비밀번호 필요)</span>
-      </a>
     </div>
   </section>
 
@@ -546,7 +522,7 @@
       return;
     }
     if (!document.getElementById("agreeChk").checked) {
-      errMsg.textContent = "사전 규약에 동의하셔야 신청이 가능합니다. (동의 체크 필요)";
+      errMsg.textContent = "사전 규약에 동의하셔야 접수가 가능합니다. (동의 체크 필요)";
       errMsg.style.display = "block";
       return;
     }
