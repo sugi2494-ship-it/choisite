@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>PBS COLOR LAB - 관리자</title>
 <style>
@@ -576,6 +577,11 @@ function selAll(type,checked){
 }
 
 /* == 문의 == */
+/* 문의 답장 도우미 (문자·톡·Gmail) */
+function _replyTpl(name){return '안녕하세요 '+(name||'')+'님, PBS COLOR LAB 최해숙입니다.\n문의 주셔서 감사합니다. ';}
+function _cpFallback(t){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(a);}
+function copyText(t,label){var done=function(){toast((label||'내용')+' 복사됨');};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){_cpFallback(t);done();});}else{_cpFallback(t);done();}}
+function kakaoReply(i){var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');var x=arr[i]||{};copyText(_replyTpl(x.name),'톡 문구');try{window.location.href='kakaotalk://';}catch(e){}}
 function loadInq(){
   var arr=JSON.parse(localStorage.getItem('pbs_inquiries')||'[]');
   var nr=arr.filter(function(x){return !x.read;}).length;
@@ -592,18 +598,25 @@ function loadInq(){
     var chips=[];
     if(x.phone)chips.push('📱 '+x.phone);
     if(x.contact&&!x.phone)chips.push('📞 '+x.contact);
-    if(x.email)chips.push('<a href="mailto:'+x.email+'" style="color:inherit;text-decoration:underline;cursor:pointer">✉ '+x.email+'</a>');
+    if(x.email)chips.push('<a href="#" onclick="copyText(\''+x.email+'\',\'메일주소\');return false" style="color:inherit;text-decoration:underline;cursor:pointer">✉ '+x.email+'</a>');
     if(x.country)chips.push('🌍 '+x.country);
     if(x.sns)chips.push('📲 '+x.sns);
     if(x.org)chips.push('🏢 '+x.org);
     var cls='card'+(x.read?'':' unread')+(x.replied?' replied':'');
+    var _ph=(x.phone||x.contact||'').replace(/[^0-9+]/g,'');
+    var _tpl=_replyTpl(x.name);
+    var _sms='sms:'+_ph+'?body='+encodeURIComponent(_tpl);
+    var _gmail='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(x.email||'')+'&su='+encodeURIComponent('PBS COLOR LAB 문의 답변')+'&body='+encodeURIComponent(_tpl);
     return '<div class="'+cls+'" id="iq'+i+'">'
       +'<label class="cb-wrap"><input type="checkbox" class="cb-inq" data-idx="'+i+'"></label>'
       +'<div class="ch"><div class="cn">'+x.name
       +(x.read?'':'<span class="new">NEW</span>')
       +(x.replied?'<span class="badge-replied">✓ 답변완료</span>':'')
       +'</div><div class="btn-row"><span class="cm">'+ds+'</span>'
-      +(x.email?'<a href="mailto:'+x.email+'" class="rbtn" style="text-decoration:none">📧 메일</a>':'')
+      +(_ph?'<a href="tel:'+_ph+'" class="rbtn" style="text-decoration:none">📞 전화</a>':'')
+      +(_ph?'<a href="'+_sms+'" class="rbtn" style="text-decoration:none">📱 문자</a>':'')
+      +(_ph?'<button class="rbtn" onclick="kakaoReply('+i+')">💬 톡</button>':'')
+      +(x.email?'<a href="'+_gmail+'" target="_blank" rel="noopener" class="rbtn" style="text-decoration:none">✉ Gmail</a>':'')
       +'<button class="'+(x.read?'rbtn on':'rbtn')+'" onclick="toggleRead('+i+')">'+(x.read?'✓ 확인':'확인')+'</button>'
       +'<button class="pbtn'+(x.replied?' on':'')+'" onclick="toggleReply('+i+')">'+(x.replied?'✓ 답변완료':'답변완료')+'</button>'
       +'<button class="dbtn" onclick="delInq('+i+')">삭제</button>'
