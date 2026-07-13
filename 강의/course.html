@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="description" content="최해숙 PBS COLOR LAB 강의방 — 교육생 강의자료, 강사 강의안, 자격시험, 질문·소감·후기를 한 곳에서 이용하세요.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>강의 | 최해숙 · PBS COLOR LAB</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,6 +69,12 @@
   </header>
 
   <main class="wrap">
+    <!-- 사전질문 (수강 전 작성) -->
+    <section class="sec" id="intake" style="display:none">
+      <h2>📝 사전질문 작성</h2>
+      <div class="sub">수업 전에 미리 작성해 주시면, 당일 바로 여러분의 웹페이지를 만듭니다. (사진·자료도 함께 올려주세요)</div>
+      <div id="intakeArea"></div>
+    </section>
     <!-- 강의 기획안 -->
     <section class="sec" id="proposal" style="display:none">
       <h2>📋 강의 기획안</h2>
@@ -168,6 +175,7 @@ fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H
    document.getElementById('cTitle').textContent=course.title||'강의';
    document.getElementById('cDesc').textContent=course.desc||'';
    document.title=(course.title||'강의')+' | 최해숙 · PBS COLOR LAB';
+   if(course.intake_url){document.getElementById('intake').style.display='';document.getElementById('intakeArea').innerHTML='<a class="btn btn-primary" href="'+esc(course.intake_url)+'" target="_blank" rel="noopener">📝 사전질문 작성하러 가기 →</a>';}
    if(course.proposal_url){var pu=course.proposal_url;if(pu.indexOf('http')!==0&&pu.charAt(0)!=='/')pu='/'+pu;document.getElementById('proposal').style.display='';document.getElementById('proposalArea').innerHTML='<a class="btn btn-gold" href="'+esc(pu)+'" target="_blank" rel="noopener">📋 강의 기획안 보기 / 다운로드 →</a>';}
    // 자격시험
    if(course.exam_url){document.getElementById('exam').style.display='';document.getElementById('examArea').innerHTML='<a class="btn btn-red" href="'+esc(course.exam_url)+'" target="_blank" rel="noopener">📝 자격시험 응시하러 가기 →</a>';}
@@ -250,6 +258,7 @@ function renderManage(){
     +mStudentRow(2,'m_slabel2','m_student2',c.student_label2,c.student_url2)
     +mStudentRow(3,'m_slabel3','m_student3',c.student_label3,c.student_url3)
     +mRow('🔒 강사 강의안','m_teacher',c.teacher_url,'비번 8808로 열림')
+    +mRow('📝 사전질문 링크','m_intake',c.intake_url,'수강 전 작성 폼 (웹페이지 강의)')
     +'<div class="mrow"><label>📝 자격시험 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_exam" value="'+esc(c.exam_url||'')+'" placeholder="자격시험 페이지 주소"></div>'
     +'<div class="mrow"><label>🎬 영상(유튜브) 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_video" value="'+esc(c.video_url||'')+'" placeholder="유튜브 주소"></div>'
     +'<button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px" onclick="saveManage()">✓ 이 과정 저장</button>'
@@ -294,7 +303,7 @@ function saveManage(){
   var it=Object.assign({},allItems[courseIdx],{
     proposal_url:v('m_proposal'),student_url:v('m_student'),student_url2:v('m_student2'),student_url3:v('m_student3'),
     student_label:v('m_slabel'),student_label2:v('m_slabel2'),student_label3:v('m_slabel3'),
-    teacher_url:v('m_teacher'),exam_url:v('m_exam'),video_url:v('m_video')});
+    teacher_url:v('m_teacher'),exam_url:v('m_exam'),video_url:v('m_video'),intake_url:v('m_intake')});
   allItems[courseIdx]=it; course=it;
   var msg=document.getElementById('mSaveMsg');msg.className='pwmsg';msg.textContent='저장 중…';
   fetch(U+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:Object.assign({Prefer:'resolution=merge-duplicates'},H),body:JSON.stringify({key:'classes_config',value:allItems,updated_at:new Date().toISOString()})})
@@ -308,9 +317,4 @@ function saveManage(){
   var path='uploads/cls_'+Date.now()+ext;
   fetch(U+'/storage/v1/object/site/'+encodeURIComponent(path),{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':file.type||'application/octet-stream','x-upsert':'true'},body:file})
    .then(function(r){if(r.ok){el.value=U+'/storage/v1/object/public/site/'+encodeURIComponent(path);}else{el.value=old;r.text().then(function(t){alert('업로드 실패: '+t);});}})
-   .catch(function(e){el.value=old;alert('업로드 오류: '+e);});
-});})();
-
-</script>
-</body>
-</html>
+   .ca
