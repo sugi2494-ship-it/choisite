@@ -342,7 +342,7 @@
     $("list_intake").innerHTML=rows.map(r=>{
       const prep=[r.prep_ai?'AI구독':'',r.prep_chrome?'크롬':'',r.prep_files?'자료':''].filter(Boolean).join(' · ')||'-';
       return `<div class="item"><div class="top"><span class="who">${esc(r.brand_name)} · ${esc(r.name)}</span><span class="date">${fmt(r.created_at)}</span></div>`+
-        rw('연락처',r.phone)+rw('이메일',r.email)+rw('카톡ID',r.kakao_id)+rw('태그라인',r.tagline)+rw('직함/일',r.role_job)+
+        rw('휴대폰 뒤4',r.phone)+rw('소속',r.affiliation)+rw('활동 분야',r.field_area)+rw('해시태그',r.tagline)+rw('하는 일 3가지',r.role_job)+
         rw('현재 강의',r.current_lecture)+rw('기획안(글)',r.lecture_plan_text)+rw('경력·자격',r.career_cert)+rw('후기',r.reviews)+
         rw('페이지 목적',r.purpose)+rw('분위기',r.mood)+rw('선호 색',r.favorite_color)+rw('참고 사이트',r.ref_urls)+rw('SNS',r.sns_links)+rw('도메인',r.domain_owned)+rw('사전 준비',prep)+
         `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;line-height:2;">`+
@@ -478,7 +478,7 @@
     {h:"No",f:(r,i,a)=>a.length-i},{h:"등록일시",f:r=>fmt(r.created_at)},{h:"이름",k:"name"},{h:"질문내용",k:"content"}
   ],"질문"));
   $("xlsxIntake").addEventListener("click",()=>toXlsx(DATA.intake,[
-    {h:"No",f:(r,i,a)=>a.length-i},{h:"제출일시",f:r=>fmt(r.created_at)},{h:"브랜드명",k:"brand_name"},{h:"성함",k:"name"},{h:"휴대폰",k:"phone"},{h:"이메일",k:"email"},{h:"카톡ID",k:"kakao_id"},{h:"태그라인",k:"tagline"},{h:"직함/일",k:"role_job"},{h:"현재강의",k:"current_lecture"},{h:"기획안(글)",k:"lecture_plan_text"},{h:"경력자격",k:"career_cert"},{h:"후기",k:"reviews"},{h:"페이지목적",k:"purpose"},{h:"분위기",k:"mood"},{h:"선호색",k:"favorite_color"},{h:"참고사이트",k:"ref_urls"},{h:"SNS",k:"sns_links"},{h:"도메인",k:"domain_owned"},{h:"프로필사진",k:"profile_photo_url"},{h:"활동사진",k:"activity_photo_url"},{h:"로고",k:"logo_url"},{h:"기획안파일",k:"lecture_plan_file_url"}
+    {h:"No",f:(r,i,a)=>a.length-i},{h:"제출일시",f:r=>fmt(r.created_at)},{h:"성함",k:"name"},{h:"휴대폰뒤4",k:"phone"},{h:"소속",k:"affiliation"},{h:"브랜드명",k:"brand_name"},{h:"활동분야",k:"field_area"},{h:"해시태그",k:"tagline"},{h:"하는일3가지",k:"role_job"},{h:"현재강의",k:"current_lecture"},{h:"기획안(글)",k:"lecture_plan_text"},{h:"경력자격",k:"career_cert"},{h:"후기",k:"reviews"},{h:"페이지목적",k:"purpose"},{h:"분위기",k:"mood"},{h:"선호색",k:"favorite_color"},{h:"참고사이트",k:"ref_urls"},{h:"SNS",k:"sns_links"},{h:"도메인",k:"domain_owned"},{h:"프로필사진",k:"profile_photo_url"},{h:"활동사진",k:"activity_photo_url"},{h:"로고",k:"logo_url"},{h:"기획안파일",k:"lecture_plan_file_url"}
   ],"사전질문지"));
 
   /* 사이드바 전환 */
