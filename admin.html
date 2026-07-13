@@ -167,11 +167,22 @@ a{text-decoration:none;color:inherit}
   <div class="lb">
     <div class="ll">PBS COLOR LAB</div>
     <h2>관리자 로그인</h2>
-    <p>4자리 비밀번호를 입력하세요</p>
-    <input type="tel" id="pw" maxlength="4" placeholder="••••" autocomplete="off"
-      oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-      onkeydown="if(event.key==='Enter')login()">
-    <button class="lbtn" onclick="login()">로그인</button>
+    <div id="Lmain">
+      <p>관리자 이메일·비밀번호로 로그인하세요</p>
+      <input type="email" id="lemail" value="sugi2494@gmail.com" autocomplete="username" placeholder="이메일" style="margin-bottom:8px">
+      <input type="password" id="lpass" autocomplete="current-password" placeholder="비밀번호"
+        onkeydown="if(event.key==='Enter')pwLogin()">
+      <button class="lbtn" onclick="pwLogin()">로그인</button>
+      <div style="margin-top:10px"><a href="#" onclick="toggleFallback();return false" style="font-size:12px;color:#8C6B37;text-decoration:none">비밀번호가 안 되면 → 임시 코드로 들어가기</a></div>
+    </div>
+    <div id="Lfallback" style="display:none">
+      <p>임시 4자리 코드</p>
+      <input type="tel" id="pw" maxlength="4" placeholder="••••" autocomplete="off"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+        onkeydown="if(event.key==='Enter')login()">
+      <button class="lbtn" onclick="login()">들어가기</button>
+      <div style="margin-top:10px"><a href="#" onclick="toggleFallback();return false" style="font-size:12px;color:#8C6B37;text-decoration:none">← 비밀번호 로그인으로</a></div>
+    </div>
     <div class="lerr" id="err"></div>
   </div>
 </div>
@@ -473,26 +484,44 @@ async function refreshFromSupa(){
 }
 
 
-function login(){
-  var v=document.getElementById('pw').value.replace(/\s/g,'');
-  if(v===PW){
-    logged=true;localStorage.setItem('pbsAuth','1');
-    document.getElementById('L').style.display='none';
-    document.getElementById('A').style.display='block';
-    init();
-  }else{
-    document.getElementById('err').textContent='비밀번호 오류 (입력: '+v+')';
-  }
+/* ── 관리자 로그인 (Supabase 이메일+비밀번호) ── */
+var SESSION=null;
+function setAuth(s){SESSION=s;try{localStorage.setItem('pbsSession',JSON.stringify(s));}catch(e){}SUPA_H.Authorization='Bearer '+s.access_token;}
+function showAdmin(){document.getElementById('L').style.display='none';document.getElementById('A').style.display='block';init();}
+function toggleFallback(){var m=document.getElementById('Lmain'),f=document.getElementById('Lfallback');var show=(f.style.display==='none');f.style.display=show?'':'none';m.style.display=show?'none':'';document.getElementById('err').textContent='';}
+function pwLogin(){
+  var email=(document.getElementById('lemail').value||'').trim();
+  var pass=document.getElementById('lpass').value||'';
+  if(!email||!pass){document.getElementById('err').textContent='이메일과 비밀번호를 입력하세요';return;}
+  document.getElementById('err').textContent='로그인 중…';
+  fetch(SUPA_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pass})})
+   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
+   .then(function(o){ if(o.ok&&o.j&&o.j.access_token){setAuth(o.j);showAdmin();} else {document.getElementById('err').textContent='로그인 실패: 이메일 또는 비밀번호를 확인하세요';} })
+   .catch(function(e){document.getElementById('err').textContent='로그인 오류: '+e;});
 }
-function logout(){localStorage.removeItem('pbsAuth');location.reload();}
+/* 임시 4자리 코드 (비상용) */
+function login(){
+  var v=(document.getElementById('pw').value||'').replace(/\s/g,'');
+  if(v===PW){logged=true;showAdmin();}
+  else{document.getElementById('err').textContent='코드 오류';}
+}
+function logout(){SESSION=null;localStorage.removeItem('pbsSession');localStorage.removeItem('pbsAuth');location.reload();}
 async function init(){await supaLoad();loadInq();loadTst();updateN();}
-
-window.addEventListener('DOMContentLoaded',function(){
-  if(localStorage.getItem('pbsAuth')==='1'){
-    document.getElementById('L').style.display='none';
-    document.getElementById('A').style.display='block';init();
-  }
-  document.getElementById('pw').focus();
+async function loadStoredSession(){
+  try{
+    var s=JSON.parse(localStorage.getItem('pbsSession')||'null');
+    if(!s||!s.access_token)return false;
+    if(s.expires_at&&(s.expires_at*1000)>Date.now()+60000){setAuth(s);return true;}
+    if(s.refresh_token){
+      var r=await fetch(SUPA_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:s.refresh_token})});
+      if(r.ok){var j=await r.json();if(j&&j.access_token){setAuth(j);return true;}}
+    }
+  }catch(e){}
+  return false;
+}
+window.addEventListener('DOMContentLoaded',async function(){
+  if(await loadStoredSession()){showAdmin();}
+  else{var e=document.getElementById('lemail');if(e)e.focus();}
 });
 
 function tab(id,btn){
