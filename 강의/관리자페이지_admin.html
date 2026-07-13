@@ -229,11 +229,11 @@
         <textarea id="smsText"></textarea>
         <button class="btn-send" id="smsDirectBtn" onclick="smsSendDirect()">📤 지금 바로 문자 발송</button>
         <div class="mrow">
-          <button class="btn-x" id="smsCopyBtn" onclick="smsCopy()">📋 문구 복사하기</button>
-          <a class="btn-x" id="smsSend" href="#">📲 문자앱으로 보내기</a>
+          <button class="btn-x" id="smsCopyBtn" onclick="smsCopy()">📋 복사 + 문자앱 열기</button>
+          <a class="btn-x" id="smsSend" href="#">📲 문자앱만 열기</a>
           <button class="btn-ghost" onclick="smsClose()">닫기</button>
         </div>
-        <p class="mhint"><b>📤 바로 발송</b>: 클릭하면 문자가 즉시 나갑니다(비용 차감). <b>📋 문구 복사하기</b>: PC/폰 연결 문자앱에 붙여넣어 무료 발송. <b>둘 중 무엇을 눌러도 자동으로 '보냄' 표시</b>되어 목록 색이 바뀝니다. 장소 등은 문구에서 바로 수정 가능해요.</p>
+        <p class="mhint"><b>📋 복사 + 문자앱 열기</b>: 문구가 복사되고, 연결된 폰의 <b>문자 화면이 번호·내용까지 채워진 채로 열립니다</b>. 그대로 보내거나 붙여넣어 보내면 무료입니다. <b>📤 지금 바로 문자 발송</b>은 폰 없이 즉시 발송(비용 차감). 어느 것을 눌러도 자동으로 ‘보냄’ 표시됩니다.</p>
       </div>
     </div>
   </div>
@@ -299,7 +299,7 @@
     $("smsTo").textContent=(r.name||"이름없음")+" · "+(r.phone||"");
     const link=$("smsSend");
     link.href=smsHref(r.phone,body);
-    link.style.display=isMobile?"inline-block":"none";
+    link.style.display="inline-block";
     $("smsModal").style.display="flex";
   };
   window.smsSendDirect=async function(){
@@ -318,8 +318,9 @@
   window.smsCopy=function(){
     const t=$("smsText");t.select();t.setSelectionRange(0,99999);
     try{navigator.clipboard.writeText(t.value);}catch(e){document.execCommand("copy");}
-    const b=$("smsCopyBtn");b.textContent="✅ 복사되었어요! (보냄 표시됨)";setTimeout(()=>b.textContent="📋 문구 복사하기",1800);
+    const b=$("smsCopyBtn");b.textContent="✅ 복사됨! 문자앱 여는 중…";setTimeout(()=>b.textContent="📋 복사 + 문자앱 열기",1900);
     markSent();
+    try{ $("smsSend").click(); }catch(e){}
   };
   window.smsClose=function(){$("smsModal").style.display="none";};
 
