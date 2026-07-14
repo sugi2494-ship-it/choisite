@@ -192,7 +192,7 @@ function goCat(id){
   var q=document.getElementById('q');
   if(q&&q.value){q.value='';render();}
   var el=document.getElementById(id);
-  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  if(el){el.scrollIntoView({block:'start'});setTimeout(function(){el.scrollIntoView({block:'start'});},60);}
   return false;
 }
 function copyP(btn,id){
