@@ -79,7 +79,7 @@
           <button type="button" class="bd-kbtn" data-k="후기" onclick="bdKind('후기')">후기</button>
         </div>
         <div class="stars" id="stars" style="display:none"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div>
-        <input id="bdName" type="text" placeholder="이름 (예명 가능)" maxlength="24">
+        <input id="bdName" type="text" name="bd_writer" placeholder="이름 (예명 가능)" maxlength="24" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly')">
         <textarea id="bdMsg" rows="3" placeholder="내용을 입력하세요"></textarea>
         <button class="btn btn-primary" onclick="bdSubmit()" style="align-self:flex-start">남기기 →</button>
         <div class="pwmsg" id="bdStat"></div>
@@ -166,7 +166,7 @@ fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H
    document.getElementById('cDesc').textContent=course.desc||'';
    document.title=(course.title||'강의')+' | 최해숙 · PBS COLOR LAB';
    if(course.intake_url){document.getElementById('intake').style.display='';document.getElementById('intakeArea').innerHTML='<a class="btn btn-primary" href="'+esc(course.intake_url)+'" target="_blank" rel="noopener">📝 사전질문 작성하러 가기 →</a>';}
-   if(course.proposal_url){var pu=course.proposal_url;if(pu.indexOf('http')!==0&&pu.charAt(0)!=='/')pu='/'+pu;document.getElementById('proposal').style.display='';document.getElementById('proposalArea').innerHTML='<a class="btn btn-gold" href="'+esc(pu)+'" target="_blank" rel="noopener">📋 강의 기획안 보기 / 다운로드 →</a>';}
+   // 강의 기획안은 강의실 카드에서 담당자가 받으므로 방 안에서는 표시하지 않음
    // 자격시험
    if(course.exam_url){document.getElementById('exam').style.display='';document.getElementById('examArea').innerHTML='<a class="btn btn-red" href="'+esc(course.exam_url)+'" target="_blank" rel="noopener">📝 자격시험 응시하러 가기 →</a>';}
    // 영상

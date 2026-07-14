@@ -84,7 +84,7 @@
     <div class="eyebrow">Prompt Class</div>
     <h1>최해숙 <span>프롬프트 교실</span></h1>
     <p>실전에서 바로 쓰는 AI 프롬프트 모음입니다. 카드의 <b>복사</b>를 눌러 ChatGPT·Claude에 붙여넣고, [ ] 부분만 내 상황에 맞게 바꿔 쓰세요.</p>
-    <div class="search"><input id="q" type="search" name="pc_search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="🔎 프롬프트 검색 (예: 블로그, 상세페이지, 퇴고)" oninput="render()"></div>
+    <div class="search"><input id="q" type="search" name="pc_search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly')" placeholder="🔎 프롬프트 검색 (예: 블로그, 상세페이지, 퇴고)" oninput="render()"></div>
   </header>
 
   <nav class="catnav" id="catnav"></nav>
@@ -175,7 +175,7 @@ function render(){
     });
     if(!items.length)return;
     shown+=items.length;
-    navHtml+='<a href="#'+slug(ci)+'">'+(c.icon||'📌')+' '+esc(c.cat)+'</a>';
+    navHtml+='<a href="#'+slug(ci)+'" onclick="return goCat(\''+slug(ci)+'\')">'+(c.icon||'📌')+' '+esc(c.cat)+'</a>';
     out+='<section class="cat" id="'+slug(ci)+'"><div class="cat-h"><span class="ci">'+(c.icon||'📌')+'</span><h2>'+esc(c.cat)+'</h2><span class="cnt">'+items.length+'개</span></div>';
     items.forEach(function(it){
       var bid='b_'+Math.random().toString(36).slice(2,9);
@@ -187,6 +187,13 @@ function render(){
   });
   nav.innerHTML= q? '' : navHtml;
   list.innerHTML= shown? out : '<div class="empty">검색 결과가 없습니다.</div>';
+}
+function goCat(id){
+  var q=document.getElementById('q');
+  if(q&&q.value){q.value='';render();}
+  var el=document.getElementById(id);
+  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}
+  return false;
 }
 function copyP(btn,id){
   var el=document.getElementById(id); if(!el)return;
