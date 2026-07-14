@@ -159,7 +159,7 @@
         <!-- 사전질문지 -->
         <div class="pane" id="pane_intake">
           <h2 class="pt">📋 사전질문지 (웹페이지 만들기)</h2>
-          <div class="bar"><span class="cnt">총 <b id="cnt_intake">0</b>건</span><button class="btn-x" id="xlsxIntake">📥 엑셀 다운로드</button></div>
+          <div class="bar"><span class="cnt">총 <b id="cnt_intake">0</b>건</span><div class="rgroup"><button class="btn-ghost" id="copyIntakeLink">🔗 링크 복사</button><button class="btn-ghost" id="copyIntakeMsg">💬 문자 문구 복사</button><button class="btn-x" id="xlsxIntake">📥 엑셀 다운로드</button></div></div>
           <p class="hint">수강생이 제출한 사전 자료입니다. 사진·기획안 파일은 ‘열기’를 눌러 다운로드하세요.</p>
           <div class="cardlist" id="list_intake"></div>
           <div class="empty" id="e_intake" style="display:none;">아직 제출된 사전질문지가 없습니다.</div>
@@ -480,6 +480,11 @@
   $("xlsxIntake").addEventListener("click",()=>toXlsx(DATA.intake,[
     {h:"No",f:(r,i,a)=>a.length-i},{h:"제출일시",f:r=>fmt(r.created_at)},{h:"성함",k:"name"},{h:"휴대폰뒤4",k:"phone"},{h:"소속",k:"affiliation"},{h:"브랜드명",k:"brand_name"},{h:"활동분야",k:"field_area"},{h:"해시태그",k:"tagline"},{h:"하는일3가지",k:"role_job"},{h:"현재강의",k:"current_lecture"},{h:"기획안(글)",k:"lecture_plan_text"},{h:"경력자격",k:"career_cert"},{h:"후기",k:"reviews"},{h:"페이지목적",k:"purpose"},{h:"분위기",k:"mood"},{h:"선호색",k:"favorite_color"},{h:"참고사이트",k:"ref_urls"},{h:"SNS",k:"sns_links"},{h:"도메인",k:"domain_owned"},{h:"프로필사진",k:"profile_photo_url"},{h:"활동사진",k:"activity_photo_url"},{h:"로고",k:"logo_url"},{h:"기획안파일",k:"lecture_plan_file_url"}
   ],"사전질문지"));
+  const INTAKE_URL="https://choisite.vercel.app/intake.html";
+  const INTAKE_MSG="[PBS컬러랩] 웹페이지 만들기 수업 사전 질문지 안내\n수업 당일 바로 여러분의 웹페이지를 만들 수 있도록, 아래 링크에서 사전 질문지를 미리 작성해 주세요. (사진·자료도 함께 올려주세요)\n👉 "+INTAKE_URL+"\n문의 010-4285-7997";
+  function copyText(text,btn,label){try{navigator.clipboard.writeText(text);}catch(e){document.execCommand&&document.execCommand("copy");}btn.textContent="✅ 복사됨!";setTimeout(()=>btn.textContent=label,1500);}
+  $("copyIntakeLink").addEventListener("click",()=>copyText(INTAKE_URL,$("copyIntakeLink"),"🔗 링크 복사"));
+  $("copyIntakeMsg").addEventListener("click",()=>copyText(INTAKE_MSG,$("copyIntakeMsg"),"💬 문자 문구 복사"));
 
   /* 사이드바 전환 */
   document.querySelector(".side").addEventListener("click",e=>{
