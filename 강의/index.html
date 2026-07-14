@@ -44,6 +44,11 @@
   .enter{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-weight:800;font-size:14px;color:#fff;background:linear-gradient(135deg,var(--pink),#7A1F6B);padding:10px 18px;border-radius:999px}
   .foot{text-align:center;color:var(--ink-soft);font-size:12.5px;padding:34px 20px 40px;border-top:1px solid var(--line);margin-top:24px}
   .foot a{color:var(--gold-deep);font-weight:700;text-decoration:none}
+  .seq{display:inline-block;background:linear-gradient(135deg,var(--pink),#7A1F6B);color:#fff;font-size:12px;font-weight:900;border-radius:7px;padding:2px 7px;margin-right:5px;vertical-align:middle}
+  .cardbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:2px}
+  .planbtn{display:inline-flex;align-items:center;gap:5px;font-weight:800;font-size:13px;color:var(--gold-deep);background:#fff;border:1px solid var(--line);padding:9px 14px;border-radius:999px;text-decoration:none;cursor:pointer}
+  .planbtn:hover{border-color:var(--gold);background:#F4ECDD}
+  button.enter{border:none;cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
@@ -92,19 +97,25 @@
 var SUPA_URL='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
 var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
 function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function enterRoom(page,pw){var v=prompt('강의실 입장 비밀번호를 입력하세요 (담당 강사에게 문의)');if(v===null)return;if((v||'').trim()===pw){location.href=page;}else{alert('비밀번호가 올바르지 않습니다.');}}
 fetch(SUPA_URL+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY}})
  .then(function(r){return r.json();})
  .then(function(rows){
    if(!rows||!rows.length||!rows[0].value||!rows[0].value.length)return;
    var items=rows[0].value;
    var grid=document.getElementById('courseGrid');
-   grid.innerHTML=items.map(function(it){
+   grid.innerHTML=items.map(function(it,i){
+     var seq=('0'+(i+1)).slice(-2);
      var page=it.page||('course.html?c='+(it.id||''));
      if(page.charAt(0)!=='/') page='/강의/'+page;
+     var isCourse=/course\.html/.test(page);
+     var pw=seq+'1004';
      var tags=(it.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
-     return '<a class="course" href="'+esc(page)+'"><div class="ic">'+(it.icon||'📘')+'</div>'
-       +'<h3>'+esc(it.title||'')+'</h3><p>'+esc(it.desc||'')+'</p>'
-       +'<div class="tags">'+tags+'</div><span class="enter">입장 →</span></a>';
+     var plan=(it.proposal_url&&isCourse)?'<a class="planbtn" href="'+esc(it.proposal_url)+'" target="_blank" rel="noopener">📄 강의기획서</a>':'';
+     var enter=isCourse?'<button class="enter" type="button" onclick="enterRoom(\''+page+'\',\''+pw+'\')">입장 →</button>':'<a class="enter" href="'+esc(page)+'">입장 →</a>';
+     return '<div class="course"><div class="ic">'+(it.icon||'📘')+'</div>'
+       +'<h3><span class="seq">'+seq+'</span> '+esc(it.title||'')+'</h3><p>'+esc(it.desc||'')+'</p>'
+       +'<div class="tags">'+tags+'</div><div class="cardbtns">'+enter+plan+'</div></div>';
    }).join('');
  }).catch(function(e){});
 
