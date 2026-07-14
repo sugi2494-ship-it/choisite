@@ -196,7 +196,7 @@
       position:relative;z-index:2;
       display:grid;grid-template-columns:1fr;gap:0;
     }
-    .hero-copy{max-width:640px}
+    .hero-copy{max-width:640px;min-width:0;width:100%}
     .eyebrow{
       display:inline-flex;align-items:center;gap:10px;
       color:var(--gold);font-weight:900;font-size:11.5px;letter-spacing:.22em;
@@ -622,6 +622,12 @@
     }
     @media(max-width:480px){
       .stats-row{grid-template-columns:1fr 1fr}
+      .hero-in{width:100%;max-width:100%;overflow:hidden}
+      .hero-copy,.stats-row,.hero-actions{width:100%;max-width:100%;min-width:0}
+      .eyebrow{max-width:100%;white-space:normal;line-height:1.6;overflow-wrap:anywhere}
+      .hero-en,.hero-sub,h1{overflow-wrap:anywhere}
+      .hero-actions{display:grid;grid-template-columns:1fr;gap:10px}
+      .hero-actions .btn{width:100%;padding-left:14px;padding-right:14px}
       .stat b{font-size:22px}
       nav .menu a{font-size:15px}
       
@@ -737,7 +743,7 @@
         <div class="stat"><b>10+</b><span data-i18n="stat.books">방송·저서</span></div>
       </div>
       <div class="hero-actions">
-        <a class="btn primary" href="downloads/최해숙_대표_프로필.pdf" target="_blank" rel="noopener" data-i18n="hero.btn1">📄 프로필 다운로드</a>
+        <a class="btn primary" href="_pbscolor_배포업데이트/downloads/최해숙_대표_프로필.pdf" target="_blank" rel="noopener" data-i18n="hero.btn1">📄 프로필 다운로드</a>
         <a class="btn gold" href="/강의/" data-i18n="hero.btn2">🎓 강의실 입장</a>
         <a class="btn outline" href="#contact" data-i18n="hero.btn3">✉ 문의하기</a>
       </div>
@@ -787,7 +793,7 @@
           <div class="bio-item"><span class="ico">📖</span><p><b data-i18n="bio.b5t">저서 · 번역서</b><br><span data-i18n="bio.b5d">『상처도 스펙이다』 『색과 숫자의 기적』 등</span></p></div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:4px">
-          <a class="btn primary" href="downloads/최해숙_대표_프로필.pdf" target="_blank" rel="noopener" data-i18n="about.btnprofile">📄 전체 프로필 다운로드</a>
+          <a class="btn primary" href="_pbscolor_배포업데이트/downloads/최해숙_대표_프로필.pdf" target="_blank" rel="noopener" data-i18n="about.btnprofile">📄 전체 프로필 다운로드</a>
           <a class="btn outline" href="#contact" data-i18n="about.btncontact">✉ 교육 문의하기</a>
         </div>
       </div>
@@ -1191,7 +1197,7 @@
     <h3>🟢 WeChat / 微信</h3>
     <p>WeChat ID로 친구 추가하거나<br>QR을 스캔해 연결하세요</p>
     <!-- WeChat QR: 파일 wechat_qr.jpg 저장 시 자동 표시 -->
-    <img src="최해숙프로필자동화만들기/wechat_qr.jpg" alt="WeChat QR"
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&amp;data=weixin%3A%2F%2F&amp;color=07C160&amp;bgcolor=ffffff" alt="WeChat QR"
       style="border-radius:12px;margin:16px auto;display:block;width:220px;height:auto"
       onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=weixin%3A%2F%2F&color=07C160&bgcolor=ffffff';this.onerror=null">
     <p style="font-size:13px;color:var(--muted)">WeChat ID: <b style="color:#07C160">Maria choi (崔海淑）</b></p>
@@ -1237,6 +1243,9 @@
       <input type="hidden" id="testiStar" value="5">
       <input class="tf-input" id="testiName" type="text" placeholder="이름 (익명 가능)" data-i18n-ph="testi.nameph" maxlength="20">
       <textarea class="tf-input" id="testiMsg" placeholder="오늘 어떠셨나요? 알게된 점이나 느낀 점을 자유롭게 작성해주세요 😊" data-i18n-ph="testi.msgph" maxlength="300"></textarea>
+      <label style="display:flex;align-items:flex-start;gap:8px;margin:0 0 12px;color:rgba(255,255,255,.72);font-size:13px;line-height:1.5;text-align:left">
+        <input type="checkbox" id="testiConsent" style="margin-top:3px"> 작성한 이름·소감·사진의 수집 및 게시 검토에 동의합니다. (필수)
+      </label>
       <label style="display:flex;align-items:center;gap:10px;cursor:pointer;background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.2);border-radius:12px;padding:11px 14px;font-size:13px;color:rgba(255,255,255,.55);margin-bottom:10px">
         📷 <span data-i18n="testi.photobtn">사진 첨부 (선택 · 강의 셀카 환영!)</span>
         <input type="file" id="testiPhoto" accept="image/*" style="display:none" onchange="previewTestiPhoto(this)">
@@ -1263,7 +1272,7 @@
       <h2 data-i18n="shop.title">컬러 교구 · <span class="g">K-Beauty 컬러샵</span></h2>
       <p class="subdesc" style="margin:0 auto;margin-top:10px" data-i18n="shop.desc">퍼스널컬러 교육 전용 교구 및 K-Beauty 코스메틱 — 전문가가 직접 큐레이션한 컬러 제품을 만나보세요</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto">
+    <div id="shopGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto">
 
       <!-- 퍼스널컬러 드레이프 세트 -->
       <div style="border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:.3s;cursor:pointer"
@@ -1306,7 +1315,7 @@
         </div>
       </div>
     </div>
-    <p style="text-align:center;margin-top:32px;font-size:13px;color:rgba(255,255,255,.38)">
+    <p id="shopNotice" style="text-align:center;margin-top:32px;font-size:13px;color:rgba(255,255,255,.38)">
       <span data-i18n="shop.notice">🔒 온라인 스토어 오픈 준비중 · 주문 및 문의:</span> <a href="tel:+821042857997" style="color:var(--pink);font-weight:800">+82-10-4285-7997</a>
     </p>
   </div>
@@ -1335,6 +1344,9 @@
           <input class="tf-input" id="inqSns" type="text" placeholder="SNS 계정 (인스타그램, 카카오 등 — 선택)" data-i18n-ph="cf.sns">
           <textarea class="tf-input" id="inqMsg" placeholder="문의 내용을 적어주세요 (강의 주제, 인원, 날짜 등)" data-i18n-ph="cf.msg" style="min-height:110px"></textarea>
         </div>
+        <label style="display:flex;align-items:flex-start;gap:8px;margin:0 0 14px;color:rgba(255,255,255,.72);font-size:13px;line-height:1.5;text-align:left">
+          <input type="checkbox" id="inqConsent" style="margin-top:3px"> 문의 답변을 위한 개인정보 수집·이용에 동의합니다. (필수)
+        </label>
         <button class="tf-submit" onclick="submitInquiry()" data-i18n="cf.submit">문의 보내기 →</button>
         <p id="inqSuccess" data-i18n="cf.success" style="display:none;text-align:center;margin-top:12px;color:var(--pink);font-weight:800">문의가 접수되었습니다! 곧 연락드리겠습니다 ✨</p>
       </div>
@@ -1343,7 +1355,7 @@
       <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:32px;padding-top:28px;border-top:1px solid rgba(255,255,255,.08)">
         <a href="tel:+821042857997" data-i18n="cc.phone.btn" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:13px;font-weight:700;text-decoration:none">📱 +82-10-4285-7997</a>
         <a href="mailto:sugi2494@gmail.com" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:13px;font-weight:700;text-decoration:none">✉ sugi2494@gmail.com</a>
-        <a href="downloads/최해숙_대표_프로필.pdf" target="_blank" rel="noopener" data-i18n="cc.profile.btn" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:999px;background:rgba(230,0,126,.12);border:1px solid rgba(230,0,126,.3);color:var(--pink);font-size:13px;font-weight:700;text-decoration:none">📄 프로필 다운로드</a>
+        <a href="_pbscolor_배포업데이트/downloads/최해숙_대표_프로필.pdf" target="_blank" rel="noopener" data-i18n="cc.profile.btn" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:999px;background:rgba(230,0,126,.12);border:1px solid rgba(230,0,126,.3);color:var(--pink);font-size:13px;font-weight:700;text-decoration:none">📄 프로필 다운로드</a>
         <a href="mailto:sugi2494@gmail.com" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:13px;font-weight:700;text-decoration:none" data-i18n="cc.global.btn">🌏 Global Inquiry</a>
       </div>
     </div>
@@ -1377,6 +1389,13 @@ var SUPA_URL='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
 var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
 var SUPA_H={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
 function supaFetch(path,opts){return fetch(SUPA_URL+'/rest/v1/'+path,Object.assign({headers:SUPA_H},opts||{}));}
+function escHtml(value){return String(value==null?'':value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function plainText(value){return String(value==null?'':value).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();}
+function safeUrl(value,allowDataImage){
+  var v=String(value||'').trim();
+  if(allowDataImage&&/^data:image\/(?:png|jpeg|webp|gif);base64,/i.test(v))return v;
+  try{var u=new URL(v,location.href);return /^(https?:)$/i.test(u.protocol)?u.href:'#';}catch(e){return '#';}
+}
 /* 자료실(담당자용) 동적 렌더 — 설정 없으면 정적 기본값 유지 */
 function renderAbout(){
   var el=document.getElementById('bioList'); if(!el) return;
@@ -1392,9 +1411,36 @@ function renderResources(){
   var items=null; try{items=JSON.parse(localStorage.getItem('pbs_resources_config')||'null');}catch(e){}
   if(!items||!items.length) return;
   grid.innerHTML=items.map(function(it){
-    return '<a class="dl-card" href="'+(it.url||'#')+'" target="_blank" rel="noopener">'
-      +'<div><div class="dl-icon">'+(it.icon||'📄')+'</div><b>'+(it.title||'')+'</b><span>'+(it.desc||'')+'</span></div>'
+    return '<a class="dl-card" href="'+escHtml(safeUrl(it.url,false))+'" target="_blank" rel="noopener">'
+      +'<div><div class="dl-icon">'+escHtml(it.icon||'📄')+'</div><b>'+escHtml(it.title||'')+'</b><span>'+escHtml(it.desc||'')+'</span></div>'
       +'<div class="dl-cta">PDF 다운로드 →</div></a>';
+  }).join('');
+}
+function renderShop(){
+  var arr=[];try{arr=JSON.parse(localStorage.getItem('pbs_store')||'[]');}catch(e){}
+  if(!Array.isArray(arr))arr=[];
+  var vis=arr.filter(function(x){return x&&x.visible!==false;});
+  var grid=document.getElementById('shopGrid');
+  if(!grid||!vis.length)return;
+  var notice=document.getElementById('shopNotice');if(notice)notice.style.display='none';
+  var grads=['linear-gradient(135deg,#e91e8c,#9c27b0,#3f51b5)','linear-gradient(135deg,#ff6b35,#f7c59f,#e63946)','linear-gradient(135deg,#ff9a9e,#fecfef,#ffecd2)'];
+  grid.innerHTML=vis.map(function(x,i){
+    var hasDetail=!!x.detail;
+    var go=hasDetail?("location.href='"+escHtml(x.detail)+"'"):"document.getElementById('contact').scrollIntoView({behavior:'smooth'})";
+    var media=x.photo
+      ?'<div style="height:180px;overflow:hidden"><img src="'+escHtml(x.photo)+'" alt="'+escHtml(x.name||'')+'" style="width:100%;height:100%;object-fit:cover;display:block"></div>'
+      :'<div style="height:180px;background:'+grads[i%3]+';display:flex;align-items:center;justify-content:center;font-size:56px">🎨</div>';
+    return '<div onclick="'+go+'" style="border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:.3s;cursor:pointer" '
+      +'onmouseover="this.style.borderColor=\'rgba(230,0,126,.45)\';this.style.transform=\'translateY(-5px)\'" '
+      +'onmouseout="this.style.borderColor=\'rgba(255,255,255,.1)\';this.style.transform=\'none\'">'
+      +media
+      +'<div style="padding:18px">'
+      +(x.cat?'<div style="font-size:10px;font-weight:900;color:var(--gold);letter-spacing:.12em;margin-bottom:6px">'+escHtml(x.cat)+'</div>':'')
+      +'<h3 style="font-size:16px;font-weight:900;color:#fff;margin-bottom:8px">'+escHtml(x.name||'')+'</h3>'
+      +(x.desc?'<p style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:10px">'+escHtml(x.desc)+'</p>':'')
+      +(x.price?'<div style="font-size:17px;font-weight:900;color:var(--pink);margin-bottom:12px">'+escHtml(x.price)+'</div>':'')
+      +'<button onclick="event.stopPropagation();'+go+'" style="width:100%;padding:9px 0;border-radius:999px;background:var(--pink);color:#fff;border:none;font-size:13px;font-weight:900;cursor:pointer">'+(hasDetail?'자세히 보기 &rarr;':'주문하기')+'</button>'
+      +'</div></div>';
   }).join('');
 }
 /* 사이트 설정 초기 로드 (페이지 열릴 때 한 번) */
@@ -1403,6 +1449,7 @@ function renderResources(){
     rows.forEach(function(c){if(c.key&&c.value!==null)localStorage.setItem('pbs_'+c.key,JSON.stringify(c.value));});
     renderResources();
     renderAbout();
+    renderShop();
     // 갤러리 갱신
     applyAdminImages();
     // 글로벌 사진
@@ -1423,8 +1470,8 @@ function renderResources(){
       if(!b||!b.visible||!b.src)return;
       var banner=document.createElement('div');banner.id='eventBanner';
       banner.style.cssText='position:fixed;top:0;left:0;right:0;z-index:10000;cursor:pointer;';
-      var bTitle=b.title?'<div style="position:absolute;bottom:0;left:0;right:0;padding:7px 46px 7px 16px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:14px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9)">'+b.title+'</div>':'';
-      banner.innerHTML='<div style="position:relative"><img src="'+b.src+'" style="width:100%;max-height:80px;object-fit:cover;display:block">'+bTitle+'<button onclick="document.getElementById(\'eventBanner\').style.display=\'none\'" style="position:absolute;top:4px;right:8px;background:rgba(0,0,0,.5);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;line-height:1">✕</button></div>';
+       var bTitle=b.title?'<div style="position:absolute;bottom:0;left:0;right:0;padding:7px 46px 7px 16px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:14px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9)">'+escHtml(plainText(b.title))+'</div>':'';
+       banner.innerHTML='<div style="position:relative"><img src="'+escHtml(safeUrl(b.src,true))+'" alt="" style="width:100%;max-height:80px;object-fit:cover;display:block">'+bTitle+'<button onclick="document.getElementById(\'eventBanner\').style.display=\'none\'" style="position:absolute;top:4px;right:8px;background:rgba(0,0,0,.5);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;line-height:1">✕</button></div>';
       document.body.insertBefore(banner,document.body.firstChild);
     })();
   }).catch(function(){});
@@ -1436,8 +1483,8 @@ function renderResources(){
     grid.innerHTML=rows.map(function(t){
       var stars='';for(var i=1;i<=5;i++)stars+='<span style="color:'+(i<=(t.star||5)?'#FFD700':'rgba(255,255,255,.2)')+'">★</span>';
       var photoHtml='';
-      if(t.photo&&t.photo_visible!==false)photoHtml='<div style="margin:10px auto 4px;text-align:center"><img src="'+t.photo+'" style="width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid rgba(230,0,126,.4)"></div>';
-      return '<div class="testi-card">'+photoHtml+'<div class="testi-stars">'+stars+'</div><p class="testi-msg">"'+t.msg+'"</p><div class="testi-meta"><b>'+t.name+'</b> · '+(t.date||'')+'</div></div>';
+       if(t.photo&&t.photo_visible!==false)photoHtml='<div style="margin:10px auto 4px;text-align:center"><img src="'+escHtml(safeUrl(t.photo,true))+'" alt="" style="width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid rgba(230,0,126,.4)"></div>';
+       return '<div class="testi-card">'+photoHtml+'<div class="testi-stars">'+stars+'</div><p class="testi-msg">"'+escHtml(t.msg)+'"</p><div class="testi-meta"><b>'+escHtml(t.name||'익명')+'</b> · '+escHtml(t.date||'')+'</div></div>';
     }).join('');
   }).catch(function(){});
 })();
@@ -1964,34 +2011,36 @@ function submitTestimonial() {
   var msgEl = document.getElementById('testiMsg');
   var starEl = document.getElementById('testiStar');
   if (!msgEl) return;
+  var consentEl=document.getElementById('testiConsent');
+  if(!consentEl||!consentEl.checked){alert('소감 수집 및 게시 검토에 동의해 주세요.');return;}
   var msg = msgEl.value.trim();
   if (!msg) { alert((I18N[curLang]||I18N.ko)['testi.nameph'] ? '소감을 작성해주세요.' : '소감을 작성해주세요.'); return; }
   var name = (nameEl ? nameEl.value.trim() : '') || '익명';
   var star = starEl ? parseInt(starEl.value) : 5;
-  var arr = JSON.parse(localStorage.getItem('pbs_testimonials') || '[]');
   var photoEl = document.getElementById('testiPhoto');
   var photoFile = photoEl && photoEl.files && photoEl.files[0];
   function doSave(photoData) {
     var entry = { name: name, msg: msg, star: star, date: new Date().toLocaleDateString('ko-KR'), approved: false };
     if (photoData) { entry.photo = photoData; entry.photoVisible = true; }
-    arr.push(entry);
-    localStorage.setItem('pbs_testimonials', JSON.stringify(arr));
     // Supabase 저장
     var supaEntry = {name:entry.name,msg:entry.msg,star:entry.star,date:entry.date,approved:false};
     if(photoData){supaEntry.photo=photoData;supaEntry.photo_visible=true;}
-    supaFetch('pbs_testimonials',{method:'POST',body:JSON.stringify(supaEntry)}).catch(function(){});
-    if (nameEl) nameEl.value = '';
-    msgEl.value = '';
-    setStar(5);
-    clearTestiPhoto();
+    return supaFetch('pbs_testimonials',{method:'POST',body:JSON.stringify(supaEntry)}).then(function(r){
+      if(!r.ok)throw new Error('후기 저장 실패');
+      if (nameEl) nameEl.value = '';
+      msgEl.value = '';
+      consentEl.checked=false;
+      setStar(5);
+      clearTestiPhoto();
+      var suc = document.getElementById('testiSuccess');
+      if (suc) { suc.style.display = 'block'; setTimeout(function(){ suc.style.display = 'none'; }, 4000); }
+    }).catch(function(){alert('소감을 전송하지 못했습니다. 잠시 후 다시 시도해 주세요.');});
   }
   if (photoFile) {
     compressImg(photoFile, 600, 0.8, function(dataUrl) { doSave(dataUrl); });
   } else {
     doSave(null);
   }
-  var suc = document.getElementById('testiSuccess');
-  if (suc) { suc.style.display = 'block'; setTimeout(function(){ suc.style.display = 'none'; }, 4000); }
 }
 
 /* ══ 승인된 소감 로딩 ══ */
@@ -2006,12 +2055,12 @@ function submitTestimonial() {
     for (var i = 1; i <= 5; i++) stars += '<span style="color:' + (i <= t.star ? '#FFD700' : 'rgba(255,255,255,.2)') + '">★</span>';
     var photoHtml = '';
     if (t.photo && t.photoVisible !== false) {
-      photoHtml = '<div style="margin:10px auto 4px;text-align:center"><img src="' + t.photo + '" style="width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid rgba(230,0,126,.4)"></div>';
+      photoHtml = '<div style="margin:10px auto 4px;text-align:center"><img src="' + escHtml(safeUrl(t.photo,true)) + '" alt="" style="width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid rgba(230,0,126,.4)"></div>';
     }
     return '<div class="testi-card">' + photoHtml
       + '<div class="testi-stars">' + stars + '</div>'
-      + '<p class="testi-msg">"' + t.msg + '"</p>'
-      + '<div class="testi-meta"><b>' + t.name + '</b> · ' + (t.date || '') + '</div></div>';
+      + '<p class="testi-msg">"' + escHtml(t.msg) + '"</p>'
+      + '<div class="testi-meta"><b>' + escHtml(t.name||'익명') + '</b> · ' + escHtml(t.date || '') + '</div></div>';
   }).join('');
 })();
 
@@ -2038,8 +2087,8 @@ function submitTestimonial() {
   var banner = document.createElement('div');
   banner.id = 'eventBanner';
   banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:10000;cursor:pointer;';
-  var bTitle = b.title ? '<div style="position:absolute;bottom:0;left:0;right:0;padding:7px 46px 7px 16px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:14px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9)">' + b.title + '</div>' : '';
-  banner.innerHTML = '<div style="position:relative"><img src="' + b.src + '" style="width:100%;max-height:80px;object-fit:cover;display:block">'
+  var bTitle = b.title ? '<div style="position:absolute;bottom:0;left:0;right:0;padding:7px 46px 7px 16px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:14px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9)">' + escHtml(plainText(b.title)) + '</div>' : '';
+  banner.innerHTML = '<div style="position:relative"><img src="' + escHtml(safeUrl(b.src,true)) + '" alt="" style="width:100%;max-height:80px;object-fit:cover;display:block">'
     + bTitle
     + '<button onclick="document.getElementById(\'eventBanner\').style.display=\'none\'" style="position:absolute;top:4px;right:8px;background:rgba(0,0,0,.5);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;line-height:1">✕</button></div>';
   document.body.insertBefore(banner, document.body.firstChild);
@@ -2058,17 +2107,18 @@ function submitInquiry() {
   var sns = (document.getElementById('inqSns') || {value:''}).value.trim();
   var msg = document.getElementById('inqMsg').value.trim();
   if (!name || !msg) { alert('성함과 문의내용은 필수입니다.'); return; }
-  var arr = JSON.parse(localStorage.getItem('pbs_inquiries') || '[]');
-  var inqDate = new Date().toLocaleString('ko-KR');
-  arr.push({ name: name, phone: phone, email: email, country: country, org: org, sns: sns, msg: msg, date: inqDate });
-  localStorage.setItem('pbs_inquiries', JSON.stringify(arr));
+  var consentEl=document.getElementById('inqConsent');
+  if(!consentEl||!consentEl.checked){alert('개인정보 수집·이용에 동의해 주세요.');return;}
   // Supabase 저장
-  supaFetch('pbs_inquiries',{method:'POST',body:JSON.stringify({name:name,phone:phone,email:email,country:country,org:org,sns:sns,msg:msg})}).catch(function(){});
-  ['inqName','inqPhone','inqEmail','inqCountry','inqOrg','inqSns','inqMsg'].forEach(function(id) {
-    var el = document.getElementById(id); if (el) el.value = '';
-  });
-  var suc = document.getElementById('inqSuccess');
-  if (suc) { suc.style.display = 'block'; setTimeout(function(){ suc.style.display = 'none'; }, 4000); }
+  supaFetch('pbs_inquiries',{method:'POST',body:JSON.stringify({name:name,phone:phone,email:email,country:country,org:org,sns:sns,msg:msg})}).then(function(r){
+    if(!r.ok)throw new Error('문의 저장 실패');
+    ['inqName','inqPhone','inqEmail','inqCountry','inqOrg','inqSns','inqMsg'].forEach(function(id) {
+      var el = document.getElementById(id); if (el) el.value = '';
+    });
+    consentEl.checked=false;
+    var suc = document.getElementById('inqSuccess');
+    if (suc) { suc.style.display = 'block'; setTimeout(function(){ suc.style.display = 'none'; }, 4000); }
+  }).catch(function(){alert('문의를 전송하지 못했습니다. 잠시 후 다시 시도해 주세요.');});
 }
 
 /* ══ QR / SNS 모달 ══ */
