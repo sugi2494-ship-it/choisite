@@ -82,29 +82,28 @@
     <form id="f">
       <!-- 수업 전 준비 -->
       <div class="card">
-        <div class="sec"><span class="dot" style="background:var(--red)"></span>수업 전 준비 (꼭 확인!)</div>
-        <small class="sec-sub" style="display:block;font-size:12.5px;color:var(--muted);margin:2px 0 0 20px;">미리 준비해 주시면 <b style="color:var(--red)">당일 완성도가 훨씬 높아집니다.</b> 준비가 안 되면 첫 시간(약 1시간)을 자료 모으는 데 쓰게 돼요.</small>
-        <label class="check"><input type="checkbox" id="prep_ai" /><span>유료 AI(Claude) <b>월 결제 구독</b> 1개 구매 완료 <span style="color:var(--red);font-weight:800">(수업 필수)</span></span></label>
+        <div class="sec"><span class="dot" style="background:var(--red)"></span>수업 전 준비</div>
+        <small class="sec-sub" style="display:block;font-size:12.5px;color:var(--muted);margin:2px 0 0 20px;">아래는 수업을 위해 미리 준비하시면 좋은 것들이에요.</small>
+        <label class="check"><input type="checkbox" id="prep_ai" /><span>유료 AI 구독 완료 (Claude 권장)</span></label>
         <label class="check"><input type="checkbox" id="prep_chrome" /><span>크롬(Chrome) 브라우저 설치 완료</span></label>
-        <label class="check"><input type="checkbox" id="prep_files" /><span>사진 · 자료 준비 완료 (아래 항목 참고)</span></label>
+        <label class="check"><input type="checkbox" id="prep_files" /><span>사진 · 자료 준비 완료</span></label>
       </div>
 
       <!-- 기본 정보 -->
       <div class="card">
         <div class="sec"><span class="dot" style="background:var(--yellow)"></span>기본 정보</div>
-        <small class="sec-sub" style="display:block;font-size:12.5px;color:var(--muted);margin:2px 0 0 20px;">신청하신 분 확인용이에요.</small>
-        <div class="field"><label class="q">성함 <span class="req">*</span></label><input type="text" id="name" placeholder="신청하신 성함을 입력해 주세요" /></div>
-        <div class="field"><label class="q">휴대폰 뒤 4자리 <span class="req">*</span></label><input type="tel" id="phone" maxlength="4" inputmode="numeric" placeholder="예) 7997" /><div class="hint">신청 시 남기신 휴대폰 번호의 마지막 4자리만 적어주세요.</div></div>
+        <div class="field"><label class="q">성함 <span class="req">*</span></label><input type="text" id="name" placeholder="성함을 입력해 주세요" /></div>
+        <div class="field"><label class="q">휴대폰 <span class="req">*</span></label><input type="tel" id="phone" placeholder="010-0000-0000" /></div>
+        <div class="field"><label class="q">이메일</label><input type="email" id="email" placeholder="example@email.com" /></div>
+        <div class="field"><label class="q">카카오톡 ID</label><input type="text" id="kakao_id" placeholder="자료 안내를 위해 (선택)" /></div>
       </div>
 
       <!-- 나 소개 -->
       <div class="card">
         <div class="sec"><span class="dot" style="background:var(--green)"></span>나를 소개해 주세요</div>
-        <div class="field"><label class="q">소속</label><input type="text" id="affiliation" placeholder="예) OO협회, OO센터, 프리랜서 등" /></div>
-        <div class="field"><label class="q">브랜드명 / 활동명</label><input type="text" id="brand_name" placeholder="예) PBS컬러랩, 김강사 아카데미" /></div>
-        <div class="field"><label class="q">활동 분야</label><input type="text" id="field_area" placeholder="예) 퍼스널컬러, 이미지메이킹, 컬러강점 등" /></div>
-        <div class="field"><label class="q">한 줄 소개 (해시태그)</label><input type="text" id="tagline" placeholder="예) #퍼스널컬러 #강점코칭 #울산강사" /><div class="hint">나를 나타내는 해시태그나 키워드를 생각나는 대로 적어주세요. 없으면 비워두셔도 돼요.</div></div>
-        <div class="field"><label class="q">중점적으로 하는 일 3가지 (강의·영역)</label><textarea id="role_job" placeholder="예)&#10;1) 퍼스널컬러 진단&#10;2) 컬러강점 소통 강의&#10;3) 이미지 컨설팅"></textarea></div>
+        <div class="field"><label class="q">브랜드명 / 활동명 <span class="req">*</span></label><input type="text" id="brand_name" placeholder="예) PBS컬러랩, 김강사 아카데미" /></div>
+        <div class="field"><label class="q">한 줄 소개 (태그라인)</label><input type="text" id="tagline" placeholder="예) 컬러로 나를 이해하고, 강점으로 브랜드를 완성합니다" /><div class="hint">페이지 맨 위에 크게 들어갈 문구예요. 없으면 비워두세요.</div></div>
+        <div class="field"><label class="q">직함 / 하는 일</label><input type="text" id="role_job" placeholder="예) 퍼스널컬러 강사 · 이미지 컨설턴트" /></div>
       </div>
 
       <!-- 강의 -->
@@ -139,7 +138,6 @@
             <option>기타</option>
           </select>
         </div>
-        <div class="field"><label class="q">웹페이지에 넣고 싶은 메뉴</label><textarea id="wanted_menus" placeholder="예) 소개 / 강의 안내 / 후기 / 수강 신청 / 갤러리 / 문의 등 — 넣고 싶은 메뉴를 생각나는 대로 적어보세요"></textarea></div>
         <div class="field"><label class="q">원하는 분위기</label><input type="text" id="mood" placeholder="예) 깔끔하고 전문적인 / 따뜻하고 편안한 / 감각적인" /></div>
         <div class="field"><label class="q">좋아하는 색</label><input type="text" id="favorite_color" placeholder="예) 핑크, 네이비, 파스텔톤 등" /></div>
         <div class="field"><label class="q">참고하고 싶은 사이트</label><textarea id="ref_urls" placeholder="마음에 드는 웹사이트 주소가 있으면 붙여넣어 주세요 (여러 개 OK)"></textarea></div>
@@ -199,7 +197,8 @@
   </div>
 
   <footer>
-    <b>PBS컬러랩</b> | 대표 : 최해숙 | 1600-7218
+    <b>PBS컬러랩</b> | 대표 : 최해숙 | 1600-7218<br>
+    인증센터 문의 : 010-4285-7997
   </footer>
 
 <script>
@@ -224,7 +223,7 @@
   f.addEventListener("submit", async e=>{
     e.preventDefault();
     err.style.display="none";
-    const need = [["name","성함"],["phone","휴대폰 뒤 4자리"],["current_lecture","현재 하는 강의"]];
+    const need = [["name","성함"],["phone","휴대폰"],["brand_name","브랜드명/활동명"],["current_lecture","현재 하는 강의"]];
     for(const [id,label] of need){ if(!$(id).value.trim()){ return showErr(label+"은(는) 필수 항목입니다."); } }
     if(!$("purpose").value) return showErr("페이지 목적을 선택해 주세요.");
     if(!$("profile_photo").files[0]) return showErr("프로필 사진을 첨부해 주세요.");
@@ -238,12 +237,12 @@
       ]);
       const data = {
         prep_ai:$("prep_ai").checked, prep_chrome:$("prep_chrome").checked, prep_files:$("prep_files").checked,
-        name:$("name").value.trim(), phone:$("phone").value.trim(),
-        affiliation:$("affiliation").value.trim()||null, brand_name:$("brand_name").value.trim(), field_area:$("field_area").value.trim()||null, tagline:$("tagline").value.trim()||null, role_job:$("role_job").value.trim()||null,
+        name:$("name").value.trim(), phone:$("phone").value.trim(), email:$("email").value.trim()||null, kakao_id:$("kakao_id").value.trim()||null,
+        brand_name:$("brand_name").value.trim(), tagline:$("tagline").value.trim()||null, role_job:$("role_job").value.trim()||null,
         current_lecture:$("current_lecture").value.trim(), lecture_plan_text:$("lecture_plan_text").value.trim()||null, lecture_plan_file_url,
         career_cert:$("career_cert").value.trim()||null, reviews:$("reviews").value.trim()||null,
         profile_photo_url, activity_photo_url, logo_url,
-        purpose:$("purpose").value, wanted_menus:$("wanted_menus").value.trim()||null, mood:$("mood").value.trim()||null, favorite_color:$("favorite_color").value.trim()||null,
+        purpose:$("purpose").value, mood:$("mood").value.trim()||null, favorite_color:$("favorite_color").value.trim()||null,
         ref_urls:$("ref_urls").value.trim()||null, sns_links:$("sns_links").value.trim()||null, domain_owned:$("domain_owned").value||null,
         agreed_privacy:true, agreed_terms:true
       };
