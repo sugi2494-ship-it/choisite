@@ -56,8 +56,8 @@
   <div class="top"><div class="in">
     <a class="brand" href="index.html">PBS COLOR LAB · 강의실</a>
     <div class="nav">
-      <a href="#download">교육생 자료</a><a href="#exam">자격시험</a><a href="#lecture">강의안</a>
-      <a href="#video">영상</a><a href="#board">질문·소감·후기</a>
+      <a href="#board">질문·소감·후기</a><a href="#download">교육생 자료</a>
+      <a href="#exam">자격시험</a><a href="#video">영상</a><a href="#lecture">강의안</a>
     </div>
     <a class="back" href="index.html">← 과정 목록</a>
   </div></div>
@@ -69,57 +69,6 @@
   </header>
 
   <main class="wrap">
-    <!-- 사전질문 (수강 전 작성) -->
-    <section class="sec" id="intake" style="display:none">
-      <h2>📝 사전질문 작성</h2>
-      <div class="sub">수업 전에 미리 작성해 주시면, 당일 바로 여러분의 웹페이지를 만듭니다. (사진·자료도 함께 올려주세요)</div>
-      <div id="intakeArea"></div>
-    </section>
-    <!-- 강의 기획안 -->
-    <section class="sec" id="proposal" style="display:none">
-      <h2>📋 강의 기획안</h2>
-      <div class="sub">담당자용 강의 기획안(제안서)입니다.</div>
-      <div id="proposalArea"></div>
-    </section>
-    <!-- 교육생 강의자료 받기 (그날 날짜 비번) -->
-    <section class="sec" id="download">
-      <h2>🎒 교육생 강의자료 받기</h2>
-      <div class="sub">강사가 알려준 비밀번호를 입력하면 강의 자료가 열립니다.</div>
-      <div class="pwrow">
-        <input type="password" id="spw" inputmode="numeric" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')sUnlock()">
-        <button class="btn btn-primary" onclick="sUnlock()">열기</button>
-      </div>
-      <div class="pwmsg" id="spwmsg"></div>
-      <div class="unlocked" id="sUnlocked"><div id="studentArea"></div></div>
-    </section>
-
-    <!-- 자격시험 응시 -->
-    <section class="sec" id="exam" style="display:none">
-      <h2>📝 자격시험 응시</h2>
-      <div class="sub">과정 수료 후 자격시험에 응시하세요.</div>
-      <div id="examArea"></div>
-    </section>
-
-    <!-- 강사 강의안 -->
-    <section class="sec" id="lecture">
-      <h2>🔒 최해숙 강의안</h2>
-      <div class="sub">강사 전용입니다. 비밀번호를 입력하면 강의 슬라이드를 이 화면에서 바로 엽니다. (USB 불필요)</div>
-      <div class="pwrow">
-        <input type="password" id="tpw" placeholder="강사 비밀번호" onkeydown="if(event.key==='Enter')tUnlock()">
-        <button class="btn btn-gold" onclick="tUnlock()">열기</button>
-      </div>
-      <div class="pwmsg" id="tpwmsg"></div>
-      <div class="unlocked" id="tUnlocked"><div id="teacherArea"></div></div>
-    </section>
-
-    <!-- 영상으로 배우는 강의 -->
-    <section class="sec" id="video" style="display:none">
-      <h2>🎬 영상으로 배우는 강의</h2>
-      <div class="sub">영상을 보며 복습하세요.</div>
-      <div id="videoArea"></div>
-    </section>
-
-    <!-- 수업 질문·소감 -->
     <section class="sec" id="board">
       <h2>💬 질문 · 소감 · 후기</h2>
       <div class="sub">궁금한 점·소감·후기를 남겨주세요. 강사 승인 후 함께 표시됩니다.</div>
@@ -137,7 +86,48 @@
       </div>
       <div id="bdFeed"></div>
     </section>
-    <!-- 운영자 관리 -->
+
+    <section class="sec" id="download">
+      <h2>🎒 교육생 강의자료 받기</h2>
+      <div class="sub">아래에서 강의 자료를 받거나 열 수 있습니다.</div>
+      <div id="studentArea"></div>
+    </section>
+
+    <section class="sec" id="intake" style="display:none">
+      <h2>📝 사전질문 작성</h2>
+      <div class="sub">수업 전에 미리 작성해 주시면, 당일 바로 여러분의 웹페이지를 만듭니다. (사진·자료도 함께 올려주세요)</div>
+      <div id="intakeArea"></div>
+    </section>
+
+    <section class="sec" id="exam" style="display:none">
+      <h2>📝 자격시험 응시</h2>
+      <div class="sub">과정 수료 후 자격시험에 응시하세요.</div>
+      <div id="examArea"></div>
+    </section>
+
+    <section class="sec" id="video" style="display:none">
+      <h2>🎬 영상으로 배우는 강의</h2>
+      <div class="sub">영상을 보며 복습하세요.</div>
+      <div id="videoArea"></div>
+    </section>
+
+    <section class="sec" id="proposal" style="display:none">
+      <h2>📋 강의 기획안</h2>
+      <div class="sub">담당자용 강의 기획안(제안서)입니다.</div>
+      <div id="proposalArea"></div>
+    </section>
+
+    <section class="sec" id="lecture">
+      <h2>🔒 최해숙 강의안</h2>
+      <div class="sub">강사 전용입니다. 비밀번호를 입력하면 강의 슬라이드를 이 화면에서 바로 엽니다. (USB 불필요)</div>
+      <div class="pwrow">
+        <input type="password" id="tpw" placeholder="강사 비밀번호" onkeydown="if(event.key==='Enter')tUnlock()">
+        <button class="btn btn-gold" onclick="tUnlock()">열기</button>
+      </div>
+      <div class="pwmsg" id="tpwmsg"></div>
+      <div class="unlocked" id="tUnlocked"><div id="teacherArea"></div></div>
+    </section>
+
     <style>#manage .mrow{margin-bottom:14px}#manage .mrow label{display:block;font-size:13px;font-weight:800;color:var(--soft);margin-bottom:5px}#manage .mrow input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit}#manage .mbtns{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}</style>
     <section class="sec" id="manage">
       <h2>⚙ 운영자 관리 <span style="font-size:12px;font-weight:400;color:var(--soft)">(강사·운영자 전용)</span></h2>
@@ -181,17 +171,14 @@ fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H
    if(course.exam_url){document.getElementById('exam').style.display='';document.getElementById('examArea').innerHTML='<a class="btn btn-red" href="'+esc(course.exam_url)+'" target="_blank" rel="noopener">📝 자격시험 응시하러 가기 →</a>';}
    // 영상
    if(course.video_url){var id=ytId(course.video_url);document.getElementById('video').style.display='';document.getElementById('videoArea').innerHTML=id?('<div class="video-embed"><iframe src="https://www.youtube.com/embed/'+id+'" allowfullscreen loading="lazy"></iframe></div>'):('<a class="btn btn-primary" href="'+esc(course.video_url)+'" target="_blank" rel="noopener">▶ 영상 보기 →</a>');}
+   renderStudent();
    bdLoad();
  }).catch(function(e){});
 
-function sUnlock(){
-  var v=document.getElementById('spw').value.trim();var msg=document.getElementById('spwmsg');
-  if(v===todayPW()){
-    document.getElementById('sUnlocked').classList.add('show');msg.className='pwmsg ok';msg.textContent='✓ 열렸습니다.';
-    var a=document.getElementById('studentArea');
-    var pairs=course?[{u:course.student_url,l:course.student_label},{u:course.student_url2,l:course.student_label2},{u:course.student_url3,l:course.student_label3}].filter(function(x){return x.u;}):[];
-    a.innerHTML=pairs.length?pairs.map(function(x,ix){var nm=x.l||('강의 자료 '+(ix+1));var isW=/\.html?(\?|$)/i.test(x.u);var icon=isW?'📂':'📥';var verb=isW?'열기':'받기';return '<a class="btn btn-primary" style="margin:4px 8px 4px 0" href="'+esc(x.u)+'" target="_blank" rel="noopener">'+icon+' '+esc(nm)+' '+verb+' →</a>';}).join(''):'<div class="muted">자료 준비 중입니다. 강사에게 문의해 주세요.</div>';
-  }else{msg.className='pwmsg err';msg.textContent='비밀번호가 올바르지 않습니다.';}
+function renderStudent(){
+  var a=document.getElementById('studentArea');if(!a)return;
+  var pairs=course?[{u:course.student_url,l:course.student_label},{u:course.student_url2,l:course.student_label2},{u:course.student_url3,l:course.student_label3}].filter(function(x){return x.u;}):[];
+  a.innerHTML=pairs.length?pairs.map(function(x,ix){var nm=x.l||('강의 자료 '+(ix+1));var isW=/\.html?(\?|$)/i.test(x.u);var icon=isW?'📂':'📥';var verb=isW?'열기':'받기';return '<a class="btn btn-primary" style="margin:4px 8px 4px 0" href="'+esc(x.u)+'" target="_blank" rel="noopener">'+icon+' '+esc(nm)+' '+verb+' →</a>';}).join(''):'<div class="muted">자료 준비 중입니다. 강사에게 문의해 주세요.</div>';
 }
 function tUnlock(){
   var v=document.getElementById('tpw').value.trim();var msg=document.getElementById('tpwmsg');
@@ -317,4 +304,8 @@ function saveManage(){
   var path='uploads/cls_'+Date.now()+ext;
   fetch(U+'/storage/v1/object/site/'+encodeURIComponent(path),{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':file.type||'application/octet-stream','x-upsert':'true'},body:file})
    .then(function(r){if(r.ok){el.value=U+'/storage/v1/object/public/site/'+encodeURIComponent(path);}else{el.value=old;r.text().then(function(t){alert('업로드 실패: '+t);});}})
-   .ca
+   .catch(function(e){el.value=old;alert('업로드 오류: '+e);});
+});})();
+</script>
+</body>
+</html>
