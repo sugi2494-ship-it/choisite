@@ -169,12 +169,10 @@ a{text-decoration:none;color:inherit}
     <div class="ll">PBS COLOR LAB</div>
     <h2>관리자 로그인</h2>
     <div id="Lmain">
-      <p>관리자 비밀번호로 로그인하세요</p>
-      <input type="hidden" id="lemail" value="sugi2494@gmail.com">
+      <p>관리자 비밀번호로 로그인하세요<br><span style="font-size:12px;color:#8C6B37">신청자 관리자와 같은 비밀번호입니다</span></p>
       <input type="password" id="lpass" autocomplete="current-password" placeholder="비밀번호"
         onkeydown="if(event.key==='Enter')pwLogin()">
       <button class="lbtn" onclick="pwLogin()">로그인</button>
-      <div style="margin-top:10px"><a href="#" onclick="toggleFallback();return false" style="font-size:12px;color:#8C6B37;text-decoration:none">비밀번호가 안 되면 → 임시 코드로 들어가기</a></div>
     </div>
     <div id="Lfallback" style="display:none">
       <p>임시 4자리 코드</p>
@@ -203,7 +201,7 @@ a{text-decoration:none;color:inherit}
   <div id="pwModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
     <div style="background:#fff;max-width:360px;width:90%;border-radius:14px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
       <h3 style="margin:0 0 6px;font-size:17px;color:#2A2621">🔑 내 비밀번호 변경</h3>
-      <p style="font-size:13px;color:#8C6B37;margin:0 0 12px">새 비밀번호를 입력하고 저장하면 다음 로그인부터 이 비밀번호를 사용합니다. (6자 이상)</p>
+      <p style="font-size:13px;color:#8C6B37;margin:0 0 12px">새 비밀번호를 입력하고 저장하면 다음 로그인부터 이 비밀번호를 사용합니다. 신청자 관리자도 같은 비밀번호가 됩니다. (4자 이상)</p>
       <input type="password" id="newpw" placeholder="새 비밀번호" autocomplete="new-password" style="width:100%;padding:10px 12px;border:1px solid #EAE2D6;border-radius:8px;font-size:15px;margin-bottom:6px;box-sizing:border-box">
       <input type="password" id="newpw2" placeholder="새 비밀번호 확인" autocomplete="new-password" style="width:100%;padding:10px 12px;border:1px solid #EAE2D6;border-radius:8px;font-size:15px;margin-bottom:10px;box-sizing:border-box" onkeydown="if(event.key==='Enter')changeMyPassword()">
       <div style="display:flex;gap:8px;justify-content:flex-end">
@@ -439,6 +437,15 @@ var logged=false;
 var SUPA_URL='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
 var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
 var SUPA_H={'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'};
+/* ── 통합 관리자 비밀번호(신청자 관리자와 동일) ── */
+var ADMIN_PW='';
+function adminCall(action,payload){
+  return fetch(SUPA_URL+'/functions/v1/admin',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY},
+    body:JSON.stringify({password:ADMIN_PW,action:action,payload:payload||{}})
+  }).then(function(r){return r.json().then(function(j){return{ok:r.ok,status:r.status,j:j};}).catch(function(){return{ok:r.ok,status:r.status,j:{}};});});
+}
 function supaFetch(path,opts){
   var h=Object.assign({},SUPA_H,opts&&opts.extraH||{});
   return fetch(SUPA_URL+'/rest/v1/'+path,Object.assign({headers:h},opts||{}));
@@ -457,33 +464,37 @@ function saveConfig(key,value,label){
 }
 async function supaUpdateRow(table,id,data){
   try{
+    if(table==='pbs_testimonials'){var rt=await adminCall('update_testimonial',Object.assign({id:id},data));if(!rt.ok){toast('DB 업데이트 실패 ('+rt.status+')');return false;}return true;}
+    if(table==='pbs_inquiries'){var ri=await adminCall('update_inquiry',Object.assign({id:id},data));if(!ri.ok){toast('DB 업데이트 실패 ('+ri.status+')');return false;}return true;}
     var r=await supaFetch(table+'?id=eq.'+id,{method:'PATCH',body:JSON.stringify(data),extraH:{'Prefer':'return=minimal'}});
     if(!r.ok){var txt=await r.text();console.error('supaUpdateRow 실패:',r.status,txt);toast('DB 업데이트 실패 ('+r.status+')');return false;}
     return true;
   }catch(e){console.error('supaUpdateRow 오류:',e);toast('DB 연결 오류');return false;}
 }
 function supaDeleteRow(table,id){
+  if(table==='pbs_inquiries'){adminCall('delete_inquiry',{id:id});return;}
+  if(table==='pbs_testimonials'){adminCall('delete_testimonial',{id:id});return;}
   supaFetch(table+'?id=eq.'+id,{method:'DELETE'}).catch(function(e){console.warn(e);});
 }
 async function supaLoad(){
   try{
-    // 문의 로드
-    var r=await supaFetch('pbs_inquiries?select=*&order=created_at.desc');
-    if(r.ok){var d=await r.json();
+    // 문의 로드 (서버함수)
+    var r=await adminCall('inquiries');
+    if(r.ok&&r.j&&r.j.rows){var d=r.j.rows;
       localStorage.setItem('pbs_inquiries',JSON.stringify(d.map(function(x){return{
         _id:x.id,name:x.name||'',phone:x.phone||'',email:x.email||'',
-        country:x.country||'',org:x.org||'',sns:x.sns||'',msg:x.msg||'',
+        country:x.country||'',org:x.org||'',sns:x.sns||'',msg:x.msg||x.message||'',
         date:x.created_at,read:false,replied:false
       };})));
-    }else{console.warn('inquiries fetch failed:',r.status,await r.text());}
-    // 소감 로드
-    var r2=await supaFetch('pbs_testimonials?select=*&order=created_at.desc');
-    if(r2.ok){var d2=await r2.json();
+    }else{console.warn('inquiries load failed:',r.status,r.j);}
+    // 소감 로드 (서버함수)
+    var r2=await adminCall('testimonials');
+    if(r2.ok&&r2.j&&r2.j.rows){var d2=r2.j.rows;
       localStorage.setItem('pbs_testimonials',JSON.stringify(d2.map(function(x){return{
         _id:x.id,name:x.name||'',msg:x.msg||'',star:x.star||5,date:x.date||'',
         photo:x.photo||null,photoVisible:x.photo_visible!==false,approved:x.approved||false
       };})));
-    }else{console.warn('testimonials fetch failed:',r2.status,await r2.text());}
+    }else{console.warn('testimonials load failed:',r2.status,r2.j);}
     // 사이트 설정 로드
     var r3=await supaFetch('pbs_site_config?select=*');
     if(r3.ok){var d3=await r3.json();
@@ -507,14 +518,14 @@ function setAuth(s){SESSION=s;try{localStorage.setItem('pbsSession',JSON.stringi
 function showAdmin(){document.getElementById('L').style.display='none';document.getElementById('A').style.display='block';init();}
 function toggleFallback(){var m=document.getElementById('Lmain'),f=document.getElementById('Lfallback');var show=(f.style.display==='none');f.style.display=show?'':'none';m.style.display=show?'none':'';document.getElementById('err').textContent='';}
 function pwLogin(){
-  var email=(document.getElementById('lemail').value||'').trim();
   var pass=document.getElementById('lpass').value||'';
-  if(!email||!pass){document.getElementById('err').textContent='이메일과 비밀번호를 입력하세요';return;}
+  if(!pass){document.getElementById('err').textContent='비밀번호를 입력하세요';return;}
   document.getElementById('err').textContent='로그인 중…';
-  fetch(SUPA_URL+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pass})})
-   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
-   .then(function(o){ if(o.ok&&o.j&&o.j.access_token){setAuth(o.j);showAdmin();} else {document.getElementById('err').textContent='로그인 실패: 이메일 또는 비밀번호를 확인하세요';} })
-   .catch(function(e){document.getElementById('err').textContent='로그인 오류: '+e;});
+  ADMIN_PW=pass;
+  adminCall('ping').then(function(o){
+    if(o.ok&&o.j&&o.j.ok){try{sessionStorage.setItem('pbsAdminPw',pass);}catch(e){}document.getElementById('err').textContent='';showAdmin();}
+    else{ADMIN_PW='';document.getElementById('err').textContent='로그인 실패: 비밀번호를 확인하세요';}
+  }).catch(function(e){ADMIN_PW='';document.getElementById('err').textContent='로그인 오류: '+e;});
 }
 /* 임시 4자리 코드 (비상용) */
 function login(){
@@ -522,10 +533,10 @@ function login(){
   if(v===PW){logged=true;showAdmin();}
   else{document.getElementById('err').textContent='코드 오류';}
 }
-function logout(){SESSION=null;localStorage.removeItem('pbsSession');localStorage.removeItem('pbsAuth');location.reload();}
+function logout(){ADMIN_PW='';try{sessionStorage.removeItem('pbsAdminPw');}catch(e){}SESSION=null;localStorage.removeItem('pbsSession');localStorage.removeItem('pbsAuth');location.reload();}
 /* 내 비밀번호 변경 (본인이 직접) */
 function openPwChange(){
-  if(!SESSION||!SESSION.access_token){alert('비밀번호를 바꾸려면 먼저 이메일+비밀번호로 로그인해야 합니다.\n(임시 코드 8808로 들어온 경우에는 변경할 수 없어요.)');return;}
+  if(!ADMIN_PW){alert('먼저 로그인해 주세요.');return;}
   document.getElementById('pwChangeMsg').textContent='';
   document.getElementById('newpw').value='';document.getElementById('newpw2').value='';
   document.getElementById('pwModal').style.display='flex';
@@ -534,31 +545,27 @@ function openPwChange(){
 function closePwChange(){document.getElementById('pwModal').style.display='none';}
 function changeMyPassword(){
   var np=document.getElementById('newpw').value, np2=document.getElementById('newpw2').value, m=document.getElementById('pwChangeMsg');
-  if(!np||np.length<6){m.style.color='#C0247E';m.textContent='새 비밀번호는 6자 이상으로 입력하세요.';return;}
+  if(!np||np.length<4){m.style.color='#C0247E';m.textContent='새 비밀번호는 4자 이상으로 입력하세요.';return;}
   if(np!==np2){m.style.color='#C0247E';m.textContent='두 비밀번호가 서로 다릅니다.';return;}
-  if(!SESSION||!SESSION.access_token){m.style.color='#C0247E';m.textContent='로그인이 만료되었습니다. 다시 로그인해 주세요.';return;}
+  if(!ADMIN_PW){m.style.color='#C0247E';m.textContent='로그인이 만료되었습니다. 다시 로그인해 주세요.';return;}
   m.style.color='#6B6157';m.textContent='변경 중…';
-  fetch(SUPA_URL+'/auth/v1/user',{method:'PUT',headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SESSION.access_token,'Content-Type':'application/json'},body:JSON.stringify({password:np})})
-   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
-   .then(function(o){ if(o.ok){m.style.color='#2E8B57';m.textContent='✓ 변경 완료! 다음 로그인부터 새 비밀번호를 사용하세요.';setTimeout(closePwChange,1800);} else {m.style.color='#C0247E';m.textContent='변경 실패: '+((o.j&&(o.j.msg||o.j.error_description||o.j.error))||'다시 시도해 주세요');} })
-   .catch(function(e){m.style.color='#C0247E';m.textContent='오류: '+e;});
+  adminCall('change_password',{new:np}).then(function(o){
+    if(o.ok&&o.j&&o.j.ok){ADMIN_PW=np;try{sessionStorage.setItem('pbsAdminPw',np);}catch(e){}m.style.color='#2E8B57';m.textContent='✓ 변경 완료! 다음부터 새 비밀번호를 사용하세요. (신청자 관리자도 같은 비밀번호가 됩니다)';setTimeout(closePwChange,2400);}
+    else{m.style.color='#C0247E';m.textContent='변경 실패: '+((o.j&&o.j.error)||'다시 시도해 주세요');}
+  }).catch(function(e){m.style.color='#C0247E';m.textContent='오류: '+e;});
 }
 async function init(){await supaLoad();loadInq();loadTst();updateN();}
 async function loadStoredSession(){
-  try{
-    var s=JSON.parse(localStorage.getItem('pbsSession')||'null');
-    if(!s||!s.access_token)return false;
-    if(s.expires_at&&(s.expires_at*1000)>Date.now()+60000){setAuth(s);return true;}
-    if(s.refresh_token){
-      var r=await fetch(SUPA_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:s.refresh_token})});
-      if(r.ok){var j=await r.json();if(j&&j.access_token){setAuth(j);return true;}}
-    }
-  }catch(e){}
+  var saved='';try{saved=sessionStorage.getItem('pbsAdminPw')||'';}catch(e){}
+  if(!saved)return false;
+  ADMIN_PW=saved;
+  try{var o=await adminCall('ping');if(o.ok&&o.j&&o.j.ok)return true;}catch(e){}
+  ADMIN_PW='';try{sessionStorage.removeItem('pbsAdminPw');}catch(e){}
   return false;
 }
 window.addEventListener('DOMContentLoaded',async function(){
   if(await loadStoredSession()){showAdmin();}
-  else{var e=document.getElementById('lemail');if(e)e.focus();}
+  else{var e=document.getElementById('lpass');if(e)e.focus();}
 });
 
 function tab(id,btn){
@@ -1063,9 +1070,9 @@ async function clr(key,label){
   localStorage.removeItem(key);
   // Supabase 삭제
   if(key==='pbs_inquiries'){
-    await supaFetch('pbs_inquiries?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
+    await adminCall('clear_inquiries').catch(function(){});
   }else if(key==='pbs_testimonials'){
-    await supaFetch('pbs_testimonials?id=neq.00000000-0000-0000-0000-000000000000',{method:'DELETE'}).catch(function(){});
+    await adminCall('clear_testimonials').catch(function(){});
   }else if(key==='pbs_gallery_config'){
     supaConfigSave('gallery_config',null);
   }else if(key==='pbs_global_config'){
