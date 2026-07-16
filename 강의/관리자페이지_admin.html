@@ -117,6 +117,17 @@
     .pane{padding:18px 14px 50px;}
     .pane h2.pt{font-size:18px;}
     .bar{gap:8px;}
+    /* 신청자 표 → 카드형 */
+    #pane_apps .tablewrap{overflow:visible;box-shadow:none;background:transparent;border-radius:0;}
+    #pane_apps table,#pane_apps tbody,#pane_apps tr,#pane_apps td{display:block;width:100%;}
+    #pane_apps thead{display:none;}
+    #pane_apps tr{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px 8px;margin-bottom:12px;box-shadow:0 3px 12px rgba(0,0,0,.05);position:relative;}
+    #pane_apps td{border:none !important;padding:5px 0 !important;white-space:normal !important;max-width:none !important;display:flex;flex-wrap:wrap;gap:5px 10px;font-size:14px;line-height:1.55;align-items:baseline;}
+    #pane_apps td::before{content:attr(data-label);flex:0 0 76px;color:var(--muted);font-weight:800;font-size:12px;padding-top:1px;}
+    #pane_apps td[data-label="이름"]{font-size:16px;font-weight:800;}
+    #pane_apps td.chkcell{position:absolute;top:12px;right:12px;width:auto;padding:0 !important;display:block;}
+    #pane_apps td.chkcell::before{display:none;}
+    #pane_apps td.no{color:var(--muted);font-size:12px;}
   }
 </style>
 </head>
@@ -382,11 +393,11 @@
       const chip=(f,label,cls)=>`<button class="stchip ${r[f]?cls:''}" onclick="toggleFlag('${r.id}','${f}',${!r[f]})">${r[f]?'✔ ':''}${label}</button>`;
       const statusCell=chip('sent_confirm','계좌안내','c1')+chip('paid','입금확인','c2')+chip('sent_venue','장소안내','c3');
       return `<tr style="background:${rowBg(r)}"><td class="chkcell"><input type="checkbox" class="chk" value="${r.id}" onchange="updateSel()"></td>`+
-        `<td class="no">${rows.length-i}</td><td>${fmt(r.created_at)}</td>`+
-        `<td><b style="color:#C33A72">${esc(r.session)}</b></td><td>${esc(r.name)}</td>`+
-        `<td>${esc(r.phone)}</td><td>${statusCell}</td><td>${smsCell}</td>`+
-        `<td>${esc(r.birthdate)}</td><td>${esc(r.job)}</td><td>${esc(r.ai_level)}</td>`+
-        `<td>${esc(r.reason)}</td><td>${esc(r.want_to_make)}</td><td>${esc(r.message)}</td></tr>`;
+        `<td class="no" data-label="No">${rows.length-i}</td><td data-label="접수일시">${fmt(r.created_at)}</td>`+
+        `<td data-label="회차"><b style="color:#C33A72">${esc(r.session)}</b></td><td data-label="이름">${esc(r.name)}</td>`+
+        `<td data-label="연락처">${esc(r.phone)}</td><td data-label="진행상태">${statusCell}</td><td data-label="문자발송">${smsCell}</td>`+
+        `<td data-label="생년월일">${esc(r.birthdate)}</td><td data-label="직업">${esc(r.job)}</td><td data-label="AI수준">${esc(r.ai_level)}</td>`+
+        `<td data-label="신청이유">${esc(r.reason)}</td><td data-label="만들고싶은것">${esc(r.want_to_make)}</td><td data-label="하고싶은말">${esc(r.message)}</td></tr>`;
     }).join("");
   }
   function rowBg(r){ if(r.sent_venue)return '#EAF9EF'; if(r.paid)return '#EAF2FF'; if(r.sent_confirm)return '#FFF7E6'; return '#fff'; }
