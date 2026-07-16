@@ -81,6 +81,8 @@
         <div class="stars" id="stars" style="display:none"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div>
         <input id="bdName" type="text" name="bd_writer" placeholder="이름 (예명 가능)" maxlength="24" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly')">
         <textarea id="bdMsg" rows="3" placeholder="내용을 입력하세요"></textarea>
+        <label style="font-size:13px;font-weight:700;color:var(--soft);margin-top:2px">📷 사진 첨부 <span style="font-weight:400;opacity:.6">(선택 · 후기에 함께 보여집니다)</span></label>
+        <input type="file" id="bdPhoto" accept="image/*" style="font-size:13px">
         <button class="btn btn-primary" onclick="bdSubmit()" style="align-self:flex-start">남기기 →</button>
         <div class="pwmsg" id="bdStat"></div>
       </div>
@@ -203,19 +205,33 @@ function post(obj,stEl,after){
   .then(function(r){if(r.ok){st.className='pwmsg ok';st.textContent='✓ 등록됐어요! 강사 승인 후 게시됩니다.';after&&after();}else{st.className='pwmsg err';st.textContent='오류가 발생했어요.';}})
   .catch(function(){st.className='pwmsg err';st.textContent='오류가 발생했어요.';});
 }
+function uploadReviewPhoto(file,cb){
+  var ext=(file.name.match(/\.[A-Za-z0-9]+$/)||['.jpg'])[0].toLowerCase();
+  var path='reviews/'+Date.now()+'_'+Math.random().toString(36).slice(2,7)+ext;
+  fetch(U+'/storage/v1/object/intake-uploads/'+encodeURIComponent(path),{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':file.type||'image/jpeg','x-upsert':'true'},body:file})
+   .then(function(r){cb(r.ok?(U+'/storage/v1/object/public/intake-uploads/'+encodeURIComponent(path)):null);})
+   .catch(function(){cb(null);});
+}
 function bdSubmit(){
   var name=(document.getElementById('bdName').value||'').trim()||'익명';
   var msg=(document.getElementById('bdMsg').value||'').trim();
-  if(!msg){document.getElementById('bdStat').className='pwmsg err';document.getElementById('bdStat').textContent='내용을 입력해주세요.';return;}
+  var st=document.getElementById('bdStat');
+  if(!msg){st.className='pwmsg err';st.textContent='내용을 입력해주세요.';return;}
   var body=msg; if(kind==='후기'){body='★'.repeat(star)+'☆'.repeat(5-star)+' '+msg;}
-  post({name:name,kind:kind,message:body,course:course?course.title:COURSE,approved:false},'bdStat',function(){document.getElementById('bdMsg').value='';bdLoad();});
+  var file=(document.getElementById('bdPhoto')||{}).files&&document.getElementById('bdPhoto').files[0];
+  function done(photoUrl){
+    post({name:name,kind:kind,message:body,course:course?course.title:COURSE,approved:false,photo:photoUrl||null},'bdStat',function(){document.getElementById('bdMsg').value='';var bp=document.getElementById('bdPhoto');if(bp)bp.value='';bdLoad();});
+  }
+  if(file){st.className='pwmsg';st.textContent='사진 올리는 중…';uploadReviewPhoto(file,function(url){done(url);});}
+  else done(null);
 }
 function render(rows,el,kinds){
   var f=document.getElementById(el);if(!f)return;
   var list=(rows||[]).filter(function(x){return kinds.indexOf(x.kind)>=0 && x.course===(course&&course.title);});
   f.innerHTML=list.map(function(x){
     var cls=x.kind==='질문'?'q':(x.kind==='후기'?'r':'c');
-    return '<div class="bd-item"><span class="bd-tag '+cls+'">'+esc(x.kind)+'</span> <b>'+esc(x.name||'익명')+'</b><div style="margin-top:6px;white-space:pre-wrap">'+esc(x.message)+'</div></div>';
+    var ph=x.photo?'<div style="margin-top:8px;position:relative;display:inline-block;max-width:240px"><img src="'+esc(x.photo)+'" alt="" loading="lazy" style="width:100%;border-radius:10px;display:block"><span style="position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px">'+esc(x.course||'')+'</span></div>':'';
+    return '<div class="bd-item"><span class="bd-tag '+cls+'">'+esc(x.kind)+'</span> <b>'+esc(x.name||'익명')+'</b><div style="margin-top:6px;white-space:pre-wrap">'+esc(x.message)+'</div>'+ph+'</div>';
   }).join('');
 }
 var _rows=[];
@@ -276,6 +292,7 @@ function mLoadPosts(){
         +'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="bd-tag '+cls+'">'+esc(x.kind)+'</span> <b>'+esc(x.name||'익명')+'</b>'
         +'<span style="margin-left:auto;font-size:12px;font-weight:700;color:'+(x.approved?'#2E8B57':'#C0247E')+'">'+(x.approved?'● 게시중':'○ 대기중')+'</span></div>'
         +'<div style="margin-top:6px;white-space:pre-wrap">'+esc(x.message)+'</div>'
+        +(x.photo?'<div style="margin-top:8px"><img src="'+esc(x.photo)+'" alt="" loading="lazy" style="max-width:150px;border-radius:8px;display:block"></div>':'')
         +'<div style="display:flex;gap:6px;margin-top:9px">'+actBtn
         +'<button type="button" class="btn" style="padding:6px 13px;font-size:12.5px;background:#f3e3ea;color:#C0247E" onclick="mDelPost('+x.id+')">삭제</button></div></div>';
     }).join('');
