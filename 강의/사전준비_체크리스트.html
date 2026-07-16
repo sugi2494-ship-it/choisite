@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>수업 준비 · 사전 점검 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<meta name="description" content="AI 웹페이지 만들기 수업 준비물 — Claude 유료 가입 방법, 크롬 설치 방법, 사전 점검 체크리스트" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#fff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:#D23B30}
+  .enginebar span:nth-child(2){background:#E0A400}
+  .enginebar span:nth-child(3){background:#2C8C5A}
+  .enginebar span:nth-child(4){background:#2C66A8}
+  header{padding:26px 18px 6px;max-width:640px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:17px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .num{width:26px;height:26px;border-radius:50%;color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .sec-desc{font-size:14px;color:var(--sub);margin:6px 0 14px}
+  .steps{margin:0 0 14px;padding:0;list-style:none}
+  .steps li{position:relative;padding:6px 0 6px 26px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li::before{content:"→";position:absolute;left:2px;color:var(--sub);font-weight:800}
+  .steps b{color:var(--ink)}
+  .linkbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-size:15.5px;font-weight:800;padding:14px;border-radius:12px;margin-top:6px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px;background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .tip{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:11px 15px;margin:2px 0 14px}
+  .tip p{font-size:12.5px;color:#8a2e63;margin:0}
+  .check{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+  .check:last-of-type{border-bottom:none}
+  .check input{margin-top:2px;width:20px;height:20px;flex:0 0 auto;accent-color:var(--green)}
+  .check .t{font-size:14.5px;font-weight:700}
+  .check .t small{display:block;font-weight:500;color:var(--sub);font-size:12.5px;margin-top:2px}
+  .doneMsg{display:none;margin-top:14px;background:#eaf5ef;border:1px solid #bfe3cf;color:#1c6b43;border-radius:12px;padding:14px 16px;font-size:14.5px;font-weight:700;text-align:center}
+  .doneMsg a{display:inline-block;margin-top:8px;background:#E91E8C;color:#fff;text-decoration:none;font-weight:800;padding:10px 18px;border-radius:999px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+  .backbar{max-width:640px;margin:0 auto;padding:12px 18px 0}
+  .backbar a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="backbar"><a href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
+  <h1>수업 준비 · 사전 점검</h1>
+  <p class="lead">아래 <b>3가지</b>만 수업 전에 준비하면 됩니다. 처음이라 낯설어도 괜찮아요 — 버튼을 눌러 순서대로 따라 하시면 됩니다. (약 15분)</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 1. Claude 유료 -->
+  <section class="card">
+    <div class="sec-title"><span class="num" style="background:#D23B30">1</span> Claude(클로드) 유료 가입하기</div>
+    <p class="sec-desc">이 수업은 <b>Claude(클로드) 유료 플랜</b>을 권장합니다. 대화창에서 웹페이지를 바로 만들고 화면에서 확인할 수 있어요.</p>
+    <ul class="steps">
+      <li>아래 <b>Claude 열기</b> 버튼을 누르세요.</li>
+      <li>이메일 또는 구글 계정으로 <b>가입/로그인</b> 하세요.</li>
+      <li>왼쪽 아래 <b>내 이름 → Settings(설정) → Billing(결제·플랜)</b> 로 들어가세요.</li>
+      <li><b>Pro(유료) 플랜</b>으로 업그레이드하고 결제하세요.</li>
+    </ul>
+    <a class="linkbtn" href="https://claude.ai/" target="_blank" rel="noopener" style="background:#D23B30">🤖 Claude(클로드) 열기 →</a>
+    <div class="note">💡 ChatGPT 유료도 가능하지만, 이 수업은 화면에서 바로 확인되는 <b>Claude</b>를 권장합니다. 결제는 카드로 진행됩니다.</div>
+  </section>
+
+  <!-- 2. 크롬 설치 -->
+  <section class="card">
+    <div class="sec-title"><span class="num" style="background:#2C66A8">2</span> 크롬(Chrome) 브라우저 설치하기</div>
+    <p class="sec-desc">노트북에 <b>크롬</b>을 설치하고 로그인까지 해두면 수업이 매끄럽습니다.</p>
+    <ul class="steps">
+      <li>아래 <b>크롬 다운로드</b> 버튼을 누르세요.</li>
+      <li><b>Chrome 다운로드</b>를 눌러 설치 파일을 내려받고 실행하세요.</li>
+      <li>설치가 끝나면 크롬을 열고 <b>구글 계정으로 로그인</b> 하세요.</li>
+    </ul>
+    <a class="linkbtn" href="https://www.google.com/chrome/" target="_blank" rel="noopener" style="background:#2C66A8">🌐 크롬 다운로드 →</a>
+    <div class="note">💡 이미 크롬이 깔려 있다면 이 단계는 넘어가셔도 됩니다.</div>
+  </section>
+
+  <!-- 3. 사진·자료 -->
+  <section class="card">
+    <div class="sec-title"><span class="num" style="background:#2C8C5A">3</span> 프로필 사진 · 자료 준비하기</div>
+    <p class="sec-desc">웹페이지에 넣을 이미지입니다. 노트북 한 폴더에 미리 모아두세요.</p>
+    <ul class="steps">
+      <li>얼굴이 또렷한 <b>프로필 사진</b> (세로 사진 권장)</li>
+      <li><b>강의·활동 사진</b> 몇 장</li>
+      <li><b>로고</b> 파일 (있으면)</li>
+    </ul>
+    <div class="note">💡 지금 없어도 됩니다. 수업 때 넣어도 되고, 초안이 나온 뒤 추가할 수 있어요.</div>
+  </section>
+
+  <!-- 4. 사전 점검 -->
+  <section class="card" style="border:2px solid var(--pink)">
+    <div class="sec-title"><span class="num" style="background:#E91E8C">✓</span> 사전 점검 체크리스트</div>
+    <div class="tip"><p>준비가 끝난 항목을 체크해 주세요. 모두 체크되면 다음 활동으로 넘어갈 수 있어요.</p></div>
+    <label class="check"><input type="checkbox" class="ck" />
+      <span class="t">Claude(클로드) 유료 가입 완료<small>Pro(유료) 플랜 결제까지 완료</small></span></label>
+    <label class="check"><input type="checkbox" class="ck" />
+      <span class="t">크롬(Chrome) 설치 · 로그인 완료<small>노트북에 크롬 설치 후 구글 로그인</small></span></label>
+    <label class="check"><input type="checkbox" class="ck" />
+      <span class="t">프로필 사진 · 자료 준비<small>사진·로고를 한 폴더에 모아두기</small></span></label>
+    <label class="check"><input type="checkbox" class="ck" />
+      <span class="t">노트북 지참<small>수업 당일 노트북과 충전기를 챙겨오기</small></span></label>
+    <div class="doneMsg" id="doneMsg">🎉 준비 완료! 이제 시작할 수 있어요.
+      <br /><a href="활동0_나발견하기_사전분석.html">➡ 활동 0. 나 발견하기 시작하기</a></div>
+  </section>
+
+  <footer>
+    PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />문의: 010-4285-7997
+  </footer>
+</div>
+
+<script>
+  var cks=document.querySelectorAll('.ck');
+  var doneMsg=document.getElementById('doneMsg');
+  function refresh(){
+    var all=[].every.call(cks,function(c){return c.checked;});
+    doneMsg.style.display=all?'block':'none';
+    if(all)doneMsg.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  [].forEach.call(cks,function(c){c.addEventListener('change',refresh);});
+</script>
+</body>
+</html>
