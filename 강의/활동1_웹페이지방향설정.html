@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 1. 웹페이지 방향 설정 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#ffffff;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:0 18px 60px}
+  .enginebar{display:flex; height:6px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:30px 18px 8px; max-width:640px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; letter-spacing:.02em; color:var(--sub)}
+  h1{font-size:24px; font-weight:800; margin:8px 0 6px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0 0 4px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin-top:18px}
+  .sec-title{font-size:16px; font-weight:800; margin:0 0 2px; display:flex; align-items:center; gap:8px}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block}
+  .sec-desc{font-size:13px; color:var(--sub); margin:4px 0 16px}
+  .field{margin-bottom:16px}
+  .field:last-child{margin-bottom:0}
+  label{display:block; font-size:14px; font-weight:700; margin-bottom:6px}
+  label .req{color:var(--red); margin-left:3px}
+  .hint{font-size:12.5px; color:var(--sub); font-weight:500; margin:-2px 0 6px}
+  input[type=text],input[type=tel],input[type=email],input[type=url],textarea,select{
+    width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:10px;
+    font-size:15px; font-family:inherit; background:#fff; color:var(--ink);
+  }
+  textarea{resize:vertical; min-height:88px}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--blue); outline-offset:1px; border-color:var(--blue)}
+  input[type=file]{width:100%; font-size:13px; padding:8px 0}
+  .checkline{display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line)}
+  .checkline:last-child{border-bottom:none}
+  .checkline input{margin-top:3px; width:18px; height:18px; flex:0 0 auto; accent-color:var(--green)}
+  .checkline .txt{font-size:14px; font-weight:600}
+  .checkline .txt small{display:block; font-weight:500; color:var(--sub); font-size:12.5px; margin-top:2px}
+  .radios{display:flex; flex-wrap:wrap; gap:8px}
+  .radios label{display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px;
+    border:1px solid var(--line); border-radius:999px; padding:8px 14px; margin:0; cursor:pointer; background:#fff}
+  .radios label:has(input:checked){border-color:var(--blue); background:#eef4fb; color:var(--blue)}
+  .radios input{accent-color:var(--blue)}
+  .chips label:has(input:checked){border-color:var(--pink); background:#fdeef6; color:var(--pink)}
+  .chips input{accent-color:var(--pink)}
+  .btn{width:100%; border:none; background:var(--ink); color:#fff; font-size:16px; font-weight:800;
+    padding:15px; border-radius:12px; cursor:pointer; margin-top:22px; font-family:inherit}
+  .btn:disabled{opacity:.55; cursor:not-allowed}
+  .consent{background:#fbfbfc; border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-top:18px}
+  .consent p{font-size:12.5px; color:var(--sub); margin:0 0 10px}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:28px; line-height:1.7}
+  .msg{padding:12px 14px; border-radius:10px; font-size:14px; font-weight:600; margin-top:14px; display:none}
+  .msg.err{background:#fdecea; color:#b3261e; display:block}
+  .done{display:none; text-align:center; padding:50px 20px}
+  .done .check{width:64px; height:64px; border-radius:50%; background:var(--green); color:#fff; font-size:34px;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 18px}
+  .done h2{font-size:22px; margin:0 0 8px}
+  .done p{color:var(--sub); font-size:15px}
+  .setup{background:#fff8e6; border:1px solid #f0d98a; color:#7a5a00; border-radius:10px; padding:12px 14px; font-size:13px; margin-top:14px; display:none}
+  .tipbox{background:#fdeef6; border:1px solid #f6c6e2; border-radius:12px; padding:12px 16px; margin-top:2px}
+  .tipbox p{font-size:12.5px; color:#8a2e63; margin:0}
+  textarea.genbox{width:100%; min-height:300px; background:#0f1720; color:#e8eef4; border:none;
+    border-radius:12px; padding:16px; font-size:13px; line-height:1.65; resize:vertical;
+    font-family:"Consolas","Courier New",monospace}
+  textarea.genbox:focus{outline:2px solid var(--pink); outline-offset:1px}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:640px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
+  <h1>활동 1. 웹페이지 방향 설정</h1>
+  <p class="lead">이 활동을 마치면 <b>나만의 '첫 프롬프트'</b>가 완성됩니다.
+  아래를 채우고 맨 아래에서 프롬프트를 만들어 <b>Claude(클로드)에 붙여넣으면</b>, 내 웹페이지 초안이 만들어집니다.
+  어렵게 생각하지 말고 지금 떠오르는 대로 편하게 적으세요. (약 10분)</p>
+</header>
+
+<div class="wrap">
+  <form id="intakeForm">
+
+    <!-- 0. 사전 준비 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--red)"></span>수업 전 준비 사항</div>
+      <p class="sec-desc">아래 세 가지는 <b>수업 당일 전에 반드시</b> 준비해 주세요. 준비되면 체크해 주세요.</p>
+
+      <div class="checkline">
+        <input type="checkbox" id="ai_ready" name="ai_ready" />
+        <span class="txt">유료 AI 구독 완료
+          <small>Claude(클로드) 또는 ChatGPT 중 <b>유료 플랜</b> 하나에 가입해 주세요.
+          이 수업은 <b>Claude(클로드) 유료 플랜</b>을 권장합니다 — 대화창에서 웹페이지를 바로 만들고 화면에서 확인할 수 있습니다.</small>
+        </span>
+      </div>
+      <div class="checkline">
+        <input type="checkbox" id="chrome_ready" name="chrome_ready" />
+        <span class="txt">크롬(Chrome) 브라우저 설치 완료
+          <small>노트북에 크롬 브라우저를 설치하고 로그인까지 해두면 수업이 매끄럽습니다.</small>
+        </span>
+      </div>
+      <div class="checkline">
+        <input type="checkbox" id="photo_ready" name="photo_ready" />
+        <span class="txt">프로필 사진·자료 준비 완료
+          <small>얼굴이 또렷하게 나온 프로필 사진, 강의 사진, 로고(있다면)를 노트북에 저장해 두세요.</small>
+        </span>
+      </div>
+    </section>
+
+    <!-- 1. 기본 정보 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--yellow)"></span>기본 정보</div>
+      <p class="sec-desc">연락과 안내를 위한 기본 정보입니다.</p>
+
+      <div class="field"><label>성함<span class="req">*</span></label>
+        <input type="text" name="name" required /></div>
+      <div class="field"><label>휴대폰 번호<span class="req">*</span></label>
+        <input type="tel" name="phone" placeholder="010-0000-0000" required /></div>
+      <div class="field"><label>이메일</label>
+        <input type="email" name="email" placeholder="example@email.com" /></div>
+      <div class="field"><label>카카오톡 ID <span class="hint" style="display:inline">(선택)</span></label>
+        <input type="text" name="kakao" /></div>
+    </section>
+
+    <!-- 2. 브랜딩 방향 잡기 (신규) -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--pink)"></span>브랜딩 방향 잡기</div>
+      <p class="sec-desc">"내가 뭘 만들고 싶은지"를 먼저 정리하는 칸입니다. 이 4가지만 정해두면 수업에서 페이지 만들기가 훨씬 빨라집니다.</p>
+
+      <div class="tipbox" style="margin-bottom:16px">
+        <p>💡 어렵게 생각하지 마세요. 지금 떠오르는 대로 편하게 적으시면 됩니다. 수업 때 AI와 함께 더 다듬습니다.</p>
+      </div>
+
+      <div class="field"><label>① 이 페이지를 <u>누구에게</u> 보여주고 싶으세요?<span class="req">*</span></label>
+        <p class="hint">내 페이지를 볼 사람을 떠올려 보세요. 예) 퍼스널컬러가 궁금한 30~50대 여성 / 수강을 고민 중인 분 / 기업 교육 담당자</p>
+        <input type="text" name="target_audience" required /></div>
+
+      <div class="field"><label>② 그분이 페이지를 보고 <u>무엇을 해주면</u> 좋겠어요?<span class="req">*</span></label>
+        <p class="hint">페이지의 진짜 목적입니다. 하나만 골라주세요.</p>
+        <div class="radios">
+          <label><input type="radio" name="site_purpose" value="강의 문의하기" required />강의 문의하기</label>
+          <label><input type="radio" name="site_purpose" value="수강 신청하기" />수강 신청하기</label>
+          <label><input type="radio" name="site_purpose" value="나를 기억·팔로우하기" />나를 기억·팔로우</label>
+          <label><input type="radio" name="site_purpose" value="예약·상담 신청" />예약·상담 신청</label>
+          <label><input type="radio" name="site_purpose" value="기타" />기타</label>
+        </div>
+      </div>
+
+      <div class="field"><label>③ 이 페이지에서 꼭 <u>자랑하고 싶은 '나만의 강점'</u>은?<span class="req">*</span></label>
+        <p class="hint">경력·후기·대표 강의·수상·방송 출연 등, 나를 믿게 만드는 것을 적어주세요.</p>
+        <textarea name="key_strength" required></textarea></div>
+
+      <div class="field"><label>④ 어떤 <u>느낌</u>의 페이지를 원하세요?</label>
+        <p class="hint">여러 개 선택 가능. 마음에 드는 걸 눌러주세요.</p>
+        <div class="radios chips" id="moodChips">
+          <label><input type="checkbox" value="단정하고 신뢰감 있는" />단정·신뢰감</label>
+          <label><input type="checkbox" value="따뜻한" />따뜻한</label>
+          <label><input type="checkbox" value="고급스러운" />고급스러운</label>
+          <label><input type="checkbox" value="밝고 컬러풀한" />밝고 컬러풀</label>
+          <label><input type="checkbox" value="세련되고 미니멀한" />세련·미니멀</label>
+          <label><input type="checkbox" value="편안하고 친근한" />편안·친근</label>
+        </div>
+        <input type="hidden" name="style_mood" id="moodValue" />
+      </div>
+    </section>
+
+    <!-- 3. 나 소개하기 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--green)"></span>나 소개하기</div>
+      <p class="sec-desc">웹페이지 첫 화면에 들어갈 핵심 소개입니다.</p>
+
+      <div class="field"><label>브랜드명 / 활동명<span class="req">*</span></label>
+        <p class="hint">예) OOO 컬러심리연구소, OOO 스피치, OOO 대표</p>
+        <input type="text" name="brand_name" required /></div>
+      <div class="field"><label>한 줄 소개 (태그라인)</label>
+        <p class="hint">나를 한 문장으로. 예) "컬러로 나를 이해하고, 강점으로 빛나게 합니다"</p>
+        <input type="text" name="tagline" /></div>
+      <div class="field"><label>직함 / 하는 일</label>
+        <input type="text" name="role" placeholder="예) 퍼스널컬러 강사, 이미지 컨설턴트" /></div>
+    </section>
+
+    <!-- 4. 강의/서비스 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>강의 · 서비스</div>
+      <p class="sec-desc">웹페이지에 소개할 강의 내용입니다. 아는 만큼만 적어주셔도 됩니다.</p>
+
+      <div class="field"><label>현재 하고 있는 강의<span class="req">*</span></label>
+        <p class="hint">강의명을 아는 대로 적어주세요. 예) 퍼스널컬러 1일 특강 / 강사 양성과정 / 색채심리 워크숍</p>
+        <textarea name="current_lectures" required></textarea></div>
+      <div class="field"><label>대표 강의 기획안 / 커리큘럼</label>
+        <p class="hint">예쁘게 정리 안 되어 있어도 괜찮습니다. 대상·시간·다루는 내용 정도만 적어주셔도 돼요.</p>
+        <textarea name="curriculum" placeholder="예) 대상: 성인 여성 / 3시간 / 사계절 컬러 진단 → 나에게 맞는 색 찾기 → 스타일링 실습"></textarea></div>
+      <div class="field"><label>강의 기획안 파일 첨부 <span class="hint" style="display:inline">(있으면 · PDF/이미지/한글)</span></label>
+        <input type="file" name="plan_file" accept=".pdf,.doc,.docx,.hwp,.hwpx,image/*" /></div>
+      <div class="field"><label>주요 경력 · 자격증</label>
+        <p class="hint">신뢰를 주는 이력을 자유롭게. 예) OO자격 마스터, 방송 출연, 교육 인원 등</p>
+        <textarea name="career"></textarea></div>
+      <div class="field"><label>수강 후기 / 사례 <span class="hint" style="display:inline">(있으면)</span></label>
+        <textarea name="testimonials"></textarea></div>
+    </section>
+
+    <!-- 5. 사진/자료 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--red)"></span>사진 · 자료 업로드</div>
+      <p class="sec-desc">웹페이지에 넣을 이미지입니다. 지금 첨부하거나, 수업 때 가져오셔도 됩니다.</p>
+
+      <div class="field"><label>프로필 사진<span class="req">*</span></label>
+        <p class="hint">얼굴이 또렷하게 나온 세로 사진을 권장합니다.</p>
+        <input type="file" name="profile_photo" accept="image/*" /></div>
+      <div class="field"><label>강의 / 활동 사진 <span class="hint" style="display:inline">(선택)</span></label>
+        <input type="file" name="activity_photo" accept="image/*" /></div>
+      <div class="field"><label>로고 파일 <span class="hint" style="display:inline">(있으면)</span></label>
+        <input type="file" name="logo" accept="image/*" /></div>
+    </section>
+
+    <!-- 6. 세부 스타일 · 연결 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--yellow)"></span>세부 스타일 · 연결</div>
+      <p class="sec-desc">색감과 연결할 링크를 알려주세요. (위에서 정한 느낌을 더 구체화하는 칸입니다.)</p>
+
+      <div class="field"><label>좋아하는 색 / 브랜드 컬러</label>
+        <input type="text" name="brand_colors" placeholder="예) 코랄, 네이비 / 핑크 계열" /></div>
+      <div class="field"><label>참고하고 싶은 사이트 <span class="hint" style="display:inline">(있으면 URL)</span></label>
+        <input type="url" name="reference_url" placeholder="https://" /></div>
+      <div class="field"><label>넣고 싶은 SNS 링크</label>
+        <p class="hint">인스타그램 · 블로그 · 유튜브 주소를 줄바꿈해서 적어주세요.</p>
+        <textarea name="sns_links" placeholder="인스타: https://instagram.com/...&#10;블로그: https://blog.naver.com/..."></textarea></div>
+      <div class="field"><label>도메인(주소)을 가지고 계신가요?</label>
+        <div class="radios">
+          <label><input type="radio" name="has_domain" value="있음" />있음</label>
+          <label><input type="radio" name="has_domain" value="없음" />없음</label>
+          <label><input type="radio" name="has_domain" value="모름" />잘 모름</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 자동 프롬프트 생성 -->
+    <section class="card" style="border:2px solid var(--pink)">
+      <div class="sec-title"><span class="dot" style="background:var(--pink)"></span>✨ 내 웹페이지 프롬프트 자동 만들기</div>
+      <p class="sec-desc">위에 입력한 내용을 모아 <b>Claude(클로드)에 붙여넣을 '첫 프롬프트'</b>를 자동으로 만들어 드립니다.
+      버튼을 누르고 → 복사해서 → Claude 대화창에 붙여넣으면, 내 웹페이지 초안이 만들어집니다.</p>
+
+      <div class="tipbox" style="margin-bottom:14px">
+        <p>💡 많이 채울수록 더 좋은 프롬프트가 나옵니다. 비어 있는 항목은 자동으로 빼고 만들어 줍니다.</p>
+      </div>
+
+      <button type="button" class="btn" id="genBtn" style="background:var(--pink); margin-top:2px">위 내용으로 내 프롬프트 만들기</button>
+
+      <div id="genWrap" style="display:none; margin-top:14px">
+        <textarea id="genOut" readonly class="genbox"></textarea>
+        <button type="button" class="btn" id="copyBtn" style="background:var(--ink); margin-top:8px">📋 프롬프트 복사하기</button>
+        <p class="hint" style="margin-top:8px">복사한 뒤 Claude 대화창에 붙여넣으세요. 프로필 사진·로고는 초안이 나온 다음에 넣으면 됩니다.</p>
+      </div>
+    </section>
+
+    <!-- 안내 (개인정보 동의는 강의 신청 단계에서 이미 완료) -->
+    <div class="consent">
+      <p>입력하신 정보는 <b>본 수업 진행 및 웹페이지 제작 목적</b>으로만 사용되며, 수업 종료 후 안전하게 관리·폐기됩니다.</p>
+    </div>
+
+    <div id="setupNote" class="setup"></div>
+    <div id="errMsg" class="msg err"></div>
+    <button type="submit" class="btn" id="submitBtn">사전 질문지 제출하기</button>
+  </form>
+
+  <div class="done" id="doneScreen">
+    <div class="check">✓</div>
+    <h2>제출이 완료되었습니다!</h2>
+    <p>소중한 답변 감사합니다.<br />수업 당일 준비물(노트북 · 유료 AI 구독 · 크롬)만 챙겨 오시면 됩니다. 🎨</p>
+  </div>
+
+  <footer>
+    PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />인증센터 문의: 010-4285-7997
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============================================================
+   ▼▼▼  설정: 아래 두 줄만 본인 값으로 바꾸면 됩니다  ▼▼▼
+   (기존에 배포하셨다면, 그때 쓰던 URL·anon key를 그대로 넣으세요)
+============================================================ */
+const SUPABASE_URL      = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8";
+const TABLE  = "webpage_class_intake";   // 저장 테이블 이름
+const BUCKET = "intake-uploads";         // 파일 저장 버킷 이름
+/* ▲▲▲  여기까지만 수정  ▲▲▲ ============================== */
+
+const form   = document.getElementById("intakeForm");
+const btn     = document.getElementById("submitBtn");
+const errMsg  = document.getElementById("errMsg");
+const done    = document.getElementById("doneScreen");
+const setupNote = document.getElementById("setupNote");
+
+// 분위기 칩(복수 선택) → hidden 필드에 콤마로 모으기
+const moodChips = document.getElementById("moodChips");
+const moodValue = document.getElementById("moodValue");
+moodChips.addEventListener("change", ()=>{
+  const picked = [...moodChips.querySelectorAll("input:checked")].map(c=>c.value);
+  moodValue.value = picked.join(", ");
+});
+
+/* ===== 자동 프롬프트 생성 ===== */
+function fval(name){ const el=form.elements[name]; return el ? (el.value||"").trim() : ""; }
+function fline(label,v){ return v ? ("- "+label+": "+v+"\n") : ""; }
+function buildPrompt(){
+  const audience=fval("target_audience"), action=fval("site_purpose"), strength=fval("key_strength");
+  const mood=fval("style_mood"), colors=fval("brand_colors"), ref=fval("reference_url");
+  const brand=fval("brand_name")||fval("name"), role=fval("role"), tagline=fval("tagline");
+  const lectures=fval("current_lectures"), curri=fval("curriculum"), career=fval("career");
+  const reviews=fval("testimonials"), sns=fval("sns_links");
+
+  let p="";
+  p+="나를 소개하는 강사·전문가 웹페이지를 만들어줘.\n";
+  p+="모바일에서도 잘 보이는 한 페이지로, 지금 바로 화면에서 볼 수 있게 만들어줘.\n\n";
+
+  p+="[누구를 위한 페이지인가]\n";
+  p+=fline("보여줄 대상", audience);
+  p+=fline("페이지를 보고 해줬으면 하는 것", action);
+  p+=fline("가장 내세우고 싶은 나만의 강점", strength);
+  p+=fline("원하는 분위기·강조색", [mood,colors].filter(Boolean).join(" / "));
+  p+=fline("참고하고 싶은 사이트 느낌", ref);
+
+  p+="\n[나에 대한 정보]\n";
+  p+=fline("이름/활동명", brand);
+  p+=fline("직함/전문분야", role);
+  p+=fline("한 줄 소개", tagline);
+  p+=fline("하는 강의", lectures);
+  p+=fline("대표 강의 커리큘럼", curri);
+  p+=fline("경력·자격", career);
+  p+=fline("수강 후기", reviews);
+  p+=fline("연결할 SNS", sns);
+
+  p+="\n[구성 요청]\n";
+  p+="섹션 순서: ① 첫 화면(이름·한 줄 소개·프로필 사진 자리) ② 소개 ③ 강의 ④ 경력·후기 ⑤ 연락(SNS·문의 버튼)\n";
+  if(action) p+="'"+action+"'이(가) 잘 일어나도록 눈에 띄는 버튼을 넣어줘.\n";
+  p+="프로필 사진과 로고가 들어갈 자리는 만들어줘(파일은 내가 나중에 넣을게).\n";
+  p+="읽기 편하고 신뢰감 있게, 한글 줄바꿈이 자연스럽게 만들어줘.\n";
+  return p.trim();
+}
+
+const genBtn=document.getElementById("genBtn");
+const genWrap=document.getElementById("genWrap");
+const genOut=document.getElementById("genOut");
+const copyBtn=document.getElementById("copyBtn");
+
+genBtn.addEventListener("click", ()=>{
+  const audience=fval("target_audience"), brand=fval("brand_name")||fval("name");
+  if(!audience && !brand){
+    alert("먼저 위 질문을 채워주세요.\n특히 '누구에게 보여줄 페이지인지'와 '브랜드명/성함'이 있으면 훨씬 좋은 프롬프트가 나옵니다.");
+    return;
+  }
+  genOut.value = buildPrompt();
+  genWrap.style.display = "block";
+  genOut.scrollIntoView({behavior:"smooth", block:"center"});
+});
+
+copyBtn.addEventListener("click", async ()=>{
+  try{ await navigator.clipboard.writeText(genOut.value); }
+  catch(e){ genOut.select(); document.execCommand("copy"); }
+  const t=copyBtn.textContent;
+  copyBtn.textContent="✅ 복사되었습니다! Claude에 붙여넣으세요";
+  setTimeout(()=>copyBtn.textContent=t, 2000);
+});
+
+const configured = SUPABASE_URL.startsWith("http") && SUPABASE_ANON_KEY.length > 20;
+let sb = null;
+if (configured) {
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} else {
+  setupNote.style.display = "block";
+  setupNote.innerHTML = "⚙️ <b>설정 필요:</b> 배포 전에 &lt;script&gt; 상단의 SUPABASE_URL과 ANON_KEY를 본인 값으로 바꿔주세요. (지금은 테스트 상태 — 제출해도 저장되지 않습니다.)";
+}
+
+async function uploadFile(file, prefix){
+  if(!file || !file.size) return null;
+  const safe = file.name.replace(/[^\w.\-가-힣]/g,"_");
+  const path = `${prefix}/${Date.now()}_${safe}`;
+  const { error } = await sb.storage.from(BUCKET).upload(path, file, { upsert:false });
+  if(error) throw error;
+  const { data } = sb.storage.from(BUCKET).getPublicUrl(path);
+  return data.publicUrl;
+}
+
+form.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  errMsg.style.display = "none";
+
+  if(!configured){
+    errMsg.textContent = "아직 Supabase 설정이 안 되어 있어 저장되지 않습니다. (제작자 확인용)";
+    errMsg.style.display = "block";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "제출 중입니다...";
+
+  try{
+    const f = new FormData(form);
+    const profileUrl  = await uploadFile(form.profile_photo.files[0], "profile");
+    const activityUrl = await uploadFile(form.activity_photo.files[0], "activity");
+    const logoUrl     = await uploadFile(form.logo.files[0], "logo");
+    const planUrl     = await uploadFile(form.plan_file.files[0], "plan");
+
+    const row = {
+      name: f.get("name"), phone: f.get("phone"), email: f.get("email"), kakao: f.get("kakao"),
+      target_audience: f.get("target_audience"),        // ① 타깃 독자 (신규)
+      site_purpose: f.get("site_purpose"),              // ② 원하는 행동
+      key_strength: f.get("key_strength"),              // ③ 내세우고 싶은 강점 (신규)
+      style_mood: f.get("style_mood"),                  // ④ 원하는 분위기
+      brand_name: f.get("brand_name"), tagline: f.get("tagline"), role: f.get("role"),
+      current_lectures: f.get("current_lectures"), curriculum: f.get("curriculum"),
+      career: f.get("career"), testimonials: f.get("testimonials"),
+      brand_colors: f.get("brand_colors"), reference_url: f.get("reference_url"),
+      sns_links: f.get("sns_links"), has_domain: f.get("has_domain"),
+      profile_photo_url: profileUrl, activity_photo_url: activityUrl,
+      logo_url: logoUrl, plan_file_url: planUrl,
+      ai_ready: form.ai_ready.checked, chrome_ready: form.chrome_ready.checked,
+      photo_ready: form.photo_ready.checked
+    };
+
+    const { error } = await sb.from(TABLE).insert([row]);
+    if(error) throw error;
+
+    form.style.display = "none";
+    done.style.display = "block";
+    window.scrollTo({top:0, behavior:"smooth"});
+  }catch(err){
+    console.error(err);
+    errMsg.textContent = "제출 중 문제가 발생했습니다. 잠시 후 다시 시도하시거나 010-4285-7997로 문의해 주세요.";
+    errMsg.style.display = "block";
+    btn.disabled = false;
+    btn.textContent = "사전 질문지 제출하기";
+  }
+});
+</script>
+</body>
+</html>

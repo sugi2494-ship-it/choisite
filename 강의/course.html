@@ -93,6 +93,13 @@
       <div id="studentArea"></div>
     </section>
 
+    <!-- 학습 활동 -->
+    <section class="sec" id="activity" style="display:none">
+      <h2>📝 학습 활동</h2>
+      <div class="sub">수업 활동 페이지입니다. 순서대로 눌러 작성하세요.</div>
+      <div id="activityArea"></div>
+    </section>
+
     <section class="sec" id="intake" style="display:none">
       <h2>📝 사전질문 작성</h2>
       <div class="sub">수업 전에 미리 작성해 주시면, 당일 바로 여러분의 웹페이지를 만듭니다. (사진·자료도 함께 올려주세요)</div>
@@ -171,6 +178,7 @@ fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H
    if(course.exam_url){document.getElementById('exam').style.display='';document.getElementById('examArea').innerHTML='<a class="btn btn-red" href="'+esc(course.exam_url)+'" target="_blank" rel="noopener">📝 자격시험 응시하러 가기 →</a>';}
    // 영상
    if(course.video_url){var id=ytId(course.video_url);document.getElementById('video').style.display='';document.getElementById('videoArea').innerHTML=id?('<div class="video-embed"><iframe src="https://www.youtube.com/embed/'+id+'" allowfullscreen loading="lazy"></iframe></div>'):('<a class="btn btn-primary" href="'+esc(course.video_url)+'" target="_blank" rel="noopener">▶ 영상 보기 →</a>');}
+   if(course.activities&&course.activities.length){document.getElementById('activity').style.display='';document.getElementById('activityArea').innerHTML=course.activities.map(function(a){return '<a class="btn btn-primary" style="margin:4px 8px 4px 0" href="'+esc(a.url)+'" target="_blank" rel="noopener">📝 '+esc(a.label)+' →</a>';}).join('');var nv=document.querySelector('.top .nav');if(nv){var na=document.createElement('a');na.href='#activity';na.textContent='학습 활동';nv.insertBefore(na,nv.firstChild);}}
    renderStudent();
    bdLoad();
  }).catch(function(e){});
