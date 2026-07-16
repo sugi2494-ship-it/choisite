@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 7. 설문·문의 폼 + 결과 다운로드 관리자 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#fff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:#D23B30}.enginebar span:nth-child(2){background:#E0A400}
+  .enginebar span:nth-child(3){background:#2C8C5A}.enginebar span:nth-child(4){background:#2C66A8}
+  .backbar{max-width:660px;margin:0 auto;padding:12px 18px 0}
+  .backbar a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:24px 18px 6px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px}
+  .grouptitle{font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.02em;margin:26px 4px 2px}
+  .p-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .p-num{width:26px;height:26px;border-radius:8px;background:#fdeef6;color:var(--pink);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px}
+  .p-title{font-size:16px;font-weight:800;flex:1;line-height:1.4}
+  .copy{flex:0 0 auto;border:none;background:var(--pink);color:#fff;font-weight:800;font-size:13px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy.done{background:var(--green)}
+  pre.prompt{white-space:pre-wrap;background:#0f1720;color:#e8eef4;border:none;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;margin:0;font-family:"Consolas","Courier New",monospace;overflow-x:auto}
+  .sec-desc{font-size:14px;color:var(--sub);margin:2px 0 12px}
+  .steps{margin:0 0 12px;padding:0;list-style:none}
+  .steps li{position:relative;padding:7px 0 7px 24px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li::before{content:"→";position:absolute;left:2px;color:var(--sub);font-weight:800}
+  .steps b{color:var(--ink)}
+  .linkbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:13px;border-radius:12px;margin-top:8px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px;background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .tip{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:11px 15px;margin:16px 0 2px}
+  .tip p{font-size:12.5px;color:#8a2e63;margin:0}
+  .nextbtn{display:block;text-align:center;text-decoration:none;background:var(--pink);color:#fff;font-size:15.5px;font-weight:800;padding:15px;border-radius:12px;margin-top:22px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:26px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="backbar"><a href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a></div>
+<header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div><h1>활동 7. 설문·문의 폼 + 결과 다운로드 관리자</h1><p class="lead">간단한 <b>설문/문의 폼</b>을 만들고, 받은 답변을 <b>관리자 페이지</b>에서 보고 <b>엑셀(CSV)로 내려받는</b> 단계입니다. (저장은 활동 6의 Supabase 연결이 되어 있어야 해요.)</p></header>
+<div class="wrap">
+<section class="card"><div class="p-head"><span class="p-num">1</span><span class="p-title">간단한 설문지 폼 만들기</span><button class="copy">복사</button></div><pre class="prompt">방문자가 답할 수 있는 간단한 설문지 폼을 만들어줘.
+- 질문 예시: 이름, 연락처, &quot;어떤 강의에 관심 있으세요?&quot;(객관식), &quot;바라는 점&quot;(주관식)
+- 제출하면 Supabase 테이블 survey_responses 에 저장되게
+- 제출 후 &quot;감사합니다&quot; 화면이 뜨게.
+(질문은 내가 나중에 바꿀 수 있게 알기 쉽게 만들어줘.)</pre></section><section class="card"><div class="p-head"><span class="p-num">2</span><span class="p-title">결과 보는 관리자 페이지 + 엑셀 다운로드</span><button class="copy">복사</button></div><pre class="prompt">설문/문의 결과를 볼 수 있는 관리자 페이지를 만들어줘.
+- 비밀번호를 입력해야 들어갈 수 있게
+- 받은 답변을 표(리스트)로 보여주고
+- 맨 위에 &quot;엑셀(CSV) 다운로드&quot; 버튼을 넣어서 클릭하면 전체 결과가 파일로 저장되게.</pre></section><section class="card"><div class="p-head"><span class="p-num">3</span><span class="p-title">새 접수 실시간 표시</span><button class="copy">복사</button></div><pre class="prompt">관리자 페이지에서 새 설문/문의가 들어오면 자동으로 목록 맨 위에 뜨고, 살짝 소리나 색으로 표시되게 해줘. (새로고침 안 해도 보이게)</pre></section><section class="card"><div class="p-head"><span class="p-num">4</span><span class="p-title">문의/신청도 같은 방식으로</span><button class="copy">복사</button></div><pre class="prompt">문의하기·수강신청 폼도 같은 방식으로 Supabase에 저장되게 하고, 관리자 페이지 한 곳에서 설문·문의·신청을 탭으로 나눠 볼 수 있게 해줘.</pre></section><section class="card"><div class="note">💡 접수 알림을 <b>내 휴대폰(텔레그램 등)으로 바로 받는 것</b>도 가능합니다. 강사(최해숙 대표)에게 "실시간 알림 연결"을 요청하세요 — 별도로 설정해 드립니다.</div></section>
+<a class="nextbtn" href="활동8_도메인.html">➡ 다음: 활동 8. 나만의 주소(도메인)</a>
+<footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />문의: 010-4285-7997</footer>
+</div>
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+    var y=window.pageYOffset||0;var pre=btn.closest('.card').querySelector('pre.prompt');var txt=pre?pre.innerText:'';
+    function ok(){window.scrollTo(0,y);var o=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fb(txt,ok);});}else fb(txt,ok);});});
+  function fb(txt,ok){var y=window.pageYOffset||0;var t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(t);t.select();try{t.setSelectionRange(0,txt.length);}catch(e){}try{document.execCommand('copy');ok();}catch(e){alert('길게 눌러 복사해주세요');}document.body.removeChild(t);window.scrollTo(0,y);}
+</script>
+</body>
+</html>

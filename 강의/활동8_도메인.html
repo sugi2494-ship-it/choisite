@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 8. 나만의 주소(도메인) 만들기 · 연결 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#fff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:#D23B30}.enginebar span:nth-child(2){background:#E0A400}
+  .enginebar span:nth-child(3){background:#2C8C5A}.enginebar span:nth-child(4){background:#2C66A8}
+  .backbar{max-width:660px;margin:0 auto;padding:12px 18px 0}
+  .backbar a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:24px 18px 6px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px}
+  .grouptitle{font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.02em;margin:26px 4px 2px}
+  .p-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .p-num{width:26px;height:26px;border-radius:8px;background:#fdeef6;color:var(--pink);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px}
+  .p-title{font-size:16px;font-weight:800;flex:1;line-height:1.4}
+  .copy{flex:0 0 auto;border:none;background:var(--pink);color:#fff;font-weight:800;font-size:13px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy.done{background:var(--green)}
+  pre.prompt{white-space:pre-wrap;background:#0f1720;color:#e8eef4;border:none;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;margin:0;font-family:"Consolas","Courier New",monospace;overflow-x:auto}
+  .sec-desc{font-size:14px;color:var(--sub);margin:2px 0 12px}
+  .steps{margin:0 0 12px;padding:0;list-style:none}
+  .steps li{position:relative;padding:7px 0 7px 24px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li::before{content:"→";position:absolute;left:2px;color:var(--sub);font-weight:800}
+  .steps b{color:var(--ink)}
+  .linkbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:13px;border-radius:12px;margin-top:8px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px;background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .tip{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:11px 15px;margin:16px 0 2px}
+  .tip p{font-size:12.5px;color:#8a2e63;margin:0}
+  .nextbtn{display:block;text-align:center;text-decoration:none;background:var(--pink);color:#fff;font-size:15.5px;font-weight:800;padding:15px;border-radius:12px;margin-top:22px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:26px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="backbar"><a href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a></div>
+<header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div><h1>활동 8. 나만의 주소(도메인) 만들기 · 연결</h1><p class="lead">mysite.com 처럼 <b>나만의 인터넷 주소</b>를 사서 내 웹페이지에 연결하는 마지막 단계입니다. 명함·SNS에 넣기 좋은 짧은 주소를 만들어 보세요.</p></header>
+<div class="wrap">
+<section class="card"><div class="p-title" style="margin-bottom:6px">도메인이 뭔가요?</div><p class="sec-desc">도메인은 <b>인터넷 주소(예: pbscolor.com)</b>입니다. 배포하면 긴 임시 주소가 생기는데, 도메인을 사면 짧고 예쁜 나만의 주소로 바꿀 수 있어요. 보통 <b>1년 단위</b>로 결제합니다.</p></section><section class="card"><div class="p-title" style="margin-bottom:6px">1) 도메인 구입 (원하는 곳 한 곳)</div><p class="sec-desc">원하는 주소가 비어 있는지 검색하고 구입하세요.</p><ul class="steps"><li>원하는 주소 검색 (예: mycolor.com, 내이름.kr)</li><li>비어 있으면 <b>구입(연 결제)</b></li><li>결제하면 내 계정에 등록됩니다.</li></ul><a class="linkbtn" href="https://www.gabia.com/" target="_blank" rel="noopener" style="background:#2C66A8">🟦 가비아(한국·한글) 열기 →</a><a class="linkbtn" href="https://www.namecheap.com/" target="_blank" rel="noopener" style="background:#D23B30">🟧 Namecheap(해외·저렴) 열기 →</a><div class="note">💡 .com이 가장 무난합니다. 한글 브랜드면 .kr / .co.kr 도 좋아요.</div></section><section class="card"><div class="p-title" style="margin-bottom:6px">2) 배포한 곳에 연결</div><p class="sec-desc">활동 4에서 배포한 곳(Netlify/Vercel)에 산 도메인을 연결합니다.</p><ul class="steps"><li>배포한 사이트 설정에서 <b>Domains(도메인)</b> 메뉴로 이동</li><li>산 도메인 입력해 <b>추가(Add)</b></li><li>안내되는 <b>DNS 값</b>을 구입처(가비아 등)에 입력</li><li>보통 <b>몇 시간~하루</b> 안에 새 주소로 접속됩니다.</li></ul></section><section class="card"><div class="p-head"><span class="p-num">1</span><span class="p-title">Claude(클로드)에게 도메인 연결 맡기기</span><button class="copy">복사</button></div><pre class="prompt">내가 산 도메인을 내 웹페이지에 연결하려고 해. 나 대신 처음부터 끝까지 이끌어줘.
+- 도메인 구입처: [가비아 / Namecheap 등]
+- 배포한 곳: [Netlify / Vercel 등]
+어디에 무엇을 입력하는지 화면 순서대로 알려주고, DNS 설정값도 정확히 짚어줘.
+중간에 헷갈리는 부분이나 실수하기 쉬운 곳은 미리 경고해줘. 막히면 &quot;이 화면인데 어떻게 해?&quot;라고 물을게.</pre></section><section class="card"><div class="note">💡 DNS 연결이 어렵게 느껴지면 구입처 고객센터(가비아 1544-4370 등)나 강사에게 문의하세요. 한 번만 설정하면 계속 쓸 수 있습니다. 🎉 여기까지 하면 나만의 웹페이지 완성!</div></section>
+<footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />문의: 010-4285-7997</footer>
+</div>
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+    var y=window.pageYOffset||0;var pre=btn.closest('.card').querySelector('pre.prompt');var txt=pre?pre.innerText:'';
+    function ok(){window.scrollTo(0,y);var o=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fb(txt,ok);});}else fb(txt,ok);});});
+  function fb(txt,ok){var y=window.pageYOffset||0;var t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(t);t.select();try{t.setSelectionRange(0,txt.length);}catch(e){}try{document.execCommand('copy');ok();}catch(e){alert('길게 눌러 복사해주세요');}document.body.removeChild(t);window.scrollTo(0,y);}
+</script>
+</body>
+</html>

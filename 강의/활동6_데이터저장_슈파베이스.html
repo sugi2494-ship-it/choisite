@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 6. 데이터 저장하기 · 슈파베이스(Supabase) 연결 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#fff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:#D23B30}.enginebar span:nth-child(2){background:#E0A400}
+  .enginebar span:nth-child(3){background:#2C8C5A}.enginebar span:nth-child(4){background:#2C66A8}
+  .backbar{max-width:660px;margin:0 auto;padding:12px 18px 0}
+  .backbar a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:24px 18px 6px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px}
+  .grouptitle{font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.02em;margin:26px 4px 2px}
+  .p-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .p-num{width:26px;height:26px;border-radius:8px;background:#fdeef6;color:var(--pink);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px}
+  .p-title{font-size:16px;font-weight:800;flex:1;line-height:1.4}
+  .copy{flex:0 0 auto;border:none;background:var(--pink);color:#fff;font-weight:800;font-size:13px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy.done{background:var(--green)}
+  pre.prompt{white-space:pre-wrap;background:#0f1720;color:#e8eef4;border:none;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;margin:0;font-family:"Consolas","Courier New",monospace;overflow-x:auto}
+  .sec-desc{font-size:14px;color:var(--sub);margin:2px 0 12px}
+  .steps{margin:0 0 12px;padding:0;list-style:none}
+  .steps li{position:relative;padding:7px 0 7px 24px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li::before{content:"→";position:absolute;left:2px;color:var(--sub);font-weight:800}
+  .steps b{color:var(--ink)}
+  .linkbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:13px;border-radius:12px;margin-top:8px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px;background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .tip{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:11px 15px;margin:16px 0 2px}
+  .tip p{font-size:12.5px;color:#8a2e63;margin:0}
+  .nextbtn{display:block;text-align:center;text-decoration:none;background:var(--pink);color:#fff;font-size:15.5px;font-weight:800;padding:15px;border-radius:12px;margin-top:22px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:26px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="backbar"><a href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a></div>
+<header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div><h1>활동 6. 데이터 저장하기 · 슈파베이스(Supabase) 연결</h1><p class="lead">설문·문의·신청 내용을 <b>저장</b>하려면 데이터가 담길 창고(데이터베이스)가 필요합니다. 가장 쉬운 <b>무료</b> 도구가 <b>Supabase(슈파베이스)</b>예요. 이 사이트도 Supabase를 씁니다.</p></header>
+<div class="wrap">
+<section class="card"><div class="p-title" style="margin-bottom:6px">슈파베이스가 뭔가요?</div><p class="sec-desc">입력받은 내용(이름·연락처·설문 답변 등)을 <b>안전하게 저장해 두는 무료 창고</b>입니다. 엑셀 대신 인터넷에 저장된다고 생각하시면 됩니다. 가입만 하면 바로 쓸 수 있어요.</p></section><section class="card"><div class="p-title" style="margin-bottom:6px">1) 가입하고 프로젝트 만들기</div><p class="sec-desc">구글 계정으로 1분이면 가입됩니다.</p><ul class="steps"><li>아래 <b>Supabase 열기</b> → <b>Start your project</b> 로 가입/로그인</li><li><b>New Project</b> 눌러 프로젝트 이름·비밀번호 정하고 생성 (1~2분 대기)</li><li>프로젝트가 만들어지면 준비 끝!</li></ul><a class="linkbtn" href="https://supabase.com/" target="_blank" rel="noopener" style="background:#2C8C5A">🟢 Supabase 열기 →</a></section><section class="card"><div class="p-title" style="margin-bottom:6px">2) 연결값(URL·키) 찾기</div><p class="sec-desc">웹페이지와 연결하려면 두 가지 값이 필요합니다.</p><ul class="steps"><li>왼쪽 메뉴 맨 아래 <b>Settings(설정) → API</b> 로 이동</li><li><b>Project URL</b> 복사 (예: https://xxxx.supabase.co)</li><li><b>anon public</b> 키 복사 — 이 두 개를 클로드에게 주면 됩니다.</li></ul><div class="note">💡 <b>anon public</b> 키는 웹에 넣어도 되는 공개용입니다. 단, <b>service_role</b> 키는 절대 웹페이지·프롬프트에 넣지 마세요(비밀 키).</div></section><section class="card"><div class="p-head"><span class="p-num">1</span><span class="p-title">내 폼을 Supabase에 저장되게 연결</span><button class="copy">복사</button></div><pre class="prompt">내 웹페이지의 문의 폼(이름·연락처·문의내용)이 Supabase에 저장되게 연결해줘.
+- 내 Supabase 정보: URL은 [여기에 붙여넣기], anon key는 [여기에 붙여넣기]
+- 테이블 이름은 contacts 로, 없으면 만들고 필요한 컬럼도 만들어줘
+- 방문자(익명)가 저장할 수 있도록 보안(RLS) 설정 방법도 초보자용으로 알려줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">2</span><span class="p-title">저장이 안 될 때 (오류 해결)</span><button class="copy">복사</button></div><pre class="prompt">방금 만든 Supabase 저장이 안 돼.
+오류 메시지는 이거야: [여기에 붙여넣기]
+초보자가 이해할 수 있게 원인과 해결 방법을 하나씩 알려주고, 코드도 고쳐줘.</pre></section>
+<a class="nextbtn" href="활동7_설문_관리자.html">➡ 다음: 활동 7. 설문·문의 폼 + 결과 관리자</a>
+<footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />문의: 010-4285-7997</footer>
+</div>
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){btn.addEventListener('click',function(){
+    var y=window.pageYOffset||0;var pre=btn.closest('.card').querySelector('pre.prompt');var txt=pre?pre.innerText:'';
+    function ok(){window.scrollTo(0,y);var o=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fb(txt,ok);});}else fb(txt,ok);});});
+  function fb(txt,ok){var y=window.pageYOffset||0;var t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(t);t.select();try{t.setSelectionRange(0,txt.length);}catch(e){}try{document.execCommand('copy');ok();}catch(e){alert('길게 눌러 복사해주세요');}document.body.removeChild(t);window.scrollTo(0,y);}
+</script>
+</body>
+</html>
