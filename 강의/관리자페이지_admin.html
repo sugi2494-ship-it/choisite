@@ -108,10 +108,15 @@
 
   @media(max-width:720px){
     .layout{flex-direction:column;}
-    .side{width:100%;flex:none;height:auto;position:sticky;top:0;flex-direction:row;overflow-x:auto;gap:6px;padding:10px;z-index:20;}
+    .side{width:100%;flex:none;height:auto;min-height:0;position:sticky;top:0;flex-direction:row;align-items:center;overflow-x:auto;overflow-y:hidden;gap:6px;padding:8px 10px;z-index:20;-webkit-overflow-scrolling:touch;}
     .side .brand{display:none;}
-    .side .reload{margin:0;flex:0 0 auto;}
-    .navitem{width:auto;white-space:nowrap;padding:10px 12px;}
+    .navitem,.side .reload,.side .homelink{flex:0 0 auto;white-space:nowrap;}
+    .side .homelink{margin:0;padding:10px 12px;font-size:13px;}
+    .side .reload{margin:0;padding:10px 12px;font-size:13px;}
+    .navitem{width:auto;padding:10px 13px;font-size:14px;}
+    .pane{padding:18px 14px 50px;}
+    .pane h2.pt{font-size:18px;}
+    .bar{gap:8px;}
   }
 </style>
 </head>
