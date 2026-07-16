@@ -206,10 +206,10 @@ const DIAG_URL = "https://www.pbscolor.com/book48.html";
 
 const f = document.getElementById("f");
 const COLOR = {
-  R:{name:"RED · 도전·열정·성과",  kw:"추진력 있게 목표를 향해 나아가는", css:"var(--red)"},
-  Y:{name:"YELLOW · 발견·공감·창의", kw:"새로운 것을 발견하고 사람들과 즐겁게 나누는", css:"var(--yellow)"},
-  G:{name:"GREEN · 배려·평화·밸런스", kw:"사람을 살피고 조화를 만드는", css:"var(--green)"},
-  B:{name:"BLUE · 신뢰·분석·체계",  kw:"믿음직하게 분석하고 체계를 세우는", css:"var(--blue)"}
+  R:{name:"RED · 도전·열정·성과",  kw:"추진력 있게 목표를 향해 나아가는", css:"#D23B30"},
+  Y:{name:"YELLOW · 발견·공감·창의", kw:"새로운 것을 발견하고 사람들과 즐겁게 나누는", css:"#E0A400"},
+  G:{name:"GREEN · 배려·평화·밸런스", kw:"사람을 살피고 조화를 만드는", css:"#2C8C5A"},
+  B:{name:"BLUE · 신뢰·분석·체계",  kw:"믿음직하게 분석하고 체계를 세우는", css:"#2C66A8"}
 };
 const val=n=>{const el=f.elements[n];return el?(el.value||"").trim():"";};
 const pick=n=>{const el=f.querySelector(`input[name="${n}"]:checked`);return el?el.value:null;};
