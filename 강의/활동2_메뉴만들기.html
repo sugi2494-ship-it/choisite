@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 2. 웹페이지 메뉴 만들기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#fff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:#D23B30}.enginebar span:nth-child(2){background:#E0A400}
+  .enginebar span:nth-child(3){background:#2C8C5A}.enginebar span:nth-child(4){background:#2C66A8}
+  .backbar{max-width:660px;margin:0 auto;padding:12px 18px 0}
+  .backbar a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:24px 18px 6px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px}
+  .grouptitle{font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.02em;margin:26px 4px 2px}
+  .p-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .p-num{width:26px;height:26px;border-radius:8px;background:#fdeef6;color:var(--pink);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px}
+  .p-title{font-size:16px;font-weight:800;flex:1;line-height:1.4}
+  .copy{flex:0 0 auto;border:none;background:var(--pink);color:#fff;font-weight:800;font-size:13px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy.done{background:var(--green)}
+  pre.prompt{white-space:pre-wrap;background:#0f1720;color:#e8eef4;border:none;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;margin:0;font-family:"Consolas","Courier New",monospace;overflow-x:auto}
+  .sec-desc{font-size:14px;color:var(--sub);margin:2px 0 12px}
+  .steps{margin:0 0 12px;padding:0;list-style:none}
+  .steps li{position:relative;padding:7px 0 7px 24px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li::before{content:"→";position:absolute;left:2px;color:var(--sub);font-weight:800}
+  .steps b{color:var(--ink)}
+  .linkbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:13px;border-radius:12px;margin-top:8px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px;background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .tip{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:11px 15px;margin:16px 0 2px}
+  .tip p{font-size:12.5px;color:#8a2e63;margin:0}
+  .nextbtn{display:block;text-align:center;text-decoration:none;background:var(--pink);color:#fff;font-size:15.5px;font-weight:800;padding:15px;border-radius:12px;margin-top:22px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:26px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="backbar"><a href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a></div>
+<header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div><h1>활동 2. 웹페이지 메뉴 만들기</h1><p class="lead">활동 1에서 나온 초안에 <b>상단 메뉴와 섹션 구성</b>을 얹어 뼈대를 완성하는 단계입니다. 아래 프롬프트를 복사해 Claude(클로드) 대화창에 붙여넣으세요. (내 페이지가 열려 있는 그 대화창에 이어서 넣으면 됩니다.)</p></header>
+<div class="wrap">
+<section class="card"><div class="p-head"><span class="p-num">1</span><span class="p-title">상단 고정 메뉴(내비게이션) 추가</span><button class="copy">복사</button></div><pre class="prompt">지금 만든 웹페이지 맨 위에 항상 보이는 상단 메뉴(내비게이션 바)를 추가해줘.
+- 메뉴 항목: 홈 · 소개 · 강의 · 후기 · 문의
+- 각 항목을 누르면 그 섹션으로 부드럽게 스크롤되게 해줘.
+- 모바일에서는 햄버거(≡) 메뉴로 접히게 해줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">2</span><span class="p-title">섹션 순서·제목 정리</span><button class="copy">복사</button></div><pre class="prompt">섹션 순서를 이렇게 바꿔줘: ① 첫 화면(이름·한줄소개·프로필) ② 나의 강의 ③ 소개(내 이야기) ④ 후기·경력 ⑤ 문의.
+각 섹션 맨 위에 큰 제목을 넣어서, 스크롤할 때 지금 어느 부분인지 바로 알 수 있게 해줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">3</span><span class="p-title">FAQ(자주 묻는 질문) 섹션 추가</span><button class="copy">복사</button></div><pre class="prompt">&#x27;자주 묻는 질문&#x27; 섹션을 추가해줘.
+질문 4개(예: 수업 대상, 준비물, 소요 시간, 비용 문의 방법)와 답변을 넣고,
+질문을 누르면 답이 펼쳐지는 아코디언 형태로 만들어줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">4</span><span class="p-title">눈에 띄는 신청·문의 버튼</span><button class="copy">복사</button></div><pre class="prompt">페이지 곳곳에 &#x27;강의 문의하기&#x27; 버튼을 눈에 띄게 넣어줘.
+누르면 맨 아래 문의 섹션으로 이동하거나, 전화(tel:)·카카오톡으로 바로 연결되게 해줘.
+색은 브랜드 포인트 색으로, 모바일에서도 손가락으로 누르기 좋은 크기로.</pre></section><section class="card"><div class="p-head"><span class="p-num">5</span><span class="p-title">깔끔한 푸터(맨 아래) 만들기</span><button class="copy">복사</button></div><pre class="prompt">맨 아래에 푸터를 만들어줘.
+- 이름/브랜드명, 연락처(전화·이메일), 인스타·블로그 링크
+- 저작권 한 줄(© 2026 이름)
+- 배경은 차분한 색으로, 글자는 작고 단정하게.</pre></section>
+<a class="nextbtn" href="활동3_퀄리티_관리자.html">➡ 다음: 활동 3. 퀄리티 올리기 · 관리자 페이지</a>
+<footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />문의: 010-4285-7997</footer>
+</div>
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var y=window.pageYOffset||document.documentElement.scrollTop||0;
+      var pre=btn.closest('.card').querySelector('pre.prompt');
+      var txt=pre?pre.innerText:'';
+      function ok(){window.scrollTo(0,y);var o=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1500);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fb(txt,ok);});}else fb(txt,ok);
+    });
+  });
+  function fb(txt,ok){var y=window.pageYOffset||0;var t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(t);t.select();try{t.setSelectionRange(0,txt.length);}catch(e){}try{document.execCommand('copy');ok();}catch(e){alert('길게 눌러 복사해주세요');}document.body.removeChild(t);window.scrollTo(0,y);}
+</script>
+</body>
+</html>

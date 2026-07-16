@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 5. 내 웹페이지 검토·검수하기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#fff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:#D23B30}.enginebar span:nth-child(2){background:#E0A400}
+  .enginebar span:nth-child(3){background:#2C8C5A}.enginebar span:nth-child(4){background:#2C66A8}
+  .backbar{max-width:660px;margin:0 auto;padding:12px 18px 0}
+  .backbar a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:24px 18px 6px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px}
+  .grouptitle{font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.02em;margin:26px 4px 2px}
+  .p-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .p-num{width:26px;height:26px;border-radius:8px;background:#fdeef6;color:var(--pink);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px}
+  .p-title{font-size:16px;font-weight:800;flex:1;line-height:1.4}
+  .copy{flex:0 0 auto;border:none;background:var(--pink);color:#fff;font-weight:800;font-size:13px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy.done{background:var(--green)}
+  pre.prompt{white-space:pre-wrap;background:#0f1720;color:#e8eef4;border:none;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;margin:0;font-family:"Consolas","Courier New",monospace;overflow-x:auto}
+  .sec-desc{font-size:14px;color:var(--sub);margin:2px 0 12px}
+  .steps{margin:0 0 12px;padding:0;list-style:none}
+  .steps li{position:relative;padding:7px 0 7px 24px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li::before{content:"→";position:absolute;left:2px;color:var(--sub);font-weight:800}
+  .steps b{color:var(--ink)}
+  .linkbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:13px;border-radius:12px;margin-top:8px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px;background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .tip{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:11px 15px;margin:16px 0 2px}
+  .tip p{font-size:12.5px;color:#8a2e63;margin:0}
+  .nextbtn{display:block;text-align:center;text-decoration:none;background:var(--pink);color:#fff;font-size:15.5px;font-weight:800;padding:15px;border-radius:12px;margin-top:22px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:26px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="backbar"><a href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a></div>
+<header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div><h1>활동 5. 내 웹페이지 검토·검수하기</h1><p class="lead">공개하기 전에 <b>오류·빠진 것·개선점</b>을 점검하는 단계입니다. 아래 프롬프트를 복사해 내 페이지가 열려 있는 대화창에 붙여넣으세요.</p></header>
+<div class="wrap">
+<section class="card"><div class="p-head"><span class="p-num">1</span><span class="p-title">전체 검토 (한 번에 점검)</span><button class="copy">복사</button></div><pre class="prompt">내가 만든 이 웹페이지를 처음부터 끝까지 검토해줘.
+- 깨지거나 이상하게 보이는 부분
+- 작동하지 않는 버튼·링크
+- 모바일에서 어색한 곳
+- 오타·어색한 문장
+찾아서 목록으로 알려주고, 그 자리에서 고쳐줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">2</span><span class="p-title">링크·버튼 연결 확인</span><button class="copy">복사</button></div><pre class="prompt">페이지의 모든 버튼과 링크가 제대로 연결됐는지 하나씩 확인해줘.
+특히 전화(tel:), 카카오톡, 인스타/블로그, 문의 버튼이 실제로 눌러지는지 점검하고,
+안 되는 게 있으면 올바르게 고쳐줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">3</span><span class="p-title">가독성·접근성 점검</span><button class="copy">복사</button></div><pre class="prompt">글자 크기와 색 대비가 읽기 편한지, 어르신이나 눈이 불편한 분도 보기 쉬운지 점검해줘.
+너무 흐린 글자색, 너무 작은 글씨, 배경과 안 어울리는 색을 찾아 고쳐줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">4</span><span class="p-title">맞춤법·띄어쓰기 교정</span><button class="copy">복사</button></div><pre class="prompt">페이지에 있는 모든 문구의 맞춤법과 띄어쓰기를 점검해서 자연스럽게 고쳐줘.
+어색한 번역 투나 딱딱한 표현도 부드럽게 다듬어줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">5</span><span class="p-title">공개 전 최종 체크리스트</span><button class="copy">복사</button></div><pre class="prompt">이 웹페이지를 공개하기 전에 확인해야 할 최종 체크리스트를 만들어줘.
+제목, 연락처, 대표 이미지, 모바일 화면, 로딩 속도, 문의 방법 등
+항목별로 &quot;OK/수정필요&quot;를 표시할 수 있게.</pre></section>
+<a class="nextbtn" href="활동6_도메인.html">➡ 다음: 활동 6. 나만의 주소(도메인)</a>
+<footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />문의: 010-4285-7997</footer>
+</div>
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var y=window.pageYOffset||document.documentElement.scrollTop||0;
+      var pre=btn.closest('.card').querySelector('pre.prompt');
+      var txt=pre?pre.innerText:'';
+      function ok(){window.scrollTo(0,y);var o=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1500);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fb(txt,ok);});}else fb(txt,ok);
+    });
+  });
+  function fb(txt,ok){var y=window.pageYOffset||0;var t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(t);t.select();try{t.setSelectionRange(0,txt.length);}catch(e){}try{document.execCommand('copy');ok();}catch(e){alert('길게 눌러 복사해주세요');}document.body.removeChild(t);window.scrollTo(0,y);}
+</script>
+</body>
+</html>

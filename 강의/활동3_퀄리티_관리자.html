@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 3. 퀄리티 올리기 · 관리자 페이지 만들기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#fff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:#D23B30}.enginebar span:nth-child(2){background:#E0A400}
+  .enginebar span:nth-child(3){background:#2C8C5A}.enginebar span:nth-child(4){background:#2C66A8}
+  .backbar{max-width:660px;margin:0 auto;padding:12px 18px 0}
+  .backbar a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:24px 18px 6px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:16px}
+  .grouptitle{font-size:13px;font-weight:800;color:var(--pink);letter-spacing:.02em;margin:26px 4px 2px}
+  .p-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .p-num{width:26px;height:26px;border-radius:8px;background:#fdeef6;color:var(--pink);font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin-top:1px}
+  .p-title{font-size:16px;font-weight:800;flex:1;line-height:1.4}
+  .copy{flex:0 0 auto;border:none;background:var(--pink);color:#fff;font-weight:800;font-size:13px;padding:9px 15px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .copy.done{background:var(--green)}
+  pre.prompt{white-space:pre-wrap;background:#0f1720;color:#e8eef4;border:none;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.6;margin:0;font-family:"Consolas","Courier New",monospace;overflow-x:auto}
+  .sec-desc{font-size:14px;color:var(--sub);margin:2px 0 12px}
+  .steps{margin:0 0 12px;padding:0;list-style:none}
+  .steps li{position:relative;padding:7px 0 7px 24px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .steps li:last-child{border-bottom:none}
+  .steps li::before{content:"→";position:absolute;left:2px;color:var(--sub);font-weight:800}
+  .steps b{color:var(--ink)}
+  .linkbtn{display:block;text-align:center;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:13px;border-radius:12px;margin-top:8px}
+  .note{font-size:12.5px;color:var(--sub);margin-top:10px;background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .tip{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:11px 15px;margin:16px 0 2px}
+  .tip p{font-size:12.5px;color:#8a2e63;margin:0}
+  .nextbtn{display:block;text-align:center;text-decoration:none;background:var(--pink);color:#fff;font-size:15.5px;font-weight:800;padding:15px;border-radius:12px;margin-top:22px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:26px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="backbar"><a href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a></div>
+<header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div><h1>활동 3. 퀄리티 올리기 · 관리자 페이지 만들기</h1><p class="lead">초안을 <b>한 단계 더 완성도 있게</b> 다듬고, 내가 직접 내용을 바꿀 수 있는 <b>관리자 페이지</b>까지 붙이는 단계입니다. 아래 프롬프트를 복사해 이어서 붙여넣으세요.</p></header>
+<div class="wrap">
+<div class="grouptitle">A. 퀄리티(완성도) 올리기</div><section class="card"><div class="p-head"><span class="p-num">1</span><span class="p-title">디자인 고급스럽게 다듬기</span><button class="copy">복사</button></div><pre class="prompt">전체 디자인을 더 세련되고 신뢰감 있게 다듬어줘.
+- 여백을 넉넉하게, 글자 크기·굵기의 위계를 분명하게
+- 포인트 색은 [내 브랜드색]만 절제해서 사용
+- 촌스럽지 않고 고급스럽고 단정한 느낌으로.</pre></section><section class="card"><div class="p-head"><span class="p-num">2</span><span class="p-title">문구(카피) 매력적으로 다듬기</span><button class="copy">복사</button></div><pre class="prompt">각 섹션의 문구를 더 매력적이고 설득력 있게 다듬어줘.
+전문성이 느껴지되 따뜻하고, 읽기 쉬운 한국어로.
+특히 첫 화면 한 줄 소개와 강의 소개 문구를 눈길이 가게 고쳐줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">3</span><span class="p-title">모바일 화면 점검</span><button class="copy">복사</button></div><pre class="prompt">휴대폰 화면에서 글자·버튼·이미지가 잘리거나 너무 작지 않은지 점검하고 고쳐줘.
+버튼은 손가락으로 누르기 좋게, 사진은 화면 폭에 맞게.</pre></section><section class="card"><div class="p-head"><span class="p-num">4</span><span class="p-title">신뢰 요소 강조</span><button class="copy">복사</button></div><pre class="prompt">후기·경력·자격증·방송 출연·교육 인원 같은 신뢰 요소를 눈에 띄게 배치해줘.
+숫자가 있으면(예: 강의 10년, 수료 500명) 크게 강조해줘.</pre></section><div class="grouptitle">B. 관리자 페이지 만들기 (내가 직접 내용 수정)</div><section class="card"><div class="p-head"><span class="p-num">5</span><span class="p-title">간단 관리자 페이지 만들기</span><button class="copy">복사</button></div><pre class="prompt">이 웹페이지의 텍스트(소개·강의·연락처)를 내가 코드를 안 건드리고 바꿀 수 있는 간단한 관리자 페이지를 만들어줘.
+- 비밀번호를 입력해야 들어갈 수 있게
+- 수정한 내용은 브라우저에 저장되어 새로고침해도 유지되게
+- 초보자도 쓸 수 있게 입력칸을 크고 알기 쉽게.</pre></section><section class="card"><div class="p-head"><span class="p-num">6</span><span class="p-title">문의 내용 저장·확인</span><button class="copy">복사</button></div><pre class="prompt">문의 폼에 들어온 내용(이름·연락처·문의)을 관리자 페이지에서 목록으로 볼 수 있게 해줘.
+무료로 할 수 있는 방법(예: Supabase, 구글 시트, 폼 서비스)으로,
+설정 방법을 초보자용으로 단계별로 알려줘.</pre></section><section class="card"><div class="p-head"><span class="p-num">7</span><span class="p-title">사진·로고 교체 기능</span><button class="copy">복사</button></div><pre class="prompt">관리자 페이지에서 프로필 사진·강의 사진·로고를 파일 선택으로 교체할 수 있게 해줘.
+바꾸면 웹페이지에 바로 반영되게.</pre></section><section class="card"><div class="note">💡 관리자 페이지·데이터 저장은 조금 기술적인 부분입니다. 한 번에 다 요청하지 말고, 위 프롬프트를 <b>하나씩 순서대로</b> 넣으면서 클로드가 만들어 주는 걸 확인하세요. 막히면 "방금 만든 것에서 OO가 안 돼, 고쳐줘"라고 이어서 물어보면 됩니다.</div></section>
+<a class="nextbtn" href="활동4_배포하기.html">➡ 다음: 활동 4. 웹페이지 배포하기</a>
+<footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218<br />문의: 010-4285-7997</footer>
+</div>
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var y=window.pageYOffset||document.documentElement.scrollTop||0;
+      var pre=btn.closest('.card').querySelector('pre.prompt');
+      var txt=pre?pre.innerText:'';
+      function ok(){window.scrollTo(0,y);var o=btn.textContent;btn.textContent='복사됨 ✓';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},1500);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fb(txt,ok);});}else fb(txt,ok);
+    });
+  });
+  function fb(txt,ok){var y=window.pageYOffset||0;var t=document.createElement('textarea');t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';document.body.appendChild(t);t.select();try{t.setSelectionRange(0,txt.length);}catch(e){}try{document.execCommand('copy');ok();}catch(e){alert('길게 눌러 복사해주세요');}document.body.removeChild(t);window.scrollTo(0,y);}
+</script>
+</body>
+</html>
