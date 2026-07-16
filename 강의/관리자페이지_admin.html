@@ -373,10 +373,48 @@
         rw('페이지 목적',r.purpose)+rw('넣고싶은 메뉴',r.wanted_menus)+rw('분위기',r.mood)+rw('선호 색',r.favorite_color)+rw('참고 사이트',r.ref_urls)+rw('SNS',r.sns_links)+rw('도메인',r.domain_owned)+rw('사전 준비',prep)+
         `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;line-height:2;">`+
         `📷 프로필 ${fl(r.profile_photo_url)} &nbsp; · &nbsp; 🖼 활동사진 ${fl(r.activity_photo_url)} &nbsp; · &nbsp; ✨ 로고 ${fl(r.logo_url)} &nbsp; · &nbsp; 📄 기획안파일 ${fl(r.lecture_plan_file_url)}</div>`+
-        `<div class="acts"><button class="btn-danger" onclick="intakeDel('${r.id}')">삭제</button></div></div>`;
+        `<div class="acts"><button class="btn-x" onclick="intakeStrategy('${r.id}')">🧠 전략 프롬프트 복사</button><button class="btn-danger" onclick="intakeDel('${r.id}')">삭제</button></div></div>`;
     }).join("");
   }
   window.intakeDel=async(id)=>{if(confirm("이 사전질문지를 삭제할까요?")){await api("delete_intake",{id});await loadAll();}};
+  window.intakeStrategy=(id)=>{
+    const r=(DATA.intake||[]).find(x=>x.id===id); if(!r)return;
+    const g=(...ks)=>{for(const k of ks){if(r[k])return String(r[k]);}return "(미입력)";};
+    const P=
+`너는 '강사·1인기업 웹페이지 만들기' 원데이 수업의 조교이자 전략 코치야.
+아래는 수강생이 제출한 사전질문지야. 이 사람이 수업(하루 5시간, AI로 웹페이지 제작)에서 최고의 결과를 내도록, 강사(최해숙)가 미리 준비할 수 있게 분석해줘.
+
+[수강생 사전질문]
+- 이름/브랜드명 : ${g("brand_name")} / ${g("name")}
+- 하는 일/직함 : ${g("role_job","role")}
+- 타깃(누구에게 보여줄 페이지) : ${g("target_audience","field_area")}
+- 페이지 목적(원하는 행동) : ${g("purpose","site_purpose")}
+- 핵심 강점 : ${g("key_strength")}
+- 한 줄 소개 : ${g("tagline")}
+- 현재 강의/서비스 : ${g("current_lecture","current_lectures")}
+- 기획안(글) : ${g("lecture_plan_text","curriculum")}
+- 경력·자격 : ${g("career_cert","career")}
+- 후기 : ${g("reviews","testimonials")}
+- 넣고싶은 메뉴 : ${g("wanted_menus")}
+- 원하는 분위기 : ${g("mood","style_mood")}
+- 선호 색 : ${g("favorite_color","brand_colors")}
+- 참고 사이트 : ${g("ref_urls","reference_url")}
+- SNS : ${g("sns_links")}
+- 도메인 보유 : ${g("domain_owned","has_domain")}
+
+[이렇게 정리해줘]
+1) 한 줄 진단 : 이 사람은 어떤 웹페이지를 만들면 가장 효과적인지 한 문장.
+2) 추천 메뉴 구성 : 이 사람에게 맞는 섹션 순서 5~6개 + 각 섹션에 넣을 내용.
+3) 강점 살리는 법 : 이 사람만의 차별점을 첫 화면에 어떻게 드러낼지.
+4) 준비물 체크 : 당일 꼭 가져와야 할 사진·자료 (부족해 보이는 것 콕 집어).
+5) 예상 난관 & 코칭 포인트 : 이 사람 성향을 고려해 강사가 미리 대비할 점.
+6) 이 사람용 '첫 프롬프트' 초안 : 수업 때 클로드에 바로 붙여넣게, 이 사람 정보로 채워서.
+
+전문적이되 실전에서 바로 쓰게 구체적으로.`;
+    const ok=()=>alert("🧠 전략 프롬프트가 복사됐어요!\n클로드/챗GPT에 붙여넣으면 이 분 맞춤 수업 전략이 나옵니다.");
+    const fb=()=>{const t=document.createElement("textarea");t.value=P;t.style.cssText="position:fixed;top:0;left:0;opacity:0";document.body.appendChild(t);t.select();try{document.execCommand("copy");ok();}catch(e){alert("복사가 안 됩니다. 길게 눌러 복사하세요.");}document.body.removeChild(t);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(P).then(ok,fb);}else fb();
+  };
 
   /* 신청자 */
   let appFilter="";
