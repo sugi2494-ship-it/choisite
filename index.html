@@ -1452,6 +1452,7 @@ function renderShop(){
     renderShop();
     // 갤러리 갱신
     applyAdminImages();
+    loadReviewGallery();
     // 글로벌 사진
     (function(){
       var cfg=null;try{cfg=JSON.parse(localStorage.getItem('pbs_global_config')||'null');}catch(e){}
@@ -1943,6 +1944,19 @@ var GALLERY_DEFAULTS = [
   {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/작가초청강연.jpg',tag:'강연',caption:'작가 초청 강연',visible:true},
   {src:'최해숙프로필자동화만들기/퍼스널컬러강의사진/협약식.jpg',tag:'협약',caption:'업무 협약식',visible:true}
 ];
+function loadReviewGallery(){
+  var grid=document.getElementById('galleryGrid');if(!grid)return;
+  supaFetch("class_board?select=name,course,photo&approved=eq.true&photo=not.is.null&order=created_at.desc&limit=12").then(function(r){return r.json();}).then(function(rows){
+    if(!rows||!rows.length)return;
+    grid.querySelectorAll('.g-item.rv').forEach(function(n){n.remove();});
+    var html=rows.map(function(x){
+      return '<div class="g-item rv"><img src="'+escHtml(safeUrl(x.photo,true))+'" alt="" loading="lazy">'
+        +'<div class="g-overlay"><div><div class="g-tag">'+escHtml(x.course||'후기')+'</div>'
+        +'<div class="g-caption">'+escHtml((x.name||'수강생')+' 님 후기')+'</div></div></div></div>';
+    }).join('');
+    grid.insertAdjacentHTML('beforeend',html);
+  }).catch(function(){});
+}
 function applyAdminImages() {
   var grid = document.getElementById('galleryGrid') || document.querySelector('.gallery-grid');
   if (!grid) return;
@@ -1963,7 +1977,7 @@ function applyAdminImages() {
 applyAdminImages();
 /* 다른 탭에서 갤러리 설정 변경 시 자동 반영 */
 window.addEventListener('storage', function(e) {
-  if (e.key === 'pbs_gallery_config') applyAdminImages();
+  if (e.key === 'pbs_gallery_config'){ applyAdminImages(); loadReviewGallery(); }
 });
 
 /* ══ 별점 ══ */
