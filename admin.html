@@ -169,8 +169,8 @@ a{text-decoration:none;color:inherit}
     <div class="ll">PBS COLOR LAB</div>
     <h2>관리자 로그인</h2>
     <div id="Lmain">
-      <p>관리자 이메일·비밀번호로 로그인하세요</p>
-      <input type="email" id="lemail" value="sugi2494@gmail.com" autocomplete="username" placeholder="이메일" style="margin-bottom:8px">
+      <p>관리자 비밀번호로 로그인하세요</p>
+      <input type="hidden" id="lemail" value="sugi2494@gmail.com">
       <input type="password" id="lpass" autocomplete="current-password" placeholder="비밀번호"
         onkeydown="if(event.key==='Enter')pwLogin()">
       <button class="lbtn" onclick="pwLogin()">로그인</button>
