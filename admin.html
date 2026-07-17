@@ -451,15 +451,13 @@ function supaFetch(path,opts){
   return fetch(SUPA_URL+'/rest/v1/'+path,Object.assign({headers:h},opts||{}));
 }
 function supaConfigSave(key,value){
-  var h=Object.assign({'Prefer':'resolution=merge-duplicates'},SUPA_H);
-  fetch(SUPA_URL+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:h,body:JSON.stringify({key:key,value:value,updated_at:new Date().toISOString()})}).catch(function(e){console.warn('supaConfigSave',e);});
+  adminCall('config_set',{key:key,value:value}).catch(function(e){console.warn('supaConfigSave',e);});
 }
 function saveConfig(key,value,label){
   localStorage.setItem('pbs_'+key,JSON.stringify(value));
-  var h=Object.assign({'Prefer':'resolution=merge-duplicates'},SUPA_H);
   toast('저장 중…');
-  fetch(SUPA_URL+'/rest/v1/pbs_site_config?on_conflict=key',{method:'POST',headers:h,body:JSON.stringify({key:key,value:value,updated_at:new Date().toISOString()})})
-   .then(function(r){ if(r.ok){toast('✓ '+label+' 저장 완료!');alert('✓ '+label+' 저장 완료!\n\n홈페이지·강의실을 새로고침하면 반영됩니다.');} else {r.text().then(function(t){alert('❌ 저장 실패\n'+t);});} })
+  adminCall('config_set',{key:key,value:value})
+   .then(function(o){ if(o.ok&&o.j&&o.j.ok){toast('✓ '+label+' 저장 완료!');alert('✓ '+label+' 저장 완료!\n\n홈페이지·강의실을 새로고침하면 반영됩니다.');} else {alert('❌ 저장 실패\n'+((o.j&&o.j.error)||('HTTP '+o.status)));} })
    .catch(function(e){alert('❌ 저장 오류\n'+e);});
 }
 async function supaUpdateRow(table,id,data){
