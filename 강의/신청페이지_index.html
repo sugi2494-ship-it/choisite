@@ -410,21 +410,20 @@
             <input type="text" name="job" placeholder="예) 강사 / 1인 사업가 / 대표 등" />
           </div>
           <div class="field">
-            <label>AI 활용 수준</label>
-            <select name="ai_level">
-              <option value="">선택해 주세요</option>
-              <option>AI가 처음이에요</option>
-              <option>조금 써봤어요</option>
-              <option>자주 활용하는 편이에요</option>
-            </select>
+            <label>소속</label>
+            <input type="text" name="affiliation" placeholder="예) OO협회, OO센터, 프리랜서 등" />
           </div>
           <div class="field">
-            <label>신청한 이유</label>
-            <textarea name="reason" placeholder="이 수업을 신청하게 된 계기를 자유롭게 적어주세요"></textarea>
+            <label>직함</label>
+            <input type="text" name="position" placeholder="예) 대표, 강사, 팀장 등" />
           </div>
           <div class="field">
-            <label>만들고 싶은 것</label>
-            <textarea name="want_to_make" placeholder="최대한 구체적으로 자세하게 적어주세요. 이미 시도해본 것, 지금 불편한 점, 해결하고 싶은 점도 좋아요. (예: 강사 프로필 + 강의 소개 + 수강 신청까지 한 페이지에)"></textarea>
+            <label>이력</label>
+            <textarea name="career" placeholder="주요 경력·활동·자격증 등을 자유롭게 적어주세요"></textarea>
+          </div>
+          <div class="field">
+            <label>신청한 이유 (구체적으로 적어주세요)</label>
+            <textarea name="reason" rows="4" placeholder="이 수업을 신청하신 이유를 구체적으로 적어주세요. 지금 겪고 계신 어려움, 이루고 싶은 목표, 만들고 싶은 웹페이지 등 자세할수록 수업 준비에 큰 도움이 됩니다."></textarea>
           </div>
           <div class="field">
             <label>하고 싶은 말</label>
@@ -484,14 +483,7 @@
     소수 정예 모집 · 마감 시 조기 종료
   </div>
 
-  <!-- 고정 하단 CTA -->
-  <div class="sticky" id="stickyBar">
-    <div class="info">
-      <div class="p">295,000원 <span style="font-size:12px;color:var(--muted);font-weight:700;text-decoration:line-through;">495,000</span></div>
-      <div class="s">7/17 매진 · <b style="color:var(--pink-deep)">8/1(토) 추가 접수중</b></div>
-    </div>
-    <a href="#apply" class="cta">신청하기</a>
-  </div>
+  <!-- 하단 고정 CTA 제거됨 (폼이 페이지에 바로 있어 불필요) -->
 
 <script>
   const SUPABASE_URL = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
