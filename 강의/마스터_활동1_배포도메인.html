@@ -56,6 +56,18 @@
     font-size:15px; font-weight:800; padding:14px; border-radius:12px; cursor:pointer;
     margin-top:10px; font-family:inherit}
   .copybtn.done{background:var(--green)}
+  .gobtn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
+    text-decoration:none; color:#fff; background:linear-gradient(135deg,#2C8C5A,#1f6f46);
+    font-size:17px; font-weight:800; padding:17px; border-radius:13px; margin:14px 0 4px;
+    box-shadow:0 8px 22px rgba(44,140,90,.28)}
+  .gobtn.sub{background:#fff; color:#2C8C5A; border:1.5px solid #bfe0cd; box-shadow:none; font-size:15px; padding:13px}
+  .bignum{list-style:none; padding:0; margin:14px 0 0}
+  .bignum li{position:relative; padding:11px 0 11px 42px; font-size:14.5px; border-top:1px solid var(--line)}
+  .bignum li:first-child{border-top:none}
+  .bignum li::before{content:counter(bn); counter-increment:bn; position:absolute; left:0; top:10px;
+    width:28px; height:28px; border-radius:50%; background:#eaf5ef; color:#1f6f46;
+    font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center}
+  .bignum{counter-reset:bn}
   .tip{background:#fdeef6; border:1px solid #f6c6e2; border-radius:12px; padding:13px 15px; margin-top:14px; font-size:13.5px; color:#7a2e5c}
   .tip b{color:#59204a}
   .next{display:flex; align-items:center; gap:10px; background:#eaf1f9; border:1px solid #cfe0f4;
@@ -110,13 +122,20 @@
   <!-- STEP 2 -->
   <section class="card">
     <div class="sec-title"><span class="step-no">2</span>도메인 구입하기</div>
-    <p class="sec-desc">국내에서 많이 쓰는 곳: 가비아 · 후이즈 · 카페24. (연 1~2만원대)</p>
-    <ul class="guide">
-      <li><b>가비아(gabia.com)</b> 예시 — 검색창에 원하는 주소 입력 → 사용 가능하면 <span class="kbd">신청하기</span></li>
-      <li>기간(보통 1년) 선택 → 결제 → 내 계정에 도메인 등록 완료</li>
-      <li>구입 후 <b>「My가비아 → 도메인 관리」</b> 화면을 열어둡니다 (다음 단계에서 씀)</li>
-    </ul>
-    <div class="tip">💡 도메인은 <b>구입한 순간엔 아직 내 사이트와 연결 안 됨.</b> 3단계에서 연결해야 진짜 내 주소가 됩니다.</div>
+    <p class="sec-desc">아래 버튼을 눌러 가비아에서 바로 검색·구매하세요. (연 1~2만원대)</p>
+
+    <a class="gobtn" href="https://domain.gabia.com/" target="_blank" rel="noopener">🔗 가비아에서 도메인 검색하기 →</a>
+
+    <ol class="bignum">
+      <li>버튼을 누르면 열리는 <b>검색창에 원하는 주소</b>를 입력해요. (예: <b>mycolor.com</b>)</li>
+      <li>초록색 <b>「등록 가능」</b>이 뜨면 → <span class="kbd">신청하기</span> → <span class="kbd">장바구니</span></li>
+      <li><b>등록 기간 1년</b> 선택 → 로그인/가입 → <b>결제</b>하면 내 도메인이 됩니다.</li>
+      <li>구입 후 <b>「My가비아 → 도메인 → 관리」</b> 화면을 열어두세요. (다음 3단계에서 사용)</li>
+    </ol>
+
+    <a class="gobtn sub" href="https://whois.co.kr/" target="_blank" rel="noopener">가비아 말고 다른 곳 — 후이즈에서 검색하기 →</a>
+
+    <div class="tip">💡 도메인은 <b>구입한 순간엔 아직 내 사이트와 연결 안 됨.</b> 3단계에서 넷플리에 연결해야 진짜 내 주소가 됩니다.</div>
     <div class="checks">
       <label><input type="checkbox"><span>도메인 구입 완료</span></label>
     </div>
