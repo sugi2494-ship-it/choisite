@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 1. 웹페이지 방향 설정 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.65; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:640px; margin:0 auto; padding:0 18px 60px}
+  .enginebar{display:flex; height:6px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:30px 18px 8px; max-width:640px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
+  h1{font-size:23px; font-weight:800; margin:8px 0 6px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0}
+  .flow{display:flex; align-items:center; gap:6px; margin-top:14px; font-size:11.5px; font-weight:700; color:var(--sub)}
+  .flow b{background:var(--ink); color:#fff; padding:6px 10px; border-radius:7px; font-weight:700}
+  .flow i{font-style:normal; padding:6px 8px; background:#eceef0; border-radius:7px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin-top:18px}
+  .sec-title{font-size:16.5px; font-weight:800; margin:0 0 2px; display:flex; align-items:center; gap:8px}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block}
+  .sec-desc{font-size:13px; color:var(--sub); margin:4px 0 16px}
+  .field{margin-bottom:18px}
+  .field:last-child{margin-bottom:0}
+  label{display:block; font-size:14.5px; font-weight:700; margin-bottom:6px}
+  .hint{font-size:12.5px; color:var(--sub); font-weight:500; margin:-2px 0 8px}
+  input[type=text],input[type=url],textarea{width:100%; padding:11px 12px; border:1px solid var(--line);
+    border-radius:10px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink)}
+  textarea{resize:vertical; min-height:72px}
+  input:focus,textarea:focus{outline:2px solid var(--blue); outline-offset:1px; border-color:var(--blue)}
+  .opts{display:flex; flex-direction:column; gap:8px}
+  .opts label{display:flex; align-items:flex-start; gap:10px; font-weight:600; font-size:14px; margin:0;
+    border:1px solid var(--line); border-radius:11px; padding:12px 14px; cursor:pointer; background:#fff}
+  .opts label:has(input:checked){border-color:var(--blue); background:#eef4fb; color:var(--blue)}
+  .opts input{margin-top:3px; accent-color:var(--blue); flex:0 0 auto}
+  .opts small{display:block; font-weight:500; color:var(--sub); font-size:12.5px; margin-top:2px}
+  .opts label:has(input:checked) small{color:var(--blue); opacity:.85}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chips label{display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; margin:0;
+    border:1px solid var(--line); border-radius:999px; padding:8px 14px; cursor:pointer; background:#fff}
+  .chips label:has(input:checked){border-color:var(--pink); background:#fdeef6; color:var(--pink)}
+  .chips input{accent-color:var(--pink)}
+  .paste{width:100%; min-height:140px; border:2px dashed var(--pink); border-radius:12px; padding:14px;
+    font-size:13.5px; font-family:inherit; background:#fffafd; resize:vertical}
+  .btn{width:100%; border:none; color:#fff; font-size:16px; font-weight:800; padding:15px;
+    border-radius:12px; cursor:pointer; margin-top:12px; font-family:inherit}
+  .btn.sm{font-size:14.5px; padding:12px; margin-top:10px}
+  .tipbox{background:#fdeef6; border:1px solid #f6c6e2; border-radius:12px; padding:12px 16px}
+  .tipbox p{font-size:12.5px; color:#8a2e63; margin:0}
+  .okbox{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:12px; padding:14px 16px; margin-top:12px; display:none}
+  .okbox h4{margin:0 0 8px; font-size:13.5px; color:var(--green)}
+  .okbox ul{margin:0; padding-left:18px}
+  .okbox li{font-size:13px; color:#2f4b3b; margin-bottom:3px}
+  .menuwrap{display:none}
+  .menuhead{background:#eef4fb; border:1px solid #c6dbf2; border-radius:12px; padding:13px 16px; margin-bottom:14px}
+  .menuhead p{margin:0; font-size:13px; color:#1d4b7d}
+  .menulist{display:flex; flex-direction:column; gap:7px}
+  .menulist label{display:flex; align-items:flex-start; gap:10px; font-weight:600; font-size:14px; margin:0;
+    border:1px solid var(--line); border-radius:10px; padding:11px 13px; cursor:pointer; background:#fff}
+  .menulist label:has(input:checked){border-color:var(--green); background:#f0f9f4}
+  .menulist input{margin-top:3px; accent-color:var(--green); flex:0 0 auto}
+  .menulist small{display:block; font-weight:500; color:var(--sub); font-size:12px; margin-top:1px}
+  .genbox{width:100%; min-height:360px; background:#0f1720; color:#e8eef4; border:none; border-radius:12px;
+    padding:16px; font-size:13px; line-height:1.7; resize:vertical; font-family:"Consolas","Courier New",monospace}
+  .later{background:#fff8e6; border:1px solid #f0d98a; border-radius:12px; padding:14px 16px; margin-top:16px}
+  .later p{font-size:13px; color:#7a5a00; margin:0}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:28px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
+  <h1>활동 1. 웹페이지 방향 설정</h1>
+  <p class="lead">웹페이지는 예쁘게 만드는 것이 아니라 <b>목표를 이루도록 설계</b>하는 것입니다.
+  내가 얻고자 하는 결과를 먼저 정하고, 그 결과가 나오도록 <b>구조와 메뉴</b>를 설계합니다.</p>
+  <div class="flow"><b>목표</b><i>→</i><b>구조·메뉴</b><i>→</i><b>콘텐츠</b><i>→</i><b>프롬프트</b></div>
+</header>
+
+<div class="wrap">
+  <form id="f">
+
+    <!-- 1. 브랜드 자산 -->
+    <section class="card" style="border:2px solid var(--pink)">
+      <div class="sec-title"><span class="dot" style="background:var(--pink)"></span>1. 나의 브랜드 자산 불러오기</div>
+      <p class="sec-desc">활동 0에서 정리한 <b>나의 정체성·강점·대상</b>을 그대로 가져옵니다.
+      활동 0의 「요약 복사하기」로 복사한 내용을 아래에 붙여넣으세요.</p>
+
+      <textarea id="paste" class="paste" placeholder="여기에 활동 0 요약을 붙여넣으세요.
+
+[나 발견하기 요약]
+· 나의 이야기: …
+· 나의 대상: …
+· 강점 색 성향: …
+· 한 문장: …"></textarea>
+      <button type="button" class="btn sm" id="loadBtn" style="background:var(--pink)">브랜드 자산 불러오기</button>
+
+      <div class="okbox" id="okbox">
+        <h4>✅ 불러온 브랜드 자산</h4>
+        <ul id="okList"></ul>
+      </div>
+
+      <div class="tipbox" style="margin-top:12px">
+        <p>💡 활동 0을 아직 안 하셨다면 이 칸은 비워두고 아래부터 진행하셔도 됩니다.</p>
+      </div>
+    </section>
+
+    <!-- 2. 목표 설정 -->
+    <section class="card" style="border:2px solid var(--red)">
+      <div class="sec-title"><span class="dot" style="background:var(--red)"></span>2. 이 웹페이지로 얻고 싶은 결과</div>
+      <p class="sec-desc">가장 중요한 단계입니다. <b>무엇을 얻기 위해</b> 이 페이지를 만드는지 정하면,
+      필요한 메뉴와 구조가 결정됩니다.</p>
+
+      <div class="field"><label>이 페이지의 핵심 목표</label>
+        <p class="hint">가장 가까운 것 하나를 골라주세요. 이 선택에 따라 필요한 메뉴가 자동으로 제안됩니다.</p>
+        <div class="opts" id="goalOpts">
+          <label><input type="radio" name="goal" value="lecture" /><span>강의 접수·수강 신청 받기<small>일정을 열고 수강생을 모집한다</small></span></label>
+          <label><input type="radio" name="goal" value="cert" /><span>자격과정·강사 양성 모집하기<small>기수를 모집하고 자격 취득으로 이끈다</small></span></label>
+          <label><input type="radio" name="goal" value="consult" /><span>컨설팅·상담 의뢰 받기<small>1:1 상담·진단·컨설팅 예약을 받는다</small></span></label>
+          <label><input type="radio" name="goal" value="b2b" /><span>기업·기관 교육 의뢰 받기<small>담당자에게 신뢰를 주고 제안 문의를 받는다</small></span></label>
+          <label><input type="radio" name="goal" value="brand" /><span>전문가로 나를 알리기<small>신뢰를 쌓고 나를 기억하게 만든다</small></span></label>
+          <label><input type="radio" name="goal" value="product" /><span>제품·교구 판매하기<small>제품을 소개하고 구매로 연결한다</small></span></label>
+        </div>
+      </div>
+
+      <div class="field"><label>구체적으로 어떤 결과가 나오면 성공인가요?</label>
+        <p class="hint">숫자나 상황으로 적으면 더 좋습니다. 예) 한 달에 강의 문의 5건 / 1기 12명 모집 완료</p>
+        <input type="text" name="kpi" placeholder="예) 매달 강의 문의 5건 이상 받기" /></div>
+
+      <div class="field"><label>이 페이지에 꼭 알려야 할 것(홍보할 것)은 무엇인가요?</label>
+        <p class="hint">지금 가장 알리고 싶은 것. 예) 3월 개강 퍼스널컬러 자격 2기 / 신규 1:1 컨설팅 오픈</p>
+        <input type="text" name="promo" placeholder="예) 3월 개강 컬러강점 지도사 2기 모집" /></div>
+    </section>
+
+    <!-- 3. 구조·메뉴 -->
+    <section class="card" style="border:2px solid var(--green)">
+      <div class="sec-title"><span class="dot" style="background:var(--green)"></span>3. 목표에 맞는 구조·메뉴 설계</div>
+      <p class="sec-desc">목표를 고르면, 그 결과가 나오기 위해 <b>반드시 필요한 메뉴</b>가 제안됩니다.
+      필요 없는 것은 해제하고, 없는 것은 직접 추가하세요.</p>
+
+      <div id="menuEmpty" class="tipbox"><p>👆 먼저 위에서 <b>핵심 목표</b>를 선택해 주세요.</p></div>
+
+      <div class="menuwrap" id="menuwrap">
+        <div class="menuhead"><p id="menuMsg"></p></div>
+        <div class="menulist" id="menuList"></div>
+
+        <div class="field" style="margin-top:16px"><label>직접 추가하고 싶은 메뉴</label>
+          <p class="hint">쉼표로 구분해서 적어주세요.</p>
+          <input type="text" name="extraMenu" placeholder="예) 갤러리, 자주 묻는 질문" /></div>
+      </div>
+    </section>
+
+    <!-- 4. 콘텐츠 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>4. 메뉴를 채울 핵심 내용</div>
+      <p class="sec-desc">위에서 정한 메뉴 안에 들어갈 내용입니다. 아는 만큼만 적으세요.</p>
+
+      <div class="field"><label>브랜드명 · 활동명</label>
+        <p class="hint">페이지 맨 위에 들어갈 이름</p>
+        <input type="text" name="brand" placeholder="예) OOO 컬러심리연구소" /></div>
+
+      <div class="field"><label>대표 강의 · 서비스 · 제품</label>
+        <p class="hint">이름 + 한 줄 설명. 줄바꿈해서 여러 개 적어주세요.</p>
+        <textarea name="offers" placeholder="퍼스널컬러 1일 특강 — 나에게 맞는 색 찾기&#10;컬러강점 지도사 자격과정 — 8주 과정"></textarea></div>
+
+      <div class="field"><label>진행 방식 · 커리큘럼</label>
+        <p class="hint">대상·시간·다루는 내용·진행 순서 정도만</p>
+        <textarea name="curriculum"></textarea></div>
+
+      <div class="field"><label>일정 · 가격 · 신청 방법</label>
+        <p class="hint">모집 중이라면 꼭 적어주세요. 미정이면 "문의 시 안내"라고 적어도 됩니다.</p>
+        <textarea name="pricing" placeholder="예) 3월 15일 개강 / 매주 토 오전 / 정원 12명 / 수강료 문의"></textarea></div>
+
+      <div class="field"><label>신뢰를 주는 자료</label>
+        <p class="hint">후기, 사례, 실적, 자격, 협력 기관 등. 있는 것만 적으세요.</p>
+        <textarea name="trust"></textarea></div>
+
+      <div class="field"><label>문의·신청 연결 수단</label>
+        <p class="hint">방문자가 실제로 연락할 통로. 이게 없으면 목표가 이뤄지지 않습니다.</p>
+        <textarea name="contact" placeholder="전화: 010-0000-0000&#10;카톡: https://open.kakao.com/...&#10;인스타: https://instagram.com/..."></textarea></div>
+    </section>
+
+    <!-- 5. 톤 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--yellow)"></span>5. 톤 · 분위기</div>
+      <p class="sec-desc">브랜드에 맞는 인상을 정합니다.</p>
+      <div class="field"><label>원하는 분위기</label>
+        <p class="hint">여러 개 선택 가능</p>
+        <div class="chips" id="moodChips">
+          <label><input type="checkbox" value="단정하고 신뢰감 있는" />단정·신뢰감</label>
+          <label><input type="checkbox" value="따뜻한" />따뜻한</label>
+          <label><input type="checkbox" value="고급스러운" />고급스러운</label>
+          <label><input type="checkbox" value="밝고 컬러풀한" />밝고 컬러풀</label>
+          <label><input type="checkbox" value="세련되고 미니멀한" />세련·미니멀</label>
+          <label><input type="checkbox" value="전문적이고 신뢰가는" />전문적</label>
+        </div>
+      </div>
+      <div class="field"><label>강조하고 싶은 색</label>
+        <input type="text" name="colors" placeholder="예) 코랄 + 아이보리" /></div>
+      <div class="field"><label>참고하고 싶은 사이트</label>
+        <input type="url" name="ref" placeholder="https://" /></div>
+    </section>
+
+    <!-- 6. 프롬프트 -->
+    <section class="card" style="border:2px solid var(--ink)">
+      <div class="sec-title"><span class="dot" style="background:var(--ink)"></span>6. 나만의 브랜딩 웹사이트 프롬프트</div>
+      <p class="sec-desc">지금까지 설계한 <b>목표 · 구조 · 메뉴 · 콘텐츠</b>가 하나의 제작 지시문으로 완성됩니다.
+      복사해 Claude에 붙여넣으면 내 웹사이트가 만들어집니다.</p>
+
+      <button type="button" class="btn" id="genBtn" style="background:var(--ink); margin-top:0">내 웹사이트 제작 프롬프트 완성하기</button>
+
+      <div id="genWrap" style="display:none; margin-top:14px">
+        <textarea id="genOut" readonly class="genbox"></textarea>
+        <button type="button" class="btn" id="copyBtn" style="background:var(--pink)">📋 프롬프트 복사하기</button>
+        <div class="later">
+          <p><b>📷 사진·로고는 나중에 넣습니다.</b> 프롬프트에 "사진 자리를 만들어 달라"는 요청이 포함돼 있습니다.
+          초안이 나온 뒤 Claude에 사진을 첨부하면서 <b>"이 사진을 프로필 자리에 넣어줘"</b> 라고 하면 됩니다.</p>
+        </div>
+      </div>
+    </section>
+  </form>
+
+    <a href="활동2_페이지만들고다듬기.html" style="display:block;max-width:620px;margin:18px auto 0;text-align:center;text-decoration:none;background:#E91E8C;color:#fff;font-weight:800;font-size:15.5px;padding:15px;border-radius:12px">➡ 다음: 활동 2. 페이지 만들고 다듬기</a>
+<footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
+</div>
+
+<script>
+const f=document.getElementById("f");
+const val=n=>{const el=f.elements[n];return el?(el.value||"").trim():"";};
+const pick=n=>{const el=f.querySelector(`input[name="${n}"]:checked`);return el?el.value:"";};
+
+/* ── 활동 0 자산 불러오기 ── */
+const A0={};
+const MAP={"나의 이야기":"story","자주 부탁받는 것":"asked","쉽게 되는 것":"easy",
+  "나의 대상":"target","내 전문":"expertise","강점 색 성향":"color","한 문장":"oneliner"};
+const LBL={story:"나의 이야기",asked:"자주 부탁받는 것",easy:"쉽게 되는 것",target:"나의 대상",
+  expertise:"내 전문",color:"강점 색 성향",oneliner:"한 문장 정의"};
+document.getElementById("loadBtn").addEventListener("click", ()=>{
+  const raw=document.getElementById("paste").value;
+  if(!raw.trim()){ alert("활동 0에서 복사한 요약을 먼저 붙여넣어 주세요."); return; }
+  Object.keys(A0).forEach(k=>delete A0[k]);
+  raw.split("\n").forEach(l=>{
+    const m=l.match(/^\s*[·\-•]\s*([^:]+):\s*(.+)$/);
+    if(m){ const k=MAP[m[1].trim()], v=m[2].trim(); if(k&&v&&v!=="-") A0[k]=v; }
+  });
+  const keys=Object.keys(A0), list=document.getElementById("okList");
+  list.innerHTML = keys.length
+    ? keys.map(k=>`<li><b>${LBL[k]}</b> — ${A0[k].length>40?A0[k].slice(0,40)+"…":A0[k]}</li>`).join("")
+    : "<li>인식된 항목이 없습니다. 활동 0의 「요약 복사하기」 내용을 그대로 붙여넣어 주세요.</li>";
+  document.getElementById("okbox").style.display="block";
+});
+
+/* ── 목표별 메뉴 설계 ── */
+const GOALS={
+  lecture:{ name:"강의 접수·수강 신청 받기",
+    msg:"수강 신청이 일어나려면 <b>강의 내용 → 신뢰 → 일정·비용 → 신청</b> 순서로 정보가 이어져야 합니다.",
+    menus:[["강의 소개","무엇을 배우는지 한눈에",1],["커리큘럼·진행 방식","어떻게 진행되는지",1],
+      ["모집 일정·수강료","언제, 얼마인지",1],["수강 신청·문의 버튼","실제 신청 통로 (필수)",1],
+      ["수강 후기","먼저 들은 사람의 증거",1],["강사 소개","누구에게 배우는지",1],["자주 묻는 질문",  "망설임 해소",0]]},
+  cert:{ name:"자격과정·강사 양성 모집하기",
+    msg:"자격과정은 <b>이 과정을 마치면 무엇이 되는가</b>가 가장 중요합니다. 이수 후의 변화를 먼저 보여주세요.",
+    menus:[["과정 개요·취득 자격","마치면 무엇이 되는지 (필수)",1],["커리큘럼·이수 체계","단계와 시간",1],
+      ["기수 모집 일정","언제 시작하는지",1],["수강료·지원 안내","비용과 혜택",1],
+      ["수료 후 활동·진로","자격 취득 후의 길",1],["신청·상담 버튼","실제 신청 통로 (필수)",1],
+      ["수료생 후기","먼저 걸어간 사람",1],["자주 묻는 질문","자격 관련 의문 해소",0]]},
+  consult:{ name:"컨설팅·상담 의뢰 받기",
+    msg:"상담 의뢰는 <b>내 문제를 해결해 줄 사람</b>이라는 확신에서 일어납니다. 과정과 결과를 구체적으로 보여주세요.",
+    menus:[["이런 분께 필요합니다","내 얘기라고 느끼게",1],["컨설팅 소개","무엇을 해주는지",1],
+      ["진행 과정·소요 시간","어떻게 진행되는지",1],["가격·프로그램 안내","비용 투명하게",1],
+      ["상담 예약·문의 버튼","실제 예약 통로 (필수)",1],["실제 사례·전후 변화","결과의 증거",1],
+      ["컨설턴트 소개","누가 해주는지",1]]},
+  b2b:{ name:"기업·기관 교육 의뢰 받기",
+    msg:"담당자는 <b>검증된 사람인가</b>를 봅니다. 실적과 프로그램을 앞에 배치하세요.",
+    menus:[["교육 프로그램 소개","어떤 교육이 가능한지",1],["대상별 커리큘럼","직급·목적별 구성",1],
+      ["교육 실적·고객사","검증의 핵심 (필수)",1],["강사 프로필·경력","전문성 증명",1],
+      ["교육 진행 사진·현장","실제 활동 증거",1],["제안서 요청·문의","담당자 연락 통로 (필수)",1]]},
+  brand:{ name:"전문가로 나를 알리기",
+    msg:"신뢰는 <b>이야기 + 활동의 증거</b>에서 생깁니다. 나열보다 흐름으로 보여주세요.",
+    menus:[["나를 한 문장으로","첫 화면 핵심 메시지 (필수)",1],["나의 이야기","왜 이 일을 하는지",1],
+      ["전문 분야·강점","무엇을 잘하는지",1],["활동·강의 이력","무엇을 해왔는지",1],
+      ["미디어·출간·수상","외부 검증",0],["연락처·SNS","기억하고 연결되는 통로 (필수)",1]]},
+  product:{ name:"제품·교구 판매하기",
+    msg:"구매는 <b>이게 나에게 왜 필요한가</b>가 이해될 때 일어납니다. 활용 장면을 보여주세요.",
+    menus:[["제품 소개","무엇인지 한눈에",1],["이런 분께 좋습니다","필요를 느끼게",1],
+      ["구성·사용 방법","어떻게 쓰는지",1],["가격·구매 안내","얼마인지",1],
+      ["구매·주문 버튼","실제 구매 통로 (필수)",1],["사용 후기","구매자의 증거",1]]}
+};
+const menuwrap=document.getElementById("menuwrap"), menuEmpty=document.getElementById("menuEmpty");
+document.getElementById("goalOpts").addEventListener("change", e=>{
+  const g=GOALS[e.target.value]; if(!g) return;
+  document.getElementById("menuMsg").innerHTML=`<b>${g.name}</b> — ${g.msg}`;
+  document.getElementById("menuList").innerHTML=g.menus.map((m,i)=>
+    `<label><input type="checkbox" class="mn" value="${m[0]}" ${m[2]?"checked":""} />
+     <span>${m[0]}<small>${m[1]}</small></span></label>`).join("");
+  menuEmpty.style.display="none"; menuwrap.style.display="block";
+});
+
+const moods=()=>[...document.querySelectorAll("#moodChips input:checked")].map(c=>c.value).join(", ");
+const menus=()=>[...document.querySelectorAll(".mn:checked")].map(c=>c.value);
+
+/* ── 프롬프트 생성 ── */
+function L(l,v){ return v?`- ${l}: ${v}\n`:""; }
+function build(){
+  const gk=pick("goal"), g=GOALS[gk];
+  const brand=val("brand")||"(브랜드명 미정)";
+  const list=menus(); const extra=val("extraMenu");
+  if(extra) extra.split(",").map(s=>s.trim()).filter(Boolean).forEach(s=>list.push(s));
+
+  let p="";
+  p+="나만의 브랜딩 웹사이트(한 페이지)를 만들어줘.\n";
+  p+="아래는 내가 직접 설계한 목표와 구조야. 예쁘게만 만들지 말고,\n";
+  p+="아래 '목표'가 실제로 이뤄지도록 설계해줘. 모바일에서 잘 보이게 만들고 화면에 바로 보여줘.\n\n";
+
+  p+="【이 페이지의 목표】\n";
+  p+=L("핵심 목표", g?g.name:"");
+  p+=L("성공 기준", val("kpi"));
+  p+=L("지금 가장 알려야 할 것", val("promo"));
+
+  p+="\n【나의 브랜드】\n";
+  p+=L("브랜드명", val("brand"));
+  p+=L("나를 한 문장으로", A0.oneliner);
+  p+=L("주요 대상", A0.target);
+  p+=L("나의 강점 성향", A0.color);
+  p+=L("사람들이 자주 부탁하는 것", A0.asked);
+  p+=L("나의 이야기", A0.story);
+  p+=L("전문 분야", A0.expertise);
+
+  p+="\n【반드시 들어가야 할 메뉴·섹션】\n";
+  if(list.length){ list.forEach((m,i)=>{ p+=`${i+1}. ${m}\n`; }); }
+  else p+="(직접 지정하지 않음 — 목표에 맞게 제안해줘)\n";
+
+  p+="\n【각 섹션에 넣을 내용】\n";
+  p+=L("대표 강의·서비스·제품", val("offers"));
+  p+=L("진행 방식·커리큘럼", val("curriculum"));
+  p+=L("일정·가격·신청 방법", val("pricing"));
+  p+=L("신뢰 자료(후기·실적·자격)", val("trust"));
+  p+=L("문의·신청 연결 수단", val("contact"));
+
+  p+="\n【톤·디자인】\n";
+  p+=L("분위기", moods());
+  p+=L("강조색", val("colors"));
+  p+=L("참고 사이트", val("ref"));
+
+  p+="\n【설계 지침】\n";
+  p+="1) 위 메뉴 순서를 그대로 페이지 구성 순서로 삼아줘. 각 섹션에 제목을 달아줘.\n";
+  p+="2) 첫 화면에는 브랜드명과 '나를 한 문장으로'를 크게 배치하고,\n";
+  p+="   지금 가장 알려야 할 것을 눈에 띄게 함께 보여줘.\n";
+  if(g) p+=`3) 방문자가 '${g.name}'에 도달하도록, 문의·신청 버튼을 첫 화면과 페이지 맨 아래에 각각 배치해줘.\n`;
+  p+="4) 내 강점과 이야기는 나열식이 아니라 읽히는 문장으로 자연스럽게 녹여줘.\n";
+  p+="5) 프로필 사진과 로고가 들어갈 자리는 미리 만들어줘. 파일은 내가 나중에 첨부할게.\n";
+  p+="6) 한글 줄바꿈이 어색하지 않게, 모바일에서 읽기 편하게 만들어줘.\n";
+  p+="7) 완성 후, 이 목표를 더 잘 이루기 위해 내가 보완하면 좋을 점 3가지를 알려줘.\n";
+  return p.trim();
+}
+
+const genWrap=document.getElementById("genWrap"), genOut=document.getElementById("genOut");
+document.getElementById("genBtn").addEventListener("click", ()=>{
+  if(!pick("goal")){ alert("2번에서 이 페이지의 핵심 목표를 먼저 선택해 주세요.\n목표에 따라 구조와 메뉴가 결정됩니다."); 
+    document.getElementById("goalOpts").scrollIntoView({behavior:"smooth",block:"center"}); return; }
+  genOut.value=build();
+  genWrap.style.display="block";
+  genOut.scrollIntoView({behavior:"smooth", block:"center"});
+});
+document.getElementById("copyBtn").addEventListener("click", async ()=>{
+  try{ await navigator.clipboard.writeText(genOut.value); }
+  catch(e){ genOut.select(); document.execCommand("copy"); }
+  const b=document.getElementById("copyBtn"), o=b.textContent;
+  b.textContent="✅ 복사됐어요! Claude에 붙여넣으세요"; setTimeout(()=>b.textContent=o,2000);
+});
+</script>
+</body>
+</html>
