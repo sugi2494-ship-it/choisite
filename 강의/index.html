@@ -105,11 +105,12 @@ fetch(SUPA_URL+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{he
    var items=rows[0].value;
    var grid=document.getElementById('courseGrid');
    grid.innerHTML=items.map(function(it,i){
-     var seq=('0'+(i+1)).slice(-2);
+     var num=('0'+(i+1)).slice(-2);
+     var seq=it.no||num;
      var page=it.page||('course.html?c='+(it.id||''));
      if(page.charAt(0)!=='/') page='/강의/'+page;
      var isCourse=/course\.html/.test(page);
-     var pw=seq+'1004';
+     var pw=num+'1004';
      var tags=(it.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
      var plan=(it.proposal_url&&isCourse)?'<a class="planbtn" href="'+esc(it.proposal_url)+'" target="_blank" rel="noopener">📄 강의기획서</a>':'';
      var enter=isCourse?'<button class="enter" type="button" onclick="enterRoom(\''+page+'\',\''+pw+'\')">입장 →</button>':'<a class="enter" href="'+esc(page)+'">입장 →</a>';
