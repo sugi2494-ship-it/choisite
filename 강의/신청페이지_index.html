@@ -230,10 +230,11 @@
         <div class="chip">모집<b>선착순 8명</b></div>
       </div>
       <div class="infobar" style="margin-top:12px;">
-        <div class="datechip" style="opacity:.5;border-color:var(--line)">1회차<b style="text-decoration:line-through">7/17 (금)</b><span style="display:block;color:#D23B30;font-size:11px;font-weight:800;margin-top:2px">마감</span></div>
-        <div class="datechip" style="background:var(--pink-soft)">2회차<b>8/1 (토)</b><span style="display:block;color:var(--pink-deep);font-size:11px;font-weight:800;margin-top:2px">추가 접수중</span></div>
+        <div class="datechip" style="opacity:.5;border-color:var(--line)">1회차<b style="text-decoration:line-through">7/17 (금)</b><span style="display:block;color:#8a8a8a;font-size:11px;font-weight:800;margin-top:2px">종료</span></div>
+        <div class="datechip" style="background:var(--pink-soft)">2회차<b>8/1 (토) 현장</b><span style="display:block;color:var(--pink-deep);font-size:11px;font-weight:800;margin-top:2px">접수중</span></div>
+        <div class="datechip" style="background:var(--pink-soft)">3회차<b>8/2 (일) 온라인</b><span style="display:block;color:var(--pink-deep);font-size:11px;font-weight:800;margin-top:2px">접수중 · 4명</span></div>
       </div>
-      <p class="lead2" style="margin-top:12px;font-size:14px;font-weight:800;color:var(--pink-deep);">🔴 7/17(금) 회차 매진! &nbsp;8/1(토) 추가 접수 중입니다 · 10:00-15:00</p>
+      <p class="lead2" style="margin-top:12px;font-size:14px;font-weight:800;color:var(--pink-deep);">🟢 8/1(토) 울산 현장 · 8/2(일) 온라인(4명) 회차 접수 중입니다 · 10:00–15:00</p>
       <div style="margin-top:24px;">
         <a href="#apply" class="cta">지금 신청하기 →</a>
       </div>
@@ -401,8 +402,9 @@
           <div class="field">
             <label>신청 회차 <span class="req">*</span></label>
             <div class="session-group">
-              <label class="session-opt" style="opacity:.55;cursor:not-allowed"><input type="radio" name="session" value="1회차 · 7/17(금) 10:00-15:00" disabled /><span class="si"><b>1회차 · 7월 17일 (금) &nbsp;<span style="color:#D23B30">— 마감(매진) 🔴</span></b><small>선착순 마감되었습니다. 8월 1일 회차로 신청해 주세요.</small></span></label>
-              <label class="session-opt sel"><input type="radio" name="session" value="2회차 · 8/1(토) 10:00-15:00" checked /><span class="si"><b>2회차 · 8월 1일 (토) &nbsp;<span style="color:var(--pink-deep)">— 추가 접수중 ✅</span></b><small>10:00 – 15:00 · 울산 실시간 현장</small></span></label>
+              <label class="session-opt" style="opacity:.55;cursor:not-allowed"><input type="radio" name="session" value="1회차 · 7/17(금) 10:00-15:00" disabled /><span class="si"><b>1회차 · 7월 17일 (금) &nbsp;<span style="color:#8a8a8a">— 종료</span></b><small>진행 완료된 회차입니다. 아래 회차로 신청해 주세요.</small></span></label>
+              <label class="session-opt sel"><input type="radio" name="session" value="2회차 · 8/1(토) 10:00-15:00 울산 현장" checked /><span class="si"><b>2회차 · 8월 1일 (토) &nbsp;<span style="color:var(--pink-deep)">— 접수중 ✅</span></b><small>10:00 – 15:00 · 울산 실시간 현장</small></span></label>
+              <label class="session-opt"><input type="radio" name="session" value="3회차 · 8/2(일) 10:00-15:00 온라인" /><span class="si"><b>3회차 · 8월 2일 (일) 온라인 &nbsp;<span style="color:var(--pink-deep)">— 접수중 ✅</span></b><small>10:00 – 15:00 · 온라인 실시간(Zoom) · 정원 4명</small></span></label>
             </div>
           </div>
           <div class="field">
@@ -433,9 +435,27 @@
             <label>이력</label>
             <textarea name="career" placeholder="주요 경력·활동·자격증 등을 자유롭게 적어주세요"></textarea>
           </div>
+          <div style="background:#FDF5F7;border:1px solid var(--line);border-left:4px solid var(--pink);border-radius:12px;padding:14px 16px;margin:6px 0 4px;font-size:13.5px;line-height:1.7;color:#7a5560;">
+            💡 <b>AI 활용 수준</b>과 <b>만들고 싶은 것</b>을 최대한 <b>명확하고 구체적으로</b> 적어주세요.<br>
+            비슷한 수준끼리 조를 나눠 수업을 진행하기 때문에, 정확히 작성해 주실수록 딱 맞는 수업을 받으실 수 있습니다.
+          </div>
+          <div class="field">
+            <label>AI 활용 수준 <span class="req">*</span></label>
+            <select name="ai_level" required style="width:100%;box-sizing:border-box;border:1.5px solid var(--line);border-radius:12px;padding:14px;font-size:15px;font-family:inherit;background:#fff;color:#443b42;">
+              <option value="">선택해 주세요</option>
+              <option value="① 거의 안 써봤어요 (AI 처음/이름만 들어봄)">① 거의 안 써봤어요 (AI 처음)</option>
+              <option value="② 가끔 챗봇에 질문해본 정도">② 가끔 챗GPT 등에 질문해본 정도</option>
+              <option value="③ 업무에 종종 활용하는 편">③ 업무에 종종 활용하는 편</option>
+              <option value="④ 자주 활용, 프롬프트도 익숙함">④ 자주 활용 / 프롬프트도 익숙함</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>만들고 싶은 것 (구체적으로) <span class="req">*</span></label>
+            <textarea name="want_to_make" rows="4" required placeholder="어떤 웹페이지를 만들고 싶으신가요? 최대한 구체적으로 적어주세요.&#10;예) 퍼스널컬러 강사 소개 페이지 / 수강 신청 받는 랜딩페이지 / 포트폴리오 등&#10;· 참고하고 싶은 사이트, 넣고 싶은 메뉴, 지금 겪고 있는 불편·해결하고 싶은 점도 함께 적어주시면 좋아요."></textarea>
+          </div>
           <div class="field">
             <label>신청한 이유 (구체적으로 적어주세요)</label>
-            <textarea name="reason" rows="4" placeholder="이 수업을 신청하신 이유를 구체적으로 적어주세요. 지금 겪고 계신 어려움, 이루고 싶은 목표, 만들고 싶은 웹페이지 등 자세할수록 수업 준비에 큰 도움이 됩니다."></textarea>
+            <textarea name="reason" rows="4" placeholder="이 수업을 신청하신 이유를 구체적으로 적어주세요. 지금 겪고 계신 어려움, 이루고 싶은 목표 등 자세할수록 수업 준비에 큰 도움이 됩니다."></textarea>
           </div>
           <div class="field">
             <label>하고 싶은 말</label>
@@ -515,12 +535,12 @@
   // 수강 후기 불러오기 (공개된 후기만)
   (async () => {
     try{
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/reviews?select=name,rating,content,created_at&status=eq.published&order=created_at.desc&limit=12`,{headers:{apikey:ANON_KEY,Authorization:"Bearer "+ANON_KEY}});
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/class_board?select=name,message,created_at&kind=eq.%ED%9B%84%EA%B8%B0&approved=eq.true&order=created_at.desc&limit=12`,{headers:{apikey:ANON_KEY,Authorization:"Bearer "+ANON_KEY}});
       const rows = await r.json();
       if(!Array.isArray(rows) || !rows.length) return;
       const fmt=(iso)=>{const d=new Date(iso);const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())}`;};
       const esc=s=>String(s||"").replace(/[<>]/g,"");
-      document.getElementById("reviewList").innerHTML = rows.map(v=>`<div style="background:#FDF5F7;border:1px solid var(--line);border-radius:16px;padding:20px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;"><span style="font-weight:800;">${esc(v.name)||"익명"}</span><span style="color:#FFB400;font-size:14px;letter-spacing:1px;">${"★".repeat(v.rating||5)}</span></div><div style="font-size:14.5px;white-space:pre-wrap;color:#443b42;line-height:1.7;">${esc(v.content)}</div><div style="color:var(--muted);font-size:12px;margin-top:10px;">${fmt(v.created_at)}</div></div>`).join("");
+      document.getElementById("reviewList").innerHTML = rows.map(v=>`<div style="background:#FDF5F7;border:1px solid var(--line);border-radius:16px;padding:20px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;"><span style="font-weight:800;">${esc(v.name)||"익명"}</span><span style="color:#FFB400;font-size:14px;letter-spacing:1px;">★★★★★</span></div><div style="font-size:14.5px;white-space:pre-wrap;color:#443b42;line-height:1.7;">${esc((v.message||"").replace(/^[★☆\s]+/,""))}</div><div style="color:var(--muted);font-size:12px;margin-top:10px;">${fmt(v.created_at)}</div></div>`).join("");
       document.getElementById("reviewSec").style.display="block";
     }catch(e){}
   })();
@@ -538,7 +558,7 @@
     errMsg.style.display = "none";
     const data = Object.fromEntries(new FormData(form).entries());
     if (!data.session) {
-      errMsg.textContent = "신청 회차(7/17 또는 8/1)를 선택해 주세요.";
+      errMsg.textContent = "신청 회차(8/1 현장 또는 8/2 온라인)를 선택해 주세요.";
       errMsg.style.display = "block";
       document.getElementById("apply").scrollIntoView({ behavior: "smooth" });
       return;
