@@ -173,7 +173,8 @@
           <div class="sfilter" id="sfilter">
             <button class="fbtn active" data-s="">전체 <b id="fcAll">0</b>명</button>
             <button class="fbtn" data-s="1회차">1회차 · 7/17 <b id="fc1">0</b>명</button>
-            <button class="fbtn" data-s="2회차">2회차 · 8/1 <b id="fc2">0</b>명</button>
+            <button class="fbtn" data-s="2회차">2회차 · 8/1 현장 <b id="fc2">0</b>명</button>
+            <button class="fbtn" data-s="3회차">3회차 · 8/2 온라인 <b id="fc3">0</b>/4명</button>
           </div>
           <div class="tablewrap"><table>
             <thead><tr><th class="chkcell"><input type="checkbox" id="chkAll" /></th><th>No</th><th>접수일시</th><th>회차</th><th>이름</th><th>연락처</th><th>진행 상태</th><th>문자 발송</th><th>생년월일</th><th>직업</th><th>AI수준</th><th>신청이유</th><th>만들고 싶은 것</th><th>하고 싶은 말</th></tr></thead>
@@ -423,6 +424,7 @@
     if($("fcAll"))$("fcAll").textContent=all.length;
     if($("fc1"))$("fc1").textContent=all.filter(r=>(r.session||"").includes("1회차")).length;
     if($("fc2"))$("fc2").textContent=all.filter(r=>(r.session||"").includes("2회차")).length;
+    if($("fc3"))$("fc3").textContent=all.filter(r=>(r.session||"").includes("3회차")).length;
     const rows=appFilter?all.filter(r=>(r.session||"").includes(appFilter)):all;
     $("cnt_apps").textContent=rows.length;$("e_apps").style.display=rows.length?"none":"block";
     if($("chkAll"))$("chkAll").checked=false;updateSel();
