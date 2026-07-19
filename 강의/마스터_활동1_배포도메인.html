@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>활동 1. 넷플리 배포 & 나만의 도메인 · AI 웹페이지 마스터과정 · 최해숙 강의실</title>
+<title>활동 1. 나만의 도메인 만들기 & 연결 · AI 웹페이지 마스터과정 · 최해숙 강의실</title>
 <meta name="robots" content="noindex" />
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
 <style>
@@ -28,22 +28,27 @@
   .eyebrow{font-size:13px; font-weight:700; color:var(--pink)}
   h1{font-size:23px; font-weight:800; margin:8px 0 6px; letter-spacing:-.01em}
   .lead{font-size:15px; color:var(--sub); margin:0}
+  .callout{background:#eaf5ef; border:1px solid #cde8d9; border-radius:12px; padding:13px 15px;
+    margin-top:14px; font-size:13.5px; color:#1c5638; max-width:660px; margin-left:auto; margin-right:auto}
+  .callout b{color:#15452c}
   .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin-top:18px}
   .sec-title{font-size:16px; font-weight:800; margin:0 0 4px; display:flex; align-items:center; gap:9px}
   .step-no{flex:0 0 auto; width:26px; height:26px; border-radius:8px; background:var(--ink); color:#fff;
     font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center}
   .sec-desc{font-size:13px; color:var(--sub); margin:2px 0 14px 35px}
-  .checks{display:flex; flex-direction:column; gap:9px}
+  .guide{margin:0; padding-left:20px; font-size:14px}
+  .guide li{margin:7px 0}
+  .guide b{color:var(--ink)}
+  .kbd{background:#eef1f4; border:1px solid #d7dde3; border-radius:6px; padding:1px 7px; font-size:12.5px; font-weight:700; white-space:nowrap}
+  .pick{border:1px solid var(--line); border-radius:11px; padding:13px 15px; margin-top:10px; font-size:13.5px}
+  .pick b{display:block; margin-bottom:3px}
+  .checks{display:flex; flex-direction:column; gap:9px; margin-top:12px}
   .checks label{display:flex; align-items:flex-start; gap:11px; font-size:14.5px; font-weight:600;
     border:1px solid var(--line); border-radius:11px; padding:12px 14px; cursor:pointer; background:#fff}
   .checks label:has(input:checked){border-color:var(--green); background:#eaf5ef; color:#1c5638}
   .checks input{margin-top:2px; width:18px; height:18px; accent-color:var(--green); flex:0 0 auto}
   .checks small{display:block; font-weight:500; color:var(--sub); margin-top:2px; font-size:12.5px}
   .checks label:has(input:checked) small{color:#3c7a58}
-  .guide{margin:0; padding-left:20px; font-size:14px}
-  .guide li{margin:6px 0}
-  .guide b{color:var(--ink)}
-  .kbd{background:#eef1f4; border:1px solid #d7dde3; border-radius:6px; padding:1px 7px; font-size:12.5px; font-weight:700; white-space:nowrap}
   .promptbox{background:#0f1720; color:#e8eef4; border-radius:12px; padding:16px;
     font-size:13px; line-height:1.7; white-space:pre-wrap;
     font-family:"Consolas","Courier New",monospace; margin-top:6px; max-height:280px; overflow:auto}
@@ -66,52 +71,25 @@
 
 <header>
   <div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터과정</div>
-  <h1>활동 1. 넷플리 배포 &amp; 나만의 도메인</h1>
-  <p class="lead">사전활동에서 점검한 내 사이트를, 이제 <b>누구나 들어올 수 있는 정식 주소</b>로 완성합니다.
-  넷플리(Netlify)에 올리고 → 주소를 정리하고 → 나만의 도메인을 연결해 → 자물쇠(https)까지 켭니다.</p>
+  <h1>활동 1. 나만의 도메인 만들기 &amp; 연결</h1>
+  <p class="lead">내 사이트는 이미 배포돼 있죠(넷플리 기본주소 <b>xxxxxx.netlify.app</b>).
+  이번 활동에서는 그 사이트에 <b>내 브랜드 주소(예: mycolor.com)</b>를 만들어 연결하고, 자물쇠(https)까지 켭니다.</p>
 </header>
+<div class="callout">✅ <b>배포는 이미 끝냈습니다.</b> (기본 과정 「AI 웹페이지 제작 · 활동 4. 배포하기」에서 완료) — 이 활동은 <b>도메인</b>만 집중해서 다룹니다.</div>
 
 <div class="wrap">
 
   <!-- STEP 1 -->
   <section class="card">
-    <div class="sec-title"><span class="step-no">1</span>넷플리에 내 사이트 올리기</div>
-    <p class="sec-desc">가장 쉬운 방법은 "드래그 배포"입니다.</p>
-    <ol class="guide">
-      <li><b>app.netlify.com</b> 로그인 → <span class="kbd">Add new site</span> → <span class="kbd">Deploy manually</span></li>
-      <li>내 사이트 <b>폴더(HTML 파일들)</b>를 드래그해서 올리기</li>
-      <li>몇 초 뒤 <b>xxxxxx.netlify.app</b> 주소가 생기면 성공 — 눌러서 잘 열리는지 확인</li>
-    </ol>
-    <div class="checks">
-      <label><input type="checkbox"><span>넷플리에 배포 완료 <small>xxxxxx.netlify.app 주소가 생겼다</small></span></label>
-      <label><input type="checkbox"><span>주소를 눌러 사이트가 정상으로 열린다</span></label>
-    </div>
-  </section>
-
-  <!-- STEP 2 -->
-  <section class="card">
-    <div class="sec-title"><span class="step-no">2</span>사이트 주소 정리하기</div>
-    <p class="sec-desc">넷플리 기본 주소(랜덤 글자)를 내 이름으로 바꿉니다.</p>
-    <ol class="guide">
-      <li>넷플리 사이트 → <span class="kbd">Site configuration</span> → <span class="kbd">Change site name</span></li>
-      <li>기억하기 쉬운 이름으로 (예: <b>choi-color.netlify.app</b>)</li>
-    </ol>
-    <div class="checks">
-      <label><input type="checkbox"><span>내 이름이 들어간 주소로 정리했다</span></label>
-    </div>
-  </section>
-
-  <!-- STEP 3 -->
-  <section class="card">
-    <div class="sec-title"><span class="step-no">3</span>나만의 도메인 연결 <span style="font-size:12px;color:var(--sub);font-weight:600">(추천)</span></div>
-    <p class="sec-desc">내 브랜드 주소(예: mycolor.com)가 있으면 훨씬 전문적으로 보입니다.</p>
-    <ol class="guide">
-      <li><b>도메인 구입</b> — 가비아·후이즈 등에서 원하는 주소 구매(연 1~2만원대)</li>
-      <li>넷플리 → <span class="kbd">Domain management</span> → <span class="kbd">Add a domain</span> → 내 도메인 입력</li>
-      <li>안내에 따라 <b>DNS 연결</b> — 도메인 구입처에서 네임서버를 넷플리 것으로 바꾸거나, 안내된 레코드 입력</li>
-      <li>연결되면 넷플리가 <b>https(자물쇠)를 자동으로</b> 켜줍니다 (몇 분~몇 시간 소요)</li>
-    </ol>
-    <p style="font-size:13.5px;font-weight:700;margin:14px 0 6px">💬 도메인 이름이 안 정해질 때 — 아래 프롬프트로 추천받기</p>
+    <div class="sec-title"><span class="step-no">1</span>도메인 이름 정하기</div>
+    <p class="sec-desc">주소는 한 번 정하면 오래 씁니다. 아래 기준으로 신중히 골라요.</p>
+    <ul class="guide">
+      <li><b>짧고 외우기 쉽게</b> — 발음했을 때 바로 받아 적을 수 있게</li>
+      <li><b>내 이름·브랜드가 들어가게</b> — 예: choihaesuk, pbscolor</li>
+      <li><b>하이픈(-)·숫자는 되도록 피하기</b> — 헷갈립니다</li>
+      <li><b>끝자리(.com / .kr / .co.kr)</b> — 가장 무난한 건 <span class="kbd">.com</span>, 국내 느낌은 <span class="kbd">.kr</span></li>
+    </ul>
+    <p style="font-size:13.5px;font-weight:700;margin:14px 0 6px">💬 안 정해질 때 — 추천받기 프롬프트</p>
     <div class="promptbox" id="p_domain">내 브랜드에 어울리는 도메인(웹사이트 주소) 이름을 추천해줘.
 
 - 내가 하는 일:
@@ -124,38 +102,87 @@
 3) 후보 8개를 표로: 도메인 | 읽는 법 | 추천 이유
 4) 이미 많이 쓰일 것 같은 건 표시해줘</div>
     <button class="copybtn" data-copy="p_domain" type="button">📋 도메인 추천 프롬프트 복사</button>
-    <div class="checks" style="margin-top:14px">
+    <div class="checks">
+      <label><input type="checkbox"><span>쓰고 싶은 도메인 이름을 정했다</span></label>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>도메인 구입하기</div>
+    <p class="sec-desc">국내에서 많이 쓰는 곳: 가비아 · 후이즈 · 카페24. (연 1~2만원대)</p>
+    <ul class="guide">
+      <li><b>가비아(gabia.com)</b> 예시 — 검색창에 원하는 주소 입력 → 사용 가능하면 <span class="kbd">신청하기</span></li>
+      <li>기간(보통 1년) 선택 → 결제 → 내 계정에 도메인 등록 완료</li>
+      <li>구입 후 <b>「My가비아 → 도메인 관리」</b> 화면을 열어둡니다 (다음 단계에서 씀)</li>
+    </ul>
+    <div class="tip">💡 도메인은 <b>구입한 순간엔 아직 내 사이트와 연결 안 됨.</b> 3단계에서 연결해야 진짜 내 주소가 됩니다.</div>
+    <div class="checks">
       <label><input type="checkbox"><span>도메인 구입 완료</span></label>
-      <label><input type="checkbox"><span>넷플리에 도메인 연결 + https 자물쇠 켜짐</span></label>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card">
+    <div class="sec-title"><span class="step-no">3</span>넷플리에 도메인 연결하기</div>
+    <p class="sec-desc">넷플리에 "이 주소를 내 사이트에 붙여줘"라고 알려주는 단계입니다.</p>
+    <ul class="guide">
+      <li>넷플리 내 사이트 → <span class="kbd">Domain management</span> → <span class="kbd">Add a domain</span></li>
+      <li>구입한 도메인 입력(예: mycolor.com) → <span class="kbd">Verify</span> → <span class="kbd">Add domain</span></li>
+    </ul>
+    <p style="font-size:14px;font-weight:800;margin:14px 0 6px">연결 방법은 둘 중 하나</p>
+    <div class="pick"><b>🟢 방법 A. 네임서버를 넷플리로 (권장·쉬움)</b>
+      넷플리가 알려주는 <b>네임서버 주소 4개</b>를, 가비아 「도메인 관리 → 네임서버 설정」에 그대로 입력.
+      이후 DNS는 넷플리가 알아서 관리 → 편합니다.</div>
+    <div class="pick"><b>🔵 방법 B. DNS 레코드 직접 입력</b>
+      가비아 「DNS 관리」에서 넷플리가 안내한 <span class="kbd">A 레코드</span>(뿌리주소용)와
+      <span class="kbd">CNAME</span>(www용)을 입력. 기존 메일 등 다른 설정을 유지하고 싶을 때.</div>
+    <div class="tip">⏳ 연결은 <b>보통 몇 분~몇 시간</b>(길면 하루) 걸립니다. 바로 안 돼도 정상이니 기다려요.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>넷플리에 도메인 추가 + 네임서버/DNS 설정 완료</span></label>
     </div>
   </section>
 
   <!-- STEP 4 -->
   <section class="card">
-    <div class="sec-title"><span class="step-no">4</span>최종 확인</div>
+    <div class="sec-title"><span class="step-no">4</span>자물쇠(https) 활성화</div>
+    <p class="sec-desc">연결이 되면 넷플리가 보안 인증서를 자동으로 발급합니다.</p>
+    <ul class="guide">
+      <li>넷플리 <span class="kbd">Domain management → HTTPS</span> 에서 <b>「Verify DNS configuration」</b> → 자동 발급</li>
+      <li>발급되면 <span class="kbd">Force HTTPS</span> 켜기 — 항상 자물쇠(https)로 열리게</li>
+      <li>주소창에 <b>🔒 자물쇠</b>가 보이면 완료</li>
+    </ul>
     <div class="checks">
-      <label><input type="checkbox"><span>📱 휴대폰에서 내 주소로 접속해 잘 열린다</span></label>
-      <label><input type="checkbox"><span>🔒 주소창에 자물쇠(https)가 보인다</span></label>
-      <label><input type="checkbox"><span>카톡·문자로 주소를 보냈을 때 제목·썸네일이 잘 뜬다</span></label>
+      <label><input type="checkbox"><span>🔒 https 자물쇠가 켜졌다</span></label>
     </div>
-    <p style="font-size:13.5px;font-weight:700;margin:16px 0 6px">🛠 배포·도메인이 안 될 때 — 문제 해결 프롬프트</p>
-    <div class="promptbox" id="p_fix">넷플리 배포/도메인 연결이 안 돼서 도움이 필요해. 초보도 알 수 있게 쉽게 알려줘.
+  </section>
 
-- 상황(무엇을 하다가 막혔는지):
+  <!-- STEP 5 -->
+  <section class="card">
+    <div class="sec-title"><span class="step-no">5</span>최종 점검</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>www 있는 주소 / 없는 주소 <u>둘 다</u> 열린다</span></label>
+      <label><input type="checkbox"><span>📱 휴대폰에서 새 도메인으로 접속된다</span></label>
+      <label><input type="checkbox"><span>카톡·문자로 주소 보냈을 때 제목·썸네일이 뜬다</span></label>
+    </div>
+    <p style="font-size:13.5px;font-weight:700;margin:16px 0 6px">🛠 도메인이 안 붙을 때 — 문제 해결 프롬프트</p>
+    <div class="promptbox" id="p_fix">넷플리에 도메인 연결이 안 돼서 도움이 필요해. 초보도 알 수 있게 쉽게 알려줘.
+
+- 도메인 구입처: (가비아/후이즈 등)
+- 내 도메인:
+- 넷플리 기본주소: (xxxxxx.netlify.app)
 - 화면에 뜬 메시지(있으면 그대로 붙여넣기):
-- 내 주소: (netlify.app 주소 / 연결하려는 도메인)
 
 원하는 것:
 1) 지금 문제의 원인을 쉬운 말로
-2) 순서대로 따라할 해결 단계
-3) 그래도 안 되면 어디를 확인해야 하는지</div>
+2) 가비아(또는 구입처)와 넷플리에서 각각 눌러야 할 곳을 순서대로
+3) 얼마나 기다려야 하는지, 그래도 안 되면 무엇을 확인하는지</div>
     <button class="copybtn" data-copy="p_fix" type="button">📋 문제 해결 프롬프트 복사</button>
-    <div class="tip">💡 도메인은 <b>없어도 다음 활동으로 넘어갈 수 있어요.</b> 넷플리 기본 주소(xxxxxx.netlify.app)로도 검색등록까지 다 됩니다. 나중에 도메인만 연결하면 됩니다.</div>
   </section>
 
   <div class="next">
     <span class="n">2</span>
-    <div>주소가 완성되면 → <b>활동 2. 검색엔진에 내 사이트 등록하기(네이버·구글·빙)</b>로 이어집니다.</div>
+    <div>도메인이 붙으면 → <b>활동 2. 검색엔진에 내 사이트 등록하기(네이버·구글·빙)</b>로 이어집니다.</div>
   </div>
 
   <footer>
