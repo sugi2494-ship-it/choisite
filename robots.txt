@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /admin_board.html
+Disallow: /styledial-admin.html
+Disallow: /강의/관리자페이지_admin.html
+
+Sitemap: https://pbscolor.com/sitemap.xml
