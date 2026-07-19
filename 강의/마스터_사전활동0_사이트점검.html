@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>사전활동 0. 준비 & 내 사이트 점검 · AI 웹페이지 마스터과정 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#ffffff; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.65; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px 60px}
+  .enginebar{display:flex; height:6px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}
+  .back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px; max-width:660px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; color:var(--pink)}
+  h1{font-size:23px; font-weight:800; margin:8px 0 6px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin-top:18px}
+  .sec-title{font-size:16px; font-weight:800; margin:0 0 4px; display:flex; align-items:center; gap:9px}
+  .step-no{flex:0 0 auto; width:26px; height:26px; border-radius:8px; background:var(--ink); color:#fff;
+    font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center}
+  .sec-desc{font-size:13px; color:var(--sub); margin:2px 0 14px 35px}
+  /* 체크리스트 */
+  .checks{display:flex; flex-direction:column; gap:9px}
+  .checks label{display:flex; align-items:flex-start; gap:11px; font-size:14.5px; font-weight:600;
+    border:1px solid var(--line); border-radius:11px; padding:12px 14px; cursor:pointer; background:#fff}
+  .checks label:has(input:checked){border-color:var(--green); background:#eaf5ef; color:#1c5638}
+  .checks input{margin-top:2px; width:18px; height:18px; accent-color:var(--green); flex:0 0 auto}
+  .checks small{display:block; font-weight:500; color:var(--sub); margin-top:2px; font-size:12.5px}
+  .checks label:has(input:checked) small{color:#3c7a58}
+  .prog{font-size:13px; font-weight:700; color:var(--sub); margin:12px 0 0 2px}
+  .prog b{color:var(--green)}
+  /* 입력 */
+  .field{margin-bottom:14px}
+  .field:last-child{margin-bottom:0}
+  label.lbl{display:block; font-size:14.5px; font-weight:700; margin-bottom:6px}
+  input[type=text]{width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:10px;
+    font-size:15px; font-family:inherit; background:#fff; color:var(--ink)}
+  input:focus{outline:2px solid var(--blue); outline-offset:1px; border-color:var(--blue)}
+  .sentence{font-size:15px; font-weight:600; line-height:2.1; color:var(--ink)}
+  .sentence input{display:inline-block; width:auto; min-width:120px; padding:6px 10px; margin:0 2px}
+  .goals{display:flex; flex-wrap:wrap; gap:8px; margin-top:4px}
+  .goals label{border:1px solid var(--line); border-radius:999px; padding:9px 15px; font-size:13.5px;
+    font-weight:700; cursor:pointer; background:#fff}
+  .goals label:has(input:checked){border-color:var(--pink); background:#fdeef6; color:#a41f6f}
+  .goals input{display:none}
+  /* 프롬프트 */
+  .promptbox{position:relative; background:#0f1720; color:#e8eef4; border-radius:12px;
+    padding:18px 16px; font-size:13px; line-height:1.7; white-space:pre-wrap;
+    font-family:"Consolas","Courier New",monospace; margin-top:6px; max-height:320px; overflow:auto}
+  .copybtn{display:block; width:100%; border:none; color:#fff; background:var(--pink);
+    font-size:16px; font-weight:800; padding:15px; border-radius:12px; cursor:pointer;
+    margin-top:12px; font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .howto{margin:0 0 12px; padding-left:20px; font-size:14px; color:var(--ink)}
+  .howto li{margin:4px 0}
+  .fill{background:#fdeef6; border:1px solid #f6c6e2; border-radius:12px; padding:13px 15px; margin-top:12px; font-size:13.5px; color:#7a2e5c}
+  .fill b{color:#59204a}
+  .next{display:flex; align-items:center; gap:10px; background:#eaf1f9; border:1px solid #cfe0f4;
+    border-radius:12px; padding:16px; margin-top:18px; font-size:14px; font-weight:600; color:#234}
+  .next .n{flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:var(--blue); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:28px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="course.html?c=aiwebmaster">← AI 웹페이지 마스터과정 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터과정</div>
+  <h1>사전활동 0. 준비 &amp; 내 사이트 점검</h1>
+  <p class="lead">본 활동에 들어가기 전에 <b>준비물을 확인하고, 목표를 정하고, 자료를 모은 뒤, 내 사이트를 진단</b>합니다.
+  이 4단계만 끝내면 활동 1부터 막힘 없이 진행돼요.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- STEP 1 -->
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>준비물 · 계정 체크</div>
+    <p class="sec-desc">활동 중에 막히지 않도록, 아래 계정을 미리 만들어 두세요. (체크하면 초록색으로 바뀝니다)</p>
+    <div class="checks" data-prog="p1">
+      <label><input type="checkbox"><span>넷플리(Netlify) 계정 <small>내 웹사이트를 올리고 배포하는 곳</small></span></label>
+      <label><input type="checkbox"><span>ChatGPT 또는 Claude 계정 <small>페이지·프롬프트 작업용 AI</small></span></label>
+      <label><input type="checkbox"><span>네이버 · 구글 계정 <small>검색등록(서치어드바이저·서치콘솔)에 사용</small></span></label>
+      <label><input type="checkbox"><span>도메인 준비 <small>나만의 주소(예: 가비아·후이즈). 없으면 넷플리 기본주소로 시작 가능</small></span></label>
+      <label><input type="checkbox"><span>캔바(Canva) 계정 <small>모집 카드뉴스 제작용</small></span></label>
+      <label><input type="checkbox"><span>문자 발송 서비스 계정 <small>접수 시 문자 알림용(예: 알리고·솔라피). 활동 3에서 안내</small></span></label>
+    </div>
+    <div class="prog" id="p1">준비 완료: <b>0</b> / 6</div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>내 목표 · 타깃 한 줄</div>
+    <p class="sec-desc">이 한 줄이 앞으로 모든 결정의 기준이 됩니다. 빈칸을 편하게 채워보세요.</p>
+    <p class="sentence">나는 <input type="text" placeholder="누구에게 (예: 강사 준비하는 분)"> 에게<br>
+      <input type="text" placeholder="무엇을 (예: 퍼스널컬러 교육)"> 을(를) 하는 사람이고,</p>
+    <p class="lbl" style="margin-top:6px">이 사이트로 하고 싶은 것은?</p>
+    <div class="goals">
+      <label><input type="radio" name="goal"><span>수강생 모집</span></label>
+      <label><input type="radio" name="goal"><span>나를 알리는 브랜딩</span></label>
+      <label><input type="radio" name="goal"><span>강의·상품 판매</span></label>
+      <label><input type="radio" name="goal"><span>문의·상담 받기</span></label>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card">
+    <div class="sec-title"><span class="step-no">3</span>내 자료 모으기</div>
+    <p class="sec-desc">활동 1부터 바로 쓸 재료입니다. 한 폴더에 모아두면 편해요. (가진 것에 체크)</p>
+    <div class="checks" data-prog="p3">
+      <label><input type="checkbox"><span>기존 홈페이지 HTML 파일 <small>넷플리에 올린 내 사이트</small></span></label>
+      <label><input type="checkbox"><span>로고 / 프로필 사진</span></label>
+      <label><input type="checkbox"><span>강의·활동 사진</span></label>
+      <label><input type="checkbox"><span>후기 · 추천사</span></label>
+      <label><input type="checkbox"><span>내 소개글 (경력·이력)</span></label>
+      <label><input type="checkbox"><span>연락처 · SNS 링크 (인스타·카톡채널 등)</span></label>
+    </div>
+    <div class="prog" id="p3">모은 자료: <b>0</b> / 6</div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="card">
+    <div class="sec-title"><span class="step-no">4</span>내 사이트 종합 점검</div>
+    <p class="sec-desc">아래 프롬프트를 복사해 ChatGPT/Claude에 붙여넣으면, 5개 영역 진단표가 나옵니다.</p>
+    <ol class="howto">
+      <li><b>프롬프트 복사하기</b> 버튼 클릭</li>
+      <li>ChatGPT/Claude 새 대화창에 붙여넣기</li>
+      <li>대괄호 [ ] 안을 위 2단계에서 정한 내 정보로 채우기</li>
+      <li>🔴 시급 항목부터 확인 → 맨 아래 "이어서 다룰 것" 보고 활동 1로</li>
+    </ol>
+    <div class="promptbox" id="prompt">[역할]
+너는 강사·1인기업의 웹사이트를 봐주는 전문 컨설턴트야.
+아래 내 사이트를 점검하고, 초보도 이해할 수 있게 쉬운 말로 진단·개선안을 줘.
+
+[내 사이트 정보]
+- 사이트 주소:
+- 내가 하는 일(직업/업종):
+- 타깃 고객(누구에게 보이고 싶은지):
+- 배포 방식: 넷플리(Netlify)
+- 지금 가장 고민되는 점:
+※ 주소로 접속이 안 되면, 내가 HTML을 붙여넣을 테니 그걸 보고 점검해줘.
+
+[점검 요청 — 아래 5개 영역을 각각 진단해줘]
+1. 보안: https 적용 여부, 코드에 노출된 비밀번호·API 키, 관리자 페이지 보호,
+   문의/신청 폼의 스팸·개인정보 처리, 넷플리 환경변수 사용 여부.
+2. 정리·구조: 메뉴가 직관적인지, 불필요·중복 페이지, 안 쓰는 파일,
+   모바일에서 깨지는 곳, 방문자가 3초 안에 "뭐 하는 곳인지" 아는지.
+3. 기업형 완성도: 브랜드(색·폰트·로고) 일관성, 신뢰 요소(연락처·사업자정보·후기·실적),
+   로딩 속도, 전문적으로 보이려면 보완할 점.
+4. SEO(검색 노출): 페이지 제목·설명 메타태그, 공유 썸네일(OG), sitemap.xml·robots.txt 유무,
+   제목 태그(H1) 구조, 모바일 최적화, 그리고 네이버·구글·빙에 사이트 등록이 돼 있는지.
+5. 홍보·마케팅 활성화: 방문자를 고객으로 만드는 행동유도(CTA), 문의·접수로 이어지는 동선,
+   카드뉴스·SNS·블로그 연결, 재방문 유도, 지금 놓치고 있는 마케팅 기회.
+
+[출력 형식]
+1) 맨 위에 종합 점수(100점 만점) + 한 줄 총평
+2) 영역별로 표: 점검항목 | 상태(🟢좋음 / 🟡보완 / 🔴시급) | 구체적 개선 방법
+3) 맨 아래 우선순위 정리:
+   - 오늘 바로 할 것 3가지
+   - 이번 주에 할 것
+   - 마스터과정에서 이어서 다룰 것(도메인·검색등록·강의실·모집·문자알림 등)
+전문 용어는 반드시 괄호로 쉬운 설명을 붙여줘.</div>
+    <button class="copybtn" id="copy" type="button">📋 프롬프트 복사하기</button>
+    <div class="fill">💡 사이트 주소로 접속이 안 된다고 하면, 넷플리에서 내 HTML을 열어 전체 복사해 붙여넣어 주세요.</div>
+  </section>
+
+  <div class="next">
+    <span class="n">1</span>
+    <div>4단계가 끝나면 → <b>활동 1. 넷플리 배포·나만의 도메인 완성</b>으로 이어집니다.</div>
+  </div>
+
+  <footer>
+    PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997
+  </footer>
+</div>
+
+<script>
+  // 체크리스트 진행률
+  document.querySelectorAll('.checks[data-prog]').forEach(function(box){
+    var id = box.getAttribute('data-prog');
+    box.addEventListener('change', function(){
+      var all = box.querySelectorAll('input[type=checkbox]');
+      var done = box.querySelectorAll('input[type=checkbox]:checked').length;
+      var el = document.getElementById(id).querySelector('b');
+      if(el) el.textContent = done;
+    });
+  });
+  // 프롬프트 복사
+  var btn = document.getElementById('copy');
+  btn.addEventListener('click', function(){
+    var t = document.getElementById('prompt').innerText;
+    navigator.clipboard.writeText(t).then(function(){
+      btn.textContent = '✅ 복사됐어요! ChatGPT/Claude에 붙여넣으세요';
+      btn.classList.add('done');
+      setTimeout(function(){ btn.textContent='📋 프롬프트 복사하기'; btn.classList.remove('done'); }, 2600);
+    }).catch(function(){
+      var r=document.createRange(); r.selectNodeContents(document.getElementById('prompt'));
+      var s=getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent='아래 텍스트를 길게 눌러 복사하세요';
+    });
+  });
+</script>
+</body>
+</html>
