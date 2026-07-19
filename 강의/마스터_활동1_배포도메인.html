@@ -61,6 +61,8 @@
     font-size:17px; font-weight:800; padding:17px; border-radius:13px; margin:14px 0 4px;
     box-shadow:0 8px 22px rgba(44,140,90,.28)}
   .gobtn.sub{background:#fff; color:#2C8C5A; border:1.5px solid #bfe0cd; box-shadow:none; font-size:15px; padding:13px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E); box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .autobox{margin-top:16px; padding-top:16px; border-top:1px dashed var(--line)}
   .bignum{list-style:none; padding:0; margin:14px 0 0}
   .bignum li{position:relative; padding:11px 0 11px 42px; font-size:14.5px; border-top:1px solid var(--line)}
   .bignum li:first-child{border-top:none}
@@ -157,6 +159,31 @@
       가비아 「DNS 관리」에서 넷플리가 안내한 <span class="kbd">A 레코드</span>(뿌리주소용)와
       <span class="kbd">CNAME</span>(www용)을 입력. 기존 메일 등 다른 설정을 유지하고 싶을 때.</div>
     <div class="tip">⏳ 연결은 <b>보통 몇 분~몇 시간</b>(길면 하루) 걸립니다. 바로 안 돼도 정상이니 기다려요.</div>
+
+    <div class="autobox">
+      <p style="font-size:14px;font-weight:800;margin:0 0 4px">🤖 혼자 하기 어렵나요? 클로드 코워크가 대신 연결해 줍니다</p>
+      <p style="font-size:13px;color:var(--sub);margin:0 0 4px">버튼으로 클로드를 열고 아래 프롬프트를 붙여넣으면, <b>어디를 눌러야 하는지 화면을 보며 안내·연결</b>해 줍니다.
+      (로그인·비밀번호·결제는 안전하게 내가 직접 해요.)</p>
+      <a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크 열기 →</a>
+      <div class="promptbox" id="p_auto">[역할] 너는 내 웹사이트에 '도메인'을 연결해 주는 도우미야. 브라우저로 화면을 보며 단계별로 도와줘.
+
+[내 상황]
+- 도메인 산 곳: 가비아 (또는 후이즈)
+- 내 도메인 주소:
+- 넷플리 사이트 기본주소: xxxxxx.netlify.app
+
+[해줘]
+1. 넷플리에서 이 도메인을 추가하는 화면까지 안내하고, 눌러야 할 버튼을 정확히 짚어줘.
+2. 가비아(도메인 산 곳)에서 '네임서버' 또는 'DNS 레코드'를 넷플리 값으로 바꾸는 위치를
+   클릭 순서대로 알려줘.
+3. 연결이 되면 https(자물쇠)가 켜졌는지 확인해줘.
+4. 안 되면 원인과 해결 방법을 쉬운 말로 알려줘.
+
+※ 로그인·비밀번호·결제는 내가 직접 할게. 너는 어디를 누르고 무엇을 입력할지 안내하고,
+   연결 상태만 확인해줘.</div>
+      <button class="copybtn" data-copy="p_auto" type="button">📋 도메인 자동 연결 프롬프트 복사</button>
+    </div>
+
     <div class="checks">
       <label><input type="checkbox"><span>넷플리에 도메인 추가 + 네임서버/DNS 설정 완료</span></label>
     </div>
