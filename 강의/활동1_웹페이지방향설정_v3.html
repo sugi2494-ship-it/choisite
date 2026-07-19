@@ -92,6 +92,11 @@
 </header>
 
 <div class="wrap">
+  <div style="background:#fff8e6;border:1px solid #f0d98a;border-radius:12px;padding:16px 18px;margin-top:18px">
+    <p style="margin:0 0 8px;font-size:14px;font-weight:800;color:#7a5a00">⚠️ 이용 안내 · 저작권 고지</p>
+    <p style="margin:0 0 8px;font-size:13px;color:#6b5200;line-height:1.65">이 과정과 여기서 만든 <b>프롬프트·교육자료</b>는 <b>본인의 웹페이지 제작용</b>입니다. 자료를 배포하거나 다른 교육에 활용하면 <b>저작권·지식재산권 침해</b>에 해당합니다. <b>(수강 전 사전규약에 동의하셨습니다.)</b></p>
+    <p style="margin:0;font-size:13px;color:#6b5200;line-height:1.65">📌 이 자료로 <b>교육을 하고 싶으시면 「AI 프롬프트 만들기 마스터과정」</b>을 신청하세요 — <b>모든 교육자료 제공 + 교육컨설팅 과정</b>이 가능합니다. 문의 <b>010-4285-7997</b></p>
+  </div>
   <form id="f">
 
     <!-- 1. 브랜드 자산 -->
@@ -126,24 +131,20 @@
       필요한 메뉴와 구조가 결정됩니다.</p>
 
       <div class="field"><label>이 페이지의 핵심 목표</label>
-        <p class="hint">가장 가까운 것 하나를 골라주세요. 이 선택에 따라 필요한 메뉴가 자동으로 제안됩니다.</p>
+        <p class="hint">가장 가까운 것으로 <b>최대 2개까지</b> 고를 수 있어요. 선택에 따라 필요한 메뉴가 자동으로 제안됩니다.</p>
         <div class="opts" id="goalOpts">
-          <label><input type="radio" name="goal" value="lecture" /><span>강의 접수·수강 신청 받기<small>일정을 열고 수강생을 모집한다</small></span></label>
-          <label><input type="radio" name="goal" value="cert" /><span>자격과정·강사 양성 모집하기<small>기수를 모집하고 자격 취득으로 이끈다</small></span></label>
-          <label><input type="radio" name="goal" value="consult" /><span>컨설팅·상담 의뢰 받기<small>1:1 상담·진단·컨설팅 예약을 받는다</small></span></label>
-          <label><input type="radio" name="goal" value="b2b" /><span>기업·기관 교육 의뢰 받기<small>담당자에게 신뢰를 주고 제안 문의를 받는다</small></span></label>
-          <label><input type="radio" name="goal" value="brand" /><span>전문가로 나를 알리기<small>신뢰를 쌓고 나를 기억하게 만든다</small></span></label>
-          <label><input type="radio" name="goal" value="product" /><span>제품·교구 판매하기<small>제품을 소개하고 구매로 연결한다</small></span></label>
+          <label><input type="checkbox" name="goal" value="lecture" /><span>강의 접수·수강 신청 받기<small>일정을 열고 수강생을 모집한다</small></span></label>
+          <label><input type="checkbox" name="goal" value="cert" /><span>자격과정·강사 양성 모집하기<small>기수를 모집하고 자격 취득으로 이끈다</small></span></label>
+          <label><input type="checkbox" name="goal" value="consult" /><span>컨설팅·상담 의뢰 받기<small>1:1 상담·진단·컨설팅 예약을 받는다</small></span></label>
+          <label><input type="checkbox" name="goal" value="b2b" /><span>기업·기관 교육 의뢰 받기<small>담당자에게 신뢰를 주고 제안 문의를 받는다</small></span></label>
+          <label><input type="checkbox" name="goal" value="brand" /><span>전문가로 나를 알리기<small>신뢰를 쌓고 나를 기억하게 만든다</small></span></label>
+          <label><input type="checkbox" name="goal" value="product" /><span>제품·교구 판매하기<small>제품을 소개하고 구매로 연결한다</small></span></label>
         </div>
       </div>
 
-      <div class="field"><label>구체적으로 어떤 결과가 나오면 성공인가요?</label>
-        <p class="hint">숫자나 상황으로 적으면 더 좋습니다. 예) 한 달에 강의 문의 5건 / 1기 12명 모집 완료</p>
-        <input type="text" name="kpi" placeholder="예) 매달 강의 문의 5건 이상 받기" /></div>
-
-      <div class="field"><label>이 페이지에 꼭 알려야 할 것(홍보할 것)은 무엇인가요?</label>
-        <p class="hint">지금 가장 알리고 싶은 것. 예) 3월 개강 퍼스널컬러 자격 2기 / 신규 1:1 컨설팅 오픈</p>
-        <input type="text" name="promo" placeholder="예) 3월 개강 컬러강점 지도사 2기 모집" /></div>
+      <div class="field"><label>원하는 메뉴가 있으면 직접 적어주세요</label>
+        <p class="hint">아래 3번에서 자동 제안되는 것 외에, 넣고 싶은 메뉴가 있으면 쉼표로 적어주세요. (선택)</p>
+        <input type="text" name="promo" placeholder="예) 갤러리, 오시는 길, 자주 묻는 질문" /></div>
     </section>
 
     <!-- 3. 구조·메뉴 -->
@@ -158,9 +159,7 @@
         <div class="menuhead"><p id="menuMsg"></p></div>
         <div class="menulist" id="menuList"></div>
 
-        <div class="field" style="margin-top:16px"><label>직접 추가하고 싶은 메뉴</label>
-          <p class="hint">쉼표로 구분해서 적어주세요.</p>
-          <input type="text" name="extraMenu" placeholder="예) 갤러리, 자주 묻는 질문" /></div>
+        <p class="hint" style="margin-top:14px">💡 더 넣고 싶은 메뉴는 위 <b>2번 「원하는 메뉴 직접 적기」</b>에 적으면 함께 반영됩니다.</p>
       </div>
     </section>
 
@@ -169,9 +168,17 @@
       <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>4. 메뉴를 채울 핵심 내용</div>
       <p class="sec-desc">위에서 정한 메뉴 안에 들어갈 내용입니다. 아는 만큼만 적으세요.</p>
 
-      <div class="field"><label>브랜드명 · 활동명</label>
+      <div class="field"><label>홈페이지 이름 (활동명·상호)</label>
         <p class="hint">페이지 맨 위에 들어갈 이름</p>
         <input type="text" name="brand" placeholder="예) OOO 컬러심리연구소" /></div>
+
+      <div class="field"><label>메인에 들어갈 프로필 사진 (1장)</label>
+        <p class="hint">사진을 고르면 미리보기가 뜹니다. 프롬프트를 붙여넣을 때 이 사진을 클로드 대화창에 함께 첨부하세요.</p>
+        <input type="file" id="photo" accept="image/*" />
+        <div id="photoPrev" style="margin-top:10px;display:none">
+          <img id="photoImg" alt="프로필 미리보기" style="max-width:160px;border-radius:12px;display:block;border:1px solid var(--line)" />
+          <p style="font-size:12px;color:#2C8C5A;font-weight:700;margin:6px 0 0">✅ 이 사진을 클로드에 함께 첨부하세요</p>
+        </div></div>
 
       <div class="field"><label>대표 강의 · 서비스 · 제품</label>
         <p class="hint">이름 + 한 줄 설명. 줄바꿈해서 여러 개 적어주세요.</p>
@@ -180,10 +187,6 @@
       <div class="field"><label>진행 방식 · 커리큘럼</label>
         <p class="hint">대상·시간·다루는 내용·진행 순서 정도만</p>
         <textarea name="curriculum"></textarea></div>
-
-      <div class="field"><label>일정 · 가격 · 신청 방법</label>
-        <p class="hint">모집 중이라면 꼭 적어주세요. 미정이면 "문의 시 안내"라고 적어도 됩니다.</p>
-        <textarea name="pricing" placeholder="예) 3월 15일 개강 / 매주 토 오전 / 정원 12명 / 수강료 문의"></textarea></div>
 
       <div class="field"><label>신뢰를 주는 자료</label>
         <p class="hint">후기, 사례, 실적, 자격, 협력 기관 등. 있는 것만 적으세요.</p>
@@ -217,18 +220,17 @@
 
     <!-- 6. 프롬프트 -->
     <section class="card" style="border:2px solid var(--ink)">
-      <div class="sec-title"><span class="dot" style="background:var(--ink)"></span>6. 나만의 브랜딩 웹사이트 프롬프트</div>
+      <div class="sec-title"><span class="dot" style="background:var(--ink)"></span>6. 나만의 홈페이지 프롬프트</div>
       <p class="sec-desc">지금까지 설계한 <b>목표 · 구조 · 메뉴 · 콘텐츠</b>가 하나의 제작 지시문으로 완성됩니다.
-      복사해 Claude에 붙여넣으면 내 웹사이트가 만들어집니다.</p>
+      복사해 Claude에 붙여넣으면 내 홈페이지가 만들어집니다.</p>
 
-      <button type="button" class="btn" id="genBtn" style="background:var(--ink); margin-top:0">내 웹사이트 제작 프롬프트 완성하기</button>
+      <button type="button" class="btn" id="genBtn" style="background:var(--ink); margin-top:0">내 홈페이지 제작 프롬프트 완성하기</button>
 
       <div id="genWrap" style="display:none; margin-top:14px">
         <textarea id="genOut" readonly class="genbox"></textarea>
         <button type="button" class="btn" id="copyBtn" style="background:var(--pink)">📋 프롬프트 복사하기</button>
         <div class="later">
-          <p><b>📷 사진·로고는 나중에 넣습니다.</b> 프롬프트에 "사진 자리를 만들어 달라"는 요청이 포함돼 있습니다.
-          초안이 나온 뒤 Claude에 사진을 첨부하면서 <b>"이 사진을 프로필 자리에 넣어줘"</b> 라고 하면 됩니다.</p>
+          <p><b>📷 프로필 사진</b>은 위 4번에서 고른 사진을 <b>Claude에 프롬프트와 함께 첨부</b>하고 <b>"이 사진을 프로필 자리에 넣어줘"</b> 라고 하면 됩니다. 로고 등 다른 사진도 같은 방식으로 나중에 추가하면 됩니다.</p>
         </div>
       </div>
     </section>
@@ -300,14 +302,34 @@ const GOALS={
       ["구매·주문 버튼","실제 구매 통로 (필수)",1],["사용 후기","구매자의 증거",1]]}
 };
 const menuwrap=document.getElementById("menuwrap"), menuEmpty=document.getElementById("menuEmpty");
-document.getElementById("goalOpts").addEventListener("change", e=>{
-  const g=GOALS[e.target.value]; if(!g) return;
-  document.getElementById("menuMsg").innerHTML=`<b>${g.name}</b> — ${g.msg}`;
-  document.getElementById("menuList").innerHTML=g.menus.map((m,i)=>
+const goalBox=document.getElementById("goalOpts");
+const selectedGoals=()=>[...goalBox.querySelectorAll('input[name="goal"]:checked')].map(c=>c.value);
+goalBox.addEventListener("change", e=>{
+  if(selectedGoals().length>2){ e.target.checked=false; alert("목표는 최대 2개까지 선택할 수 있어요."); return; }
+  renderMenus();
+});
+function renderMenus(){
+  const gs=selectedGoals();
+  if(!gs.length){ menuwrap.style.display="none"; menuEmpty.style.display="block"; return; }
+  const names=gs.map(k=>GOALS[k].name).join(" + ");
+  const msgs=gs.map(k=>"· "+GOALS[k].msg).join("<br>");
+  document.getElementById("menuMsg").innerHTML=`<b>${names}</b><br>${msgs}`;
+  const seen={}, merged=[];
+  gs.forEach(k=>GOALS[k].menus.forEach(m=>{ if(!seen[m[0]]){seen[m[0]]=1;merged.push(m);} }));
+  document.getElementById("menuList").innerHTML=merged.map(m=>
     `<label><input type="checkbox" class="mn" value="${m[0]}" ${m[2]?"checked":""} />
      <span>${m[0]}<small>${m[1]}</small></span></label>`).join("");
   menuEmpty.style.display="none"; menuwrap.style.display="block";
-});
+}
+/* 프로필 사진 미리보기 (업로드 없이 페이지 안에서만) */
+(function(){ var ph=document.getElementById("photo"); if(!ph) return;
+  ph.addEventListener("change", function(e){
+    var file=e.target.files&&e.target.files[0]; if(!file) return;
+    var r=new FileReader();
+    r.onload=function(ev){ document.getElementById("photoImg").src=ev.target.result; document.getElementById("photoPrev").style.display="block"; };
+    r.readAsDataURL(file);
+  });
+})();
 
 const moods=()=>[...document.querySelectorAll("#moodChips input:checked")].map(c=>c.value).join(", ");
 const menus=()=>[...document.querySelectorAll(".mn:checked")].map(c=>c.value);
@@ -315,20 +337,18 @@ const menus=()=>[...document.querySelectorAll(".mn:checked")].map(c=>c.value);
 /* ── 프롬프트 생성 ── */
 function L(l,v){ return v?`- ${l}: ${v}\n`:""; }
 function build(){
-  const gk=pick("goal"), g=GOALS[gk];
-  const brand=val("brand")||"(브랜드명 미정)";
-  const list=menus(); const extra=val("extraMenu");
+  const gs=selectedGoals(); const goalNames=gs.map(k=>GOALS[k].name).join(" + ");
+  const brand=val("brand")||"(홈페이지 이름 미정)";
+  const list=menus(); const extra=val("promo");
   if(extra) extra.split(",").map(s=>s.trim()).filter(Boolean).forEach(s=>list.push(s));
 
   let p="";
-  p+="나만의 브랜딩 웹사이트(한 페이지)를 만들어줘.\n";
+  p+="나만의 홈페이지(한 페이지 웹페이지)를 만들어줘.\n";
   p+="아래는 내가 직접 설계한 목표와 구조야. 예쁘게만 만들지 말고,\n";
   p+="아래 '목표'가 실제로 이뤄지도록 설계해줘. 모바일에서 잘 보이게 만들고 화면에 바로 보여줘.\n\n";
 
   p+="【이 페이지의 목표】\n";
-  p+=L("핵심 목표", g?g.name:"");
-  p+=L("성공 기준", val("kpi"));
-  p+=L("지금 가장 알려야 할 것", val("promo"));
+  p+=L("핵심 목표", goalNames);
 
   p+="\n【나의 브랜드】\n";
   p+=L("브랜드명", val("brand"));
@@ -346,7 +366,6 @@ function build(){
   p+="\n【각 섹션에 넣을 내용】\n";
   p+=L("대표 강의·서비스·제품", val("offers"));
   p+=L("진행 방식·커리큘럼", val("curriculum"));
-  p+=L("일정·가격·신청 방법", val("pricing"));
   p+=L("신뢰 자료(후기·실적·자격)", val("trust"));
   p+=L("문의·신청 연결 수단", val("contact"));
 
@@ -359,9 +378,9 @@ function build(){
   p+="1) 위 메뉴 순서를 그대로 페이지 구성 순서로 삼아줘. 각 섹션에 제목을 달아줘.\n";
   p+="2) 첫 화면에는 브랜드명과 '나를 한 문장으로'를 크게 배치하고,\n";
   p+="   지금 가장 알려야 할 것을 눈에 띄게 함께 보여줘.\n";
-  if(g) p+=`3) 방문자가 '${g.name}'에 도달하도록, 문의·신청 버튼을 첫 화면과 페이지 맨 아래에 각각 배치해줘.\n`;
+  if(goalNames) p+=`3) 방문자가 '${goalNames}'에 도달하도록, 문의·신청 버튼을 첫 화면과 페이지 맨 아래에 각각 배치해줘.\n`;
   p+="4) 내 강점과 이야기는 나열식이 아니라 읽히는 문장으로 자연스럽게 녹여줘.\n";
-  p+="5) 프로필 사진과 로고가 들어갈 자리는 미리 만들어줘. 파일은 내가 나중에 첨부할게.\n";
+  p+="5) 내가 첨부하는 프로필 사진을 메인 상단에 넣어줘. 로고 등 다른 사진 자리도 미리 만들어줘.\n";
   p+="6) 한글 줄바꿈이 어색하지 않게, 모바일에서 읽기 편하게 만들어줘.\n";
   p+="7) 완성 후, 이 목표를 더 잘 이루기 위해 내가 보완하면 좋을 점 3가지를 알려줘.\n";
   return p.trim();
@@ -369,7 +388,7 @@ function build(){
 
 const genWrap=document.getElementById("genWrap"), genOut=document.getElementById("genOut");
 document.getElementById("genBtn").addEventListener("click", ()=>{
-  if(!pick("goal")){ alert("2번에서 이 페이지의 핵심 목표를 먼저 선택해 주세요.\n목표에 따라 구조와 메뉴가 결정됩니다."); 
+  if(!selectedGoals().length){ alert("2번에서 이 페이지의 핵심 목표를 먼저 선택해 주세요.\n목표에 따라 구조와 메뉴가 결정됩니다."); 
     document.getElementById("goalOpts").scrollIntoView({behavior:"smooth",block:"center"}); return; }
   genOut.value=build();
   genWrap.style.display="block";
