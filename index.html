@@ -25,11 +25,15 @@
 
   <!-- ── 구글 검색 노출 Schema (Person) ── -->
   <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","@id":"https://www.pbscolor.com/#website","url":"https://www.pbscolor.com/","name":"PBS COLOR LAB","alternateName":"PBS컬러랩","inLanguage":"ko","publisher":{"@id":"https://www.pbscolor.com/#organization"}}
+</script>
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "최해숙",
-    "alternateName": ["Haesuk Choi", "Maria Choi", "최해숙 대표"],
+    "@id": "https://www.pbscolor.com/#choi-haesook",
+"alternateName": ["Maria Choi", "Choi Hae-sook"],
     "url": "https://pbscolor.com",
     "image": "https://www.pbscolor.com/assets/choi-profile-pink.jpg",
     "jobTitle": "Global Personal Color Analyst · CEO, PBS COLOR LAB",
@@ -62,6 +66,7 @@
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": "https://www.pbscolor.com/#organization",
     "openingHours": "Mo-Su 10:00-20:00",
     "hasMap": "https://naver.me/GSD0VrvO",
     "name": "PBS컬러랩",
@@ -695,7 +700,7 @@
     <div class="nav-right">
       <div class="menu" id="mainMenu">
         <a href="#about" data-i18n="nav.about">대표·브랜드</a>
-        <a href="/consulting" data-i18n="nav.consulting">개인 컨설팅</a>
+        <a href="#consulting" data-i18n="nav.consulting">개인 컨설팅</a>
         <a href="/business" data-i18n="nav.business">기업·공공기관 교육</a>
         <a href="/academy" data-i18n="nav.academy">전문가 아카데미</a>
         <a href="/global" data-i18n="nav.global">Global K-Beauty</a>
@@ -749,13 +754,11 @@
   <div class="hero-in">
     <div class="hero-copy">
       <div class="eyebrow">PBS COLOR LAB · ULSAN · GLOBAL K-BEAUTY</div>
-      <h1><span data-i18n="x.h1a">컬러로 사람의 강점을 발견하고,</span><br><span class="accent" data-i18n="x.h1b">더 나은 변화를 연결합니다</span></h1>
+      <h1><span data-i18n="x.h1a">컬러로 강점을 발견하고</span><br><span class="accent" data-i18n="x.h1b">더 나은 변화를 연결합니다</span></h1>
       <p class="hero-sub" data-i18n="x.sub">울산 퍼스널컬러·골격진단·얼굴분석부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty 협업까지 PBS COLOR LAB 최해숙 대표가 함께합니다.</p>
-      <p style="font-size:13px;color:rgba(255,255,255,.62);margin:-6px 0 22px;letter-spacing:.02em;font-weight:600">Personal Color Analysis · Image Branding · Corporate Education · Global K-Beauty Training</p>
+      <p style="font-size:13px;color:rgba(255,255,255,.62);margin:-6px 0 22px;letter-spacing:.02em;font-weight:600">Personal Color Analysis, Corporate Education, Professional Training and Global K-Beauty Partnership</p>
       <div class="hero-actions">
-        <a class="btn primary" href="/consulting" data-i18n="x.b1">개인 컨설팅</a>
-        <a class="btn gold" href="/business" data-i18n="x.b2">기관교육 문의</a>
-        <a class="btn outline" href="/academy" data-i18n="x.b3">전문가 과정</a>
+        <a class="btn primary" href="#services-router" data-i18n="x.pick">서비스 선택하기 →</a>
         <a class="btn outline" href="/global">Global Partnership</a>
       </div>
     </div>
@@ -771,7 +774,7 @@
     <h2 style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 8px;letter-spacing:-.02em" data-i18n="x.rt">어떤 도움이 필요하신가요?</h2>
     <p style="text-align:center;font-size:14px;color:#666;margin:0 auto 26px;max-width:640px;line-height:1.6" data-i18n="x.rd">상담, 기관교육, 전문가 과정과 글로벌 협업 중 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.</p>
     <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:stretch">
-      <a href="/consulting" style="display:flex;flex-direction:column;flex:1 1 240px;max-width:270px;text-decoration:none;border:1px solid #F0D3DF;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(194,24,91,.06)">
+      <a href="#consulting" style="display:flex;flex-direction:column;flex:1 1 240px;max-width:270px;text-decoration:none;border:1px solid #F0D3DF;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(194,24,91,.06)">
         <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c1t">울산 퍼스널컬러·이미지 컨설팅</div>
         <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c1d">퍼스널컬러, 골격진단, 얼굴분석을 통해 색·소재·스타일과 전체 이미지를 선택하는 기준을 알려드립니다.</div>
         <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">퍼스널컬러</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">골격진단</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">얼굴분석</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">프리미엄 통합</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">웨딩</span></div>
@@ -798,6 +801,70 @@
     </div>
   </div>
 </section>
+
+<!-- ═══ 개인 컨설팅 (메인 내 섹션) — 추가 ═══ -->
+<section id="consulting" style="background:#FAF7F9;padding:52px 16px">
+  <div style="max-width:1080px;margin:0 auto">
+    <p style="text-align:center;font-size:12px;font-weight:800;letter-spacing:.14em;color:#C2185B;margin:0 0 8px">PERSONAL CONSULTING · ULSAN</p>
+    <h2 data-i18n="cs.title" style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 10px;letter-spacing:-.02em;line-height:1.35">울산 퍼스널컬러, 색만 확인하지 않습니다</h2>
+    <p data-i18n="cs.desc" style="text-align:center;font-size:15px;color:#555;line-height:1.7;max-width:680px;margin:0 auto 30px">피부색과 함께 얼굴선, 체형, 소재와 전체 분위기를 살펴 나에게 맞는 색과 스타일의 기준을 알려드립니다.</p>
+
+    <h3 data-i18n="cs.progh" style="text-align:center;font-size:16px;font-weight:800;color:#111;margin:0 0 16px">상담 프로그램</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:14px">
+      <div style="background:#fff;border:1px solid #F0D3DF;border-radius:16px;padding:20px 18px;box-shadow:0 4px 16px rgba(194,24,91,.05)">
+        <div style="font-size:17px;font-weight:900;color:#C2185B;margin-bottom:12px">퍼스널컬러</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.reco" style="color:#111">추천 대상</b> · 어울리는 색·메이크업 기준이 필요한 분</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.check" style="color:#111">확인 내용</b> · 웜·쿨, 사계절 타입, 베스트 컬러, 메이크업 톤</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.time" style="color:#111">소요 시간</b> · 약 60~90분</div>
+        <div style="font-size:13px;color:#C2185B;font-weight:800;margin-top:8px" data-i18n="cs.price">가격: 상담 시 안내</div>
+      </div>      <div style="background:#fff;border:1px solid #F0D3DF;border-radius:16px;padding:20px 18px;box-shadow:0 4px 16px rgba(194,24,91,.05)">
+        <div style="font-size:17px;font-weight:900;color:#C2185B;margin-bottom:12px">골격진단</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.reco" style="color:#111">추천 대상</b> · 체형에 맞는 핏·길이·소재가 궁금한 분</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.check" style="color:#111">확인 내용</b> · 골격 유형, 어울리는 실루엣·소재·디테일</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.time" style="color:#111">소요 시간</b> · 약 60분</div>
+        <div style="font-size:13px;color:#C2185B;font-weight:800;margin-top:8px" data-i18n="cs.price">가격: 상담 시 안내</div>
+      </div>      <div style="background:#fff;border:1px solid #F0D3DF;border-radius:16px;padding:20px 18px;box-shadow:0 4px 16px rgba(194,24,91,.05)">
+        <div style="font-size:17px;font-weight:900;color:#C2185B;margin-bottom:12px">얼굴분석</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.reco" style="color:#111">추천 대상</b> · 헤어·안경·넥라인·이미지 방향이 필요한 분</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.check" style="color:#111">확인 내용</b> · 얼굴형·비율, 헤어·안경·네크라인 가이드</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.time" style="color:#111">소요 시간</b> · 약 60분</div>
+        <div style="font-size:13px;color:#C2185B;font-weight:800;margin-top:8px" data-i18n="cs.price">가격: 상담 시 안내</div>
+      </div>      <div style="background:#fff;border:1px solid #F0D3DF;border-radius:16px;padding:20px 18px;box-shadow:0 4px 16px rgba(194,24,91,.05)">
+        <div style="font-size:17px;font-weight:900;color:#C2185B;margin-bottom:12px">프리미엄 통합 컨설팅</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.reco" style="color:#111">추천 대상</b> · 색·체형·얼굴 기준을 한 번에 정리하고 싶은 분</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.check" style="color:#111">확인 내용</b> · 퍼스널컬러+골격+얼굴+스타일 종합</div>
+        <div style="font-size:13px;color:#333;line-height:1.7"><b data-i18n="cs.time" style="color:#111">소요 시간</b> · 약 150~180분</div>
+        <div style="font-size:13px;color:#C2185B;font-weight:800;margin-top:8px" data-i18n="cs.price">가격: 상담 시 안내</div>
+      </div>    </div>
+    <p style="text-align:center;font-size:13px;color:#888;margin:0 0 34px">이 외에 <b>퍼스널컬러+골격진단</b>, <b>웨딩 토탈 컨설팅</b>, <b>온라인·오프라인 쇼핑 컨설팅</b>도 진행합니다. (가격은 상담 시 안내)</p>
+
+    <h3 data-i18n="cs.cmph" style="text-align:center;font-size:16px;font-weight:800;color:#111;margin:0 0 16px">어떤 진단을 먼저 받아야 할까요?</h3>
+      <div style="display:grid;grid-template-columns:1fr;gap:8px;max-width:720px;margin:0 auto">
+        <div style="background:#fff;border:1px solid #eee;border-radius:12px;padding:12px 16px;font-size:14px"><b style="color:#C2185B">퍼스널컬러</b> — 어울리는 색·메이크업 기준이 필요한 분</div>
+        <div style="background:#fff;border:1px solid #eee;border-radius:12px;padding:12px 16px;font-size:14px"><b style="color:#C2185B">골격진단</b> — 체형에 맞는 핏·길이·소재가 궁금한 분</div>
+        <div style="background:#fff;border:1px solid #eee;border-radius:12px;padding:12px 16px;font-size:14px"><b style="color:#C2185B">얼굴분석</b> — 헤어·안경·넥라인·이미지 방향이 필요한 분</div>
+        <div style="background:#fff;border:1px solid #eee;border-radius:12px;padding:12px 16px;font-size:14px"><b style="color:#C2185B">통합 컨설팅</b> — 색·체형·얼굴 기준을 한 번에 정리하고 싶은 분</div>
+      </div>
+
+    <h3 data-i18n="cs.steph" style="text-align:center;font-size:16px;font-weight:800;color:#111;margin:34px 0 16px">진행 순서</h3>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;align-items:center;font-size:13px;color:#555;max-width:820px;margin:0 auto">
+        <span style="background:#FCE4EC;color:#C2185B;font-weight:700;border-radius:999px;padding:7px 14px">사전 상담</span> →
+        <span style="background:#FCE4EC;color:#C2185B;font-weight:700;border-radius:999px;padding:7px 14px">컬러·체형·얼굴 분석</span> →
+        <span style="background:#FCE4EC;color:#C2185B;font-weight:700;border-radius:999px;padding:7px 14px">비교 실습</span> →
+        <span style="background:#FCE4EC;color:#C2185B;font-weight:700;border-radius:999px;padding:7px 14px">결과 설명</span> →
+        <span style="background:#FCE4EC;color:#C2185B;font-weight:700;border-radius:999px;padding:7px 14px">개인별 선택 기준</span> →
+        <span style="background:#FCE4EC;color:#C2185B;font-weight:700;border-radius:999px;padding:7px 14px">후속 컨설팅</span>
+      </div>
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:34px">
+      <a href="https://naver.me/GSD0VrvO" target="_blank" rel="noopener" data-i18n="cs.bnaver" style="background:linear-gradient(135deg,#FF2D9B,#E6007E);color:#fff;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;text-decoration:none">📍 네이버 예약·문의</a>
+      <a href="#contact" data-i18n="cs.binq" style="border:1.5px solid #E6007E;color:#C2185B;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;text-decoration:none">✉ 상담 문의</a>
+      <a href="tel:+821042857997" data-i18n="cs.btel" style="border:1.5px solid #ddd;color:#333;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;text-decoration:none">📞 전화 연결</a>
+    </div>
+  </div>
+</section>
+
+
 
 <!-- ═══ TRUST MARQUEE ═══ -->
 </div>
@@ -1417,7 +1484,7 @@
       <details style="background:#fff;border:1px solid #eee;border-radius:14px;padding:14px 18px;margin-bottom:10px">
         <summary data-i18n="faq.q3" style="font-size:15px;font-weight:800;color:#1a1a1a;cursor:pointer;list-style:none">Q. 울산에서 퍼스널컬러 상담을 받을 수 있나요?</summary>
         <p data-i18n="faq.a3" style="font-size:14px;color:#555;line-height:1.7;margin:10px 0 8px">네. 울산 퍼스널컬러·골격진단·얼굴분석 개인 컨설팅을 진행합니다. 상세 안내는 개인 컨설팅 페이지에서 확인하세요.</p>
-        <a href="/consulting" data-i18n="faq.b3" style="font-size:13px;font-weight:800;color:#C2185B;text-decoration:none">개인 컨설팅 →</a>
+        <a href="#consulting" data-i18n="faq.b3" style="font-size:13px;font-weight:800;color:#C2185B;text-decoration:none">개인 컨설팅 →</a>
       </details>
       <details style="background:#fff;border:1px solid #eee;border-radius:14px;padding:14px 18px;margin-bottom:10px">
         <summary data-i18n="faq.q4" style="font-size:15px;font-weight:800;color:#1a1a1a;cursor:pointer;list-style:none">Q. 기업·공공기관 교육도 진행하나요?</summary>
@@ -1508,6 +1575,7 @@
 
 <footer>
   <p style="font-weight:800;font-size:15px;margin-bottom:8px">PBS COLOR LAB · PBS컬러랩</p>
+  <p style="margin:0 0 10px;font-size:13px;line-height:2.1"><a href="#consulting">개인 컨설팅</a> · <a href="/business">기업·공공기관 교육</a> · <a href="/academy">전문가 아카데미</a> · <a href="/global">Global K-Beauty</a> · <a href="#contact">문의</a> · <a href="/privacy">개인정보처리방침</a></p>
   <p style="margin:3px 0">📍 울산 중구 종가6길 8-18 럭키빌딩 704호</p>
   <p style="margin:3px 0">🕙 상담·교육 운영시간 10:00 – 20:00</p>
   <p style="margin:3px 0">📞 <a href="tel:+821042857997">+82-10-4285-7997</a> · ✉ <a href="mailto:sugi2494@gmail.com">sugi2494@gmail.com</a></p>
@@ -1627,7 +1695,7 @@ function renderShop(){
 ══════════════════════════════════════ */
 const I18N = {
 ko:{
-  "nav.about":"대표·브랜드","x.h1a":"컬러로 사람의 강점을 발견하고,","x.h1b":"더 나은 변화를 연결합니다","x.sub":"울산 퍼스널컬러·골격진단·얼굴분석부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty 협업까지 PBS COLOR LAB 최해숙 대표가 함께합니다.","x.b1":"개인 컨설팅","x.b2":"기관교육 문의","x.b3":"전문가 과정","x.rt":"어떤 도움이 필요하신가요?","x.rd":"상담, 기관교육, 전문가 과정과 글로벌 협업 중 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.","x.c1t":"울산 퍼스널컬러·이미지 컨설팅","x.c2t":"기업·공공기관 맞춤 교육","x.c3t":"퍼스널컬러 전문가·인증강사 과정","x.c4t":"Global K-Beauty Partnership","x.c1b":"개인 컨설팅 보기","x.c2b":"기관교육 보기","x.c3b":"아카데미 보기","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"강의","nav.downloads":"자료실","nav.media":"활동·미디어","nav.contact":"문의",
+  "nav.about":"대표·브랜드","x.pick":"서비스 선택하기 →","x.h1a":"컬러로 강점을 발견하고","x.h1b":"더 나은 변화를 연결합니다","x.sub":"울산 퍼스널컬러·골격진단·얼굴분석부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty 협업까지 PBS COLOR LAB 최해숙 대표가 함께합니다.","x.b1":"개인 컨설팅","x.b2":"기관교육 문의","x.b3":"전문가 과정","x.rt":"어떤 도움이 필요하신가요?","x.rd":"상담, 기관교육, 전문가 과정과 글로벌 협업 중 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.","x.c1t":"울산 퍼스널컬러·이미지 컨설팅","x.c2t":"기업·공공기관 맞춤 교육","x.c3t":"퍼스널컬러 전문가·인증강사 과정","x.c4t":"Global K-Beauty Partnership","x.c1b":"개인 컨설팅 보기","x.c2b":"기관교육 보기","x.c3b":"아카데미 보기","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"강의","nav.downloads":"자료실","nav.media":"활동·미디어","nav.contact":"문의",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"Understand Yourself Through Color, Complete Your Brand Through Strengths",
   "hero.t1":"컬러로 나를 이해하고,","hero.t2":"강점으로 브랜드를 완성합니다",
@@ -1722,9 +1790,21 @@ ko:{
   "faq.b4":"기관교육 보기",
   "faq.b5":"아카데미 보기",
   "faq.b6":"Global 보기",
-  "faq.b8":"문의하기"},
+  "faq.b8":"문의하기",
+  "cs.title":"울산 퍼스널컬러, 색만 확인하지 않습니다",
+  "cs.desc":"피부색과 함께 얼굴선, 체형, 소재와 전체 분위기를 살펴 나에게 맞는 색과 스타일의 기준을 알려드립니다.",
+  "cs.progh":"상담 프로그램",
+  "cs.cmph":"어떤 진단을 먼저 받아야 할까요?",
+  "cs.steph":"진행 순서",
+  "cs.price":"가격: 상담 시 안내",
+  "cs.bnaver":"📍 네이버 예약·문의",
+  "cs.binq":"✉ 상담 문의",
+  "cs.btel":"📞 전화 연결",
+  "cs.reco":"추천 대상",
+  "cs.check":"확인 내용",
+  "cs.time":"소요 시간"},
 en:{
-  "nav.about":"Brand & CEO","x.h1a":"Discover people's strengths through color,","x.h1b":"and connect them to better change.","x.sub":"From personal color, body-line and face analysis in Ulsan to corporate education, professional training and global K-Beauty partnership — with CEO Haesuk Choi of PBS COLOR LAB.","x.b1":"Personal Consulting","x.b2":"Corporate Education","x.b3":"Professional Course","x.rt":"How can we help you?","x.rd":"Choose consulting, corporate education, the professional course or global partnership to see a detailed guide page.","x.c1t":"Personal Color & Image Consulting","x.c2t":"Corporate & Public Institution Training","x.c3t":"Professional & Instructor Certification","x.c4t":"Global K-Beauty Partnership","x.c1b":"View Consulting","x.c2b":"View Training","x.c3b":"View Academy","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"Lectures","nav.downloads":"Downloads","nav.media":"Media","nav.contact":"Contact","nav.shop":"Color Shop","nav.consulting":"Personal Consulting","nav.business":"Corporate Education","nav.academy":"Professional Academy",
+  "nav.about":"Brand & CEO","x.pick":"Choose a Service →","x.h1a":"Discover people's strengths through color,","x.h1b":"and connect them to better change.","x.sub":"From personal color, body-line and face analysis in Ulsan to corporate education, professional training and global K-Beauty partnership — with CEO Haesuk Choi of PBS COLOR LAB.","x.b1":"Personal Consulting","x.b2":"Corporate Education","x.b3":"Professional Course","x.rt":"How can we help you?","x.rd":"Choose consulting, corporate education, the professional course or global partnership to see a detailed guide page.","x.c1t":"Personal Color & Image Consulting","x.c2t":"Corporate & Public Institution Training","x.c3t":"Professional & Instructor Certification","x.c4t":"Global K-Beauty Partnership","x.c1b":"View Consulting","x.c2b":"View Training","x.c3b":"View Academy","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"Lectures","nav.downloads":"Downloads","nav.media":"Media","nav.contact":"Contact","nav.shop":"Color Shop","nav.consulting":"Personal Consulting","nav.business":"Corporate Education","nav.academy":"Professional Academy",
   "shop.title":"Color Tools · <span class=\"g\">K-Beauty Color Shop</span>","shop.desc":"Personal color education tools and K-Beauty cosmetics — expert-curated color products","shop.p1name":"Personal Color Drape Set","shop.p1desc":"Professional personal color diagnosis drape — PBS COLOR LAB certified","shop.p2cat":"PBS Color Strengths Diagnosis","shop.p2name":"Color Strengths Diagnosis Kit","shop.p2desc":"Official PBS Color Strengths assessment textbook & workbook — certified by founder Maria Choi","shop.p3name":"K-Beauty Color Cosmetics","shop.p3desc":"Personal color expert-curated K-Beauty cosmetics — globally exported certified products","shop.inquiry":"Inquiry Order","shop.order":"Order Now","shop.soon":"Coming Soon","shop.notice":"🔒 Online store opening soon · Orders & Inquiries:","cc.phone.btn":"📱 +82-10-4285-7997","cc.profile.btn":"📄 Profile Download","cc.global.btn":"🌏 Global Inquiry",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"Understand Yourself Through Color, Complete Your Brand Through Strengths",
@@ -1818,9 +1898,21 @@ en:{
   "faq.b4":"View Training",
   "faq.b5":"View Academy",
   "faq.b6":"View Global",
-  "faq.b8":"Contact"},
+  "faq.b8":"Contact",
+  "cs.title":"Ulsan Personal Color — more than just your colors",
+  "cs.desc":"Beyond skin tone, we read your facial lines, body type, materials and overall mood to give you a personal standard for color and style.",
+  "cs.progh":"Consulting Programs",
+  "cs.cmph":"Which diagnosis should you start with?",
+  "cs.steph":"How it works",
+  "cs.price":"Price: shared at consultation",
+  "cs.bnaver":"📍 Naver Booking",
+  "cs.binq":"✉ Consulting Inquiry",
+  "cs.btel":"📞 Call",
+  "cs.reco":"Recommended for",
+  "cs.check":"What we check",
+  "cs.time":"Duration"},
 ja:{
-  "nav.about":"プロフィール","x.h1a":"色で人の強みを見つけ、","x.h1b":"より良い変化へとつなげます","x.sub":"蔚山のパーソナルカラー・骨格診断・顔分析から、企業・公共機関教育、専門家養成、グローバルK-Beauty協業まで、PBS COLOR LAB チェ・ヘスク代表が伴走します。","x.b1":"個人コンサル","x.b2":"企業・機関教育","x.b3":"専門家コース","x.rt":"どのようなご相談ですか？","x.rd":"相談・機関教育・専門家コース・グローバル協業から選ぶと、詳しい案内ページへ移動します。","x.c1t":"パーソナルカラー・イメージ相談","x.c2t":"企業・公共機関の教育","x.c3t":"専門家・認定講師コース","x.c4t":"グローバル K-Beauty 協業","x.c1b":"相談を見る","x.c2b":"機関教育を見る","x.c3b":"アカデミーを見る","x.c4b":"Global Partnership","nav.global":"グローバル","nav.programs":"講義","nav.downloads":"資料室","nav.media":"メディア","nav.contact":"お問い合わせ","nav.shop":"カラーショップ","nav.consulting":"個人コンサルティング","nav.business":"企業・公共機関教育","nav.academy":"専門家アカデミー",
+  "nav.about":"プロフィール","x.pick":"サービスを選ぶ →","x.h1a":"色で人の強みを見つけ、","x.h1b":"より良い変化へとつなげます","x.sub":"蔚山のパーソナルカラー・骨格診断・顔分析から、企業・公共機関教育、専門家養成、グローバルK-Beauty協業まで、PBS COLOR LAB チェ・ヘスク代表が伴走します。","x.b1":"個人コンサル","x.b2":"企業・機関教育","x.b3":"専門家コース","x.rt":"どのようなご相談ですか？","x.rd":"相談・機関教育・専門家コース・グローバル協業から選ぶと、詳しい案内ページへ移動します。","x.c1t":"パーソナルカラー・イメージ相談","x.c2t":"企業・公共機関の教育","x.c3t":"専門家・認定講師コース","x.c4t":"グローバル K-Beauty 協業","x.c1b":"相談を見る","x.c2b":"機関教育を見る","x.c3b":"アカデミーを見る","x.c4b":"Global Partnership","nav.global":"グローバル","nav.programs":"講義","nav.downloads":"資料室","nav.media":"メディア","nav.contact":"お問い合わせ","nav.shop":"カラーショップ","nav.consulting":"個人コンサルティング","nav.business":"企業・公共機関教育","nav.academy":"専門家アカデミー",
   "shop.title":"カラー教材 · <span class=\"g\">K-Beautyカラーショップ</span>","shop.desc":"パーソナルカラー教育専用教材とK-Beautyコスメ — 専門家がキュレーションしたカラー製品","shop.p1name":"パーソナルカラードレープセット","shop.p1desc":"プロ用パーソナルカラー診断ドレープ — PBS COLOR LAB認定","shop.p2cat":"PBSカラー強み診断","shop.p2name":"カラー強み診断キット","shop.p2desc":"PBSカラー強み公式テキスト＆ワークブック — 創始者チェ・ヘスク直接認定","shop.p3name":"K-Beautyカラーコスメ","shop.p3desc":"パーソナルカラー専門家キュレーションK-Beautyコスメ — 海外輸出認証製品","shop.inquiry":"お問い合わせ注文","shop.order":"注文する","shop.soon":"準備中","shop.notice":"🔒 オンラインストア準備中 · ご注文・お問い合わせ:","cc.phone.btn":"📱 +82-10-4285-7997","cc.profile.btn":"📄 プロフィールダウンロード","cc.global.btn":"🌏 グローバルお問い合わせ",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"カラーで人を読み、教育で未来をデザインする",
@@ -1914,9 +2006,21 @@ ja:{
   "faq.b4":"機関教育を見る",
   "faq.b5":"アカデミーを見る",
   "faq.b6":"グローバルを見る",
-  "faq.b8":"お問い合わせ"},
+  "faq.b8":"お問い合わせ",
+  "cs.title":"蔚山パーソナルカラー、色だけを見るのではありません",
+  "cs.desc":"肌色に加えて顔のライン、体型、素材、全体の雰囲気を見て、自分に合う色とスタイルの基準をお伝えします。",
+  "cs.progh":"相談プログラム",
+  "cs.cmph":"どの診断から受けるべき？",
+  "cs.steph":"進行の流れ",
+  "cs.price":"料金：ご相談時にご案内",
+  "cs.bnaver":"📍 Naver予約・問い合わせ",
+  "cs.binq":"✉ 相談する",
+  "cs.btel":"📞 電話",
+  "cs.reco":"おすすめ対象",
+  "cs.check":"確認内容",
+  "cs.time":"所要時間"},
 zh:{
-  "nav.about":"简介","x.h1a":"用色彩发现每个人的优势，","x.h1b":"连接更美好的改变","x.sub":"从蔚山的个人色彩·骨骼诊断·面部分析，到企业·公共机构教育、专家培养与全球K-Beauty合作，PBS COLOR LAB 崔海淑代表与您同行。","x.b1":"个人咨询","x.b2":"企业机构教育","x.b3":"专家课程","x.rt":"您需要哪方面的帮助？","x.rd":"从咨询、机构教育、专家课程与全球合作中选择，即可进入详细介绍页面。","x.c1t":"个人色彩·形象咨询","x.c2t":"企业·公共机构定制教育","x.c3t":"专家·认证讲师课程","x.c4t":"全球 K-Beauty 合作","x.c1b":"查看咨询","x.c2b":"查看机构教育","x.c3b":"查看学院","x.c4b":"Global Partnership","nav.global":"全球","nav.programs":"讲座","nav.downloads":"资料室","nav.media":"媒体","nav.contact":"联系我们","nav.shop":"色彩商店","nav.consulting":"个人咨询","nav.business":"企业·公共机构教育","nav.academy":"专家学院",
+  "nav.about":"简介","x.pick":"选择服务 →","x.h1a":"用色彩发现每个人的优势，","x.h1b":"连接更美好的改变","x.sub":"从蔚山的个人色彩·骨骼诊断·面部分析，到企业·公共机构教育、专家培养与全球K-Beauty合作，PBS COLOR LAB 崔海淑代表与您同行。","x.b1":"个人咨询","x.b2":"企业机构教育","x.b3":"专家课程","x.rt":"您需要哪方面的帮助？","x.rd":"从咨询、机构教育、专家课程与全球合作中选择，即可进入详细介绍页面。","x.c1t":"个人色彩·形象咨询","x.c2t":"企业·公共机构定制教育","x.c3t":"专家·认证讲师课程","x.c4t":"全球 K-Beauty 合作","x.c1b":"查看咨询","x.c2b":"查看机构教育","x.c3b":"查看学院","x.c4b":"Global Partnership","nav.global":"全球","nav.programs":"讲座","nav.downloads":"资料室","nav.media":"媒体","nav.contact":"联系我们","nav.shop":"色彩商店","nav.consulting":"个人咨询","nav.business":"企业·公共机构教育","nav.academy":"专家学院",
   "shop.title":"色彩教具 · <span class=\"g\">K-Beauty彩妆店</span>","shop.desc":"个人色彩教育专用教具和K-Beauty化妆品 — 专家精选色彩产品","shop.p1name":"个人色彩诊断披巾套装","shop.p1desc":"专业级个人色彩诊断披巾 — PBS COLOR LAB认证","shop.p2cat":"PBS色彩优势诊断","shop.p2name":"色彩优势诊断套件","shop.p2desc":"PBS色彩优势官方教材及练习册 — 创始人崔海淑认证","shop.p3name":"K-Beauty彩妆产品","shop.p3desc":"个人色彩专家精选K-Beauty化妆品 — 海外出口认证产品","shop.inquiry":"咨询订购","shop.order":"立即订购","shop.soon":"即将开放","shop.notice":"🔒 在线商店即将开放 · 订购及咨询:","cc.phone.btn":"📱 +82-10-4285-7997","cc.profile.btn":"📄 下载简历","cc.global.btn":"🌏 全球合作咨询",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"用色彩读懂人心，用教育设计未来",
@@ -2010,9 +2114,21 @@ zh:{
   "faq.b4":"查看机构教育",
   "faq.b5":"查看学院",
   "faq.b6":"查看全球",
-  "faq.b8":"联系我们"},
+  "faq.b8":"联系我们",
+  "cs.title":"蔚山个人色彩，不只是看颜色",
+  "cs.desc":"除肤色外，还观察脸部线条、体型、材质与整体氛围，为您提供适合自己的色彩与风格标准。",
+  "cs.progh":"咨询项目",
+  "cs.cmph":"应先做哪项诊断？",
+  "cs.steph":"进行流程",
+  "cs.price":"价格：咨询时告知",
+  "cs.bnaver":"📍 Naver预约·咨询",
+  "cs.binq":"✉ 咨询",
+  "cs.btel":"📞 电话",
+  "cs.reco":"推荐对象",
+  "cs.check":"确认内容",
+  "cs.time":"所需时间"},
 ar:{
-  "nav.about":"نبذة عني","x.h1a":"اكتشف نقاط قوة الناس من خلال الألوان،","x.h1b":"ونصلها بتغيير أفضل.","x.sub":"من تحليل الألوان الشخصية وبنية الجسم والوجه في أولسان إلى تدريب المؤسسات وإعداد المحترفين وشراكة K-Beauty العالمية، مع الرئيسة التنفيذية هيسوك تشوي من PBS COLOR LAB.","x.b1":"استشارة شخصية","x.b2":"تدريب المؤسسات","x.b3":"دورة احترافية","x.rt":"كيف يمكننا مساعدتك؟","x.rd":"اختر الاستشارة أو تدريب المؤسسات أو الدورة الاحترافية أو الشراكة العالمية للانتقال إلى صفحة تفصيلية.","x.c1t":"استشارة الألوان الشخصية والصورة","x.c2t":"تدريب الشركات والمؤسسات العامة","x.c3t":"دورة المحترفين والمدربين المعتمدين","x.c4t":"شراكة K-Beauty العالمية","x.c1b":"عرض الاستشارة","x.c2b":"عرض التدريب","x.c3b":"عرض الأكاديمية","x.c4b":"شراكة عالمية","nav.global":"عالمي","nav.programs":"محاضرات","nav.downloads":"المواد","nav.media":"إعلام","nav.contact":"تواصل","nav.shop":"متجر الألوان","nav.consulting":"استشارة شخصية","nav.business":"تدريب المؤسسات","nav.academy":"الأكاديمية المهنية",
+  "nav.about":"نبذة عني","x.pick":"اختر خدمة →","x.h1a":"اكتشف نقاط قوة الناس من خلال الألوان،","x.h1b":"ونصلها بتغيير أفضل.","x.sub":"من تحليل الألوان الشخصية وبنية الجسم والوجه في أولسان إلى تدريب المؤسسات وإعداد المحترفين وشراكة K-Beauty العالمية، مع الرئيسة التنفيذية هيسوك تشوي من PBS COLOR LAB.","x.b1":"استشارة شخصية","x.b2":"تدريب المؤسسات","x.b3":"دورة احترافية","x.rt":"كيف يمكننا مساعدتك؟","x.rd":"اختر الاستشارة أو تدريب المؤسسات أو الدورة الاحترافية أو الشراكة العالمية للانتقال إلى صفحة تفصيلية.","x.c1t":"استشارة الألوان الشخصية والصورة","x.c2t":"تدريب الشركات والمؤسسات العامة","x.c3t":"دورة المحترفين والمدربين المعتمدين","x.c4t":"شراكة K-Beauty العالمية","x.c1b":"عرض الاستشارة","x.c2b":"عرض التدريب","x.c3b":"عرض الأكاديمية","x.c4b":"شراكة عالمية","nav.global":"عالمي","nav.programs":"محاضرات","nav.downloads":"المواد","nav.media":"إعلام","nav.contact":"تواصل","nav.shop":"متجر الألوان","nav.consulting":"استشارة شخصية","nav.business":"تدريب المؤسسات","nav.academy":"الأكاديمية المهنية",
   "shop.title":"أدوات الألوان · <span class=\"g\">متجر K-Beauty</span>","shop.desc":"أدوات تعليم الألوان الشخصية ومستحضرات K-Beauty — منتجات ألوان منتقاة بعناية من خبير","shop.p1name":"مجموعة أقمشة تشخيص الألوان الشخصية","shop.p1desc":"أقمشة تشخيص ألوان شخصية احترافية — معتمدة من PBS COLOR LAB","shop.p2cat":"تشخيص نقاط قوة الألوان PBS","shop.p2name":"مجموعة تشخيص نقاط قوة الألوان","shop.p2desc":"كتاب PBS الرسمي وكراسة التدريبات لنقاط قوة الألوان — معتمد من المؤسسة ماريا تشوي","shop.p3name":"مستحضرات K-Beauty الملونة","shop.p3desc":"مستحضرات K-Beauty المنتقاة من خبير الألوان الشخصية — منتجات معتمدة للتصدير","shop.inquiry":"استفسار للطلب","shop.order":"اطلب الآن","shop.soon":"قريباً","shop.notice":"🔒 المتجر الإلكتروني قيد التطوير · للطلبات والاستفسارات:","cc.phone.btn":"📱 +82-10-4285-7997","cc.profile.btn":"📄 تنزيل الملف الشخصي","cc.global.btn":"🌏 استفسار عالمي",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"قراءة الناس من خلال الألوان، تصميم المستقبل من خلال التعليم",
@@ -2106,9 +2222,21 @@ ar:{
   "faq.b4":"عرض التدريب",
   "faq.b5":"عرض الأكاديمية",
   "faq.b6":"عرض العالمي",
-  "faq.b8":"تواصل"},
+  "faq.b8":"تواصل",
+  "cs.title":"ألوان أولسان الشخصية — أكثر من مجرد ألوانك",
+  "cs.desc":"إلى جانب لون البشرة، نقرأ خطوط وجهك ونوع جسمك والخامات والانطباع العام لنمنحك معيارًا شخصيًا للّون والأسلوب.",
+  "cs.progh":"برامج الاستشارة",
+  "cs.cmph":"بأي تشخيص تبدأ؟",
+  "cs.steph":"كيف تسير الجلسة",
+  "cs.price":"السعر: يُحدَّد عند الاستشارة",
+  "cs.bnaver":"📍 حجز Naver",
+  "cs.binq":"✉ استفسار",
+  "cs.btel":"📞 اتصال",
+  "cs.reco":"موصى به لـ",
+  "cs.check":"ما نتحقق منه",
+  "cs.time":"المدة"},
 hi:{
-  "nav.about":"परिचय","x.h1a":"रंगों से लोगों की खूबियाँ खोजें,","x.h1b":"और बेहतर बदलाव से जोड़ें।","x.sub":"उल्सान में पर्सनल कलर·बॉडी-लाइन·फेस विश्लेषण से लेकर कॉर्पोरेट शिक्षा, विशेषज्ञ प्रशिक्षण और ग्लोबल K-Beauty साझेदारी तक — PBS COLOR LAB की CEO हेसुक चोई के साथ।","x.b1":"व्यक्तिगत परामर्श","x.b2":"कॉर्पोरेट शिक्षा","x.b3":"प्रोफेशनल कोर्स","x.rt":"आपको किसमें मदद चाहिए?","x.rd":"परामर्श, संस्थागत शिक्षा, प्रोफेशनल कोर्स या ग्लोबल साझेदारी चुनें और विस्तृत पेज देखें।","x.c1t":"पर्सनल कलर·इमेज परामर्श","x.c2t":"कॉर्पोरेट·सार्वजनिक संस्थान प्रशिक्षण","x.c3t":"विशेषज्ञ·प्रमाणित प्रशिक्षक कोर्स","x.c4t":"ग्लोबल K-Beauty साझेदारी","x.c1b":"परामर्श देखें","x.c2b":"प्रशिक्षण देखें","x.c3b":"अकादमी देखें","x.c4b":"Global Partnership","nav.global":"वैश्विक","nav.programs":"व्याख्यान","nav.downloads":"डाउनलोड","nav.media":"मीडिया","nav.contact":"संपर्क","nav.shop":"रंग की दुकान","nav.consulting":"व्यक्तिगत परामर्श","nav.business":"कॉर्पोरेट शिक्षा","nav.academy":"प्रोफेशनल अकादमी",
+  "nav.about":"परिचय","x.pick":"सेवा चुनें →","x.h1a":"रंगों से लोगों की खूबियाँ खोजें,","x.h1b":"और बेहतर बदलाव से जोड़ें।","x.sub":"उल्सान में पर्सनल कलर·बॉडी-लाइन·फेस विश्लेषण से लेकर कॉर्पोरेट शिक्षा, विशेषज्ञ प्रशिक्षण और ग्लोबल K-Beauty साझेदारी तक — PBS COLOR LAB की CEO हेसुक चोई के साथ।","x.b1":"व्यक्तिगत परामर्श","x.b2":"कॉर्पोरेट शिक्षा","x.b3":"प्रोफेशनल कोर्स","x.rt":"आपको किसमें मदद चाहिए?","x.rd":"परामर्श, संस्थागत शिक्षा, प्रोफेशनल कोर्स या ग्लोबल साझेदारी चुनें और विस्तृत पेज देखें।","x.c1t":"पर्सनल कलर·इमेज परामर्श","x.c2t":"कॉर्पोरेट·सार्वजनिक संस्थान प्रशिक्षण","x.c3t":"विशेषज्ञ·प्रमाणित प्रशिक्षक कोर्स","x.c4t":"ग्लोबल K-Beauty साझेदारी","x.c1b":"परामर्श देखें","x.c2b":"प्रशिक्षण देखें","x.c3b":"अकादमी देखें","x.c4b":"Global Partnership","nav.global":"वैश्विक","nav.programs":"व्याख्यान","nav.downloads":"डाउनलोड","nav.media":"मीडिया","nav.contact":"संपर्क","nav.shop":"रंग की दुकान","nav.consulting":"व्यक्तिगत परामर्श","nav.business":"कॉर्पोरेट शिक्षा","nav.academy":"प्रोफेशनल अकादमी",
   "shop.title":"कलर टूल्स · <span class=\"g\">K-Beauty कलर शॉप</span>","shop.desc":"पर्सनल कलर एजुकेशन टूल्स और K-Beauty कॉस्मेटिक्स — विशेषज्ञ द्वारा क्यूरेटेड कलर प्रोडक्ट्स","shop.p1name":"पर्सनल कलर ड्रेप सेट","shop.p1desc":"प्रोफेशनल पर्सनल कलर डायग्नोसिस ड्रेप — PBS COLOR LAB सर्टिफाइड","shop.p2cat":"PBS कलर स्ट्रेंथ्स डायग्नोसिस","shop.p2name":"कलर स्ट्रेंथ्स डायग्नोसिस किट","shop.p2desc":"PBS कलर स्ट्रेंथ्स आधिकारिक पाठ्यपुस्तक और वर्कबुक — संस्थापक Maria Choi द्वारा प्रमाणित","shop.p3name":"K-Beauty कलर कॉस्मेटिक्स","shop.p3desc":"पर्सनल कलर विशेषज्ञ क्यूरेटेड K-Beauty कॉस्मेटिक्स — वैश्विक निर्यात प्रमाणित उत्पाद","shop.inquiry":"पूछताछ ऑर्डर","shop.order":"अभी ऑर्डर करें","shop.soon":"जल्द आ रहा है","shop.notice":"🔒 ऑनलाइन स्टोर जल्द खुलेगा · ऑर्डर और पूछताछ:","cc.phone.btn":"📱 +82-10-4285-7997","cc.profile.btn":"📄 प्रोफ़ाइल डाउनलोड","cc.global.btn":"🌏 वैश्विक पूछताछ",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"रंग से लोगों को पढ़ना, शिक्षा से भविष्य को डिजाइन करना",
@@ -2202,7 +2330,19 @@ hi:{
   "faq.b4":"प्रशिक्षण देखें",
   "faq.b5":"अकादमी देखें",
   "faq.b6":"ग्लोबल देखें",
-  "faq.b8":"संपर्क करें"}
+  "faq.b8":"संपर्क करें",
+  "cs.title":"उल्सान पर्सनल कलर — सिर्फ़ रंग नहीं",
+  "cs.desc":"त्वचा के रंग के साथ चेहरे की रेखाएँ, शरीर का प्रकार, सामग्री और समग्र भाव देखकर हम आपके लिए रंग और शैली का मानक देते हैं।",
+  "cs.progh":"परामर्श कार्यक्रम",
+  "cs.cmph":"पहले कौन-सा निदान लें?",
+  "cs.steph":"प्रक्रिया",
+  "cs.price":"मूल्य: परामर्श के समय",
+  "cs.bnaver":"📍 Naver बुकिंग",
+  "cs.binq":"✉ परामर्श पूछें",
+  "cs.btel":"📞 कॉल",
+  "cs.reco":"किसके लिए",
+  "cs.check":"क्या जाँचते हैं",
+  "cs.time":"अवधि"}
 };
 
 const LANG_META = {
@@ -2511,7 +2651,7 @@ function dlFile(url, fname) {
 @media(max-width:768px){#mobileCta{display:flex!important}body{padding-bottom:66px!important}}
 </style>
 <div id="mobileCta" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#fff;box-shadow:0 -4px 18px rgba(0,0,0,.12);border-top:1px solid #eee">
-  <a href="/consulting" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#1a1a1a;font-size:12px;font-weight:800"><div style="font-size:18px">💄</div>개인 상담</a>
+  <a href="#consulting" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#1a1a1a;font-size:12px;font-weight:800"><div style="font-size:18px">💄</div>개인 상담</a>
   <a href="/business" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#1a1a1a;font-size:12px;font-weight:800;border-left:1px solid #eee"><div style="font-size:18px">🏢</div>기관교육</a>
   <a href="#contact" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#fff;font-size:12px;font-weight:800;background:#D0247E"><div style="font-size:18px">✉</div>문의</a>
 </div>전화상담</a>

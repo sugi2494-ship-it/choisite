@@ -23,10 +23,6 @@
   ],
   "rewrites": [
     {
-      "source": "/consulting",
-      "destination": "/consulting.html"
-    },
-    {
       "source": "/business",
       "destination": "/business.html"
     },
@@ -37,6 +33,10 @@
     {
       "source": "/global",
       "destination": "/global.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
     }
   ]
 }
