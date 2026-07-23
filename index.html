@@ -931,7 +931,8 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
 <!-- ═══ 개인 컨설팅 (아코디언 · 서비스 카드 아래) ═══ -->
 <section id="consulting" style="background:transparent;padding:0 16px">
   <div style="max-width:1080px;margin:0 auto">
-    <div id="consultPanel" class="consult-acc consult-body" style="display:none;margin:16px 0 8px">
+    <div id="consultPanel" class="consult-acc consult-body" style="display:none;margin:16px 0 8px;position:relative">
+    <button type="button" onclick="var p=document.getElementById('consultPanel');p.style.display='none';document.getElementById('services-router').scrollIntoView({behavior:'smooth',block:'start'});" aria-label="닫기" style="position:absolute;top:12px;right:14px;z-index:3;background:#fff;border:1px solid #F0D3DF;color:#C2185B;width:36px;height:36px;border-radius:50%;font-size:17px;font-weight:800;cursor:pointer;line-height:1;box-shadow:0 2px 8px rgba(194,24,91,.12)">✕</button>
     <p style="text-align:center;font-size:12px;font-weight:800;letter-spacing:.14em;color:#C2185B;margin:0 0 8px">PERSONAL CONSULTING · ULSAN</p>
     <h2 data-i18n="cs.title" style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 10px;letter-spacing:-.02em;line-height:1.35">울산 퍼스널컬러, 색만 확인하지 않습니다</h2>
     <p data-i18n="cs.desc" style="text-align:center;font-size:15px;color:#555;line-height:1.7;max-width:680px;margin:0 auto 30px">피부색과 함께 얼굴선, 체형, 소재와 전체 분위기를 살펴 나에게 맞는 색과 스타일의 기준을 알려드립니다.</p>
@@ -981,6 +982,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <a href="#contact" data-i18n="cs.binq" style="border:1.5px solid #E6007E;color:#C2185B;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;text-decoration:none">✉ 상담 문의</a>
       <a href="tel:+821042857997" data-i18n="cs.btel" style="border:1.5px solid #ddd;color:#333;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;text-decoration:none">📞 전화 연결</a>
     </div>
+    <div style="text-align:center;margin-top:18px"><button type="button" onclick="var p=document.getElementById('consultPanel');p.style.display='none';document.getElementById('services-router').scrollIntoView({behavior:'smooth',block:'start'});" style="background:transparent;border:1px solid #ddd;color:#999;font-weight:700;font-size:13px;padding:10px 24px;border-radius:999px;cursor:pointer">▲ 접기</button></div>
   </div>
   </div>
 </section>
