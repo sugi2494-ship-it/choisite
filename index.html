@@ -822,7 +822,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <p style="font-size:13px;color:rgba(255,255,255,.62);margin:-6px 0 22px;letter-spacing:.02em;font-weight:600">Personal Color Analysis, Corporate Education, Professional Training and Global K-Beauty Partnership</p>
       <div class="hero-actions">
         <a class="btn primary" href="#services-router" data-i18n="x.pick">서비스 선택하기 →</a>
-        <a class="btn outline" href="/academy/classroom">🎓 강의실 바로가기</a>
+        <a class="btn outline" href="/강의/">🎓 강의실 바로가기</a>
       </div>
     </div>
   </div>
@@ -2498,7 +2498,7 @@ window.addEventListener('storage', function(e) {
 var _star = 5;
 function setStar(v) {
   _star = v;
-  document.getElementById('testiStar').value = v;
+  var _ts=document.getElementById('testiStar'); if(_ts)_ts.value = v;
   document.querySelectorAll('#starRating .star').forEach(function(s) {
     s.style.color = parseInt(s.dataset.v) <= v ? '#FFD700' : 'rgba(255,255,255,.25)';
   });
