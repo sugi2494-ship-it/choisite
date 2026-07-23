@@ -199,7 +199,7 @@
     .hero-overlay{
       position:absolute;inset:0;z-index:1;
       background:
-        linear-gradient(to right, rgba(8,8,16,.78) 0%, rgba(8,8,16,.45) 55%, rgba(8,8,16,.15) 100%),
+        linear-gradient(to right, rgba(8,8,16,.92) 0%, rgba(8,8,16,.55) 45%, rgba(8,8,16,.06) 100%),
         linear-gradient(to top, rgba(8,8,16,.92) 0%, transparent 45%);
     }
     /* 콘텐츠 */
@@ -259,9 +259,9 @@
     .btn:hover{transform:translateY(-3px)}
     .btn.primary{
       background:linear-gradient(135deg,var(--pink3),var(--pink2));color:#fff;
-      box-shadow:0 16px 40px rgba(230,0,126,.35);
+      box-shadow:0 8px 22px rgba(230,0,126,.20);
     }
-    .btn.primary:hover{box-shadow:0 20px 50px rgba(230,0,126,.5)}
+    .btn.primary:hover{box-shadow:0 12px 28px rgba(230,0,126,.30)}
     .btn.gold{
       background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--black);
       font-weight:900;
@@ -729,7 +729,7 @@
 
   <!-- 배경: 두바이 영상 (자동재생·음소거·반복) -->
   <div class="hero-media" id="heroMedia">
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto"
+    <video id="heroVideo" autoplay muted loop playsinline preload="metadata"
       poster="최해숙프로필자동화만들기/두바이사진/KakaoTalk_20251008_233414472_03.jpg">
       <source src="최해숙프로필자동화만들기/두바이사진/KakaoTalk_20251003_224221981.mp4" type="video/mp4">
       <source src="최해숙프로필자동화만들기/두바이사진/KakaoTalk_20251003_224234119.mp4" type="video/mp4">
@@ -746,20 +746,12 @@
   <!-- 콘텐츠 -->
   <div class="hero-in">
     <div class="hero-copy">
-      <div class="eyebrow" data-i18n="hero.eyebrow">GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST</div>
-      <div class="hero-en" data-i18n="hero.en">Understand Yourself Through Color, Complete Your Brand Through Strengths</div>
-      <h1><span data-i18n="hero.t1">컬러로 나를 이해하고,</span><br><span class="accent" data-i18n="hero.t2">강점으로 브랜드를 완성합니다</span></h1>
-      <p class="hero-sub" data-i18n="hero.sub">컬러테라피 · 퍼스널컬러이미지메이킹 · 컬러강점 · 글로벌 교육 · 방송 출연 및 작가</p>
-      <div class="stats-row">
-        <div class="stat"><b>10+</b><span data-i18n="stat.years">강의 경력</span></div>
-        <div class="stat"><b>10+</b><span data-i18n="stat.globesub">글로벌 진출국</span></div>
-        <div class="stat"><b>10+</b><span data-i18n="stat.books">방송·저서</span></div>
-      </div>
+      <div class="eyebrow">PBS COLOR LAB · ULSAN · GLOBAL K-BEAUTY</div>
+      <h1><span>색으로 사람의 강점을 발견하고,</span><br><span class="accent">더 나은 변화를 연결합니다</span></h1>
+      <p class="hero-sub">개인 컨설팅, 기업·공공기관 교육, 전문가 양성과 글로벌 K-Beauty 협업을 진행하는 PBS COLOR LAB 최해숙 대표의 공식 홈페이지입니다.</p>
       <div class="hero-actions">
-        <a class="btn primary" href="book48.html">🎨 지금 3분, 컬러강점 무료진단 →</a>
-        <a class="btn gold" href="/강의/" data-i18n="hero.btn2">🎓 강의실 입장</a>
-        <a class="btn outline" href="downloads/최해숙_대표_프로필.pdf" target="_blank" rel="noopener" data-i18n="hero.btn1">📄 프로필 다운로드</a>
-        <a class="btn outline" href="#contact" data-i18n="hero.btn3">✉ 문의하기</a>
+        <a class="btn primary" href="#services-router">서비스 선택하기 →</a>
+        <a class="btn outline" href="#global">Global Partnership</a>
       </div>
     </div>
   </div>
@@ -841,6 +833,24 @@
           <a class="btn outline" href="#contact" data-i18n="about.btncontact">✉ 교육 문의하기</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 신뢰 지표 (대표 소개 아래) — 추가 ═══ -->
+<section style="background:#0b0b14;padding:26px 16px">
+  <div style="max-width:860px;margin:0 auto;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;text-align:center">
+    <div style="flex:1 1 220px;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px 14px;background:rgba(255,255,255,.02)">
+      <div style="font-size:23px;font-weight:900;color:#E6007E">4년 연속</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.72);margin-top:4px">두바이·아부다비 글로벌 강연</div>
+    </div>
+    <div style="flex:1 1 220px;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px 14px;background:rgba(255,255,255,.02)">
+      <div style="font-size:23px;font-weight:900;color:#E6007E">저서 2권</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.72);margin-top:4px">『상처도 스펙이다』 · 『색과 숫자의 기적』</div>
+    </div>
+    <div style="flex:1 1 220px;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px 14px;background:rgba(255,255,255,.02)">
+      <div style="font-size:23px;font-weight:900;color:#E6007E">방송 출연</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.72);margin-top:4px">KBS 생생투데이 · 신현섭의 울산시대 외</div>
     </div>
   </div>
 </section>
@@ -2238,5 +2248,9 @@ function dlFile(url, fname) {
   <a href="book48.html" style="flex:1;text-align:center;padding:10px 4px;text-decoration:none;color:#fff;font-size:12px;font-weight:800;background:#D0247E"><div style="font-size:18px">🎨</div>무료진단</a>
 </div>
 
+<script>
+/* 모바일·저전력·감속모션 환경: 히어로 영상 대신 poster 우선 (추가) */
+(function(){var v=document.getElementById('heroVideo');if(!v)return;try{var mq=window.matchMedia;var small=mq&&mq('(max-width:768px)').matches;var reduce=mq&&mq('(prefers-reduced-motion: reduce)').matches;var save=navigator.connection&&navigator.connection.saveData;if(small||reduce||save){v.removeAttribute('autoplay');v.preload='none';v.pause();}}catch(e){}})();
+</script>
 </body>
 </html>
