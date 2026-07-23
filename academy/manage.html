@@ -1,0 +1,227 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PBS 관리자</title><style>
+:root{--ink:#15171c;--paper:#f7f6f2;--line:#e2e1db;--yellow:#f0c62d;--blue:#315fa6;--green:#328062;--red:#c94a42;--pink:#e0007a;--gray:#6b6e6b}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',-apple-system,Arial,sans-serif;line-height:1.6}
+.bar{height:5px;background:linear-gradient(90deg,var(--red) 0 25%,var(--yellow) 25% 50%,var(--green) 50% 75%,var(--blue) 75%)}
+.top{display:flex;align-items:center;gap:12px;padding:13px 22px;background:#fff;border-bottom:1px solid var(--line)}
+.top img{height:26px}.top .badge{margin-left:auto;font-size:11px;font-weight:800;color:#fff;background:var(--ink);padding:5px 11px;border-radius:20px}
+#login{max-width:400px;margin:70px auto;padding:26px;background:#fff;border:1px solid var(--line);border-radius:16px}
+#login h1{font-size:20px;margin:0 0 6px}
+.fld{margin-bottom:12px}.fld label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
+.fld input,.fld textarea,.fld select{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px}
+.btn{border:0;border-radius:10px;padding:12px 20px;font-weight:800;font-size:15px;cursor:pointer}
+.btn.ink{background:var(--ink);color:#fff}.btn.y{background:var(--yellow);color:var(--ink)}
+.msg{font-size:13px;margin-top:8px;min-height:18px}
+.hidden{display:none}
+.layout{display:flex;min-height:calc(100vh - 56px)}
+.side{flex:0 0 230px;background:#fff;border-right:1px solid var(--line);padding:16px 12px}
+.side a{display:block;padding:12px 14px;border-radius:10px;color:#40434a;text-decoration:none;font-weight:700;font-size:14.5px;margin-bottom:4px;cursor:pointer}
+.side a:hover{background:var(--paper)}.side a.on{background:var(--ink);color:#fff}
+.side .grp{font-size:11px;font-weight:800;color:#a7a9a4;letter-spacing:.05em;margin:14px 10px 6px}
+.main{flex:1;min-width:0;padding:26px 26px 70px;max-width:1100px}
+.pane{display:none}.pane.on{display:block}
+h2.pt{font-size:20px;margin:0 0 4px}p.pd{color:var(--gray);font-size:13.5px;margin:0 0 16px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.mini{font-size:13px;padding:8px 13px;border:1px solid var(--line);background:#fff;border-radius:8px;cursor:pointer;font-weight:700}
+.mini.save{background:var(--green);color:#fff;border-color:var(--green)}
+.appswrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+table.apps{width:100%;border-collapse:collapse;font-size:13px}
+.apps th,.apps td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top;white-space:nowrap}
+.apps th{background:#f2f1ec;font-weight:800}
+.apps td.msg2{white-space:normal;min-width:150px;color:#555;font-size:12px}
+.course-chip{display:inline-block;font-size:12px;font-weight:800;background:#e7eefb;color:#315fa6;padding:3px 9px;border-radius:20px}
+.act{display:flex;gap:5px;flex-wrap:wrap}
+.act button{font-size:12px;font-weight:700;border:0;border-radius:7px;padding:6px 9px;cursor:pointer;color:#fff}
+.act .b-ct{background:#315fa6}.act .b-sms{background:#328062}.act .b-pay{background:#c98a1f}
+.rowdel{background:#fbe4e2;color:#b23b30;border:0;border-radius:7px;padding:6px 9px;font-weight:700;cursor:pointer;font-size:12px}
+.count{color:var(--gray);font-size:13px}
+.help{background:#fff4c7;border:1px solid #ead57b;border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:16px}
+.photo{display:flex;gap:16px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;flex-wrap:wrap;background:#fff}
+.photo .pv{width:120px;height:90px;object-fit:cover;border-radius:8px;background:#eee;border:1px solid var(--line)}
+.photo .body{flex:1;min-width:200px}.photo b{font-size:15px}.photo .sub{color:var(--gray);font-size:12.5px;margin:2px 0 8px}
+.galgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:8px}
+.galcard{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.galcard img{width:100%;height:130px;object-fit:cover;border-radius:8px;display:block}
+.galcard input{width:100%;margin-top:8px;padding:7px;border:1px solid var(--line);border-radius:7px;font-size:13px}
+.galcard .down{width:100%;margin-top:8px;background:#fbe4e2;color:#b23b30;border:0;border-radius:7px;padding:8px;font-weight:700;cursor:pointer}
+.rv{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
+.rv .rowf{display:flex;gap:8px;flex-wrap:wrap}.rv .rowf .fld{flex:1;min-width:120px}
+.rv .rvpv{width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#eee}
+.del{background:#fbe4e2;color:#b23b30;border:0;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer;font-size:13px}
+.post{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
+</style></head><body>
+<div class="bar"></div>
+<div class="top"><img src="data:image/png;base64,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" alt="PBS"><span class="badge">관리자</span></div>
+<div id="login">
+<h1>관리자 로그인</h1>
+<p class="pd">관리자만 접근할 수 있습니다. 비밀번호를 입력해 주세요.</p>
+<div class="fld"><label>관리자 비밀번호</label><input id="pw" type="password" placeholder="비밀번호"></div>
+<button class="btn ink" id="lg">로그인</button>
+<div class="msg" id="lm" style="color:#b23b30"></div>
+</div>
+<div id="app" class="hidden"><div class="layout">
+<nav class="side">
+<div class="grp">홈페이지 관리</div>
+<a data-p="photo" class="on">홈페이지 사진</a>
+<a data-p="gallery">활동 갤러리</a>
+<a data-p="review">후기 관리</a>
+<a data-p="board">활동 게시판·공지</a>
+<a data-p="popup">이달의 강의 팝업</a>
+<a data-p="banner">이벤트 배너</a>
+<div class="grp">수강생 신청자 관리</div>
+<a data-p="special">특강 신청자</a>
+<a data-p="cert">전문가 자격과정 신청자</a>
+<a data-p="inst">인증강사 신청자</a>
+<a data-p="qna">홈페이지 문의</a>
+<div class="grp" style="color:#c7c8c3">강의실 <span style="font-weight:700;font-size:10px">준비중</span></div>
+<a style="color:#b9bab6;cursor:default" title="메인페이지 강의실을 이 자리로 옮길 예정입니다">교육 강의실 (예정)</a>
+</nav>
+<div class="main">
+<div class="pane" id="pane-special">
+<h2 class="pt">특강 신청자</h2>
+<p class="pd">일반 특강·원데이 등 특강 신청자 명단입니다.</p>
+<div class="toolbar"><button class="mini" onclick="loadApps()">새로고침</button><button class="mini" onclick="csvOf('special')">엑셀(CSV)</button><span class="count" id="cnt-special"></span></div>
+<div class="appswrap"><div id="box-special"></div></div>
+</div>
+<div class="pane" id="pane-cert">
+<h2 class="pt">전문가 자격과정 신청자</h2>
+<p class="pd">퍼스널컬러·컬러강점 등 전문가 자격과정 신청자 명단입니다.</p>
+<div class="toolbar"><button class="mini" onclick="loadApps()">새로고침</button><button class="mini" onclick="csvOf('cert')">엑셀(CSV)</button><span class="count" id="cnt-cert"></span></div>
+<div class="appswrap"><div id="box-cert"></div></div>
+</div>
+<div class="pane" id="pane-inst">
+<h2 class="pt">인증강사 신청자</h2>
+<p class="pd">지원 → 1차 면접 → 합격자에게 전자계약서 발송. 명단은 관리자만 볼 수 있습니다.</p>
+<div class="toolbar"><button class="mini" onclick="loadApps()">새로고침</button><button class="mini" onclick="csvOf('inst')">엑셀(CSV)</button><span class="count" id="cnt-inst"></span></div>
+<div class="appswrap"><div id="box-inst"></div></div>
+</div>
+<div class="pane" id="pane-qna">
+<h2 class="pt">홈페이지 문의</h2>
+<p class="pd">에듀 홈페이지 &lsquo;문의하기&rsquo;로 접수된 일반 문의입니다.</p>
+<div class="toolbar"><button class="mini" onclick="loadApps()">새로고침</button><button class="mini" onclick="csvOf('qna')">엑셀(CSV)</button><span class="count" id="cnt-qna"></span></div>
+<div class="appswrap"><div id="box-qna"></div></div>
+</div>
+<div class="pane on" id="pane-photo">
+<h2 class="pt">홈페이지 사진</h2>
+<div class="help">사진을 고르면 미리보기가 바뀝니다. <b>[이 사진으로 저장]</b>을 눌러야 실제 홈페이지에 반영됩니다.</div>
+<div id="photos"></div>
+</div>
+<div class="pane" id="pane-gallery">
+<h2 class="pt">갤러리 활동사진</h2>
+<p class="pd">인증강사 페이지 &lsquo;대표·현장&rsquo; 갤러리 사진을 올리고 내릴 수 있습니다.</p>
+<div class="help">여기에 사진을 올리면 <b>기본 6장 대신</b> 올리신 사진이 표시됩니다. 모두 내리면 기본 사진으로 돌아갑니다. 변경 후 <b>[갤러리 저장]</b>을 꼭 눌러 주세요.</div>
+<div class="toolbar"><label class="mini" style="cursor:pointer">＋ 사진 올리기<input type="file" id="galfile" accept="image/*" style="display:none"></label><button class="btn y" onclick="saveGallery()">갤러리 저장</button><span class="count" id="galmsg"></span></div>
+<div class="galgrid" id="galgrid"></div>
+</div>
+<div class="pane" id="pane-review">
+<h2 class="pt">후기 관리</h2>
+<p class="pd">후기는 별점·글·사진(선택)까지 넣을 수 있습니다. 다 고친 뒤 <b>[후기 저장]</b>을 누르세요.</p>
+<div id="reviews"></div>
+<button class="mini" id="addRv">+ 후기 추가</button>
+<div style="margin-top:14px"><button class="btn y" id="saveRv">후기 저장</button></div>
+<div class="msg" id="rvmsg"></div>
+</div>
+<div class="pane" id="pane-board">
+<h2 class="pt">교육과정 공지</h2>
+<p class="pd">자격과정 페이지에 표시되는 공지·안내글을 올립니다. 변경 후 <b>[공지 저장]</b>을 누르세요.</p>
+<div class="toolbar"><button class="mini" onclick="addPost()">+ 공지 추가</button><button class="btn y" onclick="saveBoard()">공지 저장</button><span class="count" id="bdmsg"></span></div>
+<div id="posts"></div>
+</div>
+<div class="pane" id="pane-popup">
+<h2 class="pt">이달의 강의 팝업</h2>
+<p class="pd">컬러랩 에듀 홈페이지에 들어오면 뜨는 팝업입니다. 내용을 채우고 <b>[팝업 저장]</b>을 누르세요.</p>
+<div class="help"><b>사용함</b>에 체크해야 홈페이지에 팝업이 뜹니다. 체크를 풀고 저장하면 팝업이 나오지 않습니다.</div>
+<div style="max-width:560px">
+<div class="fld"><label><input type="checkbox" id="pop_active" style="width:auto;margin-right:8px">이 팝업 사용함 (체크 시 홈페이지에 표시)</label></div>
+<div class="fld"><label>상단 라벨</label><input id="pop_ki" placeholder="예: 이달의 강의 · 8월"></div>
+<div class="fld"><label>제목</label><input id="pop_title" placeholder="예: 8월 퍼스널컬러 자격과정 모집"></div>
+<div class="fld"><label>설명</label><textarea id="pop_desc" rows="3" placeholder="예: 8월 개강반 마감 임박! 지금 신청하세요."></textarea></div>
+<div class="fld"><label>버튼을 누르면 이동할 링크</label><input id="pop_link" placeholder="예: courses.html  또는  guide.html"></div>
+<div class="fld"><label>버튼 문구</label><input id="pop_linktext" placeholder="예: 자세히 보기 / 신청하기"></div>
+<div class="fld"><label>팝업 이미지 (선택)</label>
+<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+<img id="pop_prev" class="pv" style="width:150px;height:110px" src="">
+<div><label class="mini" style="cursor:pointer">＋ 이미지 올리기<input type="file" id="pop_file" accept="image/*" style="display:none"></label>
+<button class="mini" type="button" onclick="clearPopImg()" style="margin-left:6px">이미지 지우기</button></div>
+</div></div>
+<div style="margin-top:14px"><button class="btn y" onclick="savePopup()">팝업 저장</button> <span class="count" id="popmsg"></span></div>
+</div>
+</div>
+<div class="pane" id="pane-banner">
+<h2 class="pt">이벤트 배너</h2>
+<p class="pd">에듀 홈페이지 상단에 띄우는 띠 배너입니다. 팝업보다 가볍게 항상 노출됩니다.</p>
+<div class="help"><b>사용함</b>에 체크해야 배너가 뜹니다. 짧은 한 줄 문구가 가장 잘 보입니다.</div>
+<div style="max-width:560px">
+<div class="fld"><label><input type="checkbox" id="bn_active" style="width:auto;margin-right:8px">이 배너 사용함 (체크 시 상단에 표시)</label></div>
+<div class="fld"><label>배너 문구 (한 줄)</label><input id="bn_text" placeholder="예: 8월 퍼스널컬러 자격과정 조기마감 임박!"></div>
+<div class="fld"><label>클릭 시 이동할 링크 (선택)</label><input id="bn_link" placeholder="예: courses.html  (비워두면 클릭 안 됨)"></div>
+<div class="fld"><label>버튼 문구</label><input id="bn_linktext" placeholder="예: 바로가기 / 신청하기"></div>
+<div style="margin-top:14px"><button class="btn y" onclick="saveBanner()">배너 저장</button> <span class="count" id="bnmsg"></span></div>
+</div>
+</div>
+</div></div></div>
+<script>
+var KEY="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";var B="https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/";
+var CT=B+"site-content",AL=B+"admin-list",CA=B+"contract-admin",SMS=B+"send-sms",EX=B+"extras";
+var PW="",ACCT="농협 301-4285-7997-91 (예금주: PBS컬러랩)",PENDING={},APPS=[],GAL=[],BOARD=[],RVS=[],POP={},BAN={};
+var PLACE="data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='90'%3E%3Crect width='120' height='90' fill='%23eeeeee'/%3E%3Ctext x='60' y='50' font-size='11' fill='%23999999' text-anchor='middle'%3E사진 없음%3C/text%3E%3C/svg%3E";
+function esc(s){s=String(s==null?"":s);return s.replace(/[&<>"]/g,function(c){return c=="&"?"&amp;":c=="<"?"&lt;":c==">"?"&gt;":"&quot;";});}
+function api(action,extra){var b={password:PW,action:action};if(extra){for(var k in extra)b[k]=extra[k];}return fetch(CT,{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY,Authorization:"Bearer "+KEY},body:JSON.stringify(b)}).then(function(r){return r.json();});}
+function post(url,b){return fetch(url,{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY,Authorization:"Bearer "+KEY},body:JSON.stringify(b)}).then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});});}
+function dstr(s){if(!s)return "";var d=new Date(s);if(isNaN(d))return String(s).slice(0,10);var z=function(n){return (n<10?"0":"")+n;};return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());}
+function payOf(r){var m=(r.memo||"")+" "+(r.message||"");if(m.indexOf("카드")>=0)return "카드";if(m.indexOf("이체")>=0||m.indexOf("현금")>=0)return "이체";return "";}
+function isInst(r){var s=(r.session||"");var w=(r.want_to_make||"");if(s.indexOf("인증강사")>=0)return true;return /인증강사|인증센터|전문프로|299|399|799/.test(w);}
+function isSpecial(r){var m=(r.session||"")+" "+(r.want_to_make||"");return /특강|원데이|특별강|onedaymes|one ?day/i.test(m);}
+function isQna(r){var m=(r.session||"")+" "+(r.want_to_make||"");return /문의/.test(m);}
+function catOf(r){if(isInst(r))return "inst";if(isSpecial(r))return "special";if(isQna(r))return "qna";return "cert";}
+function courseName(r){return r.want_to_make||r.session||"";}
+function resizeFile(f,maxw,cb){var rd=new FileReader();rd.onload=function(){var img=new Image();img.onload=function(){var w=img.width,hh=img.height;if(w>maxw){hh=Math.round(hh*maxw/w);w=maxw;}var cv=document.createElement("canvas");cv.width=w;cv.height=hh;cv.getContext("2d").drawImage(img,0,0,w,hh);cb(cv.toDataURL("image/jpeg",0.82));};img.src=rd.result;};rd.readAsDataURL(f);}
+/* nav */
+var links=document.querySelectorAll(".side a");
+for(var i=0;i<links.length;i++){links[i].addEventListener("click",function(){var p=this.getAttribute("data-p");for(var j=0;j<links.length;j++)links[j].className=links[j].getAttribute("data-p")==p?"on":"";var panes=document.querySelectorAll(".pane");for(var k=0;k<panes.length;k++)panes[k].className="pane"+(panes[k].id=="pane-"+p?" on":"");});}
+/* applicants */
+function smsSend(to,text){return post(SMS,{password:PW,to:to,text:text});}
+function ca(action,payload){return post(CA,{password:PW,action:action,payload:payload});}
+function gradeOf(w){w=w||"";if(w.indexOf("799")>=0||w.indexOf("센터")>=0)return "인증센터장";if(w.indexOf("399")>=0||w.indexOf("PLUS")>=0)return "전문프로 인증강사";return "인증강사";}
+function sendContract(id,name,phone,course){if(!phone){alert("연락처가 없어 발송할 수 없습니다.");return;}if(!confirm(name+"님에게 전자계약서 링크를 문자로 발송할까요?\n과정: "+course))return;ca("create",{signer_name:name,signer_phone:phone,grade:gradeOf(course),session:course,application_id:id}).then(function(res){if(!res.ok||res.j.error){alert("계약 생성 실패: "+(res.j.error||""));return;}return ca("mark_sent",{id:res.j.id}).then(function(s){alert(s.ok&&s.j.ok?"전자계약서 링크를 문자로 발송했습니다.":"문자 발송 실패: "+(s.j.error||""));});});}
+function sendText(name,phone){if(!phone){alert("연락처가 없습니다.");return;}var t=prompt(name+"님에게 보낼 문자 내용을 입력하세요.",name+"님, PBS컬러랩입니다. ");if(t==null||!t.trim())return;smsSend(phone,t).then(function(res){alert(res.ok&&res.j.ok?"문자를 발송했습니다.":"발송 실패: "+(res.j.error||""));});}
+function sendDeposit(name,phone,course){if(!phone){alert("연락처가 없습니다.");return;}var t=name+"님, "+(course||"")+" 신청 감사합니다.\n아래 계좌로 교육비를 입금해 주세요.\n▶ "+ACCT+"\n입금자명은 신청자 성함과 동일하게 부탁드립니다.\n문의 010-4285-7997";if(!confirm("입금 안내 문자를 발송할까요?\n\n"+t))return;smsSend(phone,t).then(function(res){alert(res.ok&&res.j.ok?"입금 안내 문자를 발송했습니다.":"발송 실패: "+(res.j.error||""));});}
+function delApp(id,name){if(!confirm(name+"님 신청 기록을 삭제할까요? 되돌릴 수 없습니다."))return;post(AL,{password:PW,action:"delete",id:id}).then(function(res){if(res.ok&&res.j.ok)loadApps();else alert("삭제 실패: "+(res.j.error||""));});}
+function esc2(s){return String(s||"").replace(/'/g,"").replace(/"/g,"");}
+function rowsHtml(list,kind){if(!list.length)return '<p style="padding:16px;color:#6b6e6b;font-size:13px">아직 신청자가 없습니다.</p>';var inst=kind=="inst";var h='<table class="apps"><thead><tr><th>삭제</th><th>신청일</th><th>이름</th><th>연락처</th><th>생년월일</th><th>소속</th><th>'+(inst?"지원 과정":"신청 과정")+'</th>'+(inst?"":"<th>결제</th>")+'<th>메모</th><th>관리</th></tr></thead><tbody>';list.forEach(function(r){var cn=esc(courseName(r)),nm=esc(r.name),ph=esc(r.phone);var pay=payOf(r);var payh=pay?'<span class="course-chip" style="background:#eaf5ef;color:#328062">'+pay+'</span>':'';var a2=esc2(r.name),c2=esc2(courseName(r));var act=inst?('<div class="act"><button class="b-ct" onclick="sendContract(\''+r.id+'\',\''+a2+'\',\''+ph+'\',\''+c2+'\')">전자계약서</button><button class="b-sms" onclick="sendText(\''+a2+'\',\''+ph+'\')">문자</button><button class="b-pay" onclick="sendDeposit(\''+a2+'\',\''+ph+'\',\''+c2+'\')">입금안내</button></div>'):('<div class="act"><button class="b-sms" onclick="sendText(\''+a2+'\',\''+ph+'\')">문자</button><button class="b-pay" onclick="sendDeposit(\''+a2+'\',\''+ph+'\',\''+c2+'\')">입금안내</button></div>');h+='<tr><td><button class="rowdel" onclick="delApp(\''+r.id+'\',\''+a2+'\')">삭제</button></td><td>'+esc(dstr(r.created_at))+'</td><td>'+nm+'</td><td>'+ph+'</td><td>'+esc(r.birthdate||"")+'</td><td>'+esc(r.affiliation||"")+'</td><td><span class="course-chip">'+cn+'</span></td>'+(inst?"":("<td>"+payh+"</td>"))+'<td class="msg2">'+esc(r.message||"")+'</td><td>'+act+'</td></tr>';});return h+'</tbody></table>';}
+function loadApps(){var boxes=["special","cert","inst","qna"];boxes.forEach(function(k){var el=document.getElementById("box-"+k);if(el)el.innerHTML='<p style="padding:16px;color:#6b6e6b;font-size:13px">불러오는 중...</p>';});post(AL,{password:PW}).then(function(res){var j=res.j;if(j&&j.error){document.getElementById("box-inst").innerHTML='<p style="padding:16px;color:#b23b30">'+esc(j.error)+'</p>';return;}APPS=(j&&j.rows)||[];boxes.forEach(function(k){var list=APPS.filter(function(r){return catOf(r)==k;});document.getElementById("box-"+k).innerHTML=rowsHtml(list,k);document.getElementById("cnt-"+k).textContent="총 "+list.length+"명";});}).catch(function(){document.getElementById("box-inst").innerHTML='<p style="padding:16px;color:#b23b30">명단을 불러오지 못했습니다.</p>';});}
+function csvOf(kind){var inst=kind=="inst";var nameMap={special:"특강",cert:"전문가자격과정",inst:"인증강사",qna:"문의"};var list=APPS.filter(function(r){return catOf(r)==kind;});if(!list.length){alert("내려받을 신청자가 없습니다.");return;}var cols=[["신청일","created_at"],["이름","name"],["연락처","phone"],["생년월일","birthdate"],["소속","affiliation"],["과정","_course"],["결제","_pay"],["메모","message"]];var lines=[cols.map(function(c){return c[0];}).join(",")];list.forEach(function(r){lines.push(cols.map(function(c){var v;if(c[1]=="created_at")v=dstr(r.created_at);else if(c[1]=="_course")v=courseName(r);else if(c[1]=="_pay")v=payOf(r);else v=r[c[1]]||"";return '"'+String(v).replace(/"/g,'""')+'"';}).join(","));});var blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="PBS_"+(nameMap[kind]||"신청")+"_신청명단.csv";a.click();}
+/* photos */
+var SLOTS=[{slot:"hero",key:"gc_hero",title:"첫 화면 대표 사진",sub:"히어로 오른쪽 인물 사진",maxw:760},{slot:"ceo",key:"gc_ceo",title:"대표 소개 사진",sub:"대표 소개 섹션 인물 사진",maxw:760},{slot:"logo",key:"gc_logo",title:"로고 (선택)",sub:"상단 로고 이미지",maxw:600}];
+function buildPhotos(content){var box=document.getElementById("photos");box.innerHTML="";SLOTS.forEach(function(s){var cur=content[s.slot]||"";var d=document.createElement("div");d.className="photo";d.innerHTML='<img class="pv" id="prev_'+s.slot+'" src="'+(cur||PLACE)+'" alt=""><div class="body"><b>'+s.title+'</b><div class="sub">'+s.sub+'</div><input type="file" id="file_'+s.slot+'" accept="image/*"><div style="margin-top:8px"><button class="mini save" id="save_'+s.slot+'">이 사진으로 저장</button></div><div class="msg" id="msg_'+s.slot+'"></div></div>';box.appendChild(d);document.getElementById("file_"+s.slot).addEventListener("change",function(ev){var f=ev.target.files[0];if(!f)return;resizeFile(f,s.maxw,function(durl){PENDING[s.slot]=durl;document.getElementById("prev_"+s.slot).src=durl;document.getElementById("msg_"+s.slot).style.color="#2456a0";document.getElementById("msg_"+s.slot).textContent="새 사진 선택됨. [이 사진으로 저장]을 눌러 주세요.";});});document.getElementById("save_"+s.slot).addEventListener("click",function(){var m=document.getElementById("msg_"+s.slot);if(!PENDING[s.slot]){m.style.color="#b23b30";m.textContent="먼저 사진을 선택해 주세요.";return;}m.style.color="#6b6e6b";m.textContent="저장 중...";api("set",{key:s.key,value:PENDING[s.slot]}).then(function(r){if(r&&r.ok){m.style.color="#256a4d";m.textContent="저장되었습니다.";}else{m.style.color="#b23b30";m.textContent=(r&&r.error)||"저장 실패";}});});});}
+/* gallery */
+function buildGallery(){var g=document.getElementById("galgrid");g.innerHTML="";if(!GAL.length){g.innerHTML='<p style="color:#6b6e6b;font-size:13px">올린 사진이 없습니다. 기본 활동사진 6장이 표시됩니다. 새 사진을 올려 교체하세요.</p>';return;}GAL.forEach(function(it,i){var d=document.createElement("div");d.className="galcard";d.innerHTML='<img src="'+it.img+'"><input value="'+esc(it.cap||"")+'" data-i="'+i+'" placeholder="사진 설명"><button class="down" data-down="'+i+'">이 사진 내리기</button>';g.appendChild(d);});}
+document.getElementById("galgrid").addEventListener("input",function(e){if(e.target.dataset.i!=null)GAL[e.target.dataset.i].cap=e.target.value;});
+document.getElementById("galgrid").addEventListener("click",function(e){if(e.target.dataset.down!=null){GAL.splice(Number(e.target.dataset.down),1);buildGallery();}});
+document.getElementById("galfile").addEventListener("change",function(ev){var f=ev.target.files[0];if(!f)return;resizeFile(f,900,function(durl){GAL.push({img:durl,cap:""});buildGallery();});ev.target.value="";});
+function saveGallery(){var m=document.getElementById("galmsg");m.style.color="#6b6e6b";m.textContent="저장 중...";post(EX,{password:PW,action:"set",key:"gc_gallery",value:JSON.stringify(GAL)}).then(function(res){if(res.ok&&res.j.ok){m.style.color="#256a4d";m.textContent="저장되었습니다. 홈페이지 새로고침 시 반영됩니다.";}else{m.style.color="#b23b30";m.textContent=(res.j.error)||"저장 실패";}});}
+/* reviews (stars + photo) */
+function buildReviews(content){RVS=(content.reviews&&content.reviews.length)?content.reviews.slice():[];renderReviews();}
+function renderReviews(){var box=document.getElementById("reviews");box.innerHTML="";RVS.forEach(function(rv,i){var st=rv.stars||5;var opts="";for(var s=5;s>=1;s--)opts+='<option value="'+s+'"'+(s==st?" selected":"")+'>'+"★".repeat(s)+"</option>";var d=document.createElement("div");d.className="rv";d.innerHTML='<div class="rowf"><div class="fld" style="max-width:120px"><label>별점</label><select data-i="'+i+'" data-f="stars">'+opts+'</select></div><div class="fld"><label>이름</label><input data-i="'+i+'" data-f="who" value="'+esc(rv.who||"")+'"></div><div class="fld"><label>구분</label><input data-i="'+i+'" data-f="grade" value="'+esc(rv.grade||"인증강사")+'"></div></div><div class="fld"><label>후기 내용</label><textarea rows="2" data-i="'+i+'" data-f="text">'+esc(rv.text||"")+'</textarea></div><div class="rowf" style="align-items:center"><img class="rvpv" src="'+(rv.photo||PLACE)+'"><label class="mini" style="cursor:pointer">사진 첨부(선택)<input type="file" accept="image/*" data-rvphoto="'+i+'" style="display:none"></label><button class="del" data-del="'+i+'">삭제</button></div>';box.appendChild(d);});}
+document.getElementById("reviews").addEventListener("input",function(e){var t=e.target;if(t.dataset.i!=null&&t.dataset.f){RVS[t.dataset.i][t.dataset.f]=t.value;}});
+document.getElementById("reviews").addEventListener("change",function(e){var t=e.target;if(t.dataset.rvphoto!=null){var f=t.files[0];if(!f)return;var i=t.dataset.rvphoto;resizeFile(f,360,function(durl){RVS[i].photo=durl;renderReviews();});}});
+document.getElementById("reviews").addEventListener("click",function(e){var t=e.target;if(t.dataset.del!=null){RVS.splice(Number(t.dataset.del),1);renderReviews();}});
+document.getElementById("addRv").addEventListener("click",function(){RVS.push({stars:5,text:"",who:"",grade:"인증강사",photo:""});renderReviews();});
+document.getElementById("saveRv").addEventListener("click",function(){var m=document.getElementById("rvmsg");m.style.color="#6b6e6b";m.textContent="저장 중...";api("set",{key:"gc_reviews",value:JSON.stringify(RVS)}).then(function(r){if(r&&r.ok){m.style.color="#256a4d";m.textContent="후기가 저장되었습니다.";}else{m.style.color="#b23b30";m.textContent=(r&&r.error)||"저장 실패";}});});
+/* board */
+function buildBoard(){var b=document.getElementById("posts");b.innerHTML="";if(!BOARD.length){b.innerHTML='<p style="color:#6b6e6b;font-size:13px">등록된 공지가 없습니다. [+ 공지 추가]를 눌러 작성하세요.</p>';return;}BOARD.forEach(function(p,i){var d=document.createElement("div");d.className="post";d.innerHTML='<div class="rowf"><div class="fld"><label>제목</label><input data-i="'+i+'" data-f="title" value="'+esc(p.title||"")+'"></div><div class="fld" style="max-width:150px"><label>날짜</label><input data-i="'+i+'" data-f="date" value="'+esc(p.date||"")+'" placeholder="예: 2026-08-01"></div></div><div class="fld"><label>내용</label><textarea rows="3" data-i="'+i+'" data-f="body">'+esc(p.body||"")+'</textarea></div><button class="del" data-del="'+i+'">삭제</button>';b.appendChild(d);});}
+document.getElementById("posts").addEventListener("input",function(e){var t=e.target;if(t.dataset.i!=null&&t.dataset.f)BOARD[t.dataset.i][t.dataset.f]=t.value;});
+document.getElementById("posts").addEventListener("click",function(e){if(e.target.dataset.del!=null){BOARD.splice(Number(e.target.dataset.del),1);buildBoard();}});
+function addPost(){var d=new Date();var ds=d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);BOARD.unshift({title:"",body:"",date:ds});buildBoard();}
+function saveBoard(){var m=document.getElementById("bdmsg");m.style.color="#6b6e6b";m.textContent="저장 중...";post(EX,{password:PW,action:"set",key:"gc_board",value:JSON.stringify(BOARD)}).then(function(res){if(res.ok&&res.j.ok){m.style.color="#256a4d";m.textContent="저장되었습니다. 자격과정 페이지 새로고침 시 반영됩니다.";}else{m.style.color="#b23b30";m.textContent=(res.j.error)||"저장 실패";}});}
+/* popup (이달의 강의) */
+function buildPopup(){POP=POP||{};document.getElementById("pop_active").checked=!!POP.active;document.getElementById("pop_ki").value=POP.ki||"";document.getElementById("pop_title").value=POP.title||"";document.getElementById("pop_desc").value=POP.desc||"";document.getElementById("pop_link").value=POP.link||"";document.getElementById("pop_linktext").value=POP.linkText||"";document.getElementById("pop_prev").src=POP.img||PLACE;}
+document.getElementById("pop_file").addEventListener("change",function(ev){var f=ev.target.files[0];if(!f)return;resizeFile(f,760,function(durl){POP.img=durl;document.getElementById("pop_prev").src=durl;});ev.target.value="";});
+function clearPopImg(){POP.img="";document.getElementById("pop_prev").src=PLACE;}
+function savePopup(){var m=document.getElementById("popmsg");var obj={active:document.getElementById("pop_active").checked,ki:document.getElementById("pop_ki").value.trim(),title:document.getElementById("pop_title").value.trim(),desc:document.getElementById("pop_desc").value.trim(),link:document.getElementById("pop_link").value.trim(),linkText:document.getElementById("pop_linktext").value.trim(),img:POP.img||""};POP=obj;m.style.color="#6b6e6b";m.textContent="저장 중...";post(EX,{password:PW,action:"set",key:"gc_popup",value:JSON.stringify(obj)}).then(function(res){if(res.ok&&res.j.ok){m.style.color="#256a4d";m.textContent="저장되었습니다. 에듀 홈 새로고침 시 반영됩니다.";}else{m.style.color="#b23b30";m.textContent=(res.j.error)||"저장 실패";}});}
+/* banner (이벤트 배너) */
+function buildBanner(){BAN=BAN||{};document.getElementById("bn_active").checked=!!BAN.active;document.getElementById("bn_text").value=BAN.text||"";document.getElementById("bn_link").value=BAN.link||"";document.getElementById("bn_linktext").value=BAN.linkText||"바로가기 →";}
+function saveBanner(){var m=document.getElementById("bnmsg");var obj={active:document.getElementById("bn_active").checked,text:document.getElementById("bn_text").value.trim(),link:document.getElementById("bn_link").value.trim(),linkText:document.getElementById("bn_linktext").value.trim()};BAN=obj;m.style.color="#6b6e6b";m.textContent="저장 중...";post(EX,{password:PW,action:"set",key:"gc_banner",value:JSON.stringify(obj)}).then(function(res){if(res.ok&&res.j.ok){m.style.color="#256a4d";m.textContent="저장되었습니다. 에듀 홈 새로고침 시 반영됩니다.";}else{m.style.color="#b23b30";m.textContent=(res.j.error)||"저장 실패";}});}
+/* login */
+document.getElementById("lg").addEventListener("click",function(){PW=document.getElementById("pw").value;var lm=document.getElementById("lm");lm.textContent="확인 중...";lm.style.color="#6b6e6b";api("get").then(function(r){if(r&&r.error){lm.style.color="#b23b30";lm.textContent=r.error;PW="";return;}if(r&&r.account)ACCT=r.account;document.getElementById("login").className="hidden";document.getElementById("app").className="";buildPhotos(r||{});buildReviews(r||{});loadApps();fetch(EX).then(function(x){return x.json();}).then(function(e){GAL=(e&&e.gallery)||[];BOARD=(e&&e.board)||[];POP=(e&&e.popup)||{};BAN=(e&&e.banner)||{};buildGallery();buildBoard();buildPopup();buildBanner();}).catch(function(){buildGallery();buildBoard();buildPopup();buildBanner();});}).catch(function(){lm.style.color="#b23b30";lm.textContent="연결에 실패했습니다. 잠시 후 다시 시도해 주세요.";});});
+document.getElementById("pw").addEventListener("keydown",function(e){if(e.key=="Enter")document.getElementById("lg").click();});
+</script></body></html>
