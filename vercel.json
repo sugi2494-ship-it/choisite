@@ -27,16 +27,28 @@
       "destination": "/business.html"
     },
     {
-      "source": "/academy",
-      "destination": "/academy.html"
-    },
-    {
       "source": "/global",
       "destination": "/global.html"
     },
     {
       "source": "/privacy",
       "destination": "/privacy.html"
+    },
+    {
+      "source": "/academy",
+      "destination": "/academy/index.html"
+    },
+    {
+      "source": "/academy/instructor",
+      "destination": "/academy/instructor/index.html"
+    },
+    {
+      "source": "/academy/courses",
+      "destination": "/academy/courses/index.html"
+    },
+    {
+      "source": "/academy/classroom",
+      "destination": "/academy/classroom/index.html"
     }
   ]
 }
