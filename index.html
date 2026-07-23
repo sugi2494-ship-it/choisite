@@ -929,11 +929,9 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
 </section>
 
 <!-- ═══ 개인 컨설팅 (아코디언 · 서비스 카드 아래) ═══ -->
-<section id="consulting" style="background:#FAF7F9;padding:40px 16px">
+<section id="consulting" style="background:transparent;padding:0 16px">
   <div style="max-width:1080px;margin:0 auto">
-    <details class="consult-acc">
-      <summary class="consult-summary">💄 개인 컨설팅 자세히 보기 · 울산 퍼스널컬러·골격진단·얼굴분석·프리미엄 통합</summary>
-      <div class="consult-body">
+    <div id="consultPanel" class="consult-acc consult-body" style="display:none;margin:16px 0 8px">
     <p style="text-align:center;font-size:12px;font-weight:800;letter-spacing:.14em;color:#C2185B;margin:0 0 8px">PERSONAL CONSULTING · ULSAN</p>
     <h2 data-i18n="cs.title" style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 10px;letter-spacing:-.02em;line-height:1.35">울산 퍼스널컬러, 색만 확인하지 않습니다</h2>
     <p data-i18n="cs.desc" style="text-align:center;font-size:15px;color:#555;line-height:1.7;max-width:680px;margin:0 auto 30px">피부색과 함께 얼굴선, 체형, 소재와 전체 분위기를 살펴 나에게 맞는 색과 스타일의 기준을 알려드립니다.</p>
@@ -984,7 +982,6 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <a href="tel:+821042857997" data-i18n="cs.btel" style="border:1.5px solid #ddd;color:#333;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;text-decoration:none">📞 전화 연결</a>
     </div>
   </div>
-    </details>
   </div>
 </section>
 
@@ -1608,10 +1605,11 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
   <p style="margin-top:12px;opacity:.72;font-size:12px" data-i18n="footer">© PBS COLOR LAB · 최해숙 Maria Choi 공식 브랜드 허브. All rights reserved.</p>
 </footer>
 <script>
-(function(){function openC(){var d=document.querySelector('#consulting details');if(d){d.open=true;}}
-if(location.hash==='#consulting'){setTimeout(openC,60);}
-window.addEventListener('hashchange',function(){if(location.hash==='#consulting'){openC();}});
-document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a[href$="#consulting"],a[href="#consulting"]');if(a){setTimeout(openC,60);}});
+(function(){function openC(){var p=document.getElementById('consultPanel');if(p){p.style.display='block';}}
+function goC(){openC();var s=document.getElementById('consulting');if(s){try{s.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){s.scrollIntoView();}}}
+if(location.hash==='#consulting'){setTimeout(goC,60);}
+window.addEventListener('hashchange',function(){if(location.hash==='#consulting'){goC();}});
+document.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('a[href$="#consulting"],a[href="#consulting"]');if(a){setTimeout(goC,60);}});
 })();
 </script>
 
