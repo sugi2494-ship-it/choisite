@@ -75,7 +75,7 @@ nav a.cta{background:var(--ink);color:#fff;padding:10px 18px;border-radius:8px;t
 .hero p{color:var(--muted);max-width:600px;font-size:17px;line-height:1.8}
 .hero .hpic{flex:0 0 300px;max-width:330px;margin:0 auto}
 .hcap{margin-top:16px;text-align:center}.hcap b{font-size:17px;font-weight:700;color:var(--head)}.hcap b span{font-weight:500;color:var(--muted);font-size:14px}.hcap p{margin:8px 0 0;font-size:14.5px;color:var(--ink);line-height:1.9;letter-spacing:-.01em}.hcap b{font-size:18px}.hstats{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;max-width:560px}.hstats>div{flex:1;min-width:120px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 18px}.hstats b{display:block;font-size:21px;color:var(--accent);font-weight:800;letter-spacing:-.02em}.hstats span{font-size:12px;color:var(--muted);display:block;margin-top:4px;line-height:1.5}
-.hero .hpic img{width:100%;border-radius:18px;display:block;box-shadow:0 30px 60px -24px rgba(35,40,48,.35);filter:saturate(.96)}
+.hero .hpic img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 18%;border-radius:18px;display:block;box-shadow:0 30px 60px -24px rgba(35,40,48,.35);filter:saturate(.96)}
 .hbtns{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
 .btn{display:inline-block;text-decoration:none;font-weight:600;border-radius:10px;padding:14px 28px;font-size:15px;cursor:pointer;border:1px solid transparent;transition:.15s}
 .btn.y{background:var(--ink);color:#fff}.btn.y:hover{background:#000}
@@ -219,10 +219,9 @@ form.form.locked{opacity:.55;pointer-events:none;filter:grayscale(.25)}
 </style></head><body>
 <div class="bar"></div>
 <nav>
-<img id="imgLogo" src="https://www.pbscolor.com/assets/academy/instructor-hero.jpg" alt="PBS COLOR LAB" style="height:34px;width:auto" width="360" height="77">
-<a class="back" href="https://www.pbscolor.com/">PBS COLOR LAB 홈</a><a class="back" href="/academy">아카데미 홈</a><a class="back" href="/academy/courses">전체 전문가 과정</a>
+<a class="back" href="https://www.pbscolor.com/" style="margin-left:0;padding-left:0;border-left:0">← PBS COLOR LAB 홈</a>
+<a class="back" href="/academy">아카데미</a>
 <div class="sp"></div>
-<div class="menu"><a href="#tiers">과정 안내</a><a href="#ceo">대표·현장</a><a href="#apply" onclick="openApply()">지원</a></div>
 <a class="cta" href="#apply" onclick="openApply()">온라인 지원</a>
 </nav>
 
@@ -237,20 +236,6 @@ form.form.locked{opacity:.55;pointer-events:none;filter:grayscale(.25)}
 </div>
 <div class="hpic"><img id="imgHero" src="https://www.pbscolor.com/assets/academy/instructor-01.jpg" alt="PBS컬러랩 최해숙 대표" loading="lazy" width="760" height="950"><div class="hcap"><b>최해숙 <span>· PBS컬러랩 대표</span></b><p>13년간 색채·강점 심리를 현장에서 다뤄 온 전문가<br>두바이·아부다비·베트남·중국 등 글로벌 K뷰티 퍼스널컬러 스타일리스트</p></div></div>
 </div></header>
-<section class="sec" id="recruit-schedule"><div class="wrap"><div class="ki">모집 안내</div><h2>인증강사 과정 모집 일정</h2>
-<div class="schedgrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px">
-<div class="schcard"><b>모집 상태</b><span>상시 모집 · 개별 일정 협의</span></div>
-<div class="schcard"><b>지원 기간</b><span>확정 후 안내</span></div>
-<div class="schcard"><b>1:1 면담</b><span>지원 후 개별 안내</span></div>
-<div class="schcard"><b>합격 발표</b><span>면담 후 개별 안내</span></div>
-<div class="schcard"><b>교육 시작일</b><span>확정 후 안내</span></div>
-<div class="schcard"><b>교육 일정</b><span>2개월 · 총 10회(회당 2시간)</span></div>
-<div class="schcard"><b>진행 방식</b><span>대면 + 온라인(현장 실습 포함)</span></div>
-<div class="schcard"><b>교육 장소</b><span>울산 PBS COLOR LAB (중구 종가6길)</span></div>
-<div class="schcard"><b>모집 인원 · 마감</b><span>소수 정예 · 확정 후 안내</span></div>
-</div>
-<p class="lead" style="margin-top:14px;font-size:13.5px">※ 구체적 일정·인원은 확정되는 대로 안내드립니다. 먼저 지원해 주시면 개별 상담으로 안내드립니다.</p>
-</div></section>
 
 <section class="sec"><div class="wrap">
 <div class="ki">이런 고민, 있으셨나요</div>
@@ -277,15 +262,7 @@ form.form.locked{opacity:.55;pointer-events:none;filter:grayscale(.25)}
 </div>
 </div></section>
 
-<section class="sec alt" id="ceo"><div class="wrap">
-<div class="ki">대표가 직접</div>
-<h2>최해숙 대표가<br>처음부터 끝까지 함께합니다</h2>
-<div class="ctxt" style="max-width:860px">
-<p>PBS 인증강사 과정은 조교나 영상 강의로 대체하지 않습니다. 색채·강점 심리를 <b>13년간</b> 현장에서 다뤄 오고, 두바이·아부다비·베트남·중국 등 글로벌 무대에서 <b>K뷰티 퍼스널컬러 스타일리스트</b>로 활동해 온 <b>최해숙 대표가 직접</b> 트레이닝과 1:1 컨설팅을 진행합니다.</p>
-<p>강의안 설계부터 강단 태도·동선·시선·언어, 메이크업·복장·이미지까지 — 한 사람이 ‘활동하는 강사’로 서기까지 필요한 모든 과정을 직접 코칭하며, 데뷔 이후의 성장까지 파트너로 함께합니다.</p>
-<p>최해숙 대표가 직접 기획하고 이끄는 전문 프로그램으로, <b>이미 5기까지 배출한 인증강사들의 성과</b>가 이를 입증합니다.</p>
-<div class="sign-name">최해숙 (Maria Choi)<span>PBS컬러랩 대표 · 컬러강점 트레이너</span></div><div class="tgal"><figure><img src="https://www.pbscolor.com/assets/academy/instructor-02.jpg" alt="대표 직강 트레이닝" loading="lazy" width="640" height="480"><figcaption>대표 직강 트레이닝</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-03.jpg" alt="1:1 실습 코칭" loading="lazy" width="640" height="480"><figcaption>1:1 실습 코칭</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-04.jpg" alt="그룹 트레이닝" loading="lazy" width="640" height="480"><figcaption>그룹 트레이닝</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-05.jpg" alt="수료·인증 현장" loading="lazy" width="640" height="480"><figcaption>수료·인증 현장</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-06.jpg" alt="해외 글로벌 현장" loading="lazy" width="620" height="465"><figcaption>해외 글로벌 현장</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-07.jpg" alt="박람회 현장 컨설팅" loading="lazy" width="620" height="465"><figcaption>박람회 현장 컨설팅</figcaption></figure></div>
-</div></section>
+
 
 <section class="sec alt"><div class="wrap">
 <div class="ki">WHY PBS</div>
@@ -302,6 +279,16 @@ form.form.locked{opacity:.55;pointer-events:none;filter:grayscale(.25)}
 </div></section>
 
 <section class="sec alt" id="tiers"><div class="wrap"><div class="ki">과정 안내</div><h2>목표에 맞는 단계를 선택하세요</h2><p class="lead">세 과정은 각각 독립적으로 신청할 수 있습니다. 아래에서 원하는 과정을 눌러 등급·커리큘럼을 확인하세요.</p><div class="ptabs"><button class="ptab on" onclick="showTab(0)"><b>인증강사</b><span>299만원 · 강사 데뷔</span></button><button class="ptab" onclick="showTab(1)"><b>인증강사 PLUS</b><span>399만원 · 현장 수익화</span></button><button class="ptab" onclick="showTab(2)"><b>인증센터 창업</b><span>799만원 · 센터 운영</span></button></div><div class="ppanel on"><div class="pbox"><div class="phead"><div><div class="ptag" style="background:#fbe3f0;color:#c0208a">강사로 데뷔하는 과정</div><div class="pname">인증강사 과정</div><div class="psub">강사 데뷔 · 2개월 (총 10회 · 회당 2시간)</div></div><div class="pprice">299<span style="font-size:14px"> 만원</span></div></div><div class="psec">이런 걸 받습니다</div><ul><li>개별 + 그룹 트레이닝으로 강사 기본기 완성</li><li>강의 기획안 · 교육안 · 제안서 · DTL 리더십</li><li>강사 프로필 · 프로필 사진 촬영</li><li>강의 시뮬레이션 + 개인 피드백 · 인증강사 수료</li><li>기간 중 현장 실습·트레이닝 4회 별도 제공</li></ul><div class="bonus">🎁 우수 수료생 혜택 · <b>30만원 교구 구입권</b></div><div class="psec">커리큘럼 <span style="font-weight:500;text-transform:none;color:var(--muted)">(강사 방향·역량에 따라 변경될 수 있습니다)</span></div><div class="clist"><div class="row"><div class="rn">사전미팅</div><div class="rt">강사 브랜드 진단 · 경력 분석 · 아이덴티티 · 방향 설정</div></div><div class="row"><div class="rn">1회차</div><div class="rt">기본 강사 스킬 · 비즈니스 매너 · 현장 동선</div></div><div class="row"><div class="rn">2회차</div><div class="rt">강사 프로필 · 강의 기획안 작성</div></div><div class="row"><div class="rn">3회차</div><div class="rt">DTL 리더십 · 비전 설계</div></div><div class="row"><div class="rn">4회차</div><div class="rt">시간관리</div></div><div class="row"><div class="rn">5회차</div><div class="rt">프로필 사진 촬영</div></div><div class="row"><div class="rn">6회차</div><div class="rt">강의 시뮬레이션 · 피드백 · 수료식</div></div><div class="row"><div class="rn">＋ 4회</div><div class="rt">현장 실습 · 트레이닝</div></div></div><div class="tinc">제공: 강의 PPT · 이름표 · 강사 프로필 촬영 · <b>퍼스널컬러 기본 교구 50만원 상당</b> · 수료증 · 인증강사 등록</div><a class="pick" href="#apply" onclick="openApply()">이 과정 지원하기 →</a></div></div><div class="ppanel"><div class="pbox"><div class="phead"><div><div class="ptag" style="background:#e3edfb;color:#2f6bb3">현장에서 수익을 만드는 과정</div><div class="pname">인증강사 PLUS</div><div class="psub">현장 수익화 · 2개월</div></div><div class="pprice">399<span style="font-size:14px"> 만원</span></div></div><div class="psec">이런 걸 받습니다</div><ul><li>원데이 클래스 운영권</li><li>6시간 교육 PPT · 강의 교안 제공</li><li>교육생 모집 웹사이트 운영 세팅</li><li>실제 강의 기회 제공</li><li>현장 실습 8회 (개인 및 트레이닝 포함)</li></ul><div class="bonus">🎁 우수 수료생 혜택 · <b>50만원 교구 구입권</b></div><div class="psec">커리큘럼 <span style="font-weight:500;text-transform:none;color:var(--muted)">(강사 방향·역량에 따라 변경될 수 있습니다)</span></div><div class="clist"><div class="row"><div class="rn">사전미팅</div><div class="rt">강사 브랜드 진단</div></div><div class="row"><div class="rn">1회차</div><div class="rt">시간관리</div></div><div class="row"><div class="rn">2회차</div><div class="rt">강의 제안서 작성 · 실제 제안서 제출</div></div><div class="row"><div class="rn">3회차</div><div class="rt">과정 모집 · 관리 · 카드뉴스 · AI 강의실 자동화 세팅</div></div><div class="row"><div class="rn">＋ 8회</div><div class="rt">현장 실습 (개인 및 트레이닝 포함)</div></div></div><div class="tinc">추천: 현장에서 바로 강의를 시작하고 싶은 분</div><a class="pick" href="#apply" onclick="openApply()">이 과정 지원하기 →</a></div></div><div class="ppanel"><div class="pbox"><div class="phead"><div><div class="ptag" style="background:#f3ecd6;color:#8a6d1f">직접 센터를 운영하는 과정</div><div class="pname">인증센터 창업과정</div><div class="psub">자격과정 운영 · 창업</div></div><div class="pprice">799<span style="font-size:14px"> 만원</span></div></div><div class="psec">이런 걸 받습니다</div><ul><li>특강용 + 원데이 운영 + 자격과정 운영 권한 및 <b>PPT 원본파일</b> 제공</li><li>인증센터패 · 수강생 모집 포스터 · 모집 페이지 개설 · 운영방안 세팅</li><li>AI 활용 강의기획서 · 제안서 · 강사프로필 발송 자동 세팅</li><li>4개월간 현장 실습 및 운영 12회 (자격과정 운영현장 어시스턴트 기회)</li></ul><div class="bonus">🎁 우수 수료생 혜택 · <b>100만원 교구 구입권</b></div><div class="psec">커리큘럼 <span style="font-weight:500;text-transform:none;color:var(--muted)">(강사 방향·역량에 따라 변경될 수 있습니다)</span></div><div class="clist"><div class="row"><div class="rn">운영 권한</div><div class="rt">특강·원데이 운영 + 자격과정 운영 권한 · PPT 원본파일</div></div><div class="row"><div class="rn">센터 브랜딩</div><div class="rt">인증센터패 · 모집 포스터 · 모집 페이지 개설 · 운영방안 세팅</div></div><div class="row"><div class="rn">AI 자동화</div><div class="rt">강의기획서 · 제안서 · 강사프로필 발송 자동 세팅</div></div><div class="row"><div class="rn">현장 12회</div><div class="rt">4개월간 현장 실습 및 자격과정 운영현장 어시스턴트</div></div></div><div class="tinc">대상: 자격과정을 직접 운영하고 싶은 분 (센터 공간 유무 무관)</div><a class="pick" href="#apply" onclick="openApply()">이 과정 지원하기 →</a></div></div></div></section>
+
+<section class="sec alt" id="ceo"><div class="wrap">
+<div class="ki">대표가 직접</div>
+<h2>최해숙 대표가<br>처음부터 끝까지 함께합니다</h2>
+<div class="ctxt" style="max-width:860px">
+<p>PBS 인증강사 과정은 조교나 영상 강의로 대체하지 않습니다. 색채·강점 심리를 <b>13년간</b> 현장에서 다뤄 오고, 두바이·아부다비·베트남·중국 등 글로벌 무대에서 <b>K뷰티 퍼스널컬러 스타일리스트</b>로 활동해 온 <b>최해숙 대표가 직접</b> 트레이닝과 1:1 컨설팅을 진행합니다.</p>
+<p>강의안 설계부터 강단 태도·동선·시선·언어, 메이크업·복장·이미지까지 — 한 사람이 ‘활동하는 강사’로 서기까지 필요한 모든 과정을 직접 코칭하며, 데뷔 이후의 성장까지 파트너로 함께합니다.</p>
+<p>최해숙 대표가 직접 기획하고 이끄는 전문 프로그램으로, <b>이미 5기까지 배출한 인증강사들의 성과</b>가 이를 입증합니다.</p>
+<div class="sign-name">최해숙 (Maria Choi)<span>PBS컬러랩 대표 · 컬러강점 트레이너</span></div><div class="tgal"><figure><img src="https://www.pbscolor.com/assets/academy/instructor-02.jpg" alt="대표 직강 트레이닝" loading="lazy" width="640" height="480"><figcaption>대표 직강 트레이닝</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-03.jpg" alt="1:1 실습 코칭" loading="lazy" width="640" height="480"><figcaption>1:1 실습 코칭</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-04.jpg" alt="그룹 트레이닝" loading="lazy" width="640" height="480"><figcaption>그룹 트레이닝</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-05.jpg" alt="수료·인증 현장" loading="lazy" width="640" height="480"><figcaption>수료·인증 현장</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-06.jpg" alt="해외 글로벌 현장" loading="lazy" width="620" height="465"><figcaption>해외 글로벌 현장</figcaption></figure><figure><img src="https://www.pbscolor.com/assets/academy/instructor-07.jpg" alt="박람회 현장 컨설팅" loading="lazy" width="620" height="465"><figcaption>박람회 현장 컨설팅</figcaption></figure></div>
+</div></section>
 
 <section class="sec alt"><div class="wrap">
 <div class="ki">선발 절차</div>
