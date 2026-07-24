@@ -1,8 +1,22 @@
 User-agent: *
 Allow: /
+
+# 관리자·강의실·접수(개인정보) 페이지 색인 제외 (robots는 은닉일 뿐 보안은 인증으로)
 Disallow: /admin.html
 Disallow: /admin_board.html
 Disallow: /styledial-admin.html
+Disallow: /academy/manage.html
+Disallow: /academy/profile.html
+Disallow: /apply.html
+Disallow: /intake.html
+Disallow: /book48-test.html
 Disallow: /강의/관리자페이지_admin.html
+Disallow: /강의/course.html
+Disallow: /강의/퍼스널컬러.html
+Disallow: /강의/프롬프트교실.html
+Disallow: /강의/자료실.html
+Disallow: /강의/신청페이지_index.html
+Disallow: /강의/활동3_퀄리티_관리자.html
+Disallow: /강의/활동7_설문_관리자.html
 
 Sitemap: https://pbscolor.com/sitemap.xml

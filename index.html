@@ -1698,15 +1698,32 @@ function renderShop(){
         if(cfg['pos'+i])img.style.objectPosition=cfg['pos'+i];
       });
     })();
-    // 이벤트 배너
+    // 이벤트 팝업 (포스터·카드뉴스 스타일 · 화면 우측 플로팅 창)
     (function(){
       var b=null;try{b=JSON.parse(localStorage.getItem('pbs_event_banner')||'null');}catch(e){}
       var old=document.getElementById('eventBanner');if(old)old.remove();
       if(!b||!b.visible||(!b.title&&!b.src))return;
+      // 같은 내용을 사용자가 닫았으면 다시 띄우지 않음
+      var sig=(b.title||'')+'|'+((b.src||'').length)+'|'+(b.link||b.url||'');
+      try{if(localStorage.getItem('pbs_event_dismiss')===sig)return;}catch(e){}
+      // 슬라이드-인 애니메이션 · 모바일 대응 (1회 주입)
+      if(!document.getElementById('pbsPopCss')){var st=document.createElement('style');st.id='pbsPopCss';st.textContent='@keyframes pbsPopIn{0%{opacity:0;transform:translateX(46px) scale(.95)}100%{opacity:1;transform:none}}#eventBanner{animation:pbsPopIn .55s cubic-bezier(.2,.85,.25,1) both}@media(max-width:600px){#eventBanner{right:12px!important;left:12px!important;width:auto!important;bottom:12px!important}}';document.head.appendChild(st);}
+      var link=(b.link||b.url||'');var hasImg=b.src&&b.src.length>120;
       var banner=document.createElement('div');banner.id='eventBanner';
-      banner.style.cssText='position:fixed;top:0;left:0;right:0;z-index:10000;cursor:pointer;';
-       var link=(b.link||b.url||'');var hasImg=b.src&&b.src.length>120;var inner;if(hasImg){var bTitle=b.title?'<div style="position:absolute;bottom:0;left:0;right:0;padding:7px 46px 7px 16px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:14px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9)">'+escHtml(plainText(b.title))+'</div>':'';inner='<img src="'+escHtml(safeUrl(b.src,true))+'" alt="" style="width:100%;max-height:80px;object-fit:cover;display:block">'+bTitle;}else{inner='<div style="min-height:52px;display:flex;align-items:center;justify-content:center;gap:10px 16px;flex-wrap:wrap;background:linear-gradient(90deg,#E14B8A,#C33A72);padding:9px 52px 9px 16px;box-sizing:border-box"><span style="font-size:15px;font-weight:900;color:#fff;letter-spacing:-.3px;text-shadow:0 1px 3px rgba(0,0,0,.25)">'+escHtml(plainText(b.title))+'</span>'+(b.cta?'<span style="background:#fff;color:#C33A72;font-weight:900;font-size:13px;padding:7px 18px;border-radius:100px;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.2)">'+escHtml(plainText(b.cta))+'</span>':'')+'</div>';}var _cls='<button onclick="event.preventDefault();event.stopPropagation();document.getElementById(\'eventBanner\').style.display=\'none\'" style="position:absolute;top:4px;right:8px;background:rgba(0,0,0,.35);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;line-height:1;z-index:2">✕</button>';banner.innerHTML=link?('<a href="'+escHtml(link)+'" style="display:block;position:relative;text-decoration:none;cursor:pointer">'+inner+_cls+'</a>'):('<div style="position:relative">'+inner+_cls+'</div>');
-      document.body.insertBefore(banner,document.body.firstChild);
+      banner.style.cssText='position:fixed;right:22px;bottom:24px;z-index:9400;width:min(92vw,332px)';
+      var caption=b.title?'<div style="padding:13px 16px 15px;background:linear-gradient(135deg,#E14B8A,#C33A72);color:#fff"><div style="font-size:16px;font-weight:900;line-height:1.35;letter-spacing:-.3px">'+escHtml(plainText(b.title))+'</div>'+(b.cta?'<div style="display:inline-block;margin-top:10px;background:#fff;color:#C33A72;font-weight:900;font-size:13px;padding:8px 20px;border-radius:100px;box-shadow:0 3px 10px rgba(0,0,0,.18)">'+escHtml(plainText(b.cta))+' &rarr;</div>':'')+'</div>':'';
+      var body=hasImg
+        ?'<img src="'+escHtml(safeUrl(b.src,true))+'" alt="" style="width:100%;max-height:64vh;object-fit:cover;display:block">'+caption
+        :'<div style="padding:28px 22px;background:linear-gradient(135deg,#E14B8A,#C33A72);text-align:center"><div style="font-size:12px;font-weight:900;color:rgba(255,255,255,.85);letter-spacing:.14em;margin-bottom:10px">🎉 EVENT</div><div style="font-size:19px;font-weight:900;color:#fff;line-height:1.4;letter-spacing:-.4px">'+escHtml(plainText(b.title))+'</div>'+(b.cta?'<div style="display:inline-block;margin-top:16px;background:#fff;color:#C33A72;font-weight:900;font-size:14px;padding:10px 24px;border-radius:100px;box-shadow:0 3px 10px rgba(0,0,0,.2)">'+escHtml(plainText(b.cta))+' &rarr;</div>':'')+'</div>';
+      var card='<div style="position:relative;border-radius:20px;overflow:hidden;box-shadow:0 22px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06);background:#12060e">'
+        +body
+        +'<button id="evClose" aria-label="닫기" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);border:none;color:#fff;border-radius:50%;width:30px;height:30px;font-size:16px;cursor:pointer;line-height:1;z-index:3">✕</button>'
+        +'<div style="position:absolute;top:0;left:14px;transform:translateY(-45%);background:#FFD54A;color:#7a2247;font-size:11px;font-weight:900;letter-spacing:.03em;padding:5px 12px;border-radius:100px;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:3">📢 이벤트 안내</div>'
+        +'</div>';
+      banner.innerHTML=link?('<a href="'+escHtml(link)+'" style="display:block;text-decoration:none;cursor:pointer">'+card+'</a>'):card;
+      document.body.appendChild(banner);
+      var cb=document.getElementById('evClose');
+      if(cb)cb.addEventListener('click',function(ev){ev.preventDefault();ev.stopPropagation();try{localStorage.setItem('pbs_event_dismiss',sig);}catch(e){}banner.remove();});
     })();
   }).catch(function(){});
   // 승인된 소감 로드 (Supabase)
@@ -2608,23 +2625,7 @@ function submitTestimonial() {
   });
 })();
 
-/* ══ 이벤트 배너 표시 ══ */
-(function() {
-  var b = null;
-  try { b = JSON.parse(localStorage.getItem('pbs_event_banner') || 'null'); } catch(e){}
-  if (!b || !b.visible || !b.src) return;
-  var banner = document.createElement('div');
-  banner.id = 'eventBanner';
-  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:10000;cursor:pointer;';
-  var bTitle = b.title ? '<div style="position:absolute;bottom:0;left:0;right:0;padding:7px 46px 7px 16px;background:linear-gradient(transparent,rgba(0,0,0,.72));font-size:14px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9)">' + escHtml(plainText(b.title)) + '</div>' : '';
-  banner.innerHTML = '<div style="position:relative"><img src="' + escHtml(safeUrl(b.src,true)) + '" alt="" style="width:100%;max-height:80px;object-fit:cover;display:block">'
-    + bTitle
-    + '<button onclick="document.getElementById(\'eventBanner\').style.display=\'none\'" style="position:absolute;top:4px;right:8px;background:rgba(0,0,0,.5);border:none;color:#fff;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;line-height:1">✕</button></div>';
-  document.body.insertBefore(banner, document.body.firstChild);
-  // push content down
-  var nav = document.querySelector('nav') || document.querySelector('header');
-  if (nav) { var bh = banner.offsetHeight || 80; nav.style.marginTop = bh + 'px'; }
-})();
+/* ══ 이벤트 팝업은 상단 로드 블록(우측 포스터형)에서 처리 — 중복 상단바 제거됨 ══ */
 
 /* ══ 문의 폼 제출 ══ */
 function submitInquiry() {
