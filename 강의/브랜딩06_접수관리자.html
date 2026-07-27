@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>브랜딩 접수·관리 06. 문의 접수 + 관리자 페이지(안전한 로그인) · 인플루언서 웹페이지 브랜딩 고도화 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--pink)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25;max-width:660px;margin-left:auto;margin-right:auto}
+  .callout b{color:#6e211c}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .kbd{background:#eef1f4;border:1px solid #d7dde3;border-radius:6px;padding:1px 7px;font-size:12.5px;font-weight:700;white-space:nowrap}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:6px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
+  .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aiwebmaster">← AI 웹페이지 브랜딩 과정 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · 인플루언서 웹페이지 브랜딩 고도화</div>
+  <h1>브랜딩 접수·관리 06. 문의 접수 + 관리자 페이지</h1>
+  <p class="lead">방문자가 남긴 <b>문의·신청을 저장</b>하고, <b>나만 보는 관리자 페이지</b>에서 확인·관리합니다. 여기서 가장 중요한 건 <b>안전한 로그인(서버 검증)</b>입니다.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 배포된 사이트(05)</span><span class="time">📦 결과물 · 접수 저장 + 안전한 관리자 페이지</span></p>
+</header>
+<div class="callout">🔐 <b>가장 중요한 보안 원칙:</b> 관리자 비밀번호를 <b>웹페이지 코드 안에 넣으면 안 됩니다</b>(누구나 '소스 보기'로 뚫립니다). 반드시 <b>서버에서 검증</b>하세요. 이 활동에서 그 방법을 배웁니다.</div>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span>01 브랜드 분석</span><span>02 전략·키워드</span><span>03 구조·메뉴</span><span>04 페이지 고도화</span>
+    <span>05 배포·도메인</span><span class="on">06 접수·관리</span><span>07 브랜딩 마스터</span>
+  </div>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>문의 접수 폼 붙이기 (방문자용)</div>
+    <p class="sec-desc">방문자가 이름·연락처·문의내용을 남기면 <b>어딘가에 저장</b>되게 만듭니다.</p>
+    <ul class="guide">
+      <li><b>가장 쉬운 방법</b> — 구글폼을 만들어 '문의' 버튼에 연결(무료·안전, 응답은 구글시트에 자동 저장).</li>
+      <li><b>사이트 안에서</b> 받고 싶다면 → 아래 프롬프트로 폼 + 저장(Supabase 등)을 붙입니다.</li>
+    </ul>
+    <div class="promptbox" id="p_form">너는 웹 개발 도우미야. 내 사이트에 '문의·신청 폼'을 붙이고, 제출하면 데이터가 저장되게 해줘.
+- 받을 항목: 이름 / 연락처 / 관심 서비스 / 문의내용 / (개인정보 수집 동의 체크)
+- 저장 위치: (구글폼→구글시트) 또는 (Supabase 테이블) 중 내 상황에 맞게 추천하고 그대로 세팅 안내
+- 제출 후 "접수됐습니다" 안내와, 나에게 알림(메일/문자)이 가게 하는 방법
+- 개인정보는 꼭 필요한 것만 받고, 동의 체크 없이는 제출 안 되게
+초보도 따라 하게 클릭 순서로 알려줘.</div>
+    <button class="copybtn" data-copy="p_form" type="button">📋 문의 폼 만들기 프롬프트 복사</button>
+    <div class="checks"><label><input type="checkbox"><span>문의 폼을 붙였고, 테스트 제출이 저장된다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>관리자 페이지 만들기 (나만 보는 화면)</div>
+    <p class="sec-desc">들어온 문의를 <b>목록으로 보고, 상태(연락함/완료)를 체크</b>하는 화면을 만듭니다.</p>
+    <div class="promptbox" id="p_admin">너는 웹 개발 도우미야. 방금 만든 '문의 접수'를 내가 확인·관리하는 관리자 페이지를 만들어줘.
+[기능]
+1) 들어온 문의를 최신순 목록으로 표시(이름·연락처·문의·접수일)
+2) 각 문의에 상태 표시(대기 / 연락함 / 완료)와 메모
+3) 검색/필터(기간·상태)
+4) 개인정보라 화면은 나만 봐야 함 → 로그인(다음 3단계에서 '서버 검증'으로 안전하게)
+[중요] 지금은 화면만 만들고, 비밀번호는 코드에 넣지 마. 3단계에서 서버 검증으로 붙일 거야.</div>
+    <button class="copybtn" data-copy="p_admin" type="button">📋 관리자 페이지 만들기 프롬프트 복사</button>
+    <div class="tip">🎯 관리자 페이지 주소는 <b>남들이 못 찾게</b> 하고(메뉴에 노출 X), 검색엔진 색인도 막습니다(<span class="kbd">robots noindex</span>). 하지만 "숨기는 것"은 보안이 아닙니다 — 진짜 잠금은 3단계.</div>
+    <div class="checks"><label><input type="checkbox"><span>관리자 페이지에서 문의 목록·상태 관리가 된다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">3</span>안전한 로그인 — 서버 검증 (핵심)</div>
+    <p class="sec-desc">관리자 페이지에는 <b>개인정보(방문자 연락처)</b>가 있으니, 반드시 안전하게 잠급니다.</p>
+    <div class="warn">⚠️ <b>이렇게 하면 안 됩니다</b> — 페이지 코드에 <code>if(비번==="1234")</code>처럼 넣기. 누구나 브라우저 '소스 보기'로 비번을 읽고 들어옵니다. 흔한 실수예요.</div>
+    <div class="promptbox" id="p_secure">내 관리자 페이지 로그인을 '서버 검증' 방식으로 안전하게 만들어줘. (클라이언트 비번 금지)
+[해줘]
+1) 비밀번호는 페이지 코드가 아니라 '서버(예: Supabase Edge Function)의 환경변수/시크릿'에 저장
+2) 로그인 시 입력한 비번을 서버로 보내 검증하고, 맞을 때만 데이터를 내려주기
+   (틀리면 401, 데이터는 애초에 브라우저로 안 내려오게)
+3) 문의 데이터도 아무나 못 읽게 — DB 접근 권한(RLS/서비스키)로 서버에서만 읽기
+4) 왜 이 방식이 안전한지 한 줄로 설명도
+내 사이트가 (Netlify + Supabase / 다른 스택)인지 물어보고 그에 맞게 단계별로 안내해줘.</div>
+    <button class="copybtn" data-copy="p_secure" type="button">📋 서버 검증(안전 로그인) 프롬프트 복사</button>
+    <div class="tip">✅ <b>이 정도면 통과</b> — 관리자 비번이 페이지 소스에 없고(서버에만), 틀린 비번으로는 문의 데이터가 아예 안 보이면 안전합니다.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>관리자 비번이 코드에 없다(서버에만 있다)</span></label>
+      <label><input type="checkbox"><span>틀린 비번으로는 문의 데이터가 안 내려온다</span></label>
+    </div>
+    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
+    <div class="why">📦 <b>이 활동의 결과물</b> — 문의가 저장되고, <b>서버 검증으로 안전하게 잠긴 관리자 페이지</b>. 이제 고객 문의를 놓치지 않고 관리합니다.</div>
+    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 이 활동의 진짜 목표는 <b>"비번을 코드에 넣지 않는다"</b> 한 가지입니다. 학생 대부분이 <code>if(pw==="8808")</code>식으로 만들려 하니 꼭 잡아 주세요.
+    개인정보(연락처)를 다루므로 <b>수집 동의 체크·최소 수집</b>도 강조하고, 실제 검증은 "틀린 비번 → 데이터 안 보임"으로 눈앞에서 시연하면 각인됩니다.</div>
+  </section>
+
+  <div class="next"><span class="n">7</span><div>접수·관리가 안전해지면 → <b>브랜딩 마스터 07. 브랜딩 자산 정리</b>로 마무리합니다.</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t=document.getElementById(btn.getAttribute('data-copy')).innerText;
+      navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='✅ 복사됐어요!';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},2200);});
+    });
+  });
+</script>
+</body>
+</html>
