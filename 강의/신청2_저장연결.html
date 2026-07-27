@@ -38,6 +38,11 @@
   .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
   .copybtn.g{background:#188038}.copybtn.s{background:#3ECF8E;color:#08331f}
   .copybtn.done{background:var(--green);color:#fff}
+  .linkrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .linkbtn{flex:1;min-width:150px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;border:1.5px solid var(--line);color:var(--ink);background:#fff;font-size:13.5px;font-weight:800;padding:12px;border-radius:11px}
+  .linkbtn.g{border-color:#bfe2c8;color:#188038;background:#f1f9f3}
+  .linkbtn.s{border-color:#bdead7;color:#0f7a4d;background:#f0fbf6}
+  .linkbtn:hover{filter:brightness(.98)}
   .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
   .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
   .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
@@ -100,7 +105,11 @@
  · 마지막에 '테스트 신청'을 한 번 해서 시트에 저장되는지 눈으로 확인
 어려운 말 없이, 클릭 순서로 하나씩.</div>
     <button class="copybtn g" data-copy="p_google" type="button">📋 구글시트 저장 프롬프트 복사</button>
-    <div class="tip">🟢 <b>처음이라면 이걸 추천</b> — 구글폼→구글시트가 제일 빠르고 확실합니다. "응답 → 스프레드시트"만 연결하면 신청이 자동으로 쌓여요.</div>
+    <div class="linkrow">
+      <a class="linkbtn g" href="https://forms.new" target="_blank" rel="noopener">📝 구글폼 새로 만들기</a>
+      <a class="linkbtn g" href="https://sheets.new" target="_blank" rel="noopener">📄 구글시트 새로 만들기</a>
+    </div>
+    <div class="tip">🟢 <b>처음이라면 이걸 추천</b> — 구글폼→구글시트가 제일 빠르고 확실합니다. 위 <b>초록 버튼</b>을 누르면 새 폼/시트가 바로 열려요. "응답 → 스프레드시트"만 연결하면 신청이 자동으로 쌓입니다.</div>
     <div class="checks"><label><input type="checkbox"><span>테스트로 신청했더니 구글시트에 한 줄이 저장된다</span></label></div>
   </section>
 
@@ -121,9 +130,19 @@
     ※ 관리자 화면에서 읽는 '안전한 방법'은 다음 활동(안전 로그인)에서 다룬다고만 알려줘
  5) 마지막에 '테스트 신청'을 해서 Supabase 테이블에 저장되는지 확인
 
-내 사이트가 (클로드로 만든 페이지 / Netlify / 기타)인지 물어보고 그에 맞게 단계별로.</div>
+[진행 방식 — 꼭 지켜줘. 나는 Supabase가 처음이라 어려워]
+ · 한 번에 다 설명하지 말고 '한 단계씩'만 알려줘. 내가 "다음"이라고 할 때까지 기다려줘
+ · 각 단계는 '어느 버튼·메뉴를 누르는지' 화면 기준으로 콕 집어서, 전문용어는 쉬운 말로 풀어서
+ · 내가 어디를 눌러야 할지 모르거나 화면이 달라 보이면, 내가 '화면 캡처(스크린샷)'를 붙여넣을게.
+   그 화면을 보고 "지금 이 화면에서는 여기(○○ 버튼)를 누르세요"라고 콕 집어 알려줘
+ · 에러 메시지가 뜨면 그대로 붙여넣을 테니, 무슨 뜻인지 쉽게 풀고 해결법을 알려줘
+먼저 내 사이트가 (클로드로 만든 페이지 / Netlify / 기타)인지 물어보고, 1단계부터 천천히 시작해줘.</div>
     <button class="copybtn s" data-copy="p_supabase" type="button">📋 Supabase 저장 프롬프트 복사</button>
+    <div class="linkrow">
+      <a class="linkbtn s" href="https://supabase.com/dashboard" target="_blank" rel="noopener">🟩 Supabase 대시보드 바로가기</a>
+    </div>
     <div class="warn">⚠️ <b>키(key) 조심</b> — '공개(anon) 키'만 페이지에 쓰고, 비밀 키(service key)는 절대 페이지 코드에 넣지 마세요. 그리고 신청 데이터는 <b>아무나 읽지 못하게</b>(RLS) 막아야 합니다. 관리자만 읽는 안전한 방법은 4단계에서 배웁니다.</div>
+    <div class="tip">🆘 <b>막히면 이렇게</b> — Supabase가 어려우면, 화면을 <b>캡처해서 클로드 채팅에 붙여넣으세요</b>. "지금 이 화면에서 뭘 누르면 되나요?"라고 물으면, 클로드가 그 화면을 보고 콕 집어 알려줍니다. 위 프롬프트에 이미 그렇게 도와달라고 넣어 뒀어요.</div>
     <div class="checks"><label><input type="checkbox"><span>테스트로 신청했더니 Supabase 테이블에 저장된다</span></label></div>
     <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
     <div class="why">📦 <b>이 활동의 결과물</b> — 제출하면 <b>실제로 저장</b>되는 신청 시스템(구글시트 또는 Supabase). 이제 신청이 쌓이기 시작합니다. 다음은 <b>내가 바로 보고 알림 받는</b> 관리자 화면.</div>
