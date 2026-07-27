@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>신청 준비 0. 어떤 강의를·누구에게 열지 + 신청서 설계 · AI 교육 신청 시스템 만들기 · 최해숙 강의실</title>
+<title>신청 후기 6. 후기 받고 노출하기 · AI 교육 신청 시스템 만들기 · 최해숙 강의실</title>
 <meta name="robots" content="noindex" />
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
 <style>
@@ -50,6 +50,7 @@
   .ex{background:#f4f6f8;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-top:12px;font-size:13px;color:#3a424a}.ex b{color:var(--ink)}
   .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
   .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .big{background:linear-gradient(135deg,#2C8C5A,#2C66A8);color:#fff;border-radius:14px;padding:18px 20px;margin-top:18px;text-align:center}.big b{font-size:17px}
   .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
   .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
   .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
@@ -62,69 +63,68 @@
 
 <header>
   <div class="eyebrow">최해숙 강의실 · AI 교육 신청 시스템 만들기</div>
-  <h1>신청 준비 0. 어떤 강의를·누구에게 열지 정하기</h1>
-  <p class="lead">마케팅 문구를 직접 만드실 필요 없어요. <b>제목·대상·비용·일정</b>처럼 <b>아는 것만</b> 적으면, <b>목적·차별점·메인 문구·신청서</b>까지 AI가 만들어 드립니다. 여러분은 <b>고르고 다듬기만</b> 하면 끝!</p>
-  <p style="margin:12px 0 0"><span class="time">⏱ 약 15분</span><span class="time">📥 입력 · 아는 것만(제목·대상·비용·일정)</span><span class="time">📦 결과물 · 제목·메인 문구 + 신청서 항목표</span></p>
+  <h1>신청 후기 6. 후기 받고 노출하기</h1>
+  <p class="lead">수강생에게 <b>후기를 받고</b>, 그중 <b>내가 고른 후기만</b> 신청 페이지에 예쁘게 <b>노출</b>합니다. 후기 한 줄이 다음 기수를 채웁니다.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 25분</span><span class="time">📥 입력 · 완성된 신청 시스템</span><span class="time">📦 결과물 · 후기 수집 + 노출 선택</span></p>
 </header>
-<div class="callout">🧭 <b>이 과정의 목표:</b> 내가 여는 <b>강의(특강) 하나</b>를 <b>수강생이 신청하고, 내가 관리하는 시스템</b>으로 완성하는 것. 나중엔 <b>5분이면 새 강의 신청서를 계속 만들게</b> 됩니다. 그 출발이 이 준비 단계예요. (물건을 파는 게 아니라, <b>내 강의에 사람을 모으는</b> 것입니다.)</div>
+<div class="callout">⭐ <b>왜 후기인가요?</b> 처음 보는 사람은 <b>"남들도 들었나?"</b>를 가장 궁금해합니다. 진짜 후기 한두 개면 신뢰가 확 올라가 신청률이 높아져요. 여기서 ① 수강생이 <b>후기 남기는 페이지</b>를 만들고, ② 관리자에서 <b>노출할 후기만 골라</b> 신청 페이지에 자동 표시합니다.</div>
 
 <div class="wrap">
   <div class="stepflow">
-    <span class="on">0 준비·설계</span><span>1 모집·신청 페이지</span><span>2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span>5 5분 복제</span><span>6 후기</span>
+    <span>0 준비·설계</span><span>1 모집·신청 페이지</span><span>2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span>5 5분 복제</span><span class="on">6 후기</span>
   </div>
 
   <section class="card">
-    <div class="sec-title"><span class="step-no">1</span>아는 것만 적으면 → AI가 제목·문구·신청서까지</div>
-    <p class="sec-desc"><b>목적·차별점 같은 어려운 건 직접 안 쓰셔도 돼요.</b> 제목·대상·비용·일정처럼 <b>아는 것만</b> 채우면, AI가 초안을 만들어 줍니다. 마음에 들 때까지 "이거 좋아 / 바꿔줘"로 고르기만 하세요.</p>
-    <ul class="guide">
-      <li><b>내가 채우는 것 (쉬움)</b> — 제목(가제) · 대상 · 강의내용 · 비용 · 장소 · 일정·날짜 · 시간 · 형식</li>
-      <li><b>AI가 만들어 주는 것</b> — 다듬은 제목 · 목적 · 차별점 · 메인 문구(헤드라인·소개) · 신청서 항목·동의문구</li>
-      <li><b>모르는 칸은 비워도 OK</b> — AI가 쉬운 말로 1~2개만 되물어 채워 줍니다</li>
-    </ul>
-    <div class="promptbox" id="p_all">너는 강사의 '수강생 모집'을 돕는 교육 기획 코치야.
-나는 마케팅 문구를 잘 못 만들어. 그래서 내가 '아는 것'만 적을 테니,
-목적·차별점·제목·메인 문구·신청서까지 어려운 건 네가 만들어줘. 나는 확인하고 고르기만 할게.
-(나는 물건을 파는 게 아니라, 내 강의에 수강생을 모으는 강사야.)
+    <div class="sec-title"><span class="step-no">1</span>후기 남기는 페이지 만들기</div>
+    <p class="sec-desc">수강생이 <b>쉽게 후기를 남기게</b> 합니다. 별점 + 한두 줄이면 충분해요. (공개 동의 체크 포함)</p>
+    <div class="promptbox" id="p_review">내 강의 '후기 남기는 페이지'를 만들어줘. 나는 코딩을 몰라, 쉽게.
 
-[내가 아는 것 — 아는 것만 채우기, 빈칸은 비워둬도 돼]
- · 강의 제목(가제):
- · 대상(누가 들으면 좋을지):
- · 강의 내용(무엇을 배우나, 편하게):
- · 비용(수강료):
- · 장소(오프라인 주소 / 온라인 zoom):
- · 일정·날짜:
- · 시간(총 몇 시간):
- · 형식(오프라인 / 온라인 / 혼합):
-
-[너가 할 일]
- 1) 위에서 빠졌거나 애매한 건 '쉬운 말'로 1~2개만 물어봐줘 (한꺼번에 많이 묻지 말기)
- 2) 그다음 어려운 건 네가 초안을 만들어줘:
-    (A) 다듬은 제목 후보 3개 — 대상이 "내 얘기다" 하고 멈칫하게
-    (B) 목적 한 줄 — 이 강의가 수강생의 어떤 고민을 풀어주는지 (네가 대신 정리)
-    (C) 대상 한 줄 정교화 — "이런 분 아니세요?" 확인형으로
-    (D) 끝나면 얻는 것 3가지 — 네가 제안 (내가 고르게)
-    (E) 차별점 한 줄 — 왜 나에게 배우면 좋은지 (네가 제안)
-    (F) 신청하고 싶어지는 '한 문장' 정의
-    (G) 모집 페이지 맨 위 '메인 문구' — 헤드라인 1줄 + 소개 3~4줄 (그대로 붙일 수 있게)
-    (H) "이 강의가 나에게 필요한 이유" 한 줄 — 수강생 말투로
-    (I) 수강 신청서 항목표 [항목 | 필수/선택 | 왜 받는지] + 개인정보 수집·이용 동의 문구
-        + 신청 완료 안내 문구("신청이 접수됐습니다. 확인 후 연락드릴게요")
-        · 이름·연락처·동의 중심으로 꼭 필요한 것만 · 주민번호·집주소 등 민감정보 제외
- 3) 각 항목은 내가 "이거 좋아 / 바꿔줘"로 고를 수 있게, 짧고 쉽게 보여줘.
-초등학생도 이해할 만큼 쉬운 한국어로, 나를 존중하는 따뜻한 말투로.</div>
-    <button class="copybtn" data-copy="p_all" type="button">📋 아는 것만 넣기 → 초안 만들기 프롬프트 복사</button>
-    <div class="ex">📝 <b>이런 결과가 나옵니다</b> — 내가 "제목: 퍼스널컬러 원데이 / 대상: 색 배우는 신입 강사 / 3시간 / 9만원"만 적으면, AI가 →<br><b>제목</b> "색을 처음 가르치는 강사를 위한 퍼스널컬러 원데이", <b>메인 문구</b> "진단이 막막한 신입 강사님, 3시간이면 나만의 진단 흐름이 완성됩니다…" 처럼 어려운 부분을 다 만들어 줍니다.</div>
-    <div class="warn">⚠️ <b>개인정보 최소 수집</b> — 강의 운영에 꼭 필요한 것만(이름·연락처·동의) 받으세요. 동의 없이는 신청이 안 되게 하고, 받은 정보는 강의 목적 외로 쓰지 않습니다.</div>
-    <div class="checks">
-      <label><input type="checkbox"><span>아는 것을 넣었더니 제목·메인 문구 초안이 나왔고, 마음에 들게 골랐다</span></label>
-      <label><input type="checkbox"><span>신청서 항목표 + 동의 문구 + 완료 안내 문구까지 준비됐다</span></label>
-    </div>
-    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
-    <div class="why">📦 <b>이 활동의 결과물</b> — ① 다듬은 제목 + 모집 페이지 <b>메인 문구</b>(헤드라인·소개), ② 수강 신청서 항목표(필수/선택/동의/완료 문구). 이 둘을 다음 활동(모집·신청 페이지)에 그대로 넣습니다.</div>
-    <details class="teacher"><summary>🎤 강사 팁 (강사 전용) · 눌러서 보기</summary><div class="tc">실제로 수강생들은 <b>목적·차별점을 스스로 못 씁니다.</b> 그러니 <b>"아는 것(제목·대상·비용·일정)만 적게" 하고, 어려운 문구는 AI가 초안을 만들게</b> 하세요. 강사는 <b>확인·수정만</b> 하면 됩니다. AI가 준 제목·메인 문구 중 <b>하나를 고르는 것</b>까지가 이 활동의 목표예요.</div></details>
+[후기 폼 항목]
+ · 이름 또는 닉네임(예: 김○○, 30대 강사) — 실명 다 안 써도 되게
+ · 별점(1~5)
+ · 후기 내용(한두 줄이면 OK)
+ · (선택) 사진 1장
+ · '이 후기를 홈페이지에 공개해도 좋아요' 동의 체크 (동의한 것만 노출 대상)
+[저장]
+ · 신청과 같은 곳(구글시트 / Supabase)에 '후기' 따로 저장
+ · 제출 후 "후기 감사합니다!" 안내
+[안내]
+ · QR코드나 짧은 링크로 만들어 강의 끝나고 바로 남기게 하면 좋다고 알려줘
+ · 별점 카드가 예쁘게 보이게 디자인
+[진행 방식] 한 단계씩, 막히면 화면 캡처를 붙여넣을게. 내 저장 방식을 먼저 물어봐줘.</div>
+    <button class="copybtn" data-copy="p_review" type="button">📋 후기 남기는 페이지 프롬프트 복사</button>
+    <div class="tip">📱 <b>후기는 '그 자리에서'</b> — 강의 끝나고 <b>QR코드</b>를 띄워 바로 남기게 하면 수거율이 훨씬 높아요. "별점만 눌러도 됩니다" 하면 부담이 줄어듭니다.</div>
+    <div class="checks"><label><input type="checkbox"><span>후기 남기는 페이지가 있고, 제출하면 저장된다</span></label></div>
   </section>
 
-  <div class="next"><span class="n">1</span><div>준비가 끝났으면 → <b>신청 제작 1. 수강생 모집·신청 페이지 만들기</b>로 갑니다.</div></div>
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>노출할 후기 고르기 → 신청 페이지에 표시</div>
+    <p class="sec-desc">받은 후기 중 <b>내가 '공개'로 켠 것만</b> 신청 페이지 '후기' 섹션에 자동으로 뜨게 합니다.</p>
+    <div class="promptbox" id="p_reviewshow">내가 받은 후기 중 '고른 것만' 신청 페이지에 노출되게 해줘. 나는 초보라 하나씩.
+
+[관리자에서]
+ 1) 후기 목록을 보고, 각 후기에 '공개 / 숨김' 토글(체크박스) — 부적절한 건 숨김
+ 2) '공개'로 켠 후기만 신청 페이지의 '후기' 섹션에 자동으로 표시
+ 3) 순서 정하기(최신순 또는 내가 위로 올리기)
+[신청 페이지에서]
+ 4) 신청1에서 만든 페이지의 '후기 자리'에 공개 후기가 카드로 예쁘게(별점+내용+이름) 뜨게 연결
+ 5) 후기가 아직 없으면 그 섹션은 자연스럽게 비거나 "첫 후기를 기다립니다"
+[중요] 공개 동의한 후기만 노출 · 개인정보(연락처)는 절대 노출 금지
+내 저장 방식(구글시트/Supabase)에 맞게, 막히면 화면 캡처를 붙여넣을게.</div>
+    <button class="copybtn" data-copy="p_reviewshow" type="button">📋 후기 노출 선택 프롬프트 복사</button>
+    <div class="warn">⚠️ <b>공개 동의한 후기만</b> 노출하세요. 후기에 연락처 같은 개인정보가 보이지 않게 하고, 실명이 부담되면 '김○○ 강사'처럼 표시하면 됩니다.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>관리자에서 후기를 '공개/숨김'으로 고를 수 있다</span></label>
+      <label><input type="checkbox"><span>공개한 후기가 신청 페이지에 예쁘게 뜬다</span></label>
+    </div>
+    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
+    <div class="why">📦 <b>이 활동의 결과물</b> — 후기를 <b>모으고, 고른 것만 노출</b>하는 구조. 신뢰가 쌓여 신청이 잘 들어옵니다.</div>
+    <details class="teacher"><summary>🎤 강사 팁 (강사 전용) · 눌러서 보기</summary><div class="tc">후기는 <b>양보다 진짜 한두 개</b>가 힘이 셉니다. 첫 기수엔 <b>강의 끝나고 QR로 즉시 수거</b>가 핵심 — 시간 지나면 안 써줍니다. "공개 동의 + 숨김 기능"을 꼭 넣어, 부적절하거나 민감한 후기는 강사가 거를 수 있게 하세요. 노출 후기는 신청 페이지 신뢰도를 바로 올려, 다음 기수 모집이 쉬워집니다. 이 뒤로는 다른 방의 <b>AI 소셜마케팅 과정</b>으로 '알리기'를 이어가면 완성입니다.</div></details>
+  </section>
+
+  <div class="big">🎉 <b>신청 시스템 완성!</b><br>모집 → 저장 → 관리·알림 → 안전 잠금 → 5분 복제 → 후기까지,<br>나만의 <b>AI 교육 신청 시스템</b>을 갖췄습니다.</div>
+
+  <div class="next"><span class="n">→</span><div>이제 이 페이지에 <b>사람을 모으는 홍보</b>가 필요하면 → 다른 방의 <b>AI 소셜마케팅(SEO·GEO) 과정</b>으로 이어집니다.</div></div>
   <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
 </div>
 

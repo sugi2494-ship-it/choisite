@@ -40,9 +40,19 @@
   .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
   .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
   .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
-  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  details.teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;margin-top:14px;font-size:13px;color:#7a5b12}
+  details.teacher summary{padding:12px 15px;cursor:pointer;font-weight:800;color:#5c4406;list-style:none}
+  details.teacher summary::-webkit-details-marker{display:none}
+  details.teacher summary::after{content:" \25BE";color:#b8912f}
+  details.teacher[open] summary::after{content:" \25B4"}
+  details.teacher .tc{padding:0 15px 13px}
+  details.teacher .tc b{color:#5c4406}
   .big{background:linear-gradient(135deg,#2C8C5A,#2C66A8);color:#fff;border-radius:14px;padding:18px 20px;margin-top:18px;text-align:center}
   .big b{font-size:17px}
+  .howto{background:#eef4ff;border:1px solid #cfe0f4;border-radius:12px;padding:13px 16px;margin-top:12px}
+  .howto .h{font-size:13.5px;font-weight:800;color:#173257}
+  .howto ol{margin:8px 0 0;padding-left:20px;font-size:13.5px;color:#233}
+  .howto ol li{margin:7px 0}.howto b{color:#173257}
   .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
   .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
   .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
@@ -65,7 +75,7 @@
 
 <div class="wrap">
   <div class="stepflow">
-    <span>0 준비·설계</span><span>1 모집·신청 페이지</span><span>2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span class="on">5 5분 복제</span>
+    <span>0 준비·설계</span><span>1 모집·신청 페이지</span><span>2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span class="on">5 5분 복제</span><span>6 후기</span>
   </div>
 
   <section class="card">
@@ -84,6 +94,15 @@
 [새 특강 정보]
 (여기에 새 특강의 제목·날짜·가격 등만 붙여넣기)</div>
     <button class="copybtn" data-copy="p_clone" type="button">📋 5분 복제 프롬프트 복사</button>
+    <div class="howto">
+      <div class="h">📌 복제는 '기존 페이지'가 필요해요 — 이렇게 하세요</div>
+      <ol>
+        <li><b>가장 쉬운 방법 (추천) · 기존 대화창에서</b> — 내 모집 페이지를 <b>만들었던 그 클로드(claude.ai) 대화창</b>에 이어서 위 프롬프트를 붙여넣으세요. 클로드가 이미 내 페이지를 기억하고 있어 바로 복제해 줍니다.</li>
+        <li><b>새 대화창에서 할 때</b> — 새 대화에선 클로드가 내 페이지를 기억 못 해요. 그래서 <b>기존 페이지의 HTML 코드 전체를 복사해서</b> 위 프롬프트와 <b>함께 붙여넣어야</b> 합니다. (파일을 열어 전체선택→복사, 또는 파일 자체를 첨부)</li>
+        <li>그다음 <b>새 강의 정보</b>(제목·날짜·정원·가격·마감일)만 알려주면, 클로드가 그 부분만 바꾼 <b>새 신청 페이지</b>를 만들어 줍니다.</li>
+        <li>막히면 화면을 <b>캡처해서</b> 붙여넣고 "여기서 뭘 바꾸면 되나요?"라고 물어보세요.</li>
+      </ol>
+    </div>
     <div class="tip">💡 자주 여는 특강이라면 <b>'빈칸 템플릿'</b>을 하나 만들어 두세요. 제목·날짜·가격만 채우면 되는 양식이면 <b>진짜 5분</b>입니다.</div>
     <div class="checks"><label><input type="checkbox"><span>복제본을 만들어 제목·날짜·가격을 새 특강으로 바꿨다</span></label></div>
   </section>
@@ -102,12 +121,12 @@
     <div class="checks"><label><input type="checkbox"><span>새 특강 신청이 기존 것과 구분되어 관리된다</span></label></div>
     <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
     <div class="why">📦 <b>이 활동의 결과물</b> — 새 교육 신청서 1개 완성 + <b>"복제 → 수정 → 오픈" 루틴</b>. 이제 특강을 열 때마다 5분이면 신청을 받을 수 있습니다.</div>
-    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 이 마지막 활동이 <b>이 과정의 판매 포인트</b>입니다. "한 번 배우면 특강마다 무한 복제"를 <b>직접 5분 타이머 걸고 복제 시연</b>하면 만족도가 확 올라갑니다. 수강생이 자기 특강 하나를 <b>실제로 오픈</b>해 보게 하는 것을 목표로 잡으세요.</div>
+    <details class="teacher"><summary>🎤 강사 팁 (강사 전용) · 눌러서 보기</summary><div class="tc">이 마지막 활동이 <b>이 과정의 판매 포인트</b>입니다. "한 번 배우면 특강마다 무한 복제"를 <b>직접 5분 타이머 걸고 복제 시연</b>하면 만족도가 확 올라갑니다. 수강생이 자기 특강 하나를 <b>실제로 오픈</b>해 보게 하는 것을 목표로 잡으세요.</div></details>
   </section>
 
   <div class="big">🎉 <b>완성!</b><br>모집 → 신청 → 관리 → 알림 → 안전 잠금 → 5분 복제까지,<br>나만의 <b>AI 교육 신청 시스템</b>을 갖췄습니다.</div>
 
-  <div class="next"><span class="n">→</span><div>이제 이 신청 페이지에 <b>사람을 모으는 홍보</b>가 필요하면 → <b>AI 소셜마케팅(SEO·GEO) 과정</b>으로 이어집니다.</div></div>
+  <div class="next"><span class="n">6</span><div>마지막으로 → <b>신청 후기 6. 후기 받고 노출하기</b>로 신뢰를 더합니다. (그다음은 다른 방의 <b>AI 소셜마케팅 과정</b>)</div></div>
   <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
 </div>
 

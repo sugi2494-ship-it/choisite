@@ -47,7 +47,13 @@
   .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
   .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
   .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
-  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  details.teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;margin-top:14px;font-size:13px;color:#7a5b12}
+  details.teacher summary{padding:12px 15px;cursor:pointer;font-weight:800;color:#5c4406;list-style:none}
+  details.teacher summary::-webkit-details-marker{display:none}
+  details.teacher summary::after{content:" \25BE";color:#b8912f}
+  details.teacher[open] summary::after{content:" \25B4"}
+  details.teacher .tc{padding:0 15px 13px}
+  details.teacher .tc b{color:#5c4406}
   .pick{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
   .pick .opt{flex:1;min-width:210px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-size:13px;background:#fff}
   .pick .opt b{display:block;font-size:14px;margin-bottom:3px}
@@ -75,7 +81,7 @@
 
 <div class="wrap">
   <div class="stepflow">
-    <span>0 준비·설계</span><span>1 모집·신청 페이지</span><span class="on">2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span>5 5분 복제</span>
+    <span>0 준비·설계</span><span>1 모집·신청 페이지</span><span class="on">2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span>5 5분 복제</span><span>6 후기</span>
   </div>
 
   <div class="pick">
@@ -146,7 +152,7 @@
     <div class="checks"><label><input type="checkbox"><span>테스트로 신청했더니 Supabase 테이블에 저장된다</span></label></div>
     <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
     <div class="why">📦 <b>이 활동의 결과물</b> — 제출하면 <b>실제로 저장</b>되는 신청 시스템(구글시트 또는 Supabase). 이제 신청이 쌓이기 시작합니다. 다음은 <b>내가 바로 보고 알림 받는</b> 관리자 화면.</div>
-    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — <b>초보 반은 A(구글시트)로 통일</b>하면 100% 성공합니다. Supabase(B)는 관리자 페이지·자동화까지 갈 여유 반에서만 권하세요. 어느 쪽이든 <b>"테스트 신청 → 저장 눈으로 확인"</b>을 반드시 시켜야, 다음 관리자 단계가 매끄럽습니다.</div>
+    <details class="teacher"><summary>🎤 강사 팁 (강사 전용) · 눌러서 보기</summary><div class="tc"><b>초보 반은 A(구글시트)로 통일</b>하면 100% 성공합니다. Supabase(B)는 관리자 페이지·자동화까지 갈 여유 반에서만 권하세요. 어느 쪽이든 <b>"테스트 신청 → 저장 눈으로 확인"</b>을 반드시 시켜야, 다음 관리자 단계가 매끄럽습니다.</div></details>
   </section>
 
   <div class="next"><span class="n">3</span><div>저장이 되면 → <b>신청 관리 3. 관리자 페이지 + 실시간 접수 알림</b>으로 갑니다.</div></div>

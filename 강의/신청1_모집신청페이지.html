@@ -40,7 +40,13 @@
   .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
   .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
   .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
-  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  details.teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;margin-top:14px;font-size:13px;color:#7a5b12}
+  details.teacher summary{padding:12px 15px;cursor:pointer;font-weight:800;color:#5c4406;list-style:none}
+  details.teacher summary::-webkit-details-marker{display:none}
+  details.teacher summary::after{content:" \25BE";color:#b8912f}
+  details.teacher[open] summary::after{content:" \25B4"}
+  details.teacher .tc{padding:0 15px 13px}
+  details.teacher .tc b{color:#5c4406}
   .ex{background:#f4f6f8;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-top:12px;font-size:13px;color:#3a424a}.ex b{color:var(--ink)}
   .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
   .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
@@ -64,7 +70,7 @@
 
 <div class="wrap">
   <div class="stepflow">
-    <span>0 준비·설계</span><span class="on">1 모집·신청 페이지</span><span>2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span>5 5분 복제</span>
+    <span>0 준비·설계</span><span class="on">1 모집·신청 페이지</span><span>2 저장 연결</span><span>3 관리자·알림</span><span>4 안전·엑셀</span><span>5 5분 복제</span><span>6 후기</span>
   </div>
 
   <section class="card">
@@ -123,7 +129,7 @@
     </div>
     <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
     <div class="why">📦 <b>이 활동의 결과물</b> — <b>완성도 있는 모집 페이지</b>(후기·FAQ 포함) + 신청 폼 화면. 아직 '저장'은 안 되지만, 보기에 예쁜 첫 작품이 나왔습니다. 다음 활동에서 <b>제출이 실제로 저장</b>되게 연결합니다.</div>
-    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 이 단계의 목표는 <b>"보기 좋은 완성된 페이지"로 자신감을 주는 것</b>입니다. 처음부터 저장·백엔드를 붙이면 초보가 지칩니다. 먼저 <b>예쁘게 완성 → 다음 활동에서 저장 연결</b> 순서를 지키세요. 색·문구를 CSS 변수 한 곳에 모으게 하면, 나중에 5분 복제가 정말 쉬워집니다.</div>
+    <details class="teacher"><summary>🎤 강사 팁 (강사 전용) · 눌러서 보기</summary><div class="tc">이 단계의 목표는 <b>"보기 좋은 완성된 페이지"로 자신감을 주는 것</b>입니다. 처음부터 저장·백엔드를 붙이면 초보가 지칩니다. 먼저 <b>예쁘게 완성 → 다음 활동에서 저장 연결</b> 순서를 지키세요. 색·문구를 CSS 변수 한 곳에 모으게 하면, 나중에 5분 복제가 정말 쉬워집니다.</div></details>
   </section>
 
   <div class="next"><span class="n">2</span><div>페이지가 예쁘게 나왔으면 → <b>신청 저장 2. 신청 저장 연결(구글시트 / Supabase)</b>로 갑니다.</div></div>
