@@ -110,8 +110,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=Playfair+Display:wght@700;900&display=swap');
 
     :root{
-      --pink:#E6007E; --pink2:#C2006A; --pink3:#FF2D9B;
-      --pink-glow:rgba(230,0,126,.28); --pink-soft:rgba(230,0,126,.08);
+      --pink:#E5007F; --pink2:#C2006A; --pink3:#FF2D9B;
+      --pink-glow:rgba(229,0,127,.28); --pink-soft:rgba(229,0,127,.08);
       --gold:#C8A870; --gold2:#E8C88A;
       --black:#080810; --dark:#0E0E1A; --dark2:#16162A;
       --white:#fff; --cream:#FFF9F5;
@@ -146,8 +146,9 @@
       .admin-btn-text{display:none}
     }
     .logo-text{font-size:13px;font-weight:900;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
-    .nav-right{display:flex;align-items:center;gap:20px}
-    .menu{display:flex;gap:18px;align-items:center;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.78)}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .menu{display:flex;gap:14px;align-items:center;font-size:13px;font-weight:700;color:rgba(255,255,255,.78);white-space:nowrap}
+    .menu a{white-space:nowrap;flex:0 0 auto}
     .menu a:hover{color:var(--pink)}
     .menu .cta{
       background:linear-gradient(135deg,var(--pink),var(--pink2));
@@ -155,6 +156,9 @@
       box-shadow:0 8px 24px var(--pink-glow);
     }
     .burger{display:none;border:0;background:var(--pink);color:#fff;padding:8px 13px;border-radius:999px;font-weight:900;cursor:pointer}
+    .theme-btn,.lang-btn{opacity:.68;transform:scale(.9)}
+    .theme-btn:hover,.lang-btn:hover{opacity:1;transform:scale(.95)}
+    .classroom-link:hover{box-shadow:0 6px 18px var(--pink-glow)}
 
     /* ── LANGUAGE SWITCHER ── */
     .lang-switch{position:relative}
@@ -275,10 +279,11 @@
       font-weight:900;
     }
     .btn.outline{
-      border-color:rgba(255,255,255,.3);color:#fff;background:rgba(0,0,0,.3);
-      backdrop-filter:blur(8px);
+      border-width:2px;border-color:var(--pink);color:#fff;
+      background:var(--pink-soft);backdrop-filter:blur(8px);
+      box-shadow:0 6px 18px var(--pink-glow);
     }
-    .btn.outline:hover{border-color:var(--pink);color:var(--pink)}
+    .btn.outline:hover{background:var(--pink);border-color:var(--pink);color:#fff}
 
     /* 구버전 photo-frame 제거됨 */
     .photo-badge{display:none}
@@ -625,6 +630,10 @@
         z-index:999;
       }
       .menu.open{display:flex}
+      .nav-right{gap:8px}
+      .classroom-link{padding:6px 10px!important;font-size:11.5px!important}
+      .lang-switch #langLabel,.lang-btn .chev{display:none}
+      .lang-btn{padding:6px 8px}
       .hero-photo-strip{display:none}
       .hero-in{padding:100px 18px 60px}
       
@@ -707,6 +716,9 @@ html[data-theme="light"] body{background:#F7F6F9;color:#20202A;}
 html[data-theme="light"] .topbar{background:rgba(255,255,255,.94)!important;border-bottom:1px solid rgba(0,0,0,.08)!important;}
 html[data-theme="light"] .menu{background:#fff!important;}
 html[data-theme="light"] .nav a{color:#20202A!important;}
+html[data-theme="light"] .logo img{filter:none!important;}
+html[data-theme="light"] .logo-text{color:var(--pink)!important;}
+html[data-theme="light"] .classroom-link{color:var(--pink)!important;}
 html[data-theme="light"] .menu a{color:#20202A!important;}
 html[data-theme="light"] .lang-btn{color:#20202A!important;border-color:rgba(0,0,0,.2)!important;background:rgba(0,0,0,.04)!important;}
 html[data-theme="light"] .theme-btn{color:#20202A!important;border-color:rgba(0,0,0,.2)!important;background:rgba(0,0,0,.04)!important;}
@@ -762,13 +774,13 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <div class="menu" id="mainMenu">
         <a href="#about" data-i18n="nav.about">대표·브랜드</a>
         <a href="#consulting" data-i18n="nav.consulting">개인 컨설팅</a>
-        <a href="book48.html" style="color:#FF7FB5;font-weight:800">🎨 컬러강점 3분진단</a>
         <a href="/business" data-i18n="nav.business">기업·공공기관 교육</a>
         <a href="/academy" data-i18n="nav.academy">전문가 아카데미</a>
         <a href="/global" data-i18n="nav.global">Global K-Beauty</a>
         <a href="#media" data-i18n="nav.media">활동·미디어</a>
         <a class="cta" href="#contact" data-i18n="nav.contact">문의</a>
       </div>
+      <a href="/강의/" class="classroom-link" title="수강생·강사 전용 강의실" style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:800;letter-spacing:.02em;color:#fff;text-decoration:none;padding:7px 14px;border:1.5px solid var(--pink);border-radius:999px;background:var(--pink-soft);transition:all .2s" onmouseover="this.style.background='var(--pink)'" onmouseout="this.style.background='var(--pink-soft)'">🔒 강의실</a>
       <button class="theme-btn" id="themeBtn" aria-label="테마 전환" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-size:16px;cursor:pointer;flex-shrink:0">🌙</button>
       <!-- 언어 전환 -->
       <div class="lang-switch">
@@ -786,7 +798,6 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
           <button data-lang="hi"><span class="flag">🇮🇳</span> हिन्दी</button>
         </div>
       </div>
-      <a href="admin.html" title="관리자 페이지" style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;letter-spacing:.05em;color:rgba(255,255,255,.45);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:999px;background:rgba(255,255,255,.05);transition:all .2s" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(230,0,126,.5)';this.style.background='rgba(230,0,126,.12)'" onmouseout="this.style.color='rgba(255,255,255,.45)';this.style.borderColor='rgba(255,255,255,.15)';this.style.background='rgba(255,255,255,.05)'">⚙<span class="admin-btn-text"> ADMIN</span></a>
       <button class="burger" id="burger">☰</button>
     </div>
   </nav>
@@ -822,7 +833,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <p style="font-size:13px;color:rgba(255,255,255,.62);margin:-6px 0 22px;letter-spacing:.02em;font-weight:600">Personal Color Analysis, Corporate Education, Professional Training and Global K-Beauty Partnership</p>
       <div class="hero-actions">
         <a class="btn primary" href="#services-router" data-i18n="x.pick">서비스 선택하기 →</a>
-        <a class="btn outline" href="/강의/">🎓 강의실 바로가기</a>
+        <a class="btn outline" href="book48.html">🎨 컬러강점 3분진단</a>
       </div>
     </div>
   </div>
@@ -1085,7 +1096,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       </div>
     </div>
     <div style="text-align:center;margin-top:46px">
-      <a href="/강의/" style="display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:999px;background:linear-gradient(135deg,#D0247E,#7A1F6B);color:#fff;font-weight:800;font-size:16px;letter-spacing:.01em;text-decoration:none;box-shadow:0 12px 34px rgba(208,36,126,.35)">🎓 강의실 입장 — 교육생·강사 자료 →</a>
+      <a href="/강의/" style="display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:999px;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;font-weight:800;font-size:16px;letter-spacing:.01em;text-decoration:none;box-shadow:0 12px 34px var(--pink-glow)">🎓 강의실 입장 — 교육생·강사 자료 →</a>
     </div>
   </div>
 </section>
@@ -2712,6 +2723,12 @@ b.addEventListener('click',function(){var l=document.documentElement.getAttribut
  if(l){document.documentElement.removeAttribute('data-theme');try{localStorage.setItem('pbs_theme','dark');}catch(e){}}
  else{document.documentElement.setAttribute('data-theme','light');try{localStorage.setItem('pbs_theme','light');}catch(e){}}
  upd();});
+})();
+/* ── 모바일 메뉴(버거) 토글 ── */
+(function(){var burger=document.getElementById('burger'),menu=document.getElementById('mainMenu');if(!burger||!menu)return;
+burger.addEventListener('click',function(e){e.stopPropagation();var open=menu.classList.toggle('open');burger.setAttribute('aria-expanded',open);});
+menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+document.addEventListener('click',function(e){if(menu.classList.contains('open')&&!menu.contains(e.target)&&e.target!==burger){menu.classList.remove('open');}});
 })();
 </script>
 </body>
