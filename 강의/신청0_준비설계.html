@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>신청 준비 0. 무엇을 팔지 + 신청서 항목 설계 · AI 교육 신청 시스템 만들기 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--pink)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234;max-width:660px;margin-left:auto;margin-right:auto}
+  .callout b{color:#173257}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .kbd{background:#eef1f4;border:1px solid #d7dde3;border-radius:6px;padding:1px 7px;font-size:12.5px;font-weight:700;white-space:nowrap}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:6px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
+  .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aisignup">← AI 교육 신청 시스템 만들기 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 교육 신청 시스템 만들기</div>
+  <h1>신청 준비 0. 무엇을 팔지 + 신청서 항목 설계</h1>
+  <p class="lead">페이지를 만들기 전에 딱 두 가지만 정합니다 — <b>이 특강으로 무엇을 파는지 한 문장</b>, 그리고 <b>신청서에서 받을 항목</b>. 여기가 흔들리면 뒤가 다 흔들려요.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 15분</span><span class="time">📥 입력 · 특강 아이디어</span><span class="time">📦 결과물 · 교육 상품 1줄 정의 + 신청서 항목표</span></p>
+</header>
+<div class="callout">🧭 <b>이 과정의 목표:</b> "2~3시간 특강" 하나를 <b>신청받고 관리하는 시스템</b>으로 완성하고, 나중엔 <b>5분이면 새 교육 신청서를 계속 찍어내게</b> 만드는 것. 그 출발이 이 준비 단계입니다.</div>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span class="on">0 준비·설계</span><span>1 모집·신청 페이지</span><span>2 관리자·실시간 알림</span><span>3 안전 로그인·문자·엑셀</span><span>4 5분 복제</span>
+  </div>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>이 특강을 한 문장으로 정의하기</div>
+    <p class="sec-desc">"누가 · 무엇을 얻고 · 언제 · 얼마"가 한 문장에 들어가면 모집 페이지 카피가 저절로 나옵니다.</p>
+    <div class="promptbox" id="p_define">너는 교육 상품 기획 도우미야. 내가 열 2~3시간 특강을 '팔리는 한 문장'으로 정리하게 도와줘.
+[내 특강 메모] (여기에 아는 만큼만 적기: 주제 / 대상 / 강사인 나 / 하고 싶은 것)
+너가 아래를 하나씩 물어보고, 마지막에 한 문장 정의 + 3가지 후보 제목을 만들어줘.
+1) 대상: 누구를 위한 특강인가 (초보? 자영업자? 강사?)
+2) 얻는 것: 끝나면 무엇을 '가지고' 돌아가나 (결과물/변화)
+3) 형식: 오프라인/온라인(zoom)/혼합, 몇 시간
+4) 일정·장소·정원·가격·환불 기준
+5) 남들과 다른 점 한 가지(왜 나에게 배우나)
+초등학생도 이해할 만큼 쉬운 한국어로.</div>
+    <button class="copybtn" data-copy="p_define" type="button">📋 특강 한 문장 정의 프롬프트 복사</button>
+    <div class="tip">💡 <b>예시</b> — "자영업 사장님을 위한, 3시간 만에 <b>내 가게 예약 페이지</b>를 직접 만드는 원데이 특강 (토요일 오후·정원 8명·5만원)". 이렇게 나오면 성공.</div>
+    <div class="checks"><label><input type="checkbox"><span>특강을 한 문장으로 정의했고, 제목 후보도 있다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>신청서에서 받을 항목 정하기</div>
+    <p class="sec-desc">항목이 많으면 신청을 포기합니다. <b>꼭 필요한 것만</b> 받고, 개인정보는 최소로.</p>
+    <ul class="guide">
+      <li><b>거의 항상 필요</b> — 이름 · 연락처(휴대폰) · 개인정보 수집·이용 <b>동의 체크</b></li>
+      <li><b>상황에 따라</b> — 이메일 · 신청 동기/질문 · 참가 인원 · 결제 방식 · 오는 길(온/오프)</li>
+      <li><b>받지 말 것</b> — 주민번호·주소 등 특강에 필요 없는 정보(사고의 씨앗)</li>
+    </ul>
+    <div class="promptbox" id="p_fields">너는 개인정보를 아끼는 신청서 설계 도우미야. 내 특강(위 한 문장)에 맞는 '신청서 항목표'를 만들어줘.
+[규칙]
+- 꼭 필요한 항목만 (많으면 신청 이탈). 각 항목이 '왜 필요한지' 한 줄 이유
+- 필수/선택 구분, 개인정보 '수집·이용 동의' 문구(짧고 명확하게) 포함
+- 주민번호·집주소 등 불필요한 민감정보는 넣지 말 것
+- 표로: [항목 | 필수여부 | 이유]
+내 특강 한 문장을 붙여넣을 테니 그에 맞춰 추천해줘.</div>
+    <button class="copybtn" data-copy="p_fields" type="button">📋 신청서 항목 설계 프롬프트 복사</button>
+    <div class="warn">⚠️ <b>개인정보 최소 수집</b> — 특강 운영에 꼭 필요한 것만 받으세요. 동의 체크 없이는 신청이 안 되게 하고, 받은 정보는 특강 목적 외 사용 금지. 이게 나를 지키는 기본입니다.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>받을 항목을 필수/선택으로 정리했다</span></label>
+      <label><input type="checkbox"><span>개인정보 동의 문구를 준비했다</span></label>
+    </div>
+    <div class="why">📦 <b>이 활동의 결과물</b> — ① 특강 한 문장 정의 + 제목, ② 신청서 항목표(필수/선택/동의). 이 둘을 다음 활동에 그대로 넣습니다.</div>
+    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 수강생이 가장 헤매는 지점은 "무엇을 팔지"를 두루뭉술하게 두는 것입니다. <b>한 문장 + 가격 + 정원</b>을 눈앞에서 확정시키세요. 신청서는 <b>이름·연락처·동의 3개면 충분</b>하다고 못 박아 주면 뒤 단계가 훨씬 빨라집니다.</div>
+  </section>
+
+  <div class="next"><span class="n">1</span><div>준비가 끝났으면 → <b>신청 제작 1. 수강생 모집·신청 페이지 만들기</b>로 갑니다.</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t=document.getElementById(btn.getAttribute('data-copy')).innerText;
+      navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='✅ 복사됐어요!';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},2200);});
+    });
+  });
+</script>
+</body>
+</html>

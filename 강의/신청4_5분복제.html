@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>신청 확장 4. 5분 만에 새 교육 신청서 만들기 · AI 교육 신청 시스템 만들기 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--pink)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638;max-width:660px;margin-left:auto;margin-right:auto}
+  .callout b{color:#15452c}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .kbd{background:#eef1f4;border:1px solid #d7dde3;border-radius:6px;padding:1px 7px;font-size:12.5px;font-weight:700;white-space:nowrap}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:6px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
+  .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .big{background:linear-gradient(135deg,#2C8C5A,#2C66A8);color:#fff;border-radius:14px;padding:18px 20px;margin-top:18px;text-align:center}
+  .big b{font-size:17px}
+  .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aisignup">← AI 교육 신청 시스템 만들기 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 교육 신청 시스템 만들기</div>
+  <h1>신청 확장 4. 5분 만에 새 교육 신청서 만들기</h1>
+  <p class="lead">한 번 만든 신청 시스템을 <b>복제해서 제목·날짜·가격만 바꾸면</b> 새 특강 신청서가 <b>5분</b>이면 나옵니다. 이제 특강 하나가 <b>상품 하나</b>예요.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 15분</span><span class="time">📥 입력 · 완성된 신청 시스템</span><span class="time">📦 결과물 · 새 교육 신청서 1개 + 양산 루틴</span></p>
+</header>
+<div class="callout">♻️ <b>핵심 아이디어:</b> 처음 하나만 제대로 만들면, 다음부터는 <b>복사 → 몇 군데만 수정</b>이면 끝. 새 특강을 열 때마다 처음부터 만들 필요가 없습니다.</div>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span>0 준비·설계</span><span>1 모집·신청 페이지</span><span>2 관리자·실시간 알림</span><span>3 안전 로그인·문자·엑셀</span><span class="on">4 5분 복제</span>
+  </div>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>복제하고 몇 군데만 바꾸기</div>
+    <p class="sec-desc">기존 모집·신청 페이지를 <b>그대로 복사</b>한 뒤, 바뀌는 것만 교체합니다.</p>
+    <ul class="guide">
+      <li><b>바꾸는 것 (보통 이것만)</b> — 특강 제목 · 한 문장 소개 · 날짜/시간 · 장소 · 정원 · 가격 · 신청 마감일</li>
+      <li><b>그대로 두는 것</b> — 폼 구조, 관리자 화면, 알림, 로그인(서버 검증) — 다시 만들 필요 없음</li>
+    </ul>
+    <div class="promptbox" id="p_clone">내가 만든 '교육 신청 페이지'를 복제해서 새 특강용으로 바꿔줘.
+[해줘]
+1) 기존 모집·신청 페이지를 복사해 새 파일로 만들기(파일명/주소 규칙도 추천)
+2) 아래만 새 값으로 교체: 특강 제목 / 한 문장 소개 / 날짜·시간 / 장소 / 정원 / 가격 / 마감일
+3) 폼·관리자·알림·로그인 구조는 그대로 재사용 (다시 만들지 말 것)
+4) 바꿔야 할 곳을 '체크리스트'로 정리해줘 (빠뜨리기 쉬운 곳 표시)
+[새 특강 정보]
+(여기에 새 특강의 제목·날짜·가격 등만 붙여넣기)</div>
+    <button class="copybtn" data-copy="p_clone" type="button">📋 5분 복제 프롬프트 복사</button>
+    <div class="tip">💡 자주 여는 특강이라면 <b>'빈칸 템플릿'</b>을 하나 만들어 두세요. 제목·날짜·가격만 채우면 되는 양식이면 <b>진짜 5분</b>입니다.</div>
+    <div class="checks"><label><input type="checkbox"><span>복제본을 만들어 제목·날짜·가격을 새 특강으로 바꿨다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>새 신청이 섞이지 않게 저장 분리</div>
+    <p class="sec-desc">여러 특강을 열면 <b>어느 신청이 어느 특강인지</b> 구분돼야 관리가 됩니다.</p>
+    <div class="promptbox" id="p_split">여러 특강을 운영할 때 신청이 섞이지 않게 정리해줘.
+[해줘]
+1) 각 신청에 '교육명(또는 특강코드)' 항목을 자동으로 붙여 저장(신청자는 안 적어도 되게)
+2) 관리자 페이지에서 '교육별 필터'로 특강마다 명단·인원·상태를 따로 보기
+3) 방법 비교: (A) 특강마다 시트/탭 분리  (B) 한 곳에 모으고 '교육명'으로 필터
+   - 내 상황에 뭐가 편한지 추천
+4) 새 특강을 추가할 때 뭘 하면 되는지 3줄 요약</div>
+    <button class="copybtn" data-copy="p_split" type="button">📋 저장 분리·교육별 관리 프롬프트 복사</button>
+    <div class="checks"><label><input type="checkbox"><span>새 특강 신청이 기존 것과 구분되어 관리된다</span></label></div>
+    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
+    <div class="why">📦 <b>이 활동의 결과물</b> — 새 교육 신청서 1개 완성 + <b>"복제 → 수정 → 오픈" 루틴</b>. 이제 특강을 열 때마다 5분이면 신청을 받을 수 있습니다.</div>
+    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 이 마지막 활동이 <b>이 과정의 판매 포인트</b>입니다. "한 번 배우면 특강마다 무한 복제"를 <b>직접 5분 타이머 걸고 복제 시연</b>하면 만족도가 확 올라갑니다. 수강생이 자기 특강 하나를 <b>실제로 오픈</b>해 보게 하는 것을 목표로 잡으세요.</div>
+  </section>
+
+  <div class="big">🎉 <b>완성!</b><br>모집 → 신청 → 관리 → 알림 → 안전 잠금 → 5분 복제까지,<br>나만의 <b>AI 교육 신청 시스템</b>을 갖췄습니다.</div>
+
+  <div class="next"><span class="n">→</span><div>이제 이 신청 페이지에 <b>사람을 모으는 홍보</b>가 필요하면 → <b>AI 소셜마케팅(SEO·GEO) 과정</b>으로 이어집니다.</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t=document.getElementById(btn.getAttribute('data-copy')).innerText;
+      navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='✅ 복사됐어요!';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},2200);});
+    });
+  });
+</script>
+</body>
+</html>

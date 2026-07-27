@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>신청 보안 3. 안전한 로그인 + 문자·엑셀·기록 · AI 교육 신청 시스템 만들기 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--pink)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25;max-width:660px;margin-left:auto;margin-right:auto}
+  .callout b{color:#6e211c}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .kbd{background:#eef1f4;border:1px solid #d7dde3;border-radius:6px;padding:1px 7px;font-size:12.5px;font-weight:700;white-space:nowrap}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:6px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .warn{background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#8a2b25}.warn b{color:#6e211c}
+  .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .adv{background:#f3eefc;border:1px solid #ddd0f2;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#4a2f7a}.adv b{color:#38226b}
+  .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aisignup">← AI 교육 신청 시스템 만들기 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 교육 신청 시스템 만들기</div>
+  <h1>신청 보안 3. 안전한 로그인 + 문자·엑셀·기록</h1>
+  <p class="lead">관리자 화면엔 <b>신청자 개인정보</b>가 있으니 반드시 <b>안전하게 잠급니다(서버 검증)</b>. 그리고 접수 목록을 <b>엑셀로 내려받고</b>, 원하면 실제 <b>문자(SMS)</b>까지 붙입니다.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 활동 2의 관리자 페이지</span><span class="time">📦 결과물 · 안전 잠금 + 엑셀 다운로드 + (선택)문자</span></p>
+</header>
+<div class="callout">🔐 <b>가장 중요한 보안 원칙:</b> 관리자 비밀번호를 <b>웹페이지 코드 안에 넣으면 안 됩니다</b>(누구나 '소스 보기'로 뚫립니다). 반드시 <b>서버에서 검증</b>하세요. 개인정보를 다루는 만큼 이 단계가 핵심입니다.</div>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span>0 준비·설계</span><span>1 모집·신청 페이지</span><span>2 관리자·실시간 알림</span><span class="on">3 안전 로그인·문자·엑셀</span><span>4 5분 복제</span>
+  </div>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>안전한 로그인 — 서버 검증 (핵심)</div>
+    <p class="sec-desc">틀린 비번으로는 <b>신청 데이터가 아예 안 내려오게</b> 만드는 것이 목표입니다.</p>
+    <div class="warn">⚠️ <b>이렇게 하면 안 됩니다</b> — 페이지 코드에 <code>if(비번==="1234")</code>처럼 넣기. 누구나 브라우저 '소스 보기'로 비번을 읽고 들어옵니다. 가장 흔한 실수예요.</div>
+    <div class="promptbox" id="p_secure">내 관리자 페이지 로그인을 '서버 검증' 방식으로 안전하게 만들어줘. (클라이언트 비번 금지)
+[해줘]
+1) 비밀번호는 페이지 코드가 아니라 '서버(예: Supabase Edge Function)의 환경변수/시크릿'에 저장
+2) 로그인 시 입력한 비번을 서버로 보내 검증하고, 맞을 때만 데이터를 내려주기
+   (틀리면 401, 데이터는 애초에 브라우저로 안 내려오게)
+3) 신청 데이터도 아무나 못 읽게 — DB 접근 권한(RLS/서비스키)로 서버에서만 읽기
+4) 왜 이 방식이 안전한지 한 줄 설명
+내 사이트가 (Netlify + Supabase / 구글시트 / 다른 스택)인지 물어보고 그에 맞게 단계별로 안내해줘.</div>
+    <button class="copybtn" data-copy="p_secure" type="button">📋 서버 검증(안전 로그인) 프롬프트 복사</button>
+    <div class="tip">✅ <b>이 정도면 통과</b> — 관리자 비번이 페이지 소스에 없고(서버에만), 틀린 비번으로는 신청 데이터가 아예 안 보이면 안전합니다.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>관리자 비번이 코드에 없다(서버에만 있다)</span></label>
+      <label><input type="checkbox"><span>틀린 비번으로는 신청 데이터가 안 내려온다</span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>엑셀 다운로드 & 기록 남기기</div>
+    <p class="sec-desc">접수 명단을 <b>엑셀로 내려받아</b> 출석부·정산에 쓰고, 처리 <b>기록(상태·메모)</b>을 남깁니다.</p>
+    <ul class="guide">
+      <li><b>구글시트로 저장했다면</b> — 이미 시트가 곧 엑셀입니다(파일 → 다운로드 → Excel). 관리자 페이지에 '시트 열기' 버튼만 달면 끝.</li>
+      <li><b>Supabase로 저장했다면</b> — 관리자 페이지에 <b>'엑셀(CSV) 다운로드' 버튼</b>을 붙여 현재 목록을 내려받게 합니다.</li>
+    </ul>
+    <div class="promptbox" id="p_excel">내 관리자 페이지에서 신청 명단을 엑셀로 내려받고, 처리 기록을 남기게 해줘.
+[해줘]
+1) '엑셀 다운로드' 버튼: 현재 화면의 신청 목록(필터 적용된 것)을 CSV/엑셀로 저장
+   - 컬럼: 이름·연락처·신청항목·상태·메모·접수일시
+2) 상태 변경(대기→연락함→확정)과 메모가 저장되고, '누가 언제 바꿨는지' 기록이 남게
+3) 개인정보라 다운로드 파일 취급 주의 문구 한 줄(외부 공유·방치 금지)
+내 저장 방식(구글시트/Supabase)에 맞게 버튼과 코드까지 만들어줘.</div>
+    <button class="copybtn" data-copy="p_excel" type="button">📋 엑셀 다운로드·기록 프롬프트 복사</button>
+    <div class="warn">⚠️ <b>다운로드한 엑셀도 개인정보</b>입니다. 아무 폴더에 방치하거나 외부에 공유하지 말고, 특강이 끝나 목적이 사라지면 보관 기준에 따라 정리하세요.</div>
+    <div class="checks"><label><input type="checkbox"><span>신청 명단을 엑셀로 내려받을 수 있고, 상태·메모 기록이 남는다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">3</span>(심화·선택) 실제 휴대폰 문자(SMS) 보내기</div>
+    <p class="sec-desc">"접수되면 <b>내 휴대폰에 진짜 문자</b>가 오게" 하고 싶을 때. 유료 API가 필요한 심화 단계입니다.</p>
+    <div class="adv">💜 <b>여기는 선택입니다.</b> 앞의 무료 알림(활동 2: 실시간·브라우저·카톡)으로 대부분 충분합니다. 실제 문자(SMS)는 <b>문자 발송 서비스 가입 + 소액 비용(건당 과금)</b>이 필요해요. 원하는 분만 진행하세요.</div>
+    <div class="promptbox" id="p_sms">내 신청 시스템에 '실제 휴대폰 문자(SMS)' 알림을 붙이고 싶어. 초보 기준으로 안내해줘.
+[해줘]
+1) 국내에서 쓰기 쉬운 문자 발송 서비스(예: 알리고 등)와 대략적인 비용(건당) 비교
+2) 가입 → 발신번호 등록(사전승인 필요) → API 키 발급까지의 순서
+3) 새 신청이 들어오면 '나에게' 접수 문자, 또는 신청자에게 '접수 완료' 문자가 가게 연결
+   - API 키는 코드에 노출하지 말고 서버(환경변수/시크릿)에 저장
+4) 카카오 알림톡과의 차이(더 싸지만 템플릿 승인 필요)도 한 줄 비교
+내 스택에 맞춰 단계별로, 비용과 주의점(발신번호 승인)을 꼭 알려줘.</div>
+    <button class="copybtn" data-copy="p_sms" type="button">📋 실제 문자(SMS) 연동 프롬프트 복사</button>
+    <div class="checks"><label><input type="checkbox"><span>(선택) 실제 문자 발송을 이해했고, 필요 시 연동했다</span></label></div>
+    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
+    <div class="why">📦 <b>이 활동의 결과물</b> — <b>서버 검증으로 잠긴</b> 관리자 페이지 + <b>엑셀 다운로드·기록</b> + (선택) 실제 문자. 이제 하나의 완성된 '신청 시스템'입니다.</div>
+    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 이 활동의 진짜 핵심은 <b>"비번을 코드에 넣지 않는다"</b> 한 가지입니다. <code>if(pw==="1234")</code>식으로 만들려는 학생을 꼭 잡아, "틀린 비번 → 데이터 안 보임"을 눈앞에서 시연하세요. SMS는 <b>발신번호 사전 승인·건당 과금</b> 때문에 당일 완성이 어려우니, "무료 알림으로 충분, 문자는 원하는 분만 숙제"로 정리하면 수업이 매끄럽습니다.</div>
+  </section>
+
+  <div class="next"><span class="n">4</span><div>시스템이 완성됐으면 → <b>신청 확장 4. 5분 만에 새 교육 신청서 만들기</b>로 마무리합니다.</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t=document.getElementById(btn.getAttribute('data-copy')).innerText;
+      navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='✅ 복사됐어요!';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},2200);});
+    });
+  });
+</script>
+</body>
+</html>
