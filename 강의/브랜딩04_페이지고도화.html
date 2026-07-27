@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>브랜딩 고도화 04. 페이지별 내용·디자인 고도화 · 인플루언서 웹페이지 브랜딩 고도화 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--pink)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#7a2e5c;max-width:660px;margin-left:auto;margin-right:auto}
+  .callout b{color:#59204a}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:6px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aiwebmaster">← AI 웹페이지 브랜딩 과정 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · 인플루언서 웹페이지 브랜딩 고도화</div>
+  <h1>브랜딩 고도화 04. 페이지별 내용·디자인 고도화</h1>
+  <p class="lead">03의 <b>메뉴 구조표</b>를 보고 <b>페이지(섹션)를 하나씩</b> 실제 내용으로 채웁니다. 카피·구성·신뢰요소·버튼까지, 그리고 검색 키워드가 자연스럽게 들어가 <b>노출</b>도 챙깁니다.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 25분</span><span class="time">📥 입력 · 메뉴 구조표(03)</span><span class="time">📦 결과물 · 페이지별 완성 내용</span></p>
+</header>
+<div class="callout">🧩 <b>한 번에 한 섹션씩</b> 하세요. 히어로 → 소개 → 문의 3개를 먼저 완성하면 페이지가 살아납니다. 과장·미검증 실적은 금지, <b>사실만</b>.</div>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span>01 브랜드 분석</span><span>02 전략·키워드</span><span>03 구조·메뉴</span>
+    <span class="on">04 페이지 고도화</span><span>05 배포·도메인</span><span>06 브랜딩 마스터</span>
+  </div>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>메뉴 구조표 불러오기</div>
+    <p class="sec-desc">03에서 만든 메뉴 구조표를 준비하고, 지금 만들 섹션을 하나 고릅니다.</p>
+    <ul class="guide">
+      <li>03의 <b>메뉴 구조표</b>를 붙여넣습니다(또는 같은 채팅 이어서).</li>
+      <li>먼저 만들 섹션을 고릅니다 — 추천 순서: <b>홈 히어로 → 소개(이력·신뢰) → 문의</b>.</li>
+    </ul>
+    <div class="checks"><label><input type="checkbox"><span>메뉴 구조표 준비 + 먼저 만들 섹션을 정했다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>페이지(섹션) 고도화 프롬프트 — 반복 사용</div>
+    <p class="sec-desc">섹션 이름만 바꿔가며 <b>반복</b>해서 쓰면, 모든 페이지가 완성됩니다.</p>
+    <div class="promptbox" id="p_page">너는 전환율 높은 웹 카피라이터 겸 디자이너야.
+아래 '메뉴 구조표'에서 지금 만들 섹션 하나를 골라, 실제 넣을 내용을 완성해줘.
+나는 이미 활동 중인 인플루언서/강사이고, 목표는 '노출 → 방문 → 문의·신청'이야.
+
+[붙여넣기]
+- 메뉴 구조표(03):
+- 지금 만들 섹션 이름:
+
+[해줘]
+1) 헤드라인 후보 3개 — 검색 키워드가 자연스럽게 들어가게(노출)
+2) 본문 카피 — 방문자의 고민에 공감 → 내 해결책 → 얻는 결과 순서로
+3) 넣을 요소 — 사진/후기/숫자(실적)/버튼 등 무엇을 어디에
+4) 이 섹션의 행동 버튼 문구 1개
+5) 모바일용 짧은 요약본
+※ 과장·미검증 실적은 쓰지 말고, 실제 사실만. 톤은 따뜻하고 전문적으로.</div>
+    <button class="copybtn" data-copy="p_page" type="button">📋 페이지 고도화 프롬프트 복사</button>
+    <div class="tip">🧩 완성되면 "다음 섹션은 OO" 하고 <b>같은 프롬프트를 반복</b>하세요. 한 섹션이 마음에 들 때까지 다듬은 뒤 넘어갑니다.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>홈 히어로 완성</span></label>
+      <label><input type="checkbox"><span>소개(이력·신뢰) 완성</span></label>
+      <label><input type="checkbox"><span>문의(전환) 섹션 완성</span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">3</span>전체 톤·일관성 점검</div>
+    <p class="sec-desc">섹션을 다 채웠으면, 페이지 전체가 하나의 톤으로 읽히는지 점검합니다.</p>
+    <div class="promptbox" id="p_polish">지금까지 만든 페이지 섹션들을 모아서 전체를 점검해줘.
+1) 말투·톤이 처음부터 끝까지 일관된가 (아니면 통일안 제시)
+2) 02의 '핵심 메시지 3개'가 페이지 곳곳에 반복되나
+3) 검색 키워드가 자연스럽게 들어갔나(노출) — 어색하면 다듬기
+4) 방문자가 3초 안에 "뭐 하는 사람인지" 알 수 있나
+5) 어느 화면에서든 '문의·신청' 버튼이 보이나
+6) 모바일에서 너무 길지 않은가 — 줄일 곳 제안
+고칠 점을 우선순위로 3가지만 콕 집어줘.</div>
+    <button class="copybtn" data-copy="p_polish" type="button">📋 일관성 점검 프롬프트 복사</button>
+    <div class="tip">✅ <b>이 정도면 통과</b> — 히어로·소개·문의가 완성되고, 3초 안에 정체가 읽히며, 문의 버튼이 어디서나 보이면 배포로 갑니다.</div>
+    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
+    <div class="why">📦 <b>이 활동의 결과물</b> — 페이지(섹션)별 완성 내용 + 전체 톤 통일<br>
+    ➡ <b>다음 05 활동 입력</b> — 완성된 페이지를 배포하고 나만의 도메인을 연결합니다.</div>
+    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 학생이 <b>전체를 한꺼번에</b> 하려다 지칩니다. "히어로·소개·문의 3개만 먼저"로 끊어 주세요.
+    실적·후기 숫자가 없으면 빈약해 보이니, 있는 자료(수강 인원·방송·기관명)를 먼저 모으게 하고, <b>없는 건 지어내지 않게</b> 강조하세요.</div>
+  </section>
+
+  <div class="next"><span class="n">5</span><div>페이지가 완성되면 → <b>브랜딩 배포 05. 배포 & 나만의 도메인(가비아)</b>으로 이어집니다.</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t=document.getElementById(btn.getAttribute('data-copy')).innerText;
+      navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='✅ 복사됐어요!';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},2200);});
+    });
+  });
+</script>
+</body>
+</html>

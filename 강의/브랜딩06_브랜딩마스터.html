@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>브랜딩 마스터 06. 브랜딩 자산 정리 · 인플루언서 웹페이지 브랜딩 고도화 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--pink)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#7a2e5c;max-width:660px;margin-left:auto;margin-right:auto}
+  .callout b{color:#59204a}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:6px;max-height:380px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f3e9fb;border:1px solid #e0c8f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#4a2266}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:#7A1F6B;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aiwebmaster">← AI 웹페이지 브랜딩 과정 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · 인플루언서 웹페이지 브랜딩 고도화</div>
+  <h1>브랜딩 마스터 06. 브랜딩 자산 정리</h1>
+  <p class="lead">완성된 홈페이지를 근거로 <b>어디서나 똑같이 쓸 브랜딩 자산</b>을 뽑습니다. 마스터 문장·단어, 브랜딩 키워드, 해시태그, 프로필 문구까지 — 인스타·블로그·명함에 <b>일관되게</b> 붙여 노출과 신뢰를 함께 올립니다.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 20분</span><span class="time">📥 입력 · 라이브 홈페이지(05)</span><span class="time">📦 결과물 · 브랜딩 자산 시트</span></p>
+</header>
+<div class="callout">🏁 마지막 단계입니다. 여기서 나온 <b>자산 시트</b>를 채널마다 똑같이 쓰면, 흩어져 있던 나의 활동이 <b>하나의 브랜드</b>로 묶입니다.</div>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span>01 브랜드 분석</span><span>02 전략·키워드</span><span>03 구조·메뉴</span>
+    <span>04 페이지 고도화</span><span>05 배포·도메인</span><span class="on">06 브랜딩 마스터</span>
+  </div>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>내 홈페이지 준비</div>
+    <p class="sec-desc">완성된 홈페이지 주소를 준비합니다(못 열면 핵심 내용을 붙여넣어도 됩니다).</p>
+    <div class="checks"><label><input type="checkbox"><span>라이브 홈페이지 주소(또는 핵심 내용)를 준비했다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>브랜딩 자산 시트 뽑기</div>
+    <p class="sec-desc">홈페이지 기반으로 <b>마스터 문장·단어·키워드·해시태그·프로필 문구</b>를 한 번에 정리합니다.</p>
+    <div class="promptbox" id="p_master">너는 브랜드 자산을 정리하는 마케팅 디렉터야.
+아래 '내 홈페이지'를 근거로, 어디서나 일관되게 쓸 '브랜딩 자산 시트'를 만들어줘.
+나는 이미 활동 중인 인플루언서/강사이고, 목표는 노출과 신뢰를 함께 올리는 거야.
+
+[붙여넣기]
+- 내 홈페이지 주소:
+- (열람 불가 시) 홈페이지 핵심 내용:
+
+[해줘]
+1) 마스터 문장 — 나를 한 문장으로 (모든 채널 소개에 그대로 사용)
+2) 마스터 단어 5개 — 나를 대표하는 핵심 단어
+3) 브랜딩 키워드 — 검색 노출용 10개 + 롱테일(질문형) 5개
+4) 해시태그 세트 — 대표 5개 / 확장 15개
+5) 프로필 문구 — 인스타 소개(150자 이내)·블로그 소개·명함 한 줄
+6) 반복 사용 카피 — 자주 쓸 슬로건·문구 5개
+7) 컬러·톤 가이드 한 줄 — 색과 말투 통일 기준
+
+[정리] 위 전부를 '브랜딩 자산 시트'로, 복사해 바로 쓸 수 있게 항목별 블록으로.</div>
+    <button class="copybtn" data-copy="p_master" type="button">📋 브랜딩 자산 시트 프롬프트 복사</button>
+    <div class="tip">🎯 키워드·해시태그는 <b>고객이 실제로 검색하는 말</b> 기준으로. 채널마다 <b>똑같은</b> 마스터 문장·프로필을 쓰는 게 핵심입니다.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>브랜딩 자산 시트가 나왔다</span></label>
+      <label><input type="checkbox"><span>인스타·블로그·명함 소개 문구를 통일했다</span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">3</span>적용 — 채널에 붙이기</div>
+    <div class="tip">✅ <b>이 정도면 통과(과정 완료)</b> — 마스터 문장 1개 + 검색 키워드 10개 + 해시태그 세트 + 통일된 프로필이 손에 있으면 끝입니다.</div>
+    <ul class="guide">
+      <li>인스타 <b>프로필 소개</b>를 마스터 문장·키워드로 교체</li>
+      <li>블로그 소개·<b>명함</b>·이메일 서명에 같은 문구 적용</li>
+      <li>게시물에 <b>해시태그 세트</b>를 꾸준히 사용</li>
+    </ul>
+    <div class="checks"><label><input type="checkbox"><span>자산 시트를 저장하고 채널에 적용하기 시작했다</span></label></div>
+    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
+    <div class="why">📦 <b>이 과정의 최종 결과물</b> — 「브랜딩 자산 시트」 + 나만의 도메인으로 살아있는 홈페이지. 이제 흩어진 활동이 하나의 브랜드로 묶였습니다.</div>
+    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 여기서 끝내지 말고 <b>"오늘 인스타 프로필부터 바꾸기"</b> 같은 즉시 실행 1개를 시키세요.
+    자산 시트를 안 쓰면 소용없습니다. 다음 과정(소셜마케팅)으로 <b>노출 확장</b>을 예고하며 마무리하면 재등록으로 이어집니다.</div>
+  </section>
+
+  <div class="next"><span class="n">▶</span><div>다음 여정 → <b>AI 소셜마케팅 과정</b>에서 이 자산으로 SEO·GEO 등 <b>노출을 확장</b>합니다. (준비 중)</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t=document.getElementById(btn.getAttribute('data-copy')).innerText;
+      navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='✅ 복사됐어요!';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},2200);});
+    });
+  });
+</script>
+</body>
+</html>

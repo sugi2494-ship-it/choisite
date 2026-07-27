@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>브랜딩 구조 03. 웹페이지 방향·구조·메뉴 설정 · 인플루언서 웹페이지 브랜딩 고도화 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--pink)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{background:#fdeef6;border:1px solid #f6c6e2;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#7a2e5c;max-width:660px;margin-left:auto;margin-right:auto}
+  .callout b{color:#59204a}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:6px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--pink);font-size:15px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:16px;font-weight:800;padding:15px;border-radius:13px;margin:12px 0 4px;box-shadow:0 8px 22px rgba(208,36,126,.28)}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .why{background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#234}.why b{color:#173257}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#eaf1f9;border:1px solid #cfe0f4;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#234}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aiwebmaster">← AI 웹페이지 브랜딩 과정 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · 인플루언서 웹페이지 브랜딩 고도화</div>
+  <h1>브랜딩 구조 03. 웹페이지 방향·구조·메뉴 설정</h1>
+  <p class="lead">02의 <b>「전략·키워드 맵」</b>과 <b>내가 그동안 한 일·하고 싶은 것</b>을 합쳐, 실제 <b>웹페이지 방향·구조·메뉴</b>를 짭니다. 결과물은 바로 만들 수 있는 <b>메뉴 구조표</b>입니다.</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 약 20분</span><span class="time">📥 입력 · 전략·키워드 맵(02)</span><span class="time">📦 결과물 · 메뉴 구조표</span></p>
+</header>
+<div class="callout">🧭 이미 활동 중인 분은 <b>신뢰(실적·후기)</b>가 잘 보여야 하고, 어느 화면에서든 <b>문의·신청으로 가는 길</b>이 있어야 합니다. 메뉴는 "많이"가 아니라 "정확히".</div>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span>01 브랜드 분석</span><span>02 전략·키워드</span><span class="on">03 구조·메뉴</span>
+    <span>04 페이지 고도화</span><span>05 배포·도메인</span><span>06 브랜딩 마스터</span>
+  </div>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">1</span>재료 준비 — 02 맵 + 내 이력 적기</div>
+    <p class="sec-desc">02의 전략·키워드 맵을 준비하고, 내 활동 이력과 하고 싶은 것을 짧게 적습니다.</p>
+    <ul class="guide">
+      <li><b>전략·키워드 맵(02)</b>를 복사해 둡니다(또는 같은 채팅 이어서).</li>
+      <li><b>그동안 한 일</b>(강의·활동·콘텐츠·경력)과 <b>앞으로 하고 싶은 것</b>(수익모델·목표)을 메모합니다.</li>
+    </ul>
+    <div class="checks"><label><input type="checkbox"><span>02 맵 + 내 이력/하고 싶은 것을 준비했다</span></label></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">2</span>방향·구조·메뉴 도출 프롬프트</div>
+    <p class="sec-desc">한 번에 <b>페이지 목적 · 홈 히어로 · 메뉴 구조표 · 전환 동선 · 신뢰요소 배치</b>가 나옵니다.</p>
+    <div class="promptbox" id="p_struct">너는 인플루언서·강사 웹페이지를 설계하는 UX·브랜딩 전략가야.
+아래 '전략·키워드 맵'과 '내 활동 이력/하고 싶은 것'을 근거로 내 웹페이지의
+방향·구조·메뉴를 짜줘. 목표는 '노출 → 방문 → 문의·신청'이고,
+나는 이미 활동 중인 사람이라 신뢰(실적·후기)가 잘 보여야 해.
+
+[붙여넣기]
+- 전략·키워드 맵(02):
+- 내가 그동안 한 일(강의·활동·콘텐츠·경력):
+- 앞으로 하고 싶은 것(수익모델·목표):
+
+[해줘]
+1) 이 페이지의 목적 한 줄 — 방문자가 하길 바라는 '한 가지 행동'
+2) 홈 히어로 — 첫 화면에 앞세울 한 줄 카피 + 그 아래 3요소
+3) 메뉴 구조표(사이트맵) — 상단 메뉴 5~7개, 각 메뉴의 '목적'과 '담길 핵심 내용'
+   (예: 소개 / 이런 분께 / 강의·서비스 / 후기·실적 / 문의)
+4) 전환 동선 — 어느 메뉴에서든 '문의·신청' 버튼으로 가게 배치
+5) 신뢰 요소 배치 — 후기·실적·미디어(방송·강연)를 어디에 둘지
+6) 정리 — 위를 '메뉴 구조표' 카드로 (04에서 페이지별로 채울 수 있게)</div>
+    <button class="copybtn" data-copy="p_struct" type="button">📋 구조·메뉴 프롬프트 복사</button>
+    <div class="tip">🧭 메뉴는 <b>방문자의 언어</b>로(내부 용어 X), <b>5~7개</b>를 넘기지 마세요. 많을수록 안 눌립니다.
+    '문의·신청' 버튼은 <b>모든 화면</b>에 보이게.</div>
+    <div class="checks">
+      <label><input type="checkbox"><span>메뉴 구조표가 나왔다 (메뉴 5~7개 + 목적)</span></label>
+      <label><input type="checkbox"><span>모든 화면에 '문의·신청' 버튼 자리가 있다</span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title"><span class="step-no">3</span>결과 정리 — 메뉴 구조표 저장</div>
+    <div class="tip">✅ <b>이 정도면 통과</b> — 상단 메뉴 5~7개와 각 메뉴의 목적이 정해졌고, 홈 히어로에 앞세울 한 줄이 있으면 다음으로.</div>
+    <ul class="guide">
+      <li><b>메뉴 구조표</b>를 복사해 보관합니다(또는 이 채팅 이어서).</li>
+      <li>04 활동에서 이 표의 <b>메뉴(페이지)를 하나씩</b> 실제 내용으로 채웁니다.</li>
+    </ul>
+    <div class="checks"><label><input type="checkbox"><span>메뉴 구조표를 저장(복사)해 두었다</span></label></div>
+    <a class="gobtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a>
+    <div class="why">📦 <b>이 활동의 결과물</b> — 「메뉴 구조표」(페이지 목적 · 홈 히어로 · 상단 메뉴 5~7 · 전환 동선 · 신뢰요소 배치)<br>
+    ➡ <b>다음 04 활동 입력</b> — 이 표의 메뉴를 하나씩 골라 페이지 내용을 고도화합니다.</div>
+    <div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 학생 대부분이 메뉴를 <b>너무 많이</b> 만들려 합니다. 5~7개로 좁히게 하세요.
+    "이 메뉴를 누가·왜 누르나?"로 각 메뉴를 검증시키고, 답 못하면 빼게 합니다. '문의' 버튼은 모든 화면 고정.</div>
+  </section>
+
+  <div class="next"><span class="n">4</span><div>메뉴 구조표가 준비되면 → <b>브랜딩 고도화 04. 페이지별 내용·디자인 고도화</b>로 이어집니다.</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn[data-copy]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t=document.getElementById(btn.getAttribute('data-copy')).innerText;
+      navigator.clipboard.writeText(t).then(function(){var o=btn.textContent;btn.textContent='✅ 복사됐어요!';btn.classList.add('done');setTimeout(function(){btn.textContent=o;btn.classList.remove('done');},2200);});
+    });
+  });
+</script>
+</body>
+</html>
