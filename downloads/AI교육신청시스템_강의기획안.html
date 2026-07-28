@@ -16,13 +16,33 @@
   .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
   header{padding:34px 18px 6px;max-width:720px;margin:0 auto}
   .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--gold)}
-  h1{font-size:27px;font-weight:900;margin:10px 0 8px;letter-spacing:-.01em;line-height:1.28}
-  .lead{font-size:15.5px;color:var(--sub);margin:0}
-  .badges{margin-top:14px}
+  h1{font-size:28px;font-weight:900;margin:10px 0 10px;letter-spacing:-.01em;line-height:1.25}
+  .lead{font-size:16px;color:var(--ink);margin:0;font-weight:600}
+  .lead b{color:#a5341f}
+  .badges{margin-top:16px}
   .badge{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .badge.hot{background:#fff3f0;border-color:#f4c9c0;color:#a5341f}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px;margin-top:18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
   .h2{font-size:17px;font-weight:800;margin:0 0 14px;display:flex;align-items:center;gap:8px}
   .h2:before{content:"";width:5px;height:18px;border-radius:3px;background:var(--gold)}
+  .diff{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.diff{grid-template-columns:1fr}}
+  .diff .d{border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:#fbfcfd}
+  .diff .d .ic{font-size:20px}
+  .diff .d b{display:block;font-size:14.5px;margin:6px 0 3px}
+  .diff .d span{font-size:13px;color:var(--sub)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  @media(max-width:560px){.vs{grid-template-columns:1fr}}
+  .vs .col{border-radius:12px;padding:14px 15px;font-size:13.5px}
+  .vs .no{background:#f4f5f6;border:1px solid var(--line);color:#6a7078}
+  .vs .yes{background:#eaf5ef;border:1px solid #cde8d9;color:#1c5638}
+  .vs .col b{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
+  .vs ul{margin:0;padding-left:18px}.vs li{margin:5px 0}
+  .result{background:linear-gradient(135deg,#2C8C5A,#2C66A8);color:#fff;border-radius:14px;padding:20px 22px;margin-top:18px}
+  .result .t{font-size:16px;font-weight:800;margin-bottom:10px}
+  .result ul{margin:0;padding-left:20px;font-size:14.5px;line-height:1.9}
+  .result b{color:#fff}
+  .trust{background:#fffdf3;border:1.5px solid #ecd98a;border-radius:12px;padding:14px 16px;margin-top:18px;font-size:14px;color:#5c4d12}.trust b{color:#4a3d08}
   table{width:100%;border-collapse:collapse;font-size:14px}
   th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
   th{width:96px;color:var(--sub);font-weight:700;white-space:nowrap}
@@ -30,12 +50,8 @@
   .cur li{position:relative;padding:12px 0 12px 46px;border-bottom:1px dashed var(--line)}
   .cur li:last-child{border-bottom:none}
   .cur li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:11px;width:30px;height:30px;border-radius:8px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
-  .cur b{font-size:14.5px}
-  .cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
-  .out{margin:0;padding-left:20px;font-size:14px}.out li{margin:6px 0}
-  .goal{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:14px 16px;font-size:14px;color:#1c5638}
-  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}
-  .foot b{color:var(--ink)}
+  .cur b{font-size:14.5px}.cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
+  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}.foot b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -43,27 +59,32 @@
 <header>
   <div class="eyebrow">최해숙 강의실 · 강의기획서</div>
   <h1>AI 교육 신청 시스템 만들기 · 2~3시간 특강</h1>
-  <p class="lead">수강생을 모집하는 신청 페이지부터 접수 관리·알림·안전 로그인까지, 나만의 교육 신청 시스템을 완성합니다.</p>
-  <div class="badges"><span class="badge">대상 · 강의·특강을 여는 강사</span><span class="badge">시간 · 2~3시간 특강</span><span class="badge">형식 · 실습 중심</span></div>
+  <p class="lead">신청서 하나 만들려고 외주 맡기지 마세요. 2~3시간 안에 <b>모집부터 접수·알림·후기까지 도는 나만의 신청 시스템</b>을 직접 만들어 갑니다.</p>
+  <div class="badges"><span class="badge">대상 · 강의를 여는 강사</span><span class="badge">시간 · 2~3시간 특강</span><span class="badge hot">🎁 결과물 · 작동하는 신청 시스템</span></div>
 </header>
 <div class="wrap">
   <div class="card">
-    <div class="h2">과정 개요</div>
-    <table><tr><th>대상</th><td>강의·특강에 수강생을 모집하고 접수를 편하게 관리하고 싶은 강사</td></tr><tr><th>선수지식</th><td>없음 (코딩 몰라도 진행 가능)</td></tr><tr><th>준비물</th><td>노트북 · 이메일/구글 계정 · 열고 싶은 강의 아이디어</td></tr><tr><th>진행</th><td>아는 것만 입력하면 AI가 초안을 만들고, 프롬프트를 복사·실습</td></tr></table>
+    <div class="h2">이 강의가 다른 이유</div>
+    <div class="diff"><div class="d"><div class="ic">🙅</div><b>이론만 배우는 게 아님</b><span>오늘 <b>내 강의의 진짜 신청 페이지</b>가 돌아갑니다</span></div><div class="d"><div class="ic">🔔</div><b>등록되면 내 폰이 딩동</b><span>접수 온 걸 몰라 <b>놓치는 일</b>이 없습니다</span></div><div class="d"><div class="ic">🔒</div><b>명단은 나만</b><span>서버 잠금으로 <b>개인정보 안전</b>하게</span></div><div class="d"><div class="ic">♻️</div><b>한 번 만들면 5분 재사용</b><span>새 강의마다 <b>복제해서 양산</b></span></div></div>
+    <div class="vs">
+      <div class="col no"><b>흔한 방법</b><ul><li>구글폼 하나 던져두고 끝</li><li>접수 왔는지 몰라 놓침</li><li>명단·후기 제각각</li></ul></div>
+      <div class="col yes"><b>이 특강</b><ul><li>예쁜 모집 페이지 + 신청 폼</li><li><b>등록 즉시 폰 알림</b></li><li>관리자·엑셀·후기까지 한 곳</li></ul></div>
+    </div>
   </div>
+  <div class="result">
+    <div class="t">🎁 끝나면 이걸 들고 나갑니다</div>
+    <ul><li><b>모집 페이지 + 신청 폼</b>(실제 저장까지)</li><li><b>등록 즉시 내 폰 알림</b> + 접수 관리(체크·메모·엑셀)</li><li><b>후기 받아 노출</b> — 다음 기수가 저절로 채워짐</li><li><b>5분이면 새 강의 신청서 복제</b></li></ul>
+  </div>
+  <div class="trust">⏱ <b>정말 2~3시간에 되나요?</b> — 코딩 몰라도 됩니다. AI가 만들고, 단계별 활동지를 따라가면 특강 시간 안에 <b>실제로 작동하는 신청 시스템</b>이 나옵니다. 막히면 화면을 캡처해 붙여넣으면 바로 도움을 받습니다.</div>
   <div class="card">
-    <div class="h2">이 과정의 목표</div>
-    <div class="goal">모집 페이지 + 신청 접수 + 관리자(실시간 알림·엑셀) + 안전한 로그인까지 <b>나만의 신청 시스템</b>을 완성하고, 이후 <b>5분이면 새 강의 신청서를 계속 찍어내게</b> 됩니다.</div>
+    <div class="h2">과정 개요</div>
+    <table><tr><th>대상</th><td>강의·특강에 <b>수강생을 모집·관리</b>하고 싶은 강사</td></tr><tr><th>선수지식</th><td>없음(코딩 몰라도 진행 가능)</td></tr><tr><th>준비물</th><td>노트북 · 이메일/구글 계정 · 열고 싶은 강의 아이디어</td></tr><tr><th>진행</th><td>아는 것만 입력하면 AI가 초안, 프롬프트를 복사·실습</td></tr><tr><th>결과물</th><td>모집~접수~관리~후기가 <b>실제로 도는 신청 시스템</b></td></tr></table>
   </div>
   <div class="card">
     <div class="h2">커리큘럼 (7단계)</div>
-    <ol class="cur"><li><b>신청 준비 0. 어떤 강의를·누구에게 열지</b><span class="d">아는 것만 적으면 제목·메인 문구·신청서 항목까지 AI가 초안</span></li><li><b>신청 제작 1. 수강생 모집·신청 페이지</b><span class="d">후기·FAQ까지 갖춘 완성도 있는 모집 페이지 제작</span></li><li><b>신청 저장 2. 신청 저장 연결</b><span class="d">구글시트 또는 Supabase에 접수 자동 저장</span></li><li><b>신청 관리 3. 관리자 페이지 + 실시간 알림</b><span class="d">체크박스·메모·상태 관리 + 접수 즉시 알림(무료)</span></li><li><b>신청 보안 4. 관리자 페이지 안전하게 잠그기</b><span class="d">서버 검증으로 개인정보 보호 + 엑셀 다운로드</span></li><li><b>신청 확장 5. 5분 만에 새 신청서 만들기</b><span class="d">복제·수정으로 새 강의 신청서 반복 생산</span></li><li><b>신청 후기 6. 후기 받고 노출하기</b><span class="d">후기 수집 + 고른 후기만 신청 페이지에 노출</span></li></ol>
+    <ol class="cur"><li><b>뭘 팔지 5분에 정하기</b><span class="d">아는 것만 넣으면 AI가 제목·문구·신청서까지 초안</span></li><li><b>눈길 끄는 모집 페이지 뚝딱</b><span class="d">후기·FAQ까지 갖춘 예쁜 한 페이지</span></li><li><b>신청이 사라지지 않게</b><span class="d">제출 즉시 구글시트/DB에 자동 저장</span></li><li><b>접수 오면 내 폰이 '딩동'</b><span class="d">실시간 알림 + 체크·메모로 편하게 관리</span></li><li><b>내 명단은 나만</b><span class="d">서버 잠금으로 개인정보 안전 · 엑셀 다운로드</span></li><li><b>새 강의는 5분 복제</b><span class="d">제목·날짜만 바꾸면 새 신청서 완성</span></li><li><b>후기로 신뢰 쌓기</b><span class="d">소감 받아 고른 것만 노출 → 다음 모집이 쉬워짐</span></li></ol>
   </div>
-  <div class="card">
-    <div class="h2">완성 후 결과물</div>
-    <ul class="out"><li>수강생 모집·접수·관리가 되는 <b>신청 시스템</b></li><li>접수 즉시 알림 + 명단 엑셀 다운로드</li><li>개인정보를 안전하게 지키는 관리자 페이지</li><li>5분이면 새로 찍어내는 재사용 구조</li></ul>
-  </div>
-  <div class="foot"><b>PBS컬러랩</b> · 대표 최해숙 · 대표전화 1600-7218 · 문의 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
+  <div class="foot"><b>PBS컬러랩</b> | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
 </div>
 </body>
 </html>

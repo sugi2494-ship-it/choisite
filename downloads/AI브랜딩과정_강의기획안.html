@@ -16,13 +16,33 @@
   .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
   header{padding:34px 18px 6px;max-width:720px;margin:0 auto}
   .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--gold)}
-  h1{font-size:27px;font-weight:900;margin:10px 0 8px;letter-spacing:-.01em;line-height:1.28}
-  .lead{font-size:15.5px;color:var(--sub);margin:0}
-  .badges{margin-top:14px}
+  h1{font-size:28px;font-weight:900;margin:10px 0 10px;letter-spacing:-.01em;line-height:1.25}
+  .lead{font-size:16px;color:var(--ink);margin:0;font-weight:600}
+  .lead b{color:#a5341f}
+  .badges{margin-top:16px}
   .badge{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .badge.hot{background:#fff3f0;border-color:#f4c9c0;color:#a5341f}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px;margin-top:18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
   .h2{font-size:17px;font-weight:800;margin:0 0 14px;display:flex;align-items:center;gap:8px}
   .h2:before{content:"";width:5px;height:18px;border-radius:3px;background:var(--gold)}
+  .diff{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.diff{grid-template-columns:1fr}}
+  .diff .d{border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:#fbfcfd}
+  .diff .d .ic{font-size:20px}
+  .diff .d b{display:block;font-size:14.5px;margin:6px 0 3px}
+  .diff .d span{font-size:13px;color:var(--sub)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  @media(max-width:560px){.vs{grid-template-columns:1fr}}
+  .vs .col{border-radius:12px;padding:14px 15px;font-size:13.5px}
+  .vs .no{background:#f4f5f6;border:1px solid var(--line);color:#6a7078}
+  .vs .yes{background:#eaf5ef;border:1px solid #cde8d9;color:#1c5638}
+  .vs .col b{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
+  .vs ul{margin:0;padding-left:18px}.vs li{margin:5px 0}
+  .result{background:linear-gradient(135deg,#2C8C5A,#2C66A8);color:#fff;border-radius:14px;padding:20px 22px;margin-top:18px}
+  .result .t{font-size:16px;font-weight:800;margin-bottom:10px}
+  .result ul{margin:0;padding-left:20px;font-size:14.5px;line-height:1.9}
+  .result b{color:#fff}
+  .trust{background:#fffdf3;border:1.5px solid #ecd98a;border-radius:12px;padding:14px 16px;margin-top:18px;font-size:14px;color:#5c4d12}.trust b{color:#4a3d08}
   table{width:100%;border-collapse:collapse;font-size:14px}
   th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
   th{width:96px;color:var(--sub);font-weight:700;white-space:nowrap}
@@ -30,12 +50,8 @@
   .cur li{position:relative;padding:12px 0 12px 46px;border-bottom:1px dashed var(--line)}
   .cur li:last-child{border-bottom:none}
   .cur li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:11px;width:30px;height:30px;border-radius:8px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
-  .cur b{font-size:14.5px}
-  .cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
-  .out{margin:0;padding-left:20px;font-size:14px}.out li{margin:6px 0}
-  .goal{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:14px 16px;font-size:14px;color:#1c5638}
-  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}
-  .foot b{color:var(--ink)}
+  .cur b{font-size:14.5px}.cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
+  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}.foot b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -43,27 +59,32 @@
 <header>
   <div class="eyebrow">최해숙 강의실 · 강의기획서</div>
   <h1>AI 웹페이지 브랜딩 고도화 과정</h1>
-  <p class="lead">이미 활동 중인 인플루언서·강사가, 웹페이지를 브랜딩 관점으로 분석·고도화하여 완성도를 끌어올립니다.</p>
-  <div class="badges"><span class="badge">대상 · 활동 중인 인플루언서·강사</span><span class="badge">시간 · 심화 과정</span><span class="badge">형식 · 실습 중심</span></div>
+  <p class="lead">웹페이지는 있는데 '나답지 않다'면. 내 채널·대화 기록까지 파고들어 <b>'나'라는 브랜드로 페이지를 다시 세팅</b>합니다.</p>
+  <div class="badges"><span class="badge">대상 · 활동 중인 인플루언서·강사</span><span class="badge">시간 · 심화 과정</span><span class="badge hot">🎁 결과물 · 브랜딩된 내 웹페이지 + 자산</span></div>
 </header>
 <div class="wrap">
   <div class="card">
-    <div class="h2">과정 개요</div>
-    <table><tr><th>대상</th><td>기본 웹페이지에서 나아가 브랜딩·마케팅 관점으로 고도화하려는 인플루언서·강사</td></tr><tr><th>선수지식</th><td>기본적인 웹페이지 제작 경험 권장</td></tr><tr><th>준비물</th><td>노트북 · 운영 중인 채널(인스타/블로그/유튜브 등) 링크</td></tr><tr><th>진행</th><td>내 채널·대화 기록을 분석 재료로, 프롬프트를 복사·실습</td></tr></table>
+    <div class="h2">이 강의가 다른 이유</div>
+    <div class="diff"><div class="d"><div class="ic">🔍</div><b>남 얘기 말고 '내 진단'</b><span>내 채널·대화기록으로 <b>지금 내 상태를 적나라하게</b></span></div><div class="d"><div class="ic">🎯</div><b>노출 관점</b><span>검색·첫인상에 걸리게 <b>전략·키워드</b>까지</span></div><div class="d"><div class="ic">🏗</div><b>'팔리는' 구조</b><span>예쁜 게 아니라 <b>전환되는 구조·메뉴</b></span></div><div class="d"><div class="ic">💎</div><b>흩어진 나를 한 문장으로</b><span>마스터 문장·해시태그까지 <b>자산화</b></span></div></div>
+    <div class="vs">
+      <div class="col no"><b>기본 웹 만들기</b><ul><li>페이지만 뚝딱</li><li>예쁘면 끝</li><li>브랜드가 없음</li></ul></div>
+      <div class="col yes"><b>이 과정</b><ul><li>진단→전략→구조→고도화</li><li>노출·전환까지</li><li>채널 전반에 쓰는 <b>브랜딩 자산</b></li></ul></div>
+    </div>
   </div>
+  <div class="result">
+    <div class="t">🎁 끝나면 이걸 들고 나갑니다</div>
+    <ul><li>브랜딩이 반영된 <b>완성도 높은 웹페이지</b></li><li>전략·키워드·구조가 정리된 <b>브랜드 설계</b></li><li>문의 접수(안전 로그인)까지 붙은 사이트</li><li>어디에나 쓰는 <b>브랜딩 자산 시트</b>(마스터 문장·키워드·해시태그)</li></ul>
+  </div>
+  <div class="trust">🔍 <b>이미 페이지가 있어도, 없어도 OK.</b> 내 현재를 진단하는 데서 출발해, AI로 전략·구조·카피를 단계별로 고도화합니다. 초보도 프롬프트를 복사·실습하며 <b>브랜드가 살아있는 페이지</b>로 바꿔 갑니다.</div>
   <div class="card">
-    <div class="h2">이 과정의 목표</div>
-    <div class="goal">내 현재 아이덴티티를 <b>적나라하게 분석</b>하고, 전략·구조·고도화·배포·접수·브랜딩 자산까지 이어가 <b>완성도 높은 브랜드 웹페이지</b>를 갖춥니다.</div>
+    <div class="h2">과정 개요</div>
+    <table><tr><th>대상</th><td>기본 웹을 넘어 <b>브랜딩·마케팅 관점</b>으로 고도화하려는 인플루언서·강사</td></tr><tr><th>선수지식</th><td>기본 웹페이지 제작 경험 권장</td></tr><tr><th>준비물</th><td>노트북 · 운영 중인 채널(인스타/블로그/유튜브 등) 링크</td></tr><tr><th>진행</th><td>내 채널·대화기록을 재료로 프롬프트를 복사·실습</td></tr><tr><th>결과물</th><td>브랜딩된 웹페이지 + 어디에나 쓰는 <b>브랜딩 자산 시트</b></td></tr></table>
   </div>
   <div class="card">
     <div class="h2">커리큘럼 (7단계)</div>
-    <ol class="cur"><li><b>브랜딩 분석 01. 나의 브랜드·아이덴티티 분석</b><span class="d">대화 기록·채널 링크로 현재 상태를 노출 기준으로 진단</span></li><li><b>브랜딩 전략 02. 마케팅 전략·키워드</b><span class="d">포지셔닝·핵심 메시지·키워드 맵 도출</span></li><li><b>브랜딩 구조 03. 웹페이지 방향·구조·메뉴</b><span class="d">방문자 여정과 세련된 사이트 구조·메뉴 설계</span></li><li><b>브랜딩 고도화 04. 페이지별 내용·디자인</b><span class="d">섹션별 카피·구성·CTA·톤 일관성 고도화</span></li><li><b>브랜딩 배포 05. 배포 & 나만의 도메인</b><span class="d">배포와 가비아 도메인 연결·https</span></li><li><b>브랜딩 접수·관리 06. 문의 접수 + 관리자</b><span class="d">문의 접수 폼 + 안전한 관리자 로그인(서버 검증)</span></li><li><b>브랜딩 마스터 07. 브랜딩 자산 정리</b><span class="d">마스터 문장·키워드·해시태그·프로필 자산화</span></li></ol>
+    <ol class="cur"><li><b>나를 적나라하게 진단</b><span class="d">대화기록·채널로 지금 내 브랜드 상태 파악</span></li><li><b>팔리는 전략·키워드 뽑기</b><span class="d">포지셔닝·핵심 메시지·키워드맵</span></li><li><b>세련된 구조·메뉴 설계</b><span class="d">방문자 여정과 전환 동선까지</span></li><li><b>페이지마다 카피·디자인 고도화</b><span class="d">톤 일관성으로 신뢰 UP</span></li><li><b>배포 & 나만의 도메인</b><span class="d">가비아 주소·https</span></li><li><b>문의 접수 + 안전한 관리자</b><span class="d">서버 검증으로 개인정보 보호</span></li><li><b>브랜딩 자산 완성</b><span class="d">마스터 문장·키워드·해시태그·프로필</span></li></ol>
   </div>
-  <div class="card">
-    <div class="h2">완성 후 결과물</div>
-    <ul class="out"><li>브랜딩이 반영된 <b>완성도 높은 웹페이지</b></li><li>전략·키워드·구조가 정리된 브랜드 설계</li><li>채널 전반에 쓰는 <b>브랜딩 자산 시트</b></li></ul>
-  </div>
-  <div class="foot"><b>PBS컬러랩</b> · 대표 최해숙 · 대표전화 1600-7218 · 문의 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
+  <div class="foot"><b>PBS컬러랩</b> | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
 </div>
 </body>
 </html>
