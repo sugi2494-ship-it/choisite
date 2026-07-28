@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 교육 신청 시스템 만들기 · 2~3시간 특강 · 강의기획서 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--gold:#C9A24B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:34px 18px 6px;max-width:720px;margin:0 auto}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--gold)}
+  h1{font-size:27px;font-weight:900;margin:10px 0 8px;letter-spacing:-.01em;line-height:1.28}
+  .lead{font-size:15.5px;color:var(--sub);margin:0}
+  .badges{margin-top:14px}
+  .badge{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px;margin-top:18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .h2{font-size:17px;font-weight:800;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+  .h2:before{content:"";width:5px;height:18px;border-radius:3px;background:var(--gold)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{width:96px;color:var(--sub);font-weight:700;white-space:nowrap}
+  .cur{list-style:none;margin:0;padding:0;counter-reset:c}
+  .cur li{position:relative;padding:12px 0 12px 46px;border-bottom:1px dashed var(--line)}
+  .cur li:last-child{border-bottom:none}
+  .cur li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:11px;width:30px;height:30px;border-radius:8px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .cur b{font-size:14.5px}
+  .cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
+  .out{margin:0;padding-left:20px;font-size:14px}.out li{margin:6px 0}
+  .goal{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:14px 16px;font-size:14px;color:#1c5638}
+  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}
+  .foot b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<header>
+  <div class="eyebrow">최해숙 강의실 · 강의기획서</div>
+  <h1>AI 교육 신청 시스템 만들기 · 2~3시간 특강</h1>
+  <p class="lead">수강생을 모집하는 신청 페이지부터 접수 관리·알림·안전 로그인까지, 나만의 교육 신청 시스템을 완성합니다.</p>
+  <div class="badges"><span class="badge">대상 · 강의·특강을 여는 강사</span><span class="badge">시간 · 2~3시간 특강</span><span class="badge">형식 · 실습 중심</span></div>
+</header>
+<div class="wrap">
+  <div class="card">
+    <div class="h2">과정 개요</div>
+    <table><tr><th>대상</th><td>강의·특강에 수강생을 모집하고 접수를 편하게 관리하고 싶은 강사</td></tr><tr><th>선수지식</th><td>없음 (코딩 몰라도 진행 가능)</td></tr><tr><th>준비물</th><td>노트북 · 이메일/구글 계정 · 열고 싶은 강의 아이디어</td></tr><tr><th>진행</th><td>아는 것만 입력하면 AI가 초안을 만들고, 프롬프트를 복사·실습</td></tr></table>
+  </div>
+  <div class="card">
+    <div class="h2">이 과정의 목표</div>
+    <div class="goal">모집 페이지 + 신청 접수 + 관리자(실시간 알림·엑셀) + 안전한 로그인까지 <b>나만의 신청 시스템</b>을 완성하고, 이후 <b>5분이면 새 강의 신청서를 계속 찍어내게</b> 됩니다.</div>
+  </div>
+  <div class="card">
+    <div class="h2">커리큘럼 (7단계)</div>
+    <ol class="cur"><li><b>신청 준비 0. 어떤 강의를·누구에게 열지</b><span class="d">아는 것만 적으면 제목·메인 문구·신청서 항목까지 AI가 초안</span></li><li><b>신청 제작 1. 수강생 모집·신청 페이지</b><span class="d">후기·FAQ까지 갖춘 완성도 있는 모집 페이지 제작</span></li><li><b>신청 저장 2. 신청 저장 연결</b><span class="d">구글시트 또는 Supabase에 접수 자동 저장</span></li><li><b>신청 관리 3. 관리자 페이지 + 실시간 알림</b><span class="d">체크박스·메모·상태 관리 + 접수 즉시 알림(무료)</span></li><li><b>신청 보안 4. 관리자 페이지 안전하게 잠그기</b><span class="d">서버 검증으로 개인정보 보호 + 엑셀 다운로드</span></li><li><b>신청 확장 5. 5분 만에 새 신청서 만들기</b><span class="d">복제·수정으로 새 강의 신청서 반복 생산</span></li><li><b>신청 후기 6. 후기 받고 노출하기</b><span class="d">후기 수집 + 고른 후기만 신청 페이지에 노출</span></li></ol>
+  </div>
+  <div class="card">
+    <div class="h2">완성 후 결과물</div>
+    <ul class="out"><li>수강생 모집·접수·관리가 되는 <b>신청 시스템</b></li><li>접수 즉시 알림 + 명단 엑셀 다운로드</li><li>개인정보를 안전하게 지키는 관리자 페이지</li><li>5분이면 새로 찍어내는 재사용 구조</li></ul>
+  </div>
+  <div class="foot"><b>PBS컬러랩</b> · 대표 최해숙 · 대표전화 1600-7218 · 문의 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 웹페이지 제작 · 원데이 클래스 · 강의기획서 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--gold:#C9A24B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:34px 18px 6px;max-width:720px;margin:0 auto}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--gold)}
+  h1{font-size:27px;font-weight:900;margin:10px 0 8px;letter-spacing:-.01em;line-height:1.28}
+  .lead{font-size:15.5px;color:var(--sub);margin:0}
+  .badges{margin-top:14px}
+  .badge{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px;margin-top:18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .h2{font-size:17px;font-weight:800;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+  .h2:before{content:"";width:5px;height:18px;border-radius:3px;background:var(--gold)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{width:96px;color:var(--sub);font-weight:700;white-space:nowrap}
+  .cur{list-style:none;margin:0;padding:0;counter-reset:c}
+  .cur li{position:relative;padding:12px 0 12px 46px;border-bottom:1px dashed var(--line)}
+  .cur li:last-child{border-bottom:none}
+  .cur li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:11px;width:30px;height:30px;border-radius:8px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .cur b{font-size:14.5px}
+  .cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
+  .out{margin:0;padding-left:20px;font-size:14px}.out li{margin:6px 0}
+  .goal{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:14px 16px;font-size:14px;color:#1c5638}
+  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}
+  .foot b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<header>
+  <div class="eyebrow">최해숙 강의실 · 강의기획서</div>
+  <h1>AI 웹페이지 제작 · 원데이 클래스</h1>
+  <p class="lead">코딩 0줄로, 나만의 강사·전문가 웹페이지를 하루 만에 만들어 인터넷 주소로 배포합니다.</p>
+  <div class="badges"><span class="badge">대상 · 입문(코딩 몰라도 OK)</span><span class="badge">시간 · 원데이(약 3~4시간)</span><span class="badge">형식 · 실습 중심</span></div>
+</header>
+<div class="wrap">
+  <div class="card">
+    <div class="h2">과정 개요</div>
+    <table><tr><th>대상</th><td>웹페이지가 필요하지만 코딩을 모르는 강사·전문가·1인 사업자</td></tr><tr><th>선수지식</th><td>없음 (AI 사용이 처음이어도 진행 가능)</td></tr><tr><th>준비물</th><td>노트북 · 이메일 계정 · 내 소개/사진 자료(있으면)</td></tr><tr><th>진행</th><td>활동 페이지를 따라 프롬프트를 복사·실습</td></tr></table>
+  </div>
+  <div class="card">
+    <div class="h2">이 과정의 목표</div>
+    <div class="goal">AI를 활용해 <b>내 소개·강의 페이지를 하루 만에 완성</b>하고, 실제 <b>인터넷 주소(도메인)로 배포</b>하여 누구에게나 공유할 수 있게 됩니다.</div>
+  </div>
+  <div class="card">
+    <div class="h2">커리큘럼 (7단계)</div>
+    <ol class="cur"><li><b>AI 기초 30분</b><span class="d">AI로 웹페이지를 만드는 원리와 도구 감 잡기</span></li><li><b>준비물 사전 점검</b><span class="d">계정·자료 등 실습에 필요한 준비 확인</span></li><li><b>활동 0. 나 발견하기(사전 분석)</b><span class="d">내 강점·콘텐츠·차별점 정리</span></li><li><b>활동 1. 웹페이지 방향 설정</b><span class="d">누구에게 무엇을 보여줄지 방향·메뉴 잡기</span></li><li><b>활동 2. 페이지 만들고 다듬기</b><span class="d">AI로 실제 페이지 제작 후 완성도 높이기</span></li><li><b>활동 3. 배포하고 내 주소 만들기</b><span class="d">인터넷에 올리고 나만의 주소 연결</span></li><li><b>활동 4. 내 페이지 알리기</b><span class="d">공유·홍보의 기초 다지기</span></li></ol>
+  </div>
+  <div class="card">
+    <div class="h2">완성 후 결과물</div>
+    <ul class="out"><li>인터넷 주소로 열리는 <b>나만의 웹페이지</b></li><li>내 강점이 정리된 소개·강의 콘텐츠</li><li>스스로 수정·확장할 수 있는 기본기</li></ul>
+  </div>
+  <div class="foot"><b>PBS컬러랩</b> · 대표 최해숙 · 대표전화 1600-7218 · 문의 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
+</div>
+</body>
+</html>
