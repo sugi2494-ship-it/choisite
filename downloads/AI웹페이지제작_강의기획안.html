@@ -16,13 +16,33 @@
   .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
   header{padding:34px 18px 6px;max-width:720px;margin:0 auto}
   .eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--gold)}
-  h1{font-size:27px;font-weight:900;margin:10px 0 8px;letter-spacing:-.01em;line-height:1.28}
-  .lead{font-size:15.5px;color:var(--sub);margin:0}
-  .badges{margin-top:14px}
+  h1{font-size:28px;font-weight:900;margin:10px 0 10px;letter-spacing:-.01em;line-height:1.25}
+  .lead{font-size:16px;color:var(--ink);margin:0;font-weight:600}
+  .lead b{color:#a5341f}
+  .badges{margin-top:16px}
   .badge{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .badge.hot{background:#fff3f0;border-color:#f4c9c0;color:#a5341f}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px;margin-top:18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
   .h2{font-size:17px;font-weight:800;margin:0 0 14px;display:flex;align-items:center;gap:8px}
   .h2:before{content:"";width:5px;height:18px;border-radius:3px;background:var(--gold)}
+  .diff{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.diff{grid-template-columns:1fr}}
+  .diff .d{border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:#fbfcfd}
+  .diff .d .ic{font-size:20px}
+  .diff .d b{display:block;font-size:14.5px;margin:6px 0 3px}
+  .diff .d span{font-size:13px;color:var(--sub)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+  @media(max-width:560px){.vs{grid-template-columns:1fr}}
+  .vs .col{border-radius:12px;padding:14px 15px;font-size:13.5px}
+  .vs .no{background:#f4f5f6;border:1px solid var(--line);color:#6a7078}
+  .vs .yes{background:#eaf5ef;border:1px solid #cde8d9;color:#1c5638}
+  .vs .col b{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
+  .vs ul{margin:0;padding-left:18px}.vs li{margin:5px 0}
+  .result{background:linear-gradient(135deg,#2C8C5A,#2C66A8);color:#fff;border-radius:14px;padding:20px 22px;margin-top:18px}
+  .result .t{font-size:16px;font-weight:800;margin-bottom:10px}
+  .result ul{margin:0;padding-left:20px;font-size:14.5px;line-height:1.9}
+  .result b{color:#fff}
+  .trust{background:#fffdf3;border:1.5px solid #ecd98a;border-radius:12px;padding:14px 16px;margin-top:18px;font-size:14px;color:#5c4d12}.trust b{color:#4a3d08}
   table{width:100%;border-collapse:collapse;font-size:14px}
   th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
   th{width:96px;color:var(--sub);font-weight:700;white-space:nowrap}
@@ -30,12 +50,8 @@
   .cur li{position:relative;padding:12px 0 12px 46px;border-bottom:1px dashed var(--line)}
   .cur li:last-child{border-bottom:none}
   .cur li:before{counter-increment:c;content:counter(c);position:absolute;left:0;top:11px;width:30px;height:30px;border-radius:8px;background:var(--ink);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
-  .cur b{font-size:14.5px}
-  .cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
-  .out{margin:0;padding-left:20px;font-size:14px}.out li{margin:6px 0}
-  .goal{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:14px 16px;font-size:14px;color:#1c5638}
-  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}
-  .foot b{color:var(--ink)}
+  .cur b{font-size:14.5px}.cur .d{display:block;font-size:13px;color:var(--sub);margin-top:2px}
+  .foot{text-align:center;font-size:12.5px;color:var(--sub);margin-top:26px;line-height:1.8}.foot b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -43,27 +59,61 @@
 <header>
   <div class="eyebrow">최해숙 강의실 · 강의기획서</div>
   <h1>AI 웹페이지 제작 · 원데이 클래스</h1>
-  <p class="lead">코딩 0줄로, 나만의 강사·전문가 웹페이지를 하루 만에 만들어 인터넷 주소로 배포합니다.</p>
-  <div class="badges"><span class="badge">대상 · 입문(코딩 몰라도 OK)</span><span class="badge">시간 · 원데이(약 3~4시간)</span><span class="badge">형식 · 실습 중심</span></div>
+  <p class="lead">이론만 듣는 특강이 아닙니다. 코딩 한 줄 없이, <b>오늘 하루 안에 실제 인터넷 주소로 열리는 내 웹페이지</b>를 만들어 <b>손에 들고 나갑니다.</b></p>
+  <div class="badges"><span class="badge">대상 · 입문(코딩 0줄)</span><span class="badge">시간 · 원데이 3~4시간</span><span class="badge hot">🎁 결과물 · 배포된 내 웹페이지</span></div>
 </header>
 <div class="wrap">
+
+  <div class="card">
+    <div class="h2">이 강의가 다른 이유</div>
+    <div class="diff">
+      <div class="d"><div class="ic">🙅</div><b>'구경'하는 강의가 아닙니다</b><span>시연만 보다 끝나지 않습니다. 내가 직접 만들어 <b>완성</b>까지 갑니다.</span></div>
+      <div class="d"><div class="ic">🌐</div><b>진짜 '배포'까지</b><span>대부분 특강은 화면 안에서 끝. 우리는 인터넷 주소로 <b>올려 바로 공유</b>합니다.</span></div>
+      <div class="d"><div class="ic">🧭</div><b>남의 예제가 아니라 '내 것'</b><span>연습용 샘플이 아니라 <b>내 소개·내 강의</b> 페이지를 만듭니다.</span></div>
+      <div class="d"><div class="ic">🧰</div><b>막히지 않는 단계별 활동지</b><span>단계마다 <b>복사해 쓰는 프롬프트·통과기준</b>으로 초보도 완주합니다.</span></div>
+    </div>
+    <div class="vs" style="margin-top:14px">
+      <div class="col no"><b>흔한 AI 특강</b><ul><li>이론·시연 구경</li><li>샘플만 따라 하기</li><li>끝나면 손에 남는 것 없음</li></ul></div>
+      <div class="col yes"><b>이 원데이 클래스</b><ul><li>내가 직접 제작</li><li>내 소개·강의 페이지</li><li><b>배포된 내 웹페이지를 들고 귀가</b></li></ul></div>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="t">🎁 끝나면 이걸 들고 나갑니다</div>
+    <ul>
+      <li>실제 <b>인터넷 주소로 열리는 나만의 웹페이지</b> — 그날 바로 카톡·인스타에 공유</li>
+      <li>내 강점·콘텐츠가 정리된 <b>소개·강의 페이지</b></li>
+      <li>스스로 고치고 확장하는 <b>기본기</b>(다음엔 혼자서도)</li>
+    </ul>
+  </div>
+
+  <div class="trust">⏱ <b>정말 하루에 되나요?</b> — 예전엔 웹페이지 하나에 개발자·수십만 원·며칠이 들었습니다. 지금은 <b>AI가 코드를 대신 써주기 때문에</b>, 코딩을 몰라도 '말로 시켜서' 하루면 완성됩니다. 이 강의는 그 과정을 <b>막히지 않게 단계별 활동지</b>로 안내해, 초보도 결과물을 반드시 만들어 나가게 합니다.</div>
+
   <div class="card">
     <div class="h2">과정 개요</div>
-    <table><tr><th>대상</th><td>웹페이지가 필요하지만 코딩을 모르는 강사·전문가·1인 사업자</td></tr><tr><th>선수지식</th><td>없음 (AI 사용이 처음이어도 진행 가능)</td></tr><tr><th>준비물</th><td>노트북 · 이메일 계정 · 내 소개/사진 자료(있으면)</td></tr><tr><th>진행</th><td>활동 페이지를 따라 프롬프트를 복사·실습</td></tr></table>
+    <table>
+      <tr><th>대상</th><td>웹페이지가 필요하지만 코딩을 모르는 <b>강사·전문가·1인 사업자</b></td></tr>
+      <tr><th>선수지식</th><td>없음 (AI가 처음이어도 진행 가능)</td></tr>
+      <tr><th>준비물</th><td>노트북 · 이메일 계정 · 내 소개/사진 자료(있으면)</td></tr>
+      <tr><th>진행</th><td>강의실 활동 페이지를 따라 <b>프롬프트를 복사·실습</b> (강사가 옆에서 코칭)</td></tr>
+      <tr><th>결과물</th><td>실제 배포된 <b>나만의 웹페이지</b> + 스스로 확장하는 기본기</td></tr>
+    </table>
   </div>
-  <div class="card">
-    <div class="h2">이 과정의 목표</div>
-    <div class="goal">AI를 활용해 <b>내 소개·강의 페이지를 하루 만에 완성</b>하고, 실제 <b>인터넷 주소(도메인)로 배포</b>하여 누구에게나 공유할 수 있게 됩니다.</div>
-  </div>
+
   <div class="card">
     <div class="h2">커리큘럼 (7단계)</div>
-    <ol class="cur"><li><b>AI 기초 30분</b><span class="d">AI로 웹페이지를 만드는 원리와 도구 감 잡기</span></li><li><b>준비물 사전 점검</b><span class="d">계정·자료 등 실습에 필요한 준비 확인</span></li><li><b>활동 0. 나 발견하기(사전 분석)</b><span class="d">내 강점·콘텐츠·차별점 정리</span></li><li><b>활동 1. 웹페이지 방향 설정</b><span class="d">누구에게 무엇을 보여줄지 방향·메뉴 잡기</span></li><li><b>활동 2. 페이지 만들고 다듬기</b><span class="d">AI로 실제 페이지 제작 후 완성도 높이기</span></li><li><b>활동 3. 배포하고 내 주소 만들기</b><span class="d">인터넷에 올리고 나만의 주소 연결</span></li><li><b>활동 4. 내 페이지 알리기</b><span class="d">공유·홍보의 기초 다지기</span></li></ol>
+    <ol class="cur">
+      <li><b>AI 기초 30분</b><span class="d">AI로 웹페이지를 만드는 원리와 도구 감 잡기</span></li>
+      <li><b>준비물 사전 점검</b><span class="d">계정·자료 등 실습에 필요한 준비 확인</span></li>
+      <li><b>활동 0. 나 발견하기(사전 분석)</b><span class="d">내 강점·콘텐츠·차별점 정리 → 페이지의 재료</span></li>
+      <li><b>활동 1. 웹페이지 방향 설정</b><span class="d">누구에게 무엇을 보여줄지 방향·메뉴 잡기</span></li>
+      <li><b>활동 2. 페이지 만들고 다듬기</b><span class="d">AI로 실제 페이지 제작 후 완성도 높이기</span></li>
+      <li><b>활동 3. 배포하고 내 주소 만들기</b><span class="d">인터넷에 올리고 나만의 주소 연결 — <b>여기서 진짜 '내 것'이 됩니다</b></span></li>
+      <li><b>활동 4. 내 페이지 알리기</b><span class="d">공유·홍보의 기초 다지기</span></li>
+    </ol>
   </div>
-  <div class="card">
-    <div class="h2">완성 후 결과물</div>
-    <ul class="out"><li>인터넷 주소로 열리는 <b>나만의 웹페이지</b></li><li>내 강점이 정리된 소개·강의 콘텐츠</li><li>스스로 수정·확장할 수 있는 기본기</li></ul>
-  </div>
-  <div class="foot"><b>PBS컬러랩</b> · 대표 최해숙 · 대표전화 1600-7218 · 문의 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
+
+  <div class="foot"><b>PBS컬러랩</b> | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997<br>본 기획서의 커리큘럼·구성은 운영 상황에 따라 일부 조정될 수 있습니다.</div>
 </div>
 </body>
 </html>
