@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>카드뉴스 · AI 웹페이지 브랜딩 & 마스터 과정 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8;
+    --pink:#E91E8C; --pink-deep:#C2185B; --ink:#141821; --sub:#5b636b;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:#eceff3; font-family:"Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;
+    word-break:keep-all; -webkit-font-smoothing:antialiased; padding:24px 0 60px;}
+  .top{max-width:460px; margin:0 auto 18px; padding:0 16px; text-align:center;}
+  .top h2{font-size:18px; font-weight:800; color:var(--ink);}
+  .top p{font-size:13px; color:var(--sub); margin-top:6px; line-height:1.6;}
+  .deck{display:flex; flex-direction:column; align-items:center; gap:26px;}
+  .frame{width:min(92vw,432px); overflow:hidden; border-radius:18px;
+    box-shadow:0 10px 30px rgba(20,24,33,.16); position:relative;}
+  .card{width:1080px; height:1350px; transform-origin:top left; position:relative;
+    overflow:hidden; color:#fff; display:flex; flex-direction:column;}
+  .eb{display:flex; height:12px; flex:0 0 auto;}
+  .eb span{flex:1}
+  .eb .r{background:var(--red)} .eb .y{background:var(--yellow)}
+  .eb .g{background:var(--green)} .eb .b{background:var(--blue)}
+  .pad{padding:70px 74px; flex:1; display:flex; flex-direction:column;}
+  .tag{display:inline-block; align-self:flex-start; font-size:26px; font-weight:800;
+    letter-spacing:.02em; padding:12px 24px; border-radius:100px; margin-bottom:34px;}
+  .brand{font-size:25px; font-weight:700; opacity:.9; letter-spacing:.03em;}
+  .dlbtn{width:min(92vw,432px); background:var(--ink); color:#fff; border:none;
+    padding:14px; font-size:15px; font-weight:800; border-radius:12px; cursor:pointer;
+    font-family:inherit; margin-top:-14px;}
+  .dlbtn:active{opacity:.8}
+
+  /* ---- CARD 1 : HOOK ---- */
+  #c1{background:radial-gradient(120% 80% at 20% 0%, #2a3550 0%, #141821 60%, #0c0f16 100%);}
+  #c1 .brand{color:#cbd5e6}
+  .h1big{font-size:104px; font-weight:900; line-height:1.08; letter-spacing:-.02em; margin-top:26px;}
+  .h1big .pk{color:#ff5fb0}
+  .h1sub{font-size:44px; font-weight:800; line-height:1.4; margin-top:40px; color:#eaf0fb;}
+  .h1sub .u{border-bottom:6px solid var(--yellow); padding-bottom:2px;}
+  .chips{margin-top:auto; display:flex; flex-direction:column; gap:20px;}
+  .chip{display:flex; gap:18px; align-items:flex-start; font-size:33px; font-weight:600;
+    line-height:1.45; color:#dfe6f2;}
+  .chip .ico{font-size:38px; line-height:1.2}
+  .c1foot{margin-top:44px; border-top:2px solid rgba(255,255,255,.18); padding-top:34px;}
+  .c1foot .big{font-size:40px; font-weight:900;}
+  .c1foot .lock{display:inline-block; margin-top:18px; font-size:29px; font-weight:800;
+    color:#141821; background:#ffd84a; padding:12px 26px; border-radius:100px;}
+
+  /* ---- CARD 2 : BRANDING ---- */
+  #c2{background:linear-gradient(160deg,#fff 0%,#fdeef6 100%); color:var(--ink);}
+  #c2 .brand{color:var(--pink-deep)}
+  #c2 .tag{background:var(--pink); color:#fff;}
+  .h2big{font-size:74px; font-weight:900; line-height:1.14; letter-spacing:-.02em; margin-top:8px; color:#1c1420;}
+  .lead{font-size:35px; font-weight:600; line-height:1.5; color:#5a4650; margin-top:30px;}
+  .lead b{color:var(--pink-deep)}
+  .pts{margin-top:44px; display:grid; grid-template-columns:1fr; gap:26px;}
+  .pt{display:flex; gap:22px; align-items:flex-start; background:#fff; border:2px solid #f3d3e4;
+    border-radius:24px; padding:30px 34px;}
+  .pt .ico{font-size:46px; flex:0 0 auto; line-height:1.1}
+  .pt .tx{font-size:32px; font-weight:700; line-height:1.4; color:#2b2230;}
+  .pt .tx b{color:var(--pink-deep)}
+  .infobox{margin-top:auto;}
+  .result{font-size:30px; font-weight:700; color:#7a5560; background:#fff; border:2px dashed #eeb8d4;
+    border-radius:20px; padding:26px 30px; line-height:1.5;}
+  .result b{color:var(--pink-deep)}
+  .meta{display:flex; gap:18px; margin-top:26px; flex-wrap:wrap;}
+  .meta .m{font-size:29px; font-weight:800; color:#1c1420; background:#fff; border:2px solid #f0c9de;
+    border-radius:100px; padding:14px 28px;}
+  .price{margin-top:30px; display:flex; align-items:flex-end; gap:22px; flex-wrap:wrap;}
+  .price .was{font-size:38px; font-weight:700; color:#b6a0ab; text-decoration:line-through;}
+  .price .off{font-size:34px; font-weight:800; color:#fff; background:var(--red); border-radius:14px; padding:8px 20px;}
+  .price .now{font-size:66px; font-weight:900; color:var(--pink-deep);}
+  .price .won{font-size:38px; font-weight:800; color:var(--pink-deep);}
+
+  /* ---- CARD 3 : MASTER ---- */
+  #c3{background:linear-gradient(160deg,#0f2036 0%,#173a5e 100%); color:#fff;}
+  #c3 .brand{color:#a8c6e6}
+  #c3 .tag{background:#ffd84a; color:#123; }
+  .h3big{font-size:74px; font-weight:900; line-height:1.14; letter-spacing:-.02em; margin-top:8px;}
+  #c3 .lead{color:#d6e3f2;}
+  #c3 .lead b{color:#ffd84a}
+  #c3 .pt{background:rgba(255,255,255,.06); border:2px solid rgba(255,255,255,.14);}
+  #c3 .pt .tx{color:#e9f1fb;}
+  #c3 .pt .tx b{color:#ffd84a}
+  #c3 .result{color:#dbe7f4; background:rgba(255,255,255,.05); border:2px dashed rgba(255,255,255,.3);}
+  #c3 .result b{color:#ffd84a}
+  #c3 .meta .m{color:#fff; background:rgba(255,255,255,.08); border:2px solid rgba(255,255,255,.22);}
+  #c3 .cond{font-size:28px; font-weight:800; color:#123; background:#ffd84a; border-radius:100px;
+    padding:14px 28px; align-self:flex-start; margin-top:6px;}
+  #c3 .price .was{color:#8aa6c4}
+  #c3 .price .now{color:#ffd84a}
+  #c3 .price .won{color:#ffd84a}
+
+  /* ---- CARD 4 : PACKAGE / CTA ---- */
+  #c4{background:radial-gradient(120% 90% at 80% 10%, #ff5fb0 0%, #E91E8C 45%, #a3126a 100%); color:#fff;}
+  #c4 .brand{color:#ffe0f0}
+  #c4 .tag{background:#fff; color:var(--pink-deep);}
+  .h4big{font-size:88px; font-weight:900; line-height:1.1; letter-spacing:-.02em; margin-top:12px;}
+  .calc{margin-top:40px; background:rgba(255,255,255,.14); border-radius:26px; padding:38px 40px;}
+  .calc .row{display:flex; justify-content:space-between; align-items:baseline; font-size:34px;
+    font-weight:700; color:#ffe6f2; padding:10px 0;}
+  .calc .row b{font-weight:800; color:#fff}
+  .calc .line{height:2px; background:rgba(255,255,255,.3); margin:14px 0;}
+  .calc .final{display:flex; justify-content:space-between; align-items:baseline;}
+  .calc .final .lb{font-size:40px; font-weight:900; color:#fff;}
+  .calc .final .vv{font-size:74px; font-weight:900; color:#fff;}
+  .why{font-size:33px; font-weight:600; line-height:1.5; color:#fff; margin-top:36px;}
+  .why b{color:#ffe14d}
+  .flow{display:flex; gap:14px; align-items:center; margin-top:30px; font-size:32px; font-weight:800; color:#fff; flex-wrap:wrap;}
+  .flow .a{background:rgba(255,255,255,.2); border-radius:100px; padding:10px 24px;}
+  .pay{margin-top:auto; background:#fff; color:#1c1420; border-radius:24px; padding:34px 38px;}
+  .pay .t{font-size:27px; font-weight:700; color:var(--pink-deep);}
+  .pay .acct{font-size:44px; font-weight:900; letter-spacing:.01em; margin-top:8px; color:#141821;}
+  .pay .call{font-size:31px; font-weight:800; margin-top:16px; color:#141821;}
+  .pay .call span{color:var(--pink-deep)}
+  .limit{text-align:center; font-size:29px; font-weight:800; color:#fff; margin-top:26px;}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h2>📸 AI 웹페이지 브랜딩 &amp; 마스터 과정 카드뉴스</h2>
+  <p>각 카드의 <b>‘이미지 저장’</b>을 누르면 1080×1350 PNG로 저장됩니다.<br>인스타 캐러셀 순서대로 1 → 2 → 3 → 4 올리시면 됩니다.</p>
+</div>
+
+<div class="deck">
+
+  <!-- ===== CARD 1 : HOOK ===== -->
+  <div class="frame"><div class="card" id="c1">
+    <div class="eb"><span class="r"></span><span class="y"></span><span class="g"></span><span class="b"></span></div>
+    <div class="pad">
+      <div class="brand">최해숙 강의실 · PBS컬러랩</div>
+      <div class="h1big">웹페이지,<br>만들기만 하면<br><span class="pk">끝일까요?</span></div>
+      <div class="h1sub">이제는 <span class="u">검색되고, 브랜딩</span>되어야 합니다.</div>
+      <div class="chips">
+        <div class="chip"><span class="ico">🔎</span><span>네이버·구글은 물론 <b>AI 검색</b>에서도 ‘나’를 찾게</span></div>
+        <div class="chip"><span class="ico">💎</span><span>예쁜 페이지가 아니라 <b>‘팔리는’ 브랜드</b>로</span></div>
+      </div>
+      <div class="c1foot">
+        <div class="big">AI 웹페이지 브랜딩 → 마스터 강사 과정</div>
+        <div class="lock">🔓 첫 수업 들으신 분께 먼저 엽니다</div>
+      </div>
+    </div>
+  </div></div>
+  <button class="dlbtn" onclick="dl('c1','카드뉴스_1_후킹.png')">📥 1번 카드 이미지 저장</button>
+
+  <!-- ===== CARD 2 : BRANDING ===== -->
+  <div class="frame"><div class="card" id="c2">
+    <div class="eb"><span class="r"></span><span class="y"></span><span class="g"></span><span class="b"></span></div>
+    <div class="pad">
+      <div class="brand">최해숙 강의실 · STEP 1</div>
+      <span class="tag">브랜딩 고도화 과정</span>
+      <div class="h2big">AI 웹페이지<br>브랜딩 고도화</div>
+      <div class="lead">웹은 있는데 ‘나답지 않다’면 — 내 채널·대화 기록까지 파고들어 <b>‘나’라는 브랜드로 다시 세팅</b>합니다.</div>
+      <div class="pts">
+        <div class="pt"><span class="ico">🔍</span><span class="tx">남 얘기 말고 <b>‘내 진단’</b> — 지금 내 상태를 적나라하게</span></div>
+        <div class="pt"><span class="ico">🎯</span><span class="tx">검색·첫인상에 걸리는 <b>노출 전략·키워드</b>까지</span></div>
+        <div class="pt"><span class="ico">🏗</span><span class="tx">예쁜 게 아니라 <b>전환되는 구조·메뉴</b></span></div>
+        <div class="pt"><span class="ico">💎</span><span class="tx">흩어진 나를 <b>한 문장·해시태그</b>로 자산화</span></div>
+      </div>
+      <div class="infobox">
+        <div class="result">🎁 결과물 : <b>브랜딩된 내 웹페이지</b> + 어디에나 쓰는 <b>브랜딩 자산 시트</b></div>
+        <div class="meta">
+          <span class="m">📅 2026.8.2(일)</span>
+          <span class="m">🕐 오후 1시–6시 (5시간)</span>
+          <span class="m">📍 울산 현장</span>
+        </div>
+        <div class="price">
+          <span class="was">495,000원</span>
+          <span class="off">20만원 할인</span>
+          <span class="now">295,000</span><span class="won">원</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <button class="dlbtn" onclick="dl('c2','카드뉴스_2_브랜딩과정.png')">📥 2번 카드 이미지 저장</button>
+
+  <!-- ===== CARD 3 : MASTER ===== -->
+  <div class="frame"><div class="card" id="c3">
+    <div class="eb"><span class="r"></span><span class="y"></span><span class="g"></span><span class="b"></span></div>
+    <div class="pad">
+      <div class="brand">최해숙 강의실 · STEP 2 · 강사 양성</div>
+      <span class="tag">선착순 4명 한정</span>
+      <div class="h3big">AI 웹페이지<br>마스터 전문가과정</div>
+      <div class="lead">배우고 끝? 아니라 — 내 사이트에 <b>‘강의실’을 얹어</b> 남을 가르치고 수익화하는 <b>강사로 데뷔</b>합니다.</div>
+      <div class="pts">
+        <div class="pt"><span class="ico">🏠</span><span class="tx">남의 플랫폼 X, <b>내 사이트에 강의실</b> — 내가 주인</span></div>
+        <div class="pt"><span class="ico">🎯</span><span class="tx">내 대상자에 맞춘 <b>맞춤 세팅</b>(복제 아님)</span></div>
+        <div class="pt"><span class="ico">💰</span><span class="tx">모집·<b>폰 알림</b>·후기·<b>라이선스</b>까지 손에</span></div>
+      </div>
+      <div class="infobox">
+        <div class="cond">✅ 조건 : ‘AI 브랜딩 웹페이지’ 과정 이수자</div>
+        <div class="meta" style="margin-top:22px;">
+          <span class="m">🗓 매주 화요일 오후·저녁</span>
+          <span class="m">💻 오프라인 + Zoom</span>
+          <span class="m">⏳ 약 한 달 (12시간)</span>
+        </div>
+        <div class="price">
+          <span class="was">990,000원</span>
+          <span class="off">40만원 할인</span>
+          <span class="now">590,000</span><span class="won">원</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <button class="dlbtn" onclick="dl('c3','카드뉴스_3_마스터과정.png')">📥 3번 카드 이미지 저장</button>
+
+  <!-- ===== CARD 4 : PACKAGE / CTA ===== -->
+  <div class="frame"><div class="card" id="c4">
+    <div class="eb"><span class="r"></span><span class="y"></span><span class="g"></span><span class="b"></span></div>
+    <div class="pad">
+      <div class="brand">ONLY NOW · 이번 기수 한정 패키지</div>
+      <span class="tag">두 과정 모두 포함</span>
+      <div class="h4big">이번만<br>79만원 패키지!</div>
+      <div class="calc">
+        <div class="row"><span>브랜딩 고도화 과정</span><b>295,000원</b></div>
+        <div class="row"><span>마스터 전문가과정</span><b>590,000원</b></div>
+        <div class="line"></div>
+        <div class="row"><span>따로 신청하면</span><b style="text-decoration:line-through;opacity:.85">885,000원</b></div>
+        <div class="final"><span class="lb">패키지 특가</span><span class="vv">790,000원</span></div>
+      </div>
+      <div class="why">강의기획서부터 차별화된 <b>‘완전 마스터 강사·브랜드’</b>의 필수 요소를 한 번에.</div>
+      <div class="flow"><span class="a">만들고</span>→<span class="a">검색되고</span>→<span class="a">내가 먼저 브랜딩</span></div>
+      <div class="pay">
+        <div class="t">입금 계좌</div>
+        <div class="acct">카카오뱅크 7942-08-48716</div>
+        <div class="t" style="margin-top:4px;">PBS컬러랩 최해숙</div>
+        <div class="call">신청·문의 <span>010-4285-7997</span></div>
+      </div>
+      <div class="limit">🔓 첫 수업 들으신 분께 먼저 · 선착순 마감</div>
+    </div>
+  </div></div>
+  <button class="dlbtn" onclick="dl('c4','카드뉴스_4_패키지신청.png')">📥 4번 카드 이미지 저장</button>
+
+</div>
+
+<script>
+  // 미리보기 크기에 맞춰 카드(1080x1350) 스케일
+  function fit(){
+    document.querySelectorAll('.frame').forEach(f=>{
+      const card=f.querySelector('.card');
+      const s=f.clientWidth/1080;
+      card.style.transform='scale('+s+')';
+      f.style.height=(1350*s)+'px';
+    });
+  }
+  window.addEventListener('load', fit);
+  window.addEventListener('resize', fit);
+
+  // 카드 → PNG 저장 (원본 1080x1350)
+  async function dl(id, filename){
+    const card=document.getElementById(id);
+    const frame=card.parentElement;
+    const prevT=card.style.transform, prevH=frame.style.height;
+    card.style.transform='none';
+    frame.style.height='1350px';
+    try{
+      const canvas=await html2canvas(card,{scale:2, backgroundColor:null, useCORS:true,
+        width:1080, height:1350, windowWidth:1080, windowHeight:1350});
+      const a=document.createElement('a');
+      a.href=canvas.toDataURL('image/png');
+      a.download=filename;
+      a.click();
+    }catch(e){ alert('저장 중 문제가 생겼어요. 잠시 후 다시 시도하거나 화면을 캡처해 주세요.'); }
+    finally{ card.style.transform=prevT; frame.style.height=prevH; fit(); }
+  }
+</script>
+</body>
+</html>
