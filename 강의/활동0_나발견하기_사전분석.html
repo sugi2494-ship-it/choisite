@@ -54,7 +54,7 @@
   .bar-row{display:flex; align-items:center; gap:10px; margin:7px 0; font-size:13.5px; font-weight:700}
   .bar-label{width:118px; flex:0 0 auto}
   .bar-track{flex:1; height:14px; background:#eef0f2; border-radius:8px; overflow:hidden}
-  .bar-fill{display:block; height:100%; border-radius:8px}
+  .bar-fill{height:100%; border-radius:8px}
   .bar-pct{width:38px; text-align:right; color:var(--sub); font-weight:600}
   .verdict{background:#fbfbfc; border:1px solid var(--line); border-radius:12px; padding:16px; margin:14px 0}
   .verdict b{font-size:15px}
@@ -69,14 +69,13 @@
 </head>
 <body>
 <div class="enginebar"><span></span><span></span><span></span><span></span></div>
-<div style="max-width:640px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
 
 <header>
   <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
   <h1>활동 00. 나 발견하기<br /><span style="font-size:17px;color:var(--sub)">개인 브랜딩 사전분석</span></h1>
   <p class="lead">"내 강점은?" "타깃은 누구?" — 바로 답하기 어려우시죠? 괜찮습니다.
-  아래 <b>쉬운 질문</b>에만 편하게 답하면, 그 답이 모여 <b>나의 방향과 강점 색(빨·노·초·파)</b>이 자동으로 정리됩니다.
-  여기서 나온 요약을 다음 활동(웹페이지 방향 설정)에 그대로 씁니다.</p>
+  아래 <b>쉬운 질문</b>에만 편하게 답하면, 그 답이 모여 <b>나의 방향과 강점 색(빨·노·초·파)</b>, 그리고 <b>이 홈페이지의 목적과 넣을 메뉴</b>까지 자동으로 정리됩니다.
+  여기서 나온 요약을 다음 활동(웹페이지 방향 설정 · 메뉴 만들기)에 그대로 씁니다.</p>
 </header>
 
 <div class="wrap">
@@ -172,6 +171,48 @@
         <input type="text" name="role" placeholder="예) 퍼스널컬러 강사" /></div>
     </section>
 
+    <!-- G. 홈페이지 목적 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>G. 이 홈페이지의 목적</div>
+      <p class="sec-desc">'왜 이 웹페이지를 만드는가'가 분명하면, 메뉴와 문구가 저절로 정해집니다.</p>
+      <div class="field"><label>G1. 이 웹페이지를 만드는 <u>가장 큰 이유</u>는?</label>
+        <textarea name="g1" placeholder="예) 강의 신청을 한곳에서 받고 싶어서 / 나를 제대로 소개하고 싶어서"></textarea></div>
+      <div class="field"><label>G2. 방문자가 이 페이지에서 <u>딱 하나</u>만 한다면, 무엇이길 바라세요?</label>
+        <p class="hint">가장 중요한 목표 하나만 고르세요. (메뉴·버튼의 1순위가 됩니다)</p>
+        <div class="opts">
+          <label><input type="radio" name="g2" value="강의·상담 신청" /><span>강의·상담을 신청한다</span></label>
+          <label><input type="radio" name="g2" value="문의·연락" /><span>문의·연락을 한다</span></label>
+          <label><input type="radio" name="g2" value="소개·신뢰" /><span>나(브랜드)를 알고 신뢰하게 된다</span></label>
+          <label><input type="radio" name="g2" value="예약" /><span>예약을 한다</span></label>
+          <label><input type="radio" name="g2" value="자료·후기 열람" /><span>자료·후기를 본다</span></label>
+          <label><input type="radio" name="g2" value="상품·서비스 구매" /><span>상품·서비스를 구매한다</span></label>
+        </div>
+      </div>
+      <div class="field"><label>G3. 이 페이지를 본 사람이 <u>어떤 느낌·생각</u>을 갖길 바라세요? (선택)</label>
+        <textarea name="g3" placeholder="예) 믿을 만하다 / 전문가답다 / 따뜻하고 편안하다"></textarea></div>
+    </section>
+
+    <!-- H. 필요한 메뉴 -->
+    <section class="card">
+      <div class="sec-title"><span class="dot" style="background:var(--green)"></span>H. 필요한 메뉴 고르기</div>
+      <p class="sec-desc">위 '목적'을 이루려면 어떤 메뉴가 필요할까요? 필요한 것만 고르세요. (다음 활동에서 이대로 메뉴를 만듭니다)</p>
+      <div class="field">
+        <div class="opts">
+          <label><input type="checkbox" name="menu" value="홈" /><span>홈 (첫 화면)</span></label>
+          <label><input type="checkbox" name="menu" value="소개" /><span>소개 (About · 나/브랜드 이야기)</span></label>
+          <label><input type="checkbox" name="menu" value="강의·프로그램" /><span>강의·프로그램 (서비스 안내)</span></label>
+          <label><input type="checkbox" name="menu" value="후기" /><span>후기 (수강·고객 후기)</span></label>
+          <label><input type="checkbox" name="menu" value="자료실" /><span>자료실 (다운로드·읽을거리)</span></label>
+          <label><input type="checkbox" name="menu" value="문의·신청" /><span>문의·신청 (연락·접수)</span></label>
+          <label><input type="checkbox" name="menu" value="갤러리·포트폴리오" /><span>갤러리·포트폴리오 (사진·작업)</span></label>
+          <label><input type="checkbox" name="menu" value="예약" /><span>예약</span></label>
+          <label><input type="checkbox" name="menu" value="오시는 길" /><span>오시는 길 (위치·연락처)</span></label>
+        </div>
+      </div>
+      <div class="field"><label>그 외 넣고 싶은 메뉴가 있다면?</label>
+        <input type="text" name="menu_etc" placeholder="예) 블로그, 자주 묻는 질문(FAQ), 자격·이력" /></div>
+    </section>
+
     <button type="button" class="btn" id="go" style="background:var(--pink)">나의 분석 결과 보기</button>
   </form>
 
@@ -187,11 +228,12 @@
       <div class="sent" id="oneliner"></div>
     </div>
 
-    <p class="hint" style="margin-top:16px">아래 요약을 복사해 <b>다음 활동(웹페이지 방향 설정)</b>에 붙여넣으세요.</p>
+    <div class="verdict" id="planbox" style="display:none"></div>
+
+    <p class="hint" style="margin-top:16px">아래 요약을 복사해 <b>다음 활동(웹페이지 방향 설정 · 메뉴 만들기)</b>에 붙여넣으세요.</p>
     <div class="carry" id="carry"></div>
     <button type="button" class="btn" id="copy" style="background:var(--ink)">📋 요약 복사하기</button>
 
-    <a class="btn" href="활동1_웹페이지방향설정_v3.html" style="background:#E91E8C;display:block;text-align:center;text-decoration:none;color:#fff;margin-top:12px">➡ 다음: 활동 1. 웹페이지 방향 설정</a>
     <a class="diaglink" id="diag" href="#" target="_blank" rel="noopener">🎨 정식 컬러강점 진단으로 더 정확히 알아보기 →</a>
     <p class="hint" style="text-align:center;margin-top:8px">위 색 성향은 참고용 간이 분석입니다. 정확한 진단은 컬러강점 진단에서 확인하세요.</p>
   </div>
@@ -201,15 +243,15 @@
 
 <script>
 /* ▼ 정식 컬러강점 진단 링크 — 대표님 기존 진단 사이트 주소로 바꿔주세요 ▼ */
-const DIAG_URL = "https://www.pbscolor.com/book48.html";
+const DIAG_URL = "https://choisite.vercel.app/";
 /* ▲ 여기만 수정 ▲ */
 
 const f = document.getElementById("f");
 const COLOR = {
-  R:{name:"RED · 도전·열정·성과",  kw:"추진력 있게 목표를 향해 나아가는", css:"#D23B30"},
-  Y:{name:"YELLOW · 발견·공감·창의", kw:"새로운 것을 발견하고 사람들과 즐겁게 나누는", css:"#E0A400"},
-  G:{name:"GREEN · 배려·평화·밸런스", kw:"사람을 살피고 조화를 만드는", css:"#2C8C5A"},
-  B:{name:"BLUE · 신뢰·분석·체계",  kw:"믿음직하게 분석하고 체계를 세우는", css:"#2C66A8"}
+  R:{name:"RED · 도전·열정·성과",  kw:"추진력 있게 목표를 향해 나아가는", css:"var(--red)"},
+  Y:{name:"YELLOW · 발견·공감·창의", kw:"새로운 것을 발견하고 사람들과 즐겁게 나누는", css:"var(--yellow)"},
+  G:{name:"GREEN · 배려·평화·밸런스", kw:"사람을 살피고 조화를 만드는", css:"var(--green)"},
+  B:{name:"BLUE · 신뢰·분석·체계",  kw:"믿음직하게 분석하고 체계를 세우는", css:"var(--blue)"}
 };
 const val=n=>{const el=f.elements[n];return el?(el.value||"").trim():"";};
 const pick=n=>{const el=f.querySelector(`input[name="${n}"]:checked`);return el?el.value:null;};
@@ -243,6 +285,26 @@ document.getElementById("go").addEventListener("click", ()=>{
   const sentence=`나는 ${who}이(가) ${change} 돕는, ${COLOR[p1].kw} 강점의 ${role}입니다.`;
   document.getElementById("oneliner").textContent=sentence;
 
+  // 홈페이지 목적 · 메뉴
+  const esc=s=>String(s||"").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const menus=[...f.querySelectorAll('input[name="menu"]:checked')].map(x=>x.value);
+  const menuEtc=val("menu_etc");
+  const menuAll=menus.concat(menuEtc?[menuEtc]:[]);
+  const g1=val("g1"), g2=pick("g2"), g3=val("g3");
+  const planbox=document.getElementById("planbox");
+  if(g1||g2||g3||menuAll.length){
+    planbox.style.display="block";
+    planbox.innerHTML=
+      `<b>🧭 이 홈페이지의 설계</b><br>
+       <span style="color:var(--sub);font-size:13.5px">
+       · 목적: ${esc(g1)||"-"}<br>
+       · 방문자 핵심 목표(1순위): ${esc(g2)||"-"}<br>`+
+       (g3?`· 주고 싶은 느낌: ${esc(g3)}<br>`:``)+
+       `· 넣을 메뉴: ${menuAll.length?menuAll.map(esc).join(" · "):"-"}</span>`;
+  }else{
+    planbox.style.display="none";
+  }
+
   // 요약 카드(복사용)
   const carry=
 `[나 발견하기 요약]
@@ -252,7 +314,13 @@ document.getElementById("go").addEventListener("click", ()=>{
 · 나의 대상: ${val("c1")||"-"}${val("c2")?" / 특히 "+val("c2"):""}
 · 내 전문: ${val("d1")||"-"}${val("d2")?" (필요한 이유: "+val("d2")+")":""}
 · 강점 색 성향: ${COLOR[p1].name}${counts[p2]>0?" + "+COLOR[p2].name.split(" · ")[0]:""}
-· 한 문장: ${sentence}`;
+· 한 문장: ${sentence}
+
+[홈페이지 설계]
+· 홈페이지 목적: ${g1||"-"}
+· 방문자 핵심 목표(1순위): ${g2||"-"}
+· 주고 싶은 느낌: ${g3||"-"}
+· 넣고 싶은 메뉴: ${menuAll.length?menuAll.join(", "):"-"}`;
   document.getElementById("carry").textContent=carry;
 
   document.getElementById("diag").href=DIAG_URL;
