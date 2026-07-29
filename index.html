@@ -150,6 +150,16 @@
     .menu{display:flex;gap:14px;align-items:center;font-size:13px;font-weight:700;color:rgba(255,255,255,.78);white-space:nowrap}
     .menu a{white-space:nowrap;flex:0 0 auto}
     .menu a:hover{color:var(--pink)}
+    .has-dropdown{position:relative;display:inline-flex;align-items:center}
+    .has-dropdown .dd-label{cursor:pointer;white-space:nowrap;color:rgba(255,255,255,.78);font-weight:700}
+    .has-dropdown:hover .dd-label{color:var(--pink)}
+    .has-dropdown .dropdown{position:absolute;top:100%;left:0;min-width:210px;background:#12121e;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px;display:none;flex-direction:column;gap:2px;box-shadow:0 16px 44px rgba(0,0,0,.45);z-index:1000}
+    .has-dropdown:hover .dropdown{display:flex}
+    details.lec summary{list-style:none;outline:none}
+    details.lec summary::-webkit-details-marker{display:none}
+    details.lec[open] summary .dd-arrow{transform:rotate(180deg)}
+    .has-dropdown .dropdown a{padding:9px 12px;border-radius:8px;color:#fff!important;white-space:nowrap;font-weight:700}
+    .has-dropdown .dropdown a:hover{background:rgba(229,0,127,.18);color:#fff!important}
     .menu .cta{
       background:linear-gradient(135deg,var(--pink),var(--pink2));
       color:#fff;padding:9px 16px;border-radius:999px;
@@ -630,6 +640,9 @@
         z-index:999;
       }
       .menu.open{display:flex}
+      .has-dropdown{flex-direction:column;align-items:flex-start;width:100%}
+      .has-dropdown .dropdown{position:static;display:flex;background:transparent;border:0;box-shadow:none;padding:2px 0 2px 14px;min-width:0}
+      .has-dropdown .dropdown a{padding:8px 0;color:#fff!important}
       .nav-right{gap:8px}
       .classroom-link{padding:6px 10px!important;font-size:11.5px!important}
       .lang-switch #langLabel,.lang-btn .chev{display:none}
@@ -720,6 +733,8 @@ html[data-theme="light"] .logo img{filter:none!important;}
 html[data-theme="light"] .logo-text{color:var(--pink)!important;}
 html[data-theme="light"] .classroom-link{color:var(--pink)!important;}
 html[data-theme="light"] .menu a{color:#20202A!important;}
+html[data-theme="light"] .has-dropdown .dd-label{color:#20202A!important;}
+html[data-theme="light"] .has-dropdown .dropdown a{color:#fff!important;}
 html[data-theme="light"] .lang-btn{color:#20202A!important;border-color:rgba(0,0,0,.2)!important;background:rgba(0,0,0,.04)!important;}
 html[data-theme="light"] .theme-btn{color:#20202A!important;border-color:rgba(0,0,0,.2)!important;background:rgba(0,0,0,.04)!important;}
 html[data-theme="light"] .lang-menu{background:#fff!important;border-color:rgba(0,0,0,.12)!important;}
@@ -772,13 +787,19 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
     </a>
     <div class="nav-right">
       <div class="menu" id="mainMenu">
-        <a href="#about" data-i18n="nav.about">대표·브랜드</a>
-        <a href="#consulting" data-i18n="nav.consulting">개인 컨설팅</a>
-        <a href="/business" data-i18n="nav.business">기업·공공기관 교육</a>
-        <a href="/academy" data-i18n="nav.academy">전문가 아카데미</a>
+        <a href="#about" data-i18n="nav.about">대표소개</a>
+        <div class="has-dropdown">
+          <a href="#services-router" class="dd-label">교육·컨설팅 ▾</a>
+          <div class="dropdown">
+            <a href="#consulting" data-i18n="nav.consulting">개인 컨설팅</a>
+            <a href="/business" data-i18n="nav.business">기업·공공기관 교육</a>
+            <a href="/academy" data-i18n="nav.academy">전문가 자격과정</a>
+            <a href="/academy/instructor">인증강사</a>
+          </div>
+        </div>
         <a href="/global" data-i18n="nav.global">Global K-Beauty</a>
         <a href="#media" data-i18n="nav.media">활동·미디어</a>
-        <a class="cta" href="#contact" data-i18n="nav.contact">문의</a>
+        <a class="cta" href="#contact" data-i18n="nav.contact">문의·접수</a>
       </div>
       <a href="/강의/" class="classroom-link" title="수강생·강사 전용 강의실" style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:800;letter-spacing:.02em;color:#fff;text-decoration:none;padding:7px 14px;border:1.5px solid var(--pink);border-radius:999px;background:var(--pink-soft);transition:all .2s" onmouseover="this.style.background='var(--pink)'" onmouseout="this.style.background='var(--pink-soft)'">🔒 강의실</a>
       <button class="theme-btn" id="themeBtn" aria-label="테마 전환" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-size:16px;cursor:pointer;flex-shrink:0">🌙</button>
@@ -827,9 +848,9 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
   <!-- 콘텐츠 -->
   <div class="hero-in">
     <div class="hero-copy">
-      <div class="eyebrow">PBS COLOR LAB · ULSAN · GLOBAL K-BEAUTY</div>
+      <div class="eyebrow">PBS COLOR LAB · GLOBAL K-BEAUTY</div>
       <h1><span data-i18n="x.h1a">컬러로 <span class="accent">강점</span>을 발견하고,</span><br><span data-i18n="x.h1b"><span class="accent">더 나은 변화</span>로 연결합니다</span></h1>
-      <p class="hero-sub" data-i18n="x.sub">울산 퍼스널컬러부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty까지 — PBS COLOR LAB 최해숙 대표가 함께합니다.</p>
+      <p class="hero-sub" data-i18n="x.sub">퍼스널컬러부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty까지 — PBS COLOR LAB 최해숙 대표가 함께합니다.</p>
       <p style="font-size:13px;color:rgba(255,255,255,.62);margin:-6px 0 18px;letter-spacing:.02em;font-weight:600">Personal Color Analysis, Corporate Education, Professional Training and Global K-Beauty Partnership</p>
       <div class="hero-actions">
         <a class="btn primary" href="#services-router" data-i18n="x.pick">서비스 선택하기 →</a>
@@ -877,7 +898,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <div class="about-text">
         <div class="sec-label">About</div>
         <h2 data-i18n="about.title">PBS COLOR LAB 대표 최해숙 Maria Choi</h2>
-        <div data-i18n="about.subrole" style="color:var(--gold);font-weight:700;font-size:14px;margin:2px 0 14px">울산 퍼스널컬러·이미지 브랜딩 전문가 · Global Personal Color Analyst</div>
+        <div data-i18n="about.subrole" style="color:var(--gold);font-weight:700;font-size:14px;margin:2px 0 14px">퍼스널컬러·이미지 브랜딩 전문가 · Global Personal Color Analyst</div>
         <blockquote class="quote" data-i18n="about.quote">"당신은 이미 특별합니다. 컬러는 그 특별함을 발견하고, 교육은 그 가능성을 실제 변화로 연결하는 도구입니다."</blockquote>
         <p data-i18n="about.intro" style="color:var(--muted);line-height:1.75;margin:0 0 16px">최해숙 대표는 울산에서 시작해 전국·글로벌로 확장하며, 개인 퍼스널컬러·골격진단·얼굴분석 컨설팅과 기업·공공기관·대학 교육, 전문가 양성, 해외 K-Beauty 현장에서 활동합니다. 퍼스널컬러를 단순한 색 추천이 아니라 나에게 맞는 색·소재·스타일과 강점을 이해하는 실질적인 선택 기준으로 전달합니다.</p>
         <div class="bio-list" id="bioList">
@@ -916,29 +937,49 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
 <!-- ═══ 서비스 4갈래 (방문 목적 라우터) — 재정리 ═══ -->
 <section id="services-router" style="background:#fff;padding:44px 16px 36px">
   <div style="max-width:1120px;margin:0 auto">
-    <h2 style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 8px;letter-spacing:-.02em" data-i18n="x.rt">PBS 컬러랩 서비스 안내</h2>
-    <p style="text-align:center;font-size:14px;color:#666;margin:0 auto 26px;max-width:640px;line-height:1.6" data-i18n="x.rd">상담, 기관교육, 전문가 과정과 글로벌 협업 중 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.</p>
+    <h2 style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 8px;letter-spacing:-.02em" data-i18n="x.rt">PBS 컬러랩 교육·컨설팅 안내</h2>
+    <p style="text-align:center;font-size:14px;color:#666;margin:0 auto 26px;max-width:640px;line-height:1.6" data-i18n="x.rd">개인 상담부터 특강·기관 교육, 전문가 양성, 글로벌 협업까지 — 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.</p>
     <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:stretch">
-      <a href="#consulting" style="display:flex;flex-direction:column;flex:1 1 240px;max-width:270px;text-decoration:none;border:1px solid #F0D3DF;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(194,24,91,.06)">
-        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c1t">울산 퍼스널컬러·이미지 컨설팅</div>
+      <a href="#consulting" style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
+        <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">🎨 개인 퍼스널컬러 컨설팅 신청</div>
+        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c1t">퍼스널컬러·이미지 컨설팅</div>
         <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c1d">퍼스널컬러, 골격진단, 얼굴분석을 통해 색·소재·스타일과 전체 이미지를 선택하는 기준을 알려드립니다.</div>
         <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">퍼스널컬러</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">골격진단</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">얼굴분석</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">프리미엄 통합</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">웨딩</span></div>
         <div style="font-size:14px;font-weight:800;color:#C2185B" data-i18n="x.c1b">개인 컨설팅 보기 →</div>
       </a>
-      <a href="/business" style="display:flex;flex-direction:column;flex:1 1 240px;max-width:270px;text-decoration:none;border:1px solid #F0D3DF;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(194,24,91,.06)">
-        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c2t">기업·공공기관 맞춤 교육</div>
-        <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c2d">공무원·교사·직원·관리자·퇴직 예정자를 대상으로 이미지 브랜딩, 컬러강점, 조직소통 맞춤 교육을 진행합니다.</div>
-        <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">공무원 연수</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">교사 연수</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">직원 교육</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">임원 특강</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">대학 특강</span></div>
+      <div style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
+        <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">👥 전문강사팀 50여 명 멤버십</div>
+        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px">특강 · 강사 섭외</div>
+        <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1">퍼스널컬러부터 생애설계·AI·인성교육·부스행사까지 — 50여 명 전문강사팀이 멤버십으로 함께해, 필요한 주제의 강사 섭외와 특강을 바로 진행합니다.</div>
+        <details class="lec" style="margin-bottom:12px">
+          <summary style="cursor:pointer;font-size:13px;font-weight:800;color:#C2185B">특강 종류 전체 보기 <span class="dd-arrow" style="display:inline-block;transition:transform .2s">▾</span></summary>
+          <div style="margin-top:10px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">퍼스널컬러</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">골격진단</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">스타일링</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">컬러강점</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">커뮤니케이션</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">생애설계교육</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">AI 교육</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">중·고 인성교육</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">부스행사 진행</span></div>
+        </details>
+        <div style="font-size:14px;font-weight:800;color:#C2185B"><a href="#contact" style="color:#C2185B;text-decoration:none">강사 섭외·특강 문의 →</a></div>
+      </div>
+      <a href="/business" style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
+        <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">🏢 교육담당자 교육문의</div>
+        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c2t">학교·기업·기관·병원 맞춤교육</div>
+        <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c2d">학교·기업·기관·병원 대상으로 직원연수, 직무스트레스 관리, 퇴직예정자 생애설계교육과 이미지 브랜딩·컬러강점·조직소통을 맞춤으로 진행합니다.</div>
+        <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">직원연수</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">직무스트레스 관리</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">생애설계교육</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">공무원·교사 연수</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">병원·기관 교육</span></div>
         <div style="font-size:14px;font-weight:800;color:#C2185B" data-i18n="x.c2b">기관교육 보기 →</div>
       </a>
-      <a href="/academy" style="display:flex;flex-direction:column;flex:1 1 240px;max-width:270px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
-        <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">🎓 인증강사 6기 모집 · ~8/10</div>
-        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c3t">퍼스널컬러 전문가·인증강사 과정</div>
-        <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c3d">퍼스널컬러·골격진단·얼굴분석·컬러강점 실무부터 강의 설계, 프로필, 웹페이지와 인증강사 활동까지 연결합니다.</div>
-        <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">전문가 자격과정</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">인증강사</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">강사 브랜딩</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">수강생 강의실</span></div>
-        <div style="font-size:14px;font-weight:800;color:#C2185B" data-i18n="x.c3b">아카데미 보기 →</div>
+      <a href="/academy" style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
+        <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">🎓 전문가 자격과정 모집</div>
+        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c3t">전문가 자격과정</div>
+        <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c3d">퍼스널컬러·골격진단·얼굴분석·컬러강점에 휴먼컬러·컬러테라피까지, 진단과 강의를 직접 할 수 있는 전문가로 양성하는 자격과정입니다.</div>
+        <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">퍼스널컬러</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">골격진단</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">얼굴분석</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">컬러강점</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">휴먼컬러</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">컬러테라피</span></div>
+        <div style="font-size:14px;font-weight:800;color:#C2185B" data-i18n="x.c3b">전문가 자격과정 보기 →</div>
       </a>
-      <a href="/global" style="display:flex;flex-direction:column;flex:1 1 240px;max-width:270px;text-decoration:none;border:1px solid #F0D3DF;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(194,24,91,.06)">
+      <a href="/academy/instructor" style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
+        <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">🎓 인증강사 6기 · 마감 <span id="instDday">D-12</span> (8/10)</div>
+        <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px">PBS 인증강사</div>
+        <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1">전문가 과정을 마친 뒤 강사 브랜딩·프로필·웹페이지와 인증강사 활동, 강사 멤버십, 수강생 강의실까지 연결하는 인증 단계입니다.</div>
+        <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">인증강사</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">강사 브랜딩</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">웹페이지</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">멤버십 활동</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">수강생 강의실</span></div>
+        <div style="font-size:14px;font-weight:800;color:#C2185B">6기 모집 신청 →</div>
+      </a>
+      <a href="/global" style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
+        <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">🌏 글로벌 협업 문의</div>
         <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c4t">Global K-Beauty Partnership</div>
         <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c4d">해외 K-Beauty 행사, 퍼스널컬러 무대, 체험 부스, 브랜드 직원 트레이닝과 현지 전문가 교육을 진행합니다.</div>
         <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">K-Beauty 행사</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">퍼스널컬러 부스</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">직원 교육</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">해외 전문가</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">브랜드 협업</span></div>
@@ -948,13 +989,27 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
   </div>
 </section>
 
+<script>
+(function(){
+  var el=document.getElementById('instDday');
+  if(!el) return;
+  var deadline=new Date(2026,7,10);        /* 2026-08-10 인증강사 6기 마감 */
+  var today=new Date(); today.setHours(0,0,0,0);
+  var diff=Math.ceil((deadline-today)/86400000);
+  if(diff>1){ el.textContent='D-'+diff; }
+  else if(diff===1){ el.textContent='내일 마감'; }
+  else if(diff===0){ el.textContent='오늘 마감'; }
+  else { el.textContent='접수 마감'; }
+})();
+</script>
+
 <!-- ═══ 개인 컨설팅 (아코디언 · 서비스 카드 아래) ═══ -->
 <section id="consulting" style="background:transparent;padding:0 16px">
   <div style="max-width:1080px;margin:0 auto">
     <div id="consultPanel" class="consult-acc consult-body" style="display:none;margin:16px 0 8px;position:relative">
     <button type="button" onclick="var p=document.getElementById('consultPanel');p.style.display='none';document.getElementById('services-router').scrollIntoView({behavior:'smooth',block:'start'});" aria-label="닫기" style="position:absolute;top:12px;right:14px;z-index:3;background:#fff;border:1px solid #F0D3DF;color:#C2185B;width:36px;height:36px;border-radius:50%;font-size:17px;font-weight:800;cursor:pointer;line-height:1;box-shadow:0 2px 8px rgba(194,24,91,.12)">✕</button>
-    <p style="text-align:center;font-size:12px;font-weight:800;letter-spacing:.14em;color:#C2185B;margin:0 0 8px">PERSONAL CONSULTING · ULSAN</p>
-    <h2 data-i18n="cs.title" style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 10px;letter-spacing:-.02em;line-height:1.35">울산 퍼스널컬러, 색만 확인하지 않습니다</h2>
+    <p style="text-align:center;font-size:12px;font-weight:800;letter-spacing:.14em;color:#C2185B;margin:0 0 8px">PERSONAL CONSULTING</p>
+    <h2 data-i18n="cs.title" style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 10px;letter-spacing:-.02em;line-height:1.35">퍼스널컬러, 색만 확인하지 않습니다</h2>
     <p data-i18n="cs.desc" style="text-align:center;font-size:15px;color:#555;line-height:1.7;max-width:680px;margin:0 auto 30px">피부색과 함께 얼굴선, 체형, 소재와 전체 분위기를 살펴 나에게 맞는 색과 스타일의 기준을 알려드립니다.</p>
 
     <h3 data-i18n="cs.progh" style="text-align:center;font-size:16px;font-weight:800;color:#111;margin:0 0 16px">상담 프로그램</h3>
@@ -1765,13 +1820,13 @@ function renderShop(){
 ══════════════════════════════════════ */
 const I18N = {
 ko:{
-  "nav.about":"대표·브랜드","x.pick":"서비스 선택하기 →","x.h1a":"컬러로 <span class=\"accent\">강점</span>을 발견하고,","x.h1b":"<span class=\"accent\">더 나은 변화</span>로 연결합니다","x.sub":"울산 퍼스널컬러부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty까지 — PBS COLOR LAB 최해숙 대표가 함께합니다.","x.b1":"개인 컨설팅","x.b2":"기관교육 문의","x.b3":"전문가 과정","x.rt":"PBS 컬러랩 서비스 안내","x.rd":"상담, 기관교육, 전문가 과정과 글로벌 협업 중 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.","x.c1t":"울산 퍼스널컬러·이미지 컨설팅","x.c2t":"기업·공공기관 맞춤 교육","x.c3t":"퍼스널컬러 전문가·인증강사 과정","x.c4t":"Global K-Beauty Partnership","x.c1b":"개인 컨설팅 보기","x.c2b":"기관교육 보기","x.c3b":"아카데미 보기","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"강의","nav.downloads":"자료실","nav.media":"활동·미디어","nav.contact":"문의",
+  "nav.about":"대표소개","x.pick":"서비스 선택하기 →","x.h1a":"컬러로 <span class=\"accent\">강점</span>을 발견하고,","x.h1b":"<span class=\"accent\">더 나은 변화</span>로 연결합니다","x.sub":"퍼스널컬러부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty까지 — PBS COLOR LAB 최해숙 대표가 함께합니다.","x.b1":"개인 컨설팅","x.b2":"기관교육 문의","x.b3":"전문가 과정","x.rt":"PBS 컬러랩 교육·컨설팅 안내","x.rd":"개인 상담부터 특강·기관 교육, 전문가 양성, 글로벌 협업까지 — 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.","x.c1t":"퍼스널컬러·이미지 컨설팅","x.c2t":"학교·기업·기관·병원 맞춤교육","x.c3t":"전문가 자격과정","x.c4t":"Global K-Beauty Partnership","x.c1b":"개인 컨설팅 보기","x.c2b":"기관교육 보기","x.c3b":"전문가 자격과정 보기","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"강의","nav.downloads":"자료실","nav.media":"활동·미디어","nav.contact":"문의·접수",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"Understand Yourself Through Color, Complete Your Brand Through Strengths",
   "hero.t1":"컬러로 나를 이해하고,","hero.t2":"강점으로 브랜드를 완성합니다",
   "hero.sub":"컬러테라피 · 퍼스널컬러이미지메이킹 · 컬러강점 · 글로벌 교육 · 방송 출연 및 작가",
   "stat.years":"강의 경력","stat.globe":"글로벌","stat.globesub":"글로벌 진출국","stat.kbs":"방송 출연","stat.books":"방송·저서",
-  "nav.shop":"컬러샵","nav.consulting":"개인 컨설팅","nav.business":"기업·공공기관 교육","nav.academy":"전문가 아카데미",
+  "nav.shop":"컬러샵","nav.consulting":"개인 컨설팅","nav.business":"기업·공공기관 교육","nav.academy":"전문가 자격과정",
   "shop.title":"컬러 교구 · <span class=\"g\">K-Beauty 컬러샵</span>","shop.desc":"퍼스널컬러 교육 전용 교구 및 K-Beauty 코스메틱 — 전문가가 직접 큐레이션한 컬러 제품을 만나보세요","shop.p1name":"퍼스널컬러 드레이프 세트","shop.p1desc":"전문가용 퍼스널컬러 진단 드레이프 — PBS COLOR LAB 인증","shop.p2cat":"PBS 컬러강점 진단","shop.p2name":"컬러강점 진단 키트","shop.p2desc":"PBS 컬러강점 검사 공식 교재 및 워크북 — 창시자 최해숙 직강 인증","shop.p3name":"K-Beauty 컬러 코스메틱","shop.p3desc":"퍼스널컬러 전문가 큐레이션 K-Beauty 코스메틱 — 해외 수출 인증 제품","shop.inquiry":"문의 주문","shop.order":"주문하기","shop.soon":"준비중","shop.notice":"🔒 온라인 스토어 오픈 준비중 · 주문 및 문의:","cc.phone.btn":"📱 +82-10-4285-7997","cc.profile.btn":"📄 프로필 다운로드","cc.global.btn":"🌏 글로벌 문의",
   "hero.btn1":"📄 프로필 다운로드","hero.btn2":"🎓 강의실 입장","hero.btn3":"✉ 문의하기",
   "hero.name":"최해숙 Maria Choi","hero.role":"PBS COLOR LAB 대표 · Global Personal Color Analyst",
@@ -1826,7 +1881,7 @@ ko:{
   "cf.org":"기관·회사명 (선택)","cf.sns":"SNS 계정 (인스타그램, 카카오 등 — 선택)","cf.msg":"문의 내용을 적어주세요 (강의 주제, 인원, 날짜 등)",
   "cf.submit":"문의 보내기 →","cf.success":"문의가 접수되었습니다! 곧 연락드리겠습니다 ✨",
   "tag.colordiag":"컬러진단","tag.image":"이미지","tag.teambuilding":"팀빌딩","tag.comm":"소통","tag.training":"연수","tag.lifedesign":"생애설계","tag.senior":"시니어","tag.career2":"전직","tag.job":"취업","tag.interview":"면접","tag.branding":"브랜딩","tag.teacher":"교사","tag.govstaff":"공무원","tag.healing":"힐링","tag.automation":"자동화","footer":"© PBS COLOR LAB · 최해숙 Maria Choi 공식 브랜드 허브. All rights reserved.",
-  "about.subrole":"울산 퍼스널컬러·이미지 브랜딩 전문가 · Global Personal Color Analyst",
+  "about.subrole":"퍼스널컬러·이미지 브랜딩 전문가 · Global Personal Color Analyst",
   "about.intro":"최해숙 대표는 울산에서 시작해 전국·글로벌로 확장하며, 개인 퍼스널컬러·골격진단·얼굴분석 컨설팅과 기업·공공기관·대학 교육, 전문가 양성, 해외 K-Beauty 현장에서 활동합니다. 퍼스널컬러를 단순한 색 추천이 아니라 나에게 맞는 색·소재·스타일과 강점을 이해하는 실질적인 선택 기준으로 전달합니다.",
   "about.fields":"전문 분야: 퍼스널컬러 · 골격진단 · 얼굴분석 · 이미지 브랜딩 · 컬러강점 · 기업·공공기관 교육 · 전문가·인증강사 양성 · 글로벌 K-Beauty",
   "bio.b6t":"울산폴리텍대학교 중장년 퍼스널컬러 비즈니스 실무 외래교수",
@@ -1834,8 +1889,8 @@ ko:{
   "about.btnbiz":"🏢 기관 교육 보기",
   "about.btnglobal":"🌏 글로벌 활동",
   "x.c1d":"퍼스널컬러, 골격진단, 얼굴분석을 통해 색·소재·스타일과 전체 이미지를 선택하는 기준을 알려드립니다.",
-  "x.c2d":"공무원·교사·직원·관리자·퇴직 예정자를 대상으로 이미지 브랜딩, 컬러강점, 조직소통 맞춤 교육을 진행합니다.",
-  "x.c3d":"퍼스널컬러·골격진단·얼굴분석·컬러강점 실무부터 강의 설계, 프로필, 웹페이지와 인증강사 활동까지 연결합니다.",
+  "x.c2d":"학교·기업·기관·병원 대상으로 직원연수, 직무스트레스 관리, 퇴직예정자 생애설계교육과 이미지 브랜딩·컬러강점·조직소통을 맞춤으로 진행합니다.",
+  "x.c3d":"퍼스널컬러·골격진단·얼굴분석·컬러강점에 휴먼컬러·컬러테라피까지, 진단과 강의를 직접 할 수 있는 전문가로 양성하는 자격과정입니다.",
   "x.c4d":"해외 K-Beauty 행사, 퍼스널컬러 무대, 체험 부스, 브랜드 직원 트레이닝과 현지 전문가 교육을 진행합니다.",
   "faq.title":"자주 묻는 질문",
   "faq.q1":"PBS COLOR LAB은 어떤 곳인가요?",
@@ -1861,7 +1916,7 @@ ko:{
   "faq.b5":"아카데미 보기",
   "faq.b6":"Global 보기",
   "faq.b8":"문의하기",
-  "cs.title":"울산 퍼스널컬러, 색만 확인하지 않습니다",
+  "cs.title":"퍼스널컬러, 색만 확인하지 않습니다",
   "cs.desc":"피부색과 함께 얼굴선, 체형, 소재와 전체 분위기를 살펴 나에게 맞는 색과 스타일의 기준을 알려드립니다.",
   "cs.progh":"상담 프로그램",
   "cs.cmph":"어떤 진단을 먼저 받아야 할까요?",
