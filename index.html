@@ -2795,7 +2795,7 @@ document.addEventListener('click',function(e){if(menu.classList.contains('open')
 
 <!-- ═══ 공지 팝업 (인증강사 6기 + 8/1 원데이클래스) ═══ -->
 <div id="pbsNotice" style="display:none;position:fixed;inset:0;z-index:100000;background:rgba(10,8,14,.72);align-items:center;justify-content:center;padding:18px">
-  <div style="width:100%;max-width:400px;background:#14121c;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:22px 18px 16px;box-shadow:0 30px 80px rgba(0,0,0,.55);position:relative">
+  <div style="width:100%;max-width:400px;max-height:88vh;overflow-y:auto;background:#14121c;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:22px 18px 16px;box-shadow:0 30px 80px rgba(0,0,0,.55);position:relative">
     <button onclick="pbsCloseNotice()" aria-label="닫기" style="position:absolute;top:12px;right:14px;background:none;border:0;color:rgba(255,255,255,.6);font-size:24px;cursor:pointer;line-height:1">×</button>
     <div style="text-align:center;font-size:12px;font-weight:800;letter-spacing:.12em;color:#E5007F;margin-bottom:16px">📢 PBS COLOR LAB 모집 · 공지</div>
     <a href="/academy/instructor" style="display:block;text-decoration:none;border:1.5px solid #E5007F;border-radius:16px;padding:16px;margin-bottom:12px;background:rgba(229,0,127,.07)">
@@ -2809,6 +2809,12 @@ document.addEventListener('click',function(e){if(menu.classList.contains('open')
       <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:5px">강사 웹페이지 만들기 원데이 클래스</div>
       <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.55;margin-bottom:10px">하루 만에 내 강사 웹페이지 완성 — <b style="color:#fff">추가 접수 중</b>.</div>
       <div style="font-size:13px;font-weight:800;color:#F5C64B">8/1 원데이 클래스 신청 →</div>
+    </a>
+    <a href="/apply.html" style="display:block;text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;margin-top:12px;background:rgba(255,255,255,.04)">
+      <div style="display:inline-block;font-size:11px;font-weight:800;color:#fff;background:#7C4DFF;border-radius:999px;padding:3px 10px;margin-bottom:8px">🚀 AI 브랜드 마케팅 · 마스터</div>
+      <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:6px">AI 브랜드 마케팅 심화 &amp; 마스터 과정</div>
+      <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:10px">· 8/2(일) 심화 &nbsp;<b style="color:#fff">295,000원</b><br>· 마스터 과정 · 8월 4회 &nbsp;<b style="color:#fff">590,000원</b></div>
+      <div style="font-size:13px;font-weight:800;color:#9B7BFF">심화·마스터 신청 →</div>
     </a>
     <label style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:rgba(255,255,255,.5);cursor:pointer">
       <input type="checkbox" onclick="pbsHideToday(this.checked)" style="cursor:pointer"> 오늘 하루 안 보기
