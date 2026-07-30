@@ -352,6 +352,34 @@ a{text-decoration:none;color:inherit}
       <button onclick="resetGlb()" style="background:none;border:1px solid rgba(255,255,255,.12);
         color:rgba(255,255,255,.35);padding:7px 18px;border-radius:999px;cursor:pointer;font-size:12px">초기화</button>
     </div>
+
+    <!-- 글로벌 페이지(해외) 현장 갤러리 -->
+    <div style="margin-top:36px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:8px">
+        <div class="st" style="border:none;padding:0;margin:0">🌐 글로벌 페이지 현장 갤러리</div>
+        <button class="sbtn" onclick="saveGGal()">✓ 저장</button>
+      </div>
+      <div class="hint">해외용 글로벌 페이지(pbscolor.com/global) 하단 '글로벌 현장' 갤러리 사진입니다. 사진을 올리면 기본 6장(두바이·광저우·하노이)을 <b>대체</b>합니다. 비워두면 기본 사진이 유지됩니다.</div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;margin:12px 0">
+        <p style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:10px;font-weight:600">📤 사진 추가 (여러 장 가능)</p>
+        <button onclick="document.getElementById('ggalFile').click()"
+          style="width:100%;padding:9px;background:rgba(255,255,255,.1);border:1px dashed rgba(255,255,255,.25);
+          border-radius:8px;color:rgba(255,255,255,.7);font-size:13px;cursor:pointer">📁 사진 선택하기</button>
+        <div id="ggalStaging" style="display:none;margin-top:12px">
+          <p style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px">선택된 사진 — 설명(도시·행사명) 입력 후 추가하기 클릭</p>
+          <div id="ggalStagingList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px"></div>
+          <button onclick="confirmGGalAdd()"
+            style="width:100%;padding:10px;border-radius:999px;background:linear-gradient(135deg,#7B2D8B,#E6007E);
+            color:#fff;font-size:13px;font-weight:900;border:none;cursor:pointer">✓ 갤러리에 추가하기</button>
+        </div>
+      </div>
+      <input type="file" id="ggalFile" accept="image/*" multiple style="display:none" onchange="stageGGalPics(this)">
+      <div class="pg" id="ggalGrid"></div>
+      <div style="text-align:center;margin-top:16px">
+        <button onclick="resetGGal()" style="background:none;border:1px solid rgba(255,255,255,.12);
+          color:rgba(255,255,255,.35);padding:7px 18px;border-radius:999px;cursor:pointer;font-size:12px">기본 사진으로 되돌리기</button>
+      </div>
+    </div>
   </div>
 
   <!-- 자료·강의 -->
@@ -571,7 +599,7 @@ function tab(id,btn){
   document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on');});
   document.getElementById('p-'+id).classList.add('on');btn.classList.add('on');
   if(id==='gal')renderGal();
-  if(id==='glb')renderGlb();
+  if(id==='glb'){renderGlb();renderGGal();}
   if(id==='cfg')loadCfg();
   if(id==='str')loadStore();
   if(id==='res')renderRes();
@@ -995,6 +1023,58 @@ function saveGlb(){
   saveConfig('global_config',merged,'글로벌 사진');
 }
 function resetGlb(){if(!confirm('초기화?'))return;localStorage.removeItem('pbs_global_config');_glbTemp={};renderGlb();}
+
+/* == 글로벌 페이지(해외) 현장 갤러리 — global.html 하단 갤러리 == */
+function getGGalCfg(){var c=null;try{c=JSON.parse(localStorage.getItem('pbs_global_gallery')||'null');}catch(e){}return (c&&c.items)?c:{items:[]};}
+function renderGGal(){
+  var cfg=getGGalCfg();var g=document.getElementById('ggalGrid');if(!g)return;
+  if(!cfg.items.length){
+    g.innerHTML='<p style="grid-column:1/-1;padding:22px;color:rgba(255,255,255,.35);font-size:13px;text-align:center">현재 <b>기본 6장</b>(두바이·광저우·하노이)이 글로벌 페이지에 표시됩니다.<br>위에서 사진을 올리면 그 사진들로 교체됩니다.</p>';
+    return;
+  }
+  g.innerHTML=cfg.items.map(function(p,i){
+    return '<div class="pi">'
+      +'<img src="'+p.src+'" alt="'+(p.cap||'').replace(/"/g,'&quot;')+'" onerror="this.style.opacity=\'.1\'">'
+      +'<div class="pi-btns"><button class="pdel" onclick="delGGalP('+i+')" title="삭제">🗑</button></div>'
+      +'<div style="padding:6px 8px"><input value="'+(p.cap||'').replace(/"/g,'&quot;')+'" placeholder="설명 (예: Dubai)" maxlength="30" oninput="capGGal('+i+',this.value)" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:5px 8px;color:#fff;font-size:12px;outline:none"></div>'
+      +'</div>';
+  }).join('');
+}
+function capGGal(i,v){var c=getGGalCfg();if(c.items[i]){c.items[i].cap=v;localStorage.setItem('pbs_global_gallery',JSON.stringify(c));}}
+function delGGalP(i){if(!confirm('이 사진을 삭제하시겠습니까?'))return;var c=getGGalCfg();c.items.splice(i,1);localStorage.setItem('pbs_global_gallery',JSON.stringify(c));renderGGal();toast('삭제됨 — ✓ 저장을 눌러야 반영됩니다');}
+var _ggalStaged=[];
+function stageGGalPics(inp){
+  var files=Array.from(inp.files);if(!files.length)return;_ggalStaged=[];
+  var list=document.getElementById('ggalStagingList');
+  list.innerHTML='<p style="font-size:11px;color:rgba(255,255,255,.35);padding:6px">압축 중...</p>';
+  document.getElementById('ggalStaging').style.display='block';
+  var done=0,total=files.length;
+  files.forEach(function(f){
+    compressImg(f,1000,0.74,function(dataUrl){
+      _ggalStaged.push({src:dataUrl,cap:f.name.replace(/\.[^.]+$/,'')});
+      done++;
+      if(done===total){
+        list.innerHTML=_ggalStaged.map(function(s,i){
+          return '<div style="display:flex;align-items:center;gap:8px;padding:6px;background:rgba(255,255,255,.04);border-radius:8px">'
+            +'<img src="'+s.src+'" style="width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0">'
+            +'<input placeholder="설명 (예: Dubai, Guangzhou · CIBE)" maxlength="30" value="'+s.cap.replace(/"/g,'&quot;')+'" oninput="_ggalStaged['+i+'].cap=this.value"'
+            +' style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 10px;color:#fff;font-size:12px;outline:none"></div>';
+        }).join('');
+      }
+    });
+  });inp.value='';
+}
+function confirmGGalAdd(){
+  if(!_ggalStaged.length)return;
+  var c=getGGalCfg();
+  _ggalStaged.forEach(function(s){c.items.push({src:s.src,cap:s.cap||''});});
+  localStorage.setItem('pbs_global_gallery',JSON.stringify(c));
+  var n=_ggalStaged.length;_ggalStaged=[];
+  document.getElementById('ggalStaging').style.display='none';
+  renderGGal();toast(n+'장 추가됨 — ✓ 저장을 눌러야 사이트에 반영됩니다');
+}
+function saveGGal(){saveConfig('global_gallery',getGGalCfg(),'글로벌 갤러리');}
+function resetGGal(){if(!confirm('기본 사진으로 되돌리시겠습니까?\n(업로드한 갤러리 사진이 글로벌 페이지에서 제거되고 기본 6장으로 돌아갑니다)'))return;localStorage.removeItem('pbs_global_gallery');renderGGal();saveConfig('global_gallery',{items:[]},'글로벌 갤러리');}
 
 /* == 설정 == */
 function loadBannerCfg(){
