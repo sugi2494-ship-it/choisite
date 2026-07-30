@@ -357,7 +357,7 @@
   <div class="copy">© PBS COLOR LAB · 퍼스널컬러 강의 페이지</div>
 </footer>
 <script>
-  var LECTURE_PW = "8808";
+  var LECTURE_PW = "PbsColor#2026";
   function tryUnlock(){
     var v=document.getElementById('pw').value.trim();
     var msg=document.getElementById('pwmsg');
@@ -389,7 +389,7 @@
   function bdAdminToggle(){
     if(bdAdmin){bdAdmin=false;document.getElementById('bdAdminBtn').textContent='관리자';bdLoad();return;}
     var p=prompt('관리자 비밀번호를 입력하세요');
-    if(p==='8808'){bdAdmin=true;document.getElementById('bdAdminBtn').textContent='관리자 해제';bdLoad();}
+    if(p==='PbsColor#2026'){bdAdmin=true;document.getElementById('bdAdminBtn').textContent='관리자 해제';bdLoad();}
     else if(p!==null){alert('비밀번호가 올바르지 않습니다.');}
   }
   function bdApprove(id,val){

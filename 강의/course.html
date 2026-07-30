@@ -156,14 +156,14 @@
 var U='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
 var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
 var H={apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'};
-var LECTURE_PW='8808';
+var LECTURE_PW='PbsColor#2026';
 function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function qs(k){return new URLSearchParams(location.search).get(k)||'';}
 function pad(n){return (n<10?'0':'')+n;}
 function todayPW(){var d=new Date();return pad(d.getMonth()+1)+pad(d.getDate());}
 function ytId(u){var m=(u||'').match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:'';}
 var COURSE=qs('c'), course=null, kind='질문', star=5;
-var allItems=[], courseIdx=-1, MANAGE_PW='8808', _mTarget=null;
+var allItems=[], courseIdx=-1, MANAGE_PW='PbsColor#2026', _mTarget=null;
 
 fetch(U+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{headers:H})
  .then(function(r){return r.json();})
@@ -270,7 +270,7 @@ function renderManage(){
     +mStudentRow(1,'m_slabel','m_student',c.student_label,c.student_url)
     +mStudentRow(2,'m_slabel2','m_student2',c.student_label2,c.student_url2)
     +mStudentRow(3,'m_slabel3','m_student3',c.student_label3,c.student_url3)
-    +mRow('🔒 강사 강의안','m_teacher',c.teacher_url,'비번 8808로 열림')
+    +mRow('🔒 강사 강의안','m_teacher',c.teacher_url,'비번 PbsColor#2026로 열림')
     +mRow('📝 사전질문 링크','m_intake',c.intake_url,'수강 전 작성 폼 (웹페이지 강의)')
     +'<div class="mrow"><label>📝 자격시험 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_exam" value="'+esc(c.exam_url||'')+'" placeholder="자격시험 페이지 주소"></div>'
     +'<div class="mrow"><label>🎬 영상(유튜브) 링크 <span style="opacity:.55;font-size:12px;font-weight:400">있으면 입력</span></label><input id="m_video" value="'+esc(c.video_url||'')+'" placeholder="유튜브 주소"></div>'
