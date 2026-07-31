@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 5. 내 페이지 알리기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px 70px}
+  .enginebar{display:flex; height:6px; position:sticky; top:0; z-index:20}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:32px 18px 6px; max-width:660px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
+  h1{font-size:24px; font-weight:800; margin:8px 0 8px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0}
+
+  .progress{position:sticky; top:6px; z-index:19; background:rgba(246,247,248,.95);
+    backdrop-filter:blur(6px); padding:10px 0 8px; margin-top:16px}
+  .ptrack{height:8px; background:#e6e8ea; border-radius:6px; overflow:hidden}
+  .pfill{height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
+    border-radius:6px; transition:width .35s ease}
+  .ptext{font-size:12px; font-weight:700; color:var(--sub); margin-top:6px; text-align:right}
+
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px 20px; margin-top:16px}
+  .snum{display:inline-block; font-size:12.5px; font-weight:800; color:#fff;
+    padding:5px 13px; border-radius:999px; margin-bottom:12px}
+  h2{font-size:19px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
+  .sub{font-size:13px; color:var(--sub); margin:0 0 16px; font-weight:600}
+  p.t{font-size:15px; margin:0 0 13px}
+  ul.pts{margin:12px 0; padding-left:20px}
+  ul.pts li{font-size:14.5px; margin-bottom:8px}
+  ol.nums{margin:12px 0; padding-left:22px}
+  ol.nums li{font-size:14.5px; margin-bottom:10px}
+
+  .big{background:#fbfbfc; border:1px solid var(--line); border-left:5px solid var(--ink);
+    border-radius:10px; padding:15px 17px; margin:14px 0}
+  .big .cap{font-size:12px; font-weight:800; color:var(--sub); letter-spacing:.03em}
+  .big .txt{font-size:15px; font-weight:700; margin-top:5px; line-height:1.6}
+  .warn{background:#fff8e6; border:1px solid #f0d98a; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .warn p{margin:0; font-size:13.5px; color:#7a5a00}
+  .good{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .good p{margin:0; font-size:13.5px; color:#2f4b3b}
+
+  /* 심는 곳 리스트 */
+  .spots{display:flex; flex-direction:column; gap:9px; margin:14px 0}
+  .spot{display:flex; gap:12px; align-items:flex-start; border:1px solid var(--line);
+    border-radius:11px; padding:13px 15px; background:#fff}
+  .spot input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
+  .spot .tx b{font-size:14.5px; display:block}
+  .spot .tx span{font-size:13px; color:var(--sub)}
+  .spot .badge{margin-left:auto; font-size:10.5px; font-weight:800; padding:3px 8px;
+    border-radius:5px; color:#fff; flex:0 0 auto; align-self:flex-start}
+
+  .pc{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:11px; background:#fff}
+  .pc-h{display:flex; align-items:center; gap:9px; padding:11px 14px; background:#f7f8f9;
+    border-bottom:1px solid var(--line); cursor:pointer}
+  .pc-tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:6px; color:#fff; flex:0 0 auto}
+  .pc-t{font-size:14px; font-weight:700; flex:1}
+  .pc-a{font-size:12px; color:var(--sub); font-weight:700}
+  .pc-b{display:none; padding:14px}
+  .pc.open .pc-b{display:block}
+  .code{background:#0f1720; color:#e8eef4; border-radius:10px; padding:14px; font-size:12.5px;
+    line-height:1.75; white-space:pre-wrap; font-family:"Consolas","Courier New",monospace}
+  .cbtn{width:100%; border:none; background:var(--pink); color:#fff; font-size:14px; font-weight:800;
+    padding:11px; border-radius:9px; cursor:pointer; margin-top:9px; font-family:inherit}
+  .why{font-size:12.5px; color:var(--sub); margin:9px 0 0; line-height:1.6}
+
+  .check{display:flex; gap:10px; align-items:flex-start; margin-top:18px; padding-top:16px;
+    border-top:1px dashed var(--line)}
+  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
+  .check label{font-size:14px; font-weight:700; cursor:pointer; color:var(--sub)}
+  .check input:checked + label{color:var(--green)}
+
+  details{background:#fff; border:1px solid var(--line); border-radius:11px; padding:14px 16px; margin-bottom:9px}
+  details summary{font-size:14.5px; font-weight:700; cursor:pointer; list-style:none}
+  details summary::-webkit-details-marker{display:none}
+  details summary:before{content:"Q. "; color:var(--pink); font-weight:800}
+  details[open] summary{margin-bottom:9px}
+  details p{margin:0 0 8px; font-size:14px; color:var(--sub); line-height:1.7}
+  details p:last-child{margin-bottom:0}
+
+  .plan{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-top:14px}
+  .prow{display:flex; gap:12px; padding:13px 15px; border-bottom:1px solid var(--line); background:#fff}
+  .prow:last-child{border-bottom:none}
+  .pw{flex:0 0 66px; font-size:12.5px; font-weight:800; color:#fff; height:26px; border-radius:6px;
+    display:flex; align-items:center; justify-content:center}
+  .prow .pt{font-size:14px}
+  .prow .pt b{display:block; margin-bottom:2px}
+  .prow .pt span{font-size:12.5px; color:var(--sub)}
+
+  .final{background:#fff; border:2px solid var(--ink); border-radius:var(--radius); padding:22px 20px; margin-top:16px}
+  .fl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--line)}
+  .fl:last-child{border-bottom:none}
+  .fl input{width:19px; height:19px; margin-top:2px; accent-color:var(--ink); flex:0 0 auto; cursor:pointer}
+  .fl label{font-size:14px; font-weight:600; cursor:pointer}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:26px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
+  <h1>활동 5. 내 페이지 알리기</h1>
+  <p class="lead">주소는 만들었지만, 아직 <b>아무도 모릅니다.</b>
+  새로 뭘 시작하지 말고, <b>이미 사람들이 보고 있는 곳</b>에 내 주소를 심으세요.
+  오늘 30분이면 충분합니다.</p>
+  <div class="progress">
+    <div class="ptrack"><div class="pfill" id="pfill"></div></div>
+    <div class="ptext" id="ptext">0 / 5 단계</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- 개념 -->
+  <section class="step">
+    <span class="snum" style="background:var(--sub)">먼저</span>
+    <h2>알린다는 건 뭘 하는 걸까요?</h2>
+    <p class="sub">광고를 하라는 게 아닙니다</p>
+
+    <div class="big">
+      <div class="cap">핵심 원칙</div>
+      <div class="txt">새로운 걸 시작하지 마세요.<br />
+      <b>이미 내 이름이 노출되는 자리에 주소 한 줄을 얹는 것</b>, 그게 전부입니다.<br />
+      <span style="font-size:13.5px;font-weight:600;color:var(--sub)">
+      카톡 프로필, 인스타 소개, 문자 끝, 명함 — 이미 사람들이 보고 있는 곳이 있습니다.</span></div>
+    </div>
+
+    <ul class="pts">
+      <li><b>가장 효과 큰 건 SNS 프로필입니다.</b> 사람들은 관심이 생기면 프로필부터 눌러봐요.</li>
+      <li><b>한 번 심어두면 계속 일합니다.</b> 매일 홍보하지 않아도 됩니다.</li>
+      <li><b>완벽할 때 알리려 하지 마세요.</b> 알리면서 고치는 게 맞습니다.</li>
+    </ul>
+
+    <div class="check"><input type="checkbox" class="ck" id="s0" /><label for="s0">이해했어요</label></div>
+  </section>
+
+  <!-- STEP 1 -->
+  <section class="step">
+    <span class="snum" style="background:var(--red)">STEP 1</span>
+    <h2>지금 당장 심기 (10분)</h2>
+    <p class="sub">돈도 안 들고, 지금 바로 됩니다</p>
+
+    <p class="t">아래에서 <b>내가 쓰는 것만</b> 골라 지금 넣으세요. 하나만 해도 됩니다.</p>
+
+    <div class="spots">
+      <label class="spot"><input type="checkbox" />
+        <span class="tx"><b>인스타그램 프로필 링크</b><span>프로필 편집 → 웹사이트 칸에 주소 붙여넣기</span></span>
+        <span class="badge" style="background:var(--red)">효과 1위</span></label>
+      <label class="spot"><input type="checkbox" />
+        <span class="tx"><b>카카오톡 프로필</b><span>프로필 편집 → 상태메시지나 소개에 주소 넣기</span></span>
+        <span class="badge" style="background:var(--yellow)">쉬움</span></label>
+      <label class="spot"><input type="checkbox" />
+        <span class="tx"><b>블로그·밴드 소개글</b><span>소개 맨 아래에 "자세히 보기 → 주소"</span></span></label>
+      <label class="spot"><input type="checkbox" />
+        <span class="tx"><b>문자·이메일 서명</b><span>강의 안내 문자 맨 아래에 한 줄</span></span></label>
+      <label class="spot"><input type="checkbox" />
+        <span class="tx"><b>단톡방·수강생 안내</b><span>기존 수강생에게 "제 페이지 만들었어요" 알리기</span></span>
+        <span class="badge" style="background:var(--green)">반응 좋음</span></label>
+      <label class="spot"><input type="checkbox" />
+        <span class="tx"><b>유튜브·네이버 카페 프로필</b><span>활동 중인 곳이 있다면 소개란에</span></span></label>
+    </div>
+
+    <div class="warn"><p>⚠️ <b>주소를 넣은 뒤 꼭 눌러서 확인하세요.</b> 오타 하나로 안 열리는 경우가 많습니다.</p></div>
+
+    <div class="check"><input type="checkbox" class="ck" id="s1" /><label for="s1">한 곳 이상에 주소를 심었어요</label></div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step">
+    <span class="snum" style="background:var(--yellow)">STEP 2</span>
+    <h2>카톡으로 보낼 때 예쁘게 뜨게 하기</h2>
+    <p class="sub">이거 하나로 신뢰도가 확 달라집니다</p>
+
+    <div class="big">
+      <div class="cap">이런 경험 있으시죠?</div>
+      <div class="txt">링크를 카톡으로 보냈는데 <b>주소만 덜렁</b> 뜰 때가 있고,<br />
+      <b>사진과 제목이 예쁘게</b> 뜰 때가 있습니다.<br />
+      <span style="font-size:13.5px;font-weight:600;color:var(--sub)">
+      그 차이는 페이지 안에 '미리보기 정보'가 들어 있느냐입니다. 클로드에 부탁하면 됩니다.</span></div>
+    </div>
+
+    <div class="pc open"><div class="pc-h" style="background:#eef0f2"><span class="pc-tag" style="background:var(--ink)">★</span><span class="pc-t">공유 미리보기 넣기</span><span class="pc-a">▾</span></div>
+      <div class="pc-b"><div class="code" id="pA">내 페이지를 카톡이나 SNS로 공유할 때
+제목과 설명, 사진이 예쁘게 미리보기로 뜨게 해줘.
+
+- 제목: [내 브랜드명 · 한 줄 소개]
+- 설명: [내 지역 + 무엇을 하는지 · 지금 문의하세요]
+- 미리보기 사진: 첫 화면 프로필 사진으로
+
+검색에서도 잘 보이도록 페이지 제목과 설명 정보도 함께 넣어줘.
+그리고 index.html 파일을 다시 만들어줘.</div>
+      <button class="cbtn" data-t="pA">📋 복사</button>
+      <p class="why">파일을 다시 받아 <b>넷리파이나 버셀에 다시 올리면</b> 적용됩니다.</p></div></div>
+
+    <div class="good"><p>✅ 적용 후 <b>나에게 카톡으로 주소를 보내보세요.</b> 미리보기가 뜨면 성공입니다.</p></div>
+
+    <div class="check"><input type="checkbox" class="ck" id="s2" /><label for="s2">카톡 미리보기를 확인했어요</label></div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step">
+    <span class="snum" style="background:var(--green)">STEP 3</span>
+    <h2>QR코드와 명함 만들기</h2>
+    <p class="sub">오프라인 강의장에서 특히 강력합니다</p>
+
+    <p class="t">강의를 나가시면 <b>그 자리에 있는 수강생이 가장 뜨거운 고객</b>입니다.
+    QR코드 하나면 그 자리에서 연결됩니다.</p>
+
+    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--green)">QR</span><span class="pc-t">QR코드 만들기</span><span class="pc-a">▾</span></div>
+      <div class="pc-b"><div class="code" id="pB">내 웹페이지 주소로 QR코드를 만들어줘.
+주소는 [https://내주소.netlify.app] 이야.
+
+- 인쇄해도 깨지지 않게 크고 선명하게
+- QR 아래에 [내 이름 · 브랜드명] 라고 이름을 넣어줘
+- 이미지로 내려받을 수 있게 해줘</div>
+      <button class="cbtn" data-t="pB">📋 복사</button>
+      <p class="why">만든 뒤 <b>꼭 휴대폰으로 찍어보세요.</b> 내 페이지가 열리면 성공입니다.</p></div></div>
+
+    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--green)">활용</span><span class="pc-t">QR 어디에 쓸까</span><span class="pc-a">▾</span></div>
+      <div class="pc-b">
+        <ul class="pts" style="margin:0">
+          <li><b>강의 마지막 슬라이드</b>에 크게 — "더 궁금하시면 여기로"</li>
+          <li><b>명함 뒷면</b>에 인쇄</li>
+          <li><b>강의장 안내판·배너</b>에</li>
+          <li><b>교재나 워크시트</b> 맨 아래에</li>
+        </ul>
+      </div></div>
+
+    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">명함</span><span class="pc-t">명함 문구 정리하기</span><span class="pc-a">▾</span></div>
+      <div class="pc-b"><div class="code" id="pC">내 명함에 넣을 문구를 정리해줘.
+
+- 이름: [   ]
+- 직함: [   ]
+- 한 줄 소개: [활동 0에서 만든 한 문장]
+- 연락처: [   ]
+- 웹페이지 주소: [   ]
+
+명함은 공간이 좁으니 꼭 필요한 것만 남기고,
+뒷면에는 QR코드와 짧은 안내 문구를 넣는 구성으로 제안해줘.</div>
+      <button class="cbtn" data-t="pC">📋 복사</button></div></div>
+
+    <div class="check"><input type="checkbox" class="ck" id="s3" /><label for="s3">QR코드를 만들고 확인했어요</label></div>
+  </section>
+
+  <!-- 4주 계획 -->
+  <section class="step">
+    <span class="snum" style="background:var(--ink)">한 달 계획</span>
+    <h2>혼자서 이어가는 4주</h2>
+    <p class="sub">한 번에 다 하지 말고, 주에 하나씩</p>
+
+    <div class="plan">
+      <div class="prow"><span class="pw" style="background:var(--red)">1주차</span>
+        <span class="pt"><b>심기</b><span>SNS 프로필·카톡·문자 서명에 주소 넣기</span></span></div>
+      <div class="prow"><span class="pw" style="background:var(--yellow)">2주차</span>
+        <span class="pt"><b>연결하기</b><span>QR코드 만들어 강의자료·명함에 넣기</span></span></div>
+      <div class="prow"><span class="pw" style="background:var(--green)">3주차</span>
+        <span class="pt"><b>채우기</b><span>후기 1~2개 추가하고 페이지 업데이트 (활동 3 프롬프트 활용)</span></span></div>
+      <div class="prow"><span class="pw" style="background:var(--blue)">4주차</span>
+        <span class="pt"><b>점검하기</b><span>문의가 왔는지 확인 · 안 왔다면 어디가 부족한지 AI에게 점검받기</span></span></div>
+    </div>
+
+    <div class="pc" style="margin-top:14px"><div class="pc-h"><span class="pc-tag" style="background:var(--ink)">점검</span><span class="pc-t">한 달 뒤 점검받기</span><span class="pc-a">▾</span></div>
+      <div class="pc-b"><div class="code" id="pH">내 페이지를 공개한 지 한 달이 됐어.
+목표는 [예: 강의 문의 받기]인데 아직 [예: 문의가 거의 없어].
+
+이 페이지를 다시 보고,
+- 방문자가 문의하지 않는 이유로 짐작되는 것 3가지
+- 지금 바로 고칠 수 있는 것 3가지
+를 알려줘. 어려운 말 없이 쉽게 설명해줘.</div>
+      <button class="cbtn" data-t="pH">📋 복사</button></div></div>
+  </section>
+
+  <!-- 다음 과정 안내 -->
+  <section class="step" style="border:2px solid var(--ink)">
+    <span class="snum" style="background:var(--ink)">다음 과정</span>
+    <h2>여기까지가 '만들기'입니다</h2>
+    <p class="sub">다음은 AI 웹사이트 브랜딩 과정</p>
+
+    <p class="t">오늘로 <b>내 웹페이지를 만들고, 주소를 갖고, 사람들이 찾아올 길</b>까지 열었습니다.
+    여기까지가 이 수업의 목표예요.</p>
+
+    <div class="big">
+      <div class="cap">AI 웹사이트 브랜딩 과정에서 배우는 것</div>
+      <div class="txt" style="font-size:14.5px; font-weight:600; line-height:1.9">
+      ① <b>나만의 도메인 만들기</b> — 내이름.com 처럼 나만의 주소<br />
+      ② <b>문의받는 장치 만들기</b> — 방문자가 부담 없이 신청·문의하게<br />
+      ③ <b>네이버·구글에 검색되게 하기</b> — 내 이름과 분야로 찾아오는 브랜딩<br />
+      ④ <b>모집용 이미지 카드뉴스 만들기</b> — 사람을 데려오는 홍보물<br />
+      ⑤ <b>접수 대시보드 만들기</b> — 들어온 신청을 한 곳에서 관리</div>
+    </div>
+
+    <div class="good"><p>📩 <b>다음 과정이 궁금하신 분은 문의를 남겨주세요.</b>
+    과정 일정과 내용을 안내해 드립니다.</p></div>
+
+    <p class="t" style="margin-top:14px">오늘은 <b>주소를 심어두는 것</b>까지만 하셔도 충분합니다.
+    한 번 심어두면 내가 말하지 않아도 계속 일합니다.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="step">
+    <span class="snum" style="background:var(--sub)">자주 묻는 질문</span>
+    <h2>이런 게 궁금하실 거예요</h2>
+
+    <details><summary>아직 페이지가 부족한데 알려도 되나요?</summary>
+      <p>네, 알리세요. 완벽한 페이지는 없습니다. 알리면서 반응을 보고 고치는 게 훨씬 빠릅니다.
+      부족한 부분은 언제든 고쳐서 다시 올릴 수 있어요.</p></details>
+
+    <details><summary>홍보하는 게 부담스럽고 민망해요</summary>
+      <p>많은 분이 그러십니다. 그래서 <b>글을 올리는 것보다 프로필에 심어두는 것</b>부터 시작하세요.
+      한 번 심어두면 내가 말하지 않아도 계속 일합니다.</p></details>
+
+    <details><summary>인스타를 안 하는데 어떡하죠?</summary>
+      <p>괜찮습니다. <b>내가 이미 쓰는 곳</b>에만 넣으면 됩니다. 카톡 프로필, 문자 서명, 명함만으로도 충분해요.
+      없는 채널을 새로 시작할 필요는 없습니다.</p></details>
+
+    <details><summary>주소가 길고 안 예뻐요</summary>
+      <p>활동 4에서 배운 대로 <b>주소 이름을 바꿀 수 있습니다.</b>
+      더 깔끔하게 하고 싶으면 나중에 내 도메인(예: 내이름.com)을 연결하면 됩니다.</p></details>
+
+    <details><summary>얼마나 자주 알려야 하나요?</summary>
+      <p>매일 하지 않아도 됩니다. <b>프로필에 심어두고, 새 강의가 열릴 때 한 번씩</b>이면 충분합니다.
+      위의 4주 계획대로만 하세요.</p></details>
+  </section>
+
+  <!-- 최종 -->
+  <div class="final">
+    <h2 style="margin-bottom:4px">✅ 오늘의 점검</h2>
+    <p class="sub">여기까지 하면 내 페이지가 일하기 시작합니다</p>
+    <div class="fl"><input type="checkbox" id="f1" /><label for="f1">SNS 프로필이나 카톡에 주소를 넣었다</label></div>
+    <div class="fl"><input type="checkbox" id="f2" /><label for="f2">넣은 주소를 눌러서 잘 열리는지 확인했다</label></div>
+    <div class="fl"><input type="checkbox" id="f3" /><label for="f3">카톡으로 보냈을 때 미리보기가 뜬다</label></div>
+    <div class="fl"><input type="checkbox" id="f4" /><label for="f4">QR코드를 만들고 휴대폰으로 찍어봤다</label></div>
+    <div class="fl"><input type="checkbox" id="f5" /><label for="f5">4주 계획 중 1주차를 언제 할지 정했다</label></div>
+  </div>
+
+  <style>
+  #svForm label{font-weight:700;font-size:14px;display:block;margin-bottom:6px}
+  #svForm input[type=text],#svForm input[type=url],#svForm textarea,#sv_pw{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}
+  #svForm textarea{min-height:68px;resize:vertical}
+  .svstars{font-size:30px;color:#ddd;cursor:pointer;letter-spacing:5px;user-select:none}
+  .svstars .on{color:#E7A400}
+  .svchips{display:flex;flex-wrap:wrap;gap:8px}
+  .svchips label{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px;border:1px solid var(--line);border-radius:999px;padding:8px 13px;cursor:pointer;background:#fff;margin:0}
+  .svchips label:has(input:checked){border-color:var(--pink);background:#fdeef6;color:var(--pink)}
+  .svchips input{accent-color:var(--pink)}
+  .svitem{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:8px;font-size:13px;line-height:1.6}
+  .svitem b{font-size:13.5px}
+  #doneSurvey details summary:before{content:"";margin:0}
+  </style>
+  <section class="step" id="doneSurvey" style="border:2px solid var(--pink)">
+    <span class="snum" style="background:var(--pink)">과정 완료</span>
+    <h2>🎉 후기 남기고, 내 페이지 자랑하기</h2>
+    <p class="sub">내가 만든 주소를 올려 자랑하고, 짧은 소감·만족도만 남겨주세요</p>
+
+    <div class="good"><p>💗 오늘 <b>내 손으로 웹페이지를 완성</b>하셨어요. 아래에 <b>내 페이지 주소</b>를 올려 자랑하고, 좋았던 점과 앞으로 배우고 싶은 것을 남겨주시면 다음 과정을 더 좋게 준비합니다.</p></div>
+
+    <form id="svForm" style="display:flex;flex-direction:column;gap:15px;margin-top:6px" onsubmit="return false">
+      <div><label>이름 <span style="color:var(--sub);font-weight:500">(예명 가능)</span></label>
+        <input id="sv_name" type="text" placeholder="이름 또는 예명" autocomplete="off" /></div>
+
+      <div><label>🔗 내가 만든 페이지 주소 <span style="color:var(--pink);font-weight:700">— 자랑하기!</span></label>
+        <input id="sv_url" type="url" placeholder="https://내주소.netlify.app" autocomplete="off" /></div>
+
+      <div><label>오늘 만족도</label>
+        <div class="svstars" id="svStars"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div></div>
+
+      <div><label>좋았던 점 · 소감 <span style="color:var(--sub);font-weight:500">(후기)</span></label>
+        <textarea id="sv_liked" placeholder="오늘 좋았던 점, 느낀 점을 자유롭게 적어주세요"></textarea></div>
+
+      <div><label>앞으로 관심 있는 · 더 배우고 싶은 과정 <span style="color:var(--sub);font-weight:500">(여러 개 선택)</span></label>
+        <div class="svchips" id="sv_interest">
+          <label><input type="checkbox" value="퍼스널컬러" />퍼스널컬러</label>
+          <label><input type="checkbox" value="골격분석" />골격분석</label>
+          <label><input type="checkbox" value="컬러강점" />컬러강점</label>
+          <label><input type="checkbox" value="컬러테라피" />컬러테라피</label>
+          <label><input type="checkbox" value="퇴직예정자 미래설계" />퇴직예정자 미래설계</label>
+          <label><input type="checkbox" value="AI 웹페이지 제작" />AI 웹페이지 제작</label>
+          <label><input type="checkbox" value="AI 교육신청 시스템" />AI 교육신청 시스템</label>
+          <label><input type="checkbox" value="AI 웹페이지 브랜딩" />AI 웹페이지 브랜딩</label>
+          <label><input type="checkbox" value="AI 마스터 전문가과정" />AI 마스터 전문가과정</label>
+        </div></div>
+
+      <div><label>더 배우고 싶은 것 · 바라는 점 <span style="color:var(--sub);font-weight:500">(선택)</span></label>
+        <textarea id="sv_more" placeholder="더 배우고 싶은 것, 강의에 바라는 점이 있으면 적어주세요"></textarea></div>
+
+      <button type="button" class="cbtn" id="sv_submit" style="margin-top:2px">💗 후기·소감 남기기</button>
+      <div id="sv_msg" style="font-size:13px;font-weight:700;text-align:center;min-height:18px"></div>
+    </form>
+
+    <div class="check"><input type="checkbox" class="ck" id="s4" /><label for="s4">후기·만족도 조사를 남겼어요</label></div>
+
+    <details style="margin-top:16px"><summary style="font-weight:700;color:var(--sub)">🔒 운영자 결과 보기</summary>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input id="sv_pw" type="password" placeholder="운영자 비밀번호" style="flex:1" />
+        <button type="button" class="cbtn" id="sv_open" style="width:auto;margin:0;padding:11px 18px">열기</button>
+      </div>
+      <div id="sv_admin" style="margin-top:12px"></div>
+    </details>
+  </section>
+
+  <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
+</div>
+
+<script>
+document.querySelectorAll(".pc-h").forEach(h=>{
+  h.addEventListener("click", ()=> h.parentElement.classList.toggle("open"));
+});
+document.querySelectorAll(".cbtn").forEach(b=>{
+  b.addEventListener("click", async e=>{
+    e.stopPropagation();
+    const t=document.getElementById(b.dataset.t).textContent;
+    try{ await navigator.clipboard.writeText(t); }
+    catch(err){
+      const r=document.createRange(); r.selectNode(document.getElementById(b.dataset.t));
+      const s=getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); s.removeAllRanges();
+    }
+    const o=b.textContent; b.textContent="✅ 복사됐어요!";
+    setTimeout(()=>b.textContent=o,1600);
+  });
+});
+const cks=[...document.querySelectorAll(".ck")];
+const pfill=document.getElementById("pfill"), ptext=document.getElementById("ptext");
+function upd(){
+  const n=cks.filter(c=>c.checked).length;
+  pfill.style.width=(n/cks.length*100)+"%";
+  ptext.textContent = n===cks.length ? "🎉 다 하셨어요! 이제 페이지가 일합니다" : `${n} / ${cks.length} 단계`;
+}
+cks.forEach(c=>c.addEventListener("change",upd)); upd();
+</script>
+<script>
+(function(){
+  var U='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+  var H={apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'};
+  function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var star=0, box=document.getElementById('svStars');
+  if(box){box.querySelectorAll('span').forEach(function(sp){sp.onclick=function(){star=+sp.dataset.v;box.querySelectorAll('span').forEach(function(x){x.classList.toggle('on',(+x.dataset.v)<=star);});};});}
+  var sub=document.getElementById('sv_submit');
+  if(sub) sub.addEventListener('click',function(){
+    var name=(document.getElementById('sv_name').value||'').trim()||'익명';
+    var url=(document.getElementById('sv_url').value||'').trim();
+    var liked=(document.getElementById('sv_liked').value||'').trim();
+    var more=(document.getElementById('sv_more').value||'').trim();
+    var ints=[].slice.call(document.querySelectorAll('#sv_interest input:checked')).map(function(c){return c.value;}).join(', ');
+    var msg=document.getElementById('sv_msg');
+    if(!liked && !star){ msg.style.color='#C0247E'; msg.textContent='별점이나 소감을 남겨주세요.'; return; }
+    msg.style.color='#5b636b'; msg.textContent='보내는 중…';
+    fetch(U+'/rest/v1/class_survey',{method:'POST',headers:Object.assign({Prefer:'return=minimal'},H),body:JSON.stringify({course:'AI 웹페이지 제작',name:name,page_url:url,rating:star||null,liked:liked,interests:ints,want_more:more})})
+    .then(function(r){ if(r.ok){ msg.style.color='#2C8C5A'; msg.textContent='💗 고맙습니다! 소중히 반영할게요.';
+        var ck=document.getElementById('s4'); if(ck&&!ck.checked){ck.checked=true;ck.dispatchEvent(new Event('change'));}
+        document.getElementById('svForm').reset(); star=0; if(box)box.querySelectorAll('span').forEach(function(x){x.classList.remove('on');});
+      } else { msg.style.color='#C0247E'; msg.textContent='오류가 났어요. 잠시 후 다시 시도해 주세요.'; } })
+    .catch(function(){ msg.style.color='#C0247E'; msg.textContent='오류가 났어요. 잠시 후 다시 시도해 주세요.'; });
+  });
+  var op=document.getElementById('sv_open');
+  if(op) op.addEventListener('click',function(){
+    if((document.getElementById('sv_pw').value||'').trim()!=='8808'){ document.getElementById('sv_admin').innerHTML='<div class="svitem" style="color:#C0247E">비밀번호가 올바르지 않습니다.</div>'; return; }
+    var a=document.getElementById('sv_admin'); a.innerHTML='불러오는 중…';
+    fetch(U+'/rest/v1/class_survey?select=*&order=created_at.desc&limit=300',{headers:H})
+    .then(function(r){return r.json();}).then(function(rows){
+      if(!rows||!rows.length){ a.innerHTML='<div class="svitem">아직 응답이 없습니다.</div>'; return; }
+      var tally={}, rated=rows.filter(function(x){return x.rating;});
+      rows.forEach(function(x){ (x.interests||'').split(',').map(function(s){return s.trim();}).filter(Boolean).forEach(function(k){tally[k]=(tally[k]||0)+1;}); });
+      var avg=rated.length?(rated.reduce(function(s,x){return s+x.rating;},0)/rated.length).toFixed(1):'-';
+      var ts=Object.keys(tally).sort(function(x,y){return tally[y]-tally[x];}).map(function(k){return esc(k)+' '+tally[k];}).join(' · ')||'-';
+      var head='<div class="svitem" style="background:#faf4fb;border-color:#ecd9ec"><b>응답 '+rows.length+'명 · 평균 만족도 '+avg+'점</b><br><span style="color:#5b636b">관심 과정: '+ts+'</span></div>';
+      a.innerHTML=head+rows.map(function(x){
+        return '<div class="svitem"><b>'+esc(x.name||'익명')+'</b>'+(x.rating?(' · '+'★'.repeat(x.rating)):'')+(x.page_url?(' · <a href="'+esc(x.page_url)+'" target="_blank" rel="noopener">🔗 페이지</a>'):'')
+          +(x.liked?('<div style="margin-top:4px">'+esc(x.liked)+'</div>'):'')
+          +(x.interests?('<div style="margin-top:3px;color:#5b636b">관심: '+esc(x.interests)+'</div>'):'')
+          +(x.want_more?('<div style="color:#5b636b">더: '+esc(x.want_more)+'</div>'):'')+'</div>';
+      }).join('');
+    }).catch(function(){ a.innerHTML='<div class="svitem" style="color:#C0247E">불러오기 오류.</div>'; });
+  });
+})();
+</script>
+<script>(function(){try{if(localStorage.getItem("pbs_aiweb_agree"))return;}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
+</body>
+</html>
