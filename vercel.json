@@ -3,11 +3,11 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/(.*)\\.(js|css|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2|ttf|otf|eot|mp4|webm|pdf)",
+      "source": "/(.*)\\.html",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400"
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     },
@@ -16,12 +16,20 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
+          "value": "public, max-age=3600"
         }
       ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/consulting",
+      "destination": "/consulting.html"
+    },
+    {
+      "source": "/consult-survey",
+      "destination": "/consult-survey.html"
+    },
     {
       "source": "/business",
       "destination": "/business.html"

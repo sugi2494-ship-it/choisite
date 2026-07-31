@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>토탈·웨딩 컨설팅 사전 진단 질문지 — 최해숙 PBS COLOR LAB</title>
+<meta name="description" content="PBS COLOR LAB 토탈·웨딩 컨설팅 사전 진단 질문지. 신청 이유·평소 스타일·피부톤·선호 핏·소재·개선하고 싶은 부분·원하는 이미지를 미리 남기면 상담이 훨씬 깊어집니다." />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://www.pbscolor.com/consult-survey" />
+<meta name="format-detection" content="telephone=no" />
+<style>
+:root{
+  --pink:#E91E8C; --pink-deep:#B7176E; --pink-tint:#FCEAF4; --pink-line:#F3CFE3;
+  --ink:#1E1A1C; --ink-2:#4A4247; --ink-3:#8A828A;
+  --line:#ECE7EA; --bg:#FFFFFF; --bg-2:#FBF8FA; --surface:#FFF;
+  --radius:18px; --shadow:0 1px 2px rgba(30,20,30,.04),0 10px 30px rgba(30,20,30,.06); --maxw:780px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Pretendard','Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  color:var(--ink);background:var(--bg-2);line-height:1.62;word-break:keep-all;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+header.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:15px}
+.brand .dot{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,#FF2D9B,var(--pink));box-shadow:0 0 0 4px var(--pink-tint)}
+.brand small{display:block;font-size:11px;font-weight:700;color:var(--ink-3)}
+.hero{background:linear-gradient(180deg,var(--pink-tint),var(--bg-2) 82%);padding:38px 0 24px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--pink);background:#fff;border:1px solid var(--pink-line);padding:5px 12px;border-radius:999px;margin-bottom:12px}
+h1{margin:0 0 10px;font-size:clamp(23px,4vw,31px);font-weight:900;letter-spacing:-.02em}
+.hero p{color:var(--ink-2);font-size:15px;margin:0}
+.notice{margin-top:14px;background:#fff;border:1px solid var(--pink-line);border-radius:14px;padding:12px 14px;font-size:13.5px;color:var(--ink-2)}
+.notice b{color:var(--pink-deep)}
+main{padding:26px 0 60px}
+
+/* 진단 안내 */
+.guide{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow);margin-bottom:22px}
+.guide h2{font-size:17px;font-weight:900;margin:0 0 4px}
+.guide .sub{font-size:13px;color:var(--ink-3);margin:0 0 14px}
+.dg{border:1px solid var(--line);border-radius:13px;padding:14px 15px;margin-bottom:10px;background:var(--bg-2)}
+.dg h3{margin:0 0 6px;font-size:15px;font-weight:800;color:var(--pink-deep);display:flex;align-items:center;gap:8px}
+.dg h3 .n{width:22px;height:22px;border-radius:50%;background:var(--pink);color:#fff;font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.dg p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.dg p .lab{font-weight:800;color:var(--ink)}
+.pack{margin-top:8px;border-top:1px dashed var(--line);padding-top:14px}
+.pack ul{margin:8px 0 0;padding-left:0;list-style:none;font-size:13.5px;color:var(--ink-2)}
+.pack li{padding:6px 0;border-bottom:1px solid var(--line);display:flex;gap:8px}
+.pack li:last-child{border-bottom:0}
+.pack li b{color:var(--pink-deep);flex:0 0 118px}
+.pack .fee{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+
+/* 폼 */
+form.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 20px;box-shadow:var(--shadow)}
+.grp-title{font-size:13px;font-weight:800;letter-spacing:.03em;color:var(--pink);margin:24px 0 12px;padding-top:18px;border-top:1px dashed var(--line)}
+.grp-title:first-child{border-top:0;padding-top:0;margin-top:0}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
+.field .star{color:var(--pink)}
+.field .hint{font-weight:500;color:var(--ink-3);font-size:12.5px}
+.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:11px;font-size:15px;font-family:inherit;background:var(--bg-2)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--pink);background:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:700;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:8px 13px;cursor:pointer;user-select:none}
+.chip.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+.reflinks input{margin-bottom:8px}
+.consent{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--ink-2);margin:10px 0 18px}
+.consent a{color:var(--pink);text-decoration:underline}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:800;font-size:16px;padding:14px 24px;border-radius:999px;cursor:pointer;border:0;width:100%}
+.btn-primary{background:linear-gradient(135deg,#FF2D9B,var(--pink));color:#fff;box-shadow:0 8px 22px rgba(233,30,140,.28)}
+.btn-primary:disabled{opacity:.6;cursor:default}
+.btn-naver{background:#03C75A;color:#fff;margin-top:12px}
+.okmsg{display:none;background:var(--pink-tint);border:1px solid var(--pink-line);border-radius:12px;padding:14px;margin-bottom:14px;color:var(--pink-deep);font-weight:700}
+.done{display:none;text-align:center;padding:40px 20px}
+.done .ic{font-size:44px}
+.done h2{font-size:24px;font-weight:900;margin:14px 0 8px}
+.done p{color:var(--ink-2)}
+footer{background:var(--ink);color:#9b9298;padding:30px 0;font-size:12.5px;text-align:center;line-height:1.9;margin-top:20px}
+footer a{color:#e7dfe4}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="https://www.pbscolor.com/consulting" class="brand">
+      <span class="dot"></span><span>PBS COLOR LAB<small>사전 진단 질문지</small></span>
+    </a>
+    <a href="tel:16007218" style="font-weight:800;color:var(--pink);font-size:14px">📞 1600-7218</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">PRE-CONSULT SURVEY · TOTAL &amp; WEDDING</span>
+    <h1>토탈·웨딩 컨설팅 사전 진단 질문지</h1>
+    <p>예약해 주셔서 감사합니다. 아래 질문에 아는 만큼 편하게 남겨 주시면, 대표가 미리 방향을 잡아 상담이 훨씬 깊고 알차집니다. 소요 3~4분.</p>
+    <div class="notice">
+      본 사전 질문지는 <b>토탈(VIP) 컨설팅·웨딩 컨설팅</b> 신청자분께만 안내드립니다.
+      단일·2종 진단은 현장에서 진행되며 별도 작성이 필요 없습니다.
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+
+    <!-- ── 진단 안내 ── -->
+    <section class="guide">
+      <h2>먼저, 진단이 이렇게 진행됩니다</h2>
+      <p class="sub">토탈 컨설팅은 아래 세 가지를 모두 진행합니다. 각 진단이 무엇을 알려주는지 미리 확인해 보세요.</p>
+
+      <div class="dg">
+        <h3><span class="n">1</span>퍼스널컬러 진단</h3>
+        <p><span class="lab">진행 방식 —</span> 노메이크업(또는 옅은 화장) 상태에서 얼굴 아래에 다양한 색의 진단 천(드레이프)을 대어, 피부·눈·머리색과 가장 조화로운 색 그룹을 찾습니다. 웜·쿨을 넘어 봄·여름·가을·겨울 세부 톤까지 확인합니다.<br>
+        <span class="lab">알 수 있는 것 —</span> 나를 화사하게 살려 주는 색과 칙칙하게 만드는 색, 어울리는 옷·메이크업·헤어컬러·액세서리 색의 기준.</p>
+      </div>
+
+      <div class="dg">
+        <h3><span class="n">2</span>골격(체형) 진단</h3>
+        <p><span class="lab">진행 방식 —</span> 타고난 뼈대·근육감·살집의 특징을 살펴 스트레이트·웨이브·내추럴 유형을 분석합니다.<br>
+        <span class="lab">알 수 있는 것 —</span> 체형을 가장 돋보이게 하는 옷의 핏·소재·기장·디자인 기준. 어떤 옷이 나를 날씬하고 균형 있게 보이게 하는지.</p>
+      </div>
+
+      <div class="dg">
+        <h3><span class="n">3</span>얼굴(이미지) 분석</h3>
+        <p><span class="lab">진행 방식 —</span> 얼굴형·이목구비 비율·전체 인상을 분석합니다.<br>
+        <span class="lab">알 수 있는 것 —</span> 어울리는 헤어스타일·메이크업 방향·안경테·네크라인 등 첫인상을 원하는 이미지로 연출하는 기준.</p>
+      </div>
+
+      <div class="pack">
+        <div style="font-size:13px;font-weight:800;color:var(--pink)">컨설팅 구성 안내</div>
+        <ul>
+          <li><b>단일 진단</b><span>퍼스널컬러 · 골격진단 · 얼굴분석 중 <b style="flex:none">1가지</b> 선택</span></li>
+          <li><b>2종 진단</b><span>위 세 가지 중 <b style="flex:none">2가지</b> 선택</span></li>
+          <li><b>토탈 컨설팅</b><span>세 가지 <b style="flex:none">전부</b> + 추가 서비스(온라인 퍼스널 쇼퍼)</span></li>
+          <li><b>VIP 토탈</b><span>토탈 컨설팅 + <b style="flex:none">최해숙 대표 쇼퍼 동행</b> 패키지</span></li>
+        </ul>
+        <p class="fee">※ 자세한 금액·소요시간은 <a href="https://www.pbscolor.com/consulting" style="color:var(--pink);text-decoration:underline">컨설팅 안내 페이지</a> 또는 1600-7218로 문의해 주세요.</p>
+      </div>
+    </section>
+
+    <!-- ── 사전 질문 폼 ── -->
+    <form class="card" id="surveyForm" onsubmit="return submitSurvey(event)">
+      <div class="okmsg" id="okmsg">제출 중입니다…</div>
+
+      <div class="grp-title">기본 정보</div>
+      <div class="field">
+        <label>컨설팅 종류 <span class="star">*</span></label>
+        <select id="sType" required>
+          <option value="VIP 토탈 컨설팅">VIP 토탈 컨설팅</option>
+          <option value="토탈 컨설팅">토탈 컨설팅</option>
+          <option value="웨딩 컨설팅">웨딩 컨설팅</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>성함 <span class="star">*</span></label>
+        <input id="sName" required placeholder="성함" autocomplete="name" />
+      </div>
+      <div class="field">
+        <label>연락처 <span class="star">*</span></label>
+        <input id="sPhone" required placeholder="010-0000-0000" inputmode="tel" autocomplete="tel" />
+      </div>
+      <div class="field">
+        <label>예약(방문) 예정일 <span class="hint">(선택)</span></label>
+        <input id="sDate" type="date" />
+      </div>
+
+      <div class="grp-title">신청 이유</div>
+      <div class="field">
+        <label>이번 컨설팅을 신청하신 이유가 궁금해요 <span class="hint">(중복 선택 가능)</span></label>
+        <div class="chips" id="reasonChips">
+          <span class="chip">나에게 어울리는 색·스타일을 알고 싶어서</span>
+          <span class="chip">쇼핑 실패를 줄이고 싶어서</span>
+          <span class="chip">이미지 변화를 주고 싶어서</span>
+          <span class="chip">중요한 행사 준비</span>
+          <span class="chip">직업·업무상 필요</span>
+          <span class="chip">웨딩 준비</span>
+          <span class="chip">선물 받음</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>조금 더 자세히 남겨 주세요 <span class="hint">(선택)</span></label>
+        <textarea id="sReason" rows="2" placeholder="예: 옷은 많은데 늘 비슷하게 입게 되고, 사면 잘 안 어울려서 기준을 잡고 싶어요"></textarea>
+      </div>
+
+      <div class="grp-title">평소 스타일 &amp; 취향</div>
+      <div class="field">
+        <label>평소 자주 입는 스타일 <span class="hint">(중복 선택 가능)</span></label>
+        <div class="chips" id="styleChips">
+          <span class="chip">캐주얼</span><span class="chip">미니멀·심플</span><span class="chip">클래식·포멀</span>
+          <span class="chip">러블리·페미닌</span><span class="chip">스포티</span><span class="chip">유니크·개성</span>
+          <span class="chip">편한 옷 위주</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>선호하는 옷의 핏 <span class="hint">(중복 선택 가능)</span></label>
+        <div class="chips" id="fitChips">
+          <span class="chip">몸에 딱 맞는 핏</span><span class="chip">적당히 여유 있는 핏</span>
+          <span class="chip">넉넉한·오버핏</span><span class="chip">허리 강조</span><span class="chip">잘 모르겠어요</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>선호하는 소재감 <span class="hint">(중복 선택 가능)</span></label>
+        <div class="chips" id="fabricChips">
+          <span class="chip">광택 있는 소재</span><span class="chip">매트한 소재</span>
+          <span class="chip">부드러운 소재</span><span class="chip">도톰한 소재</span>
+          <span class="chip">얇고 하늘한 소재</span><span class="chip">신축성 있는 소재</span>
+        </div>
+      </div>
+
+      <div class="grp-title">컬러 &amp; 피부 (퍼스널컬러 참고)</div>
+      <div class="field">
+        <label>햇볕에 오래 노출되면 어떤 편인가요? <span class="hint">(하나 선택)</span></label>
+        <div class="chips" id="sunChips" data-single="1">
+          <span class="chip">잘 타서 갈색이 된다</span>
+          <span class="chip">쉽게 붉어지고 잘 안 탄다</span>
+          <span class="chip">붉어졌다가 갈색으로 남는다</span>
+          <span class="chip">잘 모르겠다</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>평소 즐겨 바르는 립 컬러 <span class="hint">(중복 선택 가능)</span></label>
+        <div class="chips" id="lipChips">
+          <span class="chip">핑크 계열</span><span class="chip">코랄 계열</span><span class="chip">레드 계열</span>
+          <span class="chip">MLBB·뉴트럴</span><span class="chip">누드·베이지</span><span class="chip">거의 안 바른다</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>잘 어울린다고 듣는 색 / 피하고 싶은 색 <span class="hint">(선택)</span></label>
+        <input id="sColor" placeholder="예: 밝은 톤은 잘 어울린다고 들어요 / 노란기 도는 색은 피하고 싶어요" />
+      </div>
+
+      <div class="grp-title">체형 강점 &amp; 개선 희망</div>
+      <div class="field">
+        <label>컨설팅으로 보완·개선하고 싶은 부분 <span class="hint">(중복 선택 가능)</span></label>
+        <div class="chips" id="improveChips">
+          <span class="chip">상체</span><span class="chip">하체</span><span class="chip">복부·똥배</span>
+          <span class="chip">어깨</span><span class="chip">팔뚝</span><span class="chip">다리</span>
+          <span class="chip">허리 라인</span><span class="chip">얼굴형</span><span class="chip">전체 밸런스</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>스스로 생각하는 강점 / 살리고 싶은 부분 <span class="hint">(선택)</span></label>
+        <input id="sStrength" placeholder="예: 다리는 자신 있어요 / 목선이 예쁘다는 말을 들어요" />
+      </div>
+
+      <div class="grp-title">원하는 이미지</div>
+      <div class="field">
+        <label>어떤 이미지를 원하시나요? <span class="hint">(중복 선택 가능)</span></label>
+        <div class="chips" id="imgChips">
+          <span class="chip">화사한</span><span class="chip">우아한</span><span class="chip">단정한</span>
+          <span class="chip">세련된</span><span class="chip">부드러운</span><span class="chip">또렷한</span>
+          <span class="chip">활동적인</span><span class="chip">고급스러운</span><span class="chip">내추럴</span>
+        </div>
+      </div>
+      <div class="field reflinks">
+        <label>참고하고 싶은 이미지 링크 <span class="hint">(핀터레스트·인스타·연예인 사진 등 URL, 선택)</span></label>
+        <input id="sRef1" inputmode="url" placeholder="참고 이미지 링크 1" />
+        <input id="sRef2" inputmode="url" placeholder="참고 이미지 링크 2" />
+        <input id="sRef3" inputmode="url" placeholder="참고 이미지 링크 3" />
+      </div>
+      <div class="field">
+        <label>원하는 스타일·이미지를 자유롭게 <span class="hint">(선택)</span></label>
+        <textarea id="sImage" rows="2" placeholder="예: 부드럽지만 신뢰감 있는 인상 / OO 배우 같은 분위기를 좋아해요"></textarea>
+      </div>
+
+      <div class="grp-title">행사 · 요청사항</div>
+      <div class="field">
+        <label>특별한 행사가 있나요? <span class="hint">(웨딩·촬영·면접 등, 선택)</span></label>
+        <input id="sEvent" placeholder="예: 3개월 뒤 결혼식 / 프로필 촬영 예정" />
+      </div>
+      <div class="field">
+        <label>남기고 싶은 요청·질문 <span class="hint">(선택)</span></label>
+        <textarea id="sRequest" rows="3" placeholder="예: 결과에 맞춘 쇼핑 리스트도 받고 싶어요 / 피부가 예민해요"></textarea>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="sConsent" />
+        <span><b>개인정보 수집·이용 동의</b> — 상담 준비를 위해 입력하신 정보를 수집하며, 상담 완료 후 관련 법령에 따라 처리합니다. <a href="https://www.pbscolor.com/privacy" target="_blank" rel="noopener">처리방침</a></span>
+      </label>
+      <button type="submit" class="btn btn-primary" id="submitBtn">사전 질문지 제출하기</button>
+      <a class="btn btn-naver" id="naverBtn" href="https://naver.me/GSD0VrvO" target="_blank" rel="noopener">아직 예약 전이라면 · 네이버 예약하기</a>
+    </form>
+
+    <div class="done" id="done">
+      <div class="ic">🎉</div>
+      <h2>제출이 완료되었습니다</h2>
+      <p>소중한 답변 감사합니다. 대표가 확인 후 일정과 안내를 연락드리겠습니다.<br />궁금한 점은 1600-7218로 언제든 문의해 주세요.</p>
+      <p style="margin-top:20px"><a href="https://www.pbscolor.com/consulting" style="color:var(--pink);font-weight:800;text-decoration:underline">← 컨설팅 안내로 돌아가기</a></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  PBS COLOR LAB · 대표 최해숙 · 대표번호 <a href="tel:16007218">1600-7218</a> · 인증센터 문의 <a href="tel:01042857997">010-4285-7997</a><br />
+  © PBS COLOR LAB · www.pbscolor.com
+</footer>
+
+<script>
+/* ── Supabase (기존 홈페이지와 동일한 pbs_inquiries 방식) ── */
+var CONFIG={
+  SUPA_URL:"https://oqxlsnyuwtmjmbhgzjoz.supabase.co",
+  SUPA_KEY:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8",
+  NAVER_BOOKING_URL:"https://naver.me/GSD0VrvO",
+  ADMIN_EMAIL:"sugi2494@gmail.com"
+};
+document.getElementById('naverBtn').href=CONFIG.NAVER_BOOKING_URL;
+
+/* URL 프리필: ?type=웨딩 컨설팅 / ?name= / ?phone= */
+var qp=new URLSearchParams(location.search);
+(function(){
+  var t=qp.get('type');
+  if(t){var s=document.getElementById('sType');for(var i=0;i<s.options.length;i++){if(s.options[i].value===t){s.value=t;break;}}}
+  if(qp.get('name'))document.getElementById('sName').value=qp.get('name');
+  if(qp.get('phone'))document.getElementById('sPhone').value=qp.get('phone');
+})();
+
+/* 칩 토글 (data-single 이면 단일 선택) */
+Array.prototype.forEach.call(document.querySelectorAll('.chips'),function(box){
+  var single=box.getAttribute('data-single')==='1';
+  Array.prototype.forEach.call(box.querySelectorAll('.chip'),function(c){
+    c.addEventListener('click',function(){
+      if(single){Array.prototype.forEach.call(box.querySelectorAll('.chip'),function(x){if(x!==c)x.classList.remove('on');});}
+      c.classList.toggle('on');
+    });
+  });
+});
+function picked(id){return Array.prototype.filter.call(document.querySelectorAll('#'+id+' .chip.on'),function(){return true;}).map(function(c){return c.textContent.trim();});}
+function join(a){return a.length?a.join(', '):'-';}
+function v(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+
+/* pbs_inquiries 행 생성 */
+function toInquiryRow(){
+  var refs=[v('sRef1'),v('sRef2'),v('sRef3')].filter(function(x){return x;});
+  var L=[
+    '▶ 토탈·웨딩 사전 진단 질문지',
+    '컨설팅 종류: '+v('sType'),
+    '예약 예정일: '+(v('sDate')||'-'),
+    '── 신청 이유 ──',
+    '신청 이유(선택): '+join(picked('reasonChips')),
+    '신청 이유(서술): '+(v('sReason')||'-'),
+    '── 평소 스타일 ──',
+    '자주 입는 스타일: '+join(picked('styleChips')),
+    '선호 핏: '+join(picked('fitChips')),
+    '선호 소재감: '+join(picked('fabricChips')),
+    '── 컬러/피부 ──',
+    '햇볕 반응: '+join(picked('sunChips')),
+    '즐겨 바르는 립: '+join(picked('lipChips')),
+    '어울리는/피하고 싶은 색: '+(v('sColor')||'-'),
+    '── 체형 ──',
+    '개선 희망 부분: '+join(picked('improveChips')),
+    '강점/살리고 싶은 부분: '+(v('sStrength')||'-'),
+    '── 원하는 이미지 ──',
+    '원하는 이미지: '+join(picked('imgChips')),
+    '자유 서술: '+(v('sImage')||'-'),
+    '참고 이미지 링크: '+(refs.length?refs.join(' | '):'-'),
+    '── 행사/요청 ──',
+    '특별한 행사: '+(v('sEvent')||'-'),
+    '요청·질문: '+(v('sRequest')||'-'),
+    '── 동의 ──',
+    '개인정보 수집·이용 동의: 예'
+  ];
+  return {
+    name:v('sName'),
+    phone:v('sPhone'),
+    email:null,
+    country:'KR',
+    org:'[사전질문지] '+v('sType'),
+    sns:'',
+    msg:L.join('\n')
+  };
+}
+
+function submitSurvey(e){
+  e.preventDefault();
+  var name=v('sName'),phone=v('sPhone');
+  if(!name||!phone){alert('성함과 연락처를 입력해 주세요.');return false;}
+  if(!document.getElementById('sConsent').checked){alert('개인정보 수집·이용에 동의해 주세요.');return false;}
+  var row=toInquiryRow();
+  var btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='제출 중…';
+  document.getElementById('okmsg').style.display='block';
+  fetch(CONFIG.SUPA_URL+'/rest/v1/pbs_inquiries',{
+    method:'POST',
+    headers:{apikey:CONFIG.SUPA_KEY,Authorization:'Bearer '+CONFIG.SUPA_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify(row)
+  }).then(function(r){
+    if(!r.ok)throw new Error('save failed '+r.status);
+    document.getElementById('surveyForm').style.display='none';
+    document.getElementById('done').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }).catch(function(){
+    btn.disabled=false;btn.textContent='사전 질문지 제출하기';
+    document.getElementById('okmsg').style.display='none';
+    alert('제출에 실패했습니다. 잠시 후 다시 시도하시거나 1600-7218로 연락 주세요.');
+  });
+  return false;
+}
+</script>
+</body>
+</html>
