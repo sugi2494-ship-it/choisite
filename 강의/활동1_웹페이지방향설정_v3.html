@@ -102,16 +102,17 @@
     <!-- 1. 브랜드 자산 -->
     <section class="card" style="border:2px solid var(--pink)">
       <div class="sec-title"><span class="dot" style="background:var(--pink)"></span>1. 나의 브랜드 자산 불러오기</div>
-      <p class="sec-desc">활동 0에서 정리한 <b>나의 정체성·강점·대상</b>을 그대로 가져옵니다.
-      활동 0의 「요약 복사하기」로 복사한 내용을 아래에 붙여넣으세요.</p>
+      <p class="sec-desc">활동 0에서 <b>클로드가 정리해 준 결과</b>(① 내 소개 ② 브랜드 한 문장 ③ 웹페이지 방향 ④ 내용 초안)를
+      <b>그대로 복사해</b> 아래에 붙여넣으세요. 형식은 신경 쓰지 않아도 됩니다.</p>
 
-      <textarea id="paste" class="paste" placeholder="여기에 활동 0 요약을 붙여넣으세요.
+      <textarea id="paste" class="paste" placeholder="활동 0에서 클로드가 정리해 준 내용을 그대로 붙여넣으세요.
 
-[나 발견하기 요약]
-· 나의 이야기: …
-· 나의 대상: …
-· 강점 색 성향: …
-· 한 문장: …"></textarea>
+① 내 소개: …
+② 내 브랜드 한 문장: …
+③ 웹페이지 방향: …
+④ 페이지에 들어갈 내용 초안: …
+
+(형식이 조금 달라도 괜찮아요 — 그대로 붙여넣으면 됩니다)"></textarea>
       <button type="button" class="btn sm" id="loadBtn" style="background:var(--pink)">브랜드 자산 불러오기</button>
 
       <div class="okbox" id="okbox">
@@ -242,17 +243,14 @@ const MAP={"나의 이야기":"story","자주 부탁받는 것":"asked","쉽게 
 const LBL={story:"나의 이야기",asked:"자주 부탁받는 것",easy:"쉽게 되는 것",target:"나의 대상",
   expertise:"내 전문",color:"강점 색 성향",oneliner:"한 문장 정의"};
 document.getElementById("loadBtn").addEventListener("click", ()=>{
-  const raw=document.getElementById("paste").value;
-  if(!raw.trim()){ alert("활동 0에서 복사한 요약을 먼저 붙여넣어 주세요."); return; }
-  Object.keys(A0).forEach(k=>delete A0[k]);
-  raw.split("\n").forEach(l=>{
-    const m=l.match(/^\s*[·\-•]\s*([^:]+):\s*(.+)$/);
-    if(m){ const k=MAP[m[1].trim()], v=m[2].trim(); if(k&&v&&v!=="-") A0[k]=v; }
-  });
-  const keys=Object.keys(A0), list=document.getElementById("okList");
-  list.innerHTML = keys.length
-    ? keys.map(k=>`<li><b>${LBL[k]}</b> — ${A0[k].length>40?A0[k].slice(0,40)+"…":A0[k]}</li>`).join("")
-    : "<li>인식된 항목이 없습니다. 활동 0의 「요약 복사하기」 내용을 그대로 붙여넣어 주세요.</li>";
+  const raw=(document.getElementById("paste").value||"").trim();
+  if(!raw){ alert("활동 0에서 클로드가 정리해 준 내용을 먼저 붙여넣어 주세요."); return; }
+  A0._raw = raw;
+  const grab=(re)=>{ const m=raw.match(re); return m?m[1].trim().slice(0,70):""; };
+  const one = grab(/브랜드[^\n]*한[^\n]*문장[^\n:：]*[:：]\s*(.+)/) || grab(/나는\s+(.+?사람)/);
+  const list=document.getElementById("okList");
+  list.innerHTML = "<li>✅ 활동 0 결과를 불러왔어요. 아래 <b>제작 프롬프트</b>에 그대로 담깁니다.</li>"
+    + (one?`<li><b>브랜드 한 문장</b> — ${one}</li>`:"");
   document.getElementById("okbox").style.display="block";
 });
 
@@ -341,14 +339,11 @@ function build(){
   p+="【이 페이지의 목표】\n";
   p+=L("핵심 목표", goalNames);
 
-  p+="\n【나의 브랜드】\n";
+  p+="\n【나의 브랜드 — 활동 0 정리 결과】\n";
   p+=L("브랜드명", val("brand"));
-  p+=L("나를 한 문장으로", A0.oneliner);
-  p+=L("주요 대상", A0.target);
-  p+=L("나의 강점 성향", A0.color);
-  p+=L("사람들이 자주 부탁하는 것", A0.asked);
-  p+=L("나의 이야기", A0.story);
-  p+=L("전문 분야", A0.expertise);
+  var a0raw=(document.getElementById("paste").value||"").trim();
+  if(a0raw){ p+=a0raw+"\n"; }
+  else { p+="(활동 0 결과가 없어요 — 지금까지 우리 대화와 아래 정보를 근거로 네가 코치처럼 채워줘)\n"; }
 
   p+="\n【반드시 들어가야 할 메뉴·섹션】\n";
   if(list.length){ list.forEach((m,i)=>{ p+=`${i+1}. ${m}\n`; }); }
