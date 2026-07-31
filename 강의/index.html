@@ -113,7 +113,7 @@ fetch(SUPA_URL+'/rest/v1/pbs_site_config?key=eq.classes_config&select=value',{he
      var pw=it.pw||(num+'1004');
      var tags=(it.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
      var plan=(it.proposal_url&&isCourse)?'<a class="planbtn" href="'+esc(it.proposal_url)+'" target="_blank" rel="noopener">📄 강의기획서</a>':'';
-     var enter='<a class="enter" href="'+esc(page)+'">입장 →</a>';
+     var enter='<a class="enter" href="'+esc(page)+(isCourse?((page.indexOf('?')>=0?'&':'?')+'r='+encodeURIComponent(seq)):'')+'">입장 →</a>';
      return '<div class="course"><div class="ic">'+(it.icon||'📘')+'</div>'
        +'<h3><span class="seq">'+seq+'</span> '+esc(it.title||'')+'</h3><p>'+esc(it.desc||'')+'</p>'
        +'<div class="tags">'+tags+'</div><div class="cardbtns">'+enter+plan+'</div></div>';

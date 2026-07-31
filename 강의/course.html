@@ -53,6 +53,16 @@
 </style>
 </head>
 <body>
+  <div id="roomGate" style="position:fixed;inset:0;z-index:99999;background:#fbf6f0;display:flex;align-items:center;justify-content:center;padding:20px">
+    <div style="max-width:420px;width:100%;text-align:center;background:#fff;border:1px solid #eadfe4;border-radius:20px;padding:38px 28px;box-shadow:0 12px 44px rgba(0,0,0,.10)">
+      <div style="font-size:42px;line-height:1">🔒</div>
+      <h2 style="margin:12px 0 6px;font-size:22px;color:#1e1a1c">강의실 입장</h2>
+      <p style="color:#8a7f85;font-size:14px;margin:0 0 20px;line-height:1.5">담당 강사가 안내한 <b>입장 코드 4자리</b>를 입력하세요.</p>
+      <input id="rgpw" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="＿ ＿ ＿ ＿" style="width:100%;padding:14px 16px;font-size:20px;text-align:center;letter-spacing:8px;border:1px solid #e2d4db;border-radius:12px;box-sizing:border-box;outline:none" onkeydown="if(event.key==='Enter')rgUnlock()">
+      <div id="rgmsg" style="min-height:20px;margin:10px 0 4px;font-size:13px;font-weight:700;color:#c0392b"></div>
+      <button onclick="rgUnlock()" style="width:100%;padding:14px;font-size:16px;font-weight:800;color:#fff;background:#C0247E;border:none;border-radius:12px;cursor:pointer">입장하기 →</button>
+    </div>
+  </div>
   <div class="top"><div class="in">
     <a class="brand" href="index.html">PBS COLOR LAB · 강의실</a>
     <div class="nav">
@@ -73,13 +83,8 @@
 
     <section class="sec" id="download">
       <h2>🎒 교육생 강의자료 받기</h2>
-      <div class="sub">오늘 수업에서 안내받은 <b>6자리 자료 코드</b>를 입력하면 자료가 열립니다. <span style="opacity:.6">(코드는 매일 자동으로 바뀝니다)</span></div>
-      <div class="pwrow" id="dlLock" style="margin-top:12px">
-        <input type="password" id="dlpw" inputmode="numeric" maxlength="6" placeholder="오늘의 자료 코드 6자리" onkeydown="if(event.key==='Enter')dlUnlock()">
-        <button class="btn btn-primary" onclick="dlUnlock()">열기</button>
-      </div>
-      <div class="pwmsg" id="dlmsg"></div>
-      <div id="studentArea" style="display:none"></div>
+      <div class="sub">아래에서 강의 자료를 받거나 열 수 있습니다.</div>
+      <div id="studentArea"></div>
     </section>
 
     <!-- 학습 활동 -->
@@ -166,18 +171,30 @@ function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;',
 function qs(k){return new URLSearchParams(location.search).get(k)||'';}
 function pad(n){return (n<10?'0':'')+n;}
 function todayPW(){var d=new Date();return pad(d.getMonth()+1)+pad(d.getDate());}
-function todayCode(){var d=new Date();return pad(d.getMonth()+1)+pad(d.getDate())+'79';}
-function dlUnlock(){
-  var v=(document.getElementById('dlpw').value||'').trim();
-  var msg=document.getElementById('dlmsg');
-  if(v===todayCode()){
-    document.getElementById('studentArea').style.display='';
-    var lk=document.getElementById('dlLock'); if(lk) lk.style.display='none';
-    msg.className='pwmsg ok'; msg.textContent='✓ 오늘의 자료가 열렸습니다.';
+/* 방 입장 코드 = 방번호(2자리) + 오늘 날짜(2자리). 화면에 표시하거나 저장하지 않고 계산만 한다. */
+var RNO=qs('r');
+try{document.documentElement.style.overflow='hidden';}catch(e){}
+function roomCode(){
+  var n=parseInt(RNO,10);
+  if(isNaN(n)&&window.course&&course.no) n=parseInt(course.no,10);
+  if(isNaN(n)&&typeof courseIdx!=='undefined'&&courseIdx>=0) n=courseIdx+1;
+  if(isNaN(n)) return null;
+  var d=new Date(); return pad(n)+pad(d.getDate());
+}
+function rgUnlock(){
+  var exp=roomCode();
+  var v=(document.getElementById('rgpw').value||'').trim();
+  var msg=document.getElementById('rgmsg');
+  if(exp===null){ msg.textContent='잠시 후 다시 시도해 주세요.'; return; }
+  if(v===exp){
+    var g=document.getElementById('roomGate'); if(g) g.parentNode.removeChild(g);
+    try{document.documentElement.style.overflow='';}catch(e){}
   } else {
-    msg.className='pwmsg err'; msg.textContent='코드가 올바르지 않습니다. 오늘 수업에서 안내받은 6자리 코드를 확인하세요.';
+    msg.textContent='입장 코드가 올바르지 않습니다.';
+    var i=document.getElementById('rgpw'); if(i){i.value='';i.focus();}
   }
 }
+window.addEventListener('DOMContentLoaded',function(){var i=document.getElementById('rgpw'); if(i) i.focus();});
 function ytId(u){var m=(u||'').match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:'';}
 var COURSE=qs('c'), course=null, kind='질문', star=5;
 var allItems=[], courseIdx=-1, MANAGE_PW='PbsColor#2026', _mTarget=null;
