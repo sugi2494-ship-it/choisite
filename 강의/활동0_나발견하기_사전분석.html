@@ -76,7 +76,8 @@
   <h1>활동 00. 나 발견하기<br /><span style="font-size:17px;color:var(--sub)">개인 브랜딩 사전분석</span></h1>
   <p class="lead">"내 강점은?" "타깃은 누구?" — 바로 답하기 어려우시죠? 괜찮습니다.
   아래 프롬프트를 복사해 <b>클로드에 붙여넣으면</b>, 클로드가 <b>질문을 하나씩</b> 던져
-  <b>내 소개 · 브랜드 한 문장 · 웹페이지 방향</b>을 함께 정리해 줍니다. 여기서 나온 결과를 다음 활동에 그대로 씁니다.</p>
+  <b>내 소개 · 브랜드 한 문장 · 웹페이지 방향</b>은 물론 <b>웹페이지 구조·메뉴와 제작 프롬프트</b>까지 한 번에 정리해 줍니다.
+  마지막에 <b>"이대로 만들어줘"</b>만 하면 그 대화에서 바로 페이지가 만들어져요.</p>
 </header>
 
 <div class="wrap">
@@ -114,19 +115,21 @@
    · 신뢰 자료(경력·자격·후기) — 있는 것만
    · 문의 안내 문구
 
+⑤ 마지막으로 위 ①~④를 모두 통합해서 — 나에게 딱 맞는 &lt;웹페이지 구조와 메뉴&gt;(첫 화면부터 순서대로 어떤 섹션이 필요한지)를 제안하고, 그대로 웹페이지를 만들 수 있는 &lt;한 페이지 제작 프롬프트&gt;까지 한 번에 만들어줘. 그리고 내가 &quot;이대로 만들어줘&quot;라고 하면 바로 웹페이지를 화면에 만들어줘.
+
 자, 준비됐으면 첫 번째 질문 하나만 해줘.</div>
     <button type="button" class="btn" id="copyChat" style="background:var(--pink);width:100%;margin-top:10px">📋 이 프롬프트 복사하기</button>
     <a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);margin-top:8px">🤖 클로드 열고 붙여넣기 →</a>
-    <div style="background:#eaf5ef;border:1px solid #b6ddc7;border-radius:11px;padding:12px 14px;margin-top:12px;font-size:13.5px;color:#1c5638">✅ 끝나면 나온 <b>‘내 소개’</b>를 클로드 <b>설정 → 나에 대한 정보</b>에 붙여넣으세요. <b>브랜드 한 문장·웹페이지 방향</b>은 다음 활동에 그대로 씁니다.</div>
+    <div style="background:#eaf5ef;border:1px solid #b6ddc7;border-radius:11px;padding:12px 14px;margin-top:12px;font-size:13.5px;color:#1c5638">✅ 끝나면 <b>‘내 소개’</b>는 클로드 <b>설정 → 나에 대한 정보</b>에 넣어두면 좋고, <b>구조·메뉴·제작 프롬프트</b>는 <b>같은 대화에서 바로 "이대로 만들어줘"</b> 하면 페이지가 나옵니다. (구조를 더 다듬고 싶으면 활동 1에서 조정)</div>
   </section>
   <script>document.getElementById("copyChat").addEventListener("click",function(){var el=document.getElementById("chatPrompt");var t=el.textContent;var b=this,o=b.textContent;function done(){b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694! \ud074\ub85c\ub4dc\uc5d0 \ubd99\uc5ec\ub123\uc73c\uc138\uc694";setTimeout(function(){b.textContent=o;},2200);}navigator.clipboard.writeText(t).then(done,function(){var r=document.createRange();r.selectNode(el);var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand("copy");s.removeAllRanges();done();});});</script>
     <div class="card" style="text-align:center">
-    <p class="t" style="margin:0 0 12px;font-weight:700">클로드가 정리해 준 <b>① 내 소개 · ② 브랜드 한 문장 · ③ 웹페이지 방향 · ④ 내용 초안</b>을 <b>그대로 복사</b>해 두세요.<br><span style="font-weight:600;color:var(--sub)">다음 <b>활동 1</b> 첫 칸 「나의 브랜드 자산 불러오기」에 붙여넣으면 됩니다.</span></p>
+    <p class="t" style="margin:0 0 12px;font-weight:700">클로드가 <b>①소개 · ②브랜드 한 문장 · ③방향 · ④내용 초안 · ⑤웹페이지 구조·메뉴 + 제작 프롬프트</b>까지 한 번에 정리해 줍니다.<br><span style="font-weight:600;color:var(--sub)">그 <b>같은 대화</b>에서 <b>"이대로 만들어줘"</b> 하면 바로 페이지가 나와요. 구조를 더 손보고 싶을 때만 활동 1로 가면 됩니다.</span></p>
     <a class="btn" href="활동1_웹페이지방향설정_v3.html" style="background:#E91E8C;display:block;text-align:center;text-decoration:none;color:#fff">➡ 다음: 활동 1. 웹페이지 방향 설정</a>
   </div>
 
   <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
 </div>
-<script>(function(){try{if(localStorage.getItem("pbs_aiweb_agree"))return;}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
+<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>

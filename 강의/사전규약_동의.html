@@ -91,7 +91,7 @@
   function upd(){ go.disabled=!(ck.checked && nm.value.trim().length>=1); }
   ck.addEventListener('change',upd); nm.addEventListener('input',upd);
   go.addEventListener('click',function(){
-    var rec={name:nm.value.trim(),date:document.getElementById('date').value};
+    var rec={name:nm.value.trim(),date:document.getElementById('date').value,ts:Date.now()};
     try{ localStorage.setItem('pbs_aiweb_agree', JSON.stringify(rec)); }catch(e){}
     document.getElementById('doneMsg').textContent=rec.name+' 님 · '+rec.date;
     document.getElementById('done').classList.add('show');
