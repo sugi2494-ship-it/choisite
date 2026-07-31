@@ -3,11 +3,11 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/(.*)\\.html",
+      "source": "/(.*)\\.(js|css|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2|ttf|otf|eot|mp4|webm|pdf)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
+          "value": "public, max-age=86400"
         }
       ]
     },
@@ -16,47 +16,20 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600"
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     }
   ],
   "rewrites": [
-    {
-      "source": "/consulting",
-      "destination": "/consulting.html"
-    },
-    {
-      "source": "/consult-survey",
-      "destination": "/consult-survey.html"
-    },
-    {
-      "source": "/business",
-      "destination": "/business.html"
-    },
-    {
-      "source": "/global",
-      "destination": "/global.html"
-    },
-    {
-      "source": "/privacy",
-      "destination": "/privacy.html"
-    },
-    {
-      "source": "/academy",
-      "destination": "/academy/index.html"
-    },
-    {
-      "source": "/academy/instructor",
-      "destination": "/academy/instructor/index.html"
-    },
-    {
-      "source": "/academy/courses",
-      "destination": "/academy/courses/index.html"
-    },
-    {
-      "source": "/academy/classroom",
-      "destination": "/academy/classroom/index.html"
-    }
+    { "source": "/consulting", "destination": "/consulting.html" },
+    { "source": "/consult-survey", "destination": "/consult-survey.html" },
+    { "source": "/business", "destination": "/business.html" },
+    { "source": "/global", "destination": "/global.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/academy", "destination": "/academy/index.html" },
+    { "source": "/academy/instructor", "destination": "/academy/instructor/index.html" },
+    { "source": "/academy/courses", "destination": "/academy/courses/index.html" },
+    { "source": "/academy/classroom", "destination": "/academy/classroom/index.html" }
   ]
 }
