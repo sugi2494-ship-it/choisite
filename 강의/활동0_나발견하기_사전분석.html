@@ -54,7 +54,7 @@
   .bar-row{display:flex; align-items:center; gap:10px; margin:7px 0; font-size:13.5px; font-weight:700}
   .bar-label{width:118px; flex:0 0 auto}
   .bar-track{flex:1; height:14px; background:#eef0f2; border-radius:8px; overflow:hidden}
-  .bar-fill{height:100%; border-radius:8px}
+  .bar-fill{display:block; height:100%; border-radius:8px}
   .bar-pct{width:38px; text-align:right; color:var(--sub); font-weight:600}
   .verdict{background:#fbfbfc; border:1px solid var(--line); border-radius:12px; padding:16px; margin:14px 0}
   .verdict b{font-size:15px}
@@ -69,272 +69,64 @@
 </head>
 <body>
 <div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:640px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
 
 <header>
   <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
   <h1>활동 00. 나 발견하기<br /><span style="font-size:17px;color:var(--sub)">개인 브랜딩 사전분석</span></h1>
   <p class="lead">"내 강점은?" "타깃은 누구?" — 바로 답하기 어려우시죠? 괜찮습니다.
-  아래 <b>쉬운 질문</b>에만 편하게 답하면, 그 답이 모여 <b>나의 방향과 강점 색(빨·노·초·파)</b>, 그리고 <b>이 홈페이지의 목적과 넣을 메뉴</b>까지 자동으로 정리됩니다.
-  여기서 나온 요약을 다음 활동(웹페이지 방향 설정 · 메뉴 만들기)에 그대로 씁니다.</p>
+  아래 프롬프트를 복사해 <b>클로드에 붙여넣으면</b>, 클로드가 <b>질문을 하나씩</b> 던져
+  <b>내 소개 · 브랜드 한 문장 · 웹페이지 방향</b>을 함께 정리해 줍니다. 여기서 나온 결과를 다음 활동에 그대로 씁니다.</p>
 </header>
 
 <div class="wrap">
-  <form id="f">
+  <section class="card" style="border:2px solid #f3c9e4;background:#fdf5fa">
+    <div class="sec-title"><span class="dot" style="background:var(--pink)"></span>🗣 클로드와 대화로 나 발견하기 <span style="font-size:12px;font-weight:600;color:var(--sub)">· 3~5분 · 추천</span></div>
+    <p class="sec-desc">아래 프롬프트 <b>하나</b>면 됩니다. 복사해 클로드에 붙여넣으면 <b>클로드가 질문을 하나씩</b> 던져요. 편하게 답만 하면 — ① 클로드에 넣을 <b>내 소개</b> ② <b>내 브랜드 한 문장</b> ③ <b>웹페이지 방향</b> ④ <b>페이지에 들어갈 내용 초안</b>까지 코치처럼 정리돼 나옵니다.</p>
+    <p class="hint">💡 앞에서 클로드와 이야기를 나눴다면 그 대화도 근거로 써서 더 정확해져요. (없어도 괜찮아요)</p>
+    <div id="chatPrompt" style="background:#0f1720;color:#e8eef4;border-radius:12px;padding:16px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:'Consolas','Courier New',monospace;margin-top:10px;max-height:360px;overflow:auto">너는 나를 1:1로 돕는 다정한 브랜딩 코치야. 지금 이 대화창에서 그동안 우리가 나눈 이야기가 있으면 그것도 &#x27;근거&#x27;로 참고해줘.
+나는 곧 내 웹페이지를 만들 거야. 그 전에 (1) 너에게 &#x27;나&#x27;를 기억시키고 (2) 나를 어떻게 소개할지 (3) 내 브랜드가 뭔지를 함께 찾고 싶어. 나는 AI가 처음인 초보야.
 
-    <!-- A -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--red)"></span>A. 나의 이야기</div>
-      <p class="sec-desc">멋지게 안 써도 됩니다. 떠오르는 대로 편하게요. (→ 소개글 재료가 됩니다)</p>
-      <div class="field"><label>A1. 이 일을 어쩌다 시작하게 되셨어요?</label>
-        <textarea name="a1" placeholder="예) 내가 컬러로 위로받은 경험이 있어서…"></textarea></div>
-      <div class="field"><label>A2. 이 일을 하면서 가장 기억에 남거나 뿌듯했던 순간은?</label>
-        <textarea name="a2"></textarea></div>
-    </section>
+[진행 방법 — 꼭 지켜줘]
+- 질문은 한 번에 &#x27;하나씩&#x27;만. 내가 답하면 다음 질문으로 넘어가.
+- 전부 합쳐 10개를 넘기지 마. 쉬운 말로, 부담 없이.
+- 내가 앞 대화에서 이미 말한 건 다시 묻지 말고 &quot;이건 이렇게 이해했는데 맞아?&quot;로 확인만 해줘.
+- 대답이 막히면 예시 보기를 2~3개 줘서 고르게 해줘.
 
-    <!-- B -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--yellow)"></span>B. 강점 발견</div>
-      <p class="sec-desc">'내 강점'을 바로 묻지 않습니다. 아래 질문에 답하면 강점이 저절로 드러납니다.</p>
-      <div class="field"><label>B1. 사람들이 나에게 <u>자주 부탁하거나 물어보는</u> 것은?</label>
-        <textarea name="b1" placeholder="예) 옷 색 골라달라, 발표 자료 봐달라…"></textarea></div>
-      <div class="field"><label>B2. 남들보다 <u>유난히 쉽게, 힘 안 들이고</u> 되는 것은?</label>
-        <textarea name="b2"></textarea></div>
-      <div class="field"><label>B3. 최근 "○○ 잘한다"고 <u>칭찬받은 말</u>에 가장 가까운 것은?</label>
-        <div class="opts">
-          <label class="c-red"><input type="radio" name="b3" value="R" /><span>추진력 있다 · 결과를 낸다 · 열정적이다</span></label>
-          <label class="c-yellow"><input type="radio" name="b3" value="Y" /><span>아이디어가 많다 · 잘 알아본다 · 분위기를 밝게 한다</span></label>
-          <label class="c-green"><input type="radio" name="b3" value="G" /><span>편안하다 · 잘 들어준다 · 배려심 있다</span></label>
-          <label class="c-blue"><input type="radio" name="b3" value="B" /><span>꼼꼼하다 · 믿음직하다 · 체계적이다</span></label>
-        </div>
-      </div>
-    </section>
+[이런 걸 알아내려고 해 — 이 흐름으로, 하지만 한 번에 하나씩]
+1) 무슨 일을 하는지 / 누구를 도와주는지
+2) 어디서(지역) 누구를(대상)
+3) 내가 잘하는 것·자주 듣는 칭찬
+4) 나를 찾는 사람들의 고민
+5) 남들과 다른 나만의 점
+6) 내 느낌·분위기 (색으로 치면 어떤 느낌?)
+7) 웹페이지로 이루고 싶은 것 (신청·문의·소개 등)
+(부족하면 2~3개만 더, 총 10개 이내)
 
-    <!-- C -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--green)"></span>C. 나의 사람들</div>
-      <p class="sec-desc">'타깃'을 바로 정하지 않습니다. 지금까지 만난 사람을 떠올리면 타깃이 보입니다.</p>
-      <div class="field"><label>C1. 지금까지 강의·상담에서 만난 분들은 주로 <u>어떤 사람</u>이었나요?</label>
-        <textarea name="c1" placeholder="예) 30~50대 여성, 강사를 준비하는 분…"></textarea></div>
-      <div class="field"><label>C2. 어떤 사람이 왔을 때 <u>가장 뿌듯하고 잘 맞았나요?</u></label>
-        <textarea name="c2"></textarea></div>
-    </section>
+[질문이 다 끝나면 아래 3가지로 정리해줘 — 각각 제목 붙여서 복사하기 쉽게]
+① &#x27;AI 설정 → 나에 대한 정보&#x27;에 그대로 붙여넣을 &lt;내 소개&gt; 문구
+② &lt;내 브랜드 한 문장&gt; = &quot;나는 [누구]에게 [무엇]을 [어떻게] 주는 사람&quot; + 어울리는 키워드 5개·색 느낌
+③ &lt;웹페이지 방향&gt; = 첫 화면에 앞세울 것 3가지
+④ 웹페이지에 들어갈 내용 초안 — 내가 못 쓰면 네가 코치처럼 대신 써줘:
+   · 소개글(내 이야기·철학 3~4문장)
+   · 내가 하는 일·강점 3~4가지(각 한 줄)
+   · 대표 강의·서비스 소개(있으면)
+   · 신뢰 자료(경력·자격·후기) — 있는 것만
+   · 문의 안내 문구
 
-    <!-- D -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>D. 나의 전문</div>
-      <p class="sec-desc">내가 주는 것과, 그게 필요한 이유. (→ 강의·서비스 정리 재료)</p>
-      <div class="field"><label>D1. 내가 가르치거나 도와주는 것을 <u>한 줄</u>로?</label>
-        <input type="text" name="d1" placeholder="예) 나에게 어울리는 색과 스타일 찾아주기" /></div>
-      <div class="field"><label>D2. 그게 사람들에게 <u>왜 필요</u>하다고 생각하세요?</label>
-        <textarea name="d2"></textarea></div>
-      <div class="field"><label>D3. 나는 일할 때 주로…</label>
-        <div class="opts">
-          <label class="c-red"><input type="radio" name="d3" value="R" /><span>먼저 실행하고 밀어붙인다</span></label>
-          <label class="c-yellow"><input type="radio" name="d3" value="Y" /><span>새로운 걸 발견하고 사람들과 나눈다</span></label>
-          <label class="c-green"><input type="radio" name="d3" value="G" /><span>사람을 살피고 조화를 맞춘다</span></label>
-          <label class="c-blue"><input type="radio" name="d3" value="B" /><span>차근차근 분석하고 체계를 만든다</span></label>
-        </div>
-      </div>
-    </section>
-
-    <!-- E -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--pink)"></span>E. 나의 색 성향 (2문항)</div>
-      <p class="sec-desc">가볍게 골라주세요. 위 답들과 합쳐 '내 강점 색'을 계산합니다.</p>
-      <div class="field"><label>E1. 새로운 일이 주어지면 나는?</label>
-        <div class="opts">
-          <label class="c-red"><input type="radio" name="e1" value="R" /><span>일단 도전한다</span></label>
-          <label class="c-yellow"><input type="radio" name="e1" value="Y" /><span>아이디어부터 떠올린다</span></label>
-          <label class="c-green"><input type="radio" name="e1" value="G" /><span>사람들과 상의한다</span></label>
-          <label class="c-blue"><input type="radio" name="e1" value="B" /><span>계획부터 세운다</span></label>
-        </div>
-      </div>
-      <div class="field"><label>E2. 내가 더 <u>인정받고 싶은</u> 모습은?</label>
-        <div class="opts">
-          <label class="c-red"><input type="radio" name="e2" value="R" /><span>성과를 내는 사람</span></label>
-          <label class="c-yellow"><input type="radio" name="e2" value="Y" /><span>창의적인 사람</span></label>
-          <label class="c-green"><input type="radio" name="e2" value="G" /><span>따뜻한 사람</span></label>
-          <label class="c-blue"><input type="radio" name="e2" value="B" /><span>신뢰받는 사람</span></label>
-        </div>
-      </div>
-    </section>
-
-    <!-- 한 문장 만들기 -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--ink)"></span>F. 한 문장으로 나를 정리</div>
-      <p class="sec-desc">위 답을 떠올리며 빈칸만 채우세요. 강점 단어는 아래에서 자동으로 넣어드립니다.</p>
-      <div class="field"><label>나는 누구(대상)를 돕나요?</label>
-        <input type="text" name="who" placeholder="예) 나를 표현하고 싶은 30~50대 여성" /></div>
-      <div class="field"><label>그들에게 어떤 변화를 주나요?</label>
-        <input type="text" name="change" placeholder="예) 자신에게 어울리는 색으로 당당해지도록" /></div>
-      <div class="field"><label>나의 직함/역할은?</label>
-        <input type="text" name="role" placeholder="예) 퍼스널컬러 강사" /></div>
-    </section>
-
-    <!-- G. 홈페이지 목적 -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>G. 이 홈페이지의 목적</div>
-      <p class="sec-desc">'왜 이 웹페이지를 만드는가'가 분명하면, 메뉴와 문구가 저절로 정해집니다.</p>
-      <div class="field"><label>G1. 이 웹페이지를 만드는 <u>가장 큰 이유</u>는?</label>
-        <textarea name="g1" placeholder="예) 강의 신청을 한곳에서 받고 싶어서 / 나를 제대로 소개하고 싶어서"></textarea></div>
-      <div class="field"><label>G2. 방문자가 이 페이지에서 <u>딱 하나</u>만 한다면, 무엇이길 바라세요?</label>
-        <p class="hint">가장 중요한 목표 하나만 고르세요. (메뉴·버튼의 1순위가 됩니다)</p>
-        <div class="opts">
-          <label><input type="radio" name="g2" value="강의·상담 신청" /><span>강의·상담을 신청한다</span></label>
-          <label><input type="radio" name="g2" value="문의·연락" /><span>문의·연락을 한다</span></label>
-          <label><input type="radio" name="g2" value="소개·신뢰" /><span>나(브랜드)를 알고 신뢰하게 된다</span></label>
-          <label><input type="radio" name="g2" value="예약" /><span>예약을 한다</span></label>
-          <label><input type="radio" name="g2" value="자료·후기 열람" /><span>자료·후기를 본다</span></label>
-          <label><input type="radio" name="g2" value="상품·서비스 구매" /><span>상품·서비스를 구매한다</span></label>
-        </div>
-      </div>
-      <div class="field"><label>G3. 이 페이지를 본 사람이 <u>어떤 느낌·생각</u>을 갖길 바라세요? (선택)</label>
-        <textarea name="g3" placeholder="예) 믿을 만하다 / 전문가답다 / 따뜻하고 편안하다"></textarea></div>
-    </section>
-
-    <!-- H. 필요한 메뉴 -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--green)"></span>H. 필요한 메뉴 고르기</div>
-      <p class="sec-desc">위 '목적'을 이루려면 어떤 메뉴가 필요할까요? 필요한 것만 고르세요. (다음 활동에서 이대로 메뉴를 만듭니다)</p>
-      <div class="field">
-        <div class="opts">
-          <label><input type="checkbox" name="menu" value="홈" /><span>홈 (첫 화면)</span></label>
-          <label><input type="checkbox" name="menu" value="소개" /><span>소개 (About · 나/브랜드 이야기)</span></label>
-          <label><input type="checkbox" name="menu" value="강의·프로그램" /><span>강의·프로그램 (서비스 안내)</span></label>
-          <label><input type="checkbox" name="menu" value="후기" /><span>후기 (수강·고객 후기)</span></label>
-          <label><input type="checkbox" name="menu" value="자료실" /><span>자료실 (다운로드·읽을거리)</span></label>
-          <label><input type="checkbox" name="menu" value="문의·신청" /><span>문의·신청 (연락·접수)</span></label>
-          <label><input type="checkbox" name="menu" value="갤러리·포트폴리오" /><span>갤러리·포트폴리오 (사진·작업)</span></label>
-          <label><input type="checkbox" name="menu" value="예약" /><span>예약</span></label>
-          <label><input type="checkbox" name="menu" value="오시는 길" /><span>오시는 길 (위치·연락처)</span></label>
-        </div>
-      </div>
-      <div class="field"><label>그 외 넣고 싶은 메뉴가 있다면?</label>
-        <input type="text" name="menu_etc" placeholder="예) 블로그, 자주 묻는 질문(FAQ), 자격·이력" /></div>
-    </section>
-
-    <button type="button" class="btn" id="go" style="background:var(--pink)">나의 분석 결과 보기</button>
-  </form>
-
-  <!-- 결과 -->
-  <div id="result" class="card">
-    <div class="sec-title"><span class="dot" style="background:var(--pink)"></span>✨ 나 발견하기 요약</div>
-
-    <div class="colorbars" id="bars"></div>
-    <div class="verdict" id="verdict"></div>
-
-    <div class="onel">
-      <span style="font-size:13px;font-weight:700;color:#8a2e63">나를 한 문장으로</span>
-      <div class="sent" id="oneliner"></div>
-    </div>
-
-    <div class="verdict" id="planbox" style="display:none"></div>
-
-    <p class="hint" style="margin-top:16px">아래 요약을 복사해 <b>다음 활동(웹페이지 방향 설정 · 메뉴 만들기)</b>에 붙여넣으세요.</p>
-    <div class="carry" id="carry"></div>
-    <button type="button" class="btn" id="copy" style="background:var(--ink)">📋 요약 복사하기</button>
-
-    <a class="diaglink" id="diag" href="#" target="_blank" rel="noopener">🎨 정식 컬러강점 진단으로 더 정확히 알아보기 →</a>
-    <p class="hint" style="text-align:center;margin-top:8px">위 색 성향은 참고용 간이 분석입니다. 정확한 진단은 컬러강점 진단에서 확인하세요.</p>
+자, 준비됐으면 첫 번째 질문 하나만 해줘.</div>
+    <button type="button" class="btn" id="copyChat" style="background:var(--pink);width:100%;margin-top:10px">📋 이 프롬프트 복사하기</button>
+    <a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);margin-top:8px">🤖 클로드 열고 붙여넣기 →</a>
+    <div style="background:#eaf5ef;border:1px solid #b6ddc7;border-radius:11px;padding:12px 14px;margin-top:12px;font-size:13.5px;color:#1c5638">✅ 끝나면 나온 <b>‘내 소개’</b>를 클로드 <b>설정 → 나에 대한 정보</b>에 붙여넣으세요. <b>브랜드 한 문장·웹페이지 방향</b>은 다음 활동에 그대로 씁니다.</div>
+  </section>
+  <script>document.getElementById("copyChat").addEventListener("click",function(){var el=document.getElementById("chatPrompt");var t=el.textContent;var b=this,o=b.textContent;function done(){b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694! \ud074\ub85c\ub4dc\uc5d0 \ubd99\uc5ec\ub123\uc73c\uc138\uc694";setTimeout(function(){b.textContent=o;},2200);}navigator.clipboard.writeText(t).then(done,function(){var r=document.createRange();r.selectNode(el);var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand("copy");s.removeAllRanges();done();});});</script>
+    <div class="card" style="text-align:center">
+    <p class="t" style="margin:0 0 12px;font-weight:700">위 프롬프트로 나온 <b>내 소개 · 브랜드 한 문장 · 웹페이지 방향</b>을 메모(또는 클로드 대화 그대로)로 남겨 두세요. 다음 활동에서 그대로 씁니다.</p>
+    <a class="btn" href="활동1_웹페이지방향설정_v3.html" style="background:#E91E8C;display:block;text-align:center;text-decoration:none;color:#fff">➡ 다음: 활동 1. 웹페이지 방향 설정</a>
   </div>
 
   <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
 </div>
-
-<script>
-/* ▼ 정식 컬러강점 진단 링크 — 대표님 기존 진단 사이트 주소로 바꿔주세요 ▼ */
-const DIAG_URL = "https://choisite.vercel.app/";
-/* ▲ 여기만 수정 ▲ */
-
-const f = document.getElementById("f");
-const COLOR = {
-  R:{name:"RED · 도전·열정·성과",  kw:"추진력 있게 목표를 향해 나아가는", css:"var(--red)"},
-  Y:{name:"YELLOW · 발견·공감·창의", kw:"새로운 것을 발견하고 사람들과 즐겁게 나누는", css:"var(--yellow)"},
-  G:{name:"GREEN · 배려·평화·밸런스", kw:"사람을 살피고 조화를 만드는", css:"var(--green)"},
-  B:{name:"BLUE · 신뢰·분석·체계",  kw:"믿음직하게 분석하고 체계를 세우는", css:"var(--blue)"}
-};
-const val=n=>{const el=f.elements[n];return el?(el.value||"").trim():"";};
-const pick=n=>{const el=f.querySelector(`input[name="${n}"]:checked`);return el?el.value:null;};
-
-document.getElementById("go").addEventListener("click", ()=>{
-  const counts={R:0,Y:0,G:0,B:0};
-  ["b3","d3","e1","e2"].forEach(n=>{const v=pick(n); if(v) counts[v]++;});
-  const total=counts.R+counts.Y+counts.G+counts.B;
-  if(total===0){ alert("B3, D3, E1, E2 색 선택 문항을 골라주세요. 그래야 강점 색이 계산됩니다."); return; }
-
-  const order=Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
-  const p1=order[0], p2=order[1];
-
-  // 색 막대
-  document.getElementById("bars").innerHTML = ["R","Y","G","B"].map(k=>{
-    const pct=Math.round(counts[k]/total*100);
-    return `<div class="bar-row"><span class="bar-label" style="color:${COLOR[k].css}">${COLOR[k].name.split(" · ")[0]}</span>
-      <span class="bar-track"><span class="bar-fill" style="width:${pct}%;background:${COLOR[k].css}"></span></span>
-      <span class="bar-pct">${pct}%</span></div>`;
-  }).join("");
-
-  // 판정
-  document.getElementById("verdict").innerHTML =
-    `<b style="color:${COLOR[p1].css}">당신의 강점은 ${COLOR[p1].name} 계열</b>로 보입니다.<br>
-     <span style="color:var(--sub);font-size:13.5px">${COLOR[p1].kw} 힘이 강점이에요.` +
-     (counts[p2]>0?` 여기에 <b style="color:${COLOR[p2].css}">${COLOR[p2].name.split(" · ")[0]}</b>의 결도 함께 가지고 있습니다.`:``) +
-     `</span>`;
-
-  // 한 문장
-  const who=val("who")||"[대상]", change=val("change")||"[변화]", role=val("role")||"[직함]";
-  const sentence=`나는 ${who}이(가) ${change} 돕는, ${COLOR[p1].kw} 강점의 ${role}입니다.`;
-  document.getElementById("oneliner").textContent=sentence;
-
-  // 홈페이지 목적 · 메뉴
-  const esc=s=>String(s||"").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  const menus=[...f.querySelectorAll('input[name="menu"]:checked')].map(x=>x.value);
-  const menuEtc=val("menu_etc");
-  const menuAll=menus.concat(menuEtc?[menuEtc]:[]);
-  const g1=val("g1"), g2=pick("g2"), g3=val("g3");
-  const planbox=document.getElementById("planbox");
-  if(g1||g2||g3||menuAll.length){
-    planbox.style.display="block";
-    planbox.innerHTML=
-      `<b>🧭 이 홈페이지의 설계</b><br>
-       <span style="color:var(--sub);font-size:13.5px">
-       · 목적: ${esc(g1)||"-"}<br>
-       · 방문자 핵심 목표(1순위): ${esc(g2)||"-"}<br>`+
-       (g3?`· 주고 싶은 느낌: ${esc(g3)}<br>`:``)+
-       `· 넣을 메뉴: ${menuAll.length?menuAll.map(esc).join(" · "):"-"}</span>`;
-  }else{
-    planbox.style.display="none";
-  }
-
-  // 요약 카드(복사용)
-  const carry=
-`[나 발견하기 요약]
-· 나의 이야기: ${val("a1")||"-"}${val("a2")?" / "+val("a2"):""}
-· 자주 부탁받는 것: ${val("b1")||"-"}
-· 쉽게 되는 것: ${val("b2")||"-"}
-· 나의 대상: ${val("c1")||"-"}${val("c2")?" / 특히 "+val("c2"):""}
-· 내 전문: ${val("d1")||"-"}${val("d2")?" (필요한 이유: "+val("d2")+")":""}
-· 강점 색 성향: ${COLOR[p1].name}${counts[p2]>0?" + "+COLOR[p2].name.split(" · ")[0]:""}
-· 한 문장: ${sentence}
-
-[홈페이지 설계]
-· 홈페이지 목적: ${g1||"-"}
-· 방문자 핵심 목표(1순위): ${g2||"-"}
-· 주고 싶은 느낌: ${g3||"-"}
-· 넣고 싶은 메뉴: ${menuAll.length?menuAll.join(", "):"-"}`;
-  document.getElementById("carry").textContent=carry;
-
-  document.getElementById("diag").href=DIAG_URL;
-  document.getElementById("result").style.display="block";
-  document.getElementById("result").scrollIntoView({behavior:"smooth", block:"start"});
-});
-
-document.getElementById("copy").addEventListener("click", async ()=>{
-  const t=document.getElementById("carry").textContent;
-  try{ await navigator.clipboard.writeText(t); }
-  catch(e){ const r=document.createRange(); r.selectNode(document.getElementById("carry")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); s.removeAllRanges(); }
-  const b=document.getElementById("copy"); const o=b.textContent;
-  b.textContent="✅ 복사됐어요! 다음 활동에 붙여넣으세요"; setTimeout(()=>b.textContent=o,2000);
-});
-</script>
+<script>(function(){try{if(localStorage.getItem("pbs_aiweb_agree"))return;}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>

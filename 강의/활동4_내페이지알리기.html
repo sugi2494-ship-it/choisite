@@ -199,8 +199,8 @@
       <div class="pc-b"><div class="code" id="pA">내 페이지를 카톡이나 SNS로 공유할 때
 제목과 설명, 사진이 예쁘게 미리보기로 뜨게 해줘.
 
-- 제목: [예: 최해숙 퍼스널컬러 · 나에게 어울리는 색을 찾다]
-- 설명: [예: 울산 퍼스널컬러 강의·컨설팅. 지금 문의하세요]
+- 제목: [내 브랜드명 · 한 줄 소개]
+- 설명: [내 지역 + 무엇을 하는지 · 지금 문의하세요]
 - 미리보기 사진: 첫 화면 프로필 사진으로
 
 검색에서도 잘 보이도록 페이지 제목과 설명 정보도 함께 넣어줘.
@@ -227,7 +227,7 @@
 주소는 [https://내주소.netlify.app] 이야.
 
 - 인쇄해도 깨지지 않게 크고 선명하게
-- QR 아래에 [최해숙 퍼스널컬러] 라고 이름을 넣어줘
+- QR 아래에 [내 이름 · 브랜드명] 라고 이름을 넣어줘
 - 이미지로 내려받을 수 있게 해줘</div>
       <button class="cbtn" data-t="pB">📋 복사</button>
       <p class="why">만든 뒤 <b>꼭 휴대폰으로 찍어보세요.</b> 내 페이지가 열리면 성공입니다.</p></div></div>
@@ -349,6 +349,71 @@
     <div class="fl"><input type="checkbox" id="f5" /><label for="f5">4주 계획 중 1주차를 언제 할지 정했다</label></div>
   </div>
 
+  <style>
+  #svForm label{font-weight:700;font-size:14px;display:block;margin-bottom:6px}
+  #svForm input[type=text],#svForm input[type=url],#svForm textarea,#sv_pw{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}
+  #svForm textarea{min-height:68px;resize:vertical}
+  .svstars{font-size:30px;color:#ddd;cursor:pointer;letter-spacing:5px;user-select:none}
+  .svstars .on{color:#E7A400}
+  .svchips{display:flex;flex-wrap:wrap;gap:8px}
+  .svchips label{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px;border:1px solid var(--line);border-radius:999px;padding:8px 13px;cursor:pointer;background:#fff;margin:0}
+  .svchips label:has(input:checked){border-color:var(--pink);background:#fdeef6;color:var(--pink)}
+  .svchips input{accent-color:var(--pink)}
+  .svitem{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:8px;font-size:13px;line-height:1.6}
+  .svitem b{font-size:13.5px}
+  #doneSurvey details summary:before{content:"";margin:0}
+  </style>
+  <section class="step" id="doneSurvey" style="border:2px solid var(--pink)">
+    <span class="snum" style="background:var(--pink)">과정 완료</span>
+    <h2>🎉 후기 남기고, 내 페이지 자랑하기</h2>
+    <p class="sub">내가 만든 주소를 올려 자랑하고, 짧은 소감·만족도만 남겨주세요</p>
+
+    <div class="good"><p>💗 오늘 <b>내 손으로 웹페이지를 완성</b>하셨어요. 아래에 <b>내 페이지 주소</b>를 올려 자랑하고, 좋았던 점과 앞으로 배우고 싶은 것을 남겨주시면 다음 과정을 더 좋게 준비합니다.</p></div>
+
+    <form id="svForm" style="display:flex;flex-direction:column;gap:15px;margin-top:6px" onsubmit="return false">
+      <div><label>이름 <span style="color:var(--sub);font-weight:500">(예명 가능)</span></label>
+        <input id="sv_name" type="text" placeholder="이름 또는 예명" autocomplete="off" /></div>
+
+      <div><label>🔗 내가 만든 페이지 주소 <span style="color:var(--pink);font-weight:700">— 자랑하기!</span></label>
+        <input id="sv_url" type="url" placeholder="https://내주소.netlify.app" autocomplete="off" /></div>
+
+      <div><label>오늘 만족도</label>
+        <div class="svstars" id="svStars"><span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span></div></div>
+
+      <div><label>좋았던 점 · 소감 <span style="color:var(--sub);font-weight:500">(후기)</span></label>
+        <textarea id="sv_liked" placeholder="오늘 좋았던 점, 느낀 점을 자유롭게 적어주세요"></textarea></div>
+
+      <div><label>앞으로 관심 있는 · 더 배우고 싶은 과정 <span style="color:var(--sub);font-weight:500">(여러 개 선택)</span></label>
+        <div class="svchips" id="sv_interest">
+          <label><input type="checkbox" value="퍼스널컬러" />퍼스널컬러</label>
+          <label><input type="checkbox" value="골격분석" />골격분석</label>
+          <label><input type="checkbox" value="컬러강점" />컬러강점</label>
+          <label><input type="checkbox" value="컬러테라피" />컬러테라피</label>
+          <label><input type="checkbox" value="퇴직예정자 미래설계" />퇴직예정자 미래설계</label>
+          <label><input type="checkbox" value="AI 웹페이지 제작" />AI 웹페이지 제작</label>
+          <label><input type="checkbox" value="AI 교육신청 시스템" />AI 교육신청 시스템</label>
+          <label><input type="checkbox" value="AI 웹페이지 브랜딩" />AI 웹페이지 브랜딩</label>
+          <label><input type="checkbox" value="AI 마스터 전문가과정" />AI 마스터 전문가과정</label>
+        </div></div>
+
+      <div><label>더 배우고 싶은 것 · 바라는 점 <span style="color:var(--sub);font-weight:500">(선택)</span></label>
+        <textarea id="sv_more" placeholder="더 배우고 싶은 것, 강의에 바라는 점이 있으면 적어주세요"></textarea></div>
+
+      <button type="button" class="cbtn" id="sv_submit" style="margin-top:2px">💗 후기·소감 남기기</button>
+      <div id="sv_msg" style="font-size:13px;font-weight:700;text-align:center;min-height:18px"></div>
+    </form>
+
+    <div class="check"><input type="checkbox" class="ck" id="s4" /><label for="s4">후기·만족도 조사를 남겼어요</label></div>
+
+    <details style="margin-top:16px"><summary style="font-weight:700;color:var(--sub)">🔒 운영자 결과 보기</summary>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input id="sv_pw" type="password" placeholder="운영자 비밀번호" style="flex:1" />
+        <button type="button" class="cbtn" id="sv_open" style="width:auto;margin:0;padding:11px 18px">열기</button>
+      </div>
+      <div id="sv_admin" style="margin-top:12px"></div>
+    </details>
+  </section>
+
   <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
 </div>
 
@@ -378,5 +443,53 @@ function upd(){
 }
 cks.forEach(c=>c.addEventListener("change",upd)); upd();
 </script>
+<script>
+(function(){
+  var U='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+  var H={apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'};
+  function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var star=0, box=document.getElementById('svStars');
+  if(box){box.querySelectorAll('span').forEach(function(sp){sp.onclick=function(){star=+sp.dataset.v;box.querySelectorAll('span').forEach(function(x){x.classList.toggle('on',(+x.dataset.v)<=star);});};});}
+  var sub=document.getElementById('sv_submit');
+  if(sub) sub.addEventListener('click',function(){
+    var name=(document.getElementById('sv_name').value||'').trim()||'익명';
+    var url=(document.getElementById('sv_url').value||'').trim();
+    var liked=(document.getElementById('sv_liked').value||'').trim();
+    var more=(document.getElementById('sv_more').value||'').trim();
+    var ints=[].slice.call(document.querySelectorAll('#sv_interest input:checked')).map(function(c){return c.value;}).join(', ');
+    var msg=document.getElementById('sv_msg');
+    if(!liked && !star){ msg.style.color='#C0247E'; msg.textContent='별점이나 소감을 남겨주세요.'; return; }
+    msg.style.color='#5b636b'; msg.textContent='보내는 중…';
+    fetch(U+'/rest/v1/class_survey',{method:'POST',headers:Object.assign({Prefer:'return=minimal'},H),body:JSON.stringify({course:'AI 웹페이지 제작',name:name,page_url:url,rating:star||null,liked:liked,interests:ints,want_more:more})})
+    .then(function(r){ if(r.ok){ msg.style.color='#2C8C5A'; msg.textContent='💗 고맙습니다! 소중히 반영할게요.';
+        var ck=document.getElementById('s4'); if(ck&&!ck.checked){ck.checked=true;ck.dispatchEvent(new Event('change'));}
+        document.getElementById('svForm').reset(); star=0; if(box)box.querySelectorAll('span').forEach(function(x){x.classList.remove('on');});
+      } else { msg.style.color='#C0247E'; msg.textContent='오류가 났어요. 잠시 후 다시 시도해 주세요.'; } })
+    .catch(function(){ msg.style.color='#C0247E'; msg.textContent='오류가 났어요. 잠시 후 다시 시도해 주세요.'; });
+  });
+  var op=document.getElementById('sv_open');
+  if(op) op.addEventListener('click',function(){
+    if((document.getElementById('sv_pw').value||'').trim()!=='8808'){ document.getElementById('sv_admin').innerHTML='<div class="svitem" style="color:#C0247E">비밀번호가 올바르지 않습니다.</div>'; return; }
+    var a=document.getElementById('sv_admin'); a.innerHTML='불러오는 중…';
+    fetch(U+'/rest/v1/class_survey?select=*&order=created_at.desc&limit=300',{headers:H})
+    .then(function(r){return r.json();}).then(function(rows){
+      if(!rows||!rows.length){ a.innerHTML='<div class="svitem">아직 응답이 없습니다.</div>'; return; }
+      var tally={}, rated=rows.filter(function(x){return x.rating;});
+      rows.forEach(function(x){ (x.interests||'').split(',').map(function(s){return s.trim();}).filter(Boolean).forEach(function(k){tally[k]=(tally[k]||0)+1;}); });
+      var avg=rated.length?(rated.reduce(function(s,x){return s+x.rating;},0)/rated.length).toFixed(1):'-';
+      var ts=Object.keys(tally).sort(function(x,y){return tally[y]-tally[x];}).map(function(k){return esc(k)+' '+tally[k];}).join(' · ')||'-';
+      var head='<div class="svitem" style="background:#faf4fb;border-color:#ecd9ec"><b>응답 '+rows.length+'명 · 평균 만족도 '+avg+'점</b><br><span style="color:#5b636b">관심 과정: '+ts+'</span></div>';
+      a.innerHTML=head+rows.map(function(x){
+        return '<div class="svitem"><b>'+esc(x.name||'익명')+'</b>'+(x.rating?(' · '+'★'.repeat(x.rating)):'')+(x.page_url?(' · <a href="'+esc(x.page_url)+'" target="_blank" rel="noopener">🔗 페이지</a>'):'')
+          +(x.liked?('<div style="margin-top:4px">'+esc(x.liked)+'</div>'):'')
+          +(x.interests?('<div style="margin-top:3px;color:#5b636b">관심: '+esc(x.interests)+'</div>'):'')
+          +(x.want_more?('<div style="color:#5b636b">더: '+esc(x.want_more)+'</div>'):'')+'</div>';
+      }).join('');
+    }).catch(function(){ a.innerHTML='<div class="svitem" style="color:#C0247E">불러오기 오류.</div>'; });
+  });
+})();
+</script>
+<script>(function(){try{if(localStorage.getItem("pbs_aiweb_agree"))return;}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>

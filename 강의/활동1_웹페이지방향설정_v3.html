@@ -165,32 +165,22 @@
 
     <!-- 4. 콘텐츠 -->
     <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>4. 메뉴를 채울 핵심 내용</div>
-      <p class="sec-desc">위에서 정한 메뉴 안에 들어갈 내용입니다. 아는 만큼만 적으세요.</p>
+      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>4. 이름 · 연락처 · 사진만 준비</div>
+      <p class="sec-desc"><b>내용(강의 소개·커리큘럼·후기 등)은 여기서 안 써도 됩니다</b> — 활동 0 결과로 <b>클로드가 코치처럼 채워요.</b> 여러분은 <b>이름·연락처·사진</b>만 준비하면 됩니다.</p>
 
       <div class="field"><label>홈페이지 이름 (활동명·상호)</label>
         <p class="hint">페이지 맨 위에 들어갈 이름</p>
         <input type="text" name="brand" placeholder="예) OOO 컬러심리연구소" /></div>
 
-      <div class="field"><label>메인에 들어갈 프로필 사진 (1장)</label>
-        <p class="hint">사진을 고르면 미리보기가 뜹니다. 프롬프트를 붙여넣을 때 이 사진을 클로드 대화창에 함께 첨부하세요.</p>
+      <div class="field"><label>사진 준비 (지금 첨부 안 함)</label>
+        <p class="hint">사진은 지금 넣지 마세요. 바탕화면에 <b>‘사진’ 폴더</b>를 만들어 프로필·강의·결과 사진을 다 모아두면 됩니다. 페이지엔 <b>자리만</b> 생기고, 배포한 뒤 폴더에서 하나씩 넣습니다. (아래는 참고용 미리보기)</p>
         <input type="file" id="photo" accept="image/*" />
         <div id="photoPrev" style="margin-top:10px;display:none">
           <img id="photoImg" alt="프로필 미리보기" style="max-width:160px;border-radius:12px;display:block;border:1px solid var(--line)" />
-          <p style="font-size:12px;color:#2C8C5A;font-weight:700;margin:6px 0 0">✅ 이 사진을 클로드에 함께 첨부하세요</p>
+          <p style="font-size:12px;color:#2C8C5A;font-weight:700;margin:6px 0 0">✅ 참고용 미리보기 · 사진은 나중에 폴더에서 넣습니다</p>
         </div></div>
 
-      <div class="field"><label>대표 강의 · 서비스 · 제품</label>
-        <p class="hint">이름 + 한 줄 설명. 줄바꿈해서 여러 개 적어주세요.</p>
-        <textarea name="offers" placeholder="퍼스널컬러 1일 특강 — 나에게 맞는 색 찾기&#10;컬러강점 지도사 자격과정 — 8주 과정"></textarea></div>
-
-      <div class="field"><label>진행 방식 · 커리큘럼</label>
-        <p class="hint">대상·시간·다루는 내용·진행 순서 정도만</p>
-        <textarea name="curriculum"></textarea></div>
-
-      <div class="field"><label>신뢰를 주는 자료</label>
-        <p class="hint">후기, 사례, 실적, 자격, 협력 기관 등. 있는 것만 적으세요.</p>
-        <textarea name="trust"></textarea></div>
+      <div class="field"><p class="hint" style="background:#faf4fb;border:1px solid #ecd9ec;border-radius:10px;padding:11px 13px;color:#5c1953">💡 강의·서비스 소개, 커리큘럼, 후기·경력 같은 <b>내용은 여기서 쓰지 않아도 됩니다.</b> 활동 0에서 나온 내용으로 <b>클로드가 코치처럼 채우고</b>, 부족하면 한두 개만 물어봐요.</p></div>
 
       <div class="field"><label>문의·신청 연결 수단</label>
         <p class="hint">방문자가 실제로 연락할 통로. 이게 없으면 목표가 이뤄지지 않습니다.</p>
@@ -343,9 +333,10 @@ function build(){
   if(extra) extra.split(",").map(s=>s.trim()).filter(Boolean).forEach(s=>list.push(s));
 
   let p="";
-  p+="나만의 홈페이지(한 페이지 웹페이지)를 만들어줘.\n";
-  p+="아래는 내가 직접 설계한 목표와 구조야. 예쁘게만 만들지 말고,\n";
-  p+="아래 '목표'가 실제로 이뤄지도록 설계해줘. 모바일에서 잘 보이게 만들고 화면에 바로 보여줘.\n\n";
+  p+="너는 전문 웹디자이너이자 카피라이터야. 아래 정보로, 방문자에게 신뢰를 주는 '프로페셔널한 한 페이지 웹사이트'를 만들어줘.\n";
+  p+="예쁘게만이 아니라, 아래 '목표'가 실제로 이뤄지도록 설계해줘.\n";
+  p+="나는 코딩을 모르는 초보야. 모바일에서 먼저 잘 보이게 하고, 완성본을 화면에 바로 보여줘.\n";
+  p+="중요: 나는 생각 정리가 잘 안 되는 완전 초보야. 아래에 자세히 못 적었어도, '나의 브랜드' 정보와 지금까지 우리 대화를 근거로 각 섹션에 들어갈 문구를 네가 코치처럼 초안으로 다 써줘. 부족하면 꼭 필요한 것만 한두 개 쉽게 물어보고, 나머지는 전문가답게 채워줘. 나는 읽고 고칠 곳만 말할게.\n\n";
 
   p+="【이 페이지의 목표】\n";
   p+=L("핵심 목표", goalNames);
@@ -374,15 +365,18 @@ function build(){
   p+=L("강조색", val("colors"));
   p+=L("참고 사이트", val("ref"));
 
-  p+="\n【설계 지침】\n";
-  p+="1) 위 메뉴 순서를 그대로 페이지 구성 순서로 삼아줘. 각 섹션에 제목을 달아줘.\n";
-  p+="2) 첫 화면에는 브랜드명과 '나를 한 문장으로'를 크게 배치하고,\n";
-  p+="   지금 가장 알려야 할 것을 눈에 띄게 함께 보여줘.\n";
-  if(goalNames) p+=`3) 방문자가 '${goalNames}'에 도달하도록, 문의·신청 버튼을 첫 화면과 페이지 맨 아래에 각각 배치해줘.\n`;
-  p+="4) 내 강점과 이야기는 나열식이 아니라 읽히는 문장으로 자연스럽게 녹여줘.\n";
-  p+="5) 내가 첨부하는 프로필 사진을 메인 상단에 넣어줘. 로고 등 다른 사진 자리도 미리 만들어줘.\n";
-  p+="6) 한글 줄바꿈이 어색하지 않게, 모바일에서 읽기 편하게 만들어줘.\n";
-  p+="7) 완성 후, 이 목표를 더 잘 이루기 위해 내가 보완하면 좋을 점 3가지를 알려줘.\n";
+  p+="\n【설계 지침 — 프로페셔널하게】\n";
+  p+="1) 맨 위에 '고정 메뉴바'(각 섹션으로 이동)를 넣고, 스크롤해도 따라오게 해줘.\n";
+  p+="2) 첫 화면(히어로): 브랜드명 + '나를 한 문장으로'를 크게, 그 아래 짧은 설명 한 줄, 눈에 띄는 버튼 2개(예: 문의하기 · 자세히 보기), 상단에 프로필 사진 자리.\n";
+  p+="3) 이어지는 섹션은 위 메뉴 순서대로. 각 섹션은 '제목 + 짧은 설명 + 카드/목록'으로 보기 좋게 — 소개(내 이야기·철학), 강점/하는 일(3~4개 카드), 서비스·커리큘럼, 신뢰(경력·자격·후기 자리), 문의.\n";
+  if(goalNames) p+=`4) 방문자가 '${goalNames}'에 도달하도록, 문의·신청 버튼을 히어로와 페이지 맨 아래에 각각 배치해줘.\n`;
+  p+="5) 문의 섹션에는 '이름·연락처·문의내용' 입력폼과 전화·이메일·카톡 자리를 만들어줘. (실제 전송 연결은 다음 활동에서 함)\n";
+  p+="6) 디자인: 강조색 2~3개로 통일, 넉넉한 여백, 큰 제목·읽기 쉬운 본문, 섹션마다 배경을 살짝 구분. 과한 애니메이션은 넣지 말고 부드럽게만.\n";
+  p+="7) 반응형(모바일·PC)과 접근성(이미지 alt·명확한 버튼)까지 챙기고, 내가 준 내용만 써줘(없는 사실·과장 금지). 내 강점·이야기는 나열이 아니라 읽히는 문장으로.\n";
+  p+="8) 사진은 지금 넣지 말고, 들어갈 '자리(회색 박스 + 어떤 사진인지 한 줄 설명)'만 만들어줘. 사진은 내가 바탕화면 폴더에 모아뒀다가 나중에 넣을게.\n";
+  p+="\n【결과물 형식】\n";
+  p+="- HTML·CSS·JS를 '하나의 파일'에 담아 그대로 복사해 쓸 수 있게 해줘. 완성본을 화면에 바로 렌더해서 보여줘.\n";
+  p+="- 다 만든 뒤, 이 목표를 더 잘 이루기 위해 보완하면 좋을 점 3가지도 알려줘.\n";
   return p.trim();
 }
 
@@ -401,5 +395,6 @@ document.getElementById("copyBtn").addEventListener("click", async ()=>{
   b.textContent="✅ 복사됐어요! Claude에 붙여넣으세요"; setTimeout(()=>b.textContent=o,2000);
 });
 </script>
+<script>(function(){try{if(localStorage.getItem("pbs_aiweb_agree"))return;}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>
