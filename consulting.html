@@ -15,7 +15,7 @@
 
 <title>울산 퍼스널컬러 진단 · 최해숙 PBS컬러랩｜골격진단·얼굴분석 개인 컨설팅</title>
 <meta name="description" content="울산 퍼스널컬러 진단은 PBS컬러랩 최해숙 대표. 울산 중구 우정혁신도시에서 퍼스널컬러·골격진단·얼굴분석·웨딩·VIP 개인 컨설팅을 예약제로 진행합니다. 가격·소요시간 확인 후 예약하세요.">
-<meta name="keywords" content="울산 퍼스널컬러, 울산 퍼스널컬러 진단, 울산 퍼스널컬러 추천, 최해숙, PBS컬러랩, PBS COLOR LAB, 울산 골격진단, 울산 얼굴분석, 울산 이미지컨설팅, 퍼스널컬러 진단, 울산 중구 퍼스널컬러">
+<meta name="keywords" content="울산 퍼스널컬러, 울산퍼스널컬러, 울산 퍼스널컬러 진단, 울산중구 퍼스널컬러, 울산에서 퍼스널컬러 잘하는곳, 울산 퍼스널컬러 추천, 최해숙, PBS컬러랩, PBS COLOR LAB, 울산 골격진단, 울산 얼굴분석, 울산 이미지컨설팅, 이미지컨설팅, 퍼스널컬러 진단, 웨딩 퍼스널컬러">
 <link rel="canonical" href="https://www.pbscolor.com/consulting">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="format-detection" content="telephone=no">
@@ -216,13 +216,18 @@
   .chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface);
     border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;color:var(--ink-soft);font-weight:600}
   .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pink)}
-  .hero .wrap{display:grid;gap:26px;align-items:center}
-  .hero-photo{display:block;max-width:300px;margin:8px auto 0}
-  .hero-photo img{width:100%;height:auto;border-radius:22px;object-fit:cover;aspect-ratio:4/5;
-    box-shadow:0 20px 55px rgba(233,30,140,.20)}
+  .hero .wrap{display:grid;gap:24px;align-items:center}
+  .hero-photo{display:block;margin:20px auto 0;max-width:560px;position:relative}
+  .hero-photo img{width:100%;height:auto;display:block;border-radius:24px;object-fit:cover;aspect-ratio:4/5;
+    box-shadow:0 34px 70px -22px rgba(194,30,106,.45), 0 10px 28px rgba(30,20,30,.12);
+    outline:6px solid #fff;outline-offset:-6px}
+  .hero-photo figcaption{position:absolute;left:14px;right:14px;bottom:14px;color:#fff;font-size:13px;font-weight:700;
+    letter-spacing:-.01em;text-shadow:0 1px 6px rgba(0,0,0,.45);
+    background:linear-gradient(180deg,transparent,rgba(30,10,20,.28));padding:26px 12px 8px;border-radius:0 0 18px 18px}
   @media(min-width:900px){
-    .hero .wrap{grid-template-columns:1.12fr .88fr}
-    .hero-photo{max-width:none;margin:0}
+    .hero .wrap{grid-template-columns:1.02fr .98fr;gap:40px}
+    .hero-photo{margin:0;max-width:none}
+    .hero-photo img{aspect-ratio:5/6;min-height:540px}
   }
 
   /* 이미지 플레이스홀더 */
@@ -414,9 +419,10 @@
       <span class="chip">1인·친구·커플·학생</span>
     </div>
    </div><!-- /hero-copy -->
-   <div class="hero-photo">
+   <figure class="hero-photo">
      <img src="/consulting-hero.jpg" alt="PBS컬러랩 최해숙 대표가 고객에게 퍼스널컬러 진단(드레이프)을 진행하는 모습 — 울산 개인 컨설팅" loading="eager" width="900" height="1200">
-   </div>
+     <figcaption>퍼스널컬러 진단 현장 · 최해숙 대표</figcaption>
+   </figure>
   </div>
 </div>
 
