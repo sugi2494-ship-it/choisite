@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 7-1. 네이버·구글 검색 등록 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 7단계 검색 노출</div><h1>마스터 7-1. 네이버·구글에 내 사이트 등록</h1><p class="lead">검색에 뜨려면 먼저 <b>“내 사이트가 여기 있어요”</b>라고 검색엔진에 알려야 합니다. 네이버·구글의 <b>무료 도구</b>에 등록하고 <b>사이트맵</b>을 제출합니다. 한 번만 하면 되는 기초 작업.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 내 사이트 주소·사이트맵</span><span class="time">📦 결과물 · 검색엔진 등록</span></p></header><div class="callout">💡 등록을 안 하면 검색엔진이 내 사이트를 늦게 알거나 못 찾습니다. <b>한 번만</b> 해두면 되는 기초예요.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span class="on">7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span class="on">7-1 검색등록</span><span>7-2 SEO 점검</span><span>7-3 GEO·AI 검색</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>왜 등록? + 준비물</div><p class="sec-desc">검색에 뜨려면 먼저 검색엔진에 <b>“내 사이트 여기 있어요”</b>라고 알려야 합니다. 한 번만 하면 됩니다.</p><ul class="guide"><li><b>내 사이트 주소</b> (예: 내이름.com)</li><li><b>사이트맵 주소</b> — 보통 <b>내주소/sitemap.xml</b> (내 페이지 목록 '지도')</li><li>소유확인용으로 <b>내 사이트를 조금 수정</b>할 수 있어야 함(메타태그 한 줄 넣기 등)</li></ul><div class="note">💡 사이트맵(sitemap.xml)·robots.txt가 없으면 AI에게 "내 사이트 sitemap.xml과 robots.txt를 만들어줘"라고 요청하세요. (이 강의실처럼 만든 사이트는 대개 이미 있습니다.)</div><div class="checks"><label><input type="checkbox"><span>내 사이트 주소와 사이트맵 주소를 확인했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>🔵 구글에 등록 — 구글 서치콘솔</div><p class="sec-desc">전 세계 검색의 기본. 무료입니다.</p><ol class="steps"><li>아래 버튼 → <b>속성 추가</b> → <b>URL 접두어</b>에 내 사이트 주소</li><li><b>소유확인</b> — 'HTML 태그'(메타태그 한 줄) 방식이 가장 쉬움 → 내 사이트 &lt;head&gt;에 붙이기</li><li>왼쪽 <b>Sitemaps</b> → <b>sitemap.xml</b> 입력 후 제출</li></ol><a class="gobtn" style="background:linear-gradient(135deg,#4285F4,#1a73e8);box-shadow:0 8px 22px rgba(26,115,232,.24)" href="https://search.google.com/search-console" target="_blank" rel="noopener">🔵 구글 서치콘솔 열기 →</a><div class="promptbox" id="p71a">너는 나를 1:1로 돕는 도우미야. 나는 왕초보야.
+구글 서치콘솔에 내 사이트를 등록하고 &#x27;소유확인 → 사이트맵 제출&#x27;까지 한 단계씩 안내해줘.
+- 내 사이트 주소: [붙여넣기]
+- 사이트맵 주소: [내주소/sitemap.xml]
+규칙: 한 번에 한 단계, 쉬운 말, 누를 위치까지. 소유확인은 가장 쉬운 방법(HTML 메타태그)으로,
+그 태그를 내 사이트 어디에 어떻게 넣는지까지 알려줘. (내가 캡처 보여주면 그걸 보고)
+각 단계 끝에 &quot;여기까지 됐으면 알려줘&quot;.</div><button class="copybtn" data-copy="p71a" type="button">📋 구글 등록 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>구글 서치콘솔에 등록·소유확인했다</span></label><label><input type="checkbox"><span>사이트맵을 제출했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>🟢 네이버에 등록 — 네이버 서치어드바이저</div><p class="sec-desc">국내 검색은 네이버가 큽니다. 방식은 구글과 비슷.</p><ol class="steps"><li>아래 버튼 → <b>웹마스터 도구</b> → <b>사이트 등록</b>에 내 주소</li><li><b>소유확인</b>(HTML 태그/파일) → 내 사이트에 넣기</li><li><b>요청 → 사이트맵 제출</b>에 sitemap.xml, <b>웹페이지 수집</b>도 요청</li></ol><a class="gobtn" style="background:linear-gradient(135deg,#03C75A,#029c47);box-shadow:0 8px 22px rgba(3,199,90,.24)" href="https://searchadvisor.naver.com/" target="_blank" rel="noopener">🟢 네이버 서치어드바이저 열기 →</a><div class="promptbox" id="p71b">너는 나를 1:1로 돕는 도우미야. 나는 왕초보야.
+네이버 서치어드바이저(웹마스터도구)에 내 사이트를 등록하고 소유확인·사이트맵 제출·수집요청까지 한 단계씩 안내해줘.
+- 내 사이트 주소: [붙여넣기]
+- 사이트맵 주소: [내주소/sitemap.xml]
+한 번에 한 단계, 쉬운 말, 누를 위치까지. 각 단계 끝에 &quot;여기까지 됐으면 알려줘&quot;.</div><button class="copybtn" data-copy="p71b" type="button">📋 네이버 등록 프롬프트 복사</button><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크로 함께 만들기 (파일·서버 직접 연결) →</a><div class="checks"><label><input type="checkbox"><span>네이버 서치어드바이저에 등록·소유확인했다</span></label><label><input type="checkbox"><span>사이트맵을 제출했다</span></label></div><div class="tip">🌱 등록해도 검색에 <b>실제로 뜨기까지 며칠~몇 주</b> 걸립니다. 조급해하지 말고, 그 사이 6단계 홍보로 사람을 모으세요.</div><div class="why">📦 <b>결과물</b> — 구글·네이버에 내 사이트 등록 + 사이트맵 제출<br>➡ 다음 <b>7-2. SEO 점검·설정</b>으로.</div><div class="teacher">🎤 <b>강사 팁</b> — 소유확인에서 대부분 막힙니다. <b>메타태그 방식</b>을 기본으로 가르치고, 태그 넣는 위치(&lt;head&gt;)를 화면으로 보여주세요. 코워크로 하면 파일을 직접 넣어줘 더 쉽습니다.</div></section><div class="next"><span class="n">7-2</span><div>등록했으면 → <b>마스터 7-2. SEO 점검·설정</b>으로. <a href="마스터7-2_SEO점검.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

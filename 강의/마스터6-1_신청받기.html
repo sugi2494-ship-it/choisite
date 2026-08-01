@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 6-1. 신청 받기 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}
+  .road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}
+  .road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 6단계</div><h1>마스터 6-1. 신청 받기</h1><p class="lead">사람들이 <b>신청하는 곳</b>을 먼저 만듭니다. 초보라면 <b>A. 구글폼</b>부터 — 코딩 없이 10분. 이게 있어야 카드뉴스·홍보에 <b>신청 링크</b>를 붙일 수 있어요.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 1단계 대상자·과정</span><span class="time">📦 결과물 · 신청 폼 + 신청 링크</span></p></header><div class="callout">💡 순서상 <b>신청 받는 곳이 가장 먼저</b>입니다. 링크가 있어야 그다음 카드뉴스·홍보가 의미 있어요.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span class="on">6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span class="on">6-1 신청받기</span><span>6-2 알림</span><span>6-3 신청자관리</span><span>6-4 카드뉴스</span><span>6-5 홍보</span><span>6-6 후기</span><span>6-7 기수·수익화</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>어디로 받을지 먼저 고르기</div><p class="sec-desc">초보 강사는 <b>A. 구글폼</b>부터 시작하세요.</p><div class="why">🔑 <b>두 가지 길</b><br>• <b>A. 구글폼 + 구글시트</b> — 코딩 없음, 10분, 링크만 공유. 응답은 시트에 자동 저장. <b>초보 추천.</b><br>• <b>B. 슈파베이스</b> — 내 웹페이지 <b>안에 직접</b> 붙이고 자동화가 강함. 대신 조금 어려움(서버). 익숙해지면.</div><div class="checks"><label><input type="checkbox"><span>A(구글폼) 또는 B(슈파베이스) 중 하나를 정했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>🟢 A. 구글폼으로 받기 (쉬움·추천)</div><p class="sec-desc">코딩 없이 신청 폼을 만들고, 응답을 구글시트에 자동으로 모읍니다.</p><ol class="steps"><li>아래 버튼 → 구글폼에서 <b>빈 양식</b> 만들기 (구글 계정)</li><li>질문 추가: <b>이름·연락처</b>(단답), <b>관심 과정</b>(객관식), <b>하고 싶은 말</b>(장문)</li><li>오른쪽 위 <b>응답 탭 → 초록 시트 아이콘</b> → <b>구글시트로 연결</b>(응답 자동 저장)</li><li><b>보내기</b>로 폼 링크 복사 → 카드뉴스·홍보 글에 붙이기</li></ol><a class="gobtn" style="background:linear-gradient(135deg,#7248B9,#5b34a0);box-shadow:0 8px 22px rgba(114,72,185,.24)" href="https://docs.google.com/forms/" target="_blank" rel="noopener">📝 구글폼 만들기 →</a><div class="promptbox" id="p61a">내 강의 신청용 구글폼에 넣을 질문과 안내 문구를 만들어줘. (구글폼에 그대로 옮겨 적게)
+- 대상자/과정: (1단계 대상자 + 과정명 붙여넣기)
+질문은 꼭 필요한 것만:
+- 이름 (단답)
+- 연락처 (단답)
+- 관심 과정 (객관식 — 보기도 만들어줘)
+- 하고 싶은 말 (장문)
+그리고:
+- 폼 제목과 첫 화면 설명 문구
+- 제출 후 &#x27;감사합니다&#x27; 문구
+- 연락처 수집 목적을 밝히는 개인정보 동의 한 줄
+항목별로 정리해서, 복사해 붙이기만 하면 되게.</div><button class="copybtn" data-copy="p61a" type="button">📋 구글폼 질문 프롬프트 복사</button><div class="note">💡 구글폼은 코딩이 없고 응답이 구글시트에 자동으로 쌓입니다. 관리(6-3)도 그 시트에서 바로 할 수 있어요. <b>대부분의 초보 강사는 A로 충분</b>합니다.</div><div class="checks"><label><input type="checkbox"><span>구글폼을 만들고 시트로 연결했다</span></label><label><input type="checkbox"><span>폼 링크를 복사해 두었다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>🔵 B. 슈파베이스로 내 사이트에 직접 (조금 어려움)</div><p class="sec-desc">내 웹페이지 안에 폼을 붙이고 데이터를 직접 저장합니다. 익숙해지면 하세요.</p><ol class="steps"><li>아래 버튼 → <b>Start your project</b> 가입(구글, 1분)</li><li><b>New Project</b> — DB 비번은 <b>메모</b>, 지역은 <b>Northeast Asia(Seoul/Tokyo)</b></li><li><b>Settings → API</b>에서 <b>Project URL</b> · <b>anon public</b> 키 복사</li></ol><a class="gobtn sb" href="https://supabase.com/" target="_blank" rel="noopener">🟢 슈파베이스 열기 →</a><div class="promptbox" id="p61b">너는 나를 1:1로 돕는 친절한 개발 도우미야. 나는 코딩을 전혀 모르는 왕초보야.
+&#x27;신청 폼 만들고 슈파베이스에 저장&#x27;까지 한 번에 한 단계씩만 안내해줘.
+규칙: (1) 한 번에 한 단계만, 내가 &quot;됐어&quot; 하면 다음. (2) 쉬운 말로. (3) 누를 위치까지. (4) 캡처 보여주면 그걸 보고.
+
+내가 준비한 것:
+- 슈파베이스 Project URL: [붙여넣기]
+- anon public key: [붙여넣기]
+- 신청 항목: 이름, 연락처, 관심 과정(선택), 하고 싶은 말
+
+이 순서로:
+1) &#x27;applications&#x27; 표 만들기 — 칸(이름/연락처/관심과정/메모/신청시간)과 SQL 코드
+2) 익명 방문자가 &#x27;저장만&#x27; 되게 하는 보안(RLS) — 코드와 누를 위치
+3) 내 사이트에 붙일 신청 폼 HTML — 제출하면 저장되고 &quot;신청이 접수되었습니다 :)&quot;
+4) 시험 — 한 건 넣어보고 표에서 확인
+각 단계 끝에 &quot;여기까지 됐으면 알려줘&quot;라고 물어봐줘.</div><button class="copybtn" data-copy="p61b" type="button">📋 슈파베이스 신청 프롬프트 복사</button><div class="warn">🔒 <b>anon public</b> 키는 공개용이라 웹에 넣어도 됩니다. <b>service_role</b> 키는 절대 넣지 마세요(비밀 키).</div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크로 함께 만들기 (파일·서버 직접 연결) →</a><div class="checks"><label><input type="checkbox"><span>B를 택했다면: 신청 폼이 표에 저장되는 걸 확인했다</span></label></div><div class="why">📦 <b>결과물</b> — 신청 폼 + <b>신청 링크</b>(카드뉴스·홍보에 붙일 것)<br>➡ 다음 <b>6-2. 신청 알림</b>으로.</div><div class="teacher">🎤 <b>강사 팁</b> — 수강생에게는 무조건 <b>A(구글폼)</b>부터 가르치세요. 10분이면 성공 경험이 생깁니다. B는 자신감이 붙은 뒤에.</div></section><div class="next"><span class="n">6-2</span><div>신청 폼이 되면 → <b>마스터 6-2. 신청 알림</b>으로. <a href="마스터6-2_신청알림.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

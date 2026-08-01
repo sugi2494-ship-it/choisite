@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 7-3. AI 검색 최적화(GEO) · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 7단계 검색 노출</div><h1>마스터 7-3. AI 검색에 뜨게 (GEO)</h1><p class="lead">요즘은 사람들이 <b>ChatGPT·구글 AI·네이버 AI</b>에게 물어봅니다. <b>GEO(생성형 검색 최적화)</b> = 그 AI 답변에 <b>내 이름·내 사이트가 나오게</b> 만드는 것.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 40분</span><span class="time">📥 입력 · 7-2 다듬은 페이지</span><span class="time">📦 결과물 · AI 검색 최적화 + 점검</span></p></header><div class="callout">💡 SEO가 '검색결과에 뜨기'라면, GEO는 <b>'AI가 대답할 때 나를 인용하게'</b> 하기입니다. 핵심은 <b>명확하고 사실적인 정보</b>.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span class="on">7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span>7-1 검색등록</span><span>7-2 SEO 점검</span><span class="on">7-3 GEO·AI 검색</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>GEO가 뭔가요? — 쉬운 설명</div><p class="sec-desc">요즘은 사람들이 <b>ChatGPT·구글 AI·네이버 AI</b>에게 물어봅니다. <b>GEO(생성형 검색 최적화)</b> = 그 AI 답변에 <b>내 이름·내 사이트가 나오게</b> 하는 것.</p><div class="why">🔑 <b>SEO vs GEO</b><br>• SEO = 검색 결과 목록에 <b>내 링크가 뜨게</b><br>• GEO = AI가 대답할 때 <b>나를 인용·추천하게</b></div><p style="font-size:14px;margin:12px 0 0">AI가 답에 쓰는 정보는 대개 이런 것입니다:</p><ul class="guide"><li><b>명확한 정보</b> — 내가 누구고 무엇을 하는지 분명히</li><li><b>사실·근거</b> — 숫자·경력·후기 등 확인 가능한 것</li><li><b>질문-답변(FAQ) 형태</b> — AI가 그대로 가져다 쓰기 좋음</li><li><b>여러 곳에서 일관된 정보</b> — 홈피·블로그·인스타가 같은 이름·같은 소개</li></ul><div class="checks"><label><input type="checkbox"><span>GEO가 'AI가 나를 인용하게 하기'임을 이해했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>내 사이트를 AI가 좋아하게 만들기</div><p class="sec-desc">위 4가지를 내 페이지에 <b>실제로</b> 넣습니다.</p><div class="promptbox" id="p73a">내 페이지를 &#x27;AI 검색(생성형)&#x27;에 잘 인용되게 고쳐줘. 나는 왕초보야. 화면에 있는 사실만 쓰고 지어내지 마.
+1) 명확한 자기소개 한 문단 — 누가·누구에게·무엇을·어디서
+2) 자주 묻는 질문(FAQ) 5개 — 대상자가 궁금해할 것 + 짧은 답(AI가 가져다 쓰기 좋게)
+3) 사실 기반 정보 — 경력·활동·후기 등 확인 가능한 것만 정리
+4) 구조화 데이터(JSON-LD) — Person(나)·Course(내 강의)·FAQPage. 내 페이지 &lt;head&gt;에 넣을 코드로
+각 항목을 내 페이지 어디에 넣는지 위치까지. 한 단계씩.</div><button class="copybtn" data-copy="p73a" type="button">📋 GEO 최적화 프롬프트 복사</button><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크로 함께 만들기 (파일·서버 직접 연결) →</a><div class="checks"><label><input type="checkbox"><span>자기소개·FAQ를 넣었다</span></label><label><input type="checkbox"><span>구조화 데이터(JSON-LD)를 넣었다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>AI에 직접 물어보며 점검</div><p class="sec-desc">진짜 되는지 <b>여러 AI에 물어봅니다.</b></p><ul class="guide"><li>ChatGPT·구글(AI 개요)·네이버(큐:)에 <b>내 이름/분야/지역</b>을 물어보기</li><li>나오면 성공, 안 나오면 정보가 부족한 것 → 보강</li></ul><div class="promptbox" id="p73b">아래 질문들을 여러 AI(챗지피티/구글/네이버 AI)에 넣어보고, 그 답에 내가 나오는지 점검하는 걸 도와줘.
+- &quot;[내 이름]이 누구야?&quot; / &quot;[지역]에서 [분야] 강사 추천해줘&quot; / &quot;[내 분야] 배우려면 누구한테?&quot;
+각 질문에서 (1) 내가 나오는지 (2) 안 나오면 무엇을(어떤 정보를) 보완해야 AI가 나를 알게 될지 알려줘.</div><button class="copybtn" data-copy="p73b" type="button">📋 AI 점검 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>AI에 내 이름·분야를 물어 확인했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">4</span>일관성·평판 쌓기 (시간이 약)</div><p class="sec-desc">GEO는 하루아침에 안 됩니다. <b>쌓여야</b> AI가 신뢰합니다.</p><ul class="guide"><li>홈피·블로그·인스타에 <b>같은 이름·같은 소개</b>(1단계 아이덴티티) 통일</li><li>후기(6-6)·활동·글이 쌓일수록 AI가 나를 '진짜 전문가'로 인식</li><li>조급해 말고, 꾸준히 — 이게 결국 가장 강한 노출</li></ul><div class="checks"><label><input type="checkbox"><span>채널 간 이름·소개를 일관되게 맞췄다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — AI 검색용 자기소개·FAQ·구조화 데이터 + AI 점검<br>🎉 <b>진단 → 강의실 → 과정 → 잠금 → 교수법 → 모집·운영 → 검색 노출</b>까지 전 과정 완성!</div><div class="teacher">🎤 <b>강사 팁</b> — GEO는 '정답 세팅'보다 <b>꾸준한 일관성</b>이 핵심이라고 가르치세요. 초보에겐 (1)자기소개 (2)FAQ (3)AI에 직접 물어 확인, 이 3가지만 해도 충분한 시작입니다. 나머지는 활동이 쌓이며 따라옵니다.</div></section><div class="next"><span class="n">8</span><div>검색까지 됐으면 → <b>마스터 8. 마케팅 넓히기</b>에서 더 많은 사람에게 알립니다. <a href="마스터8_마케팅.html" style="color:#5c1953;font-weight:800">8단계 시작 바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 6-6. 후기 관리 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}
+  .road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}
+  .road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 6단계</div><h1>마스터 6-6. 후기(소감) 관리</h1><p class="lead">수강생 <b>후기</b>를 받고, 좋은 걸 골라, 홈·모집 페이지에 <b>노출</b>합니다. 후기 한 줄이 다음 기수 신청을 만듭니다.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 수료 수강생</span><span class="time">📦 결과물 · 후기 폼 + 공개 후기</span></p></header><div class="callout">💡 사람들은 '남이 좋았다는 것'을 보고 결정합니다. 후기는 가장 강력한 홍보예요.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span class="on">6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span>6-1 신청받기</span><span>6-2 알림</span><span>6-3 신청자관리</span><span>6-4 카드뉴스</span><span>6-5 홍보</span><span class="on">6-6 후기</span><span>6-7 기수·수익화</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>후기 받는 곳 만들기</div><p class="sec-desc">후기는 다음 모집의 <b>최고 무기</b>입니다. 받는 곳부터.</p><div class="why">🔑 가장 쉬운 건 <b>구글폼</b>(6-1과 같은 방식). 이름·별점·내용·사진(선택)만 받으면 됩니다.</div><div class="promptbox" id="p66a">수강생 후기(소감)를 받는 구글폼 질문을 만들어줘. (구글폼에 그대로 옮기게)
+- 이름(또는 닉네임)
+- 별점(1~5, 객관식)
+- 무엇이 가장 좋았나요? (장문)
+- 배우기 전과 후, 무엇이 달라졌나요? (장문)
+- 사진 첨부(선택)
+- 홈페이지에 공개해도 되는지 동의 (예/아니오)
+답하기 쉽게 각 질문에 짧은 안내 문구도.</div><button class="copybtn" data-copy="p66a" type="button">📋 후기 폼 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>후기 받는 폼을 만들었다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>좋은 후기 요청하기</div><p class="sec-desc">그냥 ‘후기 주세요’ 하면 안 옵니다. <b>구체적으로·쉽게</b> 물어야 옵니다.</p><div class="promptbox" id="p66b">수료한 수강생에게 후기를 부탁하는 메시지를 만들어줘.
+- 고마움 먼저, 부담 없이
+- 답하기 쉽게 구체적 질문 3개 제시(예: 신청 전 고민 / 배운 것 / 추천하고 싶은 사람)
+- 후기 폼 링크 자리 [링크]
+- 사진 한 장 부탁(선택)
+짧은 버전(문자/카톡)과 조금 정중한 버전 둘 다.</div><button class="copybtn" data-copy="p66b" type="button">📋 후기 요청 메시지 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>수료생에게 후기를 요청했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>후기 노출하기</div><p class="sec-desc">받은 후기를 <b>홈·모집 페이지</b>에 예쁘게. 공개/비공개는 내가 정합니다.</p><div class="promptbox" id="p66c">받은 후기를 내 강의실/모집 페이지에 보여주는 걸 만들어줘. 나는 왕초보야. 한 단계씩.
+- 내가 고른 후기만 공개(공개/비공개 내가 선택)
+- 이름은 닉네임/성만 표시(개인정보 보호), 별점·내용·사진
+- 관리자만 켜고 끌 수 있게(무단 수정 방지)
+- 구글시트로 후기를 모았다면 그걸 불러와 보여주는 방법도
+각 단계 끝에 &quot;여기까지 됐으면 알려줘&quot;라고 물어봐줘.</div><button class="copybtn" data-copy="p66c" type="button">📋 후기 노출 프롬프트 복사</button><div class="warn">🔒 후기에 담긴 이름·연락처·얼굴은 <b>동의받은 것만</b> 공개. 없는 후기를 지어내지 마세요(사실만).</div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크로 함께 만들기 (파일·서버 직접 연결) →</a><div class="checks"><label><input type="checkbox"><span>공개할 후기를 골라 노출했다</span></label></div><div class="why">📦 <b>결과물</b> — 후기 폼 + 공개 후기<br>➡ 다음 <b>6-7. 기수·수익화</b>로.</div><div class="teacher">🎤 <b>강사 팁</b> — 첫 기수에서 <b>후기 3개</b>만 받으면 다음 기수가 훨씬 쉬워집니다. 수료 직후(감동이 살아있을 때) 바로 요청하세요.</div></section><div class="next"><span class="n">6-7</span><div>후기가 모이면 → <b>마스터 6-7. 기수·수익화</b>로. <a href="마스터6-7_기수수익화.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

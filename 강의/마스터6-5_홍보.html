@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 6-5. 홍보하기 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}
+  .road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}
+  .road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 6단계</div><h1>마스터 6-5. 홍보하기 (채널별로 알리기)</h1><p class="lead">만든 카드뉴스·신청 링크를 <b>사람들이 있는 곳</b>에 뿌립니다. 인스타·블로그·카톡 중 <b>내가 자주 쓰는 1곳</b>부터.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 6-4 카드뉴스 + 6-1 링크</span><span class="time">📦 결과물 · 홍보 글 + 일정</span></p></header><div class="callout">💡 좋은 강의도 <b>알려야</b> 신청이 옵니다. 한 번에 다 하지 말고, 가장 자주 쓰는 채널 1곳부터.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span class="on">6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span>6-1 신청받기</span><span>6-2 알림</span><span>6-3 신청자관리</span><span>6-4 카드뉴스</span><span class="on">6-5 홍보</span><span>6-6 후기</span><span>6-7 기수·수익화</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>어디에 알릴지 — 채널 1~2곳 정하기</div><p class="sec-desc">다 하려다 아무것도 못 합니다. <b>내가 가장 자주 쓰는 곳 1곳</b>부터.</p><ul class="guide"><li><b>인스타그램</b> — 카드뉴스 올리기 좋음(피드+스토리)</li><li><b>블로그(네이버/티스토리)</b> — 검색에 남음, 자세한 소개</li><li><b>카카오톡</b> — 오픈채팅·채널·단톡, 지인에게 바로</li><li><b>네이버 밴드/카페·문자</b> — 이미 모인 사람들에게</li></ul><div class="why">🔑 새 채널을 파지 말고, <b>이미 사람이 있는 내 채널</b>부터. 없으면 지인·기존 고객이 첫 채널.</div><div class="checks"><label><input type="checkbox"><span>가장 먼저 알릴 채널 1~2곳을 정했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>채널별 홍보 글 만들기 — AI</div><p class="sec-desc">카드뉴스에 붙일 글을 채널마다 맞게. 각 글 끝에 <b>신청 링크</b>.</p><div class="promptbox" id="p65a">내 강의 모집 홍보 글을 채널별로 만들어줘. 각 글 끝에 신청 링크 자리 [링크](6-1 폼)를 넣어줘.
+- 대상자/과정/얻는 것/일정·비용: (붙여넣기)
+- 내 말투: (예: 다정한 반말 / 정중한 존댓말)
+
+만들 것:
+1) 인스타 캡션 — 후킹 첫 줄 + 핵심 + 신청 안내 + 해시태그 10개
+2) 블로그 포스팅 — 제목 + 본문(고민 공감 → 이 강의가 답 → 커리큘럼 → 신청). 검색 잘 되게 키워드 자연스럽게
+3) 카톡/문자 공지 — 짧고 부담 없이, 신청 링크
+4) 스토리/한 줄 홍보 — 아주 짧은 버전
+과장 없이 사실만, 초보 대상자가 읽기 쉽게.</div><button class="copybtn" data-copy="p65a" type="button">📋 채널별 홍보 글 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>채널별 홍보 글을 받았다</span></label><label><input type="checkbox"><span>각 글에 신청 링크를 넣었다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>지인·기존 고객에게 직접 알리기</div><p class="sec-desc">가장 먼저 신청하는 사람은 대개 <b>나를 이미 아는 사람</b>입니다.</p><div class="promptbox" id="p65b">나를 아는 사람(지인·기존 수강생·고객)에게 1:1로 보낼 강의 안내 메시지를 만들어줘.
+- 부담 없이, 강요 없이, &quot;관심 있을 것 같아 알려드려요&quot; 톤
+- 짧게: 무슨 강의 · 누구에게 좋은지 · 신청 링크
+- 소개해 줄 만한 사람이 있으면 전달 부탁하는 한 줄
+2~3가지 버전(친한 사이 / 정중한 사이)으로.</div><button class="copybtn" data-copy="p65b" type="button">📋 지인 안내 메시지 프롬프트 복사</button><div class="warn">🔒 과장·거짓 표현 금지(사실만). 단체방 도배·모르는 사람 스팸은 역효과. 받는 사람이 반가울 만한 톤으로.</div><div class="checks"><label><input type="checkbox"><span>지인·기존 고객에게 알렸다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">4</span>꾸준히·마감 임박 알리기</div><p class="sec-desc">한 번 올리고 끝이 아닙니다. <b>여러 번</b> 나눠서.</p><ul class="guide"><li>오픈 → 중간 → <b>마감 임박</b>(정원 얼마 남음/마감 D-2) 3~5회 나눠 알리기</li><li>신청자 후기·질문을 콘텐츠로(6-6 후기와 연결)</li></ul><div class="promptbox" id="p65c">내 강의 모집 2주 홍보 일정을 짜줘. 초보라 부담 안 되게 최소한으로.
+- 오픈~마감: (기간)
+- 채널: (내가 정한 채널)
+언제 무엇을 올릴지(오픈 공지 / 중간 리마인드 / 마감 임박 / 후기 공유)를 날짜별로,
+각 날짜에 쓸 짧은 문구까지 함께.</div><button class="copybtn" data-copy="p65c" type="button">📋 홍보 일정 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>오픈·리마인드·마감 임박 계획을 세웠다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 채널별 홍보 글 + 홍보 일정<br>➡ 신청이 들어오면 <b>6-6. 후기 관리</b>로.</div><div class="teacher">🎤 <b>강사 팁</b> — 초보는 "한 번 올렸는데 반응 없어요"에서 포기합니다. <b>3~5번은 알려야 보인다</b>고 미리 말해주세요. 마감 임박 알림이 신청의 절반을 만듭니다.</div></section><div class="next"><span class="n">6-6</span><div>알리기 시작하면 → <b>마스터 6-6. 후기 관리</b>로. <a href="마스터6-6_후기관리.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

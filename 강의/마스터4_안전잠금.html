@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 4. 안전 잠금 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:340px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성</div><h1>마스터 4. 수강생만 들어오게 — 안전 잠금</h1><p class="lead">등록한 <b>수강생만</b> 강의실·자료에 들어오게 <b>비밀번호 잠금</b>을 걸고(화면이 아니라 <b>서버가 검증</b>), 강사 전용 자료는 <b>비공개</b>로 보호합니다.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 2·3단계 강의실</span><span class="time">📦 결과물 · 서버검증 잠금 + 자료실</span></p></header><div class="callout">💡 <b>왜 서버검증인가요?</b> 화면(브라우저)에서만 비번을 확인하면 <b>조금만 아는 사람은 뚫습니다.</b> 유료 강의라면 <b>서버가 진짜인지 확인</b>해야 자료가 안 새요.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span class="on">4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>화면 검증 vs 서버 검증</div><p class="sec-desc">같은 '비밀번호'라도 어디서 확인하느냐가 안전을 가릅니다.</p><ul class="guide"><li>❌ <b>화면 검증</b> — 비번이 페이지 코드 안에 있음 → 조금만 아는 사람은 우회</li><li>✅ <b>서버 검증</b> — 비번을 서버(슈파베이스 Edge Function)가 확인 → 통과해야 자료 URL을 내줌</li></ul><div class="why">🔑 지금 이 사이트의 강의실도 <b>서버검증</b>으로 잠급니다. 같은 방식을 내 강의실에도 적용해요.</div><div class="checks"><label><input type="checkbox"><span>화면 검증과 서버 검증의 차이를 이해했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>서버검증 잠금 걸기</div><p class="sec-desc">AI에게 <b>한 단계씩</b> 손잡고 만들어 달라고 합니다. 이 부분은 서버를 다뤄서 조금 어렵습니다.</p><div class="promptbox" id="p4a">너는 나를 1:1로 돕는 친절한 개발 도우미야. 나는 코딩을 전혀 모르는 왕초보야.
+&#x27;등록 수강생만 들어오는 서버검증 잠금&#x27;을 한 번에 한 단계씩만 안내해줘.
+규칙: (1) 한 번에 한 단계만, 내가 &quot;됐어&quot; 하면 다음으로. (2) 어려운 말은 쉬운 말로. (3) 어디를 누르는지 화면 기준으로. (4) 내가 화면을 캡처해 보여주면 그걸 보고 알려줘.
+
+원하는 것:
+- 화면이 아니라 서버(슈파베이스 Edge Function)가 비밀번호를 확인
+- 맞으면 강의실/자료를 열고, 통과하면 일정 시간 다시 안 물어봄(세션)
+- 비번은 코드에 넣지 말고 서버 비밀값(Secret/환경변수)으로
+
+이 순서로:
+1) 슈파베이스에서 Edge Function 만들기 — 어디서 만드는지 + 붙여넣을 코드를 그대로 줘
+2) 비밀번호를 Secret(환경변수)에 넣는 위치 — 값은 내가 직접 넣을게
+3) 내 강의실 페이지에서 이 함수를 불러 통과/실패를 처리하는 코드
+4) 시험 — 맞는 비번/틀린 비번으로 확인
+각 단계 끝에 &quot;여기까지 됐으면 알려줘&quot;라고 물어봐줘.</div><button class="copybtn" data-copy="p4a" type="button">📋 서버검증 잠금 프롬프트 복사</button><div class="warn">🔒 <b>비밀번호 값 자체</b>는 강사 본인이 직접 입력·관리하세요. 프롬프트·페이지 코드에 비번을 그대로 쓰지 않습니다.</div><div class="note">💡 Edge Function은 <b>파일·서버 배포</b>가 필요해 채팅만으론 까다롭습니다. 아래 <b>클로드 코워크</b>로 하면 파일을 직접 만들어 줘서 훨씬 쉽고, 막히면 대표(최해숙)에게 서버검증 연결을 요청하세요.</div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크로 함께 만들기 (파일·서버 직접 연결) →</a><div class="checks"><label><input type="checkbox"><span>서버검증 잠금을 걸었다</span></label><label><input type="checkbox"><span>비번 값은 내가 직접 넣었다</span></label><label><input type="checkbox"><span>시험(맞는/틀린 비번)으로 확인했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>자료실 공개/비공개 나누기</div><p class="sec-desc">맛보기는 공개, 진짜 자료는 통과한 수강생만.</p><div class="promptbox" id="p4b">내 강의실 자료를 &#x27;공개&#x27;와 &#x27;비공개&#x27;로 나눠줘.
+- 공개(누구나): 과정 소개, 맛보기 1장, 커리큘럼
+- 비공개(통과한 수강생만): 강의 PDF, 워크시트, 강사 전용 자료
+- 비공개 자료는 로그인(비번 통과) 후에만 다운로드 링크가 보이게 (링크만 알면 받아지는 일 없게)
+공개/비공개를 나중에 내가 쉽게 바꾸는 방법도 알려줘.</div><button class="copybtn" data-copy="p4b" type="button">📋 공개/비공개 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>공개/비공개 자료를 나눴다</span></label><label><input type="checkbox"><span>비공개 자료는 통과 후에만 보이는 걸 확인했다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 서버검증 잠금 + 공개/비공개 자료실<br>➡ <b>다음 5단계</b>에서 '잘 가르치는 법'으로.</div><div class="teacher">🎤 <b>강사 팁</b> — 자료 유출은 대개 '링크만 알면 받아지는' 구조에서 생깁니다. 비공개 자료는 반드시 <b>통과 후에만 링크가 생성</b>되게 하세요. 세팅이 어려우면 대표(최해숙)에게 서버검증 연결을 요청할 수 있습니다.</div></section><div class="next"><span class="n">5</span><div>잠금이 걸리면 → <b>마스터 5. 잘 가르치는 법(교수법)</b>으로.</div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 8-6. 소개·제휴·추천 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}.road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:34px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}.road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 8단계 마케팅</div><h1>마스터 8-6. 소개·제휴·추천으로 넓히기</h1><p class="lead">가장 저렴하고 강한 마케팅은 <b>사람이 사람을 데려오게</b> 하는 것. 추천 이벤트·제휴 파트너·후기 소개로 입소문을 만듭니다.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📦 결과물 · 추천·제휴 세팅</span><span class="time">🤝 입소문</span></p></header><div class="callout">💡 광고비 0원, 신뢰도는 최고. 단 <b>만족한 순간</b>에 부탁하는 게 비결.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span>7 검색 노출</span><span class="on">8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span>8-1 지역노출</span><span>8-2 콘텐츠</span><span>8-3 영상·숏폼</span><span>8-4 무료미끼</span><span>8-5 소식지</span><span class="on">8-6 소개·제휴</span><span>8-7 유료광고</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>추천 이벤트 — 수강생이 데려오게</div><p class="sec-desc">가장 저렴하고 강한 마케팅 = <b>사람이 사람을 데려오게</b>.</p><div class="promptbox" id="p86a">수강생이 지인을 추천하면 혜택을 주는 &#x27;추천 이벤트&#x27;를 설계해줘.
+- 내 과정/가격: (붙여넣기)
+만들 것: 추천인·피추천인 각각의 혜택 아이디어 3세트, 부담 없는 안내 문구(카톡/문자용), 진행 시 주의점.</div><button class="copybtn" data-copy="p86a" type="button">📋 추천 이벤트 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>추천 이벤트를 설계했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>제휴 파트너 — 안 겹치는 사람과 교차 소개</div><p class="sec-desc">비슷한 대상이지만 <b>안 겹치는</b> 강사·업체와 서로 소개합니다.</p><ul class="guide"><li>예: 컬러 강사 ↔ 이미지·스피치·헤어 강사, 동네 공방·카페</li></ul><div class="promptbox" id="p86b">나와 대상이 비슷하지만 겹치지 않는 제휴 파트너 후보 유형과, 제휴 제안 메시지를 만들어줘.
+- 나/대상자: (1단계)
+만들 것: 제휴하면 좋은 상대 유형 5개, 서로 뭘 주고받을지(교차 소개·공동 특강 등), 첫 제안 메시지(정중하게).</div><button class="copybtn" data-copy="p86b" type="button">📋 제휴 제안 프롬프트 복사</button><div class="warn">⚖️ 제휴·수수료·수익 배분 조건은 <b>확정 전 내부 검토</b>, 필요하면 <b>법률 자문</b>을 권합니다(PBS 사업화 원칙). 구두 약속보다 간단한 서면으로.</div><div class="checks"><label><input type="checkbox"><span>제휴 후보·제안 메시지를 준비했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>후기 → 소개로 잇기</div><p class="sec-desc">만족한 수강생이 <b>가장 좋은 소개자</b>입니다.</p><ul class="guide"><li>후기(6-6) 남긴 수강생에게 "혹시 도움 될 분 있으면 소개해 주세요" 자연스럽게</li></ul><div class="checks"><label><input type="checkbox"><span>만족 수강생에게 소개를 부탁했다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 추천 이벤트 + 제휴 제안 + 소개 요청<br>➡ 마지막 <b>8-7. 유료 광고 맛보기</b>로.</div><div class="teacher">🎤 <b>강사 팁</b> — 소개는 <b>타이밍</b>입니다. 수강생이 가장 만족한 순간(수료 직후·좋은 후기 직후)에 부탁하면 성공률이 높아요. 제휴는 욕심내지 말고 신뢰 가는 한 명부터.</div></section><div class="next"><span class="n">8-7</span><div>입소문 준비가 되면 → <b>마스터 8-7. 유료 광고 맛보기</b>로. <a href="마스터8-7_유료광고.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

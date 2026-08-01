@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 1. 정체성·교육 대상 확정 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:340px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성</div><h1>마스터 1. 나와 내 대상을 못 박기</h1><p class="lead">0단계 진단 결과를 재료로, <b>“나는 누구에게 무엇을 가르치는 사람인가”</b>를 한 문장으로 못 박고, <b>가르칠 대상자</b>를 구체적으로 확정합니다. 여기서 정한 게 이후 강의실·과정·모집의 <b>기준</b>이 됩니다.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 20분</span><span class="time">📥 입력 · 0단계 진단 결과</span><span class="time">📦 결과물 · 아이덴티티 한 문장 + 대상자 카드</span></p></header><div class="callout">💡 <b>왜 이걸 먼저 하나요?</b> 강의실을 아무리 잘 만들어도 <b>“누구에게 · 무엇을”</b>이 흐릿하면 전부 흔들립니다. 대상자를 못 박아야 그 사람 눈높이로 과정·말투·모집을 전부 맞출 수 있어요.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span class="on">1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>진단 결과 이어서 열기</div><p class="sec-desc">0단계 '홈피 진단'에서 나온 결과(또는 그 클로드 대화)를 준비합니다.</p><ul class="guide"><li>진단 때 쓰던 <b>클로드 대화를 그대로 이어서</b> 엽니다.</li><li>진단 결과 텍스트(점수·첫인상·고칠 3가지)를 <b>옆에 둡니다.</b></li><li>아직 안 했다면 → <b>0단계 홈피 진단</b>을 먼저 하고 오세요.</li></ul><div class="checks"><label><input type="checkbox"><span>진단 결과(또는 대화)를 열어 두었다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>아이덴티티 한 문장 뽑기</div><p class="sec-desc">흩어진 나를 <b>한 문장</b>으로 압축합니다. 이 문장이 홈페이지 첫 줄·모집 글·자기소개에 그대로 쓰입니다.</p><div class="promptbox" id="p1a">너는 퍼스널 브랜딩 전략가야. 아래 &#x27;홈페이지 진단 결과&#x27;를 근거로,
+나를 한 문장으로 정의하는 걸 도와줘. 지어내지 말고 진단에 나온 내 실제 모습에서 뽑아줘.
+
+[홈페이지 진단 결과 — 붙여넣기]
+(여기에 0단계에서 복사한 진단 결과를 붙여넣기)
+
+해줄 일:
+1) 한 문장 정의 — &quot;나는 [누구]에게 [무엇]을 [어떻게] 주는 [정체성]이다&quot; 형태로 후보 3개
+2) 각 후보가 왜 나왔는지 진단 속 근거를 한 줄씩
+3) 강사로서 신뢰가 가장 잘 느껴지는 후보 1개 추천 + 이유
+4) 그 문장을 홈페이지 첫 줄(대표 제목)로 쓸 때의 표현도 다듬어줘
+쉬운 말로, 마지막에 내가 답할 확인 질문 3개도 해줘.</div><button class="copybtn" data-copy="p1a" type="button">📋 아이덴티티 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>아이덴티티 한 문장을 골랐다</span></label><label><input type="checkbox"><span>홈페이지 첫 줄로 쓸 표현까지 다듬었다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>가르칠 대상자(수강생) 확정</div><p class="sec-desc">“아무나”가 아니라 <b>한 사람</b>을 정합니다. 그 사람이 이후 모든 결정의 기준이 됩니다.</p><div class="promptbox" id="p1b">이제 내가 &#x27;가르칠 대상자&#x27;를 구체적으로 정하는 걸 도와줘.
+내 아이덴티티 한 문장: (위에서 고른 문장 붙여넣기)
+
+아래를 채워 &#x27;대상자 카드&#x27;로 정리해줘:
+1) 대상자는 누구인가 — 나이대·상황·역할 (예: 취미로 시작한 40대 컬러 강사 지망생)
+2) 지금 그 사람의 고민 3가지
+3) 그 사람이 원하는 결과 (배우고 나서 되고 싶은 모습)
+4) 그 사람의 수준 (왕초보/기초 있음) — 어려운 말은 어디까지 빼야 하나
+5) 왜 하필 &#x27;내가&#x27; 그 사람을 가르쳐야 하나 (내 강점과의 연결)
+6) 그 사람을 한 명 상상해 이름과 한 줄 소개로 (페르소나)
+마지막에 이 설정이 맞는지 내가 답할 질문 3개.</div><button class="copybtn" data-copy="p1b" type="button">📋 대상자 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>대상자 카드(누구·고민·원하는 결과·수준)를 정리했다</span></label><label><input type="checkbox"><span>대상자 한 명을 페르소나로 그렸다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">4</span>저장하고 이어가기</div><p class="sec-desc">'아이덴티티 한 문장'과 '대상자 카드'는 다음 모든 단계의 재료입니다. 꼭 저장하세요.</p><ul class="guide"><li>두 결과를 <b>복사해 메모장/문서에 붙여</b> 둡니다. (또는 이 채팅을 이어서 사용)</li></ul><div class="checks"><label><input type="checkbox"><span>아이덴티티 한 문장과 대상자 카드를 저장했다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>이 활동의 결과물</b> — ① 아이덴티티 한 문장 ② 대상자 카드<br>➡ <b>다음 2단계</b>에서 이 둘을 기준으로 강의실을 세팅합니다.</div><div class="teacher">🎤 <b>강사 팁 (강사 전용)</b> — 수강생은 대개 '누구에게'를 건너뛰고 '무엇을 만들까'로 달려갑니다. 대상자 한 명(페르소나)을 <b>이름까지 붙여</b> 정하게 하면 이후 모든 결정이 빨라집니다. 한 문장이 어색해도 괜찮다고 안심시키세요 — 2~6단계를 지나며 계속 또렷해집니다.</div></section><div class="next"><span class="n">2</span><div>정체성·대상이 정해지면 → <b>마스터 2. 내 강의실 ‘틀’ 세팅</b>으로 이어집니다.</div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

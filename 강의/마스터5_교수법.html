@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 5. 교수법 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:340px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성</div><h1>마스터 5. 잘 가르치는 법 (교수법)</h1><p class="lead">좋은 강의실을 만들었어도, <b>가르치는 법</b>은 다릅니다. 초보 눈높이로 <b>아는 것만 넣게</b> 하고, <b>시연</b> 먼저 보여주고, <b>막히면 화면 캡처</b>로 돕습니다.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 25분</span><span class="time">📥 입력 · 3단계 1강 활동</span><span class="time">📦 결과물 · 수업 대본 + 예상 FAQ</span></p></header><div class="callout">💡 <b>강사의 실력은 ‘많이 아는 것’이 아니라 ‘초보가 못 넘는 지점을 아는 것’입니다.</b> 내가 쉬웠던 곳이 수강생에겐 벽일 수 있어요.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span class="on">5 교수법</span><span>6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>초보를 살리는 5가지 원칙</div><p class="sec-desc">내가 쉬웠던 곳이 수강생에겐 벽일 수 있습니다.</p><ul class="guide"><li>① <b>아는 것만 넣게</b> — 빈칸 [   ]을 채우게, 백지에서 시작하지 않게</li><li>② <b>시연 먼저</b> — 내가 한 번 해 보이고, 그다음 따라 하게</li><li>③ <b>통과기준으로 확인</b> — "여기까지 됐으면 통과"를 눈으로 확인</li><li>④ <b>막히면 화면 캡처 → AI에 질문</b> — 말로 설명 못 해도 화면을 보여주면 해결</li><li>⑤ <b>잘한 점 먼저</b> — 지적보다 칭찬 먼저, 그다음 고칠 것 하나</li></ul><div class="checks"><label><input type="checkbox"><span>5가지 교수 원칙을 이해했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>내 수업 대본 만들기</div><p class="sec-desc">1강을 <b>진행 시나리오(대본)</b>로 만들어 두면 떨지 않고 가르칩니다.</p><div class="promptbox" id="p5a">내 1강을 45분 수업 대본으로 만들어줘. 초보 대상, 위 5가지 원칙을 적용해서.
+- 대상자: (1단계 대상자 카드)
+- 1강 목표(한 문장): (3단계에서 정한 목표)
+구성:
+1) 여는 말(2분) — 오늘 뭘 하고, 끝나면 뭐가 되는지
+2) 시연(5분) — 내가 먼저 보여줄 장면과 말할 대사
+3) 따라 하기(25분) — 프롬프트 붙여넣기 → 통과기준 확인, 중간 점검 포인트
+4) 자주 막히는 곳(5분) — 미리 준비할 대응
+5) 마무리(3분) — 잘한 점 짚기 + 다음 예고
+각 구간에 &#x27;강사가 실제로 할 말&#x27;을 대사로 써줘.</div><button class="copybtn" data-copy="p5a" type="button">📋 수업 대본 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>1강 수업 대본이 만들어졌다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>예상 질문·오류 미리 준비</div><p class="sec-desc">막히는 지점을 <b>미리</b> 준비하면 수업이 안 흔들립니다.</p><div class="promptbox" id="p5b">내 1강에서 초보가 자주 할 질문과 자주 만나는 오류를 미리 뽑아, 대응 FAQ를 만들어줘.
+- 활동 내용: (3단계 활동 요약)
+각 항목: [질문/오류] → [왜 생기나] → [이렇게 해결] (쉬운 말, 3~7개)
+마지막에 &#x27;그래도 안 되면&#x27; 최후의 안내(화면 캡처해서 AI에 묻기, 강사에게 요청)도 넣어줘.</div><button class="copybtn" data-copy="p5b" type="button">📋 예상 질문 FAQ 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>예상 질문·오류 FAQ를 준비했다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 1강 수업 대본 + 예상 질문 FAQ<br>➡ <b>다음 6단계</b>에서 실제 수강생을 모집합니다.</div><div class="teacher">🎤 <b>강사 팁</b> — 첫 수업 전, 대본을 <b>소리 내어 한 번</b> 읽어 보세요. 어색한 문장이 미리 걸러집니다. 수업 중엔 '내가 설명'보다 '수강생이 손으로 완성'하는 시간을 더 주세요 — 완성 경험이 재등록을 만듭니다.</div></section><div class="next"><span class="n">6</span><div>가르칠 준비가 되면 → <b>마스터 6. 모집·홍보·수익화</b>로.</div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

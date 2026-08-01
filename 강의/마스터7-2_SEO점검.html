@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 7-2. SEO 점검·설정 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 7단계 검색 노출</div><h1>마스터 7-2. SEO 점검·설정 (검색에 잘 뜨게)</h1><p class="lead"><b>SEO(검색엔진최적화)</b> = 검색에 잘 뜨도록 내 페이지를 다듬는 것. 0단계 진단에서 <b>점수만</b> 봤던 걸, 이제 <b>직접 고칩니다.</b></p><p style="margin:12px 0 0"><span class="time">⏱ 약 40분</span><span class="time">📥 입력 · 0단계 진단 결과</span><span class="time">📦 결과물 · SEO 다듬은 페이지</span></p></header><div class="callout">💡 SEO는 어려운 게 아니라 <b>“검색엔진이 읽기 쉽게”</b> 만드는 것: 제목·소개글·대표 이미지·모바일·글 내용.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span class="on">7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span>7-1 검색등록</span><span class="on">7-2 SEO 점검</span><span>7-3 GEO·AI 검색</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>SEO가 뭔가요? — 쉬운 설명</div><p class="sec-desc"><b>SEO(검색엔진최적화)</b> = 검색에 잘 뜨도록 내 페이지를 <b>검색엔진이 읽기 쉽게</b> 다듬는 것.</p><ul class="guide"><li><b>제목(title)</b> — 검색 결과에 뜨는 <b>파란 글씨</b>. 누가·무엇을·지역</li><li><b>소개글(description)</b> — 그 아래 <b>회색 설명</b> 한두 줄</li><li><b>대표 제목(H1)·본문</b> — 사람이 읽는 내용(검색엔진도 이걸 읽음). 글이 있어야 검색됨</li><li><b>이미지 설명(alt)·모바일 대응·https</b> — 기본 위생</li></ul><div class="why">🔑 <b>0단계 진단에서 본 항목이 곧 SEO 체크리스트</b>입니다. 그때 점수만 봤다면, 이제 <b>직접 고칩니다.</b></div><div class="checks"><label><input type="checkbox"><span>SEO가 '검색엔진이 읽기 쉽게 만드는 것'임을 이해했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>내 페이지 SEO 고치기 — AI와</div><p class="sec-desc">0단계 진단 결과(또는 다시 진단)를 재료로, 하나씩 고칩니다.</p><div class="promptbox" id="p72a">내 페이지의 SEO를 고치는 걸 도와줘. 나는 왕초보야.
+아래 진단 결과(0단계 홈피진단 복사)를 근거로, 항목마다 &#x27;무엇을 왜 어떻게&#x27; 고치는지 알려줘.
+
+[진단 결과 붙여넣기]
+(0단계에서 복사한 점수·고칠 항목)
+
+각 항목마다:
+- 지금 상태 → 바꿀 문구/코드(그대로 복사해 넣게)
+- 특히 제목(title)·소개글(description)은 &#x27;누가·무엇을·지역&#x27;이 드러나게 3개 후보
+- 내 사이트 어디를 고치면 되는지 위치까지
+쉬운 말로, 급한 것부터 순서대로.</div><button class="copybtn" data-copy="p72a" type="button">📋 SEO 수정 프롬프트 복사</button><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크로 함께 만들기 (파일·서버 직접 연결) →</a><div class="checks"><label><input type="checkbox"><span>제목·소개글을 고쳤다</span></label><label><input type="checkbox"><span>급한 항목(H1·모바일·이미지 설명 등)을 고쳤다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>키워드 정하기 — 대상자가 검색할 말</div><p class="sec-desc">내 대상자가 <b>검색창에 칠 단어</b>를 제목·소개글·본문에 자연스럽게 녹입니다.</p><div class="promptbox" id="p72b">내 강의/브랜드의 검색 키워드를 뽑아줘.
+- 나: (아이덴티티 한 문장, 1단계)
+- 대상자: (1단계 대상자)
+- 지역: (있으면)
+해줄 것:
+1) 대상자가 검색창에 칠 법한 단어·문장 10개(예: &quot;OO 지역 퍼스널컬러 강사&quot;)
+2) 그중 내가 현실적으로 노려볼 3개(경쟁 낮고 딱 맞는 것)
+3) 그 키워드를 제목·소개글·본문에 자연스럽게 넣은 예시 문장
+억지로 많이 넣지 말고 자연스럽게.</div><button class="copybtn" data-copy="p72b" type="button">📋 키워드 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>노려볼 키워드 3개를 정했다</span></label><label><input type="checkbox"><span>제목·소개글에 자연스럽게 넣었다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">4</span>무료 점검 도구로 확인</div><p class="sec-desc">고친 뒤 잘 됐는지 도구로 봅니다.</p><ul class="guide"><li><b>구글 서치콘솔 → 실적</b>: 어떤 검색어로 들어오는지, 클릭 수(며칠 뒤부터 쌓임)</li><li><b>PageSpeed</b>: 속도·모바일 점수(느리면 이탈↑)</li></ul><a class="gobtn" style="background:linear-gradient(135deg,#F4B400,#e59400);box-shadow:0 8px 22px rgba(229,148,0,.22)" href="https://pagespeed.web.dev/" target="_blank" rel="noopener">⚡ 페이지 속도·모바일 점검(PageSpeed) →</a><div class="checks"><label><input type="checkbox"><span>속도·모바일을 점검했다</span></label></div><div class="why">📦 <b>결과물</b> — 키워드 넣어 다듬은 페이지 + 점검 완료<br>➡ 다음 <b>7-3. AI 검색에 뜨게(GEO)</b>로.</div><div class="teacher">🎤 <b>강사 팁</b> — SEO는 <b>한 번에 완벽</b>이 아니라 꾸준히 다듬는 것. 초보에겐 '제목·소개글·키워드' 3개만 제대로 고쳐도 큰 진전이라고 안심시키세요. 결과는 몇 주 뒤에 나타납니다.</div></section><div class="next"><span class="n">7-3</span><div>SEO를 다듬었으면 → <b>마스터 7-3. AI 검색에 뜨게(GEO)</b>로. <a href="마스터7-3_GEO최적화.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

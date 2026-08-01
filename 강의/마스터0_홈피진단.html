@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>마스터 사전. 내 홈페이지 자동 진단 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title>
+<meta name="robots" content="noindex" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:680px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:680px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:680px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:24px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .whybox{background:#fff7e6;border:1px solid #f0d98a;border-radius:12px;padding:14px 16px;margin-top:16px;font-size:14px;color:#6a5312}.whybox b{color:#4a3a08}
+  /* 입력 */
+  .toolcard{background:linear-gradient(135deg,#3a1233,#7A1F6B);border-radius:16px;padding:24px 22px;margin-top:18px;color:#fff;box-shadow:0 12px 30px rgba(122,31,107,.25)}
+  .toolcard h2{font-size:18px;font-weight:800;margin:0 0 4px}
+  .toolcard p{font-size:13.5px;margin:0 0 16px;color:#f0d9ec}
+  .inrow{display:flex;gap:8px;flex-wrap:wrap}
+  .inrow input{flex:1;min-width:200px;border:none;border-radius:11px;padding:14px 15px;font-size:15px;font-family:inherit;color:var(--ink)}
+  .inrow button{border:none;border-radius:11px;padding:14px 20px;font-size:15px;font-weight:800;font-family:inherit;background:#fff;color:var(--purple);cursor:pointer;white-space:nowrap}
+  .inrow button:disabled{opacity:.6;cursor:default}
+  .hint{font-size:12px;color:#e6cbe0;margin-top:10px}
+  /* 로딩 */
+  .loading{display:none;text-align:center;padding:34px 18px;margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+  .loading.show{display:block}
+  .spin{width:38px;height:38px;border:4px solid #eadff0;border-top-color:var(--purple);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .loading .lt{font-size:15px;font-weight:800}.loading .ls{font-size:13px;color:var(--sub);margin-top:6px}
+  /* 결과 */
+  .result{display:none}.result.show{display:block}
+  .errbox{display:none;background:#fff3f3;border:1px solid #f4c9c6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;color:#8a2b25}
+  .errbox.show{display:block}.errbox b{color:#6e211c}
+  .overall{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-top:18px;display:flex;gap:20px;align-items:center}
+  .gauge{flex:0 0 auto;width:118px;height:118px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative}
+  .gauge .inner{width:88px;height:88px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .gauge .num{font-size:30px;font-weight:900;line-height:1}.gauge .of{font-size:11px;color:var(--sub);margin-top:2px}
+  .overall .sum h3{margin:0 0 6px;font-size:17px;font-weight:800}
+  .overall .sum p{margin:0;font-size:13.5px;color:var(--sub)}
+  .overall .sum .u{font-size:12px;color:var(--sub);margin-top:8px;word-break:break-all}
+  .scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+  @media(max-width:520px){.scores{grid-template-columns:1fr}}
+  .sc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .sc .n{font-size:24px;font-weight:900}.sc .l{font-size:12.5px;color:var(--sub);font-weight:700;margin-top:2px}
+  .sc .bar{height:6px;border-radius:4px;background:#eee;margin-top:8px;overflow:hidden}.sc .bar i{display:block;height:100%}
+  .aicard{background:#faf4fb;border:1px solid #ecd4ec;border-radius:var(--radius);padding:20px;margin-top:16px}
+  .aicard .hd{font-size:16px;font-weight:800;color:#5c1953;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .aiitem{background:#fff;border:1px solid #eedcee;border-radius:11px;padding:12px 14px;margin-top:9px}
+  .aiitem .t{font-size:12.5px;font-weight:800;color:var(--purple);margin-bottom:3px}
+  .aiitem .b{font-size:13.5px;color:#3a2140}
+  .good{background:#eaf5ef;border:1px solid #cde8d9;border-radius:11px;padding:12px 14px;margin-top:9px;font-size:13.5px;color:#1c5638}.good b{color:#15452c}
+  .prio{background:#fff;border:1px solid #f0d98a;border-left:4px solid var(--yellow);border-radius:10px;padding:12px 14px;margin-top:9px}
+  .prio .pt{font-size:14px;font-weight:800;color:#4a3a08}
+  .prio .pw{font-size:12.5px;color:var(--sub);margin:3px 0}
+  .prio .ph{font-size:13px;color:#22405f;background:#eef4fb;border-radius:8px;padding:7px 10px;margin-top:5px}.prio .ph b{color:#173257}
+  .detail{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-top:16px}
+  .detail h3{font-size:15px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:7px}
+  .detail .dsub{font-size:12px;color:var(--sub);margin:0 0 10px}
+  .chk{border-top:1px solid var(--line);padding:11px 0}
+  .chk:first-of-type{border-top:none}
+  .chk .top{display:flex;align-items:flex-start;gap:9px}
+  .chk .ico{flex:0 0 auto;font-size:15px;margin-top:1px}
+  .chk .cl{font-size:14px;font-weight:700}
+  .chk .cd{font-size:12.5px;color:var(--sub);margin:2px 0 0}
+  .chk .cf{font-size:12.5px;color:#22405f;background:#eef4fb;border-radius:8px;padding:7px 10px;margin-top:6px}.chk .cf b{color:#173257}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:14px;border-radius:12px;cursor:pointer;margin-top:16px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;background:linear-gradient(135deg,#7A1F6B,#D0247E);font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin-top:10px}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:16px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  details.teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;margin-top:14px;font-size:13px;color:#7a5b12}
+  details.teacher summary{padding:12px 15px;cursor:pointer;font-weight:800;color:#5c4406;list-style:none}
+  details.teacher summary::-webkit-details-marker{display:none}
+  details.teacher summary::after{content:" \25BE";color:#b8912f}
+  details.teacher[open] summary::after{content:" \25B4"}
+  details.teacher .tc{padding:0 15px 13px}.details .tc b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성</div>
+  <h1>마스터 사전. 내 홈페이지 자동 진단</h1>
+  <p class="lead">주소만 넣고 버튼 한 번. <b>SEO·소셜(SMO)·모바일</b>을 자동으로 <b>점수화</b>합니다. 이어서 <b>첫인상·브랜딩·강사다움</b> AI 진단은 결과 아래 <b>버튼 한 번</b>이면 — 진단 데이터가 그대로 담겨 <b>내 클로드에서 바로</b> 나와요. (추가 비용 없이)</p>
+  <p style="margin:12px 0 0"><span class="time">⏱ 점수 약 5초</span><span class="time">📥 입력 · 내 홈페이지 주소</span><span class="time">📦 결과물 · 점수 + AI 진단(1클릭) + 고칠 우선순위 3</span></p>
+</header>
+
+<div class="wrap">
+  <div class="stepflow">
+    <span class="on">사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span>
+  </div>
+
+  <div class="whybox">💡 <b>왜 이 활동을 먼저 하나요?</b> — 강사로 데뷔하려면, 내 웹페이지가 먼저 <b>'이 사람에게 배우고 싶다'</b>는 신뢰를 줘야 해요. 그런데 내 페이지의 문제는 스스로 잘 안 보입니다. 그래서 <b>제3자(자동 진단 + AI)의 냉정한 눈</b>으로 지금 상태를 확인하는 것부터 시작합니다.</div>
+
+  <div class="toolcard">
+    <h2>🔍 홈페이지 자동 진단기</h2>
+    <p>내 홈페이지 주소를 넣고 눌러 주세요. 카페·블로그·인스타 링크도 가능해요.</p>
+    <div class="inrow">
+      <input id="url" type="text" inputmode="url" placeholder="예: pbscolor.com" autocomplete="off" />
+      <button id="go" type="button">진단 시작</button>
+    </div>
+    <div class="hint">🔒 주소를 읽어 공개 정보만 분석합니다. 로그인이 필요한 페이지·비공개 글은 분석되지 않아요.</div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spin"></div>
+    <div class="lt">진단하는 중이에요…</div>
+    <div class="ls">페이지를 읽고 점수를 매기는 중 (약 5초)</div>
+  </div>
+
+  <div class="errbox" id="err"></div>
+
+  <div class="result" id="result">
+    <div class="overall">
+      <div class="gauge" id="gauge"><div class="inner"><div class="num" id="ovNum">0</div><div class="of">/ 100점</div></div></div>
+      <div class="sum"><h3 id="ovTitle">진단 완료</h3><p id="ovMsg"></p><div class="u" id="ovUrl"></div></div>
+    </div>
+    <div class="scores">
+      <div class="sc"><div class="n" id="sSeo">0</div><div class="l">검색(SEO)</div><div class="bar"><i id="bSeo"></i></div></div>
+      <div class="sc"><div class="n" id="sSmo">0</div><div class="l">소셜 공유(SMO)</div><div class="bar"><i id="bSmo"></i></div></div>
+      <div class="sc"><div class="n" id="sTech">0</div><div class="l">모바일·기술</div><div class="bar"><i id="bTech"></i></div></div>
+    </div>
+
+    <div class="aicard" id="aicard">
+      <div class="hd">🤖 AI 첫인상·브랜딩 진단 · 클릭 한 번</div>
+      <div class="aiitem"><div class="b">점수는 자동으로 나왔어요. 이제 <b>사람의 눈으로 보는 진단</b> — 첫인상 3초 · 누구를 위한 곳인지 · 강사·전문가 신뢰 · 브랜딩 일관성, 그리고 <b>지금 고칠 우선순위 3가지</b>는 아래 버튼 한 번이면 됩니다. 진단 데이터가 그대로 담겨 넘어가니, <b>추가 비용 없이 내 클로드에서 바로</b> 받아보세요.</div></div>
+      <button class="copybtn" id="copyBtn" type="button">📋 ① 진단 데이터 복사하기</button>
+      <a class="gobtn" id="claudeBtn" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 ② 클로드 열기 → 붙여넣기(Ctrl+V) → 전송 →</a>
+      <div style="font-size:12px;color:var(--sub);margin-top:8px;text-align:center">순서: ① 복사 → ② 클로드 열기 → 붙여넣고 전송. 로그인된 내 클로드에서 바로 답이 나와요.</div>
+    </div>
+
+    <div class="detail" id="detBox">
+      <h3>🔎 상세 점검표</h3>
+      <p class="dsub">✅ 좋아요 · ⚠️ 손보면 좋아요 · ❌ 지금 고치세요</p>
+      <div id="detBody"></div>
+    </div>
+
+    <div class="why">📦 <b>이 활동의 결과물</b> — ① 내 페이지 <b>점수</b>(검색·소셜·모바일), ② <b>클로드 1클릭 AI 진단</b>(첫인상·브랜딩·강사다움), ③ <b>고칠 우선순위 3가지</b>. 이 결과를 다음 활동(정체성·대상 확정)의 재료로 그대로 씁니다.</div>
+    <details class="teacher"><summary>🎤 강사 팁 (강사 전용) · 눌러서 보기</summary><div class="tc">수강생은 <b>자기 페이지의 문제를 못 봅니다.</b> 이 자동 진단으로 <b>객관적 점수</b>를 먼저 보여주면 방어가 풀립니다. 점수를 지적하지 말고 <b>'잘한 점' 먼저 읽어주고</b>, '고칠 우선순위 3가지'에 <b>합의</b>하는 것까지가 이 활동의 목표예요. 낮은 점수에 낙담하지 않게 "지금부터 같이 올리면 된다"고 안내하세요.</div></details>
+  </div>
+
+  <div class="next"><span class="n">1</span><div>진단이 끝났으면 → <b>마스터 1. '나'와 '내 대상'을 못 박기(정체성·대상 확정)</b>로 갑니다.</div></div>
+  <footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer>
+</div>
+
+<script>
+  var U='https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+  var FN=U+'/functions/v1/site-check';
+  var H={apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'};
+  var lastText='';
+
+  function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function color(n){return n>=80?'#2C8C5A':n>=60?'#E0A400':'#D23B30';}
+  function ico(st){return st==='pass'?'✅':st==='warn'?'⚠️':'❌';}
+  function show(id,on){document.getElementById(id).classList[on?'add':'remove']('show');}
+
+  function renderChecks(title, arr){
+    var h='';
+    (arr||[]).forEach(function(c){
+      h+='<div class="chk"><div class="top"><span class="ico">'+ico(c.status)+'</span><div>'+
+         '<div class="cl">'+esc(c.label)+'</div>'+
+         '<div class="cd">'+esc(c.detail)+'</div>'+
+         (c.status!=='pass'&&c.fix?'<div class="cf">💡 <b>이렇게 고치세요:</b> '+esc(c.fix)+'</div>':'')+
+         '</div></div></div>';
+    });
+    return h;
+  }
+
+  function render(d){
+    var ov=d.scores.overall;
+    document.getElementById('ovNum').textContent=ov;
+    document.getElementById('gauge').style.background='conic-gradient('+color(ov)+' '+(ov*3.6)+'deg,#eee 0)';
+    document.getElementById('ovUrl').textContent=d.url;
+    var t = ov>=80?'훌륭해요! 강사 페이지로 손색 없어요':ov>=60?'기본은 갖췄어요. 몇 곳만 손보면 확 좋아져요':'지금부터 같이 올리면 됩니다';
+    document.getElementById('ovTitle').textContent=t;
+    document.getElementById('ovMsg').textContent='검색·소셜·모바일을 종합한 점수예요. 아래에서 무엇을 고치면 되는지 확인하세요.';
+    [['sSeo','bSeo',d.scores.seo],['sSmo','bSmo',d.scores.smo],['sTech','bTech',d.scores.tech]].forEach(function(x){
+      var el=document.getElementById(x[0]); el.textContent=x[2]; el.style.color=color(x[2]);
+      var b=document.getElementById(x[1]); b.style.width=x[2]+'%'; b.style.background=color(x[2]);
+    });
+    // detail
+    var db='';
+    db+='<div style="margin-top:4px"></div>'+renderChecks('SEO',d.seo);
+    db+=renderChecks('SMO',d.smo);
+    db+=renderChecks('TECH',d.tech);
+    document.getElementById('detBody').innerHTML=db;
+    // copy text
+    lastText=buildCopy(d);
+    show('result',true);
+    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function buildCopy(d){
+    var L=[];
+    L.push('[내 홈페이지 진단 결과] '+d.url);
+    L.push('종합 '+d.scores.overall+' / 검색(SEO) '+d.scores.seo+' / 소셜 '+d.scores.smo+' / 모바일·기술 '+d.scores.tech);
+    var ac=d.aiContext||{};
+    L.push('');
+    L.push('[페이지에서 읽어낸 정보]');
+    if(ac.title)L.push('제목(title): '+ac.title);
+    if(ac.description)L.push('소개(description): '+ac.description);
+    if(ac.keywords)L.push('키워드: '+ac.keywords);
+    if(ac.og){var o=ac.og,ogl=[];if(o.title)ogl.push('title='+o.title);if(o.desc)ogl.push('desc='+o.desc);if(o.image)ogl.push('대표이미지 있음');if(ogl.length)L.push('공유태그(og): '+ogl.join(' | '));}
+    if(ac.socialChannels){var s=ac.socialChannels,ch=Object.keys(s).filter(function(k){return s[k];});L.push('연결된 SNS: '+(ch.length?ch.join(', '):'없음'));}
+    if(ac.bodyTextSnippet)L.push('본문 일부: '+ac.bodyTextSnippet);
+    var fails=[].concat(d.seo,d.smo,d.tech).filter(function(c){return c.status!=='pass';});
+    if(fails.length){L.push('');L.push('[기계 점검이 잡아낸 개선점]');fails.forEach(function(c){L.push(' - '+c.label+': '+c.fix);});}
+    L.push('');
+    L.push('나는 이 홈페이지로 앞으로 "남을 가르치는 강사"가 되려고 해. 위 데이터만 근거로(없는 사실은 지어내지 말고), 초등학생도 이해할 쉬운 말로 진단해줘:');
+    L.push('1) 첫인상 3초 — 이 페이지를 3초 봤을 때 무엇을 하는 사람으로 보이는지');
+    L.push('2) 누구를 위한 곳인지 방문자가 알 수 있는지');
+    L.push('3) 가르치는 강사·전문가로 신뢰가 가는지(근거·후기·전문성)');
+    L.push('4) 제목·소개·표현이 한 사람처럼 통일돼 있는지(브랜딩 일관성)');
+    L.push('5) 잘한 점 1~2가지');
+    L.push('6) 지금 고치면 효과 큰 것 3가지 — 각각 "무엇을 / 왜 / 어떻게"를 한 줄씩. 내가 바로 따라 할 수 있게.');
+    return L.join('\n');
+  }
+
+  function run(){
+    var v=document.getElementById('url').value.trim();
+    if(!v){document.getElementById('url').focus();return;}
+    show('result',false);show('err',false);show('loading',true);
+    var btn=document.getElementById('go');btn.disabled=true;
+    fetch(FN,{method:'POST',headers:H,body:JSON.stringify({url:v})})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        show('loading',false);btn.disabled=false;
+        if(!d||d.ok!==true){
+          var e=document.getElementById('err');
+          e.innerHTML='😅 <b>진단을 못 했어요.</b><br>'+esc((d&&d.error)||'알 수 없는 오류')+'<br><span style="font-size:12.5px">· 주소가 맞는지 확인해 주세요(예: pbscolor.com)<br>· 로그인이 필요한 페이지는 분석되지 않아요<br>· 잠시 후 다시 눌러보세요</span>';
+          show('err',true);return;
+        }
+        render(d);
+      })
+      .catch(function(err){
+        show('loading',false);btn.disabled=false;
+        var e=document.getElementById('err');
+        e.innerHTML='😅 <b>연결에 실패했어요.</b> 잠시 후 다시 시도해 주세요.<br><span style="font-size:12px">'+esc(String(err))+'</span>';
+        show('err',true);
+      });
+  }
+
+  document.getElementById('go').addEventListener('click',run);
+  document.getElementById('url').addEventListener('keydown',function(e){if(e.key==='Enter')run();});
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var b=this;navigator.clipboard.writeText(lastText).then(function(){var o=b.textContent;b.textContent='✅ 복사됐어요! 클로드에 붙여넣으세요';b.classList.add('done');setTimeout(function(){b.textContent=o;b.classList.remove('done');},2400);});
+  });
+</script>
+</body>
+</html>

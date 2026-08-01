@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 8-1. 지역·지도 노출 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}.road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:34px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}.road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 8단계 마케팅</div><h1>마스터 8-1. 지역·지도 노출 (네이버 플레이스·구글)</h1><p class="lead">네이버·구글 <b>지도</b>에 내 강의실을 등록하면, "우리 동네 OO 강의" 검색에 뜹니다. 지역 수업이 많은 강사에게 특히 강력합니다.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 40분</span><span class="time">📦 결과물 · 지도 노출</span><span class="time">🟢🔵 네이버+구글</span></p></header><div class="callout">💡 지역 수업이 많다면 이게 검색보다 빠를 수 있어요. 리뷰·사진이 쌓일수록 위로 올라갑니다.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span>7 검색 노출</span><span class="on">8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span class="on">8-1 지역노출</span><span>8-2 콘텐츠</span><span>8-3 영상·숏폼</span><span>8-4 무료미끼</span><span>8-5 소식지</span><span>8-6 소개·제휴</span><span>8-7 유료광고</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>🟢 네이버 스마트플레이스 등록</div><p class="sec-desc">네이버 <b>지도·플레이스</b>에 등록하면 "우리 동네 OO 강의" 검색에 뜹니다.</p><ol class="steps"><li>아래 버튼 → 네이버 로그인 → <b>업체 등록</b></li><li>업체명·업종·주소·전화·영업시간·소개·<b>사진</b> 입력</li><li>소개글에 <b>대상·지역·키워드</b> 자연스럽게 (예: OO동 퍼스널컬러 클래스)</li></ol><a class="gobtn" style="background:linear-gradient(135deg,#03C75A,#029c47);box-shadow:0 8px 22px rgba(3,199,90,.24)" href="https://smartplace.naver.com/" target="_blank" rel="noopener">🟢 네이버 스마트플레이스 열기 →</a><div class="promptbox" id="p81a">네이버 스마트플레이스에 넣을 업체 정보 문구를 만들어줘.
+- 업체명/업종/지역: (붙여넣기)
+- 대상자·가르치는 것: (1단계)
+만들 것: 업체 소개글(검색 키워드 자연스럽게), 대표 문구 한 줄, 넣으면 좋은 사진 목록 5개, 자주 묻는 질문 3개.</div><button class="copybtn" data-copy="p81a" type="button">📋 플레이스 정보 프롬프트 복사</button><div class="note">💡 오프라인 공간이 없어도 <b>'방문 없는 서비스'</b>나 온라인 클래스로 등록할 수 있어요. 사진(수업·결과물·프로필)이 신뢰를 크게 올립니다.</div><div class="checks"><label><input type="checkbox"><span>네이버 플레이스에 등록했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>🔵 구글 비즈니스 프로필 등록</div><p class="sec-desc">구글 지도·검색에 뜨게. 방식은 네이버와 비슷.</p><ol class="steps"><li>아래 버튼 → <b>비즈니스 추가</b> → 이름·업종·지역</li><li>소유확인(우편·전화·이메일 중 안내대로)</li><li>소개·사진·영업시간·링크(내 신청 페이지) 넣기</li></ol><a class="gobtn" style="background:linear-gradient(135deg,#4285F4,#1a73e8);box-shadow:0 8px 22px rgba(26,115,232,.24)" href="https://business.google.com/" target="_blank" rel="noopener">🔵 구글 비즈니스 프로필 열기 →</a><div class="checks"><label><input type="checkbox"><span>구글 비즈니스 프로필에 등록했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>리뷰·사진으로 키우기</div><p class="sec-desc">등록만으로 끝이 아니라, <b>리뷰·사진</b>이 쌓여야 위로 올라갑니다.</p><ul class="guide"><li>수강생에게 <b>플레이스 리뷰</b> 부탁(6-6 후기와 연결)</li><li>사진·소식을 <b>가끔 추가</b>(활동 중인 곳으로 보임)</li></ul><div class="checks"><label><input type="checkbox"><span>리뷰 요청 방법을 정했다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 네이버·구글 지도에 내 강의실 노출<br>➡ 다음 <b>8-2. 콘텐츠 꾸준히</b>로.</div><div class="teacher">🎤 <b>강사 팁</b> — 지역 기반 수강생이 많다면 이게 SEO보다 빠릅니다. 리뷰 1~2개만 있어도 신뢰가 확 올라가니, 첫 수강생에게 꼭 부탁하세요.</div></section><div class="next"><span class="n">8-2</span><div>등록했으면 → <b>마스터 8-2. 콘텐츠 꾸준히</b>로. <a href="마스터8-2_콘텐츠.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

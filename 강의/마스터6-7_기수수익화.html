@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 6-7. 기수·수익화 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}
+  .road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}
+  .road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 6단계</div><h1>마스터 6-7. 기수·가격·수익화</h1><p class="lead"><b>첫 기수</b>를 열고, <b>가격</b>을 정하고, <b>다음 기수</b>로 잇습니다. 여기까지 오면 진단부터 수익화까지 한 바퀴 완성입니다.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 완성된 모집·운영</span><span class="time">📦 결과물 · 첫 기수 계획</span></p></header><div class="callout">💡 첫 기수는 '완벽'보다 <b>'완성'</b>이 목표. 소수라도 끝까지 이끌어 후기를 받는 게 다음 기수를 만듭니다.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span class="on">6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span>6-1 신청받기</span><span>6-2 알림</span><span>6-3 신청자관리</span><span>6-4 카드뉴스</span><span>6-5 홍보</span><span>6-6 후기</span><span class="on">6-7 기수·수익화</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>첫 기수 설계 (정원·가격·일정)</div><p class="sec-desc">작게 시작해 <b>완성 경험과 후기</b>를 먼저 얻습니다.</p><ul class="guide"><li>첫 기수는 <b>소수 정원</b>(예: 3~6명) — 끝까지 이끌기 쉽게</li><li>가격은 <b>시간</b>이 아니라 <b>얻는 결과</b> 기준</li><li>일정은 짧고 명확하게(예: 4주, 주 1회)</li></ul><div class="checks"><label><input type="checkbox"><span>첫 기수 정원·일정을 정했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>가격 정하기 — 혼자 고민 말고 AI와</div><p class="sec-desc">가격은 어렵습니다. 세 가지 안을 놓고 고르세요.</p><div class="promptbox" id="p67a">내 강의 가격을 정하는 걸 도와줘. 정답을 강요하지 말고 판단 재료를 줘.
+- 대상자/과정/얻는 결과/기간: (붙여넣기)
+- 비슷한 강의 시세를 내가 아는 만큼: (있으면 붙여넣기)
+
+해줄 것:
+1) &#x27;결과 기준&#x27;으로 이 강의의 가치를 설명하는 한 문단
+2) 가격 3안(입문가·기본가·프리미엄) + 각 안의 대상과 포함 내용
+3) 첫 기수(소수·후기 목적)에 적절한 안과 이유
+4) 얼리버드·2인 동반 같은 부담 낮추는 옵션 아이디어
+최종 결정은 내가 할게 — 장단점만 정리해줘.</div><button class="copybtn" data-copy="p67a" type="button">📋 가격 설계 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>가격 안을 비교해 첫 기수 가격을 정했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>다음으로 잇기 — 재등록·심화·다음 기수</div><p class="sec-desc">한 기수로 끝내지 않습니다. <b>다음</b>을 미리 심어둡니다.</p><ul class="guide"><li>수료생에게 <b>심화 과정·다음 기수</b> 우선 안내(할인)</li><li>후기(6-6)를 다음 기수 홍보(6-5)에 재사용</li><li>수료생 <b>추천</b> 시 혜택 — 입소문 만들기</li></ul><div class="warn">⚖️ 수익화·파트너·<b>라이선스·계약</b> 조건은 공개 전 내부 검토가 필요하고, 계약서는 <b>법률 검토를 권장</b>합니다(PBS 사업화 원칙). 확정 전 대표와 상의하세요.</div><div class="checks"><label><input type="checkbox"><span>다음 기수로 잇는 계획을 세웠다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 첫 기수 계획(정원·가격·일정) + 다음으로 잇는 길<br>🎉 이제 강사로 데뷔할 준비가 끝났습니다.</div><div class="teacher">🎤 <b>강사 팁</b> — 첫 기수는 '돈'보다 <b>후기와 완주'</b>가 목표입니다. 소수라도 끝까지 이끌어 후기를 받으면, 두 번째 기수부터 수익이 붙습니다. 수익화 조건은 서두르지 말고 대표와 검토 후 확정하세요.</div></section><div class="next"><span class="n">7</span><div>모집·운영이 서면 → <b>마스터 7. 검색 노출</b>에서 네이버·구글·AI에 뜨게 만듭니다. <a href="마스터7-1_검색등록.html" style="color:#5c1953;font-weight:800">7-1 검색 등록 바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

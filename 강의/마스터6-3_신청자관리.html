@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 6-3. 신청자·수강생 관리 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .gobtn.sb{background:linear-gradient(135deg,#2C8C5A,#1f6f46);box-shadow:0 8px 22px rgba(44,140,90,.24)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}
+  .road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}
+  .road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 6단계</div><h1>마스터 6-3. 신청자·수강생 관리</h1><p class="lead">들어온 신청을 <b>표로 보고</b>, 상태(대기·확정·취소)를 관리하고, <b>명단을 저장</b>하고, 확정자를 수강생으로 챙깁니다. 구글시트만으로도 충분해요.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📥 입력 · 6-1 신청 데이터</span><span class="time">📦 결과물 · 신청 관리대장</span></p></header><div class="callout">💡 신청 폼이 '받는 곳'이라면 여기는 <b>'처리하는 곳'</b>입니다. 구글폼을 썼다면 관리도 구글시트에서 바로 하면 돼요.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span class="on">6 모집·수익화</span><span>7 검색 노출</span><span>8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span>6-1 신청받기</span><span>6-2 알림</span><span class="on">6-3 신청자관리</span><span>6-4 카드뉴스</span><span>6-5 홍보</span><span>6-6 후기</span><span>6-7 기수·수익화</span></div><div class="why">🔑 <b>구글폼(A)으로 받았다면</b> — 관리자 페이지 없이 <b>구글시트에서 바로 관리</b>해도 됩니다: 시트에 '상태' 열을 추가해 대기/확정/취소를 적고, 필터·정렬로 보고, <b>파일 → 다운로드 → .csv(엑셀)</b>로 저장. 아래 1~2번은 그 방법, 3~4번은 <b>슈파베이스(B)로 내 사이트에 관리자 페이지</b>를 두는 경우입니다.</div><section class="card"><div class="sec-title"><span class="step-no">1</span>🟢 A. 구글시트로 관리 (구글폼 사용 시·쉬움)</div><p class="sec-desc">새 시트나 프로그램 없이, 응답 시트를 그대로 관리대장으로 씁니다.</p><ul class="guide"><li>응답 시트 맨 오른쪽에 <b>'상태'</b> 열 추가 → 대기/확정/취소 적기</li><li><b>'메모'</b> 열 추가 → "입금 확인" 같은 기록</li><li>상단 <b>데이터 → 필터 만들기</b>로 상태별 보기·정렬</li><li><b>파일 → 다운로드 → .csv/엑셀</b>로 명단 저장(출석부)</li></ul><div class="promptbox" id="p63a">내 구글시트(강의 신청 응답)를 관리하기 좋게 정리하는 법을 알려줘. 나는 왕초보야.
+- &#x27;상태&#x27;(대기/확정/취소)와 &#x27;메모&#x27; 열을 추가하는 법
+- 상태별로 색이 자동으로 바뀌게(조건부 서식) 하는 법 — 누를 위치까지
+- 확정된 사람만 한눈에 보게 필터 거는 법
+- 이름/연락처로 빠르게 찾는 법
+그림 그리듯 한 단계씩, 쉬운 말로.</div><button class="copybtn" data-copy="p63a" type="button">📋 구글시트 관리 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>시트에 상태·메모 열을 만들었다</span></label><label><input type="checkbox"><span>필터로 상태별로 볼 수 있다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>개인정보 지키기 (꼭)</div><p class="sec-desc">신청자 명단은 <b>개인정보</b>입니다.</p><div class="warn">🔒 시트 <b>공유 범위</b>를 '나만'으로 두세요(링크 있는 모두 X). 내려받은 엑셀 파일은 아무 데나 두지 말고, 화면·파일을 남에게 공유하지 마세요. 연락처는 꼭 필요한 사람만.</div><div class="checks"><label><input type="checkbox"><span>시트 공유 범위를 '나만'으로 확인했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>🔵 B. 관리자 페이지 만들기 (슈파베이스 사용 시)</div><p class="sec-desc">나만 비번으로 들어가, 신청을 실시간 표로 봅니다.</p><div class="promptbox" id="p63b">너는 나를 1:1로 돕는 친절한 개발 도우미야. 나는 왕초보야.
+슈파베이스 applications 표를 보는 &#x27;관리자 페이지&#x27;를 한 단계씩 만들어줘. (쉬운 말, 누를 위치까지)
+- 나만 비밀번호로 들어가는 페이지(가능하면 4단계 서버검증)
+- 신청을 표로: 신청시간·이름·연락처·관심과정·하고 싶은 말
+- 새 신청은 맨 위에 실시간으로, 최신순 + 검색창
+- 각 신청에 상태 버튼(대기/확정/취소)·메모 저장, 상태별 개수 요약
+내 슈파베이스: URL [붙여넣기], anon key [붙여넣기]
+각 단계 끝에 &quot;여기까지 됐으면 알려줘&quot;라고 물어봐줘.</div><button class="copybtn" data-copy="p63b" type="button">📋 관리자 페이지 프롬프트 복사</button><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드 코워크로 함께 만들기 (파일·서버 직접 연결) →</a><div class="checks"><label><input type="checkbox"><span>B를 택했다면: 관리자 페이지로 신청을 관리한다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">4</span>확정자 = 수강생, 진행 챙기기</div><p class="sec-desc">'확정'된 사람은 이제 <b>수강생</b>입니다.</p><ul class="guide"><li>확정 수강생에게 <b>강의실 입장 비번</b>·안내 보내기(4단계 잠금과 연결)</li><li>진행 표시: <b>미시작 / 진행중 / 수료</b>(시트에 열 추가 또는 관리자 페이지)</li><li>수료하면 <b>후기 요청</b>(6-6과 연결)</li></ul><div class="promptbox" id="p63c">확정된 수강생에게 보낼 &#x27;강의실 입장 안내&#x27; 메시지를 만들어줘.
+- 따뜻한 인사 + 축하
+- 강의실 주소와 입장 비밀번호 넣을 자리 [   ]
+- 첫 활동을 언제까지 해오면 되는지
+- 막히면 어떻게 도움받는지(화면 캡처해서 질문)
+문자/카톡으로 보낼 짧은 버전과, 조금 자세한 버전 둘 다.</div><button class="copybtn" data-copy="p63c" type="button">📋 입장 안내 메시지 프롬프트 복사</button><div class="checks"><label><input type="checkbox"><span>확정자를 수강생으로 관리한다</span></label><label><input type="checkbox"><span>입장 안내 메시지를 준비했다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 신청 관리대장(상태·메모·진행) + 입장 안내 메시지<br>➡ 다음 <b>6-4. 모집 카드뉴스</b>로.</div><div class="teacher">🎤 <b>강사 팁</b> — 관리는 <b>단순할수록</b> 오래 씁니다. 대기→확정→수료 3단계면 충분. 구글폼+구글시트만으로도 훌륭한 관리가 됩니다.</div></section><div class="next"><span class="n">6-4</span><div>관리 준비가 되면 → <b>마스터 6-4. 모집 카드뉴스</b>로. <a href="마스터6-4_카드뉴스.html" style="color:#5c1953;font-weight:800">바로가기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>

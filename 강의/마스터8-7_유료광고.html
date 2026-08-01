@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>마스터 8-7. 유료 광고 맛보기 · AI 웹페이지 마스터 전문가과정 · 최해숙 강의실</title><meta name="robots" content="noindex" /><link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" /><style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--purple:#7A1F6B;
+    --ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;--card:#ffffff;--radius:14px;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;word-break:keep-all;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px 60px}
+  .enginebar{display:flex;height:6px}.enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  .back{max-width:660px;margin:0 auto;padding:12px 18px 0}.back a{font-size:13px;font-weight:700;color:var(--sub);text-decoration:none}
+  header{padding:26px 18px 8px;max-width:660px;margin:0 auto}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--purple)}
+  h1{font-size:23px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub);margin:0}.lead b{color:#6a1b5e}
+  .time{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px 6px 0}
+  .callout{max-width:660px;margin:16px auto 0;padding:13px 15px;background:#faf4fb;border:1px solid #ecd4ec;border-radius:12px;font-size:13.5px;color:#5c1953}
+  .callout b{color:#48123f}
+  .stepflow{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;font-size:12px;color:var(--sub)}
+  .stepflow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-weight:700}
+  .stepflow span.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .substep{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;font-size:11.5px;color:var(--sub)}
+  .substep span{background:#fbf5fb;border:1px solid #ecd4ec;border-radius:999px;padding:4px 9px;font-weight:700}
+  .substep span.on{background:#D0247E;border-color:#D0247E;color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;margin-top:18px}
+  .sec-title{font-size:16px;font-weight:800;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+  .step-no{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--purple);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .sec-desc{font-size:13.5px;color:var(--sub);margin:2px 0 14px 35px}
+  .guide{margin:6px 0 0;padding-left:20px;font-size:14px}.guide li{margin:7px 0}.guide b{color:var(--ink)}
+  .steps{margin:2px 0 6px;padding-left:20px;font-size:14px}.steps li{margin:5px 0}.steps b{color:var(--ink)}
+  .plabel{font-size:13.5px;font-weight:800;margin:16px 0 5px;display:flex;align-items:center;gap:7px}
+  .plabel .dot{width:8px;height:8px;border-radius:50%;background:var(--purple)}
+  .promptbox{background:#0f1720;color:#e8eef4;border-radius:12px;padding:15px;font-size:13px;line-height:1.7;white-space:pre-wrap;font-family:"Consolas","Courier New",monospace;margin-top:4px;max-height:360px;overflow:auto}
+  .copybtn{display:block;width:100%;border:none;color:#fff;background:var(--purple);font-size:14.5px;font-weight:800;padding:13px;border-radius:11px;cursor:pointer;margin-top:8px;font-family:inherit}
+  .copybtn.done{background:var(--green)}
+  .gobtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;text-decoration:none;color:#fff;font-size:15px;font-weight:800;padding:14px;border-radius:12px;margin:12px 0 4px}
+  .gobtn.claude{background:linear-gradient(135deg,#7A1F6B,#D0247E);box-shadow:0 8px 22px rgba(208,36,126,.26)}
+  .checks{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .checks label{display:flex;align-items:flex-start;gap:11px;font-size:14.5px;font-weight:600;border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer;background:#fff}
+  .checks label:has(input:checked){border-color:var(--green);background:#eaf5ef;color:#1c5638}
+  .checks input{margin-top:2px;width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+  .why{background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#3a2140}.why b{color:#5c1953}
+  .tip{background:#eaf5ef;border:1px solid #cde8d9;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13.5px;color:#1c5638}.tip b{color:#15452c}
+  .note{font-size:12.5px;color:var(--sub);background:#fbfbfc;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:12px}.note b{color:var(--ink)}
+  .warn{font-size:12.5px;color:#8a2e63;background:#fdeef6;border:1px solid #f6c6e2;border-radius:10px;padding:11px 13px;margin-top:12px}.warn b{color:#59204a}
+  .teacher{background:#fff7e6;border:1px dashed #e0a400;border-radius:12px;padding:13px 15px;margin-top:14px;font-size:13px;color:#7a5b12}.teacher b{color:#5c4406}
+  .next{display:flex;align-items:center;gap:10px;background:#f5ecf5;border:1px solid #e6cfe6;border-radius:12px;padding:16px;margin-top:18px;font-size:14px;font-weight:600;color:#3a2140}
+  .next .n{flex:0 0 auto;min-width:26px;height:26px;padding:0 7px;border-radius:13px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+  .road{list-style:none;margin:10px 0 0;padding:0}.road li{margin:8px 0}
+  .road a{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:#fff}
+  .road a:hover{border-color:#D0247E}
+  .road .rn{flex:0 0 auto;width:34px;height:30px;border-radius:9px;background:#faf4fb;color:var(--purple);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;border:1px solid #ecd4ec}
+  .road .rt{display:block;font-weight:800;font-size:14.5px}.road .rd{display:block;font-size:12.5px;color:var(--sub);margin-top:2px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:28px;line-height:1.7}
+</style></head><body><div class="enginebar"><span></span><span></span><span></span><span></span></div><div class="back"><a href="/강의/course.html?c=aiwebpro">← AI 웹페이지 마스터 전문가과정 강의실로</a></div><header><div class="eyebrow">최해숙 강의실 · AI 웹페이지 마스터 전문가과정 · 강사 양성 · 8단계 마케팅</div><h1>마스터 8-7. 유료 광고 맛보기 (소액·안전)</h1><p class="lead">돈을 조금 써서 <b>빨리</b> 알리는 법. 단, <b>소액·조심</b>이 원칙입니다. 무료 방법(8-1~8-6)이 먼저 되고 나서, 되는 메시지를 소액으로 증폭하세요.</p><p style="margin:12px 0 0"><span class="time">⏱ 약 30분</span><span class="time">📦 결과물 · 소액 광고 계획</span><span class="time">⚠️ 소액·안전</span></p></header><div class="callout">💡 광고는 <b>있는 걸 증폭</b>하는 것이지 없는 걸 만들지 않습니다. 준비(링크·후기·동선)부터.</div><div class="wrap"><div class="stepflow"><span>사전 진단</span><span>1 정체성·대상</span><span>2 강의실 세팅</span><span>3 과정·활동</span><span>4 안전 잠금</span><span>5 교수법</span><span>6 모집·수익화</span><span>7 검색 노출</span><span class="on">8 마케팅 넓히기</span></div><div class="substep"><span>시작 안내</span><span>8-1 지역노출</span><span>8-2 콘텐츠</span><span>8-3 영상·숏폼</span><span>8-4 무료미끼</span><span>8-5 소식지</span><span>8-6 소개·제휴</span><span class="on">8-7 유료광고</span></div><section class="card"><div class="sec-title"><span class="step-no">1</span>광고 전에 — 이것부터 확인</div><p class="sec-desc">준비 안 된 채 광고하면 <b>돈만 샙니다.</b></p><ul class="guide"><li>신청 링크(6-1)·카드뉴스(6-4)·후기(6-6)가 <b>준비됐나</b></li><li>무료 방법(8-1~8-6)을 <b>먼저</b> 해봤나</li><li>광고로 데려온 사람이 <b>신청까지 갈 길</b>이 있나</li></ul><div class="warn">🔒 위가 안 됐으면 광고를 미루세요. 광고는 '있는 걸 증폭'하는 것이지, 없는 걸 만들어주지 않습니다.</div><div class="checks"><label><input type="checkbox"><span>광고 전 준비물(링크·후기·동선)을 확인했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">2</span>어디에 — 소액부터</div><p class="sec-desc">큰돈 말고 <b>하루 5천~1만원</b>으로 테스트.</p><ul class="guide"><li><b>인스타·페이스북 부스팅</b> — 반응 좋은 게시물을 소액으로 밀기(가장 쉬움)</li><li><b>네이버 파워링크</b> — 검색 광고(지역·키워드)</li><li>먼저 <b>1~2주 소액 테스트</b> → 되는 것만 늘리기</li></ul><div class="checks"><label><input type="checkbox"><span>어디에·얼마로 테스트할지 정했다</span></label></div></section><section class="card"><div class="sec-title"><span class="step-no">3</span>안전하게 — 테스트 계획</div><p class="sec-desc">정해둔 <b>예산 상한</b> 안에서만.</p><div class="promptbox" id="p87a">내 강의 소액 광고 테스트 계획을 짜줘. 나는 초보라 크게 못 써.
+- 예산: 하루 [   ]원, 기간 [   ]주 / 채널: (인스타/네이버 등)
+- 목표: 신청 링크 클릭 or 무료 미끼 신청
+만들 것: 테스트 설계(뭘 어떻게), 광고 문구·이미지 방향 2안, 성과 보는 법(무엇이 되면 성공/멈춤), 흔한 실수.</div><button class="copybtn" data-copy="p87a" type="button">📋 광고 테스트 프롬프트 복사</button><div class="warn">⚠️ <b>예산 상한을 꼭 설정</b>하세요(자동 과금 주의). <b>과장·허위 광고 금지</b>(사실만·효과 보장 표현 금지). 성과 없으면 미루고, 큰돈 집행 전엔 전문가/대표와 상의하세요.</div><div class="checks"><label><input type="checkbox"><span>예산 상한을 정하고 소액으로 테스트했다</span></label></div><a class="gobtn claude" href="https://claude.ai/new" target="_blank" rel="noopener">🤖 클로드에서 바로 이어 하기 →</a><div class="why">📦 <b>결과물</b> — 소액 광고 테스트 계획<br>🎉 <b>진단 → 강의실 → 모집·운영 → 검색 → 마케팅</b>까지 전 과정 완주!</div><div class="teacher">🎤 <b>강사 팁</b> — 초보에게 유료 광고는 <b>맨 마지막</b>입니다. 무료 방법으로 '되는 메시지'를 찾은 뒤, 그걸 소액으로 증폭하세요. 처음부터 큰돈은 절대 금물. 손실 나면 바로 멈추는 것도 실력입니다.</div></section><div class="next"><span class="n">🎉</span><div><b>축하합니다 — 마스터 전 과정 완주!</b> 진단부터 마케팅까지 다 세팅했습니다. 이제 강의실로 돌아가 첫 기수를 모집하고, 맞는 채널을 꾸준히 키우세요. <a href="/강의/course.html?c=aiwebpro" style="color:#5c1953;font-weight:800">강의실 열기 →</a></div></div><footer>PBS컬러랩 | 대표: 최해숙 | 1600-7218 | 인증센터 문의: 010-4285-7997</footer></div><script>document.querySelectorAll(".copybtn[data-copy]").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-copy")).innerText;navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";b.classList.add("done");setTimeout(function(){b.textContent=o;b.classList.remove("done");},2000);});});});</script></body></html>
