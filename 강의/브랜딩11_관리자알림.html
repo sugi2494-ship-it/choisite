@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>관리자·실시간 알림 · AI 브랜딩 과정 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px 70px}
+  .enginebar{display:flex; height:6px; position:sticky; top:0; z-index:20}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:32px 18px 6px; max-width:660px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
+  h1{font-size:24px; font-weight:800; margin:8px 0 8px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0}
+
+  .progress{position:sticky; top:6px; z-index:19; background:rgba(246,247,248,.95);
+    backdrop-filter:blur(6px); padding:10px 0 8px; margin-top:16px}
+  .ptrack{height:8px; background:#e6e8ea; border-radius:6px; overflow:hidden}
+  .pfill{height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
+    border-radius:6px; transition:width .35s ease}
+  .ptext{font-size:12px; font-weight:700; color:var(--sub); margin-top:6px; text-align:right}
+
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px 20px; margin-top:16px}
+  .snum{display:inline-block; font-size:12.5px; font-weight:800; color:#fff;
+    padding:5px 13px; border-radius:999px; margin-bottom:12px}
+  h2{font-size:19px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
+  .sub{font-size:13px; color:var(--sub); margin:0 0 16px; font-weight:600}
+  p.t{font-size:15px; margin:0 0 13px}
+  ul.pts{margin:12px 0; padding-left:20px}
+  ul.pts li{font-size:14.5px; margin-bottom:7px}
+
+  .big{background:#fbfbfc; border:1px solid var(--line); border-left:5px solid var(--ink);
+    border-radius:10px; padding:15px 17px; margin:14px 0}
+  .big .cap{font-size:12px; font-weight:800; color:var(--sub); letter-spacing:.03em}
+  .big .txt{font-size:15px; font-weight:700; margin-top:5px; line-height:1.6}
+  .warn{background:#fff8e6; border:1px solid #f0d98a; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .warn p{margin:0; font-size:13.5px; color:#7a5a00}
+  .good{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .good p{margin:0; font-size:13.5px; color:#2f4b3b}
+
+  /* 프롬프트 카드 */
+  .pc{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:11px; background:#fff}
+  .pc-h{display:flex; align-items:center; gap:9px; padding:11px 14px; background:#f7f8f9;
+    border-bottom:1px solid var(--line); cursor:pointer}
+  .pc-tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:6px; color:#fff; flex:0 0 auto}
+  .pc-t{font-size:14px; font-weight:700; flex:1}
+  .pc-a{font-size:12px; color:var(--sub); font-weight:700}
+  .pc-b{display:none; padding:14px}
+  .pc.open .pc-b{display:block}
+  .pc.open .pc-a{transform:rotate(180deg)}
+  .code{background:#0f1720; color:#e8eef4; border-radius:10px; padding:14px; font-size:12.5px;
+    line-height:1.75; white-space:pre-wrap; font-family:"Consolas","Courier New",monospace}
+  .cbtn{width:100%; border:none; background:var(--pink); color:#fff; font-size:14px; font-weight:800;
+    padding:11px; border-radius:9px; cursor:pointer; margin-top:9px; font-family:inherit}
+  .why{font-size:12.5px; color:var(--sub); margin:9px 0 0; line-height:1.6}
+
+  .check{display:flex; gap:10px; align-items:flex-start; margin-top:18px; padding-top:16px;
+    border-top:1px dashed var(--line)}
+  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
+  .check label{font-size:14px; font-weight:700; cursor:pointer; color:var(--sub)}
+  .check input:checked + label{color:var(--green)}
+
+  .final{background:#fff; border:2px solid var(--ink); border-radius:var(--radius); padding:22px 20px; margin-top:16px}
+  .fl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--line)}
+  .fl:last-child{border-bottom:none}
+  .fl input{width:19px; height:19px; margin-top:2px; accent-color:var(--ink); flex:0 0 auto; cursor:pointer}
+  .fl label{font-size:14px; font-weight:600; cursor:pointer}
+
+  .next{background:var(--ink); color:#fff; border-radius:var(--radius); padding:26px 22px; margin-top:20px; text-align:center}
+  .next h3{margin:0 0 8px; font-size:19px}
+  .next p{margin:0 0 16px; font-size:14px; color:#c8cfd6}
+  .next a{display:block; background:#fff; color:var(--ink); text-decoration:none; font-weight:800;
+    font-size:16px; padding:15px; border-radius:11px}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:26px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="/강의/course.html?c=aiwebmaster" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 브랜딩 과정 강의실로</a></div>
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 브랜딩 과정</div>
+  <h1>브랜딩 관리 11. 관리자 페이지 + 실시간 알림</h1>
+  <p class="lead">문의를 놓치지 않게 — <b>문의 폼 → 관리자 페이지 → 실시간 알림(카톡/문자)</b>까지. 비번은 코드에 넣지 않고 안전하게.</p>
+  <div class="progress"><div class="ptrack"><div class="pfill" id="pfill"></div></div><div class="ptext" id="ptext">0 단계</div></div>
+</header>
+<div class="wrap">
+<section class="step"><span class="snum" style="background:var(--sub)">먼저</span><h2>문의를 놓치지 않으려면</h2><p class="sub">받는 곳 + 알림 + 안전</p><div class="big"><div class="cap">세 가지가 필요해요</div><div class="txt">① <b>문의 받는 폼</b> → ② <b>관리자 페이지</b>(들어온 문의 확인) → ③ <b>실시간 알림</b>(새 문의 오면 카톡/문자).<br /><span style="font-size:13.5px;font-weight:600;color:var(--sub)">비밀번호를 코드에 그냥 넣지 마세요(8808식 금지). 안전하게 서버검증으로.</span></div></div><div class="check"><input type="checkbox" class="ck" id="c0" /><label for="c0">이해했어요</label></div></section><section class="step"><span class="snum" style="background:var(--red)">STEP 1</span><h2>문의 접수 + 관리자 페이지</h2><p class="sub">들어온 문의를 한곳에서</p><div class="big"><div class="cap">저장은 2가지 중 택1</div><div class="txt">🟢 <b>구글 시트</b>(쉬움) — 문의가 시트에 쌓임<br />⚫ <b>Supabase</b>(고급) — 관리자 페이지에서 바로 관리<br /><span style="font-size:13px;color:var(--sub)">초보는 구글 시트부터. 익숙해지면 Supabase로.</span></div></div><div class="pc open" style="border:2px solid var(--ink)"><div class="pc-h" style="background:#eef0f2"><span class="pc-tag" style="background:var(--ink)">★ 접수</span><span class="pc-t">문의 폼 + 관리자 페이지 만들기</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p111">내 웹페이지에 '문의하기' 폼(이름·연락처·문의내용)을 만들고, 들어온 문의를 내가 볼 수 있는 관리자 페이지도 만들어줘.
+- 저장은 [구글 시트 / Supabase] 중 [구글 시트]로 할게. 연결 방법을 한 단계씩 쉽게.
+- 관리자 페이지는 비밀번호를 코드에 그냥 넣지 말고 안전하게(서버검증) 잠가줘.
+- 개인정보는 꼭 필요한 것만 받고, 수집·이용 동의 문구도 넣어줘.</div><button class="cbtn" data-t="p111">📋 복사</button><p class="why">[ ] 안에서 쉬운 쪽(구글 시트)을 고르세요. Supabase는 다음에 도전.</p></div></div><div class="check"><input type="checkbox" class="ck" id="c1" /><label for="c1">문의 폼·관리자 페이지를 만들었어요</label></div></section><section class="step"><span class="snum" style="background:var(--yellow)">STEP 2</span><h2>새 문의 실시간 알림</h2><p class="sub">폰으로 바로 알림 오게</p><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--yellow)">★ 알림</span><span class="pc-t">새 문의 카톡/문자 알림 연결</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p112">새 문의가 들어오면 내 휴대폰으로 바로 알림이 오게 해줘.
+- [카카오톡 알림 / 문자(SMS) / 이메일] 중 [카카오톡]으로 받고 싶어.
+- 초보도 할 수 있는 가장 쉬운 방법(예: 무료 자동화 도구)으로, 한 단계씩 안내해줘.
+- 문의 내용 요약(이름·연락처·내용)이 알림에 담기게.</div><button class="cbtn" data-t="p112">📋 복사</button><p class="why">문자·알림톡은 발송비·사전승인이 필요할 수 있어요 — 대표님 승인 전까지는 이메일/무료 알림으로.</p></div></div><div class="check"><input type="checkbox" class="ck" id="c2" /><label for="c2">새 문의 알림을 연결했어요</label></div></section><section class="step"><span class="snum" style="background:var(--green)">STEP 3</span><h2>안전·개인정보 점검</h2><p class="sub">신뢰가 브랜드입니다</p><div class="check"><input type="checkbox" class="ck" id="c3a" /><label for="c3a">관리자 비번을 코드에 안 넣었다(서버검증)</label></div><div class="check"><input type="checkbox" class="ck" id="c3b" /><label for="c3b">문의 폼에 꼭 필요한 정보만 받는다</label></div><div class="check"><input type="checkbox" class="ck" id="c3c" /><label for="c3c">개인정보 수집·이용 동의 문구가 있다</label></div><div class="warn" style="background:#f4eefb;border-color:#e0cdf0"><p style="color:#5c1953">🎤 <b>강사 팁</b> — 결제·알림톡·문자 연결은 대표 승인 전 미연결 원칙. 오늘은 "무료·안전" 범위까지만 시연하세요.</p></div></section>
+  <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
+</div>
+<script>
+document.querySelectorAll(".pc-h").forEach(function(h){h.addEventListener("click",function(){h.parentElement.classList.toggle("open");});});
+document.querySelectorAll(".cbtn").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();var t=document.getElementById(b.dataset.t).textContent;function done(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";setTimeout(function(){b.textContent=o;},1600);}navigator.clipboard.writeText(t).then(done,function(){var r=document.createRange();r.selectNode(document.getElementById(b.dataset.t));var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand("copy");s.removeAllRanges();done();});});});
+var cks=[].slice.call(document.querySelectorAll(".ck"));var pf=document.getElementById("pfill"),pt=document.getElementById("ptext");
+function upd(){var n=cks.filter(function(c){return c.checked;}).length;if(pf)pf.style.width=(n/cks.length*100)+"%";if(pt)pt.textContent=n===cks.length?"\u2705 \ub2e4 \ud558\uc168\uc5b4\uc694!":n+" / "+cks.length+" \ub2e8\uacc4";}
+cks.forEach(function(c){c.addEventListener("change",upd);});upd();
+</script>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>지역·지도 노출 · AI 브랜딩 과정 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px 70px}
+  .enginebar{display:flex; height:6px; position:sticky; top:0; z-index:20}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:32px 18px 6px; max-width:660px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
+  h1{font-size:24px; font-weight:800; margin:8px 0 8px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0}
+
+  .progress{position:sticky; top:6px; z-index:19; background:rgba(246,247,248,.95);
+    backdrop-filter:blur(6px); padding:10px 0 8px; margin-top:16px}
+  .ptrack{height:8px; background:#e6e8ea; border-radius:6px; overflow:hidden}
+  .pfill{height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
+    border-radius:6px; transition:width .35s ease}
+  .ptext{font-size:12px; font-weight:700; color:var(--sub); margin-top:6px; text-align:right}
+
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px 20px; margin-top:16px}
+  .snum{display:inline-block; font-size:12.5px; font-weight:800; color:#fff;
+    padding:5px 13px; border-radius:999px; margin-bottom:12px}
+  h2{font-size:19px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
+  .sub{font-size:13px; color:var(--sub); margin:0 0 16px; font-weight:600}
+  p.t{font-size:15px; margin:0 0 13px}
+  ul.pts{margin:12px 0; padding-left:20px}
+  ul.pts li{font-size:14.5px; margin-bottom:7px}
+
+  .big{background:#fbfbfc; border:1px solid var(--line); border-left:5px solid var(--ink);
+    border-radius:10px; padding:15px 17px; margin:14px 0}
+  .big .cap{font-size:12px; font-weight:800; color:var(--sub); letter-spacing:.03em}
+  .big .txt{font-size:15px; font-weight:700; margin-top:5px; line-height:1.6}
+  .warn{background:#fff8e6; border:1px solid #f0d98a; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .warn p{margin:0; font-size:13.5px; color:#7a5a00}
+  .good{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .good p{margin:0; font-size:13.5px; color:#2f4b3b}
+
+  /* 프롬프트 카드 */
+  .pc{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:11px; background:#fff}
+  .pc-h{display:flex; align-items:center; gap:9px; padding:11px 14px; background:#f7f8f9;
+    border-bottom:1px solid var(--line); cursor:pointer}
+  .pc-tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:6px; color:#fff; flex:0 0 auto}
+  .pc-t{font-size:14px; font-weight:700; flex:1}
+  .pc-a{font-size:12px; color:var(--sub); font-weight:700}
+  .pc-b{display:none; padding:14px}
+  .pc.open .pc-b{display:block}
+  .pc.open .pc-a{transform:rotate(180deg)}
+  .code{background:#0f1720; color:#e8eef4; border-radius:10px; padding:14px; font-size:12.5px;
+    line-height:1.75; white-space:pre-wrap; font-family:"Consolas","Courier New",monospace}
+  .cbtn{width:100%; border:none; background:var(--pink); color:#fff; font-size:14px; font-weight:800;
+    padding:11px; border-radius:9px; cursor:pointer; margin-top:9px; font-family:inherit}
+  .why{font-size:12.5px; color:var(--sub); margin:9px 0 0; line-height:1.6}
+
+  .check{display:flex; gap:10px; align-items:flex-start; margin-top:18px; padding-top:16px;
+    border-top:1px dashed var(--line)}
+  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
+  .check label{font-size:14px; font-weight:700; cursor:pointer; color:var(--sub)}
+  .check input:checked + label{color:var(--green)}
+
+  .final{background:#fff; border:2px solid var(--ink); border-radius:var(--radius); padding:22px 20px; margin-top:16px}
+  .fl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--line)}
+  .fl:last-child{border-bottom:none}
+  .fl input{width:19px; height:19px; margin-top:2px; accent-color:var(--ink); flex:0 0 auto; cursor:pointer}
+  .fl label{font-size:14px; font-weight:600; cursor:pointer}
+
+  .next{background:var(--ink); color:#fff; border-radius:var(--radius); padding:26px 22px; margin-top:20px; text-align:center}
+  .next h3{margin:0 0 8px; font-size:19px}
+  .next p{margin:0 0 16px; font-size:14px; color:#c8cfd6}
+  .next a{display:block; background:#fff; color:var(--ink); text-decoration:none; font-weight:800;
+    font-size:16px; padding:15px; border-radius:11px}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:26px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="/강의/course.html?c=aiwebmaster" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 브랜딩 과정 강의실로</a></div>
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 브랜딩 과정</div>
+  <h1>브랜딩 지역 10. 네이버 플레이스·구글 지도 노출</h1>
+  <p class="lead">오프라인·지역 강사의 핵심 — <b>네이버 플레이스</b>와 <b>구글 비즈니스 프로필</b>에 등록해 "우리 동네 OO" 지역 검색에 뜨게 합니다.</p>
+  <div class="progress"><div class="ptrack"><div class="pfill" id="pfill"></div></div><div class="ptext" id="ptext">0 단계</div></div>
+</header>
+<div class="wrap">
+<section class="step"><span class="snum" style="background:var(--sub)">먼저</span><h2>지역 강사에겐 지도가 검색이다</h2><p class="sub">"우리 동네 OO" 검색에 뜨기</p><div class="big"><div class="cap">왜 지역 노출인가</div><div class="txt">오프라인·지역 활동 강사는 <b>네이버 지도·구글 지도</b> 검색이 실제 문의로 이어집니다.<br /><span style="font-size:13.5px;font-weight:600;color:var(--sub)">네이버 플레이스 + 구글 비즈니스 프로필, 이 둘만 등록해도 지역 검색에 잡힙니다.</span></div></div><div class="check"><input type="checkbox" class="ck" id="c0" /><label for="c0">이해했어요</label></div></section><section class="step"><span class="snum" style="background:var(--red)">STEP 1</span><h2>네이버 플레이스 등록</h2><p class="sub">네이버 지도·검색에 내 정보 뜨게</p><div class="pc open" style="border:2px solid var(--ink)"><div class="pc-h" style="background:#eef0f2"><span class="pc-tag" style="background:var(--ink)">★ 안내</span><span class="pc-t">네이버 플레이스 등록 안내</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p101">나는 초보야. 네이버 스마트플레이스(플레이스)에 내 사업/활동을 등록하려고 해.
+- 회원가입부터 업체(활동) 등록, 업종·주소·연락처·소개·대표사진·영업정보 입력까지 순서를 쉬운 말로 한 단계씩 알려줘.
+- 개인 강사도 등록 가능한지, 주소는 어떻게 하면 되는지도 알려줘.
+- 등록 후 '많이 찾게' 만드는 요령(사진·소개글·키워드)도 3가지만.</div><button class="cbtn" data-t="p101">📋 복사</button><p class="why">지역·오프라인 강의가 있으면 필수예요. 온라인만이면 선택.</p></div></div><div class="check"><input type="checkbox" class="ck" id="c1" /><label for="c1">네이버 플레이스에 등록했어요</label></div></section><section class="step"><span class="snum" style="background:var(--yellow)">STEP 2</span><h2>구글 비즈니스 프로필</h2><p class="sub">구글 지도·검색에 뜨게</p><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--yellow)">구글</span><span class="pc-t">구글 비즈니스 프로필 등록 안내</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p102">구글 비즈니스 프로필(Google Business Profile)에 내 활동을 등록하려고 해. 가입부터 등록·인증·사진/소개 입력까지 순서를 쉬운 말로 한 단계씩 알려줘. 개인/1인 강사도 되는지도 알려줘.</div><button class="cbtn" data-t="p102">📋 복사</button></div></div><div class="check"><input type="checkbox" class="ck" id="c2" /><label for="c2">구글 비즈니스에 등록했어요</label></div></section><section class="step"><span class="snum" style="background:var(--green)">STEP 3</span><h2>지역 검색에서 상위로</h2><p class="sub">사진·리뷰·키워드 관리</p><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--green)">관리</span><span class="pc-t">플레이스/프로필 상위 노출 요령</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p103">내 네이버 플레이스와 구글 비즈니스 프로필이 지역 검색에서 잘 보이게 하는 방법을 알려줘.
+- 소개글에 넣을 지역+분야 키워드 예시
+- 어떤 사진을 몇 장 올리면 좋은지
+- 리뷰를 자연스럽게 받는 방법(강요 없이)
+초보가 이번 주에 할 3가지로 정리해줘.</div><button class="cbtn" data-t="p103">📋 복사</button></div></div><div class="check"><input type="checkbox" class="ck" id="c3" /><label for="c3">사진·소개·리뷰 계획을 세웠어요</label></div><div class="warn" style="background:#f4eefb;border-color:#e0cdf0"><p style="color:#5c1953">🎤 <b>강사 팁</b> — 플레이스 리뷰는 "정성껏 남겨주실 분께 부탁"하는 정도로. 대가성 리뷰 유도는 금지라는 점 안내하세요.</p></div></section>
+  <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
+</div>
+<script>
+document.querySelectorAll(".pc-h").forEach(function(h){h.addEventListener("click",function(){h.parentElement.classList.toggle("open");});});
+document.querySelectorAll(".cbtn").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();var t=document.getElementById(b.dataset.t).textContent;function done(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";setTimeout(function(){b.textContent=o;},1600);}navigator.clipboard.writeText(t).then(done,function(){var r=document.createRange();r.selectNode(document.getElementById(b.dataset.t));var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand("copy");s.removeAllRanges();done();});});});
+var cks=[].slice.call(document.querySelectorAll(".ck"));var pf=document.getElementById("pfill"),pt=document.getElementById("ptext");
+function upd(){var n=cks.filter(function(c){return c.checked;}).length;if(pf)pf.style.width=(n/cks.length*100)+"%";if(pt)pt.textContent=n===cks.length?"\u2705 \ub2e4 \ud558\uc168\uc5b4\uc694!":n+" / "+cks.length+" \ub2e8\uacc4";}
+cks.forEach(function(c){c.addEventListener("change",upd);});upd();
+</script>
+</body></html>

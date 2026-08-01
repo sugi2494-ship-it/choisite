@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>웹페이지 점검 · AI 브랜딩 과정 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px 70px}
+  .enginebar{display:flex; height:6px; position:sticky; top:0; z-index:20}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:32px 18px 6px; max-width:660px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
+  h1{font-size:24px; font-weight:800; margin:8px 0 8px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0}
+
+  .progress{position:sticky; top:6px; z-index:19; background:rgba(246,247,248,.95);
+    backdrop-filter:blur(6px); padding:10px 0 8px; margin-top:16px}
+  .ptrack{height:8px; background:#e6e8ea; border-radius:6px; overflow:hidden}
+  .pfill{height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
+    border-radius:6px; transition:width .35s ease}
+  .ptext{font-size:12px; font-weight:700; color:var(--sub); margin-top:6px; text-align:right}
+
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px 20px; margin-top:16px}
+  .snum{display:inline-block; font-size:12.5px; font-weight:800; color:#fff;
+    padding:5px 13px; border-radius:999px; margin-bottom:12px}
+  h2{font-size:19px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
+  .sub{font-size:13px; color:var(--sub); margin:0 0 16px; font-weight:600}
+  p.t{font-size:15px; margin:0 0 13px}
+  ul.pts{margin:12px 0; padding-left:20px}
+  ul.pts li{font-size:14.5px; margin-bottom:7px}
+
+  .big{background:#fbfbfc; border:1px solid var(--line); border-left:5px solid var(--ink);
+    border-radius:10px; padding:15px 17px; margin:14px 0}
+  .big .cap{font-size:12px; font-weight:800; color:var(--sub); letter-spacing:.03em}
+  .big .txt{font-size:15px; font-weight:700; margin-top:5px; line-height:1.6}
+  .warn{background:#fff8e6; border:1px solid #f0d98a; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .warn p{margin:0; font-size:13.5px; color:#7a5a00}
+  .good{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .good p{margin:0; font-size:13.5px; color:#2f4b3b}
+
+  /* 프롬프트 카드 */
+  .pc{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:11px; background:#fff}
+  .pc-h{display:flex; align-items:center; gap:9px; padding:11px 14px; background:#f7f8f9;
+    border-bottom:1px solid var(--line); cursor:pointer}
+  .pc-tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:6px; color:#fff; flex:0 0 auto}
+  .pc-t{font-size:14px; font-weight:700; flex:1}
+  .pc-a{font-size:12px; color:var(--sub); font-weight:700}
+  .pc-b{display:none; padding:14px}
+  .pc.open .pc-b{display:block}
+  .pc.open .pc-a{transform:rotate(180deg)}
+  .code{background:#0f1720; color:#e8eef4; border-radius:10px; padding:14px; font-size:12.5px;
+    line-height:1.75; white-space:pre-wrap; font-family:"Consolas","Courier New",monospace}
+  .cbtn{width:100%; border:none; background:var(--pink); color:#fff; font-size:14px; font-weight:800;
+    padding:11px; border-radius:9px; cursor:pointer; margin-top:9px; font-family:inherit}
+  .why{font-size:12.5px; color:var(--sub); margin:9px 0 0; line-height:1.6}
+
+  .check{display:flex; gap:10px; align-items:flex-start; margin-top:18px; padding-top:16px;
+    border-top:1px dashed var(--line)}
+  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
+  .check label{font-size:14px; font-weight:700; cursor:pointer; color:var(--sub)}
+  .check input:checked + label{color:var(--green)}
+
+  .final{background:#fff; border:2px solid var(--ink); border-radius:var(--radius); padding:22px 20px; margin-top:16px}
+  .fl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--line)}
+  .fl:last-child{border-bottom:none}
+  .fl input{width:19px; height:19px; margin-top:2px; accent-color:var(--ink); flex:0 0 auto; cursor:pointer}
+  .fl label{font-size:14px; font-weight:600; cursor:pointer}
+
+  .next{background:var(--ink); color:#fff; border-radius:var(--radius); padding:26px 22px; margin-top:20px; text-align:center}
+  .next h3{margin:0 0 8px; font-size:19px}
+  .next p{margin:0 0 16px; font-size:14px; color:#c8cfd6}
+  .next a{display:block; background:#fff; color:var(--ink); text-decoration:none; font-weight:800;
+    font-size:16px; padding:15px; border-radius:11px}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:26px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="/강의/course.html?c=aiwebmaster" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 브랜딩 과정 강의실로</a></div>
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 브랜딩 과정</div>
+  <h1>브랜딩 점검 08. 배포 전 웹페이지 점검</h1>
+  <p class="lead">배포·검색등록 전에 <b>모바일·속도·연락처·미리보기</b>가 제대로인지 점검합니다. AI에게 맡기면 빠르게 새는 곳을 찾아줍니다.</p>
+  <div class="progress"><div class="ptrack"><div class="pfill" id="pfill"></div></div><div class="ptext" id="ptext">0 단계</div></div>
+</header>
+<div class="wrap">
+<section class="step"><span class="snum" style="background:var(--sub)">먼저</span><h2>왜 점검부터 하나요?</h2><p class="sub">배포·검색 등록 전에 새는 곳을 막습니다</p><div class="big"><div class="cap">점검의 핵심</div><div class="txt">예쁜지가 아니라 <b>"검색되고 문의 오는 상태인지"</b>를 봅니다.<br /><span style="font-size:13.5px;font-weight:600;color:var(--sub)">모바일·속도·연락처·미리보기 이 4가지가 무너지면 아무리 예뻐도 성과가 안 납니다.</span></div></div><div class="check"><input type="checkbox" class="ck" id="c0" /><label for="c0">이해했어요</label></div></section><section class="step"><span class="snum" style="background:var(--red)">STEP 1</span><h2>AI로 종합 점검받기</h2><p class="sub">내 페이지를 붙여넣고 한 번에 진단</p><div class="pc open" style="border:2px solid var(--ink)"><div class="pc-h" style="background:#eef0f2"><span class="pc-tag" style="background:var(--ink)">★ 먼저</span><span class="pc-t">배포 전 종합 점검 프롬프트</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p081">내 웹페이지를 배포·검색등록 전에 종합 점검해줘. 아래 항목을 하나씩 표로 진단하고, 문제는 바로 고칠 수 있게 알려줘.
+1) 모바일에서 글자 잘림·버튼 크기·가로 스크롤
+2) 로딩 속도(무거운 이미지·불필요한 효과)
+3) 오탈자·어색한 문장
+4) 링크·연락처(전화·카톡·인스타)가 실제로 연결되는지
+5) 카톡/SNS 공유 미리보기(제목·설명·이미지=OG) 가 뜨는지
+6) 검색 기본(페이지 제목·설명·대표 키워드)이 들어있는지
+7) 접근성(이미지 대체텍스트·명확한 버튼)
+각 항목 상태(좋음/보완/위험)와 '지금 바로 할 일'을 한 줄로 줘.</div><button class="cbtn" data-t="p081">📋 복사</button><p class="why">[ ] 자리에 내 페이지 코드나 주소를 함께 주면 정확해져요.</p></div></div><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--green)">OG</span><span class="pc-t">카톡 미리보기(OG) 넣기</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p082">내 페이지를 카톡·SNS로 공유할 때 제목·설명·대표 이미지가 예쁘게 뜨게 해줘(OG 태그). 검색에도 잘 잡히게 페이지 제목·설명도 함께 넣고 index.html을 다시 만들어줘.</div><button class="cbtn" data-t="p082">📋 복사</button></div></div><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">연결</span><span class="pc-t">연락처·버튼 연결 점검</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p083">문의 버튼과 전화·카톡·인스타 아이콘이 실제 내 연락처로 연결되는지 확인하고, 안 되는 건 고쳐줘. 전화는 휴대폰에서 바로 걸리게, 카톡·인스타는 새 창으로.</div><button class="cbtn" data-t="p083">📋 복사</button></div></div><div class="check"><input type="checkbox" class="ck" id="c1" /><label for="c1">AI 점검을 돌렸어요</label></div></section><section class="step"><span class="snum" style="background:var(--green)">STEP 2</span><h2>배포 전 체크리스트</h2><p class="sub">눈으로 한 번 더</p><div class="check"><input type="checkbox" class="ck" id="c2a" /><label for="c2a">휴대폰에서 잘 보인다(글자·버튼)</label></div><div class="check"><input type="checkbox" class="ck" id="c2b" /><label for="c2b">문의·연락처가 실제로 연결된다</label></div><div class="check"><input type="checkbox" class="ck" id="c2c" /><label for="c2c">카톡으로 보내면 미리보기가 뜬다</label></div><div class="check"><input type="checkbox" class="ck" id="c2d" /><label for="c2d">사실이 아닌 경력·숫자가 없다</label></div><div class="check"><input type="checkbox" class="ck" id="c2e" /><label for="c2e">페이지 제목·설명이 들어있다</label></div><div class="warn" style="background:#f4eefb;border-color:#e0cdf0"><p style="color:#5c1953">🎤 <b>강사 팁</b> — 점검은 "완벽"이 아니라 "치명적 결함 제거"가 목적이라고 안내하세요. 4대 항목(모바일·연락처·미리보기·사실확인)만 통과하면 배포 OK.</p></div></section>
+  <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
+</div>
+<script>
+document.querySelectorAll(".pc-h").forEach(function(h){h.addEventListener("click",function(){h.parentElement.classList.toggle("open");});});
+document.querySelectorAll(".cbtn").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();var t=document.getElementById(b.dataset.t).textContent;function done(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";setTimeout(function(){b.textContent=o;},1600);}navigator.clipboard.writeText(t).then(done,function(){var r=document.createRange();r.selectNode(document.getElementById(b.dataset.t));var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand("copy");s.removeAllRanges();done();});});});
+var cks=[].slice.call(document.querySelectorAll(".ck"));var pf=document.getElementById("pfill"),pt=document.getElementById("ptext");
+function upd(){var n=cks.filter(function(c){return c.checked;}).length;if(pf)pf.style.width=(n/cks.length*100)+"%";if(pt)pt.textContent=n===cks.length?"\u2705 \ub2e4 \ud558\uc168\uc5b4\uc694!":n+" / "+cks.length+" \ub2e8\uacc4";}
+cks.forEach(function(c){c.addEventListener("change",upd);});upd();
+</script>
+</body></html>

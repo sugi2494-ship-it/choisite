@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>마케팅 넓히기 · AI 브랜딩 과정 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
+    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:660px; margin:0 auto; padding:0 18px 70px}
+  .enginebar{display:flex; height:6px; position:sticky; top:0; z-index:20}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}
+  .enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}
+  .enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:32px 18px 6px; max-width:660px; margin:0 auto}
+  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
+  h1{font-size:24px; font-weight:800; margin:8px 0 8px; letter-spacing:-.01em}
+  .lead{font-size:15px; color:var(--sub); margin:0}
+
+  .progress{position:sticky; top:6px; z-index:19; background:rgba(246,247,248,.95);
+    backdrop-filter:blur(6px); padding:10px 0 8px; margin-top:16px}
+  .ptrack{height:8px; background:#e6e8ea; border-radius:6px; overflow:hidden}
+  .pfill{height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
+    border-radius:6px; transition:width .35s ease}
+  .ptext{font-size:12px; font-weight:700; color:var(--sub); margin-top:6px; text-align:right}
+
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px 20px; margin-top:16px}
+  .snum{display:inline-block; font-size:12.5px; font-weight:800; color:#fff;
+    padding:5px 13px; border-radius:999px; margin-bottom:12px}
+  h2{font-size:19px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
+  .sub{font-size:13px; color:var(--sub); margin:0 0 16px; font-weight:600}
+  p.t{font-size:15px; margin:0 0 13px}
+  ul.pts{margin:12px 0; padding-left:20px}
+  ul.pts li{font-size:14.5px; margin-bottom:7px}
+
+  .big{background:#fbfbfc; border:1px solid var(--line); border-left:5px solid var(--ink);
+    border-radius:10px; padding:15px 17px; margin:14px 0}
+  .big .cap{font-size:12px; font-weight:800; color:var(--sub); letter-spacing:.03em}
+  .big .txt{font-size:15px; font-weight:700; margin-top:5px; line-height:1.6}
+  .warn{background:#fff8e6; border:1px solid #f0d98a; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .warn p{margin:0; font-size:13.5px; color:#7a5a00}
+  .good{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:11px; padding:13px 16px; margin:14px 0}
+  .good p{margin:0; font-size:13.5px; color:#2f4b3b}
+
+  /* 프롬프트 카드 */
+  .pc{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:11px; background:#fff}
+  .pc-h{display:flex; align-items:center; gap:9px; padding:11px 14px; background:#f7f8f9;
+    border-bottom:1px solid var(--line); cursor:pointer}
+  .pc-tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:6px; color:#fff; flex:0 0 auto}
+  .pc-t{font-size:14px; font-weight:700; flex:1}
+  .pc-a{font-size:12px; color:var(--sub); font-weight:700}
+  .pc-b{display:none; padding:14px}
+  .pc.open .pc-b{display:block}
+  .pc.open .pc-a{transform:rotate(180deg)}
+  .code{background:#0f1720; color:#e8eef4; border-radius:10px; padding:14px; font-size:12.5px;
+    line-height:1.75; white-space:pre-wrap; font-family:"Consolas","Courier New",monospace}
+  .cbtn{width:100%; border:none; background:var(--pink); color:#fff; font-size:14px; font-weight:800;
+    padding:11px; border-radius:9px; cursor:pointer; margin-top:9px; font-family:inherit}
+  .why{font-size:12.5px; color:var(--sub); margin:9px 0 0; line-height:1.6}
+
+  .check{display:flex; gap:10px; align-items:flex-start; margin-top:18px; padding-top:16px;
+    border-top:1px dashed var(--line)}
+  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
+  .check label{font-size:14px; font-weight:700; cursor:pointer; color:var(--sub)}
+  .check input:checked + label{color:var(--green)}
+
+  .final{background:#fff; border:2px solid var(--ink); border-radius:var(--radius); padding:22px 20px; margin-top:16px}
+  .fl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--line)}
+  .fl:last-child{border-bottom:none}
+  .fl input{width:19px; height:19px; margin-top:2px; accent-color:var(--ink); flex:0 0 auto; cursor:pointer}
+  .fl label{font-size:14px; font-weight:600; cursor:pointer}
+
+  .next{background:var(--ink); color:#fff; border-radius:var(--radius); padding:26px 22px; margin-top:20px; text-align:center}
+  .next h3{margin:0 0 8px; font-size:19px}
+  .next p{margin:0 0 16px; font-size:14px; color:#c8cfd6}
+  .next a{display:block; background:#fff; color:var(--ink); text-decoration:none; font-weight:800;
+    font-size:16px; padding:15px; border-radius:11px}
+  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:26px; line-height:1.7}
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="/강의/course.html?c=aiwebmaster" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 브랜딩 과정 강의실로</a></div>
+<header>
+  <div class="eyebrow">최해숙 강의실 · AI 브랜딩 과정</div>
+  <h1>브랜딩 마케팅 12. 마케팅 넓히기</h1>
+  <p class="lead">검색 다음은 꾸준한 <b>콘텐츠·무료미끼·소식지·소개</b>. 무리하지 말고 내게 맞는 것부터 프롬프트로 바로 만듭니다.</p>
+  <div class="progress"><div class="ptrack"><div class="pfill" id="pfill"></div></div><div class="ptext" id="ptext">0 단계</div></div>
+</header>
+<div class="wrap">
+<section class="step"><span class="snum" style="background:var(--sub)">먼저</span><h2>검색 다음은 "꾸준함"</h2><p class="sub">무리 말고, 맞는 걸 하나씩</p><div class="big"><div class="cap">마케팅의 원칙</div><div class="txt">새 채널을 다 벌이지 마세요. <b>내가 지치지 않고 꾸준히 할 수 있는 1~2가지</b>를 정해 반복하는 게 이깁니다.<br /><span style="font-size:13.5px;font-weight:600;color:var(--sub)">아래에서 내게 맞는 것부터 골라 프롬프트로 바로 만들어 보세요.</span></div></div><div class="check"><input type="checkbox" class="ck" id="c0" /><label for="c0">이해했어요</label></div></section><section class="step"><span class="snum" style="background:var(--red)">STEP 1</span><h2>콘텐츠(블로그·카드뉴스)</h2><p class="sub">검색·신뢰를 같이 쌓는 기본</p><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--red)">블로그</span><span class="pc-t">블로그 글 초안 만들기</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p121">내 분야로 검색에 도움되는 블로그 글을 써줘.
+- 주제: [예: 퍼스널컬러가 첫인상에 미치는 영향]
+- 내 대표 키워드가 자연스럽게 들어가게, 소제목으로 나눠서.
+- 마지막에 내 웹페이지·문의로 이어지는 한 줄 안내.
+초보가 그대로 올릴 수 있게 완성해줘.</div><button class="cbtn" data-t="p121">📋 복사</button></div></div><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--pink)">카드뉴스</span><span class="pc-t">인스타 카드뉴스 문구</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p122">인스타/블로그용 카드뉴스 6장 문구를 만들어줘. 주제 [예: 나에게 어울리는 색 찾는 법]. 1장=후킹, 2~5장=핵심, 6장=문의 안내. 짧고 눈에 띄게.</div><button class="cbtn" data-t="p122">📋 복사</button></div></div><div class="check"><input type="checkbox" class="ck" id="c1" /><label for="c1">콘텐츠 1개를 만들어봤어요</label></div></section><section class="step"><span class="snum" style="background:var(--yellow)">STEP 2</span><h2>무료 미끼 + 소식지</h2><p class="sub">연락처를 남기게 만드는 법</p><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--yellow)">미끼</span><span class="pc-t">무료 미끼(리드마그넷) 만들기</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p123">방문자가 연락처를 남기고 받아가는 '무료 선물'을 기획해줘.
+- 내 분야로 [예: 셀프 퍼스널컬러 체크리스트 PDF] 같은 걸 3가지 제안.
+- 고르면 그 내용 초안을 만들어주고, 웹페이지에 '무료로 받기(이메일 입력)'로 연결하는 방법도.</div><button class="cbtn" data-t="p123">📋 복사</button></div></div><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--green)">소식지</span><span class="pc-t">소식지(뉴스레터) 시작</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p124">모은 연락처로 보낼 짧은 소식지 첫 호를 만들어줘. 무겁지 않게, 한 가지 유용한 정보 + 근황 + 다음 강의 안내. 초보가 쓰기 쉬운 틀로.</div><button class="cbtn" data-t="p124">📋 복사</button></div></div><div class="check"><input type="checkbox" class="ck" id="c2" /><label for="c2">무료 미끼/소식지를 계획했어요</label></div></section><section class="step"><span class="snum" style="background:var(--blue)">STEP 3</span><h2>소개·제휴 · 유료광고 맛보기</h2><p class="sub">가장 강한 건 입소문</p><div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">소개</span><span class="pc-t">소개·추천 유도</span><span class="pc-a">▾</span></div><div class="pc-b"><div class="code" id="p125">기존 수강생·지인이 자연스럽게 나를 소개하게 만드는 방법을 알려줘. 부담 없는 소개 요청 문구와, 소개해준 분께 드릴 작은 혜택 아이디어 3가지.</div><button class="cbtn" data-t="p125">📋 복사</button></div></div><div class="warn"><p>💰 <b>유료 광고</b>는 소액부터·조심해서. 네이버/인스타 광고는 하루 소액으로 테스트만. 큰 지출·계약은 <b>대표 승인·법률 검토 후</b>에.</p></div><div class="check"><input type="checkbox" class="ck" id="c3" /><label for="c3">소개·제휴 방법을 정리했어요</label></div><div class="warn" style="background:#f4eefb;border-color:#e0cdf0"><p style="color:#5c1953">🎤 <b>강사 팁</b> — 마케팅은 "많이"가 아니라 "꾸준히"라고 못박으세요. 한 달에 콘텐츠 4개 + 소식지 1회면 충분하다는 현실적 목표로.</p></div></section>
+  <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
+</div>
+<script>
+document.querySelectorAll(".pc-h").forEach(function(h){h.addEventListener("click",function(){h.parentElement.classList.toggle("open");});});
+document.querySelectorAll(".cbtn").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();var t=document.getElementById(b.dataset.t).textContent;function done(){var o=b.textContent;b.textContent="\u2705 \ubcf5\uc0ac\ub410\uc5b4\uc694!";setTimeout(function(){b.textContent=o;},1600);}navigator.clipboard.writeText(t).then(done,function(){var r=document.createRange();r.selectNode(document.getElementById(b.dataset.t));var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand("copy");s.removeAllRanges();done();});});});
+var cks=[].slice.call(document.querySelectorAll(".ck"));var pf=document.getElementById("pfill"),pt=document.getElementById("ptext");
+function upd(){var n=cks.filter(function(c){return c.checked;}).length;if(pf)pf.style.width=(n/cks.length*100)+"%";if(pt)pt.textContent=n===cks.length?"\u2705 \ub2e4 \ud558\uc168\uc5b4\uc694!":n+" / "+cks.length+" \ub2e8\uacc4";}
+cks.forEach(function(c){c.addEventListener("change",upd);});upd();
+</script>
+</body></html>
