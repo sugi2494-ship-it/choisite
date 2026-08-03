@@ -116,7 +116,7 @@
       --black:#080810; --dark:#0E0E1A; --dark2:#16162A;
       --white:#fff; --cream:#FFF9F5;
       --muted:rgba(255,255,255,.58); --line:rgba(255,255,255,.1);
-      --max:1400px; --r:20px;
+      --max:1200px; --r:20px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;overflow-x:hidden}
@@ -231,7 +231,7 @@
       position:relative;z-index:2;
       display:grid;grid-template-columns:1fr;gap:0;
     }
-    .hero-copy{max-width:760px;min-width:0;width:100%}
+    .hero-copy{max-width:640px;min-width:0;width:100%}
     .eyebrow{
       display:inline-flex;align-items:center;gap:10px;
       color:var(--gold);font-weight:900;font-size:11.5px;letter-spacing:.22em;
@@ -240,7 +240,7 @@
       background:rgba(200,168,112,.08);backdrop-filter:blur(8px);
     }
     h1{
-      font-size:clamp(42px,6.4vw,86px);
+      font-size:clamp(38px,5.8vw,72px);
       line-height:1.08;letter-spacing:-.05em;
       color:var(--white);font-weight:900;margin-bottom:20px;
     }
@@ -751,8 +751,6 @@ html[data-theme="light"] h3{color:#1a1a22!important;}
 html[data-theme="light"] .cta-pink h2,html[data-theme="light"] .cta-pink h3,html[data-theme="light"] .cta-pink p,html[data-theme="light"] .cta-pink span{color:#fff!important;}
 html[data-theme="light"] .prog-tag{color:#C2185B!important;background:rgba(230,0,126,.08)!important;border-color:rgba(230,0,126,.22)!important;}
 html[data-theme="light"] .btn.outline,html[data-theme="light"] a.btn.outline{color:#20202A!important;border-color:rgba(0,0,0,.28)!important;background:rgba(0,0,0,.02)!important;}
-/* 히어로의 보조 버튼은 항상 어두운 사진 위에 있으므로 테마와 무관하게 흰 글자·마젠타 테두리로 고정 */
-.hero-actions .btn.outline,html[data-theme="light"] .hero-actions .btn.outline,html[data-theme="light"] a.hero-actions .btn.outline{color:#fff!important;border-color:var(--pink)!important;background:rgba(20,16,28,.42)!important;backdrop-filter:blur(8px);}
 html[data-theme="light"] .bio-item span{color:#4a4a52!important;}
 html[data-theme="light"] .bio-item p{color:#4a4a52!important;}
 html[data-theme="light"] .sns-btn{color:#20202A!important;}
@@ -794,7 +792,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
         <div class="has-dropdown">
           <a href="#services-router" class="dd-label">교육·컨설팅 ▾</a>
           <div class="dropdown">
-            <a href="#consulting" data-i18n="nav.consulting">개인 컨설팅</a>
+            <a href="/consulting" data-i18n="nav.consulting">개인 컨설팅</a>
             <a href="/business" data-i18n="nav.business">기업·공공기관 교육</a>
             <a href="/academy/courses" data-i18n="nav.academy">전문가 자격과정</a>
           </div>
@@ -943,12 +941,12 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
     <h2 style="text-align:center;font-size:24px;font-weight:900;color:#111;margin:0 0 8px;letter-spacing:-.02em" data-i18n="x.rt">PBS 컬러랩 교육·컨설팅 안내</h2>
     <p style="text-align:center;font-size:14px;color:#666;margin:0 auto 26px;max-width:640px;line-height:1.6" data-i18n="x.rd">개인 상담부터 특강·기관 교육, 전문가 양성, 글로벌 협업까지 — 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.</p>
     <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:stretch">
-      <a href="#consulting" style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
+      <a href="/consulting" style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;text-decoration:none;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
         <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">🎨 개인 퍼스널컬러 컨설팅 신청</div>
         <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:8px" data-i18n="x.c1t">퍼스널컬러·이미지 컨설팅</div>
         <div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:12px;flex:1" data-i18n="x.c1d">퍼스널컬러, 골격진단, 얼굴분석을 통해 색·소재·스타일과 전체 이미지를 선택하는 기준을 알려드립니다.</div>
         <div style="margin-bottom:14px"><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">퍼스널컬러</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">골격진단</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">얼굴분석</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">프리미엄 통합</span><span style="display:inline-block;font-size:11px;color:#C2185B;background:#FCE4EC;border-radius:999px;padding:3px 9px;margin:3px 4px 0 0">웨딩</span></div>
-        <div style="font-size:14px;font-weight:800;color:#C2185B" data-i18n="x.c1b">개인 컨설팅 보기 →</div>
+        <div style="font-size:14px;font-weight:800;color:#C2185B" data-i18n="x.c1b">퍼스널컬러 이미지 컨설팅 예약 →</div>
       </a>
       <div style="display:flex;flex-direction:column;flex:1 1 300px;max-width:340px;border:1.5px solid #E5007F;border-radius:18px;padding:22px 20px;background:#fff;box-shadow:0 6px 22px rgba(229,0,127,.12)">
         <div style="align-self:flex-start;font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 11px;margin-bottom:10px">👥 전문강사팀 50여 명 멤버십</div>
@@ -1586,7 +1584,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <details style="background:#fff;border:1px solid #eee;border-radius:14px;padding:14px 18px;margin-bottom:10px">
         <summary data-i18n="faq.q3" style="font-size:15px;font-weight:800;color:#1a1a1a;cursor:pointer;list-style:none">Q. 울산에서 퍼스널컬러 상담을 받을 수 있나요?</summary>
         <p data-i18n="faq.a3" style="font-size:14px;color:#555;line-height:1.7;margin:10px 0 8px">네. 울산 퍼스널컬러·골격진단·얼굴분석 개인 컨설팅을 진행합니다. 상세 안내는 개인 컨설팅 페이지에서 확인하세요.</p>
-        <a href="#consulting" data-i18n="faq.b3" style="font-size:13px;font-weight:800;color:#C2185B;text-decoration:none">개인 컨설팅 →</a>
+        <a href="/consulting" data-i18n="faq.b3" style="font-size:13px;font-weight:800;color:#C2185B;text-decoration:none">개인 컨설팅 →</a>
       </details>
       <details style="background:#fff;border:1px solid #eee;border-radius:14px;padding:14px 18px;margin-bottom:10px">
         <summary data-i18n="faq.q4" style="font-size:15px;font-weight:800;color:#1a1a1a;cursor:pointer;list-style:none">Q. 기업·공공기관 교육도 진행하나요?</summary>
@@ -1677,7 +1675,7 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
 
 <footer>
   <p style="font-weight:800;font-size:15px;margin-bottom:8px">PBS COLOR LAB · PBS컬러랩</p>
-  <p style="margin:0 0 10px;font-size:13px;line-height:2.1"><a href="#consulting">개인 컨설팅</a> · <a href="/business">기업·공공기관 교육</a> · <a href="/academy">전문가 아카데미</a> · <a href="/global">Global K-Beauty</a> · <a href="#contact">문의</a> · <a href="/privacy">개인정보처리방침</a></p>
+  <p style="margin:0 0 10px;font-size:13px;line-height:2.1"><a href="/consulting">개인 컨설팅</a> · <a href="/business">기업·공공기관 교육</a> · <a href="/academy">전문가 아카데미</a> · <a href="/global">Global K-Beauty</a> · <a href="#contact">문의</a> · <a href="/privacy">개인정보처리방침</a></p>
   <p style="margin:3px 0">📍 울산 중구 종가6길 8-18 럭키빌딩 704호</p>
   <p style="margin:3px 0">🕙 상담·교육 운영시간 10:00 – 20:00</p>
   <p style="margin:3px 0">📞 <a href="tel:+821042857997">+82-10-4285-7997</a> · ✉ <a href="mailto:sugi2494@gmail.com">sugi2494@gmail.com</a></p>
@@ -1823,7 +1821,7 @@ function renderShop(){
 ══════════════════════════════════════ */
 const I18N = {
 ko:{
-  "nav.about":"대표소개","x.pick":"서비스 선택하기 →","x.h1a":"컬러로 <span class=\"accent\">강점</span>을 발견하고,","x.h1b":"<span class=\"accent\">더 나은 변화</span>로 연결합니다","x.sub":"퍼스널컬러부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty까지 — PBS COLOR LAB 최해숙 대표가 함께합니다.","x.b1":"개인 컨설팅","x.b2":"기관교육 문의","x.b3":"전문가 과정","x.rt":"PBS 컬러랩 교육·컨설팅 안내","x.rd":"개인 상담부터 특강·기관 교육, 전문가 양성, 글로벌 협업까지 — 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.","x.c1t":"퍼스널컬러·이미지 컨설팅","x.c2t":"학교·기업·기관·병원 맞춤교육","x.c3t":"전문가 자격과정","x.c4t":"Global K-Beauty Partnership","x.c1b":"개인 컨설팅 보기","x.c2b":"기관교육 보기","x.c3b":"전문가 자격과정 보기","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"강의","nav.downloads":"자료실","nav.media":"활동·미디어","nav.contact":"문의·접수",
+  "nav.about":"대표소개","x.pick":"서비스 선택하기 →","x.h1a":"컬러로 <span class=\"accent\">강점</span>을 발견하고,","x.h1b":"<span class=\"accent\">더 나은 변화</span>로 연결합니다","x.sub":"퍼스널컬러부터 기업·공공기관 교육, 전문가 양성, 글로벌 K-Beauty까지 — PBS COLOR LAB 최해숙 대표가 함께합니다.","x.b1":"개인 컨설팅","x.b2":"기관교육 문의","x.b3":"전문가 과정","x.rt":"PBS 컬러랩 교육·컨설팅 안내","x.rd":"개인 상담부터 특강·기관 교육, 전문가 양성, 글로벌 협업까지 — 필요한 분야를 선택하면 자세한 안내 페이지로 연결됩니다.","x.c1t":"퍼스널컬러·이미지 컨설팅","x.c2t":"학교·기업·기관·병원 맞춤교육","x.c3t":"전문가 자격과정","x.c4t":"Global K-Beauty Partnership","x.c1b":"퍼스널컬러 이미지 컨설팅 예약","x.c2b":"기관교육 보기","x.c3b":"전문가 자격과정 보기","x.c4b":"Global Partnership","nav.global":"Global K-Beauty","nav.programs":"강의","nav.downloads":"자료실","nav.media":"활동·미디어","nav.contact":"문의·접수",
   "hero.eyebrow":"GLOBAL SPEAKER · K-BEAUTY CEO · EDUCATION STRATEGIST",
   "hero.en":"Understand Yourself Through Color, Complete Your Brand Through Strengths",
   "hero.t1":"컬러로 나를 이해하고,","hero.t2":"강점으로 브랜드를 완성합니다",
@@ -2769,7 +2767,7 @@ function dlFile(url, fname) {
 @media(max-width:768px){#mobileCta{display:flex!important}body{padding-bottom:66px!important}}
 </style>
 <div id="mobileCta" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#fff;box-shadow:0 -4px 18px rgba(0,0,0,.12);border-top:1px solid #eee">
-  <a href="#consulting" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#1a1a1a;font-size:12px;font-weight:800"><div style="font-size:18px">💄</div>개인 상담</a>
+  <a href="/consulting" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#1a1a1a;font-size:12px;font-weight:800"><div style="font-size:18px">💄</div>개인 상담</a>
   <a href="/business" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#1a1a1a;font-size:12px;font-weight:800;border-left:1px solid #eee"><div style="font-size:18px">🏢</div>기관교육</a>
   <a href="#contact" style="flex:1;text-align:center;padding:11px 4px;text-decoration:none;color:#fff;font-size:12px;font-weight:800;background:#D0247E"><div style="font-size:18px">✉</div>문의</a>
 </div>
@@ -2805,6 +2803,18 @@ document.addEventListener('click',function(e){if(menu.classList.contains('open')
       <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:5px">PBS 인증강사 6기</div>
       <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.55;margin-bottom:10px">자격증을 넘어 <b style="color:#fff">활동하는 전문 강사</b>로 — 브랜딩·웹페이지·멤버십까지.</div>
       <div style="font-size:13px;font-weight:800;color:#E5007F">인증강사 지원하기 →</div>
+    </a>
+    <a href="/apply.html" style="display:block;text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;background:rgba(255,255,255,.04)">
+      <div style="display:inline-block;font-size:11px;font-weight:800;color:#14121c;background:#F5C64B;border-radius:999px;padding:3px 10px;margin-bottom:8px">🗓️ 8/1(토) 원데이 클래스</div>
+      <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:5px">강사 웹페이지 만들기 원데이 클래스</div>
+      <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.55;margin-bottom:10px">하루 만에 내 강사 웹페이지 완성 — <b style="color:#fff">추가 접수 중</b>.</div>
+      <div style="font-size:13px;font-weight:800;color:#F5C64B">8/1 원데이 클래스 신청 →</div>
+    </a>
+    <a href="/apply.html" style="display:block;text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;margin-top:12px;background:rgba(255,255,255,.04)">
+      <div style="display:inline-block;font-size:11px;font-weight:800;color:#fff;background:#7C4DFF;border-radius:999px;padding:3px 10px;margin-bottom:8px">🚀 AI 브랜드 마케팅 · 마스터</div>
+      <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:6px">AI 브랜드 마케팅 심화 &amp; 마스터 과정</div>
+      <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:10px">· 8/2(일) 심화 &nbsp;<b style="color:#fff">295,000원</b><br>· 마스터 과정 · 8월 4회 &nbsp;<b style="color:#fff">590,000원</b></div>
+      <div style="font-size:13px;font-weight:800;color:#9B7BFF">심화·마스터 신청 →</div>
     </a>
     <label style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:rgba(255,255,255,.5);cursor:pointer">
       <input type="checkbox" onclick="pbsHideToday(this.checked)" style="cursor:pointer"> 오늘 하루 안 보기
