@@ -19,4 +19,4 @@ Disallow: /강의/신청페이지_index.html
 Disallow: /강의/활동3_퀄리티_관리자.html
 Disallow: /강의/활동7_설문_관리자.html
 
-Sitemap: https://pbscolor.com/sitemap.xml
+Sitemap: https://www.pbscolor.com/sitemap.xml
