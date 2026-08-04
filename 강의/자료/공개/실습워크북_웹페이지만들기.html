@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>실습 워크북 · AI 웹페이지 하루 만에 만들기 · 최해숙 강의실</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{--red:#D23B30;--yellow:#E0A400;--green:#2C8C5A;--blue:#2C66A8;--pink:#E91E8C;--ink:#1c2024;--sub:#5b636b;--line:#e6e8ea;--bg:#f6f7f8;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);word-break:keep-all;line-height:1.65;
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px 80px;}
+  .enginebar{display:flex;height:8px}
+  .enginebar span{flex:1}
+  .enginebar span:nth-child(1){background:var(--red)}.enginebar span:nth-child(2){background:var(--yellow)}
+  .enginebar span:nth-child(3){background:var(--green)}.enginebar span:nth-child(4){background:var(--blue)}
+  header{padding:38px 20px 8px;max-width:820px;margin:0 auto;}
+  .eyebrow{font-size:13px;font-weight:700;color:var(--sub)}
+  h1{font-size:28px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
+  .lead{font-size:15px;color:var(--sub)}
+  .toolbar{max-width:820px;margin:14px auto 0;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{border:none;background:var(--ink);color:#fff;font-weight:700;font-size:14px;padding:11px 18px;border-radius:10px;cursor:pointer;font-family:inherit}
+  .btn.pink{background:var(--pink)}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .meta .m{font-size:12.5px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:100px;padding:7px 13px;color:#37474f}
+  .flowbar{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:18px;font-size:13.5px;color:#37474f;line-height:1.9}
+  .flowbar b{color:var(--pink)}
+  .step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 22px;margin-top:20px;page-break-inside:avoid}
+  .step-h{display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+  .num{flex:0 0 auto;width:40px;height:40px;border-radius:12px;background:var(--pink);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1}
+  .num.g{background:var(--green)}.num.b{background:var(--blue)}.num.y{background:var(--yellow)}.num.r{background:var(--red)}.num.k{background:var(--ink)}
+  .step-h h2{font-size:19px;font-weight:800}
+  .step-h .t{font-size:12.5px;color:var(--sub);font-weight:600}
+  .row{margin:12px 0}
+  .tag{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:8px;margin-bottom:6px}
+  .tag.goal{background:#fdeef6;color:#c2185b}.tag.teach{background:#eaf1f9;color:#2C66A8}
+  .tag.do{background:#eaf5ef;color:#2C8C5A}.tag.check{background:#fdf6e5;color:#a97a00}
+  .row p{font-size:14.5px;color:#33383d}
+  .row ul{margin:4px 0 0 2px;list-style:none}
+  .row li{font-size:14px;color:#33383d;padding-left:20px;position:relative;margin-bottom:4px}
+  .row li:before{content:"·";position:absolute;left:6px;color:var(--pink);font-weight:900}
+  .check li{padding-left:26px}
+  .check li:before{content:"☐";left:2px;color:#a97a00;font-weight:400}
+  .memo{border:1px dashed #c9ccd0;border-radius:10px;min-height:58px;margin-top:8px;padding:10px 12px;font-size:13px;color:#9aa0a6}
+  .note{background:#fff8f9;border:1px solid #f6d9e5;border-left:4px solid var(--pink);border-radius:10px;padding:12px 14px;font-size:13.5px;color:#7a4258;margin-top:10px}
+  footer{text-align:center;font-size:12px;color:var(--sub);margin-top:30px;line-height:1.8}
+  @media print{
+    body{background:#fff}
+    .toolbar{display:none}
+    .step,.flowbar{border:1px solid #ddd;box-shadow:none}
+    .memo{min-height:52px}
+  }
+</style>
+</head>
+<body>
+<div class="enginebar"><span></span><span></span><span></span><span></span></div>
+
+<header>
+  <div class="eyebrow">최해숙 강의실 · 강사용 실습 워크북</div>
+  <h1>AI 웹페이지 하루 만에 만들기</h1>
+  <p class="lead">코딩 0줄, 하루 만에 '검색되고 브랜딩되는' 나만의 웹페이지까지. 강사는 이 워크북 순서대로 진행하고, 수강생은 빈칸을 채우며 따라옵니다.</p>
+  <div class="meta">
+    <span class="m">⏱ 총 10:00–15:00 (5시간)</span>
+    <span class="m">💻 준비물 : 노트북 · 크롬 · Claude 계정</span>
+    <span class="m">👥 소수 정예 8명</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button class="btn pink" onclick="window.print()">🖨 인쇄 / PDF로 저장</button>
+  <span style="font-size:12.5px;color:#8a8a8a;align-self:center">브라우저 인쇄에서 ‘PDF로 저장’을 고르면 워크북 PDF가 됩니다.</span>
+</div>
+
+<div class="wrap">
+
+  <div class="flowbar">
+    <b>진행 순서</b> &nbsp;①&nbsp;준비물 사전 점검 → ②&nbsp;사전 규약 동의(서명) → ③&nbsp;AI 기초 30분 → ④&nbsp;활동 0. 나 발견하기 → ⑤&nbsp;활동 1. 방향 설정 → ⑥&nbsp;활동 2. 페이지 만들기 → ⑦&nbsp;활동 3. 다듬고 연결 → ⑧&nbsp;활동 4. 배포·내 주소 → ⑨&nbsp;활동 5. 알리기
+  </div>
+
+  <!-- 1 -->
+  <section class="step">
+    <div class="step-h"><div class="num y">①</div><div><h2>준비물 사전 점검</h2><div class="t">시작 전 · 약 10분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>수업이 매끄럽게 굴러가도록, 모든 수강생의 준비 상태를 시작 전에 맞춥니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>한 명씩 노트북·인터넷·크롬 설치 확인, 콘센트/와이파이 안내</li>
+        <li>Claude 계정 로그인 확인 (유료 월결제 권장 — 실습 중 끊기지 않게)</li>
+        <li>바탕화면에 <b>‘사진’ 폴더</b>가 있는지 확인 (프로필·강의·결과 사진 미리 모아두기)</li>
+      </ul>
+    </div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span>
+      <ul class="check"><li>노트북·크롬·인터넷 정상</li><li>Claude 로그인 완료</li><li>바탕화면 ‘사진’ 폴더 준비</li></ul>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step">
+    <div class="step-h"><div class="num r">②</div><div><h2>사전 규약 동의 (서명)</h2><div class="t">약 5분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>강사와 수강생 사이의 신뢰·창작물 보호 약속을 확인하고 전자 서명합니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>규약 5개 항목(신청·확정 / 자료 보호 / 저작권 / 개인정보 등)을 함께 읽기</li>
+        <li>‘위 규약을 모두 읽었으며 동의합니다’ 체크 → 이름 입력 → <b>서명하고 교육 시작하기</b></li>
+        <li>서명 완료 화면의 <b>‘AI 기초 30분으로 시작’</b> 버튼으로 다음 단계 이동</li>
+      </ul>
+    </div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>전원 서명 완료</li></ul></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="step">
+    <div class="step-h"><div class="num b">③</div><div><h2>AI 기초 30분</h2><div class="t">약 30분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>생성형 AI가 처음이어도, 프롬프트를 ‘복사·붙여넣기’로 다룰 수 있게 몸을 풉니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>Claude 화면 소개 — 어디에 쓰고, 어떻게 답이 나오는지 시연</li>
+        <li>프롬프트 = ‘AI에게 주는 지시문’ 개념 설명, 좋은 지시의 예시</li>
+        <li>간단한 프롬프트 하나를 다 같이 복사→붙여넣기→결과 확인 (성공 경험)</li>
+      </ul>
+    </div>
+    <div class="row"><span class="tag do">✍️ 수강생 실습</span><p>제시된 예시 프롬프트를 붙여넣어 답을 받아본다. “되네!”를 경험한다.</p></div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>Claude에 프롬프트를 넣고 답을 받아봄</li></ul></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="step">
+    <div class="step-h"><div class="num">④</div><div><h2>활동 0. 나 발견하기</h2><div class="t">약 30–40분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>‘나는 누구를 어떻게 돕는가’ + <b>이 홈페이지의 목적과 넣을 메뉴</b>까지 한 번에 정리합니다. (여기서 나온 요약이 다음 활동의 재료)</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>어려운 질문(‘강점은?’) 대신 쉬운 질문에 답하게 → 강점 색이 자동 계산됨</li>
+        <li>G·H 섹션(홈페이지 목적 / 넣을 메뉴)까지 꼭 채우게 안내</li>
+        <li>맨 아래 <b>요약 복사하기</b>는 안 눌러도 됩니다 — 활동 1에서 바로 이어집니다</li>
+      </ul>
+    </div>
+    <div class="row"><span class="tag do">✍️ 수강생 실습 (빈칸 정리)</span>
+      <div class="memo">· 나의 대상 : <br>· 나의 강점(한 문장) : <br>· 홈페이지 목적 : <br>· 넣을 메뉴 : </div>
+    </div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>강점 색 결과가 나옴</li><li>홈페이지 목적·메뉴가 정해짐</li></ul></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step">
+    <div class="step-h"><div class="num r">⑤</div><div><h2>활동 1. 웹페이지 방향 설정</h2><div class="t">약 30분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>목표(무엇을 얻을 것인가)를 정하고, 그에 맞는 구조·메뉴를 짜서 <b>‘나만의 홈페이지 프롬프트’</b>를 완성합니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>1번 ‘얻고 싶은 결과’를 최대 2개 선택 → 2번에서 필요한 메뉴가 자동 제안됨</li>
+        <li>3번 <b>이름·연락처(전화·이메일·카톡)</b>를 꼭 적게 안내 — 연락 통로가 없으면 목표가 안 이뤄짐</li>
+        <li>사진은 지금 넣지 말고 <b>바탕화면 ‘사진’ 폴더</b>에 모아두라고 안내 (페이지엔 자리만)</li>
+        <li>맨 아래에서 <b>프롬프트 생성 → 복사</b></li>
+      </ul>
+    </div>
+    <div class="row"><span class="tag do">✍️ 수강생 실습</span><p>생성된 프롬프트를 복사해 둔다. (다음 단계에서 사용)</p></div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>목표·메뉴 확정</li><li>이름·연락처 입력</li><li>프롬프트 복사 완료</li></ul></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="step">
+    <div class="step-h"><div class="num g">⑥</div><div><h2>활동 2. 페이지 만들기</h2><div class="t">약 40분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>복사한 프롬프트를 Claude에 넣어 <b>첫 웹페이지</b>를 실제로 만들어냅니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>Claude에 프롬프트 붙여넣기 → 결과(HTML) 확인 시연</li>
+        <li>사진은 ‘자리(회색 박스)’만 두게 안내, 내용은 활동 0 요약으로 채워지게</li>
+        <li>막히면 화면 캡처를 Claude에 붙여 물어보는 요령 알려주기</li>
+      </ul>
+    </div>
+    <div class="row"><span class="tag do">✍️ 수강생 실습</span><p>내 프롬프트로 첫 페이지 생성 → 눈으로 확인.</p></div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>내 이름·메뉴가 들어간 페이지가 화면에 보임</li></ul></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="step">
+    <div class="step-h"><div class="num y">⑦</div><div><h2>활동 3. 다듬고 연결하기</h2><div class="t">약 40분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>문구·디자인을 다듬고, 메뉴·버튼·연락 통로가 실제로 연결되게 만듭니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>어색한 문장·색·간격을 프롬프트로 고치는 방법 (‘이 부분을 이렇게 바꿔줘’)</li>
+        <li>메뉴 클릭 시 이동, 전화·카톡 버튼 연결 확인</li>
+        <li>모바일에서도 예쁜지 점검</li>
+      </ul>
+    </div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>메뉴·연락 버튼이 눌러짐</li><li>모바일 화면 정상</li></ul></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="step">
+    <div class="step-h"><div class="num b">⑧</div><div><h2>활동 4. 배포하고 내 주소 만들기</h2><div class="t">약 40분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>내 컴퓨터 안의 파일을 <b>인터넷 어디서나 열리는 진짜 사이트</b>로 배포하고, 내 주소(도메인)를 갖습니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>배포 방법 시연 (예: GitHub → Vercel), 생성된 주소 확인</li>
+        <li>바탕화면 ‘사진’ 폴더의 사진을 자리표시 위치에 하나씩 넣기</li>
+        <li>원하면 나만의 도메인(가비아 등) 연결 안내</li>
+      </ul>
+    </div>
+    <div class="row"><span class="tag do">✍️ 내 주소 적기</span><div class="memo">내 웹페이지 주소 : https:// </div></div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>휴대폰으로 내 주소가 열림</li></ul></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="step">
+    <div class="step-h"><div class="num k">⑨</div><div><h2>활동 5. 내 페이지 알리기</h2><div class="t">약 30분</div></div></div>
+    <div class="row"><span class="tag goal">🎯 목표</span><p>만든 페이지가 <b>검색되고 사람들에게 닿도록</b> 첫걸음을 놓습니다.</p></div>
+    <div class="row"><span class="tag teach">👩‍🏫 강사 진행</span>
+      <ul>
+        <li>네이버·구글에 사이트 등록(검색 노출)하는 법 안내</li>
+        <li>인스타·블로그·카톡 프로필에 내 주소 공유</li>
+        <li>다음 단계 예고 — 검색·홍보를 더 키우는 <b>브랜딩 과정</b>으로 연결</li>
+      </ul>
+    </div>
+    <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>검색 등록 신청함</li><li>SNS/프로필에 주소 공유함</li></ul></div>
+    <div class="note">🎓 여기까지가 하루 완성 코스입니다. “검색·홍보로 고객이 오게”까지 원하면 <b>AI 웹페이지 브랜딩 고도화 과정</b>, “남을 가르치는 강사로”까지 원하면 <b>마스터 전문가과정</b>으로 이어집니다.</div>
+  </section>
+
+  <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218 · 문의 010-4285-7997<br>본 워크북의 프롬프트·교육자료는 수강생 본인 학습용이며 무단 배포·재판매를 금합니다.</footer>
+</div>
+</body>
+</html>
