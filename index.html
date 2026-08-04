@@ -116,7 +116,7 @@
       --black:#080810; --dark:#0E0E1A; --dark2:#16162A;
       --white:#fff; --cream:#FFF9F5;
       --muted:rgba(255,255,255,.58); --line:rgba(255,255,255,.1);
-      --max:1200px; --r:20px;
+      --max:1400px; --r:20px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;overflow-x:hidden}
@@ -231,7 +231,7 @@
       position:relative;z-index:2;
       display:grid;grid-template-columns:1fr;gap:0;
     }
-    .hero-copy{max-width:640px;min-width:0;width:100%}
+    .hero-copy{max-width:760px;min-width:0;width:100%}
     .eyebrow{
       display:inline-flex;align-items:center;gap:10px;
       color:var(--gold);font-weight:900;font-size:11.5px;letter-spacing:.22em;
@@ -240,7 +240,7 @@
       background:rgba(200,168,112,.08);backdrop-filter:blur(8px);
     }
     h1{
-      font-size:clamp(38px,5.8vw,72px);
+      font-size:clamp(42px,6.4vw,86px);
       line-height:1.08;letter-spacing:-.05em;
       color:var(--white);font-weight:900;margin-bottom:20px;
     }
@@ -751,6 +751,8 @@ html[data-theme="light"] h3{color:#1a1a22!important;}
 html[data-theme="light"] .cta-pink h2,html[data-theme="light"] .cta-pink h3,html[data-theme="light"] .cta-pink p,html[data-theme="light"] .cta-pink span{color:#fff!important;}
 html[data-theme="light"] .prog-tag{color:#C2185B!important;background:rgba(230,0,126,.08)!important;border-color:rgba(230,0,126,.22)!important;}
 html[data-theme="light"] .btn.outline,html[data-theme="light"] a.btn.outline{color:#20202A!important;border-color:rgba(0,0,0,.28)!important;background:rgba(0,0,0,.02)!important;}
+/* 히어로 보조버튼 테마무관 고정 */
+.hero-actions .btn.outline,html[data-theme="light"] .hero-actions .btn.outline,html[data-theme="light"] a.hero-actions .btn.outline{color:#fff!important;border-color:var(--pink)!important;background:rgba(20,16,28,.42)!important;backdrop-filter:blur(8px);}
 html[data-theme="light"] .bio-item span{color:#4a4a52!important;}
 html[data-theme="light"] .bio-item p{color:#4a4a52!important;}
 html[data-theme="light"] .sns-btn{color:#20202A!important;}
@@ -2803,18 +2805,6 @@ document.addEventListener('click',function(e){if(menu.classList.contains('open')
       <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:5px">PBS 인증강사 6기</div>
       <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.55;margin-bottom:10px">자격증을 넘어 <b style="color:#fff">활동하는 전문 강사</b>로 — 브랜딩·웹페이지·멤버십까지.</div>
       <div style="font-size:13px;font-weight:800;color:#E5007F">인증강사 지원하기 →</div>
-    </a>
-    <a href="/apply.html" style="display:block;text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;background:rgba(255,255,255,.04)">
-      <div style="display:inline-block;font-size:11px;font-weight:800;color:#14121c;background:#F5C64B;border-radius:999px;padding:3px 10px;margin-bottom:8px">🗓️ 8/1(토) 원데이 클래스</div>
-      <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:5px">강사 웹페이지 만들기 원데이 클래스</div>
-      <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.55;margin-bottom:10px">하루 만에 내 강사 웹페이지 완성 — <b style="color:#fff">추가 접수 중</b>.</div>
-      <div style="font-size:13px;font-weight:800;color:#F5C64B">8/1 원데이 클래스 신청 →</div>
-    </a>
-    <a href="/apply.html" style="display:block;text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;margin-top:12px;background:rgba(255,255,255,.04)">
-      <div style="display:inline-block;font-size:11px;font-weight:800;color:#fff;background:#7C4DFF;border-radius:999px;padding:3px 10px;margin-bottom:8px">🚀 AI 브랜드 마케팅 · 마스터</div>
-      <div style="font-size:16px;font-weight:900;color:#fff;margin-bottom:6px">AI 브랜드 마케팅 심화 &amp; 마스터 과정</div>
-      <div style="font-size:12.5px;color:rgba(255,255,255,.62);line-height:1.7;margin-bottom:10px">· 8/2(일) 심화 &nbsp;<b style="color:#fff">295,000원</b><br>· 마스터 과정 · 8월 4회 &nbsp;<b style="color:#fff">590,000원</b></div>
-      <div style="font-size:13px;font-weight:800;color:#9B7BFF">심화·마스터 신청 →</div>
     </a>
     <label style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:rgba(255,255,255,.5);cursor:pointer">
       <input type="checkbox" onclick="pbsHideToday(this.checked)" style="cursor:pointer"> 오늘 하루 안 보기
