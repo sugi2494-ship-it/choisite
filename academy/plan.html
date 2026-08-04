@@ -1,0 +1,192 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PBS 인증강사 상담일지 · 커리큘럼 계획</title>
+<style>
+:root{--pink:#E5007F;--ink:#15171c;--line:#e6e3e0;--paper:#faf8f6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Noto Sans KR','Malgun Gothic',sans-serif;line-height:1.5}
+.bar{height:5px;background:linear-gradient(90deg,#c94a42 0 25%,#e2b52e 25% 50%,#328062 50% 75%,#315fa6 75%)}
+.top{display:flex;align-items:center;gap:10px;padding:13px 20px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.top b{font-size:17px}.top .sub{color:#888;font-size:12px}
+.sync{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:12px}
+.sync input{padding:6px 9px;border:1px solid var(--line);border-radius:8px;width:92px;font-size:12px}
+.sync .s{font-size:11.5px;color:#888;min-width:66px}
+.wrap{max-width:1040px;margin:0 auto;padding:16px 16px 90px}
+select,input,textarea,button{font-family:inherit}
+select,input{padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-size:14px}
+.btn{border:0;border-radius:9px;padding:9px 13px;font-weight:800;font-size:13px;cursor:pointer}
+.btn.p{background:var(--pink);color:#fff}.btn.g{background:#eee;color:#333}.btn.o{background:#fff;border:1px solid var(--pink);color:var(--pink)}
+.ctl{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:14px;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.tabs{display:flex;gap:7px;margin-left:auto;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 14px;font-weight:800;font-size:13px;cursor:pointer;color:#555}
+.tab.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+.jisec{background:#fff;border:2px solid #f3bcd8;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.jisec h3{margin:0 0 10px;font-size:15px;color:var(--pink)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fg label{display:block;font-size:11.5px;font-weight:800;color:#888;margin-bottom:4px}
+.fg input{width:100%}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:2px 2px 12px;font-size:14px;color:#444}
+.meta .big{font-weight:900;font-size:17px}.prog{color:var(--pink);font-weight:800}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.rowh{display:flex;align-items:center;gap:9px;margin-bottom:9px;flex-wrap:wrap}
+.no{background:#fbeaf3;color:var(--pink);font-weight:900;font-size:13px;border-radius:8px;padding:6px 11px;white-space:nowrap}
+.no.pre{background:#eef2f8;color:#3f4a5c}
+.topic{flex:1;min-width:180px;font-weight:700;border:1px solid #eee;border-radius:8px;font-size:15px;padding:7px 9px;background:#fffdfe}
+.st{padding:7px 8px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;font-weight:800}
+.dtrow{display:grid;grid-template-columns:130px 96px 1fr;gap:8px;margin-bottom:9px}
+.dtrow .lab{font-size:10.5px;font-weight:800;color:#999;display:block;margin-bottom:3px}
+.dtrow input{width:100%;padding:8px 9px}
+.res{font-size:12px;color:#8a8f89;margin:0 0 8px 2px}
+.plan{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:14px;min-height:54px;resize:vertical;line-height:1.55;background:#fffdfe}
+.photos{display:flex;flex-wrap:wrap;gap:8px;margin:9px 0 4px}
+.ph{position:relative;width:84px;height:84px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .x{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.55);color:#fff;border:0;border-radius:50%;width:20px;height:20px;font-size:12px;cursor:pointer;line-height:1}
+.addph{width:84px;height:84px;border:1.5px dashed #f2b3d5;border-radius:8px;color:var(--pink);font-weight:800;font-size:12px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.next{background:#f6faf7;border:1px solid #d6e8dc;border-radius:9px;padding:9px 11px;margin-top:9px;display:grid;grid-template-columns:130px 1fr;gap:8px;align-items:end}
+.next .lab{font-size:10.5px;font-weight:800;color:#328062;display:block;margin-bottom:3px}
+.next input{width:100%;padding:8px 9px}
+.del{background:#fbe4e2;color:#b23b30;border:0;border-radius:7px;padding:6px 9px;font-weight:700;cursor:pointer;font-size:12px}
+.note{background:#fff4c7;border:1px solid #ead57b;border-radius:10px;padding:10px 13px;font-size:12.5px;color:#6b5a1a;margin-bottom:14px}
+.empty{color:#999;text-align:center;padding:40px;font-size:14px}
+.foot{text-align:center;color:#aaa;font-size:12px;margin-top:24px}
+.printonly{display:none}
+@media print{
+ .top,.ctl,.note,.foot,.btn,.del,.tabs,.sync,.actbar,.addph,.ph .x{display:none!important}
+ body{background:#fff}.wrap{padding:0;max-width:100%}
+ .card,.jisec{break-inside:avoid;border-color:#bbb}
+ .plan,.topic,.dtrow input,.next input,.fg input{border:0;background:none}
+ .plan{min-height:auto}
+ .printonly{display:block!important}
+}
+.printonly h1{margin:0;font-size:20px;text-align:center}
+.printonly .pline{text-align:center;color:#555;font-size:12.5px;margin:4px 0 14px}
+</style></head><body>
+<div class="bar"></div>
+<div class="top"><b>PBS 인증강사 상담일지 · 커리큘럼 계획</b><span class="sub">상담 기록 + 회차 일정을 확정하고 PDF로 저장</span>
+  <div class="sync">☁<input id="pw" type="password" placeholder="관리자 비번"><button class="btn g" onclick="pushServer()">서버 저장</button><button class="btn g" onclick="pullServer()">불러오기</button><span class="s" id="syncmsg"></span></div>
+</div>
+<div class="wrap">
+<div class="ctl">
+  <span style="font-weight:800;font-size:13px;color:#555">강사</span>
+  <select id="who" style="min-width:150px"></select>
+  <button class="btn o" onclick="addPerson()">+ 새 강사</button>
+  <button class="btn g" onclick="renamePerson()">이름 수정</button>
+  <button class="btn g" onclick="delPerson()" style="color:#b23b30">삭제</button>
+  <div class="tabs" id="tabs">
+    <button class="tab" data-pg="299">인증강사 299</button>
+    <button class="tab" data-pg="399">PLUS 399</button>
+    <button class="tab" data-pg="799">인증센터 799</button>
+  </div>
+</div>
+<div class="printonly" id="printhead"></div>
+<div class="note">💡 <b>상담일지</b>(날짜·시간·장소·연락처·주제)를 적고, 과정을 고르면 회차가 기본으로 들어옵니다. 회차마다 <b>날짜(직접 입력)·시간·장소</b>, <b>주제(수정 가능)</b>, <b>확정 내용</b>, <b>증거/아이디어 사진</b>, <b>다음 예정</b>을 기록하세요. [🖨 인쇄/PDF]로 저장하면 규약서(계약)의 교육계획 별지로 함께 씁니다. 서버 저장 시 다른 기기에서도 열립니다.</div>
+<div id="jibox"></div>
+<div class="meta" id="meta"></div>
+<div id="list"></div>
+<div class="actbar" style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+  <button class="btn o" onclick="addRow()">+ 회차 추가</button>
+  <button class="btn g" onclick="resetToTemplate()">이 과정 기본값으로 초기화</button>
+  <button class="btn p" onclick="window.print()" style="margin-left:auto">🖨 인쇄 / PDF 저장</button>
+</div>
+<div class="foot">PBS컬러랩 · 대표 최해숙 · 문의 010-4285-7997</div>
+</div>
+<script>
+var B="https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/",KEY="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+var LKEY="pbs_consult_plan_v3";
+function expand(stages){var out=[],n=0;stages.forEach(function(s){var name=s[0],res=s[1],cnt=s[2]||1,pre=s[3];for(var i=0;i<cnt;i++){var label,topic=name;if(pre){label="사전 미팅";}else{n++;label=n+"회차";}if(cnt>1&&!pre)topic=name+" "+["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩"][i];out.push({label:label,topic:topic,result:res,date:"",time:"",place:"",status:"예정",plan:"",photos:[],nextDate:"",nextTopic:""});}});return out;}
+var TPL={
+ "299":{title:"인증강사 (299) · 총 10회 · 처음 강단에 서는 강사",stages:[
+   ["이력·강점·브랜드 분석 · 방향·아이덴티티 설정","개인별 강사 브랜드 방향 설계",1,true],
+   ["리더십·강사 비전 교육","강사 목표와 활동 로드맵",1],
+   ["퍼스널컬러 트레이닝","진단·설명·그룹 컨설팅 역량",3],
+   ["강사 프로필 작성·강의 기획안 작성","나만의 강의 콘텐츠와 프로필",1],
+   ["강사 프로필 촬영","전문 프로필 사진과 이미지",1],
+   ["현장 서브·동행","현장 진행 방식·강의 이력",2],
+   ["강의 시연·피드백·수료식","최종 강의 점검과 수료",1]]},
+ "399":{title:"인증강사 PLUS (399) · 총 16회 · 3개월 · 원데이 운영",stages:[
+   ["이력·강점·브랜드 분석","개인별 원데이 운영 로드맵",1,true],
+   ["리더십·강사 비전 교육","강사 목표와 수익 로드맵",1],
+   ["1:1 및 그룹 트레이닝","다인 진행·심화 코칭 역량",4],
+   ["강사 프로필 작성·강의 기획안 작성","나만의 강의 콘텐츠와 프로필",1],
+   ["강사 프로필 촬영","전문 프로필 사진과 이미지",1],
+   ["원데이 기획·모집·운영 세팅 컨설팅","원데이 커리큘럼·모집 시스템",2],
+   ["기관 제안서 작성","강의 수주용 제안서",1],
+   ["현장 서브·동행","원데이 현장 이력·주강사 등단",4],
+   ["원데이 강의 시연·수료식","원데이 운영 최종 점검·수료",1]]},
+ "799":{title:"인증센터 (799) · 총 25회 · 6개월 · 센터장",stages:[
+   ["이력·강점·브랜드 분석","개인별 센터 운영 로드맵",1,true],
+   ["리더십·강사 비전 교육","강사 목표와 사업 로드맵",1],
+   ["1:1 및 그룹 트레이닝","진단·심화 코칭·주강사 역량",5],
+   ["강사 프로필 작성·강의 기획안 작성","나만의 강의 콘텐츠와 프로필",1],
+   ["강사 프로필 촬영","전문 프로필 사진과 이미지",1],
+   ["원데이 기획·모집·운영 세팅 컨설팅","원데이 커리큘럼·모집 시스템",2],
+   ["자격과정 운영 세팅·자격 서식 컨설팅","자격과정 운영 체계·서식",2],
+   ["기관 제안서 작성","강의 수주용 제안서",1],
+   ["현장 서브·동행","자격과정 현장 이력·주강사 등단",10],
+   ["원데이 강의 시연·수료식","센터 운영 최종 점검·수료",1]]}
+};
+var DB={people:[],plans:{}},curPerson=null,curPg="299";
+function load(){try{var s=localStorage.getItem(LKEY);if(s)DB=JSON.parse(s);}catch(e){}if(!DB.people)DB.people=[];if(!DB.plans)DB.plans={};}
+function save(){try{localStorage.setItem(LKEY,JSON.stringify(DB));}catch(e){}autoPush();}
+function pkey(pid,pg){return pid+"__"+pg;}
+function getPlan(){if(!curPerson)return null;var k=pkey(curPerson,curPg);if(!DB.plans[k])DB.plans[k]=expand(TPL[curPg].stages);return DB.plans[k];}
+function curP(){return DB.people.find(function(x){return x.id==curPerson;});}
+function uid(){return "p"+Date.now().toString(36)+DB.people.length;}
+function addPerson(){var nm=prompt("새 강사 이름");if(!nm||!nm.trim())return;var id=uid();DB.people.push({id:id,name:nm.trim(),phone:"",cdate:"",ctime:"",place:"",topic:"",program:curPg});curPerson=id;save();renderWho();render();}
+function renamePerson(){var p=curP();if(!p)return;var nm=prompt("이름 수정",p.name);if(nm&&nm.trim()){p.name=nm.trim();save();renderWho();render();}}
+function delPerson(){var p=curP();if(!p)return;if(!confirm(p.name+" 강사 기록을 삭제할까요?"))return;DB.people=DB.people.filter(function(x){return x.id!=curPerson;});["299","399","799"].forEach(function(pg){delete DB.plans[pkey(curPerson,pg)];});curPerson=DB.people[0]?DB.people[0].id:null;save();renderWho();render();}
+function renderWho(){var s=document.getElementById("who");s.innerHTML="";if(!DB.people.length){var o=document.createElement("option");o.textContent="(강사를 추가하세요)";s.appendChild(o);return;}DB.people.forEach(function(p){var o=document.createElement("option");o.value=p.id;o.textContent=p.name;if(p.id==curPerson)o.selected=true;s.appendChild(o);});}
+document.getElementById("who").addEventListener("change",function(e){curPerson=e.target.value;var p=curP();if(p&&p.program)curPg=p.program;render();});
+Array.prototype.forEach.call(document.querySelectorAll(".tab"),function(t){t.addEventListener("click",function(){curPg=t.dataset.pg;var p=curP();if(p)p.program=curPg;save();render();});});
+function resetToTemplate(){if(!curPerson)return;if(!confirm("이 강사의 "+curPg+" 계획을 기본 회차로 초기화할까요?"))return;DB.plans[pkey(curPerson,curPg)]=expand(TPL[curPg].stages);save();render();}
+function addRow(){var pl=getPlan();if(!pl)return;pl.push({label:"추가",topic:"",result:"",date:"",time:"",place:"",status:"예정",plan:"",photos:[],nextDate:"",nextTopic:""});save();render();}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function phline(){var p=curP();if(!p)return"";return '<h1>'+esc(p.name)+' 강사 · 상담일지 & 교육계획</h1><div class="pline">상담 '+esc(p.cdate||"-")+' '+esc(p.ctime||"")+'  |  장소 '+esc(p.place||"-")+'  |  연락처 '+esc(p.phone||"-")+'  |  '+esc(TPL[curPg].title)+'<br>주제: '+esc(p.topic||"-")+'  ·  PBS컬러랩 최해숙 010-4285-7997</div>';}
+function render(){
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"),function(t){t.classList.toggle("on",t.dataset.pg==curPg);});
+  var jibox=document.getElementById("jibox"),meta=document.getElementById("meta"),list=document.getElementById("list"),ph=document.getElementById("printhead");
+  if(!curPerson){jibox.innerHTML="";meta.innerHTML="";ph.innerHTML="";list.innerHTML='<div class="empty">먼저 [+ 새 강사]로 강사를 추가하세요.</div>';return;}
+  var p=curP(),pl=getPlan(),done=pl.filter(function(r){return r.status=="완료";}).length;
+  jibox.innerHTML='<div class="jisec"><h3>📋 강사 상담일지</h3><div class="grid">'
+    +'<div class="fg"><label>상담 날짜</label><input data-jf="cdate" inputmode="numeric" placeholder="2026-08-03" value="'+esc(p.cdate||"")+'"></div>'
+    +'<div class="fg"><label>시간</label><input data-jf="ctime" inputmode="numeric" placeholder="14:00" value="'+esc(p.ctime||"")+'"></div>'
+    +'<div class="fg"><label>장소</label><input data-jf="place" placeholder="울산 본원" value="'+esc(p.place||"")+'"></div>'
+    +'<div class="fg"><label>연락처</label><input data-jf="phone" inputmode="numeric" placeholder="010-0000-0000" value="'+esc(p.phone||"")+'"></div>'
+    +'<div class="fg" style="grid-column:1/-1"><label>상담 주제</label><input data-jf="topic" placeholder="예: 299 과정 방향 상담" value="'+esc(p.topic||"")+'"></div>'
+    +'</div></div>';
+  meta.innerHTML='<span class="big">'+esc(p.name)+' 강사</span> <span class="prog">'+esc(TPL[curPg].title)+'</span> <span style="color:#888">· 진행 '+done+' / '+pl.length+'</span>';
+  ph.innerHTML=phline();
+  var h="";pl.forEach(function(r,i){var pre=r.label=="사전 미팅";
+    var photos=(r.photos||[]).map(function(src,pi){return '<div class="ph"><img src="'+src+'"><button class="x" data-delph="'+i+'" data-pi="'+pi+'">✕</button></div>';}).join("");
+    h+='<div class="card"><div class="rowh"><span class="no'+(pre?" pre":"")+'">'+esc(r.label)+'</span>'
+     +'<input class="topic" data-i="'+i+'" data-f="topic" value="'+esc(r.topic)+'" placeholder="주제 (수정 가능)">'
+     +'<select class="st" data-i="'+i+'" data-f="status"><option'+(r.status=="예정"?" selected":"")+'>예정</option><option'+(r.status=="진행중"?" selected":"")+'>진행중</option><option'+(r.status=="완료"?" selected":"")+'>완료</option></select>'
+     +'<button class="del" data-del="'+i+'">✕</button></div>'
+     +'<div class="dtrow"><div><span class="lab">날짜</span><input data-i="'+i+'" data-f="date" inputmode="numeric" placeholder="2026-08-10" value="'+esc(r.date)+'"></div>'
+       +'<div><span class="lab">시간</span><input data-i="'+i+'" data-f="time" inputmode="numeric" placeholder="14:00" value="'+esc(r.time)+'"></div>'
+       +'<div><span class="lab">장소</span><input data-i="'+i+'" data-f="place" placeholder="장소" value="'+esc(r.place)+'"></div></div>'
+     +(r.result?'<div class="res">완성 결과: '+esc(r.result)+'</div>':'')
+     +'<textarea class="plan" data-i="'+i+'" data-f="plan" placeholder="상담 결과 반영 확정 내용을 적으세요">'+esc(r.plan)+'</textarea>'
+     +'<div class="photos">'+photos+'<label class="addph">＋<br>사진<input type="file" accept="image/*" multiple data-addph="'+i+'" style="display:none"></label></div>'
+     +'<div class="next"><div><span class="lab">다음 예정일</span><input data-i="'+i+'" data-f="nextDate" inputmode="numeric" placeholder="2026-08-17" value="'+esc(r.nextDate)+'"></div>'
+       +'<div><span class="lab">다음 주제</span><input data-i="'+i+'" data-f="nextTopic" placeholder="다음 회차에 할 내용" value="'+esc(r.nextTopic)+'"></div></div>'
+     +'</div>';
+  });
+  list.innerHTML=h;
+}
+document.getElementById("jibox").addEventListener("input",function(e){var t=e.target,f=t.dataset.jf;if(!f)return;curP()[f]=t.value;save();document.getElementById("printhead").innerHTML=phline();});
+document.getElementById("list").addEventListener("input",function(e){var t=e.target,i=t.dataset.i,f=t.dataset.f;if(i==null||!f)return;getPlan()[i][f]=t.value;save();});
+document.getElementById("list").addEventListener("change",function(e){var t=e.target,i=t.dataset.i,f=t.dataset.f;if(i!=null&&f){getPlan()[i][f]=t.value;save();if(f=="status")render();return;}if(t.dataset.addph!=null){handlePhotos(Number(t.dataset.addph),t.files);}});
+document.getElementById("list").addEventListener("click",function(e){var t=e.target;if(t.dataset.del!=null){var pl=getPlan();if(confirm("이 회차를 삭제할까요?")){pl.splice(Number(t.dataset.del),1);save();render();}return;}if(t.dataset.delph!=null){var i=Number(t.dataset.delph),pi=Number(t.dataset.pi);getPlan()[i].photos.splice(pi,1);save();render();}});
+function handlePhotos(i,files){if(!files||!files.length)return;var pl=getPlan();var arr=Array.prototype.slice.call(files);var left=arr.length;arr.forEach(function(f){resizeImg(f,function(durl){if(!pl[i].photos)pl[i].photos=[];pl[i].photos.push(durl);left--;if(left<=0){save();render();}});});}
+function resizeImg(file,cb){var r=new FileReader();r.onload=function(){var img=new Image();img.onload=function(){var mx=1000,w=img.width,h=img.height;if(w>mx||h>mx){if(w>=h){h=Math.round(h*mx/w);w=mx;}else{w=Math.round(w*mx/h);h=mx;}}var c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);cb(c.toDataURL("image/jpeg",0.72));};img.src=r.result;};r.readAsDataURL(file);}
+// ===== 서버 동기화 =====
+function sm(t,c){var e=document.getElementById("syncmsg");e.textContent=t;e.style.color=c||"#888";}
+function api(action,extra){var b={action:action,password:document.getElementById("pw").value};if(extra)b.value=extra;return fetch(B+"consult-plans",{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY,Authorization:"Bearer "+KEY},body:JSON.stringify(b)}).then(function(r){return r.json();});}
+function pushServer(){if(!document.getElementById("pw").value){sm("비번 입력","#b23b30");return;}sm("저장 중...");api("set",DB).then(function(r){if(r&&r.ok)sm("서버 저장됨 ✓","#256a4d");else sm((r&&r.error)||"저장 실패","#b23b30");}).catch(function(){sm("연결 실패","#b23b30");});}
+function pullServer(){if(!document.getElementById("pw").value){sm("비번 입력","#b23b30");return;}sm("불러오는 중...");api("get").then(function(r){if(r&&r.ok){if(r.data&&r.data.people){DB=r.data;save0();curPerson=DB.people[0]?DB.people[0].id:null;renderWho();render();sm("불러옴 ✓","#256a4d");}else sm("서버에 저장된 내용 없음","#888");}else sm((r&&r.error)||"불러오기 실패","#b23b30");}).catch(function(){sm("연결 실패","#b23b30");});}
+function save0(){try{localStorage.setItem(LKEY,JSON.stringify(DB));}catch(e){}}
+var pushT=null;function autoPush(){var pw=document.getElementById("pw");if(!pw||!pw.value)return;clearTimeout(pushT);pushT=setTimeout(function(){api("set",DB).then(function(r){if(r&&r.ok)sm("자동 저장됨 ✓","#256a4d");});},1800);}
+load();if(DB.people[0])curPerson=DB.people[0].id;renderWho();render();
+</script>
+</body></html>
