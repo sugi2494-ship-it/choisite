@@ -44,6 +44,11 @@
   .check li:before{content:"☐";left:2px;color:#a97a00;font-weight:400}
   .memo{border:1px dashed #c9ccd0;border-radius:10px;min-height:58px;margin-top:8px;padding:10px 12px;font-size:13px;color:#9aa0a6}
   .note{background:#fff8f9;border:1px solid #f6d9e5;border-left:4px solid var(--pink);border-radius:10px;padding:12px 14px;font-size:13.5px;color:#7a4258;margin-top:10px}
+  .tag.prompt-t{background:#20122b;color:#ff8dc4}
+  .prompt{position:relative;background:#141821;border-radius:12px;padding:14px 16px;margin-top:8px}
+  .prompt .pt{display:block;white-space:pre-wrap;color:#e8eef4;font-size:12.5px;line-height:1.75;font-family:"Consolas","Courier New",monospace}
+  .prompt .cp{position:absolute;top:10px;right:10px;background:var(--pink);color:#fff;border:none;border-radius:8px;padding:5px 11px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit}
+  .fill{color:#ffd84a}
   footer{text-align:center;font-size:12px;color:var(--sub);margin-top:30px;line-height:1.8}
   @media print{
     body{background:#fff}
@@ -119,7 +124,15 @@
         <li>간단한 프롬프트 하나를 다 같이 복사→붙여넣기→결과 확인 (성공 경험)</li>
       </ul>
     </div>
-    <div class="row"><span class="tag do">✍️ 수강생 실습</span><p>제시된 예시 프롬프트를 붙여넣어 답을 받아본다. “되네!”를 경험한다.</p></div>
+    <div class="row"><span class="tag do">✍️ 수강생 실습</span><p>아래 예시 프롬프트를 붙여넣어 답을 받아본다. “되네!”를 경험한다.</p></div>
+    <div class="row"><span class="tag prompt-t">💬 예시 프롬프트 (준비운동)</span>
+      <div class="prompt"><button class="cp" onclick="cpP(this)">복사</button><span class="pt">안녕! 나는 웹페이지를 처음 만들어보는 강사야. 생성형 AI가 처음이라 아주 쉽게 설명해줘.
+먼저 내 소개를 멋지게 3문장으로 써줘.
+· 나는 [퍼스널컬러 강사]이고,
+· [30~50대 여성]을 대상으로,
+· [나에게 어울리는 색과 스타일을 찾아주는] 일을 해.
+(대괄호 안은 내 상황으로 바꿔서 넣을게.)</span></div>
+    </div>
     <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>Claude에 프롬프트를 넣고 답을 받아봄</li></ul></div>
   </section>
 
@@ -167,7 +180,21 @@
         <li>막히면 화면 캡처를 Claude에 붙여 물어보는 요령 알려주기</li>
       </ul>
     </div>
-    <div class="row"><span class="tag do">✍️ 수강생 실습</span><p>내 프롬프트로 첫 페이지 생성 → 눈으로 확인.</p></div>
+    <div class="row"><span class="tag do">✍️ 수강생 실습</span><p>내 프롬프트로 첫 페이지 생성 → 눈으로 확인. (활동 1에서 만든 프롬프트가 있으면 그걸 쓰고, 없으면 아래 기본형을 채워 쓰세요.)</p></div>
+    <div class="row"><span class="tag prompt-t">💬 예시 프롬프트 (기본 제작형)</span>
+      <div class="prompt"><button class="cp" onclick="cpP(this)">복사</button><span class="pt">너는 한국어로 답하는 웹 개발 도우미야. 아래 정보로 코딩을 모르는 사람도 쓸 수 있는 '한 페이지짜리 웹사이트(index.html)'를 완성해줘.
+조건: HTML·CSS·JS를 하나의 파일에 넣고, 모바일에서도 예쁘게, 한글 줄바꿈이 자연스럽게(word-break:keep-all) 만들어줘.
+
+[홈페이지 이름]:
+[나의 소개·강점 한 문장]:   ← 활동 0 결과
+[대상(누구를 돕나)]:
+[핵심 목표]:   ← 예) 강의 신청 받기 / 상담 문의 받기
+[필요한 메뉴]:   ← 예) 홈·소개·강의·후기·문의
+[이름·연락처]: 이름 / 전화 / 이메일 / 카톡
+[분위기]:   ← 예) 따뜻하고 신뢰감 있는
+
+사진은 지금 넣지 말고 '회색 자리 박스 + 어떤 사진인지 한 줄 설명'만 만들어줘.</span></div>
+    </div>
     <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>내 이름·메뉴가 들어간 페이지가 화면에 보임</li></ul></div>
   </section>
 
@@ -182,6 +209,14 @@
         <li>모바일에서도 예쁜지 점검</li>
       </ul>
     </div>
+    <div class="row"><span class="tag prompt-t">💬 예시 프롬프트 (수정·연결)</span>
+      <div class="prompt"><button class="cp" onclick="cpP(this)">복사</button><span class="pt">방금 만든 페이지를 이렇게 다듬어줘.
+1) [소개 문단]을 더 따뜻하고 전문가답게 다시 써줘.
+2) 상단 메뉴를 누르면 해당 위치로 부드럽게 이동하게 해줘.
+3) '문의하기' 버튼을 누르면 내 전화(010-0000-0000)와 카톡(링크)으로 연결되게 해줘.
+4) 전체 색을 [핑크 계열]로 통일하고, 글자 간격·여백을 보기 좋게 정리해줘.
+5) 휴대폰에서도 깨지지 않게 확인해줘.</span></div>
+    </div>
     <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>메뉴·연락 버튼이 눌러짐</li><li>모바일 화면 정상</li></ul></div>
   </section>
 
@@ -195,6 +230,13 @@
         <li>바탕화면 ‘사진’ 폴더의 사진을 자리표시 위치에 하나씩 넣기</li>
         <li>원하면 나만의 도메인(가비아 등) 연결 안내</li>
       </ul>
+    </div>
+    <div class="row"><span class="tag prompt-t">💬 예시 프롬프트 (사진 자리 · 오류 해결)</span>
+      <div class="prompt"><button class="cp" onclick="cpP(this)">복사</button><span class="pt">① 사진 자리 만들기
+이 페이지에 프로필 사진과 강의 사진이 들어갈 자리를 만들어줘. 지금은 회색 박스로 두고, 각 자리에 '여기에 어떤 사진'인지 한 줄로 표시해줘. 나중에 내 사진 파일로 바꿀 거야.
+
+② 오류가 나면 (캡처를 붙여넣고)
+이 화면을 캡처해서 붙여넣을게. 무슨 뜻이고, 코딩을 모르는 내가 어떻게 고치면 되는지 순서대로 아주 쉽게 알려줘.</span></div>
     </div>
     <div class="row"><span class="tag do">✍️ 내 주소 적기</span><div class="memo">내 웹페이지 주소 : https:// </div></div>
     <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>휴대폰으로 내 주소가 열림</li></ul></div>
@@ -211,11 +253,29 @@
         <li>다음 단계 예고 — 검색·홍보를 더 키우는 <b>브랜딩 과정</b>으로 연결</li>
       </ul>
     </div>
+    <div class="row"><span class="tag prompt-t">💬 예시 프롬프트 (검색·홍보 문구)</span>
+      <div class="prompt"><button class="cp" onclick="cpP(this)">복사</button><span class="pt">내 웹페이지가 네이버·구글에서 잘 검색되도록,
+· 페이지 제목(&lt;title&gt;)과
+· 메타 설명(description)과
+· 키워드를 만들어줘.
+내 일은 [퍼스널컬러 강사], 지역은 [울산]이야.
+그리고 이 페이지를 인스타·카톡에 공유할 때 쓸 짧은 홍보 문구도 3가지 버전으로 만들어줘.</span></div>
+    </div>
     <div class="row check"><span class="tag check">✅ 통과 기준</span><ul class="check"><li>검색 등록 신청함</li><li>SNS/프로필에 주소 공유함</li></ul></div>
     <div class="note">🎓 여기까지가 하루 완성 코스입니다. “검색·홍보로 고객이 오게”까지 원하면 <b>AI 웹페이지 브랜딩 고도화 과정</b>, “남을 가르치는 강사로”까지 원하면 <b>마스터 전문가과정</b>으로 이어집니다.</div>
   </section>
 
   <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218 · 문의 010-4285-7997<br>본 워크북의 프롬프트·교육자료는 수강생 본인 학습용이며 무단 배포·재판매를 금합니다.</footer>
 </div>
+<script>
+  function cpP(btn){
+    var box=btn.parentElement, el=box.querySelector('.pt');
+    var t=el?el.innerText:'';
+    function ok(){var o=btn.textContent;btn.textContent='복사됨 ✓';setTimeout(function(){btn.textContent=o;},1500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok).catch(function(){fallback(el);ok();});}
+    else{fallback(el);ok();}
+  }
+  function fallback(el){try{var r=document.createRange();r.selectNode(el);var s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');s.removeAllRanges();}catch(e){}}
+</script>
 </body>
 </html>
