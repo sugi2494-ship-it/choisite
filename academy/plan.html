@@ -19,6 +19,11 @@ select,input{padding:9px 11px;border:1px solid var(--line);border-radius:9px;fon
 .tabs{display:flex;gap:7px;margin-left:auto;flex-wrap:wrap}
 .tab{border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 14px;font-weight:800;font-size:13px;cursor:pointer;color:#555}
 .tab.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+.peoplebar{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px}
+.pchip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 13px;font-weight:800;font-size:13px;cursor:pointer;color:#555;display:flex;align-items:center;gap:6px}
+.pchip.on{background:#fbeaf3;color:var(--pink);border-color:var(--pink)}
+.pchip .cnt{font-size:11px;font-weight:700;color:#aaa}
+.pchip.on .cnt{color:var(--pink)}
 .jisec{background:#fff;border:2px solid #f3bcd8;border-radius:14px;padding:14px 16px;margin-bottom:14px}
 .jisec h3{margin:0 0 10px;font-size:15px;color:var(--pink)}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -78,8 +83,9 @@ select,input{padding:9px 11px;border:1px solid var(--line);border-radius:9px;fon
     <button class="tab" data-pg="799">인증센터 799</button>
   </div>
 </div>
+<div class="peoplebar" id="peoplebar"></div>
 <div class="printonly" id="printhead"></div>
-<div class="note">💡 <b>상담일지</b>(날짜·시간·장소·연락처·주제)를 적고, 과정을 고르면 회차가 기본으로 들어옵니다. 회차마다 <b>날짜(직접 입력)·시간·장소</b>, <b>주제(수정 가능)</b>, <b>확정 내용</b>, <b>증거/아이디어 사진</b>, <b>다음 예정</b>을 기록하세요. [🖨 인쇄/PDF]로 저장하면 규약서(계약)의 교육계획 별지로 함께 씁니다. 서버 저장 시 다른 기기에서도 열립니다.</div>
+<div class="note">💡 강사를 고르고(위 목록/드롭다운) 과정을 고르면 회차가 기본으로 들어옵니다. 회차마다 <b>날짜(직접 입력)·시간·장소</b>, <b>주제(수정 가능)</b>, <b>확정 내용</b>, <b>증거/아이디어 사진</b>, <b>다음 예정</b>을 기록하세요. [📋 교육 구성 보기]로 1차 상담 때 커리큘럼을 보여주고, [📩 정리 문자/카톡 만들기]로 상담 후 정리를 문자·카톡으로 보냅니다. [🖨 인쇄/PDF]는 규약서(계약)의 교육계획 별지로 씁니다. 서버 저장 시 다른 기기에서도 열립니다.</div>
 <div id="jibox"></div>
 <div class="meta" id="meta"></div>
 <div id="list"></div>
@@ -126,7 +132,7 @@ var TPL={
    ["원데이 강의 시연·수료식","센터 운영 최종 점검·수료",1]]}
 };
 var DB={people:[],plans:{}},curPerson=null,curPg="299";
-function load(){try{var s=localStorage.getItem(LKEY);if(s)DB=JSON.parse(s);}catch(e){}if(!DB.people)DB.people=[];if(!DB.plans)DB.plans={};}
+function load(){var keys=[LKEY,"pbs_consult_plan_v2","pbs_consult_plan_v1"],got=false;for(var i=0;i<keys.length;i++){try{var s=localStorage.getItem(keys[i]);if(s){var d=JSON.parse(s);if(d&&d.people&&d.people.length){DB=d;got=true;break;}if(i===0&&d){DB=d;got=true;}}}catch(e){}}if(!DB.people)DB.people=[];if(!DB.plans)DB.plans={};if(got)save0();}
 function save(){try{localStorage.setItem(LKEY,JSON.stringify(DB));}catch(e){}autoPush();}
 function pkey(pid,pg){return pid+"__"+pg;}
 function getPlan(){if(!curPerson)return null;var k=pkey(curPerson,curPg);if(!DB.plans[k])DB.plans[k]=expand(TPL[curPg].stages);return DB.plans[k];}
@@ -136,24 +142,27 @@ function addPerson(){var nm=prompt("새 강사 이름");if(!nm||!nm.trim())retur
 function renamePerson(){var p=curP();if(!p)return;var nm=prompt("이름 수정",p.name);if(nm&&nm.trim()){p.name=nm.trim();save();renderWho();render();}}
 function delPerson(){var p=curP();if(!p)return;if(!confirm(p.name+" 강사 기록을 삭제할까요?"))return;DB.people=DB.people.filter(function(x){return x.id!=curPerson;});["299","399","799"].forEach(function(pg){delete DB.plans[pkey(curPerson,pg)];});curPerson=DB.people[0]?DB.people[0].id:null;save();renderWho();render();}
 function renderWho(){var s=document.getElementById("who");s.innerHTML="";if(!DB.people.length){var o=document.createElement("option");o.textContent="(강사를 추가하세요)";s.appendChild(o);return;}DB.people.forEach(function(p){var o=document.createElement("option");o.value=p.id;o.textContent=p.name;if(p.id==curPerson)o.selected=true;s.appendChild(o);});}
+function renderPeople(){var bar=document.getElementById("peoplebar");if(!DB.people.length){bar.innerHTML="";return;}var h="";DB.people.forEach(function(p){var n=0;["299","399","799"].forEach(function(pg){var k=pkey(p.id,pg);if(DB.plans[k])n+=DB.plans[k].filter(function(r){return r.status=="완료";}).length;});h+='<button class="pchip'+(p.id==curPerson?" on":"")+'" data-pid="'+p.id+'">'+esc(p.name)+(n?' <span class="cnt">'+n+'회</span>':'')+'</button>';});bar.innerHTML=h;}
+document.getElementById("peoplebar").addEventListener("click",function(e){var t=e.target.closest(".pchip");if(!t)return;curPerson=t.dataset.pid;var p=curP();if(p&&p.program)curPg=p.program;renderWho();render();});
 document.getElementById("who").addEventListener("change",function(e){curPerson=e.target.value;var p=curP();if(p&&p.program)curPg=p.program;render();});
 Array.prototype.forEach.call(document.querySelectorAll(".tab"),function(t){t.addEventListener("click",function(){curPg=t.dataset.pg;var p=curP();if(p)p.program=curPg;save();render();});});
 function resetToTemplate(){if(!curPerson)return;if(!confirm("이 강사의 "+curPg+" 계획을 기본 회차로 초기화할까요?"))return;DB.plans[pkey(curPerson,curPg)]=expand(TPL[curPg].stages);save();render();}
 function addRow(){var pl=getPlan();if(!pl)return;pl.push({label:"추가",topic:"",result:"",date:"",time:"",place:"",status:"예정",plan:"",photos:[],nextDate:"",nextTopic:""});save();render();}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
-function phline(){var p=curP();if(!p)return"";return '<h1>'+esc(p.name)+' 강사 · 상담일지 & 교육계획</h1><div class="pline">상담 '+esc(p.cdate||"-")+' '+esc(p.ctime||"")+'  |  장소 '+esc(p.place||"-")+'  |  연락처 '+esc(p.phone||"-")+'  |  '+esc(TPL[curPg].title)+'<br>주제: '+esc(p.topic||"-")+'  ·  PBS컬러랩 최해숙 010-4285-7997</div>';}
+function phline(){var p=curP();if(!p)return"";var pl=getPlan(),done=pl.filter(function(r){return r.status=="완료";}).length;return '<h1>'+esc(p.name)+' 강사 · 교육계획 & 상담일지</h1><div class="pline">'+esc(TPL[curPg].title)+'  |  진행 '+done+' / '+pl.length+'회차  |  연락처 '+esc(p.phone||"-")+'  ·  PBS컬러랩 최해숙 010-4285-7997</div>'+(p.memo?'<div class="pline" style="text-align:left;white-space:pre-wrap;margin-top:-6px">메모: '+esc(p.memo)+'</div>':'');}
 function render(){
+  renderPeople();
   Array.prototype.forEach.call(document.querySelectorAll(".tab"),function(t){t.classList.toggle("on",t.dataset.pg==curPg);});
   var jibox=document.getElementById("jibox"),meta=document.getElementById("meta"),list=document.getElementById("list"),ph=document.getElementById("printhead");
   if(!curPerson){jibox.innerHTML="";meta.innerHTML="";ph.innerHTML="";list.innerHTML='<div class="empty">먼저 [+ 새 강사]로 강사를 추가하세요.</div>';return;}
   var p=curP(),pl=getPlan(),done=pl.filter(function(r){return r.status=="완료";}).length;
-  jibox.innerHTML='<div class="jisec"><h3>📋 강사 상담일지</h3><div class="grid">'
-    +'<div class="fg"><label>상담 날짜</label><input data-jf="cdate" inputmode="numeric" placeholder="2026-08-03" value="'+esc(p.cdate||"")+'"></div>'
-    +'<div class="fg"><label>시간</label><input data-jf="ctime" inputmode="numeric" placeholder="14:00" value="'+esc(p.ctime||"")+'"></div>'
-    +'<div class="fg"><label>장소</label><input data-jf="place" placeholder="울산 본원" value="'+esc(p.place||"")+'"></div>'
-    +'<div class="fg"><label>연락처</label><input data-jf="phone" inputmode="numeric" placeholder="010-0000-0000" value="'+esc(p.phone||"")+'"></div>'
-    +'<div class="fg" style="grid-column:1/-1"><label>상담 주제</label><input data-jf="topic" placeholder="예: 299 과정 방향 상담" value="'+esc(p.topic||"")+'"></div>'
-    +'</div></div>';
+  jibox.innerHTML='<div class="jisec" style="padding:11px 14px"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">'
+    +'<div class="fg" style="min-width:180px"><label>강사 연락처 (문자 발송용)</label><input data-jf="phone" inputmode="numeric" placeholder="010-0000-0000" value="'+esc(p.phone||"")+'"></div>'
+    +'<button class="btn g" onclick="toggleCurr()">📋 이 과정 교육 구성 보기</button>'
+    +'<button class="btn o" onclick="makeSummary()">📩 정리 문자/카톡 만들기</button></div>'
+    +'<div class="fg" style="margin-top:9px"><label>메모 · 특이사항 · 과제</label><textarea class="plan" data-jf="memo" placeholder="상담 중 추가 메모, 특이사항, 다음까지 과제 등을 자유롭게 적으세요">'+esc(p.memo||"")+'</textarea></div>'
+    +'<div id="currbox" style="display:none;margin-top:10px;background:#fdf3f8;border:1px solid #f3bcd8;border-radius:10px;padding:10px 13px"></div>'
+    +'</div>';
   meta.innerHTML='<span class="big">'+esc(p.name)+' 강사</span> <span class="prog">'+esc(TPL[curPg].title)+'</span> <span style="color:#888">· 진행 '+done+' / '+pl.length+'</span>';
   ph.innerHTML=phline();
   var h="";pl.forEach(function(r,i){var pre=r.label=="사전 미팅";
@@ -180,6 +189,21 @@ document.getElementById("list").addEventListener("change",function(e){var t=e.ta
 document.getElementById("list").addEventListener("click",function(e){var t=e.target;if(t.dataset.del!=null){var pl=getPlan();if(confirm("이 회차를 삭제할까요?")){pl.splice(Number(t.dataset.del),1);save();render();}return;}if(t.dataset.delph!=null){var i=Number(t.dataset.delph),pi=Number(t.dataset.pi);getPlan()[i].photos.splice(pi,1);save();render();}});
 function handlePhotos(i,files){if(!files||!files.length)return;var pl=getPlan();var arr=Array.prototype.slice.call(files);var left=arr.length;arr.forEach(function(f){resizeImg(f,function(durl){if(!pl[i].photos)pl[i].photos=[];pl[i].photos.push(durl);left--;if(left<=0){save();render();}});});}
 function resizeImg(file,cb){var r=new FileReader();r.onload=function(){var img=new Image();img.onload=function(){var mx=1000,w=img.width,h=img.height;if(w>mx||h>mx){if(w>=h){h=Math.round(h*mx/w);w=mx;}else{w=Math.round(w*mx/h);h=mx;}}var c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);cb(c.toDataURL("image/jpeg",0.72));};img.src=r.result;};r.readAsDataURL(file);}
+// ===== 교육 구성 보기 =====
+function toggleCurr(){var box=document.getElementById("currbox");if(!box)return;if(box.style.display=="none"||!box.style.display){var st=TPL[curPg].stages,h='<div style="font-weight:900;color:var(--pink);margin-bottom:7px">'+esc(TPL[curPg].title)+'</div>',n=0;st.forEach(function(s){var name=s[0],res=s[1],cnt=s[2]||1,pre=s[3];var lb;if(pre){lb="사전";}else{lb=(n+1)+(cnt>1?"~"+(n+cnt):"")+"회";n+=cnt;}h+='<div style="display:flex;gap:9px;padding:5px 0;border-top:1px solid #f3d9e8"><span style="min-width:52px;font-weight:800;color:'+(pre?"#3f4a5c":"var(--pink)")+';font-size:12.5px">'+lb+'</span><span style="font-size:13px"><b>'+esc(name)+'</b><br><span style="color:#999;font-size:12px">→ '+esc(res)+'</span></span></div>';});box.innerHTML=h;box.style.display="block";}else{box.style.display="none";}}
+// ===== 정리 문자/카톡 만들기 =====
+function makeSummary(){var p=curP();if(!p){alert("먼저 강사를 선택하세요.");return;}var pl=getPlan();var done=pl.filter(function(r){return r.status=="완료";});var nx=null;pl.forEach(function(r){if(!nx&&(r.status=="예정"||r.status=="진행중")&&(r.date||r.nextDate))nx=r;});
+  var L=[];L.push("["+p.name+" 강사님 상담 정리]");L.push(TPL[curPg].title.split(" · ")[0]);L.push("");
+  if(done.length){L.push("● 진행 완료");done.forEach(function(r){L.push(" - "+r.label+" "+r.topic+(r.date?" ("+r.date+")":""));});L.push("");}
+  var nextDate=(nx&&(nx.date||nx.nextDate))||"",nextTopic=(nx&&(nx.topic||nx.nextTopic))||"";
+  if(nextDate||nextTopic){L.push("● 다음 일정");L.push(" - "+(nextDate||"일정 협의")+" / "+(nextTopic||"-")+(nx&&nx.time?" "+nx.time:"")+(nx&&nx.place?" @"+nx.place:""));L.push("");}
+  if(p.memo){L.push("● 메모 · 과제");L.push(p.memo);L.push("");}
+  L.push("PBS컬러랩 · 최해숙 010-4285-7997");
+  var txt=L.join("\n");
+  var num=(p.phone||"").replace(/[^0-9]/g,"");
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){sm("카톡용 복사됨 ✓","#256a4d");},function(){});}
+  if(confirm("아래 내용을 문자앱으로 보낼까요?\n(취소를 눌러도 카톡용으로 이미 복사됩니다)\n\n"+txt)){window.location.href="sms:"+num+"?&body="+encodeURIComponent(txt);}
+}
 // ===== 서버 동기화 =====
 function sm(t,c){var e=document.getElementById("syncmsg");e.textContent=t;e.style.color=c||"#888";}
 function api(action,extra){var b={action:action,password:document.getElementById("pw").value};if(extra)b.value=extra;return fetch(B+"consult-plans",{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY,Authorization:"Bearer "+KEY},body:JSON.stringify(b)}).then(function(r){return r.json();});}
