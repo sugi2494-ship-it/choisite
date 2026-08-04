@@ -101,7 +101,7 @@ var B="https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/",KEY="sb_publishab
 var LKEY="pbs_consult_plan_v3";
 function expand(stages){var out=[],n=0;stages.forEach(function(s){var name=s[0],res=s[1],cnt=s[2]||1,pre=s[3];for(var i=0;i<cnt;i++){var label,topic=name;if(pre){label="사전 미팅";}else{n++;label=n+"회차";}if(cnt>1&&!pre)topic=name+" "+["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩"][i];out.push({label:label,topic:topic,result:res,date:"",time:"",place:"",status:"예정",plan:"",photos:[],nextDate:"",nextTopic:""});}});return out;}
 var TPL={
- "299":{title:"인증강사 (299) · 총 10회 · 처음 강단에 서는 강사",stages:[
+ "299":{title:"인증강사 (299) · 총 10회",stages:[
    ["이력·강점·브랜드 분석 · 방향·아이덴티티 설정","개인별 강사 브랜드 방향 설계",1,true],
    ["리더십·강사 비전 교육","강사 목표와 활동 로드맵",1],
    ["퍼스널컬러 트레이닝","진단·설명·그룹 컨설팅 역량",3],
@@ -157,7 +157,8 @@ function render(){
   if(!curPerson){jibox.innerHTML="";meta.innerHTML="";ph.innerHTML="";list.innerHTML='<div class="empty">먼저 [+ 새 강사]로 강사를 추가하세요.</div>';return;}
   var p=curP(),pl=getPlan(),done=pl.filter(function(r){return r.status=="완료";}).length;
   jibox.innerHTML='<div class="jisec" style="padding:11px 14px"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">'
-    +'<div class="fg" style="min-width:180px"><label>강사 연락처 (문자 발송용)</label><input data-jf="phone" inputmode="numeric" placeholder="010-0000-0000" value="'+esc(p.phone||"")+'"></div>'
+    +'<div class="fg" style="min-width:170px"><label>강사 연락처 (문자 발송용)</label><input data-jf="phone" inputmode="numeric" placeholder="010-0000-0000" value="'+esc(p.phone||"")+'"></div>'
+    +'<button class="btn p" onclick="savePhone(event)">💾 저장</button>'
     +'<button class="btn g" onclick="toggleCurr()">📋 이 과정 교육 구성 보기</button>'
     +'<button class="btn o" onclick="makeSummary()">📩 정리 문자/카톡 만들기</button></div>'
     +'<div class="fg" style="margin-top:9px"><label>메모 · 특이사항 · 과제</label><textarea class="plan" data-jf="memo" placeholder="상담 중 추가 메모, 특이사항, 다음까지 과제 등을 자유롭게 적으세요">'+esc(p.memo||"")+'</textarea></div>'
@@ -167,7 +168,7 @@ function render(){
   ph.innerHTML=phline();
   var h="";pl.forEach(function(r,i){var pre=r.label=="사전 미팅";
     var photos=(r.photos||[]).map(function(src,pi){return '<div class="ph"><img src="'+src+'"><button class="x" data-delph="'+i+'" data-pi="'+pi+'">✕</button></div>';}).join("");
-    h+='<div class="card"><div class="rowh"><span class="no'+(pre?" pre":"")+'">'+esc(r.label)+'</span>'
+    h+='<div class="card" id="card'+i+'"><div class="rowh"><span class="no'+(pre?" pre":"")+'">'+esc(r.label)+'</span>'
      +'<input class="topic" data-i="'+i+'" data-f="topic" value="'+esc(r.topic)+'" placeholder="주제 (수정 가능)">'
      +'<select class="st" data-i="'+i+'" data-f="status"><option'+(r.status=="예정"?" selected":"")+'>예정</option><option'+(r.status=="진행중"?" selected":"")+'>진행중</option><option'+(r.status=="완료"?" selected":"")+'>완료</option></select>'
      +'<button class="del" data-del="'+i+'">✕</button></div>'
@@ -184,13 +185,17 @@ function render(){
   list.innerHTML=h;
 }
 document.getElementById("jibox").addEventListener("input",function(e){var t=e.target,f=t.dataset.jf;if(!f)return;curP()[f]=t.value;save();document.getElementById("printhead").innerHTML=phline();});
+document.getElementById("jibox").addEventListener("click",function(e){var row=e.target.closest(".currrow");if(!row)return;jumpToCard(Number(row.dataset.jump));});
 document.getElementById("list").addEventListener("input",function(e){var t=e.target,i=t.dataset.i,f=t.dataset.f;if(i==null||!f)return;getPlan()[i][f]=t.value;save();});
 document.getElementById("list").addEventListener("change",function(e){var t=e.target,i=t.dataset.i,f=t.dataset.f;if(i!=null&&f){getPlan()[i][f]=t.value;save();if(f=="status")render();return;}if(t.dataset.addph!=null){handlePhotos(Number(t.dataset.addph),t.files);}});
 document.getElementById("list").addEventListener("click",function(e){var t=e.target;if(t.dataset.del!=null){var pl=getPlan();if(confirm("이 회차를 삭제할까요?")){pl.splice(Number(t.dataset.del),1);save();render();}return;}if(t.dataset.delph!=null){var i=Number(t.dataset.delph),pi=Number(t.dataset.pi);getPlan()[i].photos.splice(pi,1);save();render();}});
 function handlePhotos(i,files){if(!files||!files.length)return;var pl=getPlan();var arr=Array.prototype.slice.call(files);var left=arr.length;arr.forEach(function(f){resizeImg(f,function(durl){if(!pl[i].photos)pl[i].photos=[];pl[i].photos.push(durl);left--;if(left<=0){save();render();}});});}
 function resizeImg(file,cb){var r=new FileReader();r.onload=function(){var img=new Image();img.onload=function(){var mx=1000,w=img.width,h=img.height;if(w>mx||h>mx){if(w>=h){h=Math.round(h*mx/w);w=mx;}else{w=Math.round(w*mx/h);h=mx;}}var c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);cb(c.toDataURL("image/jpeg",0.72));};img.src=r.result;};r.readAsDataURL(file);}
-// ===== 교육 구성 보기 =====
-function toggleCurr(){var box=document.getElementById("currbox");if(!box)return;if(box.style.display=="none"||!box.style.display){var st=TPL[curPg].stages,h='<div style="font-weight:900;color:var(--pink);margin-bottom:7px">'+esc(TPL[curPg].title)+'</div>',n=0;st.forEach(function(s){var name=s[0],res=s[1],cnt=s[2]||1,pre=s[3];var lb;if(pre){lb="사전";}else{lb=(n+1)+(cnt>1?"~"+(n+cnt):"")+"회";n+=cnt;}h+='<div style="display:flex;gap:9px;padding:5px 0;border-top:1px solid #f3d9e8"><span style="min-width:52px;font-weight:800;color:'+(pre?"#3f4a5c":"var(--pink)")+';font-size:12.5px">'+lb+'</span><span style="font-size:13px"><b>'+esc(name)+'</b><br><span style="color:#999;font-size:12px">→ '+esc(res)+'</span></span></div>';});box.innerHTML=h;box.style.display="block";}else{box.style.display="none";}}
+// ===== 연락처 저장 =====
+function savePhone(ev){var p=curP();if(!p)return;var inp=document.querySelector('#jibox input[data-jf="phone"]');if(inp)p.phone=inp.value;save();document.getElementById("printhead").innerHTML=phline();var b=ev&&ev.target;if(b){var t=b.textContent;b.textContent="저장됨 ✓";b.disabled=true;setTimeout(function(){b.textContent=t;b.disabled=false;},1200);}}
+// ===== 교육 구성 보기 (회차 클릭 → 아래 카드로 이동) =====
+function toggleCurr(){var box=document.getElementById("currbox");if(!box)return;if(box.style.display=="none"||!box.style.display){var st=TPL[curPg].stages,h='<div style="font-weight:900;color:var(--pink);margin-bottom:4px">'+esc(TPL[curPg].title)+'</div><div style="font-size:11.5px;color:#b3316f;margin-bottom:6px">👆 회차를 누르면 아래 입력 카드로 이동합니다</div>',n=0,cardIdx=0;st.forEach(function(s){var name=s[0],res=s[1],cnt=s[2]||1,pre=s[3];var lb,start=cardIdx;if(pre){lb="사전";}else{lb=(n+1)+(cnt>1?"~"+(n+cnt):"")+"회";n+=cnt;}cardIdx+=cnt;h+='<div class="currrow" data-jump="'+start+'" style="display:flex;gap:9px;padding:6px 5px;border-top:1px solid #f3d9e8;cursor:pointer;border-radius:6px"><span style="min-width:52px;font-weight:800;color:'+(pre?"#3f4a5c":"var(--pink)")+';font-size:12.5px">'+lb+'</span><span style="font-size:13px"><b>'+esc(name)+'</b><br><span style="color:#999;font-size:12px">→ '+esc(res)+'</span></span></div>';});box.innerHTML=h;box.style.display="block";}else{box.style.display="none";}}
+function jumpToCard(idx){var card=document.getElementById("card"+idx);if(!card)return;card.scrollIntoView({behavior:"smooth",block:"center"});card.style.transition="box-shadow .3s ease,border-color .3s ease";card.style.boxShadow="0 0 0 3px #f2a3ce";card.style.borderColor="#e5007f";setTimeout(function(){card.style.boxShadow="";card.style.borderColor="";},1700);}
 // ===== 정리 문자/카톡 만들기 =====
 function makeSummary(){var p=curP();if(!p){alert("먼저 강사를 선택하세요.");return;}var pl=getPlan();var done=pl.filter(function(r){return r.status=="완료";});var nx=null;pl.forEach(function(r){if(!nx&&(r.status=="예정"||r.status=="진행중")&&(r.date||r.nextDate))nx=r;});
   var L=[];L.push("["+p.name+" 강사님 상담 정리]");L.push(TPL[curPg].title.split(" · ")[0]);L.push("");
