@@ -858,6 +858,48 @@ function renderResult(){
     <table style="width:100%;font-size:13px;margin-top:8px;border-collapse:collapse;">
       ${BANDS.map(b=>`<tr style="border-bottom:1px solid var(--border-default)"><td style="padding:8px 6px;font-weight:800;white-space:nowrap;">${b.range}</td><td style="padding:8px 6px;font-weight:800;white-space:nowrap;">${b.label}</td><td style="padding:8px 6px;color:var(--text-secondary)">${b.desc}</td></tr>`).join('')}
     </table></div>`;
+  // ===== 다음 단계 — 엔진별 단일 CTA =====
+  const NEXT={
+    RED:{line:'추진 엔진이 1순위인 분들은 배운 것을 바로 현장에서 쓰고 싶어 합니다.',
+         sub:'자격 취득에서 끝나지 않고, 실제로 활동하는 강사가 되는 과정입니다.',
+         label:'PBS 인증강사 과정 알아보기', href:'/academy/instructor'},
+    YELLOW:{line:'관계 엔진이 1순위인 분들은 사람 앞에서 설명할 때 가장 살아납니다.',
+         sub:'컬러강점을 나누는 강사로 활동하는 길을 안내합니다.',
+         label:'PBS 인증강사 과정 알아보기', href:'/academy/instructor'},
+    GREEN:{line:'조화 엔진이 1순위인 분들은 나를 충분히 이해한 뒤에 움직입니다.',
+         sub:'색과 골격, 얼굴을 함께 보는 1:1 통합 진단입니다.',
+         label:'퍼스널컬러 진단 예약하기', href:'https://naver.me/GSD0VrvO'},
+    BLUE:{line:'분석 엔진이 1순위인 분들은 근거와 체계가 잡힌 학습을 선호합니다.',
+         sub:'퍼스널컬러와 골격진단을 기초부터 체계적으로 배웁니다.',
+         label:'전문가 자격과정 알아보기', href:'/academy'}
+  };
+  const nx = NEXT[r.first] || NEXT.GREEN;
+  const nxExt = nx.href.indexOf('http')===0 ? ' target="_blank" rel="noopener"' : '';
+  h+=`<div class="card no-print" style="border:2px solid ${E1.hex}55;background:${E1.hex}0A;">
+    <div class="eyebrow" style="color:${E1.hex}">다음 단계</div>
+    <h2 style="font-size:17px;line-height:1.45;">${nx.line}</h2>
+    <p class="sub" style="margin-top:6px;">${nx.sub}</p>
+    <a href="${nx.href}"${nxExt} class="btn btn-primary btn-lg" style="margin-top:16px;display:block;text-align:center;text-decoration:none;">${nx.label} →</a>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;justify-content:center;align-items:center;">
+      ${[
+        {t:'퍼스널컬러 진단 예약', u:'https://naver.me/GSD0VrvO'},
+        {t:'전문가 자격과정', u:'/academy'},
+        {t:'인증강사 과정', u:'/academy/instructor'},
+        {t:'기업, 기관 교육', u:'/business'}
+      ].filter(o=>o.u!==nx.href)
+       .map(o=>`<a href="${o.u}"${o.u.indexOf('http')===0?' target="_blank" rel="noopener"':''} style="font-size:12.5px;color:var(--text-muted);">${o.t}</a>`)
+       .join('<span style="font-size:11px;color:var(--text-muted);opacity:.5;">|</span>')}
+    </div>
+  </div>`;
+  // ===== 결과 공유 =====
+  h+=`<div class="card no-print" style="text-align:center;">
+    <h2 style="font-size:15px;">주변에도 물어보세요</h2>
+    <p class="sub" style="margin-top:4px;">같이 일하는 사람의 엔진을 알면 대화가 쉬워집니다.</p>
+    <div style="display:flex;gap:8px;margin-top:14px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-ghost" onclick="shareLink()">🔗 링크 복사</button>
+      <button class="btn btn-ghost" onclick="shareNative()">📤 공유하기</button>
+    </div>
+  </div>`;
   // 설문 + PDF
   h+=`<div class="card no-print" id="survey-card">
     <div class="eyebrow">30초 설문</div>
@@ -888,6 +930,28 @@ function renderResult(){
   h+=`<div id="print-feedback" class="print-only"></div>`;
   h+=`<div class="no-print" style="text-align:center;margin-top:16px;"><button class="btn btn-ghost" onclick="location.reload()">🔄 다시 진단하기</button></div>`;
   document.getElementById('result-body').innerHTML=h;
+}
+
+/* ============ 결과 공유 ============ */
+const SHARE_URL='https://pbscolor.com/book48.html';
+const SHARE_TEXT='컬러강점 48문항 무료 진단 - 나의 1순위 엔진은? | PBS COLOR LAB';
+function shareLink(){
+  const done=()=>toast('링크가 복사되었습니다');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(SHARE_URL).then(done).catch(fallbackCopy);
+  }else{ fallbackCopy(); }
+  function fallbackCopy(){
+    const t=document.createElement('textarea');
+    t.value=SHARE_URL; t.style.position='fixed'; t.style.opacity='0';
+    document.body.appendChild(t); t.select();
+    try{ document.execCommand('copy'); done(); }catch(e){ toast('복사에 실패했습니다'); }
+    document.body.removeChild(t);
+  }
+}
+function shareNative(){
+  if(navigator.share){
+    navigator.share({title:SHARE_TEXT,text:SHARE_TEXT,url:SHARE_URL}).catch(()=>{});
+  }else{ shareLink(); }
 }
 
 /* ============ 설문 · PDF ============ */
