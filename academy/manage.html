@@ -203,7 +203,7 @@ function post(url,b){return fetch(url,{method:"POST",headers:{"Content-Type":"ap
 function dstr(s){if(!s)return "";var d=new Date(s);if(isNaN(d))return String(s).slice(0,10);var z=function(n){return (n<10?"0":"")+n;};return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());}
 function payOf(r){var m=(r.memo||"")+" "+(r.message||"");if(m.indexOf("카드")>=0)return "카드";if(m.indexOf("이체")>=0||m.indexOf("현금")>=0)return "이체";return "";}
 function isInst(r){var s=(r.session||"");var w=(r.want_to_make||"");if(s.indexOf("인증강사")>=0)return true;return /인증강사|인증센터|전문프로|299|399|799/.test(w);}
-function isSpecial(r){var m=(r.session||"")+" "+(r.want_to_make||"");return /특강|원데이|특별강|onedaymes|one ?day/i.test(m);}
+function isSpecial(r){var s=(r.session||"");var m=s+" "+(r.want_to_make||"");if(/웹페이지|AI\s*웹|브랜딩\s*고도화|마스터\s*전문가과정|브랜딩\s*\+\s*마스터|패키지\s*\(\s*브랜딩/i.test(s))return true;return /특강|원데이|특별강|onedaymes|one ?day/i.test(m);}
 function isQna(r){var m=(r.session||"")+" "+(r.want_to_make||"");return /문의/.test(m);}
 function catOf(r){if(isInst(r))return "inst";if(isSpecial(r))return "special";if(isQna(r))return "qna";return "cert";}
 function courseName(r){return r.session||r.want_to_make||"";}
