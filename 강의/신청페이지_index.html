@@ -561,6 +561,12 @@
         headers: { "Authorization": `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
         body: JSON.stringify(data),
       }).catch(() => {});
+      // 신청자에게 계좌번호 안내 SMS 자동발송 (실패해도 신청 처리에는 영향 없음)
+      fetch(`${SUPABASE_URL}/functions/v1/sms-account-info`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ name: data.name, phone: data.phone, session: data.session }),
+      }).catch(() => {});
       document.getElementById("formCard").querySelector("h2").style.display = "none";
       document.getElementById("formCard").querySelector(".lead").style.display = "none";
       form.style.display = "none";
