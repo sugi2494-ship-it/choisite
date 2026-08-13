@@ -1785,7 +1785,7 @@ function renderShop(){
       var sig=(b.title||'')+'|'+((b.src||'').length)+'|'+(b.link||b.url||'');
       try{if(localStorage.getItem('pbs_event_dismiss')===sig)return;}catch(e){}
       // 슬라이드-인 애니메이션 · 모바일 대응 (1회 주입)
-      if(!document.getElementById('pbsPopCss')){var st=document.createElement('style');st.id='pbsPopCss';st.textContent='@keyframes pbsPopIn{0%{opacity:0;transform:translateX(46px) scale(.95)}100%{opacity:1;transform:none}}#eventBanner{animation:pbsPopIn .55s cubic-bezier(.2,.85,.25,1) both}@media(max-width:600px){#eventBanner{right:12px!important;left:12px!important;width:auto!important;bottom:12px!important}}';document.head.appendChild(st);}
+      if(!document.getElementById('pbsPopCss')){var st=document.createElement('style');st.id='pbsPopCss';st.textContent='@keyframes pbsPopIn{0%{opacity:0;transform:translateX(46px) scale(.95)}100%{opacity:1;transform:none}}#eventBanner{animation:pbsPopIn .55s cubic-bezier(.2,.85,.25,1) both}@media(max-width:600px){#eventBanner{right:12px!important;left:12px!important;width:auto!important;bottom:12px!important}}@media(max-width:768px){#eventBanner{bottom:82px!important}}';document.head.appendChild(st);}
       var link=(b.link||b.url||'');var hasImg=b.src&&b.src.length>120;
       var banner=document.createElement('div');banner.id='eventBanner';
       banner.style.cssText='position:fixed;right:22px;bottom:24px;z-index:9400;width:min(92vw,332px)';
