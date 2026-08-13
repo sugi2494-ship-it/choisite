@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>퍼스널컬러 자가진단 3분 테스트 — 웜톤·쿨톤 확인 | PBS COLOR LAB</title>
+<meta name="description" content="8문항으로 3분이면 끝나는 무료 퍼스널컬러 자가진단. 웜톤·쿨톤부터 봄웜·여름쿨·가을웜·겨울쿨까지, 나에게 어울리는 색의 방향을 바로 확인하세요.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.pbscolor.com/personalcolor">
+<meta property="og:title" content="퍼스널컬러 자가진단 3분 테스트 | PBS COLOR LAB">
+<meta property="og:description" content="8문항 무료 자가진단으로 나의 웜톤·쿨톤 방향을 3분 만에 확인하세요. 정확한 12톤 진단은 PBS COLOR LAB 1:1 컨설팅에서.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.pbscolor.com/personalcolor">
+<meta property="og:image" content="https://www.pbscolor.com/og-main.jpg?v=2">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Quiz","name":"퍼스널컬러 자가진단","about":{"@type":"Thing","name":"퍼스널컬러(웜톤·쿨톤) 진단"},"provider":{"@type":"Organization","name":"PBS COLOR LAB","url":"https://www.pbscolor.com/"}}
+</script>
+<style>
+:root{
+  --pink:#E6007E;--pink2:#FF2D9B;--grad:linear-gradient(135deg,#FF2D9B,#E6007E);
+  --ink:#1a1a1a;--ink-soft:#555;--line:#F0D3DF;--bg:#FFFBFD;--surface:#fff;
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:0 20px}
+header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:56px;max-width:640px;margin:0 auto;padding:0 20px}
+.brand{font-weight:900;font-size:15px;text-decoration:none}
+.brand b{color:var(--pink)}
+.nav-back{font-size:13px;font-weight:700;color:var(--ink-soft);text-decoration:none}
+.screen{display:none}
+.screen.active{display:block}
+main{padding:30px 0 70px}
+.eyebrow{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--pink);background:#FCE4EC;border-radius:999px;padding:5px 12px;margin-bottom:14px}
+h1{font-size:clamp(22px,6vw,30px);font-weight:900;line-height:1.35;margin-bottom:12px}
+.lead{font-size:15px;color:var(--ink-soft);margin-bottom:24px}
+.trust{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.trust span{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:999px;font-family:var(--font);font-weight:800;cursor:pointer;text-decoration:none}
+.btn-primary{background:var(--grad);color:#fff;font-size:16px;padding:16px 30px;width:100%;box-shadow:0 10px 24px -8px rgba(230,0,126,.5)}
+.btn-outline{background:#fff;border:1.5px solid var(--line);color:var(--ink);font-size:14px;padding:12px 20px}
+.btn-ghost{background:none;border:none;color:var(--ink-soft);font-size:13px;text-decoration:underline}
+.note{font-size:12.5px;color:#999;margin-top:12px;text-align:center}
+/* 진행바 */
+.progress-outer{position:sticky;top:56px;z-index:40;background:var(--bg);padding:10px 0 6px}
+.progress-track{height:7px;background:#F5DCE9;border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:var(--grad);border-radius:999px;transition:.3s}
+.progress-label{font-size:11px;color:#999;text-align:right;margin-top:4px;font-weight:700}
+/* 문항 카드 */
+.q-card{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:22px 20px;margin:18px 0;box-shadow:0 4px 16px rgba(230,0,126,.06)}
+.q-num{font-size:12px;font-weight:800;color:var(--pink);margin-bottom:8px}
+.q-text{font-size:16.5px;font-weight:800;margin-bottom:16px;line-height:1.5}
+.opt-list{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14.5px;font-weight:700;color:var(--ink);background:#fff;cursor:pointer;text-align:left;width:100%}
+.opt:active,.opt.sel{background:#FCE4EC;border-color:var(--pink);color:var(--pink)}
+/* 결과 */
+.result-hero{border-radius:24px;padding:34px 24px;color:#fff;text-align:center;margin:20px 0 18px;background:var(--grad)}
+.result-hero .kicker{font-size:12px;font-weight:800;letter-spacing:.1em;opacity:.88}
+.result-hero h2{font-size:32px;font-weight:900;margin:8px 0 4px}
+.result-hero .en{font-size:13px;opacity:.85;font-weight:700}
+.result-card{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:22px 20px;margin-bottom:16px}
+.result-card h3{font-size:14px;color:var(--pink);font-weight:900;margin-bottom:8px}
+.result-card p{font-size:14.5px;color:var(--ink-soft)}
+.palette{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.swatch{display:flex;align-items:center;gap:6px;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;border:1px solid rgba(0,0,0,.06)}
+.swatch i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.disclaimer{background:#FBF3F8;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:12.5px;color:#8a5570;margin-bottom:20px}
+.result-cta{display:grid;gap:10px;margin-top:6px}
+.reveal{display:none}
+.mobileCta{display:none;position:fixed;left:0;right:0;bottom:0;z-index:999;background:#fff;box-shadow:0 -4px 18px rgba(0,0,0,.12);border-top:1px solid var(--line)}
+.mobileCta a{flex:1;text-align:center;padding:12px 4px;text-decoration:none;color:#fff;font-size:13px;font-weight:800;background:var(--grad)}
+@media(max-width:640px){.mobileCta{display:flex}body{padding-bottom:64px}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/">PBS <b>COLOR LAB</b></a>
+    <a class="nav-back" href="/consulting">← 개인 컨설팅으로</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ══ 인트로 ══ -->
+  <section id="intro" class="screen active">
+    <span class="eyebrow">FREE · 3MIN SELF TEST</span>
+    <h1>내 피부에 진짜 어울리는 색,<br>웜톤일까 쿨톤일까?</h1>
+    <p class="lead">질문 8개, 3분이면 끝나요. 지금 바로 나의 퍼스널컬러 방향을 확인하고, 정확한 진단은 PBS COLOR LAB 1:1 컨설팅에서 완성하세요.</p>
+    <div class="trust">
+      <span>⭐ 네이버 후기 496건</span>
+      <span>🎓 현장 진단 13년</span>
+      <span>📺 KBS·UBC 방송 출연</span>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()">🎨 무료 자가진단 시작하기 →</button>
+    <p class="note">자가진단은 참고용이며, 정확한 결과는 현장 1:1 진단에서 확인됩니다.</p>
+  </section>
+
+  <!-- ══ 진행바 (퀴즈 중에만) ══ -->
+  <div id="progressWrap" class="progress-outer reveal">
+    <div class="wrap" style="padding:0">
+      <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-label" id="progLabel">0 / 8</div>
+    </div>
+  </div>
+
+  <!-- ══ 퀴즈 ══ -->
+  <section id="quiz" class="screen">
+    <div id="qContainer"></div>
+  </section>
+
+  <!-- ══ 결과 ══ -->
+  <section id="result" class="screen">
+    <div id="resultBody"></div>
+  </section>
+
+</main>
+
+<div class="mobileCta">
+  <a href="tel:+821042857997">📞 지금 바로 전화 문의</a>
+</div>
+
+<script>
+/* ══════════════ 문항 데이터 ══════════════
+   axis: 'wc' = 웜(w)/쿨(c) 판정,  'cd' = 화사(c)/차분(d) 판정
+*/
+const QUESTIONS = [
+  {axis:'wc', text:'손목 안쪽 혈관 색은 어느 쪽에 가깝나요?', opts:[
+    {t:'초록빛이 도는 갈색', v:'w'}, {t:'파란빛이 도는 보라색', v:'c'}]},
+  {axis:'wc', text:'골드 액세서리와 실버 액세서리, 얼굴이 더 화사해 보이는 쪽은?', opts:[
+    {t:'골드 액세서리', v:'w'}, {t:'실버 액세서리', v:'c'}]},
+  {axis:'wc', text:'햇빛 아래에서 내 피부는 어떤 느낌인가요?', opts:[
+    {t:'노란빛·황금빛이 돈다', v:'w'}, {t:'분홍빛·붉은기가 돈다', v:'c'}]},
+  {axis:'wc', text:'순백색 티셔츠와 아이보리색 티셔츠, 얼굴이 더 살아나는 쪽은?', opts:[
+    {t:'아이보리색', v:'w'}, {t:'순백색', v:'c'}]},
+  {axis:'cd', text:'평소 눈이 가는 색의 느낌은?', opts:[
+    {t:'파스텔처럼 밝고 맑은 색', v:'c'}, {t:'짙고 깊이 있는 색', v:'d'}]},
+  {axis:'cd', text:'염색하지 않은 자연 모발 색은?', opts:[
+    {t:'밝은 갈색~금빛 계열', v:'c'}, {t:'짙은 흑갈색~검정 계열', v:'d'}]},
+  {axis:'cd', text:'눈동자와 흰자의 색 대비는?', opts:[
+    {t:'부드럽고 은은한 편', v:'c'}, {t:'또렷하고 대비가 강한 편', v:'d'}]},
+  {axis:'cd', text:'화장했을 때 더 잘 어울리는 느낌은?', opts:[
+    {t:'은은하고 부드러운 화장', v:'c'}, {t:'선명하고 또렷한 화장', v:'d'}]},
+];
+
+const RESULTS = {
+  springwarm:{
+    key:'봄웜', en:'SPRING WARM', title:'봄웜 타입',
+    desc:'노란빛이 도는 화사하고 맑은 피부에, 생기 있는 코랄·피치·아이보리가 얼굴을 환하게 살려주는 타입입니다. 반대로 차가운 버건디나 잿빛 그레이는 얼굴을 칙칙해 보이게 할 수 있어요.',
+    colors:[['코랄','#FF7F6E'],['피치','#FFB4A2'],['아이보리','#F3E9D2'],['그린어패','#8FBF7F']]
+  },
+  autumnwarm:{
+    key:'가을웜', en:'AUTUMN WARM', title:'가을웜 타입',
+    desc:'노란빛이 깊게 도는 차분한 피부에, 카멜·브릭·올리브·머스터드처럼 깊고 따뜻한 색이 고급스럽게 어울리는 타입입니다. 파스텔이나 형광기 있는 색은 얼굴과 옷이 따로 노는 느낌을 줄 수 있어요.',
+    colors:[['카멜','#C08552'],['브릭','#B5502D'],['올리브','#7C7C3F'],['머스터드','#C99A2E']]
+  },
+  summercool:{
+    key:'여름쿨', en:'SUMMER COOL', title:'여름쿨 타입',
+    desc:'푸른빛이 도는 맑은 피부에, 라벤더·소프트블루·로즈핑크처럼 부드럽고 시원한 색이 잘 어울리는 타입입니다. 쨍한 오렌지나 노란기 강한 브라운은 피부를 어두워 보이게 할 수 있어요.',
+    colors:[['라벤더','#B9A6D9'],['소프트블루','#A9C6E8'],['로즈핑크','#E8AFC0'],['그레이지','#B7AFA6']]
+  },
+  wintercool:{
+    key:'겨울쿨', en:'WINTER COOL', title:'겨울쿨 타입',
+    desc:'희고 차가운 피부와 또렷한 이목구비에, 블랙·퓨어화이트·로열블루처럼 선명하고 대비 강한 색이 얼굴을 살려주는 타입입니다. 탁하고 흐릿한 색은 얼굴이 흐려 보이게 할 수 있어요.',
+    colors:[['블랙','#1A1A1A'],['퓨어화이트','#FFFFFF'],['로열블루','#2E4AA8'],['마젠타','#E6007E']]
+  }
+};
+
+let current = 0;
+const answers = [];
+
+function startQuiz(){
+  show('quiz');
+  document.getElementById('progressWrap').style.display='block';
+  renderQuestion();
+}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id!=='quiz') document.getElementById('progressWrap').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderQuestion(){
+  const q = QUESTIONS[current];
+  const c = document.getElementById('qContainer');
+  c.innerHTML = `
+    <div class="q-card">
+      <div class="q-num">Q${current+1}. / ${QUESTIONS.length}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="opt-list">
+        ${q.opts.map((o,i)=>`<button class="opt" onclick="pick(${i})">${o.t}</button>`).join('')}
+      </div>
+    </div>`;
+  updateProgress();
+}
+
+function updateProgress(){
+  const pct = Math.round((current/QUESTIONS.length)*100);
+  document.getElementById('progFill').style.width = pct+'%';
+  document.getElementById('progLabel').textContent = current+' / '+QUESTIONS.length;
+}
+
+function pick(i){
+  const q = QUESTIONS[current];
+  answers.push({axis:q.axis, v:q.opts[i].v});
+  current++;
+  if(current < QUESTIONS.length){
+    setTimeout(renderQuestion, 150);
+  } else {
+    document.getElementById('progFill').style.width='100%';
+    document.getElementById('progLabel').textContent = QUESTIONS.length+' / '+QUESTIONS.length;
+    setTimeout(showResult, 300);
+  }
+}
+
+function showResult(){
+  let w=0,c=0,cl=0,d=0;
+  answers.forEach(a=>{
+    if(a.axis==='wc'){ if(a.v==='w') w++; else c++; }
+    else { if(a.v==='c') cl++; else d++; }
+  });
+  const isWarm = w>=c;
+  const isClear = cl>=d;
+  let key;
+  if(isWarm && isClear) key='springwarm';
+  else if(isWarm && !isClear) key='autumnwarm';
+  else if(!isWarm && isClear) key='summercool';
+  else key='wintercool';
+
+  const r = RESULTS[key];
+  const body = document.getElementById('resultBody');
+  body.innerHTML = `
+    <div class="result-hero">
+      <div class="kicker">MY PERSONAL COLOR</div>
+      <h2>${r.title}</h2>
+      <div class="en">${r.en}</div>
+    </div>
+    <div class="result-card">
+      <h3>이런 색이 잘 어울려요</h3>
+      <p>${r.desc}</p>
+      <div class="palette">
+        ${r.colors.map(([name,hex])=>`<span class="swatch"><i style="background:${hex};${hex==='#FFFFFF'?'border:1px solid #ddd':''}"></i>${name}</span>`).join('')}
+      </div>
+    </div>
+    <div class="disclaimer">🔍 이 결과는 8문항 자가진단 기반의 <b>참고용 방향</b>입니다. 12톤까지 세밀하게 나뉘는 정확한 퍼스널컬러는 PBS COLOR LAB 현장 1:1 진단에서 컬러 드레이프로 확인하실 수 있어요.</div>
+    <div class="result-cta">
+      <a class="btn btn-primary" href="/consulting#programs">📍 1:1 정확한 진단 예약하기 →</a>
+      <a class="btn btn-outline" href="/consulting#consulting-form" style="text-align:center">✉ 사전 상담 신청</a>
+      <button class="btn btn-ghost" onclick="restart()" style="justify-self:center">🔄 다시 진단하기</button>
+    </div>`;
+  show('result');
+}
+
+function restart(){
+  current = 0;
+  answers.length = 0;
+  show('intro');
+}
+</script>
+</body>
+</html>
