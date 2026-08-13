@@ -1776,8 +1776,7 @@ function renderShop(){
         if(cfg['pos'+i])img.style.objectPosition=cfg['pos'+i];
       });
     })();
-    // 이벤트 팝업 (2026-08-04 비활성화 — 8월 1일 추가접수 베너 삭제)
-    /*
+    // 이벤트 팝업 (2026-08-13 재활성화 — 8/16 원데이 웹페이지 만들기 추가접수)
     (function(){
       var b=null;try{b=JSON.parse(localStorage.getItem('pbs_event_banner')||'null');}catch(e){}
       var old=document.getElementById('eventBanner');if(old)old.remove();
@@ -1804,7 +1803,6 @@ function renderShop(){
       var cb=document.getElementById('evClose');
       if(cb)cb.addEventListener('click',function(ev){ev.preventDefault();ev.stopPropagation();try{localStorage.setItem('pbs_event_dismiss',sig);}catch(e){}banner.remove();});
     })();
-    */
   }).catch(function(){});
   // 승인된 소감 로드 (Supabase)
   supaFetch('pbs_testimonials?select=*&approved=eq.true&order=created_at.desc').then(function(r){return r.json();}).then(function(rows){
