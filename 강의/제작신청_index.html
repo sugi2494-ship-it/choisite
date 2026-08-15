@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 웹페이지 제작 대행 · PBS컬러랩</title>
+<meta name="description" content="바쁜 강사·대표님을 위해 PBS컬러랩이 직접 만들어 드립니다. 코딩 없이 완성되는 나만의 브랜딩 웹페이지. 79만원부터." />
+<meta property="og:title" content="AI 웹페이지 제작 대행 · PBS컬러랩" />
+<meta property="og:description" content="바쁜 강사·대표님을 위해 PBS컬러랩이 직접 만들어 드립니다." />
+<style>
+  :root{
+    --pink:#E14B8A;
+    --pink-deep:#C33A72;
+    --pink-soft:#FBE9F0;
+    --ink:#2B2230;
+    --muted:#8A7E86;
+    --line:#F0D9E3;
+    --dark:#221820;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,sans-serif;
+    background:#FDF5F7;color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
+    padding-bottom:76px;
+  }
+  .wrap{max-width:620px;margin:0 auto;padding:0 20px;}
+  .center{text-align:center;}
+  .pink{color:var(--pink);}
+  .kicker{
+    display:inline-block;font-size:12px;font-weight:800;letter-spacing:3px;
+    color:var(--pink);background:#fff;border:1px solid var(--line);
+    padding:7px 16px;border-radius:100px;margin-bottom:20px;
+  }
+  section{padding:52px 0;}
+  h2.title{font-size:25px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;margin:0 0 14px;}
+  p.desc{font-size:15px;color:var(--muted);margin:0;}
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(180deg,#FCEBF2 0%,#FDF5F7 100%);
+    padding:60px 0 46px;text-align:center;
+  }
+  .hero h1{font-size:33px;font-weight:900;line-height:1.26;letter-spacing:-0.8px;margin:0 0 16px;}
+  .hero .lead{font-size:16px;color:#5f5560;margin:0 0 8px;font-weight:600;}
+  .hero .lead2{font-size:15px;color:var(--muted);margin:0 0 26px;}
+  .tag{
+    display:inline-block;font-size:13px;color:var(--pink-deep);font-weight:700;
+    background:var(--pink-soft);border-radius:100px;padding:8px 16px;margin-bottom:28px;
+  }
+  .infobar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13px;min-width:90px;}
+  .chip b{display:block;color:var(--pink-deep);font-size:15px;margin-top:2px;}
+
+  /* 가격 카드 */
+  .price-grid{display:grid;gap:16px;margin-top:28px;}
+  .price-card{
+    background:#fff;border:2px solid var(--line);border-radius:22px;padding:28px 22px;text-align:center;
+    box-shadow:0 8px 28px rgba(197,58,114,0.08);transition:border .2s,transform .2s;position:relative;
+  }
+  .price-card.pop{border-color:var(--pink);box-shadow:0 14px 40px rgba(197,58,114,0.18);}
+  .price-card .badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#E14B8A,#C33A72);color:#fff;font-size:12px;font-weight:900;padding:5px 16px;border-radius:100px;white-space:nowrap;}
+  .price-card .tier{font-size:13px;font-weight:800;letter-spacing:2px;color:var(--pink);margin-bottom:8px;}
+  .price-card .name{font-size:20px;font-weight:900;color:var(--ink);margin-bottom:12px;}
+  .price-card .amount{font-size:36px;font-weight:900;color:var(--pink-deep);line-height:1;}
+  .price-card .unit{font-size:16px;font-weight:700;color:var(--muted);}
+  .price-card .includes{text-align:left;margin-top:18px;font-size:14px;line-height:2;}
+  .price-card .includes .ck{color:var(--pink);font-weight:700;margin-right:6px;}
+
+  /* 세션 옵트 */
+  .session-group{display:grid;gap:10px;}
+  .session-opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:border .15s,background .15s;}
+  .session-opt:hover{border-color:var(--pink);}
+  .session-opt input{width:20px;height:20px;accent-color:var(--pink);margin:0;flex:0 0 auto;}
+  .session-opt.sel{border-color:var(--pink);background:var(--pink-soft);}
+  .session-opt .si b{font-size:15px;}
+  .session-opt .si small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;}
+
+  .terms{border:1.5px solid var(--line);border-radius:12px;background:#FFFDFE;padding:14px 16px;max-height:210px;overflow-y:auto;font-size:12.5px;color:#5f5560;line-height:1.75;}
+  .terms h4{margin:12px 0 4px;font-size:13.5px;color:var(--ink);}
+  .terms h4:first-child{margin-top:0;}
+  .terms b{color:var(--pink-deep);}
+  .agree{display:flex;align-items:flex-start;gap:10px;margin-top:12px;cursor:pointer;font-size:14px;font-weight:700;color:var(--ink);}
+  .agree input{width:20px;height:20px;accent-color:var(--pink);margin:1px 0 0;flex:0 0 auto;}
+
+  /* CTA 버튼 */
+  .cta{
+    display:inline-block;text-decoration:none;cursor:pointer;border:none;
+    background:linear-gradient(135deg,var(--pink) 0%,var(--pink-deep) 100%);
+    color:#fff;font-size:17px;font-weight:800;padding:16px 34px;border-radius:100px;
+    box-shadow:0 10px 24px rgba(197,58,114,0.32);transition:transform .1s;
+    font-family:inherit;
+  }
+  .cta:hover{transform:translateY(-2px);}
+
+  /* 공감 */
+  .pain{background:#fff;border:1px solid var(--line);border-radius:16px;padding:8px 22px;margin-top:22px;}
+  .pain .row{display:flex;gap:12px;padding:15px 0;border-bottom:1px dashed var(--line);align-items:flex-start;}
+  .pain .row:last-child{border-bottom:none;}
+  .pain .ic{flex:0 0 26px;font-size:18px;line-height:1.5;}
+  .pain .row b{font-weight:700;}
+  .pain .row small{color:var(--muted);font-size:13.5px;}
+
+  /* 결과물 */
+  .results{background:#fff;border-radius:20px;padding:12px 24px;margin-top:24px;box-shadow:0 10px 34px rgba(197,58,114,0.08);}
+  .results .item{display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);}
+  .results .item:last-child{border-bottom:none;}
+  .results .num{flex:0 0 34px;font-size:15px;font-weight:900;color:var(--pink);}
+  .results .txt{font-size:16px;font-weight:700;}
+  .banner{
+    background:var(--dark);color:#fff;border-radius:14px;padding:18px;text-align:center;
+    font-weight:800;font-size:16px;margin-top:20px;
+  }
+  .banner .pink{color:#FF9DC4;}
+
+  /* 제작 샘플 */
+  .sample{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;
+    box-shadow:0 6px 20px rgba(197,58,114,0.06);transition:transform .12s,box-shadow .12s;}
+  .sample:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(197,58,114,0.16);border-color:var(--pink);}
+
+  /* 신청 폼 */
+  #apply{scroll-margin-top:14px;}
+  .card{
+    background:#fff;border-radius:22px;padding:30px 24px;margin-top:24px;
+    box-shadow:0 16px 44px rgba(197,58,114,0.12);border:1px solid #fff;
+  }
+  .card h2{font-size:21px;font-weight:900;margin:0 0 6px;}
+  .card .lead{font-size:14px;color:var(--muted);margin:0 0 22px;}
+  .field{margin-bottom:18px;}
+  label{display:block;font-size:14px;font-weight:700;margin-bottom:7px;}
+  label .req{color:var(--pink);}
+  input,select,textarea{
+    width:100%;font-size:15px;font-family:inherit;color:var(--ink);
+    padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:#FFFDFE;
+    transition:border .15s,box-shadow .15s;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(225,75,138,0.12);}
+  textarea{resize:vertical;min-height:82px;}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px;}
+  button.submit{
+    width:100%;border:none;cursor:pointer;margin-top:8px;
+    background:linear-gradient(135deg,var(--pink) 0%,var(--pink-deep) 100%);
+    color:#fff;font-size:18px;font-weight:800;padding:17px;border-radius:14px;
+    box-shadow:0 8px 20px rgba(197,58,114,0.30);transition:transform .1s,opacity .2s;
+  }
+  button.submit:hover{transform:translateY(-1px);}
+  button.submit:disabled{opacity:.6;cursor:default;transform:none;}
+  .msg{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:14px;display:none;}
+  .msg.err{background:#FDECEC;color:#C0392B;display:block;}
+
+  .done{display:none;text-align:center;padding:20px 10px;}
+  .done .check{width:76px;height:76px;border-radius:50%;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+  .done .check svg{width:38px;height:38px;stroke:var(--pink);}
+  .done h2{font-size:22px;margin:0 0 10px;}
+  .done p{color:var(--muted);font-size:15px;margin:0 0 6px;}
+  .done .acct{margin-top:20px;background:var(--pink-soft);border-radius:14px;padding:16px;font-size:14px;}
+  .done .acct b{color:var(--pink-deep);}
+
+  .foot{text-align:center;color:var(--muted);font-size:12.5px;padding:36px 20px 20px;line-height:1.9;}
+  .foot b{color:var(--pink-deep);}
+
+  /* 고정 하단 CTA */
+  .sticky{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);
+    border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:12px;align-items:center;
+    max-width:620px;margin:0 auto;box-shadow:0 -6px 20px rgba(197,58,114,0.08);
+  }
+  .sticky .info{flex:1;line-height:1.3;}
+  .sticky .info .p{font-size:16px;font-weight:900;color:var(--pink-deep);}
+  .sticky .info .s{font-size:11px;color:var(--muted);font-weight:700;}
+  .sticky a.cta{padding:14px 22px;font-size:15px;box-shadow:none;white-space:nowrap;}
+  @media(min-width:640px){.sticky{border-radius:16px 16px 0 0;}}
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="kicker">WEB PRODUCTION · 제작 대행</span>
+      <div style="font-size:38px;font-weight:900;letter-spacing:-.03em;margin:10px 0 12px;color:var(--ink);line-height:1.12;">AI 웹페이지<br>제작 대행</div>
+      <div style="margin:0 0 8px;background:linear-gradient(135deg,#E91E8C,#a3126a);color:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 10px 30px rgba(233,30,140,.28);">
+        <div style="font-size:22px;font-weight:900;line-height:1.18;letter-spacing:-.03em;">🖥️ 바쁜 대표님 대신,<br>PBS컬러랩이 만들어 드립니다</div>
+        <div style="font-size:14px;font-weight:800;margin-top:9px;color:#ffe3f1;">코딩 0줄 · AI 기반 · <span style="color:#ffe14d;">전문가가 직접 제작</span></div>
+      </div>
+      <p class="lead2" style="margin-top:12px;">직접 만들 시간이 없는 분을 위한 맞춤 제작 서비스</p>
+      <span class="tag">강사 · 1인 사업가 · 컨설턴트 · 스타트업 대표</span>
+      <div class="infobar">
+        <div class="chip">제작<b>맞춤 설계</b></div>
+        <div class="chip">소통<b>1:1 상담</b></div>
+        <div class="chip">기간<b>상담 후 안내</b></div>
+        <div class="chip">결과물<b>완성 웹사이트</b></div>
+      </div>
+      <div style="margin-top:24px;">
+        <a href="#apply" class="cta">제작 신청하기 →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 이런 분 -->
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <span class="kicker">FOR YOU</span>
+        <h2 class="title">이런 분이라면,<br><span class="pink">제작 대행</span>이 딱입니다</h2>
+      </div>
+      <div class="pain">
+        <div class="row"><div class="ic">⏰</div><div><b>수업 들을 시간이 없다</b><br><small>바쁜 일정 속 하루도 비우기 어려운 분</small></div></div>
+        <div class="row"><div class="ic">🤯</div><div><b>AI·코딩이 너무 막막하다</b><br><small>직접 하기엔 부담, 전문가에게 맡기고 싶은 분</small></div></div>
+        <div class="row"><div class="ic">🏢</div><div><b>외주 업체 비용이 부담된다</b><br><small>수백만 원대 외주 대신 합리적 가격을 원하는 분</small></div></div>
+        <div class="row"><div class="ic">📱</div><div><b>지금 당장 웹페이지가 필요하다</b><br><small>강의·사업·브랜딩에 바로 쓸 페이지가 급한 분</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 제작 결과물 -->
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <span class="kicker">RESULT · 이렇게 만들어 드립니다</span>
+        <h2 class="title">PBS컬러랩이 직접 만든<br><span class="pink">실제 결과물</span></h2>
+      </div>
+      <div class="results">
+        <div class="item"><div class="num">01</div><div class="txt">나만의 브랜딩 웹페이지 완성</div></div>
+        <div class="item"><div class="num">02</div><div class="txt">모바일 완벽 대응 반응형 디자인</div></div>
+        <div class="item"><div class="num">03</div><div class="txt">프로필 · 서비스 소개 · 문의 동선</div></div>
+        <div class="item"><div class="num">04</div><div class="txt">검색 노출(SEO) 기본 설정</div></div>
+      </div>
+      <div class="banner">외주 맡기면 수백만 원, PBS는 <span class="pink">79만 원부터</span></div>
+    </div>
+  </section>
+
+  <!-- 실제 제작 샘플 -->
+  <section style="background:#fff;">
+    <div class="wrap">
+      <div class="center">
+        <span class="kicker">REAL SAMPLE · 이런 걸 만듭니다</span>
+        <h2 class="title">말보다 <span class="pink">직접 보세요</span></h2>
+        <p class="desc">PBS컬러랩이 직접 제작한 실제 웹페이지입니다. 눌러서 확인해 보세요.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;">
+        <a href="https://choisite.vercel.app/" target="_blank" rel="noopener" style="display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.05);">
+          <div style="aspect-ratio:16/10;background:#f4f5f7;overflow:hidden;"><img src="https://image.thum.io/get/width/1280/crop/800/https://choisite.vercel.app/" alt="강사 브랜딩 홈페이지" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='#141821';" /></div>
+          <div style="padding:12px 14px;"><b style="font-size:14px;">강사 브랜딩 홈페이지</b><small style="display:block;color:var(--muted);font-size:12px;margin-top:3px;">대표 최해숙 · PBS컬러랩</small></div>
+        </a>
+        <a href="https://www.imjastyle.com/" target="_blank" rel="noopener" style="display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.05);">
+          <div style="position:relative;aspect-ratio:16/10;background:#f4f5f7;overflow:hidden;"><img src="https://image.thum.io/get/width/1280/crop/800/https://www.imjastyle.com/" alt="제작 결과물" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='#141821';" /><span style="position:absolute;top:8px;left:8px;background:var(--pink);color:#fff;font-size:11px;font-weight:800;padding:4px 9px;border-radius:100px;">제작 사례</span></div>
+          <div style="padding:12px 14px;"><b style="font-size:14px;">제작 결과물</b><small style="display:block;color:var(--muted);font-size:12px;margin-top:3px;">imjastyle.com</small></div>
+        </a>
+        <a href="https://realcoach1.com/" target="_blank" rel="noopener" style="display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.05);">
+          <div style="position:relative;aspect-ratio:16/10;background:#f4f5f7;overflow:hidden;"><img src="https://image.thum.io/get/width/1280/crop/800/https://realcoach1.com/" alt="제작 결과물" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='#141821';" /><span style="position:absolute;top:8px;left:8px;background:var(--pink);color:#fff;font-size:11px;font-weight:800;padding:4px 9px;border-radius:100px;">제작 사례</span></div>
+          <div style="padding:12px 14px;"><b style="font-size:14px;">제작 결과물</b><small style="display:block;color:var(--muted);font-size:12px;margin-top:3px;">realcoach1.com</small></div>
+        </a>
+        <a href="https://antena.kr/" target="_blank" rel="noopener" style="display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.05);">
+          <div style="position:relative;aspect-ratio:16/10;background:#f4f5f7;overflow:hidden;"><img src="https://image.thum.io/get/width/1280/crop/800/https://antena.kr/" alt="제작 결과물" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" onerror="this.style.display='none';this.parentElement.style.background='#141821';" /><span style="position:absolute;top:8px;left:8px;background:var(--pink);color:#fff;font-size:11px;font-weight:800;padding:4px 9px;border-radius:100px;">제작 사례</span></div>
+          <div style="padding:12px 14px;"><b style="font-size:14px;">제작 결과물</b><small style="display:block;color:var(--muted);font-size:12px;margin-top:3px;">antena.kr</small></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 가격 안내 -->
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <span class="kicker">PRICING · 제작 비용</span>
+        <h2 class="title">합리적인 가격,<br><span class="pink">전문가 퀄리티</span></h2>
+        <p class="desc">필요에 맞는 패키지를 선택하세요.</p>
+      </div>
+
+      <div class="price-grid">
+        <!-- 베이직 -->
+        <div class="price-card">
+          <div class="tier">BASIC</div>
+          <div class="name">베이직</div>
+          <div class="amount">79<span class="unit">만원</span></div>
+          <div class="includes">
+            <div><span class="ck">✓</span> 1페이지 웹사이트 (랜딩페이지)</div>
+            <div><span class="ck">✓</span> 프로필 · 서비스 소개 구성</div>
+            <div><span class="ck">✓</span> 모바일 반응형 디자인</div>
+            <div><span class="ck">✓</span> 기본 문구 작성</div>
+          </div>
+        </div>
+
+        <!-- 스탠다드 (인기) -->
+        <div class="price-card pop">
+          <div class="badge">🔥 가장 많이 선택</div>
+          <div class="tier">STANDARD</div>
+          <div class="name">스탠다드</div>
+          <div class="amount">99<span class="unit">만원</span></div>
+          <div class="includes">
+            <div><span class="ck">✓</span> 멀티페이지 웹사이트</div>
+            <div><span class="ck">✓</span> 브랜드 맞춤 디자인</div>
+            <div><span class="ck">✓</span> 모바일 반응형</div>
+            <div><span class="ck">✓</span> 마케팅 문구 + SEO 기본 설정</div>
+            <div><span class="ck">✓</span> 문의/신청 폼 연동</div>
+          </div>
+        </div>
+
+        <!-- 프리미엄 -->
+        <div class="price-card">
+          <div class="tier">PREMIUM</div>
+          <div class="name">프리미엄</div>
+          <div class="amount">149<span class="unit">만원</span></div>
+          <div class="includes">
+            <div><span class="ck">✓</span> 풀 브랜딩 웹사이트</div>
+            <div><span class="ck">✓</span> 도메인 연결 + 배포</div>
+            <div><span class="ck">✓</span> SEO + 검색 등록 설정</div>
+            <div><span class="ck">✓</span> 접수/예약 시스템 구축</div>
+            <div><span class="ck">✓</span> 운영 가이드 제공</div>
+            <div><span class="ck">✓</span> 1개월 수정 지원</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="desc center" style="margin-top:20px;font-size:14px;font-weight:700;color:var(--ink);">
+        💬 상담 후 맞춤 견적도 가능합니다. 편하게 문의주세요.
+      </p>
+      <div class="center" style="margin-top:24px;">
+        <a href="#apply" class="cta">제작 신청하기 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 제작 진행 과정 -->
+  <section style="background:#fff;">
+    <div class="wrap">
+      <div class="center">
+        <span class="kicker">PROCESS · 진행 과정</span>
+        <h2 class="title">이렇게 <span class="pink">진행됩니다</span></h2>
+      </div>
+      <div class="results">
+        <div class="item"><div class="num">01</div><div class="txt">신청서 접수 + 입금</div></div>
+        <div class="item"><div class="num">02</div><div class="txt">1:1 상담 · 원하는 방향 파악</div></div>
+        <div class="item"><div class="num">03</div><div class="txt">초안 제작 · 피드백 반영</div></div>
+        <div class="item"><div class="num">04</div><div class="txt">완성 · 배포 · 인수</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 신청 폼 -->
+  <section id="apply" style="background:#fff;padding-top:20px;">
+    <div class="wrap">
+      <div class="card" id="formCard">
+        <h2>제작 대행 신청서</h2>
+        <p class="lead">아래 정보를 남겨주시면 확인 후 상담 안내를 드립니다.</p>
+
+        <form id="applyForm">
+          <div class="field">
+            <label>패키지 선택 <span class="req">*</span></label>
+            <div class="session-group">
+              <label class="session-opt"><input type="radio" name="session" value="웹페이지 제작 대행 · 베이직 · 790,000원" /><span class="si"><b>🟢 베이직 (79만원)</b><small>1페이지 랜딩 · 프로필+서비스 소개 · 모바일 반응형</small></span></label>
+              <label class="session-opt"><input type="radio" name="session" value="웹페이지 제작 대행 · 스탠다드 · 990,000원" /><span class="si"><b>🔥 스탠다드 (99만원) <span style="color:var(--pink-deep)">— 인기</span></b><small>멀티페이지 · 브랜드 디자인 · 마케팅 문구+SEO · 신청폼 연동</small></span></label>
+              <label class="session-opt"><input type="radio" name="session" value="웹페이지 제작 대행 · 프리미엄 · 1,490,000원" /><span class="si"><b>💎 프리미엄 (149만원)</b><small>풀 브랜딩 · 도메인+배포 · SEO+검색등록 · 예약시스템 · 1개월 수정지원</small></span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label>이름 <span class="req">*</span></label>
+            <input type="text" name="name" required placeholder="성함을 입력해 주세요" />
+          </div>
+          <div class="field">
+            <label>연락처 <span class="req">*</span></label>
+            <input type="tel" name="phone" required placeholder="010-0000-0000" />
+          </div>
+          <div class="field">
+            <label>직업</label>
+            <input type="text" name="job" placeholder="예) 강사 / 1인 사업가 / 대표 등" />
+          </div>
+          <div class="field">
+            <label>소속</label>
+            <input type="text" name="affiliation" placeholder="예) OO협회, OO센터, 프리랜서 등" />
+          </div>
+          <div class="field">
+            <label>원하시는 웹페이지 내용 <span class="req">*</span></label>
+            <textarea name="want_to_make" rows="7" required placeholder="아래 내용을 편하게 적어주세요.&#10;&#10;① 어떤 웹페이지를 원하시나요? (예: 강사 프로필, 수강 신청 페이지, 브랜드 소개 등)&#10;② 넣고 싶은 내용·메뉴 (예: 프로필, 경력, 수강후기, 문의폼 등)&#10;③ 참고 사이트가 있으면 URL&#10;④ 기타 요청 사항"></textarea>
+          </div>
+
+          <div class="field">
+            <label>사전 규약 동의 <span class="req">*</span></label>
+            <div class="terms">
+              <h4>1. 신청 및 확정</h4>
+              신청 후 안내된 계좌로 제작비를 입금하시면 접수되며, 입금 확인 후 1:1 상담을 통해 제작 방향을 확정합니다.
+              <h4>2. 환불 규정</h4>
+              · 제작 착수 전 : <b>전액 환불</b><br>
+              · 초안 제공 후 : <b>50% 환불</b><br>
+              · 완성 후 인수 시 : <b>환불 불가</b>
+              <h4>3. 제작 안내</h4>
+              · 1:1 상담 후 제작 기간과 세부 일정을 안내드립니다.<br>
+              · 초안 제작 후 1회 피드백 반영이 기본 포함됩니다.<br>
+              · 추가 수정 요청은 패키지별 정책에 따릅니다.
+              <h4>4. 개인정보 수집·이용 동의</h4>
+              · 수집 항목 : 이름, 연락처, 직업 등 신청 정보<br>
+              · 이용 목적 : 제작 상담·안내 및 서비스 제공<br>
+              · 보유 기간 : 서비스 완료 후 1년 (관련 법령에 따름)<br>
+              동의를 거부하실 수 있으나, 거부 시 신청이 제한됩니다.
+            </div>
+            <label class="agree"><input type="checkbox" id="agreeChk" /><span>위 사전 규약 및 개인정보 수집·이용에 모두 동의합니다. (필수)</span></label>
+          </div>
+
+          <button type="submit" class="submit" id="submitBtn">제작 신청서 제출하기</button>
+          <div class="msg err" id="errMsg"></div>
+          <p class="hint center" style="margin-top:14px;">제출 후 <b>상담 안내 문자</b>를 보내드립니다.</p>
+        </form>
+
+        <div class="done" id="doneScreen">
+          <div class="check">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h2>신청이 접수되었습니다 🎉</h2>
+          <p>소중한 신청 감사합니다.</p>
+          <div class="acct">
+            제작비 입금계좌<br><b>카카오뱅크 3333-14-5173594</b><br><span style="font-size:13.5px;color:var(--muted)">예금주 : PBS컬러랩 최해숙</span><br>
+            <button type="button" onclick="copyAcct(this)" style="margin-top:12px;background:var(--pink);color:#fff;border:none;font-weight:800;font-size:15px;padding:12px 22px;border-radius:100px;cursor:pointer;font-family:inherit">📋 계좌 복사</button>
+          </div>
+          <div style="margin-top:16px;background:#FFF7E6;border:1px solid #F0D98A;border-radius:12px;padding:14px 16px;font-size:14px;color:#7a5a00;line-height:1.7;text-align:left">
+            ⚠️ <b>입금 확인 후 1:1 상담 안내를 보내드립니다.</b><br>
+            <b>상담 안내 문자를 받으셔야 제작이 시작</b>됩니다. 조금만 기다려 주세요 🙏
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <b>PBS컬러랩</b> · 대표 최해숙 · 1600-7218<br>
+    제작 문의 010-4285-7997 · 입금계좌 카카오뱅크 3333-14-5173594 (예금주 PBS컬러랩 최해숙)
+  </div>
+
+  <!-- 하단 고정 CTA -->
+  <div class="sticky" id="stickyBar">
+    <div class="info">
+      <div class="p">웹페이지 제작 대행 79만원~</div>
+      <div class="s">PBS컬러랩이 직접 만들어 드립니다</div>
+    </div>
+    <a href="#apply" class="cta">신청하기</a>
+  </div>
+
+<script>
+  const SUPABASE_URL = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co";
+  const ANON_KEY = "sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+
+  function copyAcct(btn){
+    var acct = "3333-14-5173594";
+    function ok(){ var o=btn.textContent; btn.textContent="✓ 계좌번호 복사됐어요"; setTimeout(function(){ btn.textContent=o; }, 1800); }
+    function fb(){ var t=document.createElement("textarea"); t.value=acct; t.setAttribute("readonly",""); t.style.cssText="position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px"; document.body.appendChild(t); t.select(); try{ t.setSelectionRange(0,acct.length); }catch(e){} try{ document.execCommand("copy"); ok(); }catch(e){ alert("복사가 안 됩니다. 계좌: 카카오뱅크 "+acct); } document.body.removeChild(t); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(acct).then(ok, fb); } else { fb(); }
+  }
+
+  const form = document.getElementById("applyForm");
+  const btn = document.getElementById("submitBtn");
+  const errMsg = document.getElementById("errMsg");
+
+  // 회차 선택 카드 하이라이트
+  document.querySelectorAll(".session-opt input").forEach(r => {
+    r.addEventListener("change", () => {
+      document.querySelectorAll(".session-opt").forEach(o => o.classList.remove("sel"));
+      if (r.checked) r.closest(".session-opt").classList.add("sel");
+    });
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errMsg.style.display = "none";
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (!data.session) {
+      errMsg.textContent = "패키지를 선택해 주세요.";
+      errMsg.style.display = "block";
+      document.getElementById("apply").scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    if (!data.name.trim() || !data.phone.trim()) {
+      errMsg.textContent = "이름과 연락처는 필수 입력입니다.";
+      errMsg.style.display = "block";
+      return;
+    }
+    if (!data.want_to_make || !data.want_to_make.trim()) {
+      errMsg.textContent = "원하시는 웹페이지 내용을 적어주세요.";
+      errMsg.style.display = "block";
+      return;
+    }
+    if (!document.getElementById("agreeChk").checked) {
+      errMsg.textContent = "사전 규약에 동의하셔야 접수가 가능합니다. (동의 체크 필요)";
+      errMsg.style.display = "block";
+      return;
+    }
+    data.agreed = true;
+    data.type = "제작대행";
+    btn.disabled = true;
+    btn.textContent = "제출 중...";
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/applications`, {
+        method: "POST",
+        headers: {
+          "apikey": ANON_KEY,
+          "Authorization": `Bearer ${ANON_KEY}`,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        throw new Error(t || "제출에 실패했습니다.");
+      }
+      // 대표님께 새 신청 이메일 알림
+      fetch(`${SUPABASE_URL}/functions/v1/notify-application`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }).catch(() => {});
+      // 신청자에게 계좌번호 안내 SMS 자동발송
+      fetch(`${SUPABASE_URL}/functions/v1/sms-account-info`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ name: data.name, phone: data.phone, session: data.session }),
+      }).catch(() => {});
+      document.getElementById("formCard").querySelector("h2").style.display = "none";
+      document.getElementById("formCard").querySelector(".lead").style.display = "none";
+      form.style.display = "none";
+      document.getElementById("doneScreen").style.display = "block";
+      var sb=document.getElementById("stickyBar");
+      if(sb){ sb.innerHTML='<div class="info"><div class="p" style="font-size:14px">입금계좌 <b>카카오뱅크 3333-14-5173594</b> (PBS컬러랩 최해숙)</div><div class="s">입금 후 상담 안내 문자를 보내드립니다</div></div><button class="cta" onclick="copyAcct(this)" style="border:none;cursor:pointer;font-family:inherit">📋 계좌 복사</button>'; }
+      document.getElementById("apply").scrollIntoView({ behavior: "smooth" });
+    } catch (err) {
+      errMsg.textContent = "제출 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 010-4285-7997로 연락 주세요.";
+      errMsg.style.display = "block";
+      btn.disabled = false;
+      btn.textContent = "제작 신청서 제출하기";
+    }
+  });
+</script>
+</body>
+</html>
