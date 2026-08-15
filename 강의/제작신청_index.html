@@ -510,12 +510,7 @@
         headers: { "Authorization": `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
         body: JSON.stringify(data),
       }).catch(() => {});
-      // 신청자에게 계좌번호 안내 SMS 자동발송
-      fetch(`${SUPABASE_URL}/functions/v1/sms-account-info`, {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${ANON_KEY}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ name: data.name, phone: data.phone, session: data.session }),
-      }).catch(() => {});
+      // 고객 SMS는 notify-application에서 통합 발송 (중복 방지)
       document.getElementById("formCard").querySelector("h2").style.display = "none";
       document.getElementById("formCard").querySelector(".lead").style.display = "none";
       form.style.display = "none";
