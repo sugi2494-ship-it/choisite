@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 웹페이지 만들기 · PBS COLOR LAB 최해숙</title>
+<meta name="description" content="코딩 0줄로 나만의 홈페이지를 만드는 6단계 실습 과정. 업종별 기획부터 배포·검색 노출까지 하루에 완성합니다." />
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;border-radius:0}
+:root{
+  --ink:#111111; --ink2:#3D3D3D; --ink3:#767676; --ink4:#9B9B9B;
+  --line:#E2E2E2; --line-strong:#111111; --bg:#FFFFFF; --bg2:#FAFAFA; --bg3:#F4F4F4;
+  --plum:#7A2E45; --plum-deep:#5C2033; --plum-tint:#FBF4F6;
+  --pad: clamp(20px, 4vw, 68px);
+  --maxw: 1520px;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg); color:var(--ink); font-size:17px; line-height:1.75;
+  word-break:keep-all; -webkit-font-smoothing:antialiased; letter-spacing:-0.011em;
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+svg{display:block;flex:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);width:100%}
+
+/* ── 헤더 ── */
+.site-head{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50}
+.site-head .wrap{display:flex;align-items:center;gap:28px;height:76px}
+.brand{font-size:17px;font-weight:800;letter-spacing:.06em;white-space:nowrap}
+.brand span{color:var(--ink3);font-weight:600;letter-spacing:0}
+.nav{display:flex;gap:26px;margin-left:auto;align-items:center}
+.nav a{font-size:15.5px;font-weight:600;color:var(--ink2);padding:6px 0;border-bottom:2px solid transparent;transition:color .12s,border-color .12s}
+.nav a:hover{color:var(--plum);border-bottom-color:var(--plum)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--ink)}
+.head-cta{border:1px solid var(--line-strong);padding:11px 20px;font-size:15px;font-weight:700;transition:background .12s,color .12s,border-color .12s}
+.head-cta:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.burger{display:none;margin-left:auto;border:1px solid var(--line-strong);background:#fff;padding:9px 11px;cursor:pointer}
+
+/* ── 공통 타이포 ── */
+.eyebrow{font-size:13.5px;font-weight:800;letter-spacing:.14em;color:var(--plum);text-transform:uppercase}
+h1{font-size:clamp(34px,4.4vw,54px);line-height:1.2;font-weight:800;letter-spacing:-.03em}
+h2{font-size:clamp(24px,2.5vw,34px);line-height:1.28;font-weight:800;letter-spacing:-.025em}
+h3{font-size:20.5px;line-height:1.4;font-weight:800;letter-spacing:-.02em}
+h4{font-size:17.5px;font-weight:800;letter-spacing:-.015em}
+.lead{font-size:clamp(17px,1.35vw,20px);line-height:1.75;color:var(--ink2);max-width:62ch}
+.muted{color:var(--ink3)}
+.small{font-size:15px;line-height:1.7;color:var(--ink2)}
+.micro{font-size:13.5px;letter-spacing:.02em;color:var(--ink3)}
+b,strong{font-weight:800}
+
+/* ── 섹션 ── */
+section{padding:clamp(52px,6vw,92px) 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  padding-bottom:20px;border-bottom:1px solid var(--line-strong);margin-bottom:38px}
+.sec-head p{color:var(--ink3);font-size:16px;max-width:56ch}
+
+/* ── 버튼 ── */
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line-strong);background:#fff;
+  padding:15px 26px;font-size:16px;font-weight:700;cursor:pointer;transition:background .12s,color .12s,border-color .12s}
+.btn:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.btn-solid{background:var(--ink);color:#fff}
+.btn-solid:hover{background:var(--plum);border-color:var(--plum)}
+.btn-sm{padding:11px 18px;font-size:15px}
+.btn-block{width:100%;justify-content:center}
+.btn:disabled{border-color:var(--line);color:var(--ink4);background:#fff;cursor:not-allowed}
+.btn:disabled:hover{background:#fff;color:var(--ink4);border-color:var(--line)}
+.btn.ok{background:#111;border-color:#111;color:#fff}
+
+/* ── 폼 ── */
+label.fl{display:block;font-size:15px;font-weight:800;margin-bottom:7px}
+.fh{font-size:14.5px;color:var(--ink3);margin-bottom:10px;line-height:1.65}
+input[type=text],input[type=url],textarea,select{
+  width:100%;border:1px solid var(--line-strong);background:#fff;padding:14px 16px;font-size:16.5px;line-height:1.5}
+textarea{resize:vertical;min-height:110px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--plum);box-shadow:inset 0 0 0 1px var(--plum)}
+input::placeholder,textarea::placeholder{color:var(--ink4)}
+/* 셀렉트(드롭다운) */
+.selwrap{position:relative}
+.selwrap select{appearance:none;-webkit-appearance:none;padding-right:52px;cursor:pointer;font-weight:700}
+.selwrap .chev{position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink)}
+.selwrap:hover select{border-color:var(--plum)}
+.selwrap:hover .chev{color:var(--plum)}
+
+/* ── 카드 ── */
+.grid{display:grid;gap:0}
+.card{border:1px solid var(--line);padding:30px;background:#fff;transition:border-color .12s,box-shadow .12s}
+.card:hover{border-color:var(--plum)}
+
+/* 활동 카드 (홈) */
+.acts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-strong);border-left:1px solid var(--line-strong)}
+.act{display:flex;flex-direction:column;gap:14px;padding:34px 32px 30px;background:#fff;
+  border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);
+  transition:background .14s;position:relative;min-height:250px}
+.act:hover{background:var(--plum-tint)}
+.act:hover .act-no,.act:hover h3,.act:hover .act-go{color:var(--plum)}
+.act:hover .act-ico{border-color:var(--plum);color:var(--plum)}
+.act-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.act-no{font-size:14px;font-weight:800;letter-spacing:.12em;color:var(--ink4);transition:color .14s}
+.act-ico{border:1px solid var(--line-strong);width:46px;height:46px;display:flex;align-items:center;justify-content:center;transition:border-color .14s,color .14s}
+.act p{font-size:15.5px;line-height:1.7;color:var(--ink2);flex:1}
+.act-go{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;transition:color .14s}
+
+/* 준비 단계 */
+.preps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.prep{display:flex;gap:14px;align-items:flex-start;padding:24px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .14s}
+.prep:hover{background:var(--plum-tint)}
+.prep:hover .prep-t{color:var(--plum)}
+.prep-t{font-size:16.5px;font-weight:800;transition:color .14s}
+.prep .micro{margin-top:3px}
+
+/* ── 프롬프트 블록 ── */
+.pblock{border:1px solid var(--line-strong);margin-top:16px}
+.pblock-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 20px;border-bottom:1px solid var(--line-strong);background:var(--bg2)}
+.pblock-head .t{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.pbody{padding:22px 20px;white-space:pre-wrap;font-size:16px;line-height:1.8;color:var(--ink)}
+.copy{border:1px solid var(--line-strong);background:#fff;padding:9px 16px;font-size:14.5px;font-weight:800;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;transition:background .12s,color .12s,border-color .12s;white-space:nowrap}
+.copy:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.copy.done{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ── 아코디언(스텝) ── */
+.steps{border-top:1px solid var(--line-strong)}
+.step{border-bottom:1px solid var(--line-strong)}
+.step-h{display:flex;align-items:center;gap:20px;padding:26px 4px;cursor:pointer;transition:color .12s}
+.step-h:hover{color:var(--plum)}
+.step-h:hover .step-ico{border-color:var(--plum);color:var(--plum)}
+.step-n{font-size:14px;font-weight:800;letter-spacing:.1em;color:var(--ink4);width:28px;flex:none}
+.step-ico{width:44px;height:44px;border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;flex:none;transition:border-color .12s,color .12s}
+.step-tt{flex:1}
+.step-tt h3{margin-bottom:2px}
+.step-tt .micro{color:var(--ink3)}
+.step-chev{transition:transform .18s;color:var(--ink3);flex:none}
+.step.open .step-chev{transform:rotate(180deg);color:var(--plum)}
+.step-b{display:none;padding:0 4px 34px 92px}
+.step.open .step-b{display:block}
+
+/* ── 표 ── */
+table{width:100%;border-collapse:collapse;font-size:16px}
+th,td{border:1px solid var(--line);padding:16px 18px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:var(--bg2);font-weight:800;font-size:15px;letter-spacing:.02em}
+td:first-child{font-weight:700;white-space:nowrap;width:130px}
+tr:hover td{background:var(--plum-tint)}
+
+/* ── 노트 ── */
+.note{border:1px solid var(--line-strong);padding:20px 22px;font-size:15.5px;line-height:1.75;background:var(--bg2);margin-top:18px}
+.note.accent{border-color:var(--plum);background:var(--plum-tint)}
+.note h4{margin-bottom:6px}
+.ol{margin:12px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.ol li{counter-increment:s;padding:11px 0 11px 42px;position:relative;font-size:16px;line-height:1.7;border-top:1px solid var(--line)}
+.ol li:first-child{border-top:0}
+.ol li::before{content:counter(s);position:absolute;left:0;top:11px;width:26px;height:26px;border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:800}
+.ul{margin:10px 0 0 0;padding:0;list-style:none}
+.ul li{padding:8px 0 8px 24px;position:relative;font-size:16px;line-height:1.7}
+.ul li::before{content:"";position:absolute;left:0;top:18px;width:9px;height:1px;background:var(--ink)}
+.ul a,.ol a{font-weight:700;border-bottom:1px solid var(--line-strong);transition:color .12s,border-color .12s}
+.ul a:hover,.ol a:hover{color:var(--plum);border-color:var(--plum)}
+
+/* 체크박스 */
+.chk{display:flex;align-items:flex-start;gap:13px;padding:14px 0;border-top:1px solid var(--line);cursor:pointer;font-size:16px}
+.chk input{width:21px;height:21px;flex:none;margin-top:3px;accent-color:var(--plum)}
+.chk:hover{color:var(--plum)}
+.done-msg{display:none;border:1px solid var(--plum);background:var(--plum-tint);color:var(--plum-deep);padding:16px 18px;margin-top:16px;font-weight:800;font-size:16px}
+.done-msg.show{display:block}
+
+/* ── 2단 레이아웃 ── */
+.split{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:clamp(32px,4vw,72px);align-items:start}
+.rail{position:sticky;top:104px;border:1px solid var(--line-strong);padding:26px 24px}
+.rail h4{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.rail .ul li{font-size:15.5px;padding:6px 0 6px 22px}
+.rail .next{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+
+/* ── 후기 ── */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-strong);border-left:1px solid var(--line-strong)}
+.rv{padding:30px 28px;border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);transition:background .14s}
+.rv:hover{background:var(--plum-tint)}
+.rv-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.rv-name{font-size:16.5px;font-weight:800}
+.rv-date{font-size:13.5px;color:var(--ink4)}
+.rv-kind{display:inline-block;border:1px solid var(--line-strong);padding:3px 10px;font-size:12.5px;font-weight:800;letter-spacing:.04em;margin-bottom:12px}
+.rv-msg{font-size:16.5px;line-height:1.85;color:var(--ink);white-space:pre-wrap}
+.rv-img{margin-top:14px;max-width:100%;border:1px solid var(--line)}
+
+/* ── 히어로 ── */
+.hero{border-bottom:1px solid var(--line-strong);padding:clamp(56px,7vw,104px) 0 clamp(48px,5vw,80px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(32px,5vw,88px);align-items:end}
+.hero h1{margin:18px 0 22px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.facts{border-top:1px solid var(--line-strong)}
+.fact{display:flex;justify-content:space-between;gap:20px;padding:15px 0;border-bottom:1px solid var(--line)}
+.fact dt{font-size:15px;color:var(--ink3);font-weight:600}
+.fact dd{font-size:16px;font-weight:800;text-align:right}
+
+/* ── 플로우 스트립 ── */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);border-left:1px solid var(--line)}
+.flow > div{padding:20px 18px;border-right:1px solid var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .14s}
+.flow > div:hover{background:var(--plum-tint)}
+.flow > div:hover .t{color:var(--plum)}
+.flow .t{transition:color .14s}
+.flow .n{font-size:12.5px;font-weight:800;letter-spacing:.1em;color:var(--ink4)}
+.flow .t{font-size:15.5px;font-weight:800;margin-top:4px}
+
+/* ── 푸터 ── */
+.site-foot{border-top:1px solid var(--line-strong);padding:44px 0;margin-top:20px}
+.site-foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.site-foot .micro{font-size:14px}
+.foot-links{display:flex;gap:22px}
+.foot-links a{font-size:14.5px;font-weight:600;color:var(--ink2)}
+.foot-links a:hover{color:var(--plum)}
+
+/* ── 반응형 ── */
+@media(max-width:1080px){
+  .acts{grid-template-columns:repeat(2,1fr)}
+  .reviews{grid-template-columns:repeat(2,1fr)}
+  .preps{grid-template-columns:repeat(2,1fr)}
+  .split{grid-template-columns:1fr}
+  .rail{position:static}
+  .hero-grid{grid-template-columns:1fr;align-items:start}
+  .flow{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:720px){
+  body{font-size:16.5px}
+  .nav{display:none}
+  .nav.open{display:flex;position:absolute;top:76px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line-strong);
+    flex-direction:column;gap:0;padding:8px var(--pad) 18px;margin:0}
+  .nav.open a{padding:13px 0;border-bottom:1px solid var(--line);width:100%}
+  .burger{display:block}
+  .head-cta{display:none}
+  .acts,.reviews,.preps{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .step-b{padding-left:0}
+  .step-ico{display:none}
+  td:first-child{width:auto}
+}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="홈.html">PBS COLOR LAB <span>· AI 웹페이지 만들기</span></a>
+    <button class="burger" id="burger" aria-label="메뉴"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <nav class="nav" id="nav">
+      <a href="홈.html" class="on">과정 홈</a> <a href="홈.html#활동">학습 활동</a> <a href="홈.html#자료">자료실</a> <a href="홈.html#후기">후기</a>
+    </nav>
+    <a class="head-cta" href="활동1_웹페이지방향설정_v3.html">지금 시작하기</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">One-day Course</div>
+      <h1>코딩 없이,<br />하루 만에 내 홈페이지</h1>
+      <p class="lead">업종만 고르면 기획이 나오고, 대화를 이어가면 페이지가 완성됩니다.
+        강사·카페·병원·보험·교육 등 어떤 일을 하시든 그대로 따라 하실 수 있게 6단계로 나눴습니다.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="활동1_웹페이지방향설정_v3.html">활동 1부터 시작하기 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></a>
+        <a class="btn" href="#준비">준비 단계 먼저 보기</a>
+      </div>
+    </div>
+    <div>
+      <dl class="facts">
+        <div class="fact"><dt>대상</dt><dd>코딩 경험 없는 분</dd></div>
+        <div class="fact"><dt>준비물</dt><dd>노트북 · 클로드 유료 계정</dd></div>
+        <div class="fact"><dt>구성</dt><dd>준비 4단계 + 활동 6단계</dd></div>
+        <div class="fact"><dt>결과물</dt><dd>인터넷 주소가 있는 내 홈페이지</dd></div>
+        <div class="fact"><dt>진행</dt><dd>클로드 코워크 · 원데이</dd></div>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<section id="준비">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Before you start</div><h2 style="margin-top:10px">시작 전 준비</h2></div>
+      <p>딱 한 번만 설정하면 됩니다. 네 가지를 순서대로 확인한 뒤 활동을 시작하세요.</p>
+    </div>
+    <div class="preps"><a class="prep" href="사전설정_코워크크롬연결.html"><span style="color:#111;margin-top:2px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span><span><span class="prep-t">시작 전 설정</span><span class="micro" style="display:block">코워크·크롬 연결</span></span></a>
+<a class="prep" href="사전준비_체크리스트.html"><span style="color:#111;margin-top:2px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 5h11"/><path d="M4 12h8"/><path d="M4 19h6"/><path d="M15 15l3 3 5-6"/></svg></span><span><span class="prep-t">준비물 사전 점검</span><span class="micro" style="display:block">노트북·사진·계정</span></span></a>
+<a class="prep" href="사전규약_동의.html"><span style="color:#111;margin-top:2px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="10" width="16" height="11"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><span><span class="prep-t">사전 규약 동의</span><span class="micro" style="display:block">서명 후 활동 열림</span></span></a>
+<a class="prep" href="AI기초30분_학습페이지.html"><span style="color:#111;margin-top:2px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h13"/></svg></span><span><span class="prep-t">AI 기초 30분</span><span class="micro" style="display:block">클로드 사용법</span></span></a></div>
+  </div>
+</section>
+
+<section id="활동" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Learning activities</div><h2 style="margin-top:10px">학습 활동 6단계</h2></div>
+      <p>순서대로 진행하시면 됩니다. 활동 1에서 만든 대화를 계속 이어가는 것이 핵심입니다.</p>
+    </div>
+    <div class="acts"><a class="act" href="활동1_웹페이지방향설정_v3.html"><div class="act-top"><span class="act-no">01</span><span class="act-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span></div><h3>판 먼저 짜기</h3><p>업종을 고르면 컨셉·구조·메뉴까지 기획해 주는 맞춤 프롬프트가 완성됩니다. 바로 만들지 않고 판부터 짭니다.</p><span class="act-go">활동 열기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span></a>
+<a class="act" href="활동2_페이지만들기.html"><div class="act-top"><span class="act-no">02</span><span class="act-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></span></div><h3>페이지 다듬기</h3><p>문의 받기, 후기·별점, 디자인 고급화. 같은 대화에 이어 붙이며 제일 중요한 세 가지만 손봅니다.</p><span class="act-go">활동 열기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span></a>
+<a class="act" href="활동3_다듬고연결하기.html"><div class="act-top"><span class="act-no">03</span><span class="act-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg></span></div><h3>다듬고 연결하기</h3><p>사진·로고 자리를 잡고 연락처·SNS·지도를 실제로 연결한 뒤, 배포 전 최종 점검까지 마칩니다.</p><span class="act-go">활동 열기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span></a>
+<a class="act" href="활동4_배포하고내주소만들기.html"><div class="act-top"><span class="act-no">04</span><span class="act-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M12 16V4"/><path d="M8 8l4-4 4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg></span></div><h3>배포하고 내 주소 만들기</h3><p>검색 노출(SEO)과 카톡 대표이미지를 넣고, 넷리파이 또는 버셀로 진짜 인터넷 주소를 만듭니다.</p><span class="act-go">활동 열기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span></a>
+<a class="act" href="활동5_내페이지알리기.html"><div class="act-top"><span class="act-no">05</span><span class="act-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M21 3L10.5 13.5"/><path d="M21 3l-6.5 18-4-8-8-4z"/></svg></span></div><h3>내 페이지 알리기</h3><p>완성한 링크를 알리는 가장 쉬운 방법. 소개글 만들기와 QR코드로 명함·전단까지 연결합니다.</p><span class="act-go">활동 열기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span></a>
+<a class="act" href="활동6_후기와다음단계.html"><div class="act-top"><span class="act-no">06</span><span class="act-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8L3.5 9.7l5.9-.9z"/></svg></span></div><h3>후기 & 다음 단계</h3><p>수료를 확인하고 후기를 남깁니다. 손님이 찾아오게 만드는 마케팅 과정도 함께 안내합니다.</p><span class="act-go">활동 열기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span></a></div>
+    <div class="note" style="margin-top:32px">
+      <h4>진행 원칙 세 가지</h4>
+      <ul class="ul">
+        <li><b>같은 대화에서 이어갑니다.</b> 활동 1에서 페이지를 만든 클로드 대화창에 계속 붙여넣으세요.</li>
+        <li><b>한 번에 하나씩.</b> 카드 하나를 붙여넣고 결과를 확인한 뒤 다음으로 넘어갑니다.</li>
+        <li><b>없는 것은 만들지 않습니다.</b> 경력·수치·후기는 실제 있는 내용만 넣습니다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">Flow</div><h2 style="margin-top:10px">전체 흐름 한눈에</h2></div></div>
+    <div class="flow"><div><div class="n">01</div><div class="t">판 먼저 짜기</div></div><div><div class="n">02</div><div class="t">페이지 다듬기</div></div><div><div class="n">03</div><div class="t">다듬고 연결하기</div></div><div><div class="n">04</div><div class="t">배포하고 내 주소 만들기</div></div><div><div class="n">05</div><div class="t">내 페이지 알리기</div></div><div><div class="n">06</div><div class="t">후기 & 다음 단계</div></div></div>
+  </div>
+</section>
+
+<section id="자료" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Resources</div><h2 style="margin-top:10px">교육생 자료실</h2></div>
+      <p>수업에서 쓰는 프롬프트와 순서를 3장으로 정리했습니다. 인쇄해서 옆에 두고 따라 하세요.</p>
+    </div>
+    <div class="split">
+      <div class="card" style="padding:36px 34px">
+        <div style="display:flex;gap:20px;align-items:flex-start">
+          <span class="act-ico" style="width:52px;height:52px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M14 3H7a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h4"/></svg></span>
+          <div style="flex:1">
+            <h3>AI 웹페이지 만들기 · 5단계 정리본</h3>
+            <p class="small" style="margin-top:8px">준비 · 판짜기 · 다듬기 · 배포 · 알리기 전 과정과 복사해서 바로 쓰는 프롬프트 모음. A4 3장.</p>
+            <a class="btn btn-sm" style="margin-top:20px" href="/강의/자료/공개/AI웹페이지_5단계_정리본.pdf" target="_blank" rel="noopener">PDF 내려받기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="padding:30px 28px">
+        <h4>강의실로 가기</h4>
+        <p class="small" style="margin-top:8px">질문·소감 남기기, 강사 자료, 자격시험은 강의실에서 이용하실 수 있습니다.</p>
+        <a class="btn btn-sm" style="margin-top:18px" href="course.html?c=aiweb">강의실 열기 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="후기" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Reviews</div><h2 style="margin-top:10px">수강생 후기</h2></div>
+      <p>실제로 만들어 본 분들의 이야기입니다. 강사 승인 후 함께 표시됩니다.</p>
+    </div>
+    <div id="rvFeed"><p class="muted" style="font-size:16px">후기를 불러오는 중입니다…</p></div>
+
+    <div class="split" style="margin-top:48px">
+      <div class="card" style="padding:34px 32px">
+        <h3 style="margin-bottom:20px">한 줄 남기기</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div>
+            <label class="fl" for="rvKind">종류</label>
+            <div class="selwrap">
+              <select id="rvKind">
+                <option value="후기">후기</option>
+                <option value="소감">소감</option>
+                <option value="질문">질문</option>
+              </select>
+              <span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 8l7 7 7-7"/></svg></span>
+            </div>
+          </div>
+          <div>
+            <label class="fl" for="rvName">이름</label>
+            <input type="text" id="rvName" placeholder="예명도 괜찮습니다" />
+          </div>
+        </div>
+        <div style="margin-top:18px">
+          <label class="fl" for="rvMsg">내용</label>
+          <textarea id="rvMsg" placeholder="오늘 만든 내 페이지 주소와 함께 짧은 소감을 남겨 주세요."></textarea>
+        </div>
+        <button class="btn btn-solid btn-block" id="rvSend" style="margin-top:18px">등록하기</button>
+        <p class="micro" id="rvStat" style="margin-top:12px;min-height:20px"></p>
+      </div>
+      <div class="card" style="padding:30px 28px">
+        <h4>후기가 막막하다면</h4>
+        <p class="small" style="margin-top:8px">아래 문장을 클로드에 붙여넣고 다듬어 보세요.</p>
+        <div class="pblock" style="margin-top:14px">
+          <div class="pblock-head"><span class="t">Prompt</span>
+            <button class="copy" onclick="pbsCopy(this,function(){return document.getElementById('rvPrompt').textContent})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="8" y="8" width="12" height="12"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/></svg> 복사</button></div>
+          <div class="pbody" id="rvPrompt" style="font-size:15.5px">오늘 'AI 웹페이지 만들기' 수업을 들었어. 내가 만든 홈페이지 주소는 [내 주소]야.
+수업 후기를 3~4문장으로 따뜻하게 써줘. (좋았던 점 + 뿌듯했던 순간 + 추천 한마디)
+과장 없이 내 말투로, 편하게.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="micro">PBS COLOR LAB · 최해숙 &nbsp;|&nbsp; AI 웹페이지 만들기 — 코딩 없이 만드는 나만의 홈페이지</div>
+    <div class="foot-links">
+      <a href="홈.html">과정 홈</a>
+      <a href="course.html?c=aiweb">강의실</a>
+      <a href="/강의/자료/공개/AI웹페이지_5단계_정리본.pdf" target="_blank" rel="noopener">정리본 PDF</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+(function(){var b=document.getElementById('burger'),n=document.getElementById('nav');
+if(b&&n)b.addEventListener('click',function(){n.classList.toggle('open');});})();
+
+
+function pbsCopy(btn, getText, label){
+  var txt = getText();
+  function done(){ btn.classList.add('done'); var o=btn.innerHTML; btn.textContent='복사됨';
+    setTimeout(function(){ btn.classList.remove('done'); btn.innerHTML=o; }, 2200); }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, function(){ pbsFallback(txt); done(); });
+  } else { pbsFallback(txt); done(); }
+}
+function pbsFallback(t){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';
+  document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(a);}
+function pbsSteps(){
+  document.querySelectorAll('.step').forEach(function(s){
+    var h=s.querySelector('.step-h'); if(!h) return;
+    h.addEventListener('click', function(){
+      var willOpen = !s.classList.contains('open');
+      if(willOpen && s.dataset.build && window[s.dataset.build]) window[s.dataset.build]();
+      s.classList.toggle('open');
+    });
+  });
+}
+
+(function(){
+  var U='https://oqxlsnyuwtmjmbhgzjoz.supabase.co', K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8', COURSE='AI 웹페이지 제작';
+  var H={apikey:K, Authorization:'Bearer '+K, 'Content-Type':'application/json'};
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function fmt(d){ if(!d) return ''; var t=new Date(d); if(isNaN(t)) return '';
+    return t.getFullYear()+'.'+String(t.getMonth()+1).padStart(2,'0')+'.'+String(t.getDate()).padStart(2,'0'); }
+
+  function load(){
+    fetch(U+'/rest/v1/class_board?select=*&approved=eq.true&order=created_at.desc&limit=24',{headers:H})
+      .then(function(r){return r.json();})
+      .then(function(rows){
+        var list=(rows||[]).filter(function(x){ return x.course===COURSE; });
+        var feed=document.getElementById('rvFeed');
+        if(!list.length){ feed.innerHTML='<div class="note"><h4>아직 등록된 후기가 없습니다</h4>'+
+          '<p class="small" style="margin-top:6px">첫 후기를 남겨 주시면 다음 기수 분들께 큰 도움이 됩니다.</p></div>'; return; }
+        feed.innerHTML='<div class="reviews">'+list.map(function(x){
+          var img = x.photo ? '<img class="rv-img" src="'+esc(x.photo)+'" alt="" loading="lazy">' : '';
+          return '<article class="rv">'+
+            '<div class="rv-top"><span class="rv-name">'+esc(x.name||'익명')+'</span>'+
+            '<span class="rv-date">'+fmt(x.created_at)+'</span></div>'+
+            '<span class="rv-kind">'+esc(x.kind||'후기')+'</span>'+
+            '<div class="rv-msg">'+esc(x.message)+'</div>'+img+'</article>';
+        }).join('')+'</div>';
+      })
+      .catch(function(){ document.getElementById('rvFeed').innerHTML=
+        '<div class="note"><h4>후기를 불러오지 못했습니다</h4><p class="small" style="margin-top:6px">잠시 후 새로고침해 주세요.</p></div>'; });
+  }
+  load();
+
+  document.getElementById('rvSend').addEventListener('click', function(){
+    var name=document.getElementById('rvName').value.trim();
+    var msg=document.getElementById('rvMsg').value.trim();
+    var kind=document.getElementById('rvKind').value;
+    var stat=document.getElementById('rvStat');
+    if(!msg){ stat.textContent='내용을 입력해 주세요.'; return; }
+    stat.textContent='등록 중입니다…';
+    fetch(U+'/rest/v1/class_board',{method:'POST',headers:Object.assign({Prefer:'return=minimal'},H),
+      body:JSON.stringify({name:name||'익명',kind:kind,message:msg,course:COURSE,approved:false,photo:null})})
+      .then(function(r){
+        if(r.ok){ stat.textContent='등록됐습니다. 강사 승인 후 게시됩니다.';
+          document.getElementById('rvMsg').value=''; }
+        else stat.textContent='오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+      })
+      .catch(function(){ stat.textContent='오류가 발생했습니다. 잠시 후 다시 시도해 주세요.'; });
+  });
+})();
+</script>
+</body>
+</html>

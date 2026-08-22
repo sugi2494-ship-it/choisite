@@ -3,197 +3,411 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>활동 3. 다듬고 연결하기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
-<meta name="description" content="배포 전 마지막 손질 — 사진·로고 넣기, 연락처·SNS·지도 연결, 그리고 배포 전 최종 점검까지. 카드만 누르면 프롬프트가 나옵니다." />
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<title>활동 3. 다듬고 연결하기 · AI 웹페이지 만들기 · PBS COLOR LAB</title>
+<meta name="description" content="사진·로고, 연락처·SNS·지도 연결, 배포 전 최종 점검까지 한 번에 마무리합니다." />
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
-  :root{
-    --magenta:#E91E8C; --deep:#7A1F6B; --grad1:#7A1F6B; --grad2:#D0247E;
-    --ink:#1b1420; --sub:#6b6270; --line:#ece4ee; --bg:#faf8fb; --card:#fff;
-    --soft:#fbeef6; --radius:16px;
-  }
-  *{box-sizing:border-box}
-  body{margin:0; background:var(--bg); color:var(--ink);
-    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
-  .topbar{height:5px; background:linear-gradient(90deg,var(--grad1),var(--grad2))}
-  .wrap{max-width:660px; margin:0 auto; padding:0 20px 96px}
-  header{max-width:660px; margin:0 auto; padding:34px 20px 0}
-  .back{display:inline-block; font-size:13px; color:var(--sub); text-decoration:none; margin-bottom:20px}
-  .back:hover{color:var(--magenta)}
-  .eyebrow{font-size:13px; font-weight:800; color:var(--magenta); letter-spacing:.02em}
-  h1{font-size:27px; font-weight:800; margin:10px 0 10px; letter-spacing:-.02em; line-height:1.35}
-  .lead{font-size:16px; color:var(--sub); margin:0}
+*{margin:0;padding:0;box-sizing:border-box;border-radius:0}
+:root{
+  --ink:#111111; --ink2:#3D3D3D; --ink3:#767676; --ink4:#9B9B9B;
+  --line:#E2E2E2; --line-strong:#111111; --bg:#FFFFFF; --bg2:#FAFAFA; --bg3:#F4F4F4;
+  --plum:#7A2E45; --plum-deep:#5C2033; --plum-tint:#FBF4F6;
+  --pad: clamp(20px, 4vw, 68px);
+  --maxw: 1520px;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg); color:var(--ink); font-size:17px; line-height:1.75;
+  word-break:keep-all; -webkit-font-smoothing:antialiased; letter-spacing:-0.011em;
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+svg{display:block;flex:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);width:100%}
 
-  .keep{margin-top:20px; background:#fff8fc; border:1px solid #f2dcec; border-radius:14px; padding:16px 18px; font-size:14px}
-  .keep b{color:var(--deep)}
+/* ── 헤더 ── */
+.site-head{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:50}
+.site-head .wrap{display:flex;align-items:center;gap:28px;height:76px}
+.brand{font-size:17px;font-weight:800;letter-spacing:.06em;white-space:nowrap}
+.brand span{color:var(--ink3);font-weight:600;letter-spacing:0}
+.nav{display:flex;gap:26px;margin-left:auto;align-items:center}
+.nav a{font-size:15.5px;font-weight:600;color:var(--ink2);padding:6px 0;border-bottom:2px solid transparent;transition:color .12s,border-color .12s}
+.nav a:hover{color:var(--plum);border-bottom-color:var(--plum)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--ink)}
+.head-cta{border:1px solid var(--line-strong);padding:11px 20px;font-size:15px;font-weight:700;transition:background .12s,color .12s,border-color .12s}
+.head-cta:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.burger{display:none;margin-left:auto;border:1px solid var(--line-strong);background:#fff;padding:9px 11px;cursor:pointer}
 
-  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-top:22px}
-  .lbl{display:block; font-size:14px; font-weight:800; margin:0 0 6px}
-  .hint{font-size:12.5px; color:var(--sub); font-weight:500; margin:0 0 10px}
-  .field{margin-top:12px}
-  .field:first-child{margin-top:0}
-  .field label{display:block; font-size:13.5px; font-weight:700; margin:0 0 5px}
-  input[type=text]{width:100%; padding:12px 13px; border:1.5px solid var(--line); border-radius:11px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink)}
-  input:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 3px rgba(233,30,140,.12)}
+/* ── 공통 타이포 ── */
+.eyebrow{font-size:13.5px;font-weight:800;letter-spacing:.14em;color:var(--plum);text-transform:uppercase}
+h1{font-size:clamp(34px,4.4vw,54px);line-height:1.2;font-weight:800;letter-spacing:-.03em}
+h2{font-size:clamp(24px,2.5vw,34px);line-height:1.28;font-weight:800;letter-spacing:-.025em}
+h3{font-size:20.5px;line-height:1.4;font-weight:800;letter-spacing:-.02em}
+h4{font-size:17.5px;font-weight:800;letter-spacing:-.015em}
+.lead{font-size:clamp(17px,1.35vw,20px);line-height:1.75;color:var(--ink2);max-width:62ch}
+.muted{color:var(--ink3)}
+.small{font-size:15px;line-height:1.7;color:var(--ink2)}
+.micro{font-size:13.5px;letter-spacing:.02em;color:var(--ink3)}
+b,strong{font-weight:800}
 
-  .item{background:#fff; border:1.5px solid var(--line); border-radius:15px; margin-top:14px; overflow:hidden; transition:border-color .15s}
-  .item.open{border-color:var(--magenta); box-shadow:0 6px 20px rgba(122,31,107,.10)}
-  .ihead{display:flex; align-items:center; gap:13px; padding:18px 18px; cursor:pointer}
-  .ihead .num{flex:none; width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center}
-  .ihead .tt{flex:1}
-  .ihead .nm{font-size:16.5px; font-weight:800; color:var(--ink)}
-  .ihead .ds{font-size:12.5px; color:var(--sub); font-weight:600; margin-top:2px}
-  .ihead .chev{flex:none; color:#c9b9ce; font-size:14px; transition:transform .2s}
-  .item.open .chev{transform:rotate(180deg); color:var(--magenta)}
-  .ibody{display:none; padding:0 18px 18px}
-  .item.open .ibody{display:block}
-  .fieldwrap{margin-bottom:12px}
-  .promptbox{white-space:pre-wrap; font-size:13.5px; line-height:1.7; background:#fbf6fc; border:1.5px dashed #e2c9e6; border-radius:12px; padding:15px 14px; color:#2a1f2e; max-height:320px; overflow:auto}
-  .copybtn{display:block; width:100%; margin-top:11px; padding:15px; border:none; border-radius:12px; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:16px; font-weight:800; font-family:inherit; cursor:pointer}
-  .copybtn.done{background:#2C8C5A}
+/* ── 섹션 ── */
+section{padding:clamp(52px,6vw,92px) 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  padding-bottom:20px;border-bottom:1px solid var(--line-strong);margin-bottom:38px}
+.sec-head p{color:var(--ink3);font-size:16px;max-width:56ch}
 
-  .checkbox-list{margin-top:12px}
-  .clabel{display:flex; align-items:flex-start; gap:10px; padding:7px 0; font-size:14px; cursor:pointer}
-  .clabel input{width:19px; height:19px; margin-top:2px; accent-color:var(--magenta); flex:none}
-  .doneMsg{display:none; margin-top:12px; background:#eaf6ef; border:1px solid #bfe3cd; color:#1c6b3f; border-radius:10px; padding:12px 14px; font-weight:700; font-size:14px}
-  .doneMsg.show{display:block}
+/* ── 버튼 ── */
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line-strong);background:#fff;
+  padding:15px 26px;font-size:16px;font-weight:700;cursor:pointer;transition:background .12s,color .12s,border-color .12s}
+.btn:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.btn-solid{background:var(--ink);color:#fff}
+.btn-solid:hover{background:var(--plum);border-color:var(--plum)}
+.btn-sm{padding:11px 18px;font-size:15px}
+.btn-block{width:100%;justify-content:center}
+.btn:disabled{border-color:var(--line);color:var(--ink4);background:#fff;cursor:not-allowed}
+.btn:disabled:hover{background:#fff;color:var(--ink4);border-color:var(--line)}
+.btn.ok{background:#111;border-color:#111;color:#fff}
 
-  .next{margin-top:30px; text-align:center; background:linear-gradient(135deg,#fbeef6,#f6e9f7); border:1px solid var(--line); border-radius:var(--radius); padding:24px 20px}
-  .next h3{font-size:17px; font-weight:800; margin:0 0 6px}
-  .next p{font-size:13.5px; color:var(--sub); margin:0 0 14px}
-  .next a{display:inline-block; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; text-decoration:none; font-weight:800; padding:14px 26px; border-radius:12px}
-  @media(max-width:420px){ h1{font-size:23px} }
+/* ── 폼 ── */
+label.fl{display:block;font-size:15px;font-weight:800;margin-bottom:7px}
+.fh{font-size:14.5px;color:var(--ink3);margin-bottom:10px;line-height:1.65}
+input[type=text],input[type=url],textarea,select{
+  width:100%;border:1px solid var(--line-strong);background:#fff;padding:14px 16px;font-size:16.5px;line-height:1.5}
+textarea{resize:vertical;min-height:110px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--plum);box-shadow:inset 0 0 0 1px var(--plum)}
+input::placeholder,textarea::placeholder{color:var(--ink4)}
+/* 셀렉트(드롭다운) */
+.selwrap{position:relative}
+.selwrap select{appearance:none;-webkit-appearance:none;padding-right:52px;cursor:pointer;font-weight:700}
+.selwrap .chev{position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink)}
+.selwrap:hover select{border-color:var(--plum)}
+.selwrap:hover .chev{color:var(--plum)}
+
+/* ── 카드 ── */
+.grid{display:grid;gap:0}
+.card{border:1px solid var(--line);padding:30px;background:#fff;transition:border-color .12s,box-shadow .12s}
+.card:hover{border-color:var(--plum)}
+
+/* 활동 카드 (홈) */
+.acts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-strong);border-left:1px solid var(--line-strong)}
+.act{display:flex;flex-direction:column;gap:14px;padding:34px 32px 30px;background:#fff;
+  border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);
+  transition:background .14s;position:relative;min-height:250px}
+.act:hover{background:var(--plum-tint)}
+.act:hover .act-no,.act:hover h3,.act:hover .act-go{color:var(--plum)}
+.act:hover .act-ico{border-color:var(--plum);color:var(--plum)}
+.act-top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.act-no{font-size:14px;font-weight:800;letter-spacing:.12em;color:var(--ink4);transition:color .14s}
+.act-ico{border:1px solid var(--line-strong);width:46px;height:46px;display:flex;align-items:center;justify-content:center;transition:border-color .14s,color .14s}
+.act p{font-size:15.5px;line-height:1.7;color:var(--ink2);flex:1}
+.act-go{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;transition:color .14s}
+
+/* 준비 단계 */
+.preps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.prep{display:flex;gap:14px;align-items:flex-start;padding:24px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .14s}
+.prep:hover{background:var(--plum-tint)}
+.prep:hover .prep-t{color:var(--plum)}
+.prep-t{font-size:16.5px;font-weight:800;transition:color .14s}
+.prep .micro{margin-top:3px}
+
+/* ── 프롬프트 블록 ── */
+.pblock{border:1px solid var(--line-strong);margin-top:16px}
+.pblock-head{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 20px;border-bottom:1px solid var(--line-strong);background:var(--bg2)}
+.pblock-head .t{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.pbody{padding:22px 20px;white-space:pre-wrap;font-size:16px;line-height:1.8;color:var(--ink)}
+.copy{border:1px solid var(--line-strong);background:#fff;padding:9px 16px;font-size:14.5px;font-weight:800;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;transition:background .12s,color .12s,border-color .12s;white-space:nowrap}
+.copy:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.copy.done{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ── 아코디언(스텝) ── */
+.steps{border-top:1px solid var(--line-strong)}
+.step{border-bottom:1px solid var(--line-strong)}
+.step-h{display:flex;align-items:center;gap:20px;padding:26px 4px;cursor:pointer;transition:color .12s}
+.step-h:hover{color:var(--plum)}
+.step-h:hover .step-ico{border-color:var(--plum);color:var(--plum)}
+.step-n{font-size:14px;font-weight:800;letter-spacing:.1em;color:var(--ink4);width:28px;flex:none}
+.step-ico{width:44px;height:44px;border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;flex:none;transition:border-color .12s,color .12s}
+.step-tt{flex:1}
+.step-tt h3{margin-bottom:2px}
+.step-tt .micro{color:var(--ink3)}
+.step-chev{transition:transform .18s;color:var(--ink3);flex:none}
+.step.open .step-chev{transform:rotate(180deg);color:var(--plum)}
+.step-b{display:none;padding:0 4px 34px 92px}
+.step.open .step-b{display:block}
+
+/* ── 표 ── */
+table{width:100%;border-collapse:collapse;font-size:16px}
+th,td{border:1px solid var(--line);padding:16px 18px;text-align:left;vertical-align:top;line-height:1.65}
+th{background:var(--bg2);font-weight:800;font-size:15px;letter-spacing:.02em}
+td:first-child{font-weight:700;white-space:nowrap;width:130px}
+tr:hover td{background:var(--plum-tint)}
+
+/* ── 노트 ── */
+.note{border:1px solid var(--line-strong);padding:20px 22px;font-size:15.5px;line-height:1.75;background:var(--bg2);margin-top:18px}
+.note.accent{border-color:var(--plum);background:var(--plum-tint)}
+.note h4{margin-bottom:6px}
+.ol{margin:12px 0 0 0;padding:0;list-style:none;counter-reset:s}
+.ol li{counter-increment:s;padding:11px 0 11px 42px;position:relative;font-size:16px;line-height:1.7;border-top:1px solid var(--line)}
+.ol li:first-child{border-top:0}
+.ol li::before{content:counter(s);position:absolute;left:0;top:11px;width:26px;height:26px;border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:800}
+.ul{margin:10px 0 0 0;padding:0;list-style:none}
+.ul li{padding:8px 0 8px 24px;position:relative;font-size:16px;line-height:1.7}
+.ul li::before{content:"";position:absolute;left:0;top:18px;width:9px;height:1px;background:var(--ink)}
+.ul a,.ol a{font-weight:700;border-bottom:1px solid var(--line-strong);transition:color .12s,border-color .12s}
+.ul a:hover,.ol a:hover{color:var(--plum);border-color:var(--plum)}
+
+/* 체크박스 */
+.chk{display:flex;align-items:flex-start;gap:13px;padding:14px 0;border-top:1px solid var(--line);cursor:pointer;font-size:16px}
+.chk input{width:21px;height:21px;flex:none;margin-top:3px;accent-color:var(--plum)}
+.chk:hover{color:var(--plum)}
+.done-msg{display:none;border:1px solid var(--plum);background:var(--plum-tint);color:var(--plum-deep);padding:16px 18px;margin-top:16px;font-weight:800;font-size:16px}
+.done-msg.show{display:block}
+
+/* ── 2단 레이아웃 ── */
+.split{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:clamp(32px,4vw,72px);align-items:start}
+.rail{position:sticky;top:104px;border:1px solid var(--line-strong);padding:26px 24px}
+.rail h4{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.rail .ul li{font-size:15.5px;padding:6px 0 6px 22px}
+.rail .next{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+
+/* ── 후기 ── */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-strong);border-left:1px solid var(--line-strong)}
+.rv{padding:30px 28px;border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);transition:background .14s}
+.rv:hover{background:var(--plum-tint)}
+.rv-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.rv-name{font-size:16.5px;font-weight:800}
+.rv-date{font-size:13.5px;color:var(--ink4)}
+.rv-kind{display:inline-block;border:1px solid var(--line-strong);padding:3px 10px;font-size:12.5px;font-weight:800;letter-spacing:.04em;margin-bottom:12px}
+.rv-msg{font-size:16.5px;line-height:1.85;color:var(--ink);white-space:pre-wrap}
+.rv-img{margin-top:14px;max-width:100%;border:1px solid var(--line)}
+
+/* ── 히어로 ── */
+.hero{border-bottom:1px solid var(--line-strong);padding:clamp(56px,7vw,104px) 0 clamp(48px,5vw,80px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(32px,5vw,88px);align-items:end}
+.hero h1{margin:18px 0 22px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.facts{border-top:1px solid var(--line-strong)}
+.fact{display:flex;justify-content:space-between;gap:20px;padding:15px 0;border-bottom:1px solid var(--line)}
+.fact dt{font-size:15px;color:var(--ink3);font-weight:600}
+.fact dd{font-size:16px;font-weight:800;text-align:right}
+
+/* ── 플로우 스트립 ── */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);border-left:1px solid var(--line)}
+.flow > div{padding:20px 18px;border-right:1px solid var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .14s}
+.flow > div:hover{background:var(--plum-tint)}
+.flow > div:hover .t{color:var(--plum)}
+.flow .t{transition:color .14s}
+.flow .n{font-size:12.5px;font-weight:800;letter-spacing:.1em;color:var(--ink4)}
+.flow .t{font-size:15.5px;font-weight:800;margin-top:4px}
+
+/* ── 푸터 ── */
+.site-foot{border-top:1px solid var(--line-strong);padding:44px 0;margin-top:20px}
+.site-foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.site-foot .micro{font-size:14px}
+.foot-links{display:flex;gap:22px}
+.foot-links a{font-size:14.5px;font-weight:600;color:var(--ink2)}
+.foot-links a:hover{color:var(--plum)}
+
+/* ── 반응형 ── */
+@media(max-width:1080px){
+  .acts{grid-template-columns:repeat(2,1fr)}
+  .reviews{grid-template-columns:repeat(2,1fr)}
+  .preps{grid-template-columns:repeat(2,1fr)}
+  .split{grid-template-columns:1fr}
+  .rail{position:static}
+  .hero-grid{grid-template-columns:1fr;align-items:start}
+  .flow{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:720px){
+  body{font-size:16.5px}
+  .nav{display:none}
+  .nav.open{display:flex;position:absolute;top:76px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line-strong);
+    flex-direction:column;gap:0;padding:8px var(--pad) 18px;margin:0}
+  .nav.open a{padding:13px 0;border-bottom:1px solid var(--line);width:100%}
+  .burger{display:block}
+  .head-cta{display:none}
+  .acts,.reviews,.preps{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .step-b{padding-left:0}
+  .step-ico{display:none}
+  td:first-child{width:auto}
+}
 </style>
 </head>
 <body>
-<div class="topbar"></div>
-
-<header>
-  <a class="back" href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a>
-  <div class="eyebrow">활동 3</div>
-  <h1>다듬고 연결하기<br />배포 전 마지막 손질</h1>
-  <p class="lead">이제 <b>사진·로고</b>를 넣고, <b>연락처·SNS·지도</b>를 연결한 뒤, <b>배포 전 점검</b>만 하면 끝이에요. 카드 → <b>복사</b> → <b>같은 클로드 대화</b>에 붙여넣기.</p>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="홈.html">PBS COLOR LAB <span>· AI 웹페이지 만들기</span></a>
+    <button class="burger" id="burger" aria-label="메뉴"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <nav class="nav" id="nav">
+      <a href="홈.html">과정 홈</a> <a href="홈.html#활동" class="on">학습 활동</a> <a href="홈.html#자료">자료실</a> <a href="홈.html#후기">후기</a>
+    </nav>
+    <a class="head-cta" href="활동1_웹페이지방향설정_v3.html">지금 시작하기</a>
+  </div>
 </header>
 
-<div class="wrap">
-
-  <div class="keep">
-    💡 <b>계속 같은 대화에서 이어가세요.</b> 활동 1·2를 했던 그 대화창에 그대로 붙여넣으면, 클로드가 <b>내 페이지를 기억한 채</b> 마무리해 줍니다.
-  </div>
-
-  <!-- 1. 사진·로고 -->
-  <div class="item" data-key="photo">
-    <div class="ihead"><span class="num">1</span><div class="tt"><div class="nm">📷 사진·로고 넣기</div><div class="ds">내 사진 자리 + 없을 때 대안</div></div><span class="chev">▼</span></div>
-    <div class="ibody"><div class="promptbox"></div><button class="copybtn">📋 복사하기</button></div>
-  </div>
-
-  <!-- 2. 연락처·SNS·지도 연결 -->
-  <div class="item" data-key="connect">
-    <div class="ihead"><span class="num">2</span><div class="tt"><div class="nm">🔗 연락처·SNS·지도 연결</div><div class="ds">전화·카톡·인스타·지도를 실제로 연결</div></div><span class="chev">▼</span></div>
-    <div class="ibody">
-      <div class="fieldwrap">
-        <div class="field"><label>전화 / 카톡</label><input type="text" id="f_contact" placeholder="예: 010-1234-5678  또는  카톡 오픈채팅 링크" /></div>
-        <div class="field"><label>인스타 / 블로그 / 유튜브 <span style="color:#b39abb">· 선택</span></label><input type="text" id="f_sns" placeholder="예: instagram.com/내계정" /></div>
-        <div class="field"><label>오프라인 주소(지도) <span style="color:#b39abb">· 선택</span></label><input type="text" id="f_addr" placeholder="예: 울산 남구 ○○로 12" /></div>
-      </div>
-      <div class="promptbox"></div><button class="copybtn">📋 복사하기</button>
+<div class="hero" style="padding-bottom:clamp(36px,4vw,56px)">
+  <div class="wrap">
+    <div class="micro" style="margin-bottom:18px">
+      <a href="홈.html" style="border-bottom:1px solid var(--line)">과정 홈</a>
+      <span style="color:var(--ink4);padding:0 8px">/</span>
+      <span style="color:var(--ink2);font-weight:700">활동 3</span>
     </div>
+    <div class="eyebrow">ACTIVITY 03</div>
+    <h1 style="margin:16px 0 20px;max-width:20ch">다듬고 연결하기</h1>
+    <p class="lead">사진 자리를 잡고 연락처·SNS·지도를 실제로 연결한 뒤, 배포 전 최종 점검까지 마칩니다.</p>
   </div>
-
-  <!-- 3. 배포 전 최종 점검 -->
-  <div class="item" data-key="check">
-    <div class="ihead"><span class="num">3</span><div class="tt"><div class="nm">✅ 배포 전 최종 점검</div><div class="ds">클로드에게 점검 요청 + 내 눈으로 확인</div></div><span class="chev">▼</span></div>
-    <div class="ibody">
-      <div class="promptbox"></div><button class="copybtn">📋 점검 프롬프트 복사하기</button>
-      <div class="checkbox-list">
-        <label class="clabel"><input type="checkbox" /> 휴대폰에서 열어봤다 (글자·버튼 안 깨짐)</label>
-        <label class="clabel"><input type="checkbox" /> 전화·카톡 버튼이 <b>진짜로 연결</b>된다</label>
-        <label class="clabel"><input type="checkbox" /> 오탈자·이상한 문장이 없다</label>
-        <label class="clabel"><input type="checkbox" /> <b>없는 경력·수치·후기</b>가 들어가 있지 않다</label>
-        <div class="doneMsg" id="doneMsg">🎉 점검 완료! 이제 인터넷 주소로 배포할 차례예요.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NEXT -->
-  <div class="next">
-    <h3>다 다듬었어요!</h3>
-    <p>이제 진짜 인터넷 주소(URL)로 배포할 차례예요.</p>
-    <a href="활동4_배포하고내주소만들기.html">활동 4. 배포하고 내 주소 만들기 →</a>
-  </div>
-
 </div>
 
+<section style="padding-top:clamp(40px,4vw,64px)">
+  <div class="wrap split">
+    <div><div class="note accent"><h4>같은 대화에서 이어가세요</h4><p class="small" style="margin-top:6px;color:var(--ink2)">활동 1에서 페이지를 만든 그 클로드 대화창에 그대로 붙여넣으면, 내 페이지를 기억한 채로 고쳐 줍니다. 새 대화를 열면 처음부터 다시 설명해야 합니다.</p></div>
+<div class="steps" style="margin-top:36px">
+<div class="step" data-build="buildPhoto">
+  <div class="step-h"><span class="step-n">01</span><span class="step-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="3" y="4" width="18" height="16"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg></span>
+    <span class="step-tt"><h3>사진·로고 넣기</h3><span class="micro">사진 자리를 잡고, 없으면 자리표시로</span></span>
+    <span class="step-chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 8l7 7 7-7"/></svg></span></div>
+  <div class="step-b"><div class="pblock">
+  <div class="pblock-head"><span class="t">사진·로고 프롬프트</span>
+    <button class="copy" onclick="pbsCopy(this,function(){return document.getElementById('p_photo').textContent})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="8" y="8" width="12" height="12"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/></svg> 복사</button></div>
+  <div class="pbody" id="p_photo"></div>
+</div></div>
+</div>
+<div class="step" data-build="buildConnect">
+  <div class="step-h"><span class="step-n">02</span><span class="step-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+    <span class="step-tt"><h3>연락처·SNS·지도 연결</h3><span class="micro">적어 넣으면 프롬프트에 자동으로 들어갑니다</span></span>
+    <span class="step-chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 8l7 7 7-7"/></svg></span></div>
+  <div class="step-b">
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:6px" class="cgrid">
+  <div><label class="fl" for="f_contact">전화 · 카톡</label><input type="text" id="f_contact" placeholder="010-1234-5678 또는 카톡 링크" /></div>
+  <div><label class="fl" for="f_sns">인스타 · 블로그</label><input type="text" id="f_sns" placeholder="instagram.com/내계정" /></div>
+  <div><label class="fl" for="f_addr">오프라인 주소</label><input type="text" id="f_addr" placeholder="울산 남구 ○○로 12" /></div>
+</div>
+<div class="pblock">
+  <div class="pblock-head"><span class="t">연결 프롬프트</span>
+    <button class="copy" onclick="pbsCopy(this,function(){return document.getElementById('p_connect').textContent})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="8" y="8" width="12" height="12"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/></svg> 복사</button></div>
+  <div class="pbody" id="p_connect"></div>
+</div></div>
+</div>
+<div class="step" data-build="buildCheck">
+  <div class="step-h"><span class="step-n">03</span><span class="step-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 5h11"/><path d="M4 12h8"/><path d="M4 19h6"/><path d="M15 15l3 3 5-6"/></svg></span>
+    <span class="step-tt"><h3>배포 전 최종 점검</h3><span class="micro">클로드 점검 + 내 눈으로 확인</span></span>
+    <span class="step-chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M5 8l7 7 7-7"/></svg></span></div>
+  <div class="step-b"><div class="pblock">
+  <div class="pblock-head"><span class="t">배포 전 점검 프롬프트</span>
+    <button class="copy" onclick="pbsCopy(this,function(){return document.getElementById('p_check').textContent})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><rect x="8" y="8" width="12" height="12"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/></svg> 복사</button></div>
+  <div class="pbody" id="p_check"></div>
+</div>
+<div style="margin-top:26px">
+  <h4 style="margin-bottom:6px">내 눈으로도 확인하세요</h4>
+  <label class="chk"><input type="checkbox" /> <span>휴대폰에서 열어봤다 — 글자·버튼이 깨지지 않는다</span></label>
+  <label class="chk"><input type="checkbox" /> <span>전화·카톡 버튼이 실제로 연결된다</span></label>
+  <label class="chk"><input type="checkbox" /> <span>오탈자나 어색한 문장이 없다</span></label>
+  <label class="chk"><input type="checkbox" /> <span>없는 경력·수치·후기가 들어가 있지 않다</span></label>
+  <div class="done-msg" id="checkDone">점검 완료. 이제 인터넷 주소로 배포할 차례입니다.</div>
+</div></div>
+</div>
+</div>
+</div>
+    <aside class="rail">
+      <h4>이 활동에서 할 일</h4>
+      <ul class="ul"><li>사진·로고 자리 잡기</li><li>전화·카톡·SNS·지도 연결하기</li><li>배포 전 점검 요청하기</li><li>휴대폰에서 직접 확인하기</li></ul>
+      <div class="next">
+        <div class="micro" style="margin-bottom:10px">다음 활동</div>
+        <a class="btn btn-sm btn-block" href="활동4_배포하고내주소만들기.html">활동 4. 배포하기 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </aside>
+  </div>
+</section>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="micro">PBS COLOR LAB · 최해숙 &nbsp;|&nbsp; AI 웹페이지 만들기 — 코딩 없이 만드는 나만의 홈페이지</div>
+    <div class="foot-links">
+      <a href="홈.html">과정 홈</a>
+      <a href="course.html?c=aiweb">강의실</a>
+      <a href="/강의/자료/공개/AI웹페이지_5단계_정리본.pdf" target="_blank" rel="noopener">정리본 PDF</a>
+    </div>
+  </div>
+</footer>
 <script>
-(function(){
-  var head = '지금 만든 내 페이지에 이어서 고쳐줘. (전체를 새로 만들지 말고, 아래 부분만 자연스럽게 반영해줘.)\n\n';
-  function val(id){ var e=document.getElementById(id); return e?(e.value||'').trim():''; }
 
-  var T = {
-    photo: function(){ return head +
-'[사진·로고 넣기]\n' +
-'· 로고와 사진이 들어갈 자리를 보기 좋게 잡아줘 (첫 화면 대표 이미지, 소개 사진, 활동/제품 사진).\n' +
-'· 사진은 내가 나중에 넣을 거라, 지금은 "여기에 사진" 자리표시(회색 박스)로 만들어줘.\n' +
-'· 사진이 없어도 허전하지 않게 색·여백으로 채워줘. 없는 사진을 억지로 만들지는 말고.'; },
+(function(){var b=document.getElementById('burger'),n=document.getElementById('nav');
+if(b&&n)b.addEventListener('click',function(){n.classList.toggle('open');});})();
 
-    connect: function(){
-      var c=val('f_contact'), s=val('f_sns'), a=val('f_addr');
-      var lines='';
-      lines += c ? '· 전화/카톡: ' + c + ' (전화면 tel: 로 바로 걸리게, 링크면 새 창으로)\n'
-                 : '· 전화/카톡: 내 번호/링크를 여기에 넣을 거야. 우선 자리만 만들어줘.\n';
-      if(s) lines += '· SNS: ' + s + ' (아이콘 버튼으로 새 창 열리게)\n';
-      if(a) lines += '· 오프라인 주소: ' + a + ' (지도로 볼 수 있게 지도 링크/버튼 넣어줘)\n';
-      return head +
-'[연락처·SNS·지도 연결]\n' +
-'· 아래 정보를 페이지에 실제로 연결해줘. 누르면 바로 연결되게.\n' +
-lines +
-'· 맨 아래(푸터)에 연락처와 링크를 한 번 더 정리해서 넣어줘.'; },
 
-    check: function(){ return head +
-'[배포 전 점검]\n' +
-'이 페이지를 배포하기 전에 아래를 점검하고, 문제 있으면 바로 고쳐줘.\n' +
-'· 휴대폰 화면에서 깨지거나 글자가 넘치는 곳\n' +
-'· 눌러도 안 되는 버튼·링크(전화·카톡·SNS·지도)\n' +
-'· 오탈자, 어색하거나 과장된 문장\n' +
-'· 사실이 아닐 수 있는 경력·수치·후기 (있으면 표시해줘)\n' +
-'점검 결과를 짧게 알려주고, 고친 부분을 반영한 최종 HTML을 줘.'; }
-  };
-
-  document.querySelectorAll('.item').forEach(function(item){
-    var key=item.getAttribute('data-key');
-    var box=item.querySelector('.promptbox');
-    var copy=item.querySelector('.copybtn');
-    item.querySelector('.ihead').addEventListener('click', function(){
-      var willOpen=!item.classList.contains('open');
-      if(willOpen) box.textContent=T[key]();
-      item.classList.toggle('open');
-    });
-    copy.addEventListener('click', function(e){
-      e.stopPropagation();
-      box.textContent=T[key]();
-      var txt=box.textContent;
-      function done(){ copy.classList.add('done'); copy.textContent='✅ 복사됐어요! 같은 대화에 붙여넣으세요'; setTimeout(function(){ copy.classList.remove('done'); copy.textContent=(key==='check'?'📋 점검 프롬프트 복사하기':'📋 복사하기'); },2600); }
-      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,function(){ fb(txt); done(); }); }
-      else { fb(txt); done(); }
-    });
-    // 입력값 바뀌면 열려있는 프롬프트 갱신
-    item.querySelectorAll('input[type=text]').forEach(function(inp){
-      inp.addEventListener('input', function(){ if(item.classList.contains('open')) box.textContent=T[key](); });
+function pbsCopy(btn, getText, label){
+  var txt = getText();
+  function done(){ btn.classList.add('done'); var o=btn.innerHTML; btn.textContent='복사됨';
+    setTimeout(function(){ btn.classList.remove('done'); btn.innerHTML=o; }, 2200); }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done, function(){ pbsFallback(txt); done(); });
+  } else { pbsFallback(txt); done(); }
+}
+function pbsFallback(t){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';
+  document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(a);}
+function pbsSteps(){
+  document.querySelectorAll('.step').forEach(function(s){
+    var h=s.querySelector('.step-h'); if(!h) return;
+    h.addEventListener('click', function(){
+      var willOpen = !s.classList.contains('open');
+      if(willOpen && s.dataset.build && window[s.dataset.build]) window[s.dataset.build]();
+      s.classList.toggle('open');
     });
   });
+}
 
-  // 점검 체크리스트
-  var boxes=document.querySelectorAll('.checkbox-list input[type=checkbox]');
-  var done=document.getElementById('doneMsg');
-  function refresh(){ var all=true; boxes.forEach(function(b){ if(!b.checked) all=false; }); if(done) done.classList.toggle('show', all); }
-  boxes.forEach(function(b){ b.addEventListener('change', refresh); });
 
-  function fb(txt){ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+pbsSteps();
+var HEAD='지금 만든 내 페이지에 이어서 고쳐줘. (전체를 새로 만들지 말고, 아래 부분만 자연스럽게 반영해줘.)\n\n';
+function _v(id){ var e=document.getElementById(id); return e ? (e.value||'').trim() : ''; }
+function buildPhoto(){
+  document.getElementById('p_photo').textContent = HEAD +
+'[사진·로고 넣기]\n' +
+'· 로고와 사진이 들어갈 자리를 보기 좋게 잡아줘 (첫 화면 대표 이미지, 소개 사진, 활동·제품 사진).\n' +
+'· 사진은 내가 나중에 넣을 거라, 지금은 "여기에 사진" 자리표시로 만들어줘.\n' +
+'· 사진이 없어도 허전하지 않게 색과 여백으로 채워줘. 없는 사진을 억지로 만들지는 말고.';
+}
+function buildConnect(){
+  var c=_v('f_contact'), s=_v('f_sns'), a=_v('f_addr'), lines='';
+  lines += c ? '· 전화·카톡: '+c+' (전화면 tel: 로 바로 걸리게, 링크면 새 창으로)\n'
+             : '· 전화·카톡: 내 번호나 링크를 넣을 거야. 우선 자리만 만들어줘.\n';
+  if(s) lines += '· SNS: '+s+' (아이콘 버튼으로 새 창이 열리게)\n';
+  if(a) lines += '· 오프라인 주소: '+a+' (지도로 볼 수 있게 지도 링크·버튼을 넣어줘)\n';
+  document.getElementById('p_connect').textContent = HEAD +
+'[연락처·SNS·지도 연결]\n· 아래 정보를 페이지에 실제로 연결해줘. 누르면 바로 연결되게.\n' + lines +
+'· 맨 아래(푸터)에 연락처와 링크를 한 번 더 정리해서 넣어줘.';
+}
+function buildCheck(){
+  document.getElementById('p_check').textContent = HEAD +
+'[배포 전 점검]\n이 페이지를 배포하기 전에 아래를 점검하고, 문제가 있으면 바로 고쳐줘.\n' +
+'· 휴대폰 화면에서 깨지거나 글자가 넘치는 곳\n' +
+'· 눌러도 안 되는 버튼·링크 (전화·카톡·SNS·지도)\n' +
+'· 오탈자, 어색하거나 과장된 문장\n' +
+'· 사실이 아닐 수 있는 경력·수치·후기 (있으면 표시해줘)\n' +
+'점검 결과를 짧게 알려주고, 고친 부분을 반영한 최종 HTML을 줘.';
+}
+(function(){
+  ['f_contact','f_sns','f_addr'].forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    el.addEventListener('input', function(){
+      var s=document.querySelector('.step[data-build="buildConnect"]');
+      if(s && s.classList.contains('open')) buildConnect();
+    });
+  });
+  var boxes=document.querySelectorAll('.chk input'), done=document.getElementById('checkDone');
+  boxes.forEach(function(b){ b.addEventListener('change', function(){
+    var all=true; boxes.forEach(function(x){ if(!x.checked) all=false; });
+    done.classList.toggle('show', all);
+  });});
 })();
-</script>
 
-<!-- 사전 규약 게이트 (서명 후 10시간 유지) -->
-<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">🔒</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">먼저 사전 규약에 동의해 주세요</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">이 교육의 활동 페이지는 <b>사전 규약 동의(서명)</b> 후 열립니다.</p><a href="사전규약_동의.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">규약 보고 서명하기 →</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
+</script>
+<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:9999;background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:460px;border:1px solid #111;padding:40px 36px"><div style="font-size:13.5px;font-weight:800;letter-spacing:.14em;color:#767676">ACCESS</div><h2 style="margin:14px 0 12px;font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.3">먼저 사전 규약에 동의해 주세요</h2><p style="color:#3D3D3D;font-size:16px;line-height:1.75;margin:0">이 교육의 활동 페이지는 사전 규약 동의(서명) 후 열립니다.</p><a href="사전규약_동의.html" style="display:inline-block;margin-top:26px;border:1px solid #111;background:#111;color:#fff;text-decoration:none;font-weight:700;padding:15px 26px;font-size:16px">규약 보고 서명하기</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>
