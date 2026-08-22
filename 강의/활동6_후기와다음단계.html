@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>활동 6. 후기 & 다음 단계 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<meta name="description" content="수료 축하! 후기를 남기고, 다음 단계인 마케팅(브랜딩) 과정도 살펴보세요." />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --magenta:#E91E8C; --deep:#7A1F6B; --grad1:#7A1F6B; --grad2:#D0247E;
+    --ink:#1b1420; --sub:#6b6270; --line:#ece4ee; --bg:#faf8fb; --card:#fff;
+    --soft:#fbeef6; --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .topbar{height:5px; background:linear-gradient(90deg,var(--grad1),var(--grad2))}
+  .wrap{max-width:660px; margin:0 auto; padding:0 20px 96px}
+  header{max-width:660px; margin:0 auto; padding:34px 20px 0}
+  .back{display:inline-block; font-size:13px; color:var(--sub); text-decoration:none; margin-bottom:20px}
+  .back:hover{color:var(--magenta)}
+  .eyebrow{font-size:13px; font-weight:800; color:var(--magenta); letter-spacing:.02em}
+  h1{font-size:27px; font-weight:800; margin:10px 0 10px; letter-spacing:-.02em; line-height:1.35}
+  .lead{font-size:16px; color:var(--sub); margin:0}
+
+  .cert{margin-top:22px; text-align:center; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; border-radius:var(--radius); padding:30px 22px}
+  .cert .big{font-size:40px}
+  .cert h2{font-size:21px; font-weight:800; margin:8px 0 8px}
+  .cert p{font-size:14px; margin:0; opacity:.95}
+  .flow{display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-top:14px; font-size:11.5px; font-weight:700}
+  .flow span{background:rgba(255,255,255,.18); padding:5px 9px; border-radius:7px}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px 22px; margin-top:20px}
+  .card .ic{font-size:26px}
+  .card h2{font-size:19px; font-weight:800; margin:8px 0 6px}
+  .card p{font-size:14.5px; color:#3a323f; margin:6px 0}
+  .card .sub{font-size:13.5px; color:var(--sub)}
+  ul.pts{margin:12px 0 0; padding-left:18px}
+  ul.pts li{margin:7px 0; font-size:14px}
+  .btn{display:inline-block; margin-top:16px; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; text-decoration:none; font-weight:800; padding:14px 24px; border-radius:12px}
+  .btn.ghost{background:#fff; color:var(--magenta); border:1.5px solid var(--magenta)}
+  .promptbox{white-space:pre-wrap; font-size:13.5px; line-height:1.7; background:#fbf6fc; border:1.5px dashed #e2c9e6; border-radius:12px; padding:15px 14px; color:#2a1f2e; margin-top:12px}
+  .copybtn{display:block; width:100%; margin-top:10px; padding:13px; border:none; border-radius:12px; background:#fff; color:var(--magenta); border:1.5px solid var(--magenta); font-size:14.5px; font-weight:800; font-family:inherit; cursor:pointer}
+  .copybtn.done{background:#2C8C5A; color:#fff; border-color:#2C8C5A}
+  @media(max-width:420px){ h1{font-size:23px} }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header>
+  <a class="back" href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a>
+  <div class="eyebrow">활동 6 · 마무리</div>
+  <h1>후기 & 다음 단계</h1>
+  <p class="lead">끝까지 오셨어요! 후기를 남겨 주시고, 더 배우고 싶다면 다음 단계도 살펴보세요.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 수료 -->
+  <div class="cert">
+    <div class="big">🎓</div>
+    <h2>수료를 축하합니다!</h2>
+    <p>코딩 0줄로 나만의 홈페이지를 만들고, 인터넷에 배포까지 마쳤어요.</p>
+    <div class="flow"><span>준비</span><span>판짜기</span><span>다듬기</span><span>배포</span><span>알리기</span><span>완료 ✓</span></div>
+  </div>
+
+  <!-- 후기 -->
+  <div class="card">
+    <div class="ic">💬</div>
+    <h2>후기 남기기</h2>
+    <p>오늘 만든 <b>내 페이지 주소</b>와 함께 짧은 소감을 남겨 주세요. 다음 기수 분들께 큰 힘이 되고, 대표님께도 소중한 피드백이 됩니다.</p>
+    <p class="sub">뭐라고 쓸지 막막하면, 아래를 복사해 클로드에 물어보고 다듬어 보세요.</p>
+    <div class="promptbox" id="revbox">오늘 'AI 웹페이지 만들기' 수업을 들었어. 내가 만든 홈페이지 주소는 [내 주소]야.
+수업 후기를 3~4문장으로 따뜻하게 써줘. (좋았던 점 + 만들면서 뿌듯했던 순간 + 추천 한마디)
+과장 없이 내 말투로, 편하게.</div>
+    <button class="copybtn" id="revcopy">📋 후기 프롬프트 복사하기</button>
+    <a class="btn" href="course.html?c=aiweb#review">강의실에서 후기 남기기 →</a>
+  </div>
+
+  <!-- 다음 단계: 마케팅 과정 -->
+  <div class="card">
+    <div class="ic">🚀</div>
+    <h2>다음 단계 · 마케팅(브랜딩) 과정</h2>
+    <p>만드는 건 끝났어요. 이제 <b>손님이 찾아오게</b> 만들 차례예요. 이 과정에서 배웁니다:</p>
+    <ul class="pts">
+      <li>네이버·구글 <b>검색 상위 노출</b>과 <b>네이버 플레이스(지도)</b></li>
+      <li><b>블로그·카드뉴스·SNS</b>로 꾸준히 알리기</li>
+      <li><b>AI 검색 노출(GEO)</b> — 챗봇이 내 페이지를 인용하게</li>
+      <li><b>나만의 도메인</b>(내이름.com) 구입·연결</li>
+      <li>문의 접수·관리자 페이지로 <b>상담을 매출로</b></li>
+    </ul>
+    <a class="btn ghost" href="course.html?c=aiwebmaster">마케팅(브랜딩) 과정 보기 →</a>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var box=document.getElementById('revbox'); var btn=document.getElementById('revcopy');
+  btn.addEventListener('click', function(){
+    var txt=box.textContent;
+    function done(){ btn.classList.add('done'); btn.textContent='✅ 복사됐어요!'; setTimeout(function(){ btn.classList.remove('done'); btn.textContent='📋 후기 프롬프트 복사하기'; },2400); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,function(){ fb(txt); done(); }); }
+    else { fb(txt); done(); }
+  });
+  function fb(txt){ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+})();
+</script>
+
+<!-- 사전 규약 게이트 (서명 후 10시간 유지) -->
+<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">🔒</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">먼저 사전 규약에 동의해 주세요</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">이 교육의 활동 페이지는 <b>사전 규약 동의(서명)</b> 후 열립니다.</p><a href="사전규약_동의.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">규약 보고 서명하기 →</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
+</body>
+</html>
