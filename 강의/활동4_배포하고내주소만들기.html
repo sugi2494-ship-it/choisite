@@ -122,9 +122,15 @@
       <li>잠시 후 <b>OOO.netlify.app</b> 주소가 생기면 완성! 그 링크가 내 홈페이지예요.</li>
     </ol>
     <div class="reupload">
-      🔁 <b>수정한 파일을 다시 올릴 땐?</b><br>
-      새로 드롭하지 말고 → <b>내 사이트 대시보드</b>로 들어가 → <b>"Production deploys"</b> 영역에 <b>고친 파일(폴더)을 다시 드래그</b>하면 됩니다. <b>주소는 그대로</b> 두고 내용만 바뀌어요.
-      <div class="warnnote">⚠️ 처음 만든 드롭 페이지(app.netlify.com/drop)에 또 드래그하면 <b>주소가 새로 생겨요.</b> 꼭 <b>내 사이트 대시보드 안</b>에서 다시 올리세요.</div>
+      🔁 <b>수정한 파일을 다시 올릴 땐? (그대로 따라하기)</b>
+      <ol class="steps" style="margin-top:8px">
+        <li>클로드에서 <b>고친 HTML 파일을 새로 내려받아요</b> (내 컴퓨터에 저장).</li>
+        <li><a href="https://app.netlify.com/login" target="_blank" rel="noopener">app.netlify.com</a>에 로그인 → <b>내 사이트(방금 만든 것)를 클릭</b>해서 들어가요.</li>
+        <li>사이트 화면을 아래로 내리면 <b>"Production deploys"</b>(프로덕션 배포) 칸이 있어요.</li>
+        <li>그 안의 <b>"Drag and drop your site output folder here"</b> 영역에 <b>고친 파일(폴더)을 끌어다 놓기</b>.</li>
+        <li>잠깐 기다리면 <b>같은 주소 그대로</b> 내용만 새로 바뀝니다. 끝!</li>
+      </ol>
+      <div class="warnnote">⚠️ <b>app.netlify.com/drop</b>(맨 처음 올렸던 그 화면)에 또 놓으면 <b>다른 주소가 새로 생겨요.</b> 꼭 <b>내 사이트 안으로 들어가서</b> 위 4번 자리에 올리세요.</div>
     </div>
   </div>
 
@@ -142,14 +148,22 @@
   <div class="method">
     <span class="mtag vc">Vercel</span>
     <h2>버셀에 연결해서 자동 배포</h2>
-    <p class="msub">GitHub와 연결해 두면, 파일만 고쳐 올려도 <b>알아서 다시 배포</b>돼요.</p>
+    <p class="msub">GitHub와 연결해 두면, 파일만 고쳐 올려도 <b>알아서 다시 배포</b>돼요. (그대로 따라하기)</p>
     <ol class="steps">
-      <li><a href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com</a>에 <b>GitHub 계정으로</b> 무료 가입</li>
-      <li><a href="https://vercel.com/new" target="_blank" rel="noopener">Add New → Project</a>에서 방금 만든 <b>GitHub 저장소를 Import</b></li>
-      <li><b>Deploy</b> 누르기 → <b>OOO.vercel.app</b> 주소 완성</li>
-      <li>이후엔 GitHub에서 파일만 고쳐 올리면 <b>자동으로</b> 새 내용이 반영돼요.</li>
+      <li><a href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com</a> 열기 → <b>"Continue with GitHub"</b>(GitHub로 계속)를 눌러 <b>GitHub 계정으로 가입</b>해요.</li>
+      <li>처음엔 GitHub가 <b>"Authorize Vercel"</b>(버셀 허용) 창을 띄워요 → <b>Authorize</b> 눌러 연결 허용.</li>
+      <li>버셀에서 <b>Add New → Project</b> → 내 <b>저장소 목록</b>이 뜨면, 아까 만든 저장소 옆 <b>Import</b> 클릭.</li>
+      <li>설정은 그대로 두고(정적 HTML이면 손댈 것 없음) <b>Deploy</b> 클릭.</li>
+      <li>잠시 후 <b>OOO.vercel.app</b> 주소 완성! 이제부턴 <b>GitHub에 파일만 고쳐 올리면 자동으로</b> 새 내용이 반영돼요.</li>
     </ol>
+    <div class="warnnote">💡 저장소가 안 보이면, Import 화면의 <b>"Adjust GitHub App Permissions"</b>(또는 Configure)에서 <b>내 저장소를 선택</b>해 접근을 허용하면 나타나요.</div>
     <div class="warnnote">💡 더 간단히 시험만 하려면 <a href="https://vercel.com/drop" target="_blank" rel="noopener" style="color:#8a3d00;font-weight:800">vercel.com/drop</a>에 드래그도 돼요. 단, <b>드롭은 올릴 때마다 새 주소</b>가 생겨서, 계속 운영할 거면 위 GitHub 연결 방식을 권해요.</div>
+  </div>
+
+  <div class="reupload" style="background:#fbf6fc;border-color:#e2c9e6;margin-top:22px">
+    🌐 <b>나만의 도메인(예: 내이름.com)은요?</b><br>
+    이 과정은 <b>무료 주소(OOO.netlify.app / OOO.vercel.app)</b>로 마무리해요. 그 주소로도 충분히 공유·홍보할 수 있어요.
+    <b>내 도메인 구입·연결</b>은 조금 더 나아간 단계라, <b>마케팅(브랜딩) 과정</b>에서 함께 배웁니다.
   </div>
 
   <!-- NEXT -->
