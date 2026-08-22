@@ -3,374 +3,258 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>활동 1. 웹페이지 방향 설정 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<title>활동 1. 판 먼저 짜기 (업종별 맞춤) · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<meta name="description" content="내 업종을 고르면 홈페이지 기획·구조·메뉴를 먼저 짜주는 맞춤 프롬프트가 자동으로 나옵니다. 복사해서 클로드에 붙이면 끝." />
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
 <style>
   :root{
-    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
-    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+    --magenta:#E91E8C; --deep:#7A1F6B; --grad1:#7A1F6B; --grad2:#D0247E;
+    --ink:#1b1420; --sub:#6b6270; --line:#ece4ee; --bg:#faf8fb; --card:#fff;
+    --soft:#fbeef6; --radius:16px;
   }
   *{box-sizing:border-box}
   body{margin:0; background:var(--bg); color:var(--ink);
     font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-    word-break:keep-all; line-height:1.65; -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:640px; margin:0 auto; padding:0 18px 60px}
-  .enginebar{display:flex; height:6px}
-  .enginebar span{flex:1}
-  .enginebar span:nth-child(1){background:var(--red)}
-  .enginebar span:nth-child(2){background:var(--yellow)}
-  .enginebar span:nth-child(3){background:var(--green)}
-  .enginebar span:nth-child(4){background:var(--blue)}
-  header{padding:30px 18px 8px; max-width:640px; margin:0 auto}
-  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
-  h1{font-size:23px; font-weight:800; margin:8px 0 6px; letter-spacing:-.01em}
-  .lead{font-size:15px; color:var(--sub); margin:0}
-  .flow{display:flex; align-items:center; gap:6px; margin-top:14px; font-size:11.5px; font-weight:700; color:var(--sub)}
-  .flow b{background:var(--ink); color:#fff; padding:6px 10px; border-radius:7px; font-weight:700}
-  .flow i{font-style:normal; padding:6px 8px; background:#eceef0; border-radius:7px}
-  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; margin-top:18px}
-  .sec-title{font-size:16.5px; font-weight:800; margin:0 0 2px; display:flex; align-items:center; gap:8px}
-  .dot{width:9px; height:9px; border-radius:50%; display:inline-block}
-  .sec-desc{font-size:13px; color:var(--sub); margin:4px 0 16px}
-  .field{margin-bottom:18px}
-  .field:last-child{margin-bottom:0}
-  label{display:block; font-size:14.5px; font-weight:700; margin-bottom:6px}
-  .hint{font-size:12.5px; color:var(--sub); font-weight:500; margin:-2px 0 8px}
-  input[type=text],input[type=url],textarea{width:100%; padding:11px 12px; border:1px solid var(--line);
-    border-radius:10px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink)}
-  textarea{resize:vertical; min-height:72px}
-  input:focus,textarea:focus{outline:2px solid var(--blue); outline-offset:1px; border-color:var(--blue)}
-  .opts{display:flex; flex-direction:column; gap:8px}
-  .opts label{display:flex; align-items:flex-start; gap:10px; font-weight:600; font-size:14px; margin:0;
-    border:1px solid var(--line); border-radius:11px; padding:12px 14px; cursor:pointer; background:#fff}
-  .opts label:has(input:checked){border-color:var(--blue); background:#eef4fb; color:var(--blue)}
-  .opts input{margin-top:3px; accent-color:var(--blue); flex:0 0 auto}
-  .opts small{display:block; font-weight:500; color:var(--sub); font-size:12.5px; margin-top:2px}
-  .opts label:has(input:checked) small{color:var(--blue); opacity:.85}
-  .chips{display:flex; flex-wrap:wrap; gap:8px}
-  .chips label{display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; margin:0;
-    border:1px solid var(--line); border-radius:999px; padding:8px 14px; cursor:pointer; background:#fff}
-  .chips label:has(input:checked){border-color:var(--pink); background:#fdeef6; color:var(--pink)}
-  .chips input{accent-color:var(--pink)}
-  .paste{width:100%; min-height:140px; border:2px dashed var(--pink); border-radius:12px; padding:14px;
-    font-size:13.5px; font-family:inherit; background:#fffafd; resize:vertical}
-  .btn{width:100%; border:none; color:#fff; font-size:16px; font-weight:800; padding:15px;
-    border-radius:12px; cursor:pointer; margin-top:12px; font-family:inherit}
-  .btn.sm{font-size:14.5px; padding:12px; margin-top:10px}
-  .tipbox{background:#fdeef6; border:1px solid #f6c6e2; border-radius:12px; padding:12px 16px}
-  .tipbox p{font-size:12.5px; color:#8a2e63; margin:0}
-  .okbox{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:12px; padding:14px 16px; margin-top:12px; display:none}
-  .okbox h4{margin:0 0 8px; font-size:13.5px; color:var(--green)}
-  .okbox ul{margin:0; padding-left:18px}
-  .okbox li{font-size:13px; color:#2f4b3b; margin-bottom:3px}
-  .menuwrap{display:none}
-  .menuhead{background:#eef4fb; border:1px solid #c6dbf2; border-radius:12px; padding:13px 16px; margin-bottom:14px}
-  .menuhead p{margin:0; font-size:13px; color:#1d4b7d}
-  .menulist{display:flex; flex-direction:column; gap:7px}
-  .menulist label{display:flex; align-items:flex-start; gap:10px; font-weight:600; font-size:14px; margin:0;
-    border:1px solid var(--line); border-radius:10px; padding:11px 13px; cursor:pointer; background:#fff}
-  .menulist label:has(input:checked){border-color:var(--green); background:#f0f9f4}
-  .menulist input{margin-top:3px; accent-color:var(--green); flex:0 0 auto}
-  .menulist small{display:block; font-weight:500; color:var(--sub); font-size:12px; margin-top:1px}
-  .genbox{width:100%; min-height:360px; background:#0f1720; color:#e8eef4; border:none; border-radius:12px;
-    padding:16px; font-size:13px; line-height:1.7; resize:vertical; font-family:"Consolas","Courier New",monospace}
-  .later{background:#fff8e6; border:1px solid #f0d98a; border-radius:12px; padding:14px 16px; margin-top:16px}
-  .later p{font-size:13px; color:#7a5a00; margin:0}
-  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:28px; line-height:1.7}
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .topbar{height:5px; background:linear-gradient(90deg,var(--grad1),var(--grad2))}
+  .wrap{max-width:660px; margin:0 auto; padding:0 20px 96px}
+  header{max-width:660px; margin:0 auto; padding:34px 20px 0}
+  .back{display:inline-block; font-size:13px; color:var(--sub); text-decoration:none; margin-bottom:20px}
+  .back:hover{color:var(--magenta)}
+  .eyebrow{font-size:13px; font-weight:800; color:var(--magenta); letter-spacing:.02em}
+  h1{font-size:27px; font-weight:800; margin:10px 0 10px; letter-spacing:-.02em; line-height:1.35}
+  .lead{font-size:16px; color:var(--sub); margin:0}
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:22px; font-size:12px; font-weight:700}
+  .flow b{background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; padding:7px 12px; border-radius:8px}
+  .flow i{font-style:normal; padding:7px 11px; background:#f0e7f2; color:var(--sub); border-radius:8px}
+  .flow .arw{color:#c9b9ce}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:26px 22px; margin-top:22px}
+  .step{display:flex; align-items:center; gap:10px; margin:0 0 4px}
+  .step .n{flex:none; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center}
+  .step h2{font-size:18px; font-weight:800; margin:0}
+  .step .opt{font-size:12px; font-weight:700; color:#b39abb; margin-left:2px}
+  .desc{font-size:13.5px; color:var(--sub); margin:8px 0 18px}
+
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .jobbtn{display:flex; flex-direction:column; gap:3px; text-align:left; padding:14px 15px; border:1.5px solid var(--line); border-radius:13px; background:#fff; cursor:pointer; transition:all .15s; font-family:inherit}
+  .jobbtn .emo{font-size:20px}
+  .jobbtn .nm{font-size:15px; font-weight:800; color:var(--ink)}
+  .jobbtn .ex{font-size:11.5px; color:var(--sub); font-weight:600}
+  .jobbtn:hover{border-color:var(--magenta); background:var(--soft)}
+  .jobbtn.on{border-color:var(--magenta); background:var(--soft); box-shadow:0 0 0 3px rgba(233,30,140,.14)}
+  .jobbtn.on .nm{color:var(--deep)}
+
+  .customwrap{margin-top:12px; display:none}
+  .customwrap.show{display:block}
+  label.fl{display:block; font-size:14px; font-weight:700; margin:0 0 6px}
+  .hint{font-size:12.5px; color:var(--sub); font-weight:500; margin:0 0 8px}
+  input[type=text],input[type=url],textarea{width:100%; padding:13px 14px; border:1.5px solid var(--line); border-radius:12px; font-size:15.5px; font-family:inherit; background:#fff; color:var(--ink)}
+  input:focus,textarea:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 3px rgba(233,30,140,.12)}
+
+  .makebtn{display:block; width:100%; margin-top:8px; padding:18px; border:none; border-radius:14px; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:18px; font-weight:800; font-family:inherit; cursor:pointer; box-shadow:0 8px 22px rgba(122,31,107,.28); transition:transform .12s, box-shadow .12s}
+  .makebtn:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(122,31,107,.34)}
+  .makebtn:active{transform:translateY(0)}
+  .makebtn:disabled{background:#e3d7e6; color:#fff; box-shadow:none; cursor:not-allowed; transform:none}
+
+  #result{display:none; margin-top:22px}
+  #result.show{display:block}
+  .resulthead{display:flex; align-items:center; gap:8px; margin-bottom:12px}
+  .resulthead .tag{font-size:13px; font-weight:800; color:var(--deep); background:var(--soft); padding:5px 11px; border-radius:20px}
+  .promptbox{white-space:pre-wrap; font-size:14px; line-height:1.72; background:#fbf6fc; border:1.5px dashed #e2c9e6; border-radius:14px; padding:18px 16px; color:#2a1f2e; max-height:340px; overflow:auto}
+  .btnrow{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap}
+  .copybtn{flex:1; min-width:150px; padding:16px; border:none; border-radius:13px; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:16px; font-weight:800; font-family:inherit; cursor:pointer}
+  .copybtn.done{background:#2C8C5A}
+  .claudebtn{flex:1; min-width:150px; padding:16px; border:1.5px solid var(--magenta); border-radius:13px; background:#fff; color:var(--magenta); font-size:16px; font-weight:800; font-family:inherit; text-decoration:none; text-align:center; cursor:pointer}
+  .after{font-size:13.5px; color:var(--sub); margin-top:14px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px}
+  .after b{color:var(--deep)}
+
+  .notice{margin-top:22px; font-size:12.5px; color:var(--sub); background:#fff8fc; border:1px solid #f2dcec; border-radius:12px; padding:14px 16px}
+  .notice b{color:var(--deep)}
+
+  .next{margin-top:30px; text-align:center; background:linear-gradient(135deg,#fbeef6,#f6e9f7); border:1px solid var(--line); border-radius:var(--radius); padding:24px 20px}
+  .next h3{font-size:17px; font-weight:800; margin:0 0 6px}
+  .next p{font-size:13.5px; color:var(--sub); margin:0 0 14px}
+  .next a{display:inline-block; background:#fff; border:1.5px solid var(--magenta); color:var(--magenta); text-decoration:none; font-weight:800; padding:12px 22px; border-radius:12px}
+  @media(max-width:420px){ h1{font-size:23px} .grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
-<div class="enginebar"><span></span><span></span><span></span><span></span></div>
-<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
+<div class="topbar"></div>
 
 <header>
-  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
-  <h1>활동 1. 웹페이지 방향 설정</h1>
-  <p class="lead">웹페이지는 예쁘게 만드는 것이 아니라 <b>목표를 이루도록 설계</b>하는 것입니다.
-  내가 얻고자 하는 결과를 먼저 정하고, 그 결과가 나오도록 <b>구조와 메뉴</b>를 설계합니다.</p>
-  <div class="flow"><b>목표</b><i>→</i><b>구조·메뉴</b><i>→</i><b>콘텐츠</b><i>→</i><b>프롬프트</b></div>
+  <a class="back" href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a>
+  <div class="eyebrow">활동 1</div>
+  <h1>판을 먼저 짭니다<br />내 업종에 딱 맞는 기획부터</h1>
+  <p class="lead">바로 만들지 않아요. <b>내 업종·고객에 맞는 컨셉과 구조(메뉴)를 먼저</b> 잡아야 예쁜 페이지가 나옵니다. 업종만 고르면 그 기획을 대신 해주는 프롬프트가 자동으로 완성돼요.</p>
+  <div class="flow">
+    <b>① 업종 고르기</b><span class="arw">→</span><i>② 프롬프트 자동완성</i><span class="arw">→</span><i>③ 복사해서 클로드에</i><span class="arw">→</span><i>기획안 확인 후 제작</i>
+  </div>
 </header>
 
 <div class="wrap">
-  <div style="background:#fff8e6;border:1px solid #f0d98a;border-radius:12px;padding:16px 18px;margin-top:18px">
-    <p style="margin:0 0 8px;font-size:14px;font-weight:800;color:#7a5a00">⚠️ 이용 안내 · 저작권 고지</p>
-    <p style="margin:0 0 8px;font-size:13px;color:#6b5200;line-height:1.65">이 과정과 여기서 만든 <b>프롬프트·교육자료</b>는 <b>본인의 웹페이지 제작용</b>입니다. 자료를 배포하거나 다른 교육에 활용하면 <b>저작권·지식재산권 침해</b>에 해당합니다. <b>(수강 전 사전규약에 동의하셨습니다.)</b></p>
-    <p style="margin:0;font-size:13px;color:#6b5200;line-height:1.65">📌 이 자료로 <b>교육을 하고 싶으시면 「AI 프롬프트 만들기 마스터과정」</b>을 신청하세요 — <b>모든 교육자료 제공 + 교육컨설팅 과정</b>이 가능합니다. 문의 <b>010-4285-7997</b></p>
+
+  <!-- STEP 1 -->
+  <section class="card">
+    <div class="step"><span class="n">1</span><h2>내 업종 고르기</h2></div>
+    <p class="desc">가장 가까운 것 하나만 눌러 주세요. 딱 맞는 게 없으면 <b>기타</b>에 직접 적으면 됩니다.</p>
+    <div class="grid" id="jobs">
+      <button class="jobbtn" data-name="강사·교육"><span class="emo">🎓</span><span class="nm">강사·교육</span><span class="ex">특강·교육회사·아카데미</span></button>
+      <button class="jobbtn" data-name="카페·음식점"><span class="emo">☕</span><span class="nm">카페·음식점</span><span class="ex">카페·식당·베이커리</span></button>
+      <button class="jobbtn" data-name="피부·미용"><span class="emo">💆</span><span class="nm">피부·미용</span><span class="ex">피부과·에스테틱·네일</span></button>
+      <button class="jobbtn" data-name="병원·의원"><span class="emo">🦷</span><span class="nm">병원·의원</span><span class="ex">치과·의원·한의원</span></button>
+      <button class="jobbtn" data-name="보험·재무"><span class="emo">🛡️</span><span class="nm">보험·재무</span><span class="ex">보험설계·자산·컨설팅</span></button>
+      <button class="jobbtn" data-name="안전·점검"><span class="emo">🧯</span><span class="nm">안전·점검</span><span class="ex">소방점검·시설안전</span></button>
+      <button class="jobbtn" data-name="복지·돌봄"><span class="emo">🤝</span><span class="nm">복지·돌봄</span><span class="ex">장애인교육·요양·상담</span></button>
+      <button class="jobbtn" data-name="건강식품"><span class="emo">🌿</span><span class="nm">건강식품</span><span class="ex">효소·건강기능식품</span></button>
+      <button class="jobbtn" data-name="제품·유통 판매"><span class="emo">📦</span><span class="nm">제품·유통 판매</span><span class="ex">제품 소개·네트워크 판매</span></button>
+      <button class="jobbtn" data-name="__custom__"><span class="emo">✏️</span><span class="nm">기타 (직접 입력)</span><span class="ex">위에 없는 업종</span></button>
+    </div>
+    <div class="customwrap" id="customwrap">
+      <label class="fl" for="customjob">내 업종을 한마디로 적어 주세요</label>
+      <input type="text" id="customjob" placeholder="예: 반려동물 미용, 공방, 세무사무소…" />
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card">
+    <div class="step"><span class="n">2</span><h2>참고하고 싶은 곳<span class="opt"> · 선택</span></h2></div>
+    <p class="desc">마음에 드는 홈페이지가 있으면 링크를 붙여 주세요. 그 장점을 <b>내 업종에 맞게</b> 반영해 줍니다. (없으면 비워도 돼요)</p>
+    <input type="url" id="bench" placeholder="https:// 참고하고 싶은 사이트 주소" />
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card">
+    <div class="step"><span class="n">3</span><h2>내 사업 한 줄<span class="opt"> · 선택</span></h2></div>
+    <p class="desc">내가 뭘 하는지 한 줄이면 충분해요. 잘 모르겠으면 비워 두세요 — 클로드가 대신 제안해 줍니다.</p>
+    <input type="text" id="oneline" placeholder="예: 울산에서 20년 된 동네 치과 / 직장인 대상 소방안전 교육" />
+  </section>
+
+  <button class="makebtn" id="makebtn" disabled>먼저 업종을 골라 주세요</button>
+
+  <!-- RESULT -->
+  <section id="result">
+    <div class="resulthead"><span class="tag">✨ 내 맞춤 프롬프트 완성</span></div>
+    <div class="promptbox" id="promptbox"></div>
+    <div class="btnrow">
+      <button class="copybtn" id="copybtn">📋 프롬프트 복사하기</button>
+      <a class="claudebtn" href="https://claude.ai/" target="_blank" rel="noopener">클로드 열기 →</a>
+    </div>
+    <div class="after">
+      <b>이렇게 하세요.</b> ① 위 <b>복사</b>를 누르고 → ② <b>클로드 열기</b>로 이동 → ③ 새 대화에 <b>붙여넣기(Ctrl+V)</b> → 보내기.
+      클로드가 <b>질문 몇 개</b>를 하고, <b>기획안</b>을 보여준 뒤 <b>"이대로 만들어 드릴까요?"</b>라고 물어봐요. <b>"네"</b> 하면 페이지가 완성됩니다.
+    </div>
+  </section>
+
+  <div class="notice">
+    ⚠️ <b>정직하게.</b> 없는 경력·수치·후기는 만들지 않습니다. 실제 있는 내용만 넣고, 자료가 없으면 클로드가 빈칸으로 두거나 예시임을 표시하도록 안내돼 있어요.
   </div>
-  <form id="f">
 
-    <!-- 1. 목표 설정 -->
-    <section class="card" style="border:2px solid var(--red)">
-      <div class="sec-title"><span class="dot" style="background:var(--red)"></span>1. 이 웹페이지로 얻고 싶은 결과</div>
-      <p class="sec-desc">가장 중요한 단계입니다. <b>무엇을 얻기 위해</b> 이 페이지를 만드는지 정하면,
-      필요한 메뉴와 구조가 결정됩니다.</p>
+  <!-- NEXT -->
+  <div class="next">
+    <h3>기획안대로 페이지가 나왔나요?</h3>
+    <p>이제 사진·후기·문의받기 같은 세부를 다듬을 차례예요.</p>
+    <a href="활동2_페이지만들기.html">활동 2. 페이지 다듬기 →</a>
+  </div>
 
-      <div class="field"><label>이 페이지의 핵심 목표</label>
-        <p class="hint">가장 가까운 것으로 <b>최대 2개까지</b> 고를 수 있어요. 선택에 따라 필요한 메뉴가 자동으로 제안됩니다.</p>
-        <div class="opts" id="goalOpts">
-          <label><input type="checkbox" name="goal" value="lecture" /><span>강의 접수·수강 신청 받기<small>일정을 열고 수강생을 모집한다</small></span></label>
-          <label><input type="checkbox" name="goal" value="cert" /><span>자격과정·강사 양성 모집하기<small>기수를 모집하고 자격 취득으로 이끈다</small></span></label>
-          <label><input type="checkbox" name="goal" value="consult" /><span>컨설팅·상담 의뢰 받기<small>1:1 상담·진단·컨설팅 예약을 받는다</small></span></label>
-          <label><input type="checkbox" name="goal" value="b2b" /><span>기업·기관 교육 의뢰 받기<small>담당자에게 신뢰를 주고 제안 문의를 받는다</small></span></label>
-          <label><input type="checkbox" name="goal" value="brand" /><span>전문가로 나를 알리기<small>신뢰를 쌓고 나를 기억하게 만든다</small></span></label>
-          <label><input type="checkbox" name="goal" value="product" /><span>제품·교구 판매하기<small>제품을 소개하고 구매로 연결한다</small></span></label>
-        </div>
-      </div>
-
-      <div class="field"><label>원하는 메뉴가 있으면 직접 적어주세요</label>
-        <p class="hint">아래 2번에서 자동 제안되는 것 외에, 넣고 싶은 메뉴가 있으면 쉼표로 적어주세요. (선택)</p>
-        <input type="text" name="promo" placeholder="예) 갤러리, 오시는 길, 자주 묻는 질문" /></div>
-    </section>
-
-    <!-- 3. 구조·메뉴 -->
-    <section class="card" style="border:2px solid var(--green)">
-      <div class="sec-title"><span class="dot" style="background:var(--green)"></span>2. 목표에 맞는 구조·메뉴 설계</div>
-      <p class="sec-desc">목표를 고르면, 그 결과가 나오기 위해 <b>반드시 필요한 메뉴</b>가 제안됩니다.
-      필요 없는 것은 해제하고, 없는 것은 직접 추가하세요.</p>
-
-      <div id="menuEmpty" class="tipbox"><p>👆 먼저 위에서 <b>핵심 목표</b>를 선택해 주세요.</p></div>
-
-      <div class="menuwrap" id="menuwrap">
-        <div class="menuhead"><p id="menuMsg"></p></div>
-        <div class="menulist" id="menuList"></div>
-
-        <p class="hint" style="margin-top:14px">💡 더 넣고 싶은 메뉴는 위 <b>1번 「원하는 메뉴 직접 적기」</b>에 적으면 함께 반영됩니다.</p>
-      </div>
-    </section>
-
-    <!-- 4. 콘텐츠 -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--blue)"></span>3. 이름 · 연락처 · 사진만 준비</div>
-      <p class="sec-desc"><b>내용(강의 소개·커리큘럼·후기 등)은 여기서 안 써도 됩니다</b> — 활동 0 결과로 <b>클로드가 코치처럼 채워요.</b> 여러분은 <b>이름·연락처·사진</b>만 준비하면 됩니다.</p>
-
-      <div class="field"><label>홈페이지 이름 (활동명·상호)</label>
-        <p class="hint">페이지 맨 위에 들어갈 이름</p>
-        <input type="text" name="brand" placeholder="예) OOO 컬러심리연구소" /></div>
-
-      <div class="field"><label>이름 · 연락처 (방문자가 연락할 통로) <span style="color:var(--pink)">*</span></label>
-        <p class="hint">방문자가 실제로 연락할 통로예요. <b>이름·연락처·이메일·카톡</b>을 함께 적어주세요. 이게 없으면 페이지의 목표가 이뤄지지 않습니다.</p>
-        <textarea name="contact" placeholder="이름: OOO&#10;연락처(전화): 010-0000-0000&#10;이메일: name@email.com&#10;카톡: https://open.kakao.com/...&#10;인스타: https://instagram.com/... (선택)"></textarea></div>
-
-      <div class="field"><label>사진 준비 — 바탕화면 ‘사진’ 폴더에 모으기</label>
-        <p class="hint">사진은 <b>지금 넣지 마세요.</b> 바탕화면에 <b>‘사진’ 폴더</b>를 만들어 프로필·강의·결과 사진을 다 모아두면 됩니다. 페이지엔 <b>자리(회색 박스)만</b> 생기고, 배포한 뒤 폴더에서 하나씩 넣습니다. (아래는 참고용 미리보기)</p>
-        <input type="file" id="photo" accept="image/*" />
-        <div id="photoPrev" style="margin-top:10px;display:none">
-          <img id="photoImg" alt="프로필 미리보기" style="max-width:160px;border-radius:12px;display:block;border:1px solid var(--line)" />
-          <p style="font-size:12px;color:#2C8C5A;font-weight:700;margin:6px 0 0">✅ 참고용 미리보기 · 사진은 나중에 폴더에서 넣습니다</p>
-        </div></div>
-
-      <div class="field"><p class="hint" style="background:#faf4fb;border:1px solid #ecd9ec;border-radius:10px;padding:11px 13px;color:#5c1953">💡 강의·서비스 소개, 커리큘럼, 후기·경력 같은 <b>내용은 여기서 쓰지 않아도 됩니다.</b> 활동 0에서 나온 내용으로 <b>클로드가 코치처럼 채우고</b>, 부족하면 한두 개만 물어봐요.</p></div>
-    </section>
-
-    <!-- 5. 톤 -->
-    <section class="card">
-      <div class="sec-title"><span class="dot" style="background:var(--yellow)"></span>4. 톤 · 분위기</div>
-      <p class="sec-desc">브랜드에 맞는 인상을 정합니다.</p>
-      <div class="field"><label>원하는 분위기</label>
-        <p class="hint">여러 개 선택 가능</p>
-        <div class="chips" id="moodChips">
-          <label><input type="checkbox" value="단정하고 신뢰감 있는" />단정·신뢰감</label>
-          <label><input type="checkbox" value="따뜻한" />따뜻한</label>
-          <label><input type="checkbox" value="고급스러운" />고급스러운</label>
-          <label><input type="checkbox" value="밝고 컬러풀한" />밝고 컬러풀</label>
-          <label><input type="checkbox" value="세련되고 미니멀한" />세련·미니멀</label>
-          <label><input type="checkbox" value="전문적이고 신뢰가는" />전문적</label>
-        </div>
-      </div>
-      <div class="field"><label>강조하고 싶은 색</label>
-        <input type="text" name="colors" placeholder="예) 코랄 + 아이보리" /></div>
-      <div class="field"><label>참고하고 싶은 사이트</label>
-        <input type="url" name="ref" placeholder="https://" /></div>
-    </section>
-
-    <!-- 6. 프롬프트 -->
-    <section class="card" style="border:2px solid var(--ink)">
-      <div class="sec-title"><span class="dot" style="background:var(--ink)"></span>5. 나만의 홈페이지 프롬프트</div>
-      <p class="sec-desc">지금까지 설계한 <b>목표 · 구조 · 메뉴 · 콘텐츠</b>가 하나의 제작 지시문으로 완성됩니다.
-      복사해 Claude에 붙여넣으면 내 홈페이지가 만들어집니다.</p>
-
-      <button type="button" class="btn" id="genBtn" style="background:var(--ink); margin-top:0">내 홈페이지 제작 프롬프트 완성하기</button>
-
-      <div id="genWrap" style="display:none; margin-top:14px">
-        <textarea id="genOut" readonly class="genbox"></textarea>
-        <button type="button" class="btn" id="copyBtn" style="background:var(--pink)">📋 프롬프트 복사하기</button>
-        <div class="later">
-          <p><b>📷 프로필 사진</b>은 위 4번에서 고른 사진을 <b>Claude에 프롬프트와 함께 첨부</b>하고 <b>"이 사진을 프로필 자리에 넣어줘"</b> 라고 하면 됩니다. 로고 등 다른 사진도 같은 방식으로 나중에 추가하면 됩니다.</p>
-        </div>
-      </div>
-    </section>
-  </form>
-
-    <a href="활동2_페이지만들고다듬기.html" style="display:block;max-width:620px;margin:18px auto 0;text-align:center;text-decoration:none;background:#E91E8C;color:#fff;font-weight:800;font-size:15.5px;padding:15px;border-radius:12px">➡ 다음: 활동 2. 페이지 만들고 다듬기</a>
-<footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
 </div>
 
 <script>
-const f=document.getElementById("f");
-const val=n=>{const el=f.elements[n];return el?(el.value||"").trim():"";};
-const pick=n=>{const el=f.querySelector(`input[name="${n}"]:checked`);return el?el.value:"";};
+(function(){
+  var jobs = document.getElementById('jobs');
+  var customwrap = document.getElementById('customwrap');
+  var customjob = document.getElementById('customjob');
+  var bench = document.getElementById('bench');
+  var oneline = document.getElementById('oneline');
+  var makebtn = document.getElementById('makebtn');
+  var result = document.getElementById('result');
+  var promptbox = document.getElementById('promptbox');
+  var copybtn = document.getElementById('copybtn');
+  var selected = null;
 
-/* ── 활동 0 자산 불러오기 ── */
-const A0={};
-const MAP={"나의 이야기":"story","자주 부탁받는 것":"asked","쉽게 되는 것":"easy",
-  "나의 대상":"target","내 전문":"expertise","강점 색 성향":"color","한 문장":"oneliner"};
-const LBL={story:"나의 이야기",asked:"자주 부탁받는 것",easy:"쉽게 되는 것",target:"나의 대상",
-  expertise:"내 전문",color:"강점 색 성향",oneliner:"한 문장 정의"};
-var _loadBtn=document.getElementById("loadBtn");
-if(_loadBtn) _loadBtn.addEventListener("click", ()=>{
-  const raw=document.getElementById("paste").value;
-  if(!raw.trim()){ alert("활동 0에서 복사한 요약을 먼저 붙여넣어 주세요."); return; }
-  Object.keys(A0).forEach(k=>delete A0[k]);
-  raw.split("\n").forEach(l=>{
-    const m=l.match(/^\s*[·\-•]\s*([^:]+):\s*(.+)$/);
-    if(m){ const k=MAP[m[1].trim()], v=m[2].trim(); if(k&&v&&v!=="-") A0[k]=v; }
-  });
-  const keys=Object.keys(A0), list=document.getElementById("okList");
-  list.innerHTML = keys.length
-    ? keys.map(k=>`<li><b>${LBL[k]}</b> — ${A0[k].length>40?A0[k].slice(0,40)+"…":A0[k]}</li>`).join("")
-    : "<li>인식된 항목이 없습니다. 활동 0의 「요약 복사하기」 내용을 그대로 붙여넣어 주세요.</li>";
-  document.getElementById("okbox").style.display="block";
-});
+  function refreshBtn(){
+    var ok = selected && (selected !== '__custom__' || (customjob.value||'').trim().length>0);
+    makebtn.disabled = !ok;
+    makebtn.textContent = ok ? '내 맞춤 프롬프트 만들기 ✨' : '먼저 업종을 골라 주세요';
+  }
 
-/* ── 목표별 메뉴 설계 ── */
-const GOALS={
-  lecture:{ name:"강의 접수·수강 신청 받기",
-    msg:"수강 신청이 일어나려면 <b>강의 내용 → 신뢰 → 일정·비용 → 신청</b> 순서로 정보가 이어져야 합니다.",
-    menus:[["강의 소개","무엇을 배우는지 한눈에",1],["커리큘럼·진행 방식","어떻게 진행되는지",1],
-      ["모집 일정·수강료","언제, 얼마인지",1],["수강 신청·문의 버튼","실제 신청 통로 (필수)",1],
-      ["수강 후기","먼저 들은 사람의 증거",1],["강사 소개","누구에게 배우는지",1],["자주 묻는 질문",  "망설임 해소",0]]},
-  cert:{ name:"자격과정·강사 양성 모집하기",
-    msg:"자격과정은 <b>이 과정을 마치면 무엇이 되는가</b>가 가장 중요합니다. 이수 후의 변화를 먼저 보여주세요.",
-    menus:[["과정 개요·취득 자격","마치면 무엇이 되는지 (필수)",1],["커리큘럼·이수 체계","단계와 시간",1],
-      ["기수 모집 일정","언제 시작하는지",1],["수강료·지원 안내","비용과 혜택",1],
-      ["수료 후 활동·진로","자격 취득 후의 길",1],["신청·상담 버튼","실제 신청 통로 (필수)",1],
-      ["수료생 후기","먼저 걸어간 사람",1],["자주 묻는 질문","자격 관련 의문 해소",0]]},
-  consult:{ name:"컨설팅·상담 의뢰 받기",
-    msg:"상담 의뢰는 <b>내 문제를 해결해 줄 사람</b>이라는 확신에서 일어납니다. 과정과 결과를 구체적으로 보여주세요.",
-    menus:[["이런 분께 필요합니다","내 얘기라고 느끼게",1],["컨설팅 소개","무엇을 해주는지",1],
-      ["진행 과정·소요 시간","어떻게 진행되는지",1],["가격·프로그램 안내","비용 투명하게",1],
-      ["상담 예약·문의 버튼","실제 예약 통로 (필수)",1],["실제 사례·전후 변화","결과의 증거",1],
-      ["컨설턴트 소개","누가 해주는지",1]]},
-  b2b:{ name:"기업·기관 교육 의뢰 받기",
-    msg:"담당자는 <b>검증된 사람인가</b>를 봅니다. 실적과 프로그램을 앞에 배치하세요.",
-    menus:[["교육 프로그램 소개","어떤 교육이 가능한지",1],["대상별 커리큘럼","직급·목적별 구성",1],
-      ["교육 실적·고객사","검증의 핵심 (필수)",1],["강사 프로필·경력","전문성 증명",1],
-      ["교육 진행 사진·현장","실제 활동 증거",1],["제안서 요청·문의","담당자 연락 통로 (필수)",1]]},
-  brand:{ name:"전문가로 나를 알리기",
-    msg:"신뢰는 <b>이야기 + 활동의 증거</b>에서 생깁니다. 나열보다 흐름으로 보여주세요.",
-    menus:[["나를 한 문장으로","첫 화면 핵심 메시지 (필수)",1],["나의 이야기","왜 이 일을 하는지",1],
-      ["전문 분야·강점","무엇을 잘하는지",1],["활동·강의 이력","무엇을 해왔는지",1],
-      ["미디어·출간·수상","외부 검증",0],["연락처·SNS","기억하고 연결되는 통로 (필수)",1]]},
-  product:{ name:"제품·교구 판매하기",
-    msg:"구매는 <b>이게 나에게 왜 필요한가</b>가 이해될 때 일어납니다. 활용 장면을 보여주세요.",
-    menus:[["제품 소개","무엇인지 한눈에",1],["이런 분께 좋습니다","필요를 느끼게",1],
-      ["구성·사용 방법","어떻게 쓰는지",1],["가격·구매 안내","얼마인지",1],
-      ["구매·주문 버튼","실제 구매 통로 (필수)",1],["사용 후기","구매자의 증거",1]]}
-};
-const menuwrap=document.getElementById("menuwrap"), menuEmpty=document.getElementById("menuEmpty");
-const goalBox=document.getElementById("goalOpts");
-const selectedGoals=()=>[...goalBox.querySelectorAll('input[name="goal"]:checked')].map(c=>c.value);
-goalBox.addEventListener("change", e=>{
-  if(selectedGoals().length>2){ e.target.checked=false; alert("목표는 최대 2개까지 선택할 수 있어요."); return; }
-  renderMenus();
-});
-function renderMenus(){
-  const gs=selectedGoals();
-  if(!gs.length){ menuwrap.style.display="none"; menuEmpty.style.display="block"; return; }
-  const names=gs.map(k=>GOALS[k].name).join(" + ");
-  const msgs=gs.map(k=>"· "+GOALS[k].msg).join("<br>");
-  document.getElementById("menuMsg").innerHTML=`<b>${names}</b><br>${msgs}`;
-  const seen={}, merged=[];
-  gs.forEach(k=>GOALS[k].menus.forEach(m=>{ if(!seen[m[0]]){seen[m[0]]=1;merged.push(m);} }));
-  document.getElementById("menuList").innerHTML=merged.map(m=>
-    `<label><input type="checkbox" class="mn" value="${m[0]}" ${m[2]?"checked":""} />
-     <span>${m[0]}<small>${m[1]}</small></span></label>`).join("");
-  menuEmpty.style.display="none"; menuwrap.style.display="block";
-}
-/* 프로필 사진 미리보기 (업로드 없이 페이지 안에서만) */
-(function(){ var ph=document.getElementById("photo"); if(!ph) return;
-  ph.addEventListener("change", function(e){
-    var file=e.target.files&&e.target.files[0]; if(!file) return;
-    var r=new FileReader();
-    r.onload=function(ev){ document.getElementById("photoImg").src=ev.target.result; document.getElementById("photoPrev").style.display="block"; };
-    r.readAsDataURL(file);
+  jobs.addEventListener('click', function(e){
+    var btn = e.target.closest('.jobbtn');
+    if(!btn) return;
+    Array.prototype.forEach.call(jobs.children, function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    selected = btn.getAttribute('data-name');
+    if(selected === '__custom__'){ customwrap.classList.add('show'); customjob.focus(); }
+    else { customwrap.classList.remove('show'); }
+    refreshBtn();
   });
+  customjob.addEventListener('input', refreshBtn);
+
+  function industryName(){
+    if(selected === '__custom__') return (customjob.value||'').trim() || '(직접 입력한 업종)';
+    return selected;
+  }
+
+  function buildPrompt(){
+    var job = industryName();
+    var b = (bench.value||'').trim();
+    var one = (oneline.value||'').trim();
+    var benchLine = b ? b : '특별히 없음 — 내 업종에서 잘하는 곳을 네가 참고해서 제안해줘';
+    var oneLine = one ? one : '아직 한 줄로 정리 못 했음 — 질문한 뒤 네가 제안해줘';
+
+    return (
+'너는 웹페이지 기획 전문가야. 나는 "' + job + '"을(를) 하는 사람이고, 코딩은 전혀 몰라.\n' +
+'지금부터 내 홈페이지의 "판(기획)"을 너와 함께 먼저 짜고 싶어. 바로 만들지 말고 순서대로 진행해줘.\n' +
+'\n' +
+'[내 정보]\n' +
+'· 업종: ' + job + '\n' +
+'· 참고하고 싶은 곳: ' + benchLine + '\n' +
+'· 한 줄 소개: ' + oneLine + '\n' +
+'\n' +
+'[1단계 — 나에게 딱 3~5개만 물어봐]\n' +
+'한 번에 하나씩, 아주 쉬운 말로 물어봐. (누구에게 보여줄지 / 가장 받고 싶은 문의·행동 / 꼭 넣고 싶은 것 등)\n' +
+'내가 답을 잘 모르면, "' + job + '" 기준으로 네가 보기를 2~3개 제안해줘서 고르게 해줘.\n' +
+'\n' +
+'[2단계 — 답을 다 들으면 "기획안"을 이렇게 정리해줘]\n' +
+'① 컨셉·한 줄 방향 (내 업종·고객에 맞게)\n' +
+'② 톤·분위기 + 어울리는 색 2~3개\n' +
+'③ 페이지 구조 (위 → 아래 섹션 순서)\n' +
+'④ 메뉴 구성\n' +
+'⑤ 첫 화면 후킹 문구 3개 (고객이 딱 멈추게)\n' +
+'⑥ 단 하나의 핵심 행동(CTA) — 예: 상담 신청·예약·문의\n' +
+'※ 참고 링크가 있으면 그 장점을 내 업종에 맞게 반영하되 그대로 베끼지는 마.\n' +
+'\n' +
+'[3단계 — 확인 후 제작]\n' +
+'기획안을 보여준 뒤 "이대로 만들어 드릴까요?"라고 물어봐.\n' +
+'내가 "네" 또는 "이대로"라고 하면, 그 기획안대로 완성된 웹페이지를 HTML 한 파일로 만들어줘.\n' +
+'(CSS·JS 포함, 휴대폰에서도 잘 보이게. 없는 경력·수치·후기는 절대 지어내지 말고, 자료가 없으면 빈칸이나 예시로 표시해줘.)'
+    );
+  }
+
+  makebtn.addEventListener('click', function(){
+    if(makebtn.disabled) return;
+    promptbox.textContent = buildPrompt();
+    result.classList.add('show');
+    result.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  copybtn.addEventListener('click', function(){
+    var txt = promptbox.textContent;
+    function done(){ copybtn.classList.add('done'); copybtn.textContent='✅ 복사됐어요! 클로드에 붙여넣으세요'; setTimeout(function(){ copybtn.classList.remove('done'); copybtn.textContent='📋 프롬프트 복사하기'; }, 2600); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt); done(); });
+    } else { fallback(txt); done(); }
+  });
+  function fallback(txt){
+    var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(ta);
+  }
 })();
-
-const moods=()=>[...document.querySelectorAll("#moodChips input:checked")].map(c=>c.value).join(", ");
-const menus=()=>[...document.querySelectorAll(".mn:checked")].map(c=>c.value);
-
-/* ── 프롬프트 생성 ── */
-function L(l,v){ return v?`- ${l}: ${v}\n`:""; }
-function build(){
-  const gs=selectedGoals(); const goalNames=gs.map(k=>GOALS[k].name).join(" + ");
-  const brand=val("brand")||"(홈페이지 이름 미정)";
-  const list=menus(); const extra=val("promo");
-  if(extra) extra.split(",").map(s=>s.trim()).filter(Boolean).forEach(s=>list.push(s));
-
-  let p="";
-  p+="너는 전문 웹디자이너이자 카피라이터야. 아래 정보로, 방문자에게 신뢰를 주는 '프로페셔널한 한 페이지 웹사이트'를 만들어줘.\n";
-  p+="예쁘게만이 아니라, 아래 '목표'가 실제로 이뤄지도록 설계해줘.\n";
-  p+="나는 코딩을 모르는 초보야. 모바일에서 먼저 잘 보이게 하고, 완성본을 화면에 바로 보여줘.\n";
-  p+="중요: 나는 생각 정리가 잘 안 되는 완전 초보야. 아래에 자세히 못 적었어도, '나의 브랜드' 정보와 지금까지 우리 대화를 근거로 각 섹션에 들어갈 문구를 네가 코치처럼 초안으로 다 써줘. 부족하면 꼭 필요한 것만 한두 개 쉽게 물어보고, 나머지는 전문가답게 채워줘. 나는 읽고 고칠 곳만 말할게.\n\n";
-
-  p+="【이 페이지의 목표】\n";
-  p+=L("핵심 목표", goalNames);
-
-  p+="\n【나의 브랜드】\n";
-  p+=L("브랜드명", val("brand"));
-  p+=L("나를 한 문장으로", A0.oneliner);
-  p+=L("주요 대상", A0.target);
-  p+=L("나의 강점 성향", A0.color);
-  p+=L("사람들이 자주 부탁하는 것", A0.asked);
-  p+=L("나의 이야기", A0.story);
-  p+=L("전문 분야", A0.expertise);
-
-  p+="\n【반드시 들어가야 할 메뉴·섹션】\n";
-  if(list.length){ list.forEach((m,i)=>{ p+=`${i+1}. ${m}\n`; }); }
-  else p+="(직접 지정하지 않음 — 목표에 맞게 제안해줘)\n";
-
-  p+="\n【각 섹션에 넣을 내용】\n";
-  p+=L("대표 강의·서비스·제품", val("offers"));
-  p+=L("진행 방식·커리큘럼", val("curriculum"));
-  p+=L("신뢰 자료(후기·실적·자격)", val("trust"));
-  p+=L("이름·연락처(전화·이메일·카톡)", val("contact"));
-
-  p+="\n【톤·디자인】\n";
-  p+=L("분위기", moods());
-  p+=L("강조색", val("colors"));
-  p+=L("참고 사이트", val("ref"));
-
-  p+="\n【설계 지침 — 프로페셔널하게】\n";
-  p+="1) 맨 위에 '고정 메뉴바'(각 섹션으로 이동)를 넣고, 스크롤해도 따라오게 해줘.\n";
-  p+="2) 첫 화면(히어로): 브랜드명 + '나를 한 문장으로'를 크게, 그 아래 짧은 설명 한 줄, 눈에 띄는 버튼 2개(예: 문의하기 · 자세히 보기), 상단에 프로필 사진 자리.\n";
-  p+="3) 이어지는 섹션은 위 메뉴 순서대로. 각 섹션은 '제목 + 짧은 설명 + 카드/목록'으로 보기 좋게 — 소개(내 이야기·철학), 강점/하는 일(3~4개 카드), 서비스·커리큘럼, 신뢰(경력·자격·후기 자리), 문의.\n";
-  if(goalNames) p+=`4) 방문자가 '${goalNames}'에 도달하도록, 문의·신청 버튼을 히어로와 페이지 맨 아래에 각각 배치해줘.\n`;
-  p+="5) 문의 섹션에는 '이름·연락처·문의내용' 입력폼과 전화·이메일·카톡 자리를 만들어줘. (실제 전송 연결은 다음 활동에서 함)\n";
-  p+="6) 디자인: 강조색 2~3개로 통일, 넉넉한 여백, 큰 제목·읽기 쉬운 본문, 섹션마다 배경을 살짝 구분. 과한 애니메이션은 넣지 말고 부드럽게만.\n";
-  p+="7) 반응형(모바일·PC)과 접근성(이미지 alt·명확한 버튼)까지 챙기고, 내가 준 내용만 써줘(없는 사실·과장 금지). 내 강점·이야기는 나열이 아니라 읽히는 문장으로.\n";
-  p+="8) 사진은 지금 넣지 말고, 들어갈 '자리(회색 박스 + 어떤 사진인지 한 줄 설명)'만 만들어줘. 사진은 내가 바탕화면 폴더에 모아뒀다가 나중에 넣을게.\n";
-  p+="\n【결과물 형식】\n";
-  p+="- HTML·CSS·JS를 '하나의 파일'에 담아 그대로 복사해 쓸 수 있게 해줘. 완성본을 화면에 바로 렌더해서 보여줘.\n";
-  p+="- 다 만든 뒤, 이 목표를 더 잘 이루기 위해 보완하면 좋을 점 3가지도 알려줘.\n";
-  return p.trim();
-}
-
-const genWrap=document.getElementById("genWrap"), genOut=document.getElementById("genOut");
-document.getElementById("genBtn").addEventListener("click", ()=>{
-  if(!selectedGoals().length){ alert("2번에서 이 페이지의 핵심 목표를 먼저 선택해 주세요.\n목표에 따라 구조와 메뉴가 결정됩니다."); 
-    document.getElementById("goalOpts").scrollIntoView({behavior:"smooth",block:"center"}); return; }
-  genOut.value=build();
-  genWrap.style.display="block";
-  genOut.scrollIntoView({behavior:"smooth", block:"center"});
-});
-document.getElementById("copyBtn").addEventListener("click", async ()=>{
-  try{ await navigator.clipboard.writeText(genOut.value); }
-  catch(e){ genOut.select(); document.execCommand("copy"); }
-  const b=document.getElementById("copyBtn"), o=b.textContent;
-  b.textContent="✅ 복사됐어요! Claude에 붙여넣으세요"; setTimeout(()=>b.textContent=o,2000);
-});
 </script>
-<script>(function(){try{if(localStorage.getItem("pbs_aiweb_agree"))return;}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
+
+<!-- 사전 규약 게이트 (서명 후 10시간 유지) -->
+<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">🔒</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">먼저 사전 규약에 동의해 주세요</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">이 교육의 활동 페이지는 <b>사전 규약 동의(서명)</b> 후 열립니다.</p><a href="사전규약_동의.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">규약 보고 서명하기 →</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>

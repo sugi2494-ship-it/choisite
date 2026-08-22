@@ -4,378 +4,196 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>활동 3. 다듬고 연결하기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<meta name="description" content="배포 전 마지막 손질 — 사진·로고 넣기, 연락처·SNS·지도 연결, 그리고 배포 전 최종 점검까지. 카드만 누르면 프롬프트가 나옵니다." />
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
 <style>
   :root{
-    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
-    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+    --magenta:#E91E8C; --deep:#7A1F6B; --grad1:#7A1F6B; --grad2:#D0247E;
+    --ink:#1b1420; --sub:#6b6270; --line:#ece4ee; --bg:#faf8fb; --card:#fff;
+    --soft:#fbeef6; --radius:16px;
   }
   *{box-sizing:border-box}
   body{margin:0; background:var(--bg); color:var(--ink);
     font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
     word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:660px; margin:0 auto; padding:0 18px 70px}
-  .enginebar{display:flex; height:6px; position:sticky; top:0; z-index:20}
-  .enginebar span{flex:1}
-  .enginebar span:nth-child(1){background:var(--red)}
-  .enginebar span:nth-child(2){background:var(--yellow)}
-  .enginebar span:nth-child(3){background:var(--green)}
-  .enginebar span:nth-child(4){background:var(--blue)}
-  header{padding:32px 18px 6px; max-width:660px; margin:0 auto}
-  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
-  h1{font-size:24px; font-weight:800; margin:8px 0 8px; letter-spacing:-.01em}
-  .lead{font-size:15px; color:var(--sub); margin:0}
+  .topbar{height:5px; background:linear-gradient(90deg,var(--grad1),var(--grad2))}
+  .wrap{max-width:660px; margin:0 auto; padding:0 20px 96px}
+  header{max-width:660px; margin:0 auto; padding:34px 20px 0}
+  .back{display:inline-block; font-size:13px; color:var(--sub); text-decoration:none; margin-bottom:20px}
+  .back:hover{color:var(--magenta)}
+  .eyebrow{font-size:13px; font-weight:800; color:var(--magenta); letter-spacing:.02em}
+  h1{font-size:27px; font-weight:800; margin:10px 0 10px; letter-spacing:-.02em; line-height:1.35}
+  .lead{font-size:16px; color:var(--sub); margin:0}
 
-  .progress{position:sticky; top:6px; z-index:19; background:rgba(246,247,248,.95);
-    backdrop-filter:blur(6px); padding:10px 0 8px; margin-top:16px}
-  .ptrack{height:8px; background:#e6e8ea; border-radius:6px; overflow:hidden}
-  .pfill{height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
-    border-radius:6px; transition:width .35s ease}
-  .ptext{font-size:12px; font-weight:700; color:var(--sub); margin-top:6px; text-align:right}
+  .keep{margin-top:20px; background:#fff8fc; border:1px solid #f2dcec; border-radius:14px; padding:16px 18px; font-size:14px}
+  .keep b{color:var(--deep)}
 
-  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-    padding:24px 20px; margin-top:16px}
-  .snum{display:inline-block; font-size:12.5px; font-weight:800; color:#fff;
-    padding:5px 13px; border-radius:999px; margin-bottom:12px}
-  h2{font-size:19px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
-  .sub{font-size:13px; color:var(--sub); margin:0 0 16px; font-weight:600}
-  p.t{font-size:15px; margin:0 0 13px}
-  ul.pts{margin:12px 0; padding-left:20px}
-  ul.pts li{font-size:14.5px; margin-bottom:7px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-top:22px}
+  .lbl{display:block; font-size:14px; font-weight:800; margin:0 0 6px}
+  .hint{font-size:12.5px; color:var(--sub); font-weight:500; margin:0 0 10px}
+  .field{margin-top:12px}
+  .field:first-child{margin-top:0}
+  .field label{display:block; font-size:13.5px; font-weight:700; margin:0 0 5px}
+  input[type=text]{width:100%; padding:12px 13px; border:1.5px solid var(--line); border-radius:11px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink)}
+  input:focus{outline:none; border-color:var(--magenta); box-shadow:0 0 0 3px rgba(233,30,140,.12)}
 
-  .big{background:#fbfbfc; border:1px solid var(--line); border-left:5px solid var(--ink);
-    border-radius:10px; padding:15px 17px; margin:14px 0}
-  .big .cap{font-size:12px; font-weight:800; color:var(--sub); letter-spacing:.03em}
-  .big .txt{font-size:15px; font-weight:700; margin-top:5px; line-height:1.6}
-  .warn{background:#fff8e6; border:1px solid #f0d98a; border-radius:11px; padding:13px 16px; margin:14px 0}
-  .warn p{margin:0; font-size:13.5px; color:#7a5a00}
-  .good{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:11px; padding:13px 16px; margin:14px 0}
-  .good p{margin:0; font-size:13.5px; color:#2f4b3b}
+  .item{background:#fff; border:1.5px solid var(--line); border-radius:15px; margin-top:14px; overflow:hidden; transition:border-color .15s}
+  .item.open{border-color:var(--magenta); box-shadow:0 6px 20px rgba(122,31,107,.10)}
+  .ihead{display:flex; align-items:center; gap:13px; padding:18px 18px; cursor:pointer}
+  .ihead .num{flex:none; width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center}
+  .ihead .tt{flex:1}
+  .ihead .nm{font-size:16.5px; font-weight:800; color:var(--ink)}
+  .ihead .ds{font-size:12.5px; color:var(--sub); font-weight:600; margin-top:2px}
+  .ihead .chev{flex:none; color:#c9b9ce; font-size:14px; transition:transform .2s}
+  .item.open .chev{transform:rotate(180deg); color:var(--magenta)}
+  .ibody{display:none; padding:0 18px 18px}
+  .item.open .ibody{display:block}
+  .fieldwrap{margin-bottom:12px}
+  .promptbox{white-space:pre-wrap; font-size:13.5px; line-height:1.7; background:#fbf6fc; border:1.5px dashed #e2c9e6; border-radius:12px; padding:15px 14px; color:#2a1f2e; max-height:320px; overflow:auto}
+  .copybtn{display:block; width:100%; margin-top:11px; padding:15px; border:none; border-radius:12px; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:16px; font-weight:800; font-family:inherit; cursor:pointer}
+  .copybtn.done{background:#2C8C5A}
 
-  /* 프롬프트 카드 */
-  .pc{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:11px; background:#fff}
-  .pc-h{display:flex; align-items:center; gap:9px; padding:11px 14px; background:#f7f8f9;
-    border-bottom:1px solid var(--line); cursor:pointer}
-  .pc-tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:6px; color:#fff; flex:0 0 auto}
-  .pc-t{font-size:14px; font-weight:700; flex:1}
-  .pc-a{font-size:12px; color:var(--sub); font-weight:700}
-  .pc-b{display:none; padding:14px}
-  .pc.open .pc-b{display:block}
-  .pc.open .pc-a{transform:rotate(180deg)}
-  .code{background:#0f1720; color:#e8eef4; border-radius:10px; padding:14px; font-size:12.5px;
-    line-height:1.75; white-space:pre-wrap; font-family:"Consolas","Courier New",monospace}
-  .cbtn{width:100%; border:none; background:var(--pink); color:#fff; font-size:14px; font-weight:800;
-    padding:11px; border-radius:9px; cursor:pointer; margin-top:9px; font-family:inherit}
-  .why{font-size:12.5px; color:var(--sub); margin:9px 0 0; line-height:1.6}
+  .checkbox-list{margin-top:12px}
+  .clabel{display:flex; align-items:flex-start; gap:10px; padding:7px 0; font-size:14px; cursor:pointer}
+  .clabel input{width:19px; height:19px; margin-top:2px; accent-color:var(--magenta); flex:none}
+  .doneMsg{display:none; margin-top:12px; background:#eaf6ef; border:1px solid #bfe3cd; color:#1c6b3f; border-radius:10px; padding:12px 14px; font-weight:700; font-size:14px}
+  .doneMsg.show{display:block}
 
-  .check{display:flex; gap:10px; align-items:flex-start; margin-top:18px; padding-top:16px;
-    border-top:1px dashed var(--line)}
-  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
-  .check label{font-size:14px; font-weight:700; cursor:pointer; color:var(--sub)}
-  .check input:checked + label{color:var(--green)}
-
-  .final{background:#fff; border:2px solid var(--ink); border-radius:var(--radius); padding:22px 20px; margin-top:16px}
-  .fl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--line)}
-  .fl:last-child{border-bottom:none}
-  .fl input{width:19px; height:19px; margin-top:2px; accent-color:var(--ink); flex:0 0 auto; cursor:pointer}
-  .fl label{font-size:14px; font-weight:600; cursor:pointer}
-
-  .next{background:var(--ink); color:#fff; border-radius:var(--radius); padding:26px 22px; margin-top:20px; text-align:center}
-  .next h3{margin:0 0 8px; font-size:19px}
-  .next p{margin:0 0 16px; font-size:14px; color:#c8cfd6}
-  .next a{display:block; background:#fff; color:var(--ink); text-decoration:none; font-weight:800;
-    font-size:16px; padding:15px; border-radius:11px}
-  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:26px; line-height:1.7}
+  .next{margin-top:30px; text-align:center; background:linear-gradient(135deg,#fbeef6,#f6e9f7); border:1px solid var(--line); border-radius:var(--radius); padding:24px 20px}
+  .next h3{font-size:17px; font-weight:800; margin:0 0 6px}
+  .next p{font-size:13.5px; color:var(--sub); margin:0 0 14px}
+  .next a{display:inline-block; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; text-decoration:none; font-weight:800; padding:14px 26px; border-radius:12px}
+  @media(max-width:420px){ h1{font-size:23px} }
 </style>
 </head>
 <body>
-<div class="enginebar"><span></span><span></span><span></span><span></span></div>
-<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
+<div class="topbar"></div>
 
 <header>
-  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
-  <h1>활동 3. 다듬고 연결하기</h1>
-  <p class="lead">기본 페이지가 나왔으면, 여기서 <b>사진·색·레이아웃</b>을 다듬고
-  <b>연락처·SNS·후기</b>를 연결해 완성합니다. 작업 내내 옆에 열어두고 쓰세요.</p>
-  <div class="progress">
-    <div class="ptrack"><div class="pfill" id="pfill"></div></div>
-    <div class="ptext" id="ptext">0 / 6 단계</div>
-  </div>
+  <a class="back" href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a>
+  <div class="eyebrow">활동 3</div>
+  <h1>다듬고 연결하기<br />배포 전 마지막 손질</h1>
+  <p class="lead">이제 <b>사진·로고</b>를 넣고, <b>연락처·SNS·지도</b>를 연결한 뒤, <b>배포 전 점검</b>만 하면 끝이에요. 카드 → <b>복사</b> → <b>같은 클로드 대화</b>에 붙여넣기.</p>
 </header>
 
 <div class="wrap">
 
-  <!-- STEP 4 -->
-  <section class="step">
-    <span class="snum" style="background:var(--blue)">STEP 1</span>
-    <h2>사진과 로고 넣기</h2>
-    <p class="sub">가장 많이 막히는 부분 — 순서만 지키면 쉽습니다</p>
-
-    <div class="good"><p>📁 <b>먼저 준비:</b> 올릴 사진을 바탕화면에 <b>'사진' 폴더</b> 하나로 모아두세요 (프로필·강의·활동·후기·로고). 여기서 하나씩 끌어다 올립니다.</p></div>
-
-    <div class="big">
-      <div class="cap">사진 넣는 3단계</div>
-      <div class="txt">① 대화창에 사진을 <b>끌어다 놓거나 클립(📎)</b>으로 첨부<br />
-      ② 사진과 <b>함께</b> "어디에 넣어줘"라고 말하기<br />
-      ③ 화면에서 확인하고 크기·모양 조정</div>
-    </div>
-
-    <div class="warn"><p>⚠️ 사진만 덜렁 올리면 AI가 뭘 해야 할지 모릅니다.
-    <b>반드시 사진 + 설명을 함께</b> 보내세요.</p></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">프로필</span><span class="pc-t">프로필 사진 넣기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p10">(사진을 첨부한 뒤 함께 보내세요)
-
-이 사진을 첫 화면 프로필 자리에 넣어줘.
-동그란 모양으로, 얼굴이 가운데 오게 해줘.</div>
-      <button class="cbtn" data-t="p10">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">로고</span><span class="pc-t">로고 넣기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p11">(로고 파일을 첨부한 뒤 함께 보내세요)
-
-이 로고를 페이지 맨 위 왼쪽에 넣어줘.
-너무 크지 않게, 글자가 잘 보이는 크기로 해줘.</div>
-      <button class="cbtn" data-t="p11">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">여러장</span><span class="pc-t">강의 사진 여러 장 넣기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p12">(사진 여러 장을 함께 첨부)
-
-이 사진들을 [강의 소개] 섹션 아래에 넣어줘.
-휴대폰에서는 한 줄에 하나씩, 컴퓨터에서는 나란히 보이게 해줘.</div>
-      <button class="cbtn" data-t="p12">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">조정</span><span class="pc-t">사진 크기·위치 고치기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p13">프로필 사진이 너무 커. 지금의 절반 크기로 줄여줘.
-그리고 사진 아래에 내 이름이 오게 해줘.</div>
-      <button class="cbtn" data-t="p13">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">여백</span><span class="pc-t">사진 여백 없애고 꽉 차게</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p25">프로필 사진 둘레에 빈 여백이 있어. 여백을 없애고
-사진이 자리에 꽉 차게 해줘. 잘려도 되니 얼굴(중심)이 가운데 오게.</div>
-      <button class="cbtn" data-t="p25">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">얼굴크게</span><span class="pc-t">얼굴을 크게 (확대·크롭)</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p26">프로필 사진에서 얼굴이 너무 작아. 위·아래·양옆을 잘라내고(크롭)
-얼굴 중심으로 확대해서, 동그란 틀 안에 얼굴이 꽉 차게 해줘.</div>
-      <button class="cbtn" data-t="p26">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">위치</span><span class="pc-t">사진 위치 옮기기 (왼·오·가운데)</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p27">프로필 사진을 [왼쪽 / 오른쪽 / 가운데] 로 옮겨줘.
-글과 사진이 나란히 균형 있게 보이게 해줘.</div>
-      <button class="cbtn" data-t="p27">📋 복사</button>
-      <p class="why">[ ] 안에서 원하는 위치 하나만 남기세요.</p></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--sub)">없을때</span><span class="pc-t">아직 사진이 없다면</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p14">사진은 나중에 넣을게.
-지금은 사진이 들어갈 자리만 예쁘게 표시해두고,
-그 자리에 "사진 준비 중"이라고 써줘.</div>
-      <button class="cbtn" data-t="p14">📋 복사</button>
-      <p class="why">사진이 없어도 작업을 멈추지 마세요. 자리만 잡아두고 진행하면 됩니다.</p></div></div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s4" /><label for="s4">사진·로고를 넣었어요 (또는 자리를 잡았어요)</label></div>
-  </section>
-
-  <!-- STEP 5 -->
-  <section class="step">
-    <span class="snum" style="background:var(--pink)">STEP 2</span>
-    <h2>디자인·레이아웃 완성도 올리기</h2>
-    <p class="sub">색은 고민하지 마세요. 활동 0·1에서 이미 정해졌습니다</p>
-
-    <div class="big">
-      <div class="cap">색을 직접 고르지 않아도 되는 이유</div>
-      <div class="txt">활동 0에서 <b>나의 강점 색</b>이, 활동 1에서 <b>원하는 분위기</b>가 이미 나왔습니다.<br />
-      <span style="font-size:13.5px;font-weight:600;color:var(--sub)">
-      그 결과를 그대로 알려주면, AI가 어울리는 색 조합을 <b>대신 설계</b>해 줍니다.
-      "무슨 색이 좋을까" 고민하지 말고, 내 결과를 알려주기만 하세요.</span></div>
-    </div>
-
-    <div class="good"><p>📋 <b>준비물:</b> 활동 0의 「강점 색 성향」과 「한 문장」, 활동 1에서 고른 「분위기·강조색」.
-    기억이 안 나면 활동 0·1 페이지를 다시 열어 확인하세요.</p></div>
-
-    <div class="pc open" style="border:2px solid var(--ink)">
-      <div class="pc-h" style="background:#eef0f2"><span class="pc-tag" style="background:var(--ink)">★ 먼저</span><span class="pc-t">내 브랜드에 맞는 색 조합 제안받기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="pD">이 페이지의 색과 디자인을 내 브랜드에 맞게 정리하고 싶어.
-나는 색을 고르는 전문가가 아니니까, 네가 제안해줘.
-
-내 정보는 이래.
-- 나의 강점 색 성향: [예: RED · 도전·열정·성과]
-- 원하는 분위기: [예: 단정하고 신뢰감 있는, 따뜻한]
-- 나의 대상: [예: 수강을 고민 중인 40~50대 여성]
-- 페이지 목표: [예: 강의 문의 받기]
-
-이걸 바탕으로 색 조합을 3가지 제안해줘. 각각에 대해
-① 어떤 색을 쓰는지(메인색·보조색·배경색)
-② 어떤 인상을 주는지
-③ 내 대상에게 왜 어울리는지
-를 한 줄씩 설명해줘.
-
-색은 한 조합당 2~3가지만 써서 정돈되게 해줘.
-아직 적용하지 말고 제안만 보여줘.</div>
-      <button class="cbtn" data-t="pD">📋 복사</button>
-      <p class="why">[ ] 안을 <b>활동 0·1의 내 결과</b>로 채우세요. 색 이름을 몰라도 됩니다.</p></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--ink)">★ 다음</span><span class="pc-t">고른 조합으로 전체 적용하기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="pE">[2번] 조합으로 페이지 전체에 적용해줘.
-
-적용할 때 이것도 함께 정리해줘.
-- 색은 그 조합 안에서만 쓰고, 알록달록해지지 않게.
-- 글씨는 배경과 충분히 대비되어 읽기 편하게.
-- 강조색은 버튼과 중요한 문구에만 써서 눈이 그리로 가게.
-- 섹션마다 배경색을 번갈아 써서 구분이 되게 해줘.</div>
-      <button class="cbtn" data-t="pE">📋 복사</button>
-      <p class="why">1·2·3 중 마음에 드는 번호만 말하면 됩니다.</p></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--pink)">★ 레이아웃</span><span class="pc-t">배치와 여백 정리하기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="pF">이제 레이아웃을 정리해줘.
-나는 디자인을 몰라서 어디가 어색한지 판단이 안 돼.
-네가 보기에 어색한 부분을 찾아서 고쳐줘.
-
-- 섹션 사이 여백을 넉넉하고 일정하게.
-- 글이 너무 길게 늘어진 곳은 읽기 좋은 폭으로 잡아줘.
-- 제목·본문·작은 글씨의 크기 차이를 분명하게.
-- 사진과 글이 어색하게 붙어 있으면 균형 있게 배치해줘.
-- 휴대폰과 컴퓨터 화면 둘 다 자연스럽게.
-
-고친 뒤에 무엇을 바꿨는지 3줄로 알려줘.</div>
-      <button class="cbtn" data-t="pF">📋 복사</button>
-      <p class="why">여백만 정리해도 완성도가 눈에 띄게 올라갑니다.</p></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--pink)">★ 업그레이드</span><span class="pc-t">전문가가 만든 것처럼 다듬기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="pG">이 페이지를 전문가가 만든 것처럼 한 단계 올려줘.
-단, 지금의 색·구조·내 글은 그대로 유지하고
-완성도만 높여줘.
-
-- 첫 화면이 한눈에 인상적으로 보이게.
-- 섹션마다 시선이 자연스럽게 아래로 이어지게.
-- 지나치게 화려한 효과는 넣지 말고, 정돈된 느낌으로.
-- 버튼과 링크가 눌러도 되는 것처럼 분명하게 보이게.
-
-내 브랜드는 [예: 신뢰감 있는 퍼스널컬러 강사]야.
-이 인상과 어긋나는 건 넣지 말아줘.</div>
-      <button class="cbtn" data-t="pG">📋 복사</button>
-      <p class="why">여기까지 하면 "직접 만들었다"는 말을 안 믿는 수준이 됩니다.</p></div></div>
-
-    <p class="t" style="margin-top:22px; padding-top:18px; border-top:1px dashed var(--line)">
-    <b>세부 조정</b> — 위 작업 후, 개별적으로 손볼 때 쓰세요.</p>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--pink)">가독성</span><span class="pc-t">글씨가 안 읽힐 때</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p17">글씨가 작고 답답해 보여.
-글씨를 조금 키우고, 줄 간격과 여백을 넉넉하게 해줘.
-한글이 어색하게 잘리지 않게 해줘.</div>
-      <button class="cbtn" data-t="p17">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--pink)">버튼</span><span class="pc-t">문의·신청 버튼 강조</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p18">[강의 문의하기] 버튼을 더 눈에 띄게 만들어줘.
-첫 화면과 페이지 맨 아래에 각각 하나씩 넣고,
-누르면 [내 카톡/전화 링크]로 연결되게 해줘.</div>
-      <button class="cbtn" data-t="p18">📋 복사</button>
-      <p class="why">이 버튼이 없으면 페이지의 목표가 이뤄지지 않습니다. 꼭 확인하세요.</p></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--pink)">색바꾸기</span><span class="pc-t">특정 색으로 바로 바꾸기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p28">메인 색을 [예: 코랄]으로 바꿔줘.
-구조·글·사진은 그대로 두고 색만 바꿔줘.
-강조색은 버튼과 중요한 문구에만 써줘.</div>
-      <button class="cbtn" data-t="p28">📋 복사</button>
-      <p class="why">색 이름 대신 "좀 더 차분한 색으로"처럼 <b>느낌으로</b> 말해도 됩니다.</p></div></div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s5" /><label for="s5">디자인과 레이아웃을 정리했어요</label></div>
-  </section>
-
-  <!-- STEP 6 : 연락처·SNS·후기 -->
-  <section class="step">
-    <span class="snum" style="background:var(--blue)">STEP 3</span>
-    <h2>연락처·SNS·후기 연결하기</h2>
-    <p class="sub">방문자가 실제로 연락하고, 신뢰를 느끼게 하는 마지막 고도화</p>
-
-    <div class="good"><p>💡 <b>여기가 목표를 완성하는 곳입니다.</b> 아무리 예뻐도 <b>연락 통로</b>와 <b>후기(신뢰)</b>가 없으면 문의가 오지 않아요.</p></div>
-
-    <div class="pc open" style="border:2px solid var(--ink)"><div class="pc-h" style="background:#eef0f2"><span class="pc-tag" style="background:var(--blue)">★ 연결</span><span class="pc-t">카톡·인스타·전화 실제로 연결하기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p29">문의 버튼과 아이콘을 내 실제 연락처로 연결해줘.
-- 전화: 010-0000-0000  (휴대폰에서 누르면 바로 전화 걸리게)
-- 카카오톡 오픈채팅: https://open.kakao.com/...
-- 인스타그램: https://instagram.com/...
-
-첫 화면과 페이지 맨 아래에 '전화·카톡·인스타' 아이콘 버튼을
-나란히 넣고, 각각 위 주소로 연결해줘.
-휴대폰에서 손가락으로 누르기 편한 크기로 해줘.</div>
-      <button class="cbtn" data-t="p29">📋 복사</button>
-      <p class="why">[ ] 안을 <b>내 실제 번호·주소</b>로 바꾸세요. 전화는 바로 걸리고, 카톡·인스타는 새 창으로 열립니다. <b>오타 꼭 확인!</b></p></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--green)">후기</span><span class="pc-t">후기 섹션 만들기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p30">'수강 후기' 섹션을 [수강 신청] 바로 위에 추가해줘.
-후기 카드 3개를 넣고, 각 카드에 별점·한 줄 후기·이름(익명 가능) 자리를 만들어줘.
-지금은 예시로 채워두고, 내가 나중에 실제 후기로 바꿀게.</div>
-      <button class="cbtn" data-t="p30">📋 복사</button>
-      <p class="why">후기는 방문자가 가장 믿는 증거입니다. 자리를 먼저 만들어두세요.</p></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--green)">후기사진</span><span class="pc-t">받은 후기(캡처)를 이미지로 넣기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p31">(후기 캡처 사진을 첨부한 뒤 함께 보내세요)
-
-이 후기 캡처들을 후기 섹션에 카드로 넣어줘.
-휴대폰에서는 한 줄에 하나씩, 컴퓨터에서는 나란히 보이게 해줘.</div>
-      <button class="cbtn" data-t="p31">📋 복사</button></div></div>
-
-    <div class="pc"><div class="pc-h"><span class="pc-tag" style="background:var(--blue)">활동사진</span><span class="pc-t">활동·현장 사진 갤러리 넣기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="p32">(활동 사진 여러 장을 함께 첨부)
-
-[강의 소개] 아래에 '활동 사진' 갤러리 섹션을 만들어줘.
-컴퓨터에서는 3장씩 나란히, 휴대폰에서는 한 장씩 보이게 해줘.
-사진을 누르면 크게 볼 수 있으면 더 좋아.</div>
-      <button class="cbtn" data-t="p32">📋 복사</button></div></div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s7" /><label for="s7">연락처·SNS·후기를 연결했어요</label></div>
-  </section>
-
-  <!-- 최종 점검 -->
-  <div class="final">
-    <h2 style="margin-bottom:4px">✅ 배포 전 최종 점검</h2>
-    <p class="sub">다음 활동(배포)으로 가기 전에 확인하세요</p>
-    <div class="fl"><input type="checkbox" id="f1" /><label for="f1">첫 화면에 내가 누구인지 바로 보인다</label></div>
-    <div class="fl"><input type="checkbox" id="f2" /><label for="f2">문의·신청 버튼이 있고, 실제로 연결된다</label></div>
-    <div class="fl"><input type="checkbox" id="f3" /><label for="f3">연락처·SNS 주소가 정확하다 (오타 확인!)</label></div>
-    <div class="fl"><input type="checkbox" id="f4" /><label for="f4">사실이 아닌 경력·숫자가 들어가 있지 않다</label></div>
-    <div class="fl"><input type="checkbox" id="f5" /><label for="f5">휴대폰 화면에서 잘 보인다</label></div>
-    <div class="fl"><input type="checkbox" id="f6" /><label for="f6">전체 코드를 복사해서 따로 저장해두었다</label></div>
+  <div class="keep">
+    💡 <b>계속 같은 대화에서 이어가세요.</b> 활동 1·2를 했던 그 대화창에 그대로 붙여넣으면, 클로드가 <b>내 페이지를 기억한 채</b> 마무리해 줍니다.
   </div>
 
+  <!-- 1. 사진·로고 -->
+  <div class="item" data-key="photo">
+    <div class="ihead"><span class="num">1</span><div class="tt"><div class="nm">📷 사진·로고 넣기</div><div class="ds">내 사진 자리 + 없을 때 대안</div></div><span class="chev">▼</span></div>
+    <div class="ibody"><div class="promptbox"></div><button class="copybtn">📋 복사하기</button></div>
+  </div>
+
+  <!-- 2. 연락처·SNS·지도 연결 -->
+  <div class="item" data-key="connect">
+    <div class="ihead"><span class="num">2</span><div class="tt"><div class="nm">🔗 연락처·SNS·지도 연결</div><div class="ds">전화·카톡·인스타·지도를 실제로 연결</div></div><span class="chev">▼</span></div>
+    <div class="ibody">
+      <div class="fieldwrap">
+        <div class="field"><label>전화 / 카톡</label><input type="text" id="f_contact" placeholder="예: 010-1234-5678  또는  카톡 오픈채팅 링크" /></div>
+        <div class="field"><label>인스타 / 블로그 / 유튜브 <span style="color:#b39abb">· 선택</span></label><input type="text" id="f_sns" placeholder="예: instagram.com/내계정" /></div>
+        <div class="field"><label>오프라인 주소(지도) <span style="color:#b39abb">· 선택</span></label><input type="text" id="f_addr" placeholder="예: 울산 남구 ○○로 12" /></div>
+      </div>
+      <div class="promptbox"></div><button class="copybtn">📋 복사하기</button>
+    </div>
+  </div>
+
+  <!-- 3. 배포 전 최종 점검 -->
+  <div class="item" data-key="check">
+    <div class="ihead"><span class="num">3</span><div class="tt"><div class="nm">✅ 배포 전 최종 점검</div><div class="ds">클로드에게 점검 요청 + 내 눈으로 확인</div></div><span class="chev">▼</span></div>
+    <div class="ibody">
+      <div class="promptbox"></div><button class="copybtn">📋 점검 프롬프트 복사하기</button>
+      <div class="checkbox-list">
+        <label class="clabel"><input type="checkbox" /> 휴대폰에서 열어봤다 (글자·버튼 안 깨짐)</label>
+        <label class="clabel"><input type="checkbox" /> 전화·카톡 버튼이 <b>진짜로 연결</b>된다</label>
+        <label class="clabel"><input type="checkbox" /> 오탈자·이상한 문장이 없다</label>
+        <label class="clabel"><input type="checkbox" /> <b>없는 경력·수치·후기</b>가 들어가 있지 않다</label>
+        <div class="doneMsg" id="doneMsg">🎉 점검 완료! 이제 인터넷 주소로 배포할 차례예요.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT -->
   <div class="next">
-    <h3>🎉 페이지가 완성됐습니다!</h3>
-    <p>이제 이 페이지를 인터넷에 올려서 <b>나만의 주소</b>를 만들 차례예요.</p>
+    <h3>다 다듬었어요!</h3>
+    <p>이제 진짜 인터넷 주소(URL)로 배포할 차례예요.</p>
     <a href="활동4_배포하고내주소만들기.html">활동 4. 배포하고 내 주소 만들기 →</a>
   </div>
 
-  <footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
 </div>
 
 <script>
-/* 아코디언 */
-document.querySelectorAll(".pc-h").forEach(h=>{
-  h.addEventListener("click", ()=> h.parentElement.classList.toggle("open"));
-});
-/* 복사 */
-document.querySelectorAll(".cbtn").forEach(b=>{
-  b.addEventListener("click", async e=>{
-    e.stopPropagation();
-    const t=document.getElementById(b.dataset.t).textContent;
-    try{ await navigator.clipboard.writeText(t); }
-    catch(err){
-      const r=document.createRange(); r.selectNode(document.getElementById(b.dataset.t));
-      const s=getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); s.removeAllRanges();
-    }
-    const o=b.textContent; b.textContent="✅ 복사됐어요!";
-    setTimeout(()=>b.textContent=o,1600);
+(function(){
+  var head = '지금 만든 내 페이지에 이어서 고쳐줘. (전체를 새로 만들지 말고, 아래 부분만 자연스럽게 반영해줘.)\n\n';
+  function val(id){ var e=document.getElementById(id); return e?(e.value||'').trim():''; }
+
+  var T = {
+    photo: function(){ return head +
+'[사진·로고 넣기]\n' +
+'· 로고와 사진이 들어갈 자리를 보기 좋게 잡아줘 (첫 화면 대표 이미지, 소개 사진, 활동/제품 사진).\n' +
+'· 사진은 내가 나중에 넣을 거라, 지금은 "여기에 사진" 자리표시(회색 박스)로 만들어줘.\n' +
+'· 사진이 없어도 허전하지 않게 색·여백으로 채워줘. 없는 사진을 억지로 만들지는 말고.'; },
+
+    connect: function(){
+      var c=val('f_contact'), s=val('f_sns'), a=val('f_addr');
+      var lines='';
+      lines += c ? '· 전화/카톡: ' + c + ' (전화면 tel: 로 바로 걸리게, 링크면 새 창으로)\n'
+                 : '· 전화/카톡: 내 번호/링크를 여기에 넣을 거야. 우선 자리만 만들어줘.\n';
+      if(s) lines += '· SNS: ' + s + ' (아이콘 버튼으로 새 창 열리게)\n';
+      if(a) lines += '· 오프라인 주소: ' + a + ' (지도로 볼 수 있게 지도 링크/버튼 넣어줘)\n';
+      return head +
+'[연락처·SNS·지도 연결]\n' +
+'· 아래 정보를 페이지에 실제로 연결해줘. 누르면 바로 연결되게.\n' +
+lines +
+'· 맨 아래(푸터)에 연락처와 링크를 한 번 더 정리해서 넣어줘.'; },
+
+    check: function(){ return head +
+'[배포 전 점검]\n' +
+'이 페이지를 배포하기 전에 아래를 점검하고, 문제 있으면 바로 고쳐줘.\n' +
+'· 휴대폰 화면에서 깨지거나 글자가 넘치는 곳\n' +
+'· 눌러도 안 되는 버튼·링크(전화·카톡·SNS·지도)\n' +
+'· 오탈자, 어색하거나 과장된 문장\n' +
+'· 사실이 아닐 수 있는 경력·수치·후기 (있으면 표시해줘)\n' +
+'점검 결과를 짧게 알려주고, 고친 부분을 반영한 최종 HTML을 줘.'; }
+  };
+
+  document.querySelectorAll('.item').forEach(function(item){
+    var key=item.getAttribute('data-key');
+    var box=item.querySelector('.promptbox');
+    var copy=item.querySelector('.copybtn');
+    item.querySelector('.ihead').addEventListener('click', function(){
+      var willOpen=!item.classList.contains('open');
+      if(willOpen) box.textContent=T[key]();
+      item.classList.toggle('open');
+    });
+    copy.addEventListener('click', function(e){
+      e.stopPropagation();
+      box.textContent=T[key]();
+      var txt=box.textContent;
+      function done(){ copy.classList.add('done'); copy.textContent='✅ 복사됐어요! 같은 대화에 붙여넣으세요'; setTimeout(function(){ copy.classList.remove('done'); copy.textContent=(key==='check'?'📋 점검 프롬프트 복사하기':'📋 복사하기'); },2600); }
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,function(){ fb(txt); done(); }); }
+      else { fb(txt); done(); }
+    });
+    // 입력값 바뀌면 열려있는 프롬프트 갱신
+    item.querySelectorAll('input[type=text]').forEach(function(inp){
+      inp.addEventListener('input', function(){ if(item.classList.contains('open')) box.textContent=T[key](); });
+    });
   });
-});
-/* 진행률 */
-const cks=[...document.querySelectorAll(".ck")];
-const pfill=document.getElementById("pfill"), ptext=document.getElementById("ptext");
-function upd(){
-  const n=cks.filter(c=>c.checked).length;
-  pfill.style.width=(n/cks.length*100)+"%";
-  ptext.textContent = n===cks.length ? "✅ 다 하셨어요! 배포하러 가볼까요" : `${n} / ${cks.length} 단계`;
-}
-cks.forEach(c=>c.addEventListener("change",upd)); upd();
+
+  // 점검 체크리스트
+  var boxes=document.querySelectorAll('.checkbox-list input[type=checkbox]');
+  var done=document.getElementById('doneMsg');
+  function refresh(){ var all=true; boxes.forEach(function(b){ if(!b.checked) all=false; }); if(done) done.classList.toggle('show', all); }
+  boxes.forEach(function(b){ b.addEventListener('change', refresh); });
+
+  function fb(txt){ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+})();
 </script>
-<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
+
+<!-- 사전 규약 게이트 (서명 후 10시간 유지) -->
+<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">🔒</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">먼저 사전 규약에 동의해 주세요</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">이 교육의 활동 페이지는 <b>사전 규약 동의(서명)</b> 후 열립니다.</p><a href="사전규약_동의.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">규약 보고 서명하기 →</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>

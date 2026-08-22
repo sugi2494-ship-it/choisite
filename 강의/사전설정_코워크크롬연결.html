@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>시작 전 설정 · 코워크 & 크롬 연결 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<meta name="description" content="수업 전 딱 한 번의 설정 — 유료 확인, 클로드 데스크톱 앱, 코워크 켜기, 폴더 연결, 크롬 연결까지 순서대로. 왜 누구는 되고 누구는 안 되는지도 정리했어요." />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<style>
+  :root{
+    --magenta:#E91E8C; --deep:#7A1F6B; --grad1:#7A1F6B; --grad2:#D0247E;
+    --ink:#1b1420; --sub:#6b6270; --line:#ece4ee; --bg:#faf8fb; --card:#fff;
+    --soft:#fbeef6; --radius:16px; --ok:#2C8C5A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
+  .topbar{height:5px; background:linear-gradient(90deg,var(--grad1),var(--grad2))}
+  .wrap{max-width:660px; margin:0 auto; padding:0 20px 96px}
+  header{max-width:660px; margin:0 auto; padding:34px 20px 0}
+  .back{display:inline-block; font-size:13px; color:var(--sub); text-decoration:none; margin-bottom:20px}
+  .back:hover{color:var(--magenta)}
+  .eyebrow{font-size:13px; font-weight:800; color:var(--magenta); letter-spacing:.02em}
+  h1{font-size:26px; font-weight:800; margin:10px 0 10px; letter-spacing:-.02em; line-height:1.35}
+  .lead{font-size:16px; color:var(--sub); margin:0}
+
+  .compare{margin-top:22px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px}
+  .compare h3{font-size:15px; font-weight:800; margin:0 0 12px}
+  .crow{display:flex; gap:11px; padding:9px 0; border-top:1px solid #f2ecf3; font-size:13.5px}
+  .crow:first-of-type{border-top:none}
+  .crow .k{flex:none; width:104px; font-weight:800; color:var(--deep)}
+  .crow .v{color:#3a323f}
+  .crow.hl{background:var(--soft); margin:0 -10px; padding:11px 10px; border-radius:10px; border-top:none}
+
+  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:20px; margin-top:16px; display:flex; gap:14px}
+  .step .num{flex:none; width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center}
+  .step .body{flex:1}
+  .step h2{font-size:17px; font-weight:800; margin:0 0 6px}
+  .step p{font-size:14px; color:#3a323f; margin:5px 0}
+  .step .path{display:inline-block; font-size:12.5px; font-weight:700; color:var(--deep); background:var(--soft); padding:3px 9px; border-radius:7px; margin:3px 4px 3px 0}
+  .step a.link{color:var(--magenta); font-weight:700; text-decoration:none}
+  .step a.link:hover{text-decoration:underline}
+  .warnnote{font-size:12.5px; color:#8a3d00; background:#fff4e8; border:1px solid #f6dcbf; border-radius:9px; padding:8px 11px; margin-top:8px}
+
+  .sec{font-size:14px; font-weight:800; color:var(--sub); margin:30px 4px 4px}
+
+  .trouble{margin-top:14px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden}
+  .titem{border-top:1px solid #f2ecf3}
+  .titem:first-child{border-top:none}
+  .thead{display:flex; align-items:center; gap:10px; padding:15px 18px; cursor:pointer; font-size:14.5px; font-weight:800}
+  .thead .q{flex:1}
+  .thead .chev{color:#c9b9ce; transition:transform .2s}
+  .titem.open .chev{transform:rotate(180deg); color:var(--magenta)}
+  .tbody{display:none; padding:0 18px 16px; font-size:13.5px; color:#3a323f}
+  .titem.open .tbody{display:block}
+  .tbody b{color:var(--deep)}
+
+  .check{margin-top:26px; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:20px}
+  .check h3{font-size:15.5px; font-weight:800; margin:0 0 12px}
+  .clabel{display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:14.5px; cursor:pointer}
+  .clabel input{width:20px; height:20px; margin-top:2px; accent-color:var(--magenta); flex:none}
+  .done{display:none; margin-top:12px; background:#eaf6ef; border:1px solid #bfe3cd; color:#1c6b3f; border-radius:10px; padding:12px 14px; font-weight:700; font-size:14px}
+  .done.show{display:block}
+
+  .next{margin-top:30px; text-align:center; background:linear-gradient(135deg,#fbeef6,#f6e9f7); border:1px solid var(--line); border-radius:var(--radius); padding:24px 20px}
+  .next h3{font-size:17px; font-weight:800; margin:0 0 6px}
+  .next p{font-size:13.5px; color:var(--sub); margin:0 0 14px}
+  .next a{display:inline-block; background:#fff; border:1.5px solid var(--magenta); color:var(--magenta); text-decoration:none; font-weight:800; padding:12px 22px; border-radius:12px}
+  @media(max-width:420px){ h1{font-size:22px} .crow .k{width:84px} }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<header>
+  <a class="back" href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a>
+  <div class="eyebrow">시작 전 설정</div>
+  <h1>코워크 & 크롬 연결<br />딱 한 번만 설정해요</h1>
+  <p class="lead">"누구는 되고 누구는 안 되던" 이유가 여기 다 있어요. 아래 <b>5단계</b>만 순서대로 하면, 폴더도 연결되고 크롬으로 배포까지 한 손으로 됩니다.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 헷갈림 정리 -->
+  <div class="compare">
+    <h3>먼저, 헷갈리는 3가지 정리</h3>
+    <div class="crow"><span class="k">그냥 클로드</span><span class="v">대화만 하는 기본 채팅. 내 파일·크롬은 못 만짐.</span></div>
+    <div class="crow"><span class="k">클로드 코드</span><span class="v">개발자용 명령어 도구. 우리 수업에서는 안 써도 돼요.</span></div>
+    <div class="crow hl"><span class="k">✅ 코워크</span><span class="v"><b>우리 수업은 이걸로!</b> 내 폴더를 읽고, 크롬을 움직여 배포까지 대신 해줍니다.</span></div>
+  </div>
+
+  <!-- 5 단계 -->
+  <div class="sec">순서대로 5단계</div>
+
+  <div class="step"><div class="num">1</div><div class="body">
+    <h2>유료 플랜인지 확인 (Pro 이상)</h2>
+    <p>코워크와 크롬 연결은 <b>유료 플랜(Pro·Max·Team)에서만</b> 됩니다. 무료는 안 돼요.</p>
+    <div class="warnnote">💡 "코워크가 안 보여요"의 1순위 이유가 바로 무료 플랜이에요.</div>
+  </div></div>
+
+  <div class="step"><div class="num">2</div><div class="body">
+    <h2>클로드 데스크톱 앱 설치</h2>
+    <p><span class="path">claude.com/download</span> 에서 컴퓨터용 앱을 설치해요.</p>
+    <p><b>웹사이트·휴대폰이 아니라 "컴퓨터에 까는 앱"</b>이어야 폴더 연결·크롬 연결이 됩니다.</p>
+  </div></div>
+
+  <div class="step"><div class="num">3</div><div class="body">
+    <h2>코워크 켜기</h2>
+    <p>데스크톱 앱에서 메시지 입력창의 <b>드롭다운</b>을 눌러 <span class="path">Cowork</span> 를 선택해요.</p>
+  </div></div>
+
+  <div class="step"><div class="num">4</div><div class="body">
+    <h2>컴퓨터 사용 켜기 + 폴더 연결</h2>
+    <p>① 앱 <span class="path">설정 &gt; General(데스크톱 앱)</span> 에서 <span class="path">컴퓨터 사용(Computer use)</span> 토글을 <b>켬</b>.</p>
+    <p>② 코워크에서 작업을 <b>"내 컴퓨터에서 실행"</b>으로 시작하고, <b>폴더 추가/연결</b>로 내 자료 폴더(사진·로고 등)를 연결해요.</p>
+    <div class="warnnote">💡 "폴더 추가가 안 돼요" → 컴퓨터 사용이 꺼져 있거나, 웹/클라우드로 실행 중일 때예요. 위 두 가지를 확인!</div>
+  </div></div>
+
+  <div class="step"><div class="num">5</div><div class="body">
+    <h2>크롬 연결 (확장 프로그램)</h2>
+    <p>① <b>구글 크롬</b>에서 크롬 웹스토어 → <b>"Claude in Chrome"</b> 검색 → <b>Chrome에 추가</b>.</p>
+    <p>② 내 클로드 계정으로 <b>로그인</b> → 퍼즐(🧩) 아이콘에서 <b>📌 고정</b> → 요청하는 <b>권한 허용</b>.</p>
+    <div class="warnnote">💡 크롬 <b>전용</b>이에요. 엣지·웨일·사파리에서는 안 됩니다. 반드시 구글 크롬으로!</div>
+  </div></div>
+
+  <!-- 잘 안 될 때 -->
+  <div class="sec">잘 안 될 때 (눌러서 펼치기)</div>
+  <div class="trouble" id="trouble">
+    <div class="titem"><div class="thead"><span class="q">코워크가 안 보여요</span><span class="chev">▼</span></div><div class="tbody"><b>무료 플랜</b>이거나 <b>웹·모바일</b>로 접속했을 때예요. <b>유료 플랜 + 데스크톱 앱</b>에서 메시지창 드롭다운을 확인하세요.</div></div>
+    <div class="titem"><div class="thead"><span class="q">폴더 추가가 안 돼요</span><span class="chev">▼</span></div><div class="tbody"><b>컴퓨터 사용 토글이 꺼져</b> 있거나, 작업이 <b>클라우드(웹)로 실행</b> 중일 때예요. 설정에서 컴퓨터 사용을 켜고, 작업을 <b>"내 컴퓨터에서 실행"</b>으로 시작하세요.</div></div>
+    <div class="titem"><div class="thead"><span class="q">크롬 연결이 안 돼요</span><span class="chev">▼</span></div><div class="tbody"><b>구글 크롬이 아닌</b> 브라우저이거나, 확장 <b>설치·로그인</b>이 안 됐을 때예요. 크롬에서 확장을 설치하고 클로드 계정으로 로그인했는지 확인하세요.</div></div>
+    <div class="titem"><div class="thead"><span class="q">클로드 코드가 열려요</span><span class="chev">▼</span></div><div class="tbody">드롭다운에서 <b>Code가 아니라 Cowork</b>를 골랐는지 확인하세요. 우리 수업은 코워크입니다.</div></div>
+  </div>
+
+  <!-- 체크리스트 -->
+  <div class="check">
+    <h3>다 됐는지 체크해 볼까요?</h3>
+    <label class="clabel"><input type="checkbox" /> 유료 플랜(Pro 이상)이다</label>
+    <label class="clabel"><input type="checkbox" /> 클로드 <b>데스크톱 앱</b>을 설치했다</label>
+    <label class="clabel"><input type="checkbox" /> 메시지창에서 <b>코워크</b>를 선택했다</label>
+    <label class="clabel"><input type="checkbox" /> <b>컴퓨터 사용</b>을 켜고 <b>폴더를 연결</b>했다</label>
+    <label class="clabel"><input type="checkbox" /> <b>크롬 확장</b>을 설치·로그인·고정했다</label>
+    <div class="done" id="doneMsg">🎉 설정 완료! 이제 준비물만 확인하면 시작할 수 있어요.</div>
+  </div>
+
+  <!-- NEXT -->
+  <div class="next">
+    <h3>설정이 끝났어요</h3>
+    <p>이제 노트북·사진 같은 준비물을 빠르게 확인해요.</p>
+    <a href="사전준비_체크리스트.html">준비물 사전 점검 →</a>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  // 잘 안 될 때 아코디언
+  document.querySelectorAll('#trouble .titem').forEach(function(it){
+    it.querySelector('.thead').addEventListener('click', function(){ it.classList.toggle('open'); });
+  });
+  // 체크리스트
+  var boxes = document.querySelectorAll('.check input[type=checkbox]');
+  var done = document.getElementById('doneMsg');
+  function refresh(){ var all=true; boxes.forEach(function(b){ if(!b.checked) all=false; }); done.classList.toggle('show', all); }
+  boxes.forEach(function(b){ b.addEventListener('change', refresh); });
+})();
+</script>
+</body>
+</html>

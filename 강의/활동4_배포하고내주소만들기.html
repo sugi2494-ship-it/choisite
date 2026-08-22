@@ -4,422 +4,190 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>활동 4. 배포하고 내 주소 만들기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
+<meta name="description" content="배포 전 검색 노출(SEO·GEO) 넣기 → 넷리파이 드롭(가장 쉬움) 또는 버셀+GitHub(자동배포)로 내 인터넷 주소 만들기. 수정 후 재업로드 위치까지." />
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
 <style>
   :root{
-    --red:#D23B30; --yellow:#E0A400; --green:#2C8C5A; --blue:#2C66A8; --pink:#E91E8C;
-    --ink:#1c2024; --sub:#5b636b; --line:#e6e8ea; --bg:#f6f7f8; --card:#fff; --radius:14px;
+    --magenta:#E91E8C; --deep:#7A1F6B; --grad1:#7A1F6B; --grad2:#D0247E;
+    --ink:#1b1420; --sub:#6b6270; --line:#ece4ee; --bg:#faf8fb; --card:#fff;
+    --soft:#fbeef6; --radius:16px; --nf:#00AD9F; --vc:#111;
   }
   *{box-sizing:border-box}
   body{margin:0; background:var(--bg); color:var(--ink);
     font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
     word-break:keep-all; line-height:1.7; -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:660px; margin:0 auto; padding:0 18px 70px}
-  .enginebar{display:flex; height:6px; position:sticky; top:0; z-index:20}
-  .enginebar span{flex:1}
-  .enginebar span:nth-child(1){background:var(--red)}
-  .enginebar span:nth-child(2){background:var(--yellow)}
-  .enginebar span:nth-child(3){background:var(--green)}
-  .enginebar span:nth-child(4){background:var(--blue)}
-  header{padding:32px 18px 6px; max-width:660px; margin:0 auto}
-  .eyebrow{font-size:13px; font-weight:700; color:var(--sub)}
-  h1{font-size:24px; font-weight:800; margin:8px 0 8px; letter-spacing:-.01em}
-  .lead{font-size:15px; color:var(--sub); margin:0}
+  .topbar{height:5px; background:linear-gradient(90deg,var(--grad1),var(--grad2))}
+  .wrap{max-width:660px; margin:0 auto; padding:0 20px 96px}
+  header{max-width:660px; margin:0 auto; padding:34px 20px 0}
+  .back{display:inline-block; font-size:13px; color:var(--sub); text-decoration:none; margin-bottom:20px}
+  .back:hover{color:var(--magenta)}
+  .eyebrow{font-size:13px; font-weight:800; color:var(--magenta); letter-spacing:.02em}
+  h1{font-size:27px; font-weight:800; margin:10px 0 10px; letter-spacing:-.02em; line-height:1.35}
+  .lead{font-size:16px; color:var(--sub); margin:0}
 
-  .progress{position:sticky; top:6px; z-index:19; background:rgba(246,247,248,.95);
-    backdrop-filter:blur(6px); padding:10px 0 8px; margin-top:16px}
-  .ptrack{height:8px; background:#e6e8ea; border-radius:6px; overflow:hidden}
-  .pfill{height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
-    border-radius:6px; transition:width .35s ease}
-  .ptext{font-size:12px; font-weight:700; color:var(--sub); margin-top:6px; text-align:right}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-top:22px}
+  .sec{font-size:14px; font-weight:800; color:var(--sub); margin:32px 4px 6px}
 
-  .step{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-    padding:24px 20px; margin-top:16px}
-  .snum{display:inline-block; font-size:12.5px; font-weight:800; color:#fff;
-    padding:5px 13px; border-radius:999px; margin-bottom:12px}
-  h2{font-size:19px; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
-  .sub{font-size:13px; color:var(--sub); margin:0 0 16px; font-weight:600}
-  p.t{font-size:15px; margin:0 0 13px}
-  ul.pts{margin:12px 0; padding-left:20px}
-  ul.pts li{font-size:14.5px; margin-bottom:8px}
-  ol.nums{margin:12px 0; padding-left:22px}
-  ol.nums li{font-size:14.5px; margin-bottom:10px}
+  /* SEO 카드 (프롬프트) */
+  .seo .st{display:flex; align-items:center; gap:10px; margin-bottom:6px}
+  .seo .st .emo{font-size:22px}
+  .seo .st h2{font-size:18px; font-weight:800; margin:0}
+  .seo .desc{font-size:13.5px; color:var(--sub); margin:0 0 14px}
+  .promptbox{white-space:pre-wrap; font-size:13.5px; line-height:1.7; background:#fbf6fc; border:1.5px dashed #e2c9e6; border-radius:12px; padding:15px 14px; color:#2a1f2e; max-height:300px; overflow:auto}
+  .copybtn{display:block; width:100%; margin-top:11px; padding:15px; border:none; border-radius:12px; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; font-size:16px; font-weight:800; font-family:inherit; cursor:pointer}
+  .copybtn.done{background:#2C8C5A}
+  .qa{margin-top:12px; font-size:13px; color:#3a323f; background:#fff8fc; border:1px solid #f2dcec; border-radius:10px; padding:12px 14px}
+  .qa b{color:var(--deep)}
 
-  .big{background:#fbfbfc; border:1px solid var(--line); border-left:5px solid var(--ink);
-    border-radius:10px; padding:15px 17px; margin:14px 0}
-  .big .cap{font-size:12px; font-weight:800; color:var(--sub); letter-spacing:.03em}
-  .big .txt{font-size:15px; font-weight:700; margin-top:5px; line-height:1.6}
-  .warn{background:#fff8e6; border:1px solid #f0d98a; border-radius:11px; padding:13px 16px; margin:14px 0}
-  .warn p{margin:0; font-size:13.5px; color:#7a5a00}
-  .good{background:#eaf5ef; border:1px solid #b6ddc7; border-radius:11px; padding:13px 16px; margin:14px 0}
-  .good p{margin:0; font-size:13.5px; color:#2f4b3b}
+  /* 비교표 */
+  table.cmp{width:100%; border-collapse:collapse; margin-top:10px; font-size:13.5px}
+  table.cmp th,table.cmp td{border:1px solid var(--line); padding:10px 11px; text-align:left; vertical-align:top}
+  table.cmp th{background:var(--soft); font-weight:800; color:var(--deep)}
+  table.cmp td:first-child{font-weight:700; white-space:nowrap}
+  .pick{font-size:13px; color:#1c6b3f; background:#eaf6ef; border:1px solid #bfe3cd; border-radius:10px; padding:11px 13px; margin-top:12px}
+  .pick b{color:#155}
 
-  .roles{display:flex; flex-direction:column; gap:9px; margin:14px 0}
-  .role{display:flex; gap:12px; align-items:flex-start; border:1px solid var(--line);
-    border-radius:11px; padding:13px 15px; background:#fff}
-  .role .ic{width:34px; height:34px; border-radius:9px; flex:0 0 auto; display:flex;
-    align-items:center; justify-content:center; font-size:17px; color:#fff}
-  .role b{font-size:14.5px; display:block}
-  .role span{font-size:13px; color:var(--sub)}
+  /* 방법 스텝 */
+  .method{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-top:16px}
+  .mtag{display:inline-block; font-size:12px; font-weight:800; color:#fff; padding:4px 11px; border-radius:20px; margin-bottom:10px}
+  .mtag.nf{background:var(--nf)}
+  .mtag.vc{background:var(--vc)}
+  .method h2{font-size:19px; font-weight:800; margin:0 0 4px}
+  .msub{font-size:13.5px; color:var(--sub); margin:0 0 14px}
+  ol.steps{margin:0; padding-left:20px}
+  ol.steps li{margin:9px 0; font-size:14.5px}
+  ol.steps a{color:var(--magenta); font-weight:700; text-decoration:none}
+  ol.steps a:hover{text-decoration:underline}
+  .link{display:inline-block; margin-top:4px; font-size:13.5px; font-weight:700; color:var(--magenta); text-decoration:none; background:var(--soft); padding:5px 11px; border-radius:8px}
+  .reupload{margin-top:14px; background:#eefaf8; border:1px solid #bfe7e2; border-radius:12px; padding:14px 16px; font-size:13.5px}
+  .reupload b{color:#0a6e64}
+  .warnnote{font-size:12.5px; color:#8a3d00; background:#fff4e8; border:1px solid #f6dcbf; border-radius:9px; padding:9px 12px; margin-top:12px}
 
-  .pc{border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:11px; background:#fff}
-  .pc-h{display:flex; align-items:center; gap:9px; padding:11px 14px; background:#f7f8f9;
-    border-bottom:1px solid var(--line); cursor:pointer}
-  .pc-tag{font-size:11px; font-weight:800; padding:3px 9px; border-radius:6px; color:#fff; flex:0 0 auto}
-  .pc-t{font-size:14px; font-weight:700; flex:1}
-  .pc-a{font-size:12px; color:var(--sub); font-weight:700}
-  .pc-b{display:none; padding:14px}
-  .pc.open .pc-b{display:block}
-  .code{background:#0f1720; color:#e8eef4; border-radius:10px; padding:14px; font-size:12.5px;
-    line-height:1.75; white-space:pre-wrap; font-family:"Consolas","Courier New",monospace}
-  .cbtn{width:100%; border:none; background:var(--pink); color:#fff; font-size:14px; font-weight:800;
-    padding:11px; border-radius:9px; cursor:pointer; margin-top:9px; font-family:inherit}
-  .why{font-size:12.5px; color:var(--sub); margin:9px 0 0; line-height:1.6}
-
-  .check{display:flex; gap:10px; align-items:flex-start; margin-top:18px; padding-top:16px;
-    border-top:1px dashed var(--line)}
-  .check input{width:20px; height:20px; margin-top:2px; accent-color:var(--green); flex:0 0 auto; cursor:pointer}
-  .check label{font-size:14px; font-weight:700; cursor:pointer; color:var(--sub)}
-  .check input:checked + label{color:var(--green)}
-
-  details{background:#fff; border:1px solid var(--line); border-radius:11px; padding:14px 16px; margin-bottom:9px}
-  details summary{font-size:14.5px; font-weight:700; cursor:pointer; list-style:none}
-  details summary::-webkit-details-marker{display:none}
-  details summary:before{content:"⚠ "; color:var(--red)}
-  details[open] summary{margin-bottom:9px}
-  details p{margin:0 0 8px; font-size:14px; color:var(--sub); line-height:1.7}
-  details p:last-child{margin-bottom:0}
-
-  .oplink{display:block; text-align:center; text-decoration:none; color:#fff; font-weight:800;
-    font-size:16px; padding:16px; border-radius:12px; margin:14px 0; line-height:1.4}
-  .oplink small{display:block; font-weight:600; font-size:12.5px; opacity:.92; margin-top:4px}
-
-  .tabs{display:flex; gap:8px; margin:12px 0 4px}
-  .tab{flex:1; border:2px solid var(--line); background:#fff; color:var(--sub); font-family:inherit;
-    font-size:14px; font-weight:800; padding:13px 10px; border-radius:11px; cursor:pointer}
-  .tab.on{border-color:var(--ink); background:var(--ink); color:#fff}
-
-  .final{background:#fff; border:2px solid var(--ink); border-radius:var(--radius); padding:22px 20px; margin-top:16px}
-  .fl{display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--line)}
-  .fl:last-child{border-bottom:none}
-  .fl input{width:19px; height:19px; margin-top:2px; accent-color:var(--ink); flex:0 0 auto; cursor:pointer}
-  .fl label{font-size:14px; font-weight:600; cursor:pointer}
-
-  .done{background:linear-gradient(135deg,#D23B30,#E0A400 33%,#2C8C5A 66%,#2C66A8);
-    color:#fff; border-radius:var(--radius); padding:30px 24px; margin-top:20px; text-align:center}
-  .done h3{margin:0 0 10px; font-size:22px}
-  .done p{margin:0; font-size:14.5px; opacity:.95; line-height:1.8}
-  footer{text-align:center; font-size:12px; color:var(--sub); margin-top:26px; line-height:1.7}
+  .next{margin-top:32px; text-align:center; background:linear-gradient(135deg,#fbeef6,#f6e9f7); border:1px solid var(--line); border-radius:var(--radius); padding:24px 20px}
+  .next h3{font-size:17px; font-weight:800; margin:0 0 6px}
+  .next p{font-size:13.5px; color:var(--sub); margin:0 0 14px}
+  .next a{display:inline-block; background:linear-gradient(135deg,var(--grad1),var(--grad2)); color:#fff; text-decoration:none; font-weight:800; padding:14px 26px; border-radius:12px}
+  @media(max-width:460px){ h1{font-size:23px} table.cmp{font-size:12.5px} table.cmp th,table.cmp td{padding:8px} }
 </style>
 </head>
 <body>
-<div class="enginebar"><span></span><span></span><span></span><span></span></div>
-<div style="max-width:660px;margin:0 auto;padding:12px 18px 0"><a href="course.html?c=aiweb" style="font-size:13px;font-weight:700;color:#5b636b;text-decoration:none">← AI 웹페이지 만들기 강의실로</a></div>
+<div class="topbar"></div>
 
 <header>
-  <div class="eyebrow">최해숙 강의실 · AI 웹페이지 만들기</div>
-  <h1>활동 4. 배포하고 내 주소 만들기</h1>
-  <p class="lead">지금 만든 페이지는 아직 <b>나만 볼 수 있습니다.</b>
-  이제 인터넷에 올려서, 누구나 들어올 수 있는 <b>나만의 주소</b>를 만듭니다.
-  무료이고, 10분이면 됩니다.</p>
-  <div class="progress">
-    <div class="ptrack"><div class="pfill" id="pfill"></div></div>
-    <div class="ptext" id="ptext">0 / 6 단계</div>
-  </div>
+  <a class="back" href="course.html?c=aiweb">← AI 웹페이지 만들기 강의실로</a>
+  <div class="eyebrow">활동 4</div>
+  <h1>배포하고 내 주소 만들기<br />인터넷에 올려 링크 받기</h1>
+  <p class="lead">"배포"는 내 페이지를 <b>진짜 인터넷 주소(링크)</b>로 만드는 거예요. 먼저 <b>검색에 잘 나오게</b> 한 뒤, 두 가지 방법 중 편한 걸로 올리면 됩니다.</p>
 </header>
 
 <div class="wrap">
 
-  <!-- 개념 -->
-  <section class="step">
-    <span class="snum" style="background:var(--sub)">먼저</span>
-    <h2>'배포'가 뭔가요?</h2>
-    <p class="sub">어려운 말 같지만 아주 간단합니다</p>
-
-    <div class="big">
-      <div class="cap">이렇게 생각하세요</div>
-      <div class="txt">지금까지는 <b>내 방 안에 그림을 그린 것</b>입니다.<br />
-      배포는 그 그림을 <b>가게에 걸고, 가게 주소를 갖는 것</b>이에요.<br />
-      <span style="font-size:13.5px;font-weight:600;color:var(--sub)">그래야 남에게 "여기 와서 보세요"라고 할 수 있습니다.</span></div>
+  <!-- STEP 0: SEO·GEO -->
+  <div class="sec">먼저 · 올리기 전에 "검색 노출" 넣기</div>
+  <div class="card seo">
+    <div class="st"><span class="emo">🔎</span><h2>검색에 잘 나오게 (SEO·GEO)</h2></div>
+    <p class="desc">검색 노출용 정보는 <b>페이지의 &lt;head&gt;</b>에 들어갑니다. 화면 디자인은 안 바뀌어요. 아래를 복사해 <b>같은 대화</b>에 붙여넣으면 클로드가 넣어 줍니다. <b>배포 직전에</b> 하세요.</p>
+    <div class="promptbox" id="seobox"></div>
+    <button class="copybtn" id="seocopy">📋 검색 노출 프롬프트 복사하기</button>
+    <div class="qa">
+      <b>Q. SEO·GEO가 뭐예요?</b><br>
+      · <b>SEO</b> = 네이버·구글 검색에 잘 걸리게 (제목·설명·키워드).<br>
+      · <b>GEO</b> = AI 검색(챗봇)이 내 페이지를 <b>인용</b>하게 (결론부터 명확히).<br>
+      둘 다 <b>화면이 아니라 &lt;head&gt; 안</b>에 들어가서, 보기엔 그대로예요.
     </div>
+  </div>
 
-    <p class="t"><b>오늘 쓰는 도구 3가지의 역할</b>을 정리하면 이렇습니다.</p>
-    <div class="roles">
-      <div class="role"><span class="ic" style="background:var(--pink)">✍️</span>
-        <div><b>Claude (클로드)</b><span>페이지를 만들어주는 사람</span></div></div>
-      <div class="role"><span class="ic" style="background:var(--blue)">🪟</span>
-        <div><b>Chrome (크롬)</b><span>페이지를 보는 창문</span></div></div>
-      <div class="role"><span class="ic" style="background:var(--ink)">🏠</span>
-        <div><b>Netlify (넷리파이) 또는 Vercel (버셀)</b><span>인터넷에 올려주고 주소를 내주는 곳 — 오늘 새로 배웁니다. 둘 중 <b>하나만</b> 쓰면 됩니다</span></div></div>
-    </div>
-
-    <div class="good"><p>💰 <b>둘 다 무료입니다.</b> 내 페이지 하나 올리는 정도는 돈이 들지 않아요.</p></div>
-    <div class="warn"><p>📌 이름이 어려워 보이지만 하는 일은 똑같습니다. <b>내 파일을 받아서 인터넷 주소를 만들어주는 곳</b>이에요.</p></div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s0" /><label for="s0">이해했어요</label></div>
-  </section>
-
-  <!-- STEP 1 -->
-  <section class="step">
-    <span class="snum" style="background:var(--red)">STEP 1</span>
-    <h2>내 페이지 파일 받기</h2>
-    <p class="sub">클로드에서 파일 하나를 내려받습니다</p>
-
-    <p class="t">지금 페이지는 클로드 화면 안에 있습니다. 이걸 <b>파일로 내려받아야</b> 인터넷에 올릴 수 있어요.</p>
-
-    <div class="pc open"><div class="pc-h" style="background:#eef0f2"><span class="pc-tag" style="background:var(--ink)">★</span><span class="pc-t">파일로 만들어 달라고 하기</span><span class="pc-a">▾</span></div>
-      <div class="pc-b"><div class="code" id="pA">지금까지 만든 웹페이지를 인터넷에 올리려고 해.
-index.html 이라는 이름의 파일 하나로 만들어서 내려받게 해줘.
-
-- 사진과 로고가 파일 안에 같이 들어가서,
-  다른 컴퓨터에서 열어도 그대로 보이게 해줘.
-- 파일은 딱 하나만 만들어줘.</div>
-      <button class="cbtn" data-t="pA">📋 복사</button>
-      <p class="why">파일 이름은 꼭 <b>index.html</b> 이어야 합니다. 이 이름이어야 주소를 열었을 때 바로 보여요.</p></div></div>
-
-    <ul class="pts">
-      <li>내려받은 파일은 <b>바탕화면</b>이나 <b>다운로드 폴더</b>에 있습니다.</li>
-      <li>파일을 <b>두 번 눌러</b> 열어보세요. 크롬에서 내 페이지가 뜨면 성공입니다.</li>
-    </ul>
-
-    <div class="warn"><p>⚠️ 파일을 열었는데 <b>사진이 안 보인다면</b>, 아직 인터넷에 올려도 똑같이 안 보입니다.
-    아래 「문제 해결」의 사진 항목을 먼저 보세요.</p></div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s1" /><label for="s1">index.html 파일을 받았어요</label></div>
-  </section>
-
-  <!-- STEP 2 -->
-  <section class="step">
-    <span class="snum" style="background:var(--yellow)">STEP 2</span>
-    <h2>어디에 올릴지 정하기</h2>
-    <p class="sub">두 곳 중 하나만 고르면 됩니다</p>
-
-    <table style="width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px">
-      <tr><th style="border:1px solid var(--line); padding:10px; background:#f4f5f6; width:26%"></th>
-        <th style="border:1px solid var(--line); padding:10px; background:#eaf5ef">Netlify<br />(넷리파이)</th>
-        <th style="border:1px solid var(--line); padding:10px; background:#f4f5f6">Vercel<br />(버셀)</th></tr>
-      <tr><td style="border:1px solid var(--line); padding:10px"><b>쉬운 정도</b></td>
-        <td style="border:1px solid var(--line); padding:10px; background:#f7fcf9"><b>★ 아주 쉬움</b><br />가입 전에도 올려볼 수 있음</td>
-        <td style="border:1px solid var(--line); padding:10px">쉬움<br />가입 후 올리기</td></tr>
-      <tr><td style="border:1px solid var(--line); padding:10px"><b>올리는 법</b></td>
-        <td style="border:1px solid var(--line); padding:10px; background:#f7fcf9">파일을 끌어다 놓기만</td>
-        <td style="border:1px solid var(--line); padding:10px">새 프로젝트 만들고 올리기</td></tr>
-      <tr><td style="border:1px solid var(--line); padding:10px"><b>이런 분께</b></td>
-        <td style="border:1px solid var(--line); padding:10px; background:#f7fcf9">처음 해보는 분<br />오늘 빨리 끝내고 싶은 분</td>
-        <td style="border:1px solid var(--line); padding:10px">앞으로 계속 키울 분</td></tr>
+  <!-- 비교 -->
+  <div class="sec">넷리파이 vs 버셀 — 뭐가 다를까?</div>
+  <div class="card">
+    <table class="cmp">
+      <tr><th></th><th>넷리파이 드롭</th><th>버셀 (+GitHub)</th></tr>
+      <tr><td>쉬움</td><td>⭐⭐⭐ 폴더 드래그만</td><td>⭐⭐ 가입·연결 필요</td></tr>
+      <tr><td>GitHub</td><td>없어도 됨</td><td>필요(연결하면 강력)</td></tr>
+      <tr><td>수정 반영</td><td>같은 사이트에 <b>다시 드래그</b></td><td>파일 고쳐 올리면 <b>자동 배포</b></td></tr>
+      <tr><td>추천 상황</td><td>오늘 <b>바로 확인</b>하고 싶을 때</td><td><b>계속 운영·수정</b>할 홈페이지</td></tr>
     </table>
-
-    <div class="good"><p>😊 <b>고민되면 Netlify(넷리파이)로 하세요.</b> 처음 하시는 분께는 이쪽이 훨씬 편합니다.
-    나중에 다른 곳으로 옮기는 것도 얼마든지 가능해요.</p></div>
-
-    <p class="t" style="margin-top:20px"><b>고르셨나요? 아래에서 눌러주세요.</b> 그에 맞는 방법만 보여드립니다.</p>
-    <div class="tabs">
-      <button type="button" class="tab on" data-go="netlify">🟢 Netlify로 할래요 (쉬움)</button>
-      <button type="button" class="tab" data-go="vercel">⚫ Vercel로 할래요</button>
-    </div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s2" /><label for="s2">올릴 곳을 정했어요</label></div>
-  </section>
-
-  <!-- STEP 3 -->
-  <section class="step">
-    <span class="snum" style="background:var(--green)">STEP 3</span>
-    <h2>파일 올리고 주소 받기</h2>
-    <p class="sub">여기까지 하면 내 주소가 생깁니다</p>
-
-    <!-- Netlify -->
-    <div class="pane" id="pane-netlify">
-      <div class="big" style="border-left-color:var(--green)">
-        <div class="cap">Netlify · 끌어다 놓기 3단계</div>
-        <div class="txt">파일을 끌어다 놓으면 <b>바로 주소가 나옵니다.</b></div>
-      </div>
-
-      <a class="oplink" style="background:var(--green)" href="https://app.netlify.com/drop" target="_blank" rel="noopener">
-        🟢 넷리파이 드롭 바로 열기
-        <small>새 창으로 열립니다 · 이 화면은 그대로 두세요</small>
-      </a>
-
-      <ol class="nums">
-        <li><b>위 버튼</b>을 누르면 넷리파이 드롭 화면이 열립니다.
-          <br /><span style="font-size:13px;color:var(--sub)">→ 화면 가운데에 파일을 놓으라는 큰 상자가 보입니다.</span></li>
-        <li>받아둔 <b>index.html 파일을 그 상자 위로 끌어다 놓습니다.</b>
-          <br /><span style="font-size:13px;color:var(--sub)">→ 잘 안 되면 index.html을 폴더 하나에 넣고, 그 폴더째 끌어다 놓으세요.</span></li>
-        <li>잠시 기다리면 <b>주소가 바로 만들어집니다.</b> 눌러서 확인하세요.</li>
-        <li>주소를 <b>계속 쓰려면 가입</b>하라고 나옵니다. 구글 계정으로 가입하면 그 주소가 내 것이 됩니다.
-          <br /><span style="font-size:13px;color:var(--sub)">⚠️ 가입하지 않으면 주소가 임시로만 유지됩니다. 꼭 가입하세요.</span></li>
-      </ol>
-
-      <div class="big">
-        <div class="cap">이런 주소가 생깁니다</div>
-        <div class="txt" style="font-family:Consolas,monospace; font-size:15px">https://<span style="color:var(--green)">내가정한이름</span>.netlify.app</div>
-      </div>
-
-      <div class="good"><p>✏️ 주소가 이상한 영어로 나왔다면, <b>Site settings → Change site name</b>에서 원하는 이름으로 바꿀 수 있습니다.</p></div>
-    </div>
-
-    <!-- Vercel -->
-    <div class="pane" id="pane-vercel" style="display:none">
-      <div class="big">
-        <div class="cap">Vercel · 가입하고 올리기</div>
-        <div class="txt">먼저 가입한 뒤 파일을 올립니다.</div>
-      </div>
-
-      <p class="t"><b>① 가입하기</b></p>
-      <ol class="nums">
-        <li>크롬에서 <b>vercel.com</b> 으로 들어갑니다.</li>
-        <li><b>Sign Up</b>(가입)을 누르고, <b>구글 계정</b>으로 가입하는 게 가장 쉽습니다.</li>
-        <li>용도를 물으면 <b>개인(Hobby / Personal)</b>을 고르세요. 이게 무료입니다.</li>
-      </ol>
-
-      <p class="t" style="margin-top:16px"><b>② 파일 올리기</b></p>
-      <ol class="nums">
-        <li>첫 화면에서 <b>새로 만들기(Add New / New Project)</b>를 누릅니다.</li>
-        <li>파일을 직접 올리는 <b>배포(Deploy)</b> 화면으로 들어갑니다.</li>
-        <li><b>index.html 파일을 끌어다 놓습니다.</b> (폴더째 올려도 됩니다)</li>
-        <li>1분 내로 완료 화면이 나옵니다.</li>
-      </ol>
-
-      <div class="big">
-        <div class="cap">이런 주소가 생깁니다</div>
-        <div class="txt" style="font-family:Consolas,monospace; font-size:15px">https://<span style="color:var(--pink)">내가정한이름</span>.vercel.app</div>
-      </div>
-
-      <div class="good"><p>✏️ 주소 이름은 <b>Settings → Domains</b>에서 바꿀 수 있습니다.</p></div>
-    </div>
-
-    <div class="warn"><p>⚠️ 두 곳 모두 화면 구성이 수시로 바뀝니다. 버튼 위치보다
-    <b>「올린다 → 주소가 나온다 → 확인한다」</b> 이 흐름만 기억하세요.</p></div>
-    <div class="good"><p>💡 화면이 영어라 당황스러우면 <b>크롬에서 마우스 오른쪽 → 한국어로 번역</b>을 쓰세요.</p></div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s3" /><label for="s3">내 주소가 생겼어요</label></div>
-  </section>
-
-  <!-- STEP 4 -->
-  <section class="step">
-    <span class="snum" style="background:var(--blue)">STEP 4</span>
-    <h2>주소 확인하고 이름 다듬기</h2>
-    <p class="sub">기억하기 좋은 주소로 바꿉니다</p>
-
-    <ul class="pts">
-      <li>생긴 주소를 눌러서 <b>내 페이지가 잘 뜨는지</b> 확인합니다.</li>
-      <li><b>휴대폰에서도 꼭 열어보세요.</b> 주소를 나에게 카톡으로 보내면 간단합니다.</li>
-      <li>주소가 너무 복잡하면 <b>설정(Settings) → Domains</b>에서 이름을 바꿀 수 있습니다.</li>
-    </ul>
-
-    <div class="good"><p>✏️ <b>주소 이름 짓기 요령</b> — 영어로 짧고 기억하기 쉽게.
-    이름·브랜드명을 쓰면 좋아요. (예: haesook-color, pbscolor)</p></div>
-
-    <div class="check"><input type="checkbox" class="ck" id="s4" /><label for="s4">휴대폰에서도 확인했어요</label></div>
-  </section>
-
-  <!-- 다음 활동 안내 -->
-  <section class="step" style="border:1px dashed var(--line); background:#fbfbfc">
-    <span class="snum" style="background:var(--sub)">다음 활동</span>
-    <h2>주소가 생겼으니 이제 알려야 합니다</h2>
-    <p class="sub">알리는 방법은 다음 활동에서 자세히 다룹니다</p>
-
-    <p class="t">주소를 만들었어도 <b>아무도 모르면 소용없습니다.</b>
-    SNS 프로필·카톡·명함·QR코드에 심는 방법은
-    <b>「활동 5. 내 페이지 알리기」</b>에서 하나씩 따라 하게 됩니다.</p>
-
-    <div class="good"><p>💡 오늘은 <b>주소를 나에게 카톡으로 보내</b> 잘 열리는지만 확인해 두세요.</p></div>
-  </section>
-
-  <!-- 문제 해결 -->
-  <section class="step">
-    <span class="snum" style="background:var(--sub)">문제 해결</span>
-    <h2>이럴 때는 이렇게</h2>
-    <p class="sub">수업에서 가장 자주 나오는 상황</p>
-
-    <details><summary>사진이 안 보여요</summary>
-      <p>가장 흔한 문제입니다. 사진이 파일 안에 포함되지 않아서 그래요. 클로드에 이렇게 말하세요.</p>
-      <div class="code" id="pD">사진이 안 보여. 사진을 파일 안에 함께 넣어서
-다른 컴퓨터에서 열어도 보이도록 index.html을 다시 만들어줘.</div>
-      <button class="cbtn" data-t="pD">📋 복사</button></details>
-
-    <details><summary>주소를 열었는데 빈 화면이거나 목록만 나와요</summary>
-      <p>파일 이름이 <b>index.html</b>이 아닐 가능성이 큽니다. 파일 이름을 정확히 <b>index.html</b>로 바꾸고 다시 올려보세요. (대문자·띄어쓰기·한글 없이)</p></details>
-
-    <details><summary>파일 이름에 한글이 들어가 있어요</summary>
-      <p>한글 파일명은 문제를 일으킬 수 있습니다. <b>index.html</b>로 바꿔주세요.</p></details>
-
-    <details><summary>휴대폰에서 이상하게 보여요</summary>
-      <p>클로드로 돌아가 아래처럼 고친 뒤, 새 파일을 받아 다시 올리세요.</p>
-      <div class="code" id="pE">휴대폰 화면에서 글자가 잘리고 답답해 보여.
-휴대폰에서 잘 보이도록 전체를 정리하고
-index.html 파일을 다시 만들어줘.</div>
-      <button class="cbtn" data-t="pE">📋 복사</button></details>
-
-    <details><summary>Netlify와 Vercel 중 뭘 써야 할지 모르겠어요</summary>
-      <p>처음이시면 <b>Netlify</b>를 쓰세요. 파일을 끌어다 놓기만 하면 주소가 나옵니다. 둘 다 무료이고, 나중에 옮기는 것도 얼마든지 가능합니다.</p>
-      <p>이미 한쪽에 올렸다면 <b>그대로 쓰시면 됩니다.</b> 굳이 옮길 필요 없어요.</p></details>
-
-    <details><summary>Vercel 화면이 영어라 모르겠어요</summary>
-      <p>크롬에서 <b>화면 아무 곳이나 마우스 오른쪽 클릭 → 한국어로 번역</b>을 누르세요. 대부분 한글로 바뀝니다. Netlify도 마찬가지입니다.</p></details>
-
-    <details><summary>내 도메인(예: 내이름.com)을 쓰고 싶어요</summary>
-      <p>가능합니다. 다만 도메인을 따로 구입해야 하고(연 1~2만원대), 연결 설정이 필요합니다. <b>오늘은 netlify.app / vercel.app 주소로 충분합니다.</b> 나중에 필요할 때 도전하세요.</p></details>
-  </section>
-
-  <!-- 최종 -->
-  <div class="final">
-    <h2 style="margin-bottom:4px">✅ 오늘의 최종 점검</h2>
-    <p class="sub">여기까지 되면 완주입니다</p>
-    <div class="fl"><input type="checkbox" id="f1" /><label for="f1">내 웹페이지 주소가 생겼다</label></div>
-    <div class="fl"><input type="checkbox" id="f2" /><label for="f2">휴대폰에서 열어봤고 잘 보인다</label></div>
-    <div class="fl"><input type="checkbox" id="f3" /><label for="f3">사진이 제대로 보인다</label></div>
-    <div class="fl"><input type="checkbox" id="f4" /><label for="f4">문의·신청 버튼이 실제로 연결된다</label></div>
-    <div class="fl"><input type="checkbox" id="f5" /><label for="f5">index.html 파일을 내 컴퓨터에 보관해뒀다</label></div>
+    <div class="pick">💡 <b>추천 순서:</b> 오늘은 <b>넷리파이 드롭</b>으로 5분 만에 내 링크를 만들어 보고 → 계속 쓸 거면 <b>버셀+GitHub</b>로 옮기면 됩니다. <b>둘 다 무료</b>로 시작해요.</div>
   </div>
 
-  <div class="done">
-    <h3>🎉 축하합니다!</h3>
-    <p>오늘 아침까지 <b>코딩을 한 줄도 몰랐던 분</b>이<br />
-    자기 브랜드가 담긴 웹페이지를 만들고<br />
-    세상에 공개했습니다.<br /><br />
-    이제 이 주소는 <b>계속 자라는 나의 공간</b>입니다.<br />
-    내용을 채워가며 키워보세요.</p>
+  <!-- 방법 A: Netlify -->
+  <div class="sec">방법 A · 가장 쉬운 넷리파이 드롭</div>
+  <div class="method">
+    <span class="mtag nf">Netlify Drop</span>
+    <h2>드래그 한 번으로 올리기</h2>
+    <p class="msub">GitHub 없이, 폴더를 끌어다 놓기만 하면 끝나요.</p>
+    <ol class="steps">
+      <li><a href="https://app.netlify.com/signup" target="_blank" rel="noopener">netlify.com</a>에 무료 가입 후 로그인</li>
+      <li><a href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a> 열기</li>
+      <li>내 <b>HTML 파일(또는 폴더)</b>을 화면에 <b>끌어다 놓기</b></li>
+      <li>잠시 후 <b>OOO.netlify.app</b> 주소가 생기면 완성! 그 링크가 내 홈페이지예요.</li>
+    </ol>
+    <div class="reupload">
+      🔁 <b>수정한 파일을 다시 올릴 땐?</b><br>
+      새로 드롭하지 말고 → <b>내 사이트 대시보드</b>로 들어가 → <b>"Production deploys"</b> 영역에 <b>고친 파일(폴더)을 다시 드래그</b>하면 됩니다. <b>주소는 그대로</b> 두고 내용만 바뀌어요.
+      <div class="warnnote">⚠️ 처음 만든 드롭 페이지(app.netlify.com/drop)에 또 드래그하면 <b>주소가 새로 생겨요.</b> 꼭 <b>내 사이트 대시보드 안</b>에서 다시 올리세요.</div>
+    </div>
   </div>
 
-    <a href="활동5_내페이지알리기.html" style="display:block;max-width:620px;margin:18px auto 0;text-align:center;text-decoration:none;background:#E91E8C;color:#fff;font-weight:800;font-size:15.5px;padding:15px;border-radius:12px">➡ 다음: 활동 5. 내 페이지 알리기</a>
-<footer>PBS컬러랩 · 최해숙 강의실 | 1600-7218</footer>
+  <!-- 방법 B: Vercel + GitHub -->
+  <div class="sec">방법 B · 계속 운영할 땐 버셀 + GitHub</div>
+  <div class="method">
+    <span class="mtag vc">GitHub</span>
+    <h2>먼저 GitHub 가입</h2>
+    <p class="msub"><b>GitHub</b>는 내 파일을 저장해 두는 인터넷 창고예요. 버셀이 이 창고에서 파일을 가져다 웹페이지로 띄워 줍니다.</p>
+    <ol class="steps">
+      <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a>에서 무료 가입 (이메일·비밀번호)</li>
+      <li>가입 후 <b>새 저장소(New repository)</b>를 만들고, 내 HTML 파일을 업로드 (Add file → Upload files)</li>
+    </ol>
+  </div>
+  <div class="method">
+    <span class="mtag vc">Vercel</span>
+    <h2>버셀에 연결해서 자동 배포</h2>
+    <p class="msub">GitHub와 연결해 두면, 파일만 고쳐 올려도 <b>알아서 다시 배포</b>돼요.</p>
+    <ol class="steps">
+      <li><a href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com</a>에 <b>GitHub 계정으로</b> 무료 가입</li>
+      <li><a href="https://vercel.com/new" target="_blank" rel="noopener">Add New → Project</a>에서 방금 만든 <b>GitHub 저장소를 Import</b></li>
+      <li><b>Deploy</b> 누르기 → <b>OOO.vercel.app</b> 주소 완성</li>
+      <li>이후엔 GitHub에서 파일만 고쳐 올리면 <b>자동으로</b> 새 내용이 반영돼요.</li>
+    </ol>
+    <div class="warnnote">💡 더 간단히 시험만 하려면 <a href="https://vercel.com/drop" target="_blank" rel="noopener" style="color:#8a3d00;font-weight:800">vercel.com/drop</a>에 드래그도 돼요. 단, <b>드롭은 올릴 때마다 새 주소</b>가 생겨서, 계속 운영할 거면 위 GitHub 연결 방식을 권해요.</div>
+  </div>
+
+  <!-- NEXT -->
+  <div class="next">
+    <h3>내 인터넷 주소가 생겼나요?</h3>
+    <p>이제 이 링크를 검색·SNS에 알려서 손님이 오게 할 차례예요.</p>
+    <a href="활동5_내페이지알리기.html">활동 5. 내 페이지 알리기 →</a>
+  </div>
+
 </div>
 
 <script>
-document.querySelectorAll(".pc-h").forEach(h=>{
-  h.addEventListener("click", ()=> h.parentElement.classList.toggle("open"));
-});
-document.querySelectorAll(".cbtn").forEach(b=>{
-  b.addEventListener("click", async e=>{
-    e.stopPropagation();
-    const t=document.getElementById(b.dataset.t).textContent;
-    try{ await navigator.clipboard.writeText(t); }
-    catch(err){
-      const r=document.createRange(); r.selectNode(document.getElementById(b.dataset.t));
-      const s=getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); s.removeAllRanges();
-    }
-    const o=b.textContent; b.textContent="✅ 복사됐어요!";
-    setTimeout(()=>b.textContent=o,1600);
+(function(){
+  var seo =
+'지금 만든 내 페이지에 이어서, 검색에 잘 나오게 <head>를 채워줘. (화면 디자인은 그대로 두고)\n\n' +
+'· 제목(title): [내 업종 + 지역 + 이름] 형태로, 검색에 잘 걸리게\n' +
+'· 설명(description): 한 문장으로, 결론부터 (누가·무엇을 해주는 곳인지)\n' +
+'· 공유 이미지(og:image, og:title, og:description): 카톡·페북에 링크 붙이면 예쁘게 뜨게\n' +
+'· 지역 키워드: 화면 첫인상엔 크게 드러내지 말고, 메타(설명·구조화데이터)에는 내 지역을 넣어줘\n' +
+'· 구조화데이터(JSON-LD): 내 업종에 맞게 LocalBusiness(지역업체) 또는 Person(전문가) + 자주 묻는 질문(FAQ)\n' +
+'· AI 검색(GEO)에 인용되게: 첫 문단은 "누가·어디서·무엇을" 결론부터 명확히\n' +
+'· 없는 정보(주소·전화·평점)는 지어내지 말고 빈칸으로 둬줘.';
+
+  var box=document.getElementById('seobox');
+  var btn=document.getElementById('seocopy');
+  box.textContent=seo;
+  btn.addEventListener('click', function(){
+    var txt=box.textContent;
+    function done(){ btn.classList.add('done'); btn.textContent='✅ 복사됐어요! 같은 대화에 붙여넣으세요'; setTimeout(function(){ btn.classList.remove('done'); btn.textContent='📋 검색 노출 프롬프트 복사하기'; },2600); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done,function(){ fb(txt); done(); }); }
+    else { fb(txt); done(); }
   });
-});
-document.querySelectorAll(".tab").forEach(t=>{
-  t.addEventListener("click", ()=>{
-    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
-    t.classList.add("on");
-    const go=t.dataset.go;
-    document.getElementById("pane-netlify").style.display = go==="netlify"?"block":"none";
-    document.getElementById("pane-vercel").style.display  = go==="vercel"?"block":"none";
-  });
-});
-const cks=[...document.querySelectorAll(".ck")];
-const pfill=document.getElementById("pfill"), ptext=document.getElementById("ptext");
-function upd(){
-  const n=cks.filter(c=>c.checked).length;
-  pfill.style.width=(n/cks.length*100)+"%";
-  ptext.textContent = n===cks.length ? "🎉 완주하셨습니다!" : `${n} / ${cks.length} 단계`;
-}
-cks.forEach(c=>c.addEventListener("change",upd)); upd();
+  function fb(txt){ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); }
+})();
 </script>
-<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">\uD83D\uDD12</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">\uBA3C\uC800 \uC0AC\uC804 \uADDC\uC57D\uC5D0 \uB3D9\uC758\uD574 \uC8FC\uC138\uC694</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">\uC774 \uAD50\uC721\uC758 \uD65C\uB3D9 \uD398\uC774\uC9C0\uB294 <b>\uC0AC\uC804 \uADDC\uC57D \uB3D9\uC758(\uC11C\uBA85)</b> \uD6C4 \uC5F4\uB9BD\uB2C8\uB2E4.</p><a href="\uC0AC\uC804\uADDC\uC57D_\uB3D9\uC758.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">\uADDC\uC57D \uBCF4\uACE0 \uC11C\uBA85\uD558\uAE30 \u2192</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
+
+<!-- 사전 규약 게이트 (서명 후 10시간 유지) -->
+<script>(function(){try{var _r=localStorage.getItem("pbs_aiweb_agree");if(_r){var _o=JSON.parse(_r);if(!_o||!_o.ts||(Date.now()-_o.ts)<36000000)return;}}catch(e){return;}var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99999;background:rgba(248,247,250,.98);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Pretendard,system-ui,sans-serif";o.innerHTML='<div style="max-width:440px;text-align:center;background:#fff;border:1px solid #ecd9ec;border-radius:16px;padding:28px 24px;box-shadow:0 12px 40px rgba(0,0,0,.12)"><div style="font-size:44px">🔒</div><h2 style="margin:10px 0 8px;font-size:20px;color:#5c1953">먼저 사전 규약에 동의해 주세요</h2><p style="color:#555;font-size:14px;line-height:1.65;margin:0">이 교육의 활동 페이지는 <b>사전 규약 동의(서명)</b> 후 열립니다.</p><a href="사전규약_동의.html" style="display:inline-block;margin-top:16px;background:linear-gradient(135deg,#7A1F6B,#D0247E);color:#fff;text-decoration:none;font-weight:800;padding:14px 24px;border-radius:12px">규약 보고 서명하기 →</a></div>';document.documentElement.appendChild(o);if(document.body)document.body.style.overflow="hidden";})();</script>
 </body>
 </html>
