@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>활동 4. 배포하고 내 주소 만들기 · AI 웹페이지 만들기 · 최해숙 강의실</title>
-<meta name="description" content="배포 전 검색 노출(SEO·GEO) 넣기 → 넷리파이 드롭(가장 쉬움) 또는 버셀+GitHub(자동배포)로 내 인터넷 주소 만들기. 수정 후 재업로드 위치까지." />
+<meta name="description" content="배포 전 검색 노출(SEO) 넣기 → 넷리파이 드롭(가장 쉬움) 또는 버셀+GitHub(자동배포)로 내 인터넷 주소 만들기. 수정 후 재업로드 위치까지." />
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
 <style>
   :root{
@@ -82,18 +82,17 @@
 
 <div class="wrap">
 
-  <!-- STEP 0: SEO·GEO -->
+  <!-- STEP 0: SEO -->
   <div class="sec">먼저 · 올리기 전에 "검색 노출" 넣기</div>
   <div class="card seo">
-    <div class="st"><span class="emo">🔎</span><h2>검색에 잘 나오게 (SEO·GEO)</h2></div>
+    <div class="st"><span class="emo">🔎</span><h2>검색에 잘 나오게 (SEO)</h2></div>
     <p class="desc">검색 노출용 정보는 <b>페이지의 &lt;head&gt;</b>에 들어갑니다. 화면 디자인은 안 바뀌어요. 아래를 복사해 <b>같은 대화</b>에 붙여넣으면 클로드가 넣어 줍니다. <b>배포 직전에</b> 하세요.</p>
     <div class="promptbox" id="seobox"></div>
     <button class="copybtn" id="seocopy">📋 검색 노출 프롬프트 복사하기</button>
     <div class="qa">
-      <b>Q. SEO·GEO가 뭐예요?</b><br>
-      · <b>SEO</b> = 네이버·구글 검색에 잘 걸리게 (제목·설명·키워드).<br>
-      · <b>GEO</b> = AI 검색(챗봇)이 내 페이지를 <b>인용</b>하게 (결론부터 명확히).<br>
-      둘 다 <b>화면이 아니라 &lt;head&gt; 안</b>에 들어가서, 보기엔 그대로예요.
+      <b>Q. SEO가 뭐예요?</b><br>
+      <b>SEO</b> = 네이버·구글 검색에 내 페이지가 잘 걸리게 만드는 것 (제목·설명·키워드·공유이미지). <b>화면이 아니라 &lt;head&gt; 안</b>에 들어가서, 보기엔 그대로예요.<br>
+      <span style="color:#8a3d00">※ AI 검색에 인용되게 하는 <b>GEO</b>와 더 넓은 마케팅은 <b>마케팅(브랜딩) 과정</b>에서 다뤄요.</span>
     </div>
   </div>
 
@@ -171,7 +170,6 @@
 '· 공유 이미지(og:image, og:title, og:description): 카톡·페북에 링크 붙이면 예쁘게 뜨게\n' +
 '· 지역 키워드: 화면 첫인상엔 크게 드러내지 말고, 메타(설명·구조화데이터)에는 내 지역을 넣어줘\n' +
 '· 구조화데이터(JSON-LD): 내 업종에 맞게 LocalBusiness(지역업체) 또는 Person(전문가) + 자주 묻는 질문(FAQ)\n' +
-'· AI 검색(GEO)에 인용되게: 첫 문단은 "누가·어디서·무엇을" 결론부터 명확히\n' +
 '· 없는 정보(주소·전화·평점)는 지어내지 말고 빈칸으로 둬줘.';
 
   var box=document.getElementById('seobox');
