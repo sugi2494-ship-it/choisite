@@ -331,6 +331,10 @@
   })();
   (function(){
     if(PRE.n) $("name").value = PRE.n;
+    if(PRE.k){
+      var kr = document.querySelector('input[name="kind"][value="'+PRE.k+'"]');
+      if(kr){ kr.checked = true; $("kind").dispatchEvent(new Event("change")); }
+    }
     if(PRE.d) $("sdate").value = PRE.d;
     if(PRE.n || PRE.r){
       var who = [PRE.n ? PRE.n + " 선생님" : "", PRE.r, PRE.d].filter(Boolean).join(" · ");

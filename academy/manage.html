@@ -342,7 +342,7 @@ document.getElementById("teachers").addEventListener("click",function(e){var t=e
 function addTeacher(){TCH.push({name:"",brand:"",spec:"",photo:"",visible:true,member:false});buildTeachers();var b=document.getElementById("teachers");b.scrollTop=b.scrollHeight;}
 function delSelectedTeachers(){var idx=[];document.querySelectorAll("#teachers input[data-sel]").forEach(function(b){if(b.checked)idx.push(Number(b.dataset.sel));});if(!idx.length){alert("삭제할 강사를 앞의 체크박스로 선택해 주세요.");return;}if(!confirm("선택한 "+idx.length+"명을 삭제할까요? (저장을 눌러야 실제 반영됩니다)"))return;idx.sort(function(a,b){return b-a;}).forEach(function(i){TCH.splice(i,1);});buildTeachers();}
 function trainChecklist(t,i){var all=TRAIN_STEPS.slice();(t.customSteps||[]).forEach(function(s){if(all.indexOf(s)<0)all.push(s);});var html=all.map(function(s){var on=(t.train&&t.train[s])?"checked":"";var custom=TRAIN_STEPS.indexOf(s)<0;var del=custom?'<span data-delstep="'+i+'" data-step="'+esc(s)+'" title="이 항목 삭제" style="cursor:pointer;color:#c94a42;margin-left:2px;font-weight:800">✕</span>':'';return '<span style="display:inline-flex;align-items:center;gap:1px"><label class="mini" style="cursor:pointer;border:1px solid #e2e1db;padding:3px 8px;margin:0"><input type="checkbox" data-tri="'+i+'" data-tstep="'+esc(s)+'" '+on+' style="width:auto;margin-right:4px">'+esc(s)+'</label>'+del+'</span>';}).join("");html+='<button class="mini" data-addstep="'+i+'" style="border:1px dashed #b0257a;color:#b0257a">+ 항목 추가</button>';return html;}
-function dispatchRows(t,i){var list=t.dispatch||[];var st='padding:7px;border:1px solid #e2e1db;border-radius:7px;font-size:12.5px;width:100%;font-family:inherit';var lb='font-size:10.5px;font-weight:800;color:#8a8f89;display:block;margin-bottom:2px';var rows=list.map(function(dp,di){var pos=DISP_POS.map(function(p){return '<option'+(dp.position===p?" selected":"")+'>'+p+'</option>';}).join("");return '<div style="border:1px solid #dde3ec;background:#fafbfd;border-radius:10px;padding:10px 12px;margin-bottom:8px"><div style="display:grid;grid-template-columns:1fr 96px 100px 108px 26px;gap:6px;align-items:end;margin-bottom:6px"><div><span style="'+lb+'">출강 기관/행사</span><input data-tri="'+i+'" data-di="'+di+'" data-df="org" value="'+esc(dp.org||"")+'" placeholder="예: ○○초 특강" style="'+st+'"></div><div><span style="'+lb+'">포지션</span><select data-tri="'+i+'" data-di="'+di+'" data-df="position" style="'+st+'">'+pos+'</select></div><div><span style="'+lb+'">강사비</span><input data-tri="'+i+'" data-di="'+di+'" data-df="fee" value="'+esc(dp.fee||"")+'" placeholder="금액/여부 직접입력" style="'+st+'"></div><div><span style="'+lb+'">날짜</span><input data-tri="'+i+'" data-di="'+di+'" data-df="date" value="'+esc(dp.date||"")+'" placeholder="2026-08" style="'+st+'"></div><button class="del" data-deldisp="'+i+'" data-di="'+di+'" style="padding:4px 6px;height:34px">✕</button></div><input data-tri="'+i+'" data-di="'+di+'" data-df="feedback" value="'+esc(dp.feedback||"")+'" placeholder="출강 후 평가·피드백 한 줄 (예: 반응 좋았음, 다음엔 시간 배분 보완)" style="'+st+'"></div>';}).join("");if(!list.length)rows='<p style="font-size:12px;color:#aaa;margin:2px 0 6px">아직 출강 이력이 없습니다. [+ 출강 이력 추가]를 누르세요.</p>';return rows+'<button class="mini" data-adddisp="'+i+'" style="border:1px dashed #315fa6;color:#315fa6">+ 출강 이력 추가</button>';}
+function dispatchRows(t,i){var list=t.dispatch||[];var st='padding:7px;border:1px solid #e2e1db;border-radius:7px;font-size:12.5px;width:100%;font-family:inherit';var lb='font-size:10.5px;font-weight:800;color:#8a8f89;display:block;margin-bottom:2px';var rows=list.map(function(dp,di){var pos=DISP_POS.map(function(p){return '<option'+(dp.position===p?" selected":"")+'>'+p+'</option>';}).join("");return '<div style="border:1px solid #dde3ec;background:#fafbfd;border-radius:10px;padding:10px 12px;margin-bottom:8px"><div style="display:grid;grid-template-columns:1fr 96px 100px 108px 26px;gap:6px;align-items:end;margin-bottom:6px"><div><span style="'+lb+'">출강 기관/행사</span><input data-tri="'+i+'" data-di="'+di+'" data-df="org" value="'+esc(dp.org||"")+'" placeholder="예: ○○초 특강" style="'+st+'"></div><div><span style="'+lb+'">포지션</span><select data-tri="'+i+'" data-di="'+di+'" data-df="position" style="'+st+'">'+pos+'</select></div><div><span style="'+lb+'">강사비</span><input data-tri="'+i+'" data-di="'+di+'" data-df="fee" value="'+esc(dp.fee||"")+'" placeholder="금액/여부 직접입력" style="'+st+'"></div><div><span style="'+lb+'">날짜</span><input data-tri="'+i+'" data-di="'+di+'" data-df="date" value="'+esc(dp.date||"")+'" placeholder="2026-08" style="'+st+'"></div><button class="del" data-deldisp="'+i+'" data-di="'+di+'" style="padding:4px 6px;height:34px">✕</button></div><input data-tri="'+i+'" data-di="'+di+'" data-df="feedback" value="'+esc(dp.feedback||"")+'" placeholder="출강 후 평가·피드백 한 줄 (예: 반응 좋았음, 다음엔 시간 배분 보완)" style="'+st+'">'+trDispatchRow(t,dp)+'</div>';}).join("");if(!list.length)rows='<p style="font-size:12px;color:#aaa;margin:2px 0 6px">아직 출강 이력이 없습니다. [+ 출강 이력 추가]를 누르세요.</p>';return rows+'<button class="mini" data-adddisp="'+i+'" style="border:1px dashed #315fa6;color:#315fa6">+ 출강 이력 추가</button>';}
 function consultsRows(t,i){var list=t.consults||[];var st='padding:7px;border:1px solid #e2e1db;border-radius:7px;font-size:12.5px;width:100%;font-family:inherit';var lb='font-size:10.5px;font-weight:800;color:#8a8f89;display:block;margin-bottom:2px';var rows=list.map(function(c,ci){var mopt=CMETHODS.map(function(m){return '<option'+(c.method===m?" selected":"")+'>'+m+'</option>';}).join("");var sopt=CSTAT.map(function(s){return '<option'+((c.status||"예정")===s?" selected":"")+'>'+s+'</option>';}).join("");var scol=c.status==="완료"?"#328062":(c.status==="진행중"?"#c98a1f":"#8a8f89");return '<div style="border:1px solid #ead9e6;background:#fdfafc;border-radius:10px;padding:10px 12px;margin-bottom:8px"><div style="font-weight:800;color:#b0257a;font-size:12px;margin-bottom:6px">'+(ci+1)+'회차</div><div style="display:grid;grid-template-columns:130px 74px 82px 90px 1fr 26px;gap:6px;align-items:end;margin-bottom:7px"><div><span style="'+lb+'">날짜</span><input type="date" data-tri="'+i+'" data-ci="'+ci+'" data-cf="date" value="'+esc(c.date||"")+'" style="'+st+'"></div><div><span style="'+lb+'">시간(24시)</span><input type="text" inputmode="numeric" data-tri="'+i+'" data-ci="'+ci+'" data-cf="time" value="'+esc(c.time||"")+'" placeholder="14:30" maxlength="5" style="'+st+'"></div><div><span style="'+lb+'">진행방식</span><select data-tri="'+i+'" data-ci="'+ci+'" data-cf="method" style="'+st+'">'+mopt+'</select></div><div><span style="'+lb+'">상태</span><select data-tri="'+i+'" data-ci="'+ci+'" data-cf="status" style="'+st+';color:'+scol+';font-weight:800">'+sopt+'</select></div><div><span style="'+lb+'">다음 미팅</span><button class="mini" data-calc="'+i+'" data-ci="'+ci+'" title="이 일정을 내 구글 캘린더에 예약" style="border:1px solid #315fa6;color:#315fa6;font-weight:800;width:100%">📅 캘린더 예약</button></div><button class="del" data-delcon="'+i+'" data-ci="'+ci+'" style="padding:4px 6px;height:34px">✕</button></div><div style="display:grid;grid-template-columns:1fr 1.4fr;gap:6px;margin-bottom:6px"><input data-tri="'+i+'" data-ci="'+ci+'" data-cf="topic" value="'+esc(c.topic||"")+'" placeholder="컨설팅 주제 (예: 강의안 방향)" style="'+st+'"><input data-tri="'+i+'" data-ci="'+ci+'" data-cf="content" value="'+esc(c.content||"")+'" placeholder="상담 내용" style="'+st+'"></div><input data-tri="'+i+'" data-ci="'+ci+'" data-cf="memo" value="'+esc(c.memo||"")+'" placeholder="메모 · 추후 진행해야 할 것" style="'+st+'"><div style="margin-top:6px"><span style="'+lb+';color:#b0257a">강사에게 보낼 평가 — 후기 요청 링크에 함께 전달됩니다</span><input data-tri="'+i+'" data-ci="'+ci+'" data-cf="coach" value="'+esc(c.coach||"")+'" placeholder="예: 시나리오 흐름은 잡혔습니다. 진단천 넘기는 속도만 더 연습하세요." style="'+st+';border-color:#e9c6dc;background:#fffafd"></div>'+trReviewRow(t,ci,c)+'</div>';}).join("");if(!list.length)rows='<p style="font-size:12px;color:#aaa;margin:2px 0 6px">등록된 컨설팅이 없습니다. [+ 컨설팅 추가]로 첫 상담을 기록하세요.</p>';return rows+'<button class="mini" data-addcon="'+i+'" style="border:1px dashed #b0257a;color:#b0257a">+ 컨설팅 추가</button>';}
 function notifyTrainee(i){var t=TRN[i];if(!t.phone){alert("이 교육생의 연락처가 없습니다.");return;}var base=(t.name||"")+"님, PBS컬러랩 인증강사 과정 안내드립니다.\n· 회차/내용: 3회차 현장 실습이 진행되었습니다.\n수고 많으셨습니다! 다음 일정도 함께해요.\n문의 010-4285-7997";var msg=prompt("[진행 알림] 보낼 문자입니다. 회차·내용을 고쳐서 보내세요.",base);if(msg==null||!msg.trim())return;smsSend(t.phone,msg).then(function(res){alert(res.ok&&res.j.ok?"진행 알림 문자를 발송했습니다.":"발송 실패: "+(res.j.error||""));});}
 function calOpen(name,phone,date,time,label){if(!date){alert("먼저 날짜를 입력하세요.");return;}var title="[PBS] "+(name?name+" · ":"")+(label||"일정");var pad=function(n){return(n<10?"0":"")+n;};var ymd=date.replace(/-/g,"");var start,end;if(time){start=ymd+"T"+time.replace(":","")+"00";var d=new Date(date+"T"+time);d.setHours(d.getHours()+1);end=""+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+"T"+pad(d.getHours())+pad(d.getMinutes())+"00";}else{start=ymd;var d=new Date(date+"T00:00");d.setDate(d.getDate()+1);end=""+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate());}var det="PBS 인증강사 트레이닝실\n강사: "+name+(phone?"\n연락처: "+phone:"");var url="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(title)+"&dates="+start+"/"+end+"&details="+encodeURIComponent(det);window.open(url,"_blank");}
@@ -416,6 +416,52 @@ function copyReviewLink(name,round,date,hasCoach){
   catch(e){prompt("아래 내용을 복사하세요",msg);}
   document.body.removeChild(t);
 }
+function findDispatchSign(name,org,date){
+  if(typeof RPT==="undefined"||!RPT.length)return null;
+  var nm=String(name||"").replace(/\s/g,"");
+  var key=String(org||"").trim()+"|"+String(date||"").trim();
+  var hit=RPT.filter(function(r){
+    return r.kind==="출강확인" && String(r.name||"").replace(/\s/g,"")===nm && r.dispatch_key===key;
+  });
+  return hit.length?hit[0]:null;
+}
+function copyDispatchLink(name,org,date,hasCoach){
+  var url="https://www.pbscolor.com/academy/report.html?n="+encodeURIComponent(name||"")+"&k=출강확인";
+  var msg=name+" 선생님, "+(org||"")+"("+(date||"")+") 출강 수고 많으셨습니다.\n"
+    +(hasCoach?"출강 평가를 남겨두었습니다. 확인하시고 확인 서명 부탁드립니다.\n":"아래에서 출강 내용 확인 서명 부탁드립니다.\n")
+    +"이름과 연락처 뒤 4자리만 넣으시면 됩니다.\n▶ "+url;
+  var t=document.createElement("textarea");t.value=msg;document.body.appendChild(t);t.select();
+  try{document.execCommand("copy");alert("카톡에 붙여넣을 문구를 복사했습니다.\n\n"+msg);}
+  catch(e){prompt("아래 내용을 복사하세요",msg);}
+  document.body.removeChild(t);
+}
+function trDispatchRow(t,dp){
+  var wrap='margin-top:7px;border-radius:8px;padding:9px 11px;font-size:12.5px';
+  var rv=findDispatchSign(t.name,dp.org,dp.date);
+  if(rv){
+    var fb=rv.feedback||{};
+    var ks=Object.keys(fb).filter(function(k){return String(fb[k]||"").trim();});
+    var body=ks.length?ks.map(function(k){
+      return '<div style="margin-top:5px"><span style="font-size:10.5px;font-weight:800;color:#1b7a4a">'+esc(k)+'</span><br><span style="color:#25402f;white-space:pre-wrap">'+esc(fb[k])+'</span></div>';
+    }).join(""):'';
+    return '<div style="'+wrap+';background:#eef8f1;border:1px solid #bfe3cd">'
+      +'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">'
+      +'<b style="color:#1b7a4a">✅ 확인 서명 완료</b>'
+      +'<span style="font-size:11.5px;font-weight:800;color:'+(rv.fee_received?"#1b7a4a":"#b23b30")+'">강사비 '+(rv.fee_received?"수령 확인":"미수령")+'</span>'
+      +(rv.note_confirmed?'<span style="font-size:11.5px;color:#5c6b60">평가 확인함</span>':'')
+      +'<span style="margin-left:auto;color:#8a8f89;font-size:11px">'+esc(dstr(rv.created_at))+'</span>'
+      +'<button class="mini" style="padding:4px 9px;font-size:11px" onclick="openSig(\''+rv.id+'\')">서명</button>'
+      +'</div>'+body+'<div id="sig-'+rv.id+'"></div></div>';
+  }
+  var has=String(dp.feedback||"").trim();
+  return '<div style="'+wrap+';background:'+(has?"#fdf2f8":"#fafafa")+';border:1px dashed '+(has?"#E5007F":"#ddd")+';display:flex;align-items:center;gap:9px;flex-wrap:wrap">'
+    +'<span style="color:'+(has?"#b0257a":"#9a9a9a")+';font-weight:'+(has?"800":"600")+'">'
+    +(has?"평가를 담아 확인 서명을 요청하세요":"아직 확인 서명을 받지 않았습니다")+'</span>'
+    +'<button class="mini" style="margin-left:auto;padding:5px 11px;font-size:11.5px;'
+    +(has?"border-color:#E5007F;color:#E5007F;font-weight:800":"")+'" '
+    +'onclick="copyDispatchLink(\''+esc(t.name||"").replace(/'/g,"\\'")+'\',\''+esc(dp.org||"")+'\',\''+esc(dp.date||"")+'\','+(has?"true":"false")+')">✍ 서명 요청 문구 복사</button>'
+    +'</div>';
+}
 function trReviewRow(t,ci,c){
   var round=(ci+1)+"회차";
   var rv=findReview(t.name,round,c.date);
@@ -443,10 +489,10 @@ function trReviewRow(t,ci,c){
   var done=(c.status==="완료");
   return '<div style="'+wrap+';background:'+(done?"#fdf2f8":"#fafafa")+';border:1px dashed '+(done?"#E5007F":"#ddd")+';display:flex;align-items:center;gap:9px;flex-wrap:wrap">'
     +'<span style="color:'+(done?"#b0257a":"#9a9a9a")+';font-weight:'+(done?"800":"600")+'">'
-    +(done?(String(c.coach||"").trim()?"평가를 담아 후기를 요청하세요":"평가를 적고 후기를 요청하세요 (평가 없이 보내도 됩니다)"):"완료로 바꾸면 후기를 요청할 수 있습니다")+'</span>'
+    +(done?(String(c.coach||"").trim()?"평가를 담아 후기·서명을 요청하세요":"평가를 적고 요청하세요 (평가 없이 보내도 됩니다)"):"완료로 바꾸면 후기를 요청할 수 있습니다")+'</span>'
     +'<button class="mini" style="margin-left:auto;padding:5px 11px;font-size:11.5px;'
     +(done?"border-color:#E5007F;color:#E5007F;font-weight:800":"")+'" '
-    +'onclick="copyReviewLink(\''+esc(t.name||"").replace(/'/g,"\\'")+'\',\''+round+'\',\''+esc(c.date||"")+'\','+(String(c.coach||"").trim()?"true":"false")+')">📋 후기 요청 문구 복사</button>'
+    +'onclick="copyReviewLink(\''+esc(t.name||"").replace(/'/g,"\\'")+'\',\''+round+'\',\''+esc(c.date||"")+'\','+(String(c.coach||"").trim()?"true":"false")+')">✍ 평가·서명 요청 문구 복사</button>'
     +'</div>';
 }
 
