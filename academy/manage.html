@@ -31,6 +31,19 @@ table.apps{width:100%;border-collapse:collapse;font-size:13px}
 .apps th{background:#f2f1ec;font-weight:800}
 .apps td.msg2{white-space:normal;min-width:150px;color:#555;font-size:12px}
 .course-chip{display:inline-block;font-size:12px;font-weight:800;background:#e7eefb;color:#315fa6;padding:3px 9px;border-radius:20px}
+.cg{border:1px solid #dce4ef;border-radius:12px;margin-bottom:16px;background:#fff;overflow:hidden}
+.cg-head{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;background:#f8f7f4;border-bottom:1px solid #e6e7e4;user-select:none}
+.cg-head:hover{background:#f0efec}
+.cg-title{font-weight:800;font-size:15px;flex:1;color:#33303a}
+.cg-cnt{font-size:13px;color:#6b6e6b;font-weight:700}
+.cg-arrow{font-size:16px;color:#b0257a;font-weight:800;transition:transform .2s}
+.cg.closed .cg-arrow{transform:rotate(-90deg)}
+.cg.closed .cg-body{display:none}
+.cg-body{padding:12px 14px}
+.cg-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.cg-chip{display:inline-block;padding:6px 14px;border-radius:20px;border:1px solid #d8d4cc;background:#fff;font-size:13px;font-weight:700;color:#6b6e6b;cursor:pointer}
+.cg-chip:hover{background:#f0efec}
+.cg-chip.on{border-color:#b0257a;background:#b0257a;color:#fff}
 .pipe{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:8px 0 2px}
 .pchip{font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:20px;border:1px solid #e2d8de;color:#b3a9af;background:#fff}
 .pchip.done{background:#e0007a;border-color:#e0007a;color:#fff}
@@ -85,8 +98,8 @@ table.apps{width:100%;border-collapse:collapse;font-size:13px}
 </nav>
 <div class="main">
 <div class="pane" id="pane-special">
-<h2 class="pt">특강 신청자</h2>
-<p class="pd">일반 특강·원데이 등 특강 신청자 명단입니다.</p>
+<h2 class="pt">특강·원데이 신청자</h2>
+<p class="pd">과정별로 자동 분류됩니다. 칩을 눌러 특정 과정만 볼 수 있습니다.</p>
 <div class="toolbar"><button class="mini" onclick="loadApps()">새로고침</button><button class="mini" onclick="delSelectedApps('special')" style="color:#b23b30;border-color:#e6b8b3">체크한 신청자 삭제</button><button class="mini" onclick="csvOf('special')">엑셀(CSV)</button><span class="count" id="cnt-special"></span></div>
 <div class="appswrap"><div id="box-special"></div></div>
 </div>
@@ -247,6 +260,8 @@ function isSpecial(r){var s=(r.session||"");var m=s+" "+(r.want_to_make||"");if(
 function isQna(r){var m=(r.session||"")+" "+(r.want_to_make||"");return /문의/.test(m);}
 function catOf(r){if(isInst(r))return "inst";if(isSpecial(r))return "special";if(isQna(r))return "qna";return "cert";}
 function courseName(r){return r.session||r.want_to_make||"";}
+function courseKey(r){var s=(r.type||"").trim();if(s)return s;var c=courseName(r);return c.replace(/\s*·\s*(일반|재수강|얼리버드).*$/i,"").replace(/\s*\d[\d,]*원.*$/,"").trim()||"기타";}
+function buildSpecialGroups(list){if(!list.length)return '<p style="padding:16px;color:#6b6e6b;font-size:13px">아직 신청자가 없습니다.</p>';var groups={},order=[];list.forEach(function(r){var cn=courseKey(r);if(!groups[cn]){groups[cn]=[];order.push(cn);}groups[cn].push(r);});var chips='<div class="cg-chips"><span class="cg-chip on" data-cgf="전체">전체 '+list.length+'명</span>';order.forEach(function(cn){chips+='<span class="cg-chip" data-cgf="'+esc(cn)+'">'+esc(cn)+' '+groups[cn].length+'명</span>';});chips+='</div>';var html=chips;order.forEach(function(cn){var items=groups[cn];html+='<div class="cg" data-cgname="'+esc(cn)+'">';html+='<div class="cg-head" onclick="this.parentNode.classList.toggle(\'closed\')">';html+='<span class="cg-title">'+esc(cn)+'</span>';html+='<span class="cg-cnt">'+items.length+'명</span>';html+='<span class="cg-arrow">▾</span>';html+='</div>';html+='<div class="cg-body">'+rowsHtml(items,"special")+'</div>';html+='</div>';});return html;}
 function resizeFile(f,maxw,cb){var rd=new FileReader();rd.onload=function(){var img=new Image();img.onload=function(){var w=img.width,hh=img.height;if(w>maxw){hh=Math.round(hh*maxw/w);w=maxw;}var cv=document.createElement("canvas");cv.width=w;cv.height=hh;cv.getContext("2d").drawImage(img,0,0,w,hh);cb(cv.toDataURL("image/jpeg",0.82));};img.src=rd.result;};rd.readAsDataURL(f);}
 /* nav */
 var links=document.querySelectorAll(".side a");
@@ -277,7 +292,7 @@ function nextSchedule(name,phone){if(!phone){alert("연락처가 없습니다.")
 function esc2(s){return String(s||"").replace(/'/g,"").replace(/"/g,"");}
 function pipeHtml(r){if(r.status==="불합격")return '<div class="pipe"><span class="pchip done" style="background:#b23b30;border-color:#b23b30">불합격</span></div>';if(r.status==="보류")return '<div class="pipe"><span class="pchip done" style="background:#a06a1a;border-color:#a06a1a">보류</span></div>';var steps=[["접수",true],["합격",r.status==="합격"],["결제안내",r.sent_confirm===true],["입금완료",r.paid===true]];var h='<div class="pipe">';steps.forEach(function(s,i){h+=(i?'<span class="parw">›</span>':'')+'<span class="pchip'+(s[1]?' done':'')+'">'+s[0]+'</span>';});return h+'</div>';}
 function rowsHtml(list,kind){if(!list.length)return '<p style="padding:16px;color:#6b6e6b;font-size:13px">아직 신청자가 없습니다.</p>';var inst=kind=="inst";if(inst){var out="";list.forEach(function(r){var a2=esc2(r.name),ph=esc(r.phone),c2=esc2(courseName(r));var st=r.status||"미정";var paidck=r.paid===true?"checked":"";var reason=esc(r.reason||"")||"<span style=\"color:#aaa\">(없음)</span>";var mm=esc(r.message||"")||"<span style=\"color:#aaa\">(없음)</span>";out+='<div class="appc"><div class="appc-top"><label class="appc-sel"><input type="checkbox" data-asel="'+r.id+'"></label>'+'<div class="appc-name">'+esc(r.name)+' <b class="appc-st" style="color:'+statusColor(r.status)+'">· '+esc(st)+'</b></div>'+'<div class="appc-when">🕐 신청 '+(esc(dstr(r.created_at))||"일시 미상")+'</div></div>'+'<div class="appc-meta">📞 '+ph+' · 생년월일 '+esc(r.birthdate||"-")+' · 소속 '+esc(r.affiliation||"-")+' · <span class="course-chip">'+esc(courseName(r))+'</span></div>'+pipeHtml(r)+'<div class="appc-field"><span class="lbl">지원 이유</span><p>'+reason+'</p></div>'+'<div class="appc-field"><span class="lbl">상세 (알게된 경위·목표·통화 가능·걱정되는 점)</span><p>'+mm+'</p></div>'+'<div class="appc-acts"><span class="agrp">상태 <button class="mini" onclick="setStatus(\''+r.id+'\',\'합격\')">합격</button><button class="mini" onclick="setStatus(\''+r.id+'\',\'불합격\')">불합격</button><button class="mini" onclick="setStatus(\''+r.id+'\',\'보류\')">보류</button></span>'+'<label class="mini" style="border:0;cursor:pointer"><input type="checkbox" '+paidck+' onclick="togglePaid(\''+r.id+'\',this.checked)" style="width:auto;margin-right:4px">결제확인</label>'+'<button class="b-pay" onclick="passPay(\''+a2+'\',\''+ph+'\',\''+c2+'\',\''+r.id+'\')">합격→결제안내</button>'+'<button class="b-sms" onclick="reject(\''+a2+'\',\''+ph+'\',\''+r.id+'\')">불합격 문자</button>'+'<button class="b-sms" onclick="nextSchedule(\''+a2+'\',\''+ph+'\')">다음일정</button>'+'<button class="b-ct" onclick="sendContract(\''+r.id+'\',\''+a2+'\',\''+ph+'\',\''+c2+'\')">전자계약서</button>'+'<button class="rowdel" onclick="delApp(\''+r.id+'\',\''+a2+'\')">삭제</button></div></div>';});return out;}var out2="";list.forEach(function(r){var a2=esc2(r.name),ph=esc(r.phone),c2=esc2(courseName(r));var reason=esc(r.reason||"")||"<span style=\"color:#aaa\">(없음)</span>";var detail=esc(r.message||r.want_to_make||"")||"<span style=\"color:#aaa\">(없음)</span>";var pay=payOf(r);var payh=pay?' · <span class="course-chip" style="background:#eaf5ef;color:#328062">결제 '+pay+'</span>':'';out2+='<div class="appc"><div class="appc-top"><label class="appc-sel"><input type="checkbox" data-asel="'+r.id+'"></label>'+'<div class="appc-name">'+esc(r.name)+'</div>'+'<div class="appc-when">🕐 신청 '+(esc(dstr(r.created_at))||"일시 미상")+'</div></div>'+'<div class="appc-meta">📞 '+ph+' · 생년월일 '+esc(r.birthdate||"-")+' · 소속 '+esc(r.affiliation||"-")+' · <span class="course-chip">'+esc(courseName(r))+'</span>'+payh+'</div>'+'<div class="appc-field"><span class="lbl">신청 내용·이유</span><p>'+reason+'</p></div>'+'<div class="appc-field"><span class="lbl">상세 내용</span><p>'+detail+'</p></div>'+'<div class="appc-acts">'+'<button class="b-sms" onclick="sendText(\''+a2+'\',\''+ph+'\')">문자 보내기</button>'+'<button class="b-pay" onclick="sendDeposit(\''+a2+'\',\''+ph+'\',\''+c2+'\')">입금 안내</button>'+'<button class="rowdel" onclick="delApp(\''+r.id+'\',\''+a2+'\')">삭제</button></div></div>';});return out2;}
-function loadApps(){var boxes=["special","cert","inst","qna"];boxes.forEach(function(k){var el=document.getElementById("box-"+k);if(el)el.innerHTML='<p style="padding:16px;color:#6b6e6b;font-size:13px">불러오는 중...</p>';});post(AL,{password:PW}).then(function(res){var j=res.j;if(j&&j.error){document.getElementById("box-inst").innerHTML='<p style="padding:16px;color:#b23b30">'+esc(j.error)+'</p>';return;}APPS=(j&&j.rows)||[];boxes.forEach(function(k){var list=APPS.filter(function(r){return catOf(r)==k;});document.getElementById("box-"+k).innerHTML=rowsHtml(list,k);document.getElementById("cnt-"+k).textContent="총 "+list.length+"명";var _nw=list.filter(function(r){return !r.status;}).length;var _nb=document.getElementById("nb-"+k);if(_nb){if(_nw>0){_nb.textContent=_nw;_nb.className="nb show";}else{_nb.className="nb";}}});}).catch(function(){document.getElementById("box-inst").innerHTML='<p style="padding:16px;color:#b23b30">명단을 불러오지 못했습니다.</p>';});}
+function loadApps(){var boxes=["special","cert","inst","qna"];boxes.forEach(function(k){var el=document.getElementById("box-"+k);if(el)el.innerHTML='<p style="padding:16px;color:#6b6e6b;font-size:13px">불러오는 중...</p>';});post(AL,{password:PW}).then(function(res){var j=res.j;if(j&&j.error){document.getElementById("box-inst").innerHTML='<p style="padding:16px;color:#b23b30">'+esc(j.error)+'</p>';return;}APPS=(j&&j.rows)||[];boxes.forEach(function(k){var list=APPS.filter(function(r){return catOf(r)==k;});document.getElementById("box-"+k).innerHTML=(k==="special"?buildSpecialGroups(list):rowsHtml(list,k));document.getElementById("cnt-"+k).textContent="총 "+list.length+"명";var _nw=list.filter(function(r){return !r.status;}).length;var _nb=document.getElementById("nb-"+k);if(_nb){if(_nw>0){_nb.textContent=_nw;_nb.className="nb show";}else{_nb.className="nb";}}});}).catch(function(){document.getElementById("box-inst").innerHTML='<p style="padding:16px;color:#b23b30">명단을 불러오지 못했습니다.</p>';});}
 function csvOf(kind){var inst=kind=="inst";var nameMap={special:"특강",cert:"전문가자격과정",inst:"인증강사",qna:"문의"};var list=APPS.filter(function(r){return catOf(r)==kind;});if(!list.length){alert("내려받을 신청자가 없습니다.");return;}var cols=[["신청일","created_at"],["이름","name"],["연락처","phone"],["생년월일","birthdate"],["소속","affiliation"],["과정","_course"],["결제","_pay"],["메모","message"]];var lines=[cols.map(function(c){return c[0];}).join(",")];list.forEach(function(r){lines.push(cols.map(function(c){var v;if(c[1]=="created_at")v=dstr(r.created_at);else if(c[1]=="_course")v=courseName(r);else if(c[1]=="_pay")v=payOf(r);else v=r[c[1]]||"";return '"'+String(v).replace(/"/g,'""')+'"';}).join(","));});var blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="PBS_"+(nameMap[kind]||"신청")+"_신청명단.csv";a.click();}
 /* photos */
 var SLOTS=[{slot:"hero",key:"gc_hero",title:"인증강사 첫 화면 사진",sub:"인증강사 페이지 맨 위(히어로) 사진",maxw:900},{slot:"logo",key:"gc_logo",title:"로고 (선택)",sub:"상단 로고 이미지",maxw:600}];
@@ -393,8 +408,6 @@ function loadReports(){
 function fillReportFilters(){
   var ns={},rs={};
   RPT.forEach(function(r){if(r.name)ns[r.name]=1;if(r.round)rs[r.round]=1;});
-  rs["출강 확인"]=RPT.some(function(r){return r.kind=="출강확인";})?1:undefined;
-  if(!rs["출강 확인"])delete rs["출강 확인"];
   var sn=document.getElementById("rp-name"),sr=document.getElementById("rp-round");
   if(sn){var v=sn.value;sn.innerHTML='<option value="">전체 강사</option>'+Object.keys(ns).map(function(n){return '<option'+(n==v?" selected":"")+'>'+esc(n)+'</option>';}).join("");}
   if(sr){var w=sr.value;sr.innerHTML='<option value="">전체 회차</option>'+Object.keys(rs).sort().map(function(n){return '<option'+(n==w?" selected":"")+'>'+esc(n)+'</option>';}).join("");}
@@ -416,16 +429,10 @@ function buildReports(){
   if(nb){if(nw>0){nb.textContent=nw;nb.className="nb show";}else{nb.className="nb";}}
   if(!list.length){box.innerHTML='<p style="padding:16px;color:#6b6e6b;font-size:13px">아직 제출된 리포트가 없습니다.</p>';return;}
   box.innerHTML=list.map(function(r){
-    var isD=(r.kind=="출강확인");
-    var when=isD?(r.dispatch_date||dstr(r.created_at).slice(0,10)):(r.session_date||dstr(r.created_at).slice(0,10));
-    var time=(!isD&&(r.start_time||r.end_time))?(" "+(r.start_time||"")+"~"+(r.end_time||"")):"";
+    var when=(r.session_date||dstr(r.created_at).slice(0,10));
+    var time=(r.start_time||r.end_time)?(" "+(r.start_time||"")+"~"+(r.end_time||"")):"";
     var kit="";
-    if(isD){
-      kit='<div class="rpc-kit"><b>출강 확인</b><br>'
-        +esc(r.dispatch_org||"")+(r.dispatch_position?" · "+esc(r.dispatch_position):"")
-        +(r.dispatch_fee?'<br>강사비 '+esc(r.dispatch_fee)+' — <b style="color:'+(r.fee_received?"#1b7a4a":"#b23b30")+'">'+(r.fee_received?"수령 확인":"미수령")+'</b>':'')
-        +'</div>';
-    }else if(r.kit_received){
+    if(r.kit_received){
       var items=(r.kit_items&&r.kit_items.length)?r.kit_items.map(esc).join(" · "):"(품목 체크 없음)";
       kit='<div class="rpc-kit"><b>교구 인수 확인</b><br>'+items+(r.kit_memo?'<br><span style="color:#6b6e6b">메모: '+esc(r.kit_memo)+'</span>':'')+'</div>';
     }
@@ -433,9 +440,9 @@ function buildReports(){
       +'<div class="rpc-top">'
       +'<span class="rpc-name">'+esc(r.name)+'</span>'
       +(r.cohort?'<span class="rpc-tag">'+esc(r.cohort)+'</span>':'')
-      +(isD
-        ?'<span class="rpc-tag mg">출강 확인</span>'+(r.fee_received?'<span class="rpc-tag">강사비 수령</span>':'<span class="rpc-tag" style="border-color:#e6b8b3;background:#fdf1ef;color:#b23b30">강사비 미수령</span>')
-        :'<span class="rpc-tag mg">'+esc(r.round||"")+'</span><span class="rpc-tag">'+esc(r.attend_type||"대면")+' 출석</span>'+(r.kit_received?'<span class="rpc-tag mg">교구 인수</span>':''))
+      +'<span class="rpc-tag mg">'+esc(r.round||"")+'</span>'
+      +'<span class="rpc-tag">'+esc(r.attend_type||"대면")+' 출석</span>'
+      +(r.kit_received?'<span class="rpc-tag mg">교구 인수</span>':'')
       +(r.status=="신규"?'<span class="rpc-tag new">NEW</span>':'')
       +'<span class="rpc-when">'+esc(when+time)+'</span>'
       +'</div>'
@@ -512,6 +519,7 @@ function saveTeachers(){var m=document.getElementById("tchmsg");m.style.color="#
 /* login */
 document.getElementById("lg").addEventListener("click",function(){PW=document.getElementById("pw").value;var lm=document.getElementById("lm");lm.textContent="확인 중...";lm.style.color="#6b6e6b";api("get").then(function(r){if(r&&r.error){lm.style.color="#b23b30";lm.textContent=r.error;PW="";return;}if(r&&r.account)ACCT=r.account;document.getElementById("login").className="hidden";document.getElementById("app").className="";loadTplUI();buildPhotos(r||{});buildReviews(r||{});loadApps();loadTeachers();loadTrainees();loadReports();fetch(EX).then(function(x){return x.json();}).then(function(e){GAL=(e&&e.gallery)||[];BOARD=(e&&e.board)||[];POP=(e&&e.popup)||{};BAN=(e&&e.banner)||{};buildGallery();buildBoard();buildPopup();buildBanner();}).catch(function(){buildGallery();buildBoard();buildPopup();buildBanner();});}).catch(function(){lm.style.color="#b23b30";lm.textContent="연결에 실패했습니다. 잠시 후 다시 시도해 주세요.";});});
 document.getElementById("pw").addEventListener("keydown",function(e){if(e.key=="Enter")document.getElementById("lg").click();});
+document.getElementById("box-special").addEventListener("click",function(e){var chip=e.target.closest&&e.target.closest("[data-cgf]");if(!chip)return;var f=chip.getAttribute("data-cgf");document.querySelectorAll("#box-special .cg-chip").forEach(function(c){c.className="cg-chip"+(c.getAttribute("data-cgf")===f?" on":"");});document.querySelectorAll("#box-special .cg").forEach(function(g){g.style.display=(f==="전체"||g.getAttribute("data-cgname")===f)?"":"none";});});
 </script><script>var TR_FILTER="전체",TR_SEARCH="",TR_OPEN={};
 function trNextInfo(t){var cs=(t.consults||[]),next=null;for(var k=0;k<cs.length;k++){var c=cs[k];if(c.status!=="완료"&&c.date){if(!next||c.date<next.date)next=c;}}return next;}
 (function(){var box=document.getElementById("trainees");if(!box)return;
