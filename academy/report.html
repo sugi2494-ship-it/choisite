@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>트레이닝 회차 리포트 | PBS 컬러랩 인증강사</title>
+<title>인증강사 교육 트레이닝 후기 | PBS 컬러랩</title>
 <meta name="robots" content="noindex, nofollow" />
 <meta name="description" content="PBS 컬러랩 인증강사 트레이닝 — 출석·후기·서명, 교구 인수 확인, 출강 확인." />
 <link rel="icon" href="/assets/common/pbs-logo.png" />
@@ -120,15 +120,15 @@
 
 <div class="top">
   <div class="logo">PB</div>
-  <div><b>PBS 컬러랩 인증강사</b><small>트레이닝 회차 리포트</small></div>
+  <div><b>PBS 컬러랩</b><small>인증강사 교육 트레이닝 관리</small></div>
 </div>
 
 <div class="wrap" id="form">
 
   <div class="hero">
-    <div class="k">TRAINING REPORT</div>
-    <h1>오늘 일정 마치고,<br>3분만 남겨 주세요.</h1>
-    <p>출석과 후기를 남기면 트레이닝 기록에 반영됩니다.</p>
+    <div class="k">PBS COLOR LAB · 인증강사 트레이닝</div>
+    <h1 id="htitle">인증강사 교육 트레이닝 후기</h1>
+    <p id="hsub">회차별 출석과 후기를 기록하는 공식 양식입니다. 제출 내용은 트레이닝 이력에 반영됩니다.</p>
   </div>
 
   <!-- 1. 본인 확인 -->
@@ -293,7 +293,7 @@
 <div class="wrap done" id="done">
   <div class="ic">✓</div>
   <h2>제출이 완료되었습니다</h2>
-  <p>기록에 반영되었습니다.<br />오늘도 수고 많으셨습니다.</p>
+  <p>제출 내용이 트레이닝 이력에 반영되었습니다.</p>
   <div class="box" id="donebox"></div>
   <p class="foot">PBS COLOR LAB · 문의 1600-7218</p>
 </div>
@@ -333,11 +333,8 @@
     if(PRE.n) $("name").value = PRE.n;
     if(PRE.d) $("sdate").value = PRE.d;
     if(PRE.n || PRE.r){
-      var h = document.querySelector(".hero");
-      var who = PRE.n ? (PRE.n + " 선생님") : "선생님";
-      var what = [PRE.r, PRE.d].filter(Boolean).join(" · ");
-      h.querySelector("h1").innerHTML = who + ",<br>" + (what || "오늘 회차") + " 후기를<br>남겨 주세요.";
-      h.querySelector("p").textContent = "연락처 뒤 4자리를 넣고 [내 일정 불러오기]를 눌러주세요.";
+      var who = [PRE.n ? PRE.n + " 선생님" : "", PRE.r, PRE.d].filter(Boolean).join(" · ");
+      $("hsub").textContent = who + " — 연락처 뒤 4자리를 넣고 [내 일정 불러오기]를 눌러주세요.";
     }
   })();
 
@@ -367,6 +364,15 @@
     $("card-fb").style.display       = (m === "교구인수") ? "none" : "";
     $("card-sign").style.display     = (m === "교구인수") ? "none" : "";
     $("fbtitle").textContent = (m === "출강확인") ? "현장 소감" : "후기 작성";
+    $("htitle").textContent = (m === "출강확인") ? "출강 확인서"
+      : (m === "교구인수") ? "교구 인수 확인서" : "인증강사 교육 트레이닝 후기";
+    if(!PRE.n && !PRE.r){
+      $("hsub").textContent = (m === "출강확인")
+        ? "출강 내용과 강사비 수령 여부를 확인하고 서명하는 양식입니다."
+        : (m === "교구인수")
+        ? "지급받은 교구를 확인하고 인수 사실을 기록하는 양식입니다."
+        : "회차별 출석과 후기를 기록하는 공식 양식입니다. 제출 내용은 트레이닝 이력에 반영됩니다.";
+    }
     $("lq1").textContent = (m === "출강확인") ? "현장에서 잘 됐던 것 · 알게 된 것" : "도움이 된 것 · 알게 된 것 한 가지";
     $("lq2").textContent = (m === "출강확인") ? "보완이 더 필요하다고 느낀 부분" : "연습이 더 필요하다고 느낀 부분";
     $("agreetext").textContent = (m === "출강확인")
