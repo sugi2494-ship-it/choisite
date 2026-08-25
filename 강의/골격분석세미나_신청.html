@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <title>골격분석 스타일링 원데이 세미나 · PBS COLOR LAB</title>
 <meta name="description" content="2026.9.6(일) 골격분석 스타일링 원데이 세미나. 선착순 6명 모집. Straight·Wave·Natural 3유형 골격진단부터 스타일링까지 하루 완성. PBS COLOR LAB 최해숙 대표 직강." />
 <meta property="og:title" content="골격분석 스타일링 원데이 세미나 · 2026.9.6" />
@@ -26,11 +28,11 @@
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
-  margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,sans-serif;
-  background:#FDF5F7;color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
-  padding-bottom:80px;
+  margin:0;font-family:'Pretendard Variable','Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,sans-serif;
+  background:#FDF5F7;color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;
+  padding-bottom:80px;letter-spacing:-0.2px;
 }
-.wrap{max-width:620px;margin:0 auto;padding:0 20px;}
+.wrap{max-width:780px;margin:0 auto;padding:0 18px;}
 .center{text-align:center;}
 .pink{color:var(--pink);}
 
@@ -62,8 +64,8 @@ body{
 .hero .seats b{color:#FFD700;}
 
 /* SECTION */
-section{padding:40px 0;}
-h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;margin:0 0 14px;}
+section{padding:44px 0;}
+h2.title{font-size:22px;font-weight:800;line-height:1.35;letter-spacing:-0.5px;margin:0 0 18px;}
 
 /* INFO CARDS */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 0;}
@@ -77,8 +79,8 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 /* CURRICULUM */
 .curr-list{list-style:none;padding:0;margin:18px 0 0;}
 .curr-list li{
-  display:flex;gap:12px;align-items:flex-start;
-  padding:14px 0;border-bottom:1px solid rgba(0,0,0,.06);
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 0;border-bottom:1px solid rgba(0,0,0,.06);
 }
 .curr-list li:last-child{border-bottom:none;}
 .curr-num{
@@ -86,23 +88,23 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-size:13px;font-weight:900;margin-top:2px;
 }
-.curr-txt b{display:block;font-size:15px;font-weight:800;margin-bottom:2px;}
-.curr-txt small{font-size:13px;color:var(--muted);}
+.curr-txt b{display:block;font-size:16px;font-weight:800;margin-bottom:3px;}
+.curr-txt small{font-size:13.5px;color:var(--muted);line-height:1.5;}
 
 /* TARGET */
 .target-row{
-  display:flex;gap:10px;align-items:center;
-  padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06);
+  display:flex;gap:12px;align-items:center;
+  padding:13px 16px;margin-bottom:8px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:12px;
 }
-.target-row:last-child{border-bottom:none;}
-.target-row .ic{font-size:18px;flex:0 0 28px;text-align:center;}
-.target-row span{font-size:14px;font-weight:700;}
+.target-row:last-child{margin-bottom:0;}
+.target-row .ic{font-size:20px;flex:0 0 30px;text-align:center;}
+.target-row span{font-size:15px;font-weight:700;}
 
 /* BENEFIT */
 .benefit-list{list-style:none;padding:0;margin:14px 0 0;}
 .benefit-list li{
-  padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06);
-  font-size:14px;font-weight:700;display:flex;gap:10px;align-items:center;
+  padding:13px 16px;margin-bottom:8px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:12px;
+  font-size:15px;font-weight:700;display:flex;gap:12px;align-items:center;
 }
 .benefit-list li:last-child{border-bottom:none;}
 .benefit-list .ic{font-size:18px;flex:0 0 24px;text-align:center;}
@@ -129,12 +131,12 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 /* FORM */
 .form-card{
   background:#fff;border:1px solid var(--line);border-radius:18px;
-  padding:28px 22px;margin-top:24px;
+  padding:32px 28px;margin-top:24px;
 }
-.form-card h2{font-size:21px;font-weight:900;margin:0 0 4px;}
-.form-card .lead{font-size:14px;color:var(--muted);margin:0 0 20px;}
-.field{margin-bottom:18px;}
-.field label{display:block;font-size:14px;font-weight:800;margin-bottom:6px;}
+.form-card h2{font-size:22px;font-weight:900;margin:0 0 6px;}
+.form-card .lead{font-size:14px;color:var(--muted);margin:0 0 24px;}
+.field{margin-bottom:22px;}
+.field label{display:block;font-size:15px;font-weight:800;margin-bottom:8px;}
 .field .req{color:var(--pink);font-weight:900;}
 .field input[type="text"],
 .field input[type="tel"],
@@ -215,6 +217,7 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 .type-chip .emoji{font-size:28px;margin-bottom:4px;}
 .type-chip .en{font-size:11px;color:var(--pink);font-weight:800;letter-spacing:1px;}
 .type-chip .ko{font-size:14px;font-weight:900;margin-top:2px;}
+@keyframes fadeInUp{0%{opacity:0;transform:translateX(-50%) translateY(10px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}
 </style>
 </head>
 <body>
@@ -232,8 +235,8 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 
 <!-- 골격 3유형 -->
 <section>
-  <div class="wrap center">
-    <h2 class="title">골격 3유형</h2>
+  <div class="wrap">
+    <h2 class="title center">골격 3유형</h2>
     <div class="types-row">
       <div class="type-chip">
         <div class="emoji">📐</div>
@@ -255,7 +258,7 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 </section>
 
 <!-- 세미나 정보 -->
-<section style="padding-top:0;">
+<section style="padding-top:10px;">
   <div class="wrap">
     <h2 class="title center">세미나 안내</h2>
     <div class="info-grid">
@@ -284,7 +287,7 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 </section>
 
 <!-- 커리큘럼 -->
-<section style="padding-top:0;">
+<section style="padding-top:10px;">
   <div class="wrap">
     <h2 class="title">📚 커리큘럼</h2>
     <ol class="curr-list">
@@ -299,7 +302,7 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 </section>
 
 <!-- 대상 -->
-<section style="padding-top:0;">
+<section style="padding-top:10px;">
   <div class="wrap">
     <h2 class="title">🎯 이런 분께 추천합니다</h2>
     <div class="target-row"><span class="ic">🎨</span><span>퍼스널컬러 전문가</span></div>
@@ -310,7 +313,7 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 </section>
 
 <!-- 특전 -->
-<section style="padding-top:0;">
+<section style="padding-top:10px;">
   <div class="wrap">
     <h2 class="title">🎁 수강 특전</h2>
     <ul class="benefit-list">
@@ -323,7 +326,7 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 </section>
 
 <!-- 수강료 -->
-<section style="padding-top:0;">
+<section style="padding-top:10px;">
   <div class="wrap">
     <div class="price-box">
       <div class="label">원데이 세미나 수강료</div>
@@ -335,7 +338,7 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 </section>
 
 <!-- 신청 폼 -->
-<section id="apply" style="padding-top:0;">
+<section id="apply" style="padding-top:10px;">
   <div class="wrap">
     <div class="form-card" id="formCard">
       <h2>세미나 신청</h2>
@@ -343,11 +346,11 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
       <form id="applyForm" autocomplete="on">
         <div class="field">
           <label>이름 <span class="req">*</span></label>
-          <input type="text" name="name" required placeholder="성함을 입력해 주세요" />
+          <input type="text" name="name" placeholder="성함을 입력해 주세요" />
         </div>
         <div class="field">
           <label>연락처 <span class="req">*</span></label>
-          <input type="tel" name="phone" required placeholder="010-0000-0000" />
+          <input type="tel" name="phone" placeholder="010-0000-0000" />
         </div>
         <div class="field">
           <label>이메일 <small style="color:var(--muted)">(선택)</small></label>
@@ -356,15 +359,20 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
         <div class="field">
           <label>과정 선택 <span class="req">*</span></label>
           <div class="session-group">
-            <label class="session-opt"><input type="radio" name="session" value="골격분석 원데이 세미나 · 일반 · 495,000원" required /><span class="si"><b>🟢 일반 수강 (495,000원)</b><small>교구 · 수료증 포함</small></span></label>
+            <label class="session-opt"><input type="radio" name="session" value="골격분석 원데이 세미나 · 일반 · 495,000원" /><span class="si"><b>🟢 일반 수강 (495,000원)</b><small>교구 · 수료증 포함</small></span></label>
             <label class="session-opt"><input type="radio" name="session" value="골격분석 원데이 세미나 · 재수강 · 100,000원" /><span class="si"><b>🔁 재수강 (100,000원)</b></span></label>
           </div>
         </div>
         <div class="field">
           <label>결제 방식 <span class="req">*</span></label>
           <div class="session-group" id="payMethodGroup">
-            <label class="session-opt"><input type="radio" name="pay_method" value="이체" /><span class="si"><b>🏦 계좌 이체</b></span></label>
+            <label class="session-opt"><input type="radio" name="pay_method" value="이체" id="payTransfer" /><span class="si"><b>🏦 계좌 이체</b></span></label>
             <label class="session-opt"><input type="radio" name="pay_method" value="카드" /><span class="si"><b>💳 카드 결제</b></span></label>
+          </div>
+          <!-- 계좌 이체 선택 시 계좌 안내 -->
+          <div id="acctCopyBox" style="display:none;margin-top:10px;background:#FFF7E6;border:1px solid #F0D98A;border-radius:12px;padding:14px 16px;text-align:center;font-size:14px;color:#7a5a00;line-height:1.8">
+            <b>카카오뱅크 3333-14-5173594</b> (최해숙)<br>
+            <button type="button" onclick="copyAcct(this)" style="margin-top:8px;background:var(--pink);color:#fff;border:none;font-weight:800;font-size:14px;padding:9px 20px;border-radius:100px;cursor:pointer;font-family:inherit">📋 계좌번호 복사</button>
           </div>
         </div>
         <div class="field" id="receiptField" style="display:none;">
@@ -372,6 +380,11 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
           <div class="session-group">
             <label class="session-opt"><input type="radio" name="receipt_type" value="세금계산서" /><span class="si"><b>📄 세금계산서</b></span></label>
             <label class="session-opt"><input type="radio" name="receipt_type" value="현금영수증" /><span class="si"><b>🧾 현금영수증</b></span></label>
+          </div>
+          <!-- 현금영수증 번호 입력 -->
+          <div id="cashReceiptNum" style="display:none;margin-top:10px;">
+            <label style="font-size:14px;font-weight:700;color:var(--ink)">현금영수증 번호</label>
+            <input type="text" name="receipt_number" placeholder="휴대폰 번호 또는 사업자번호 입력" style="width:100%;padding:14px 16px;border:2px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit;margin-top:6px;outline:none;transition:border .2s" onfocus="this.style.borderColor='var(--pink)'" onblur="this.style.borderColor='var(--line)'" />
           </div>
         </div>
 
@@ -438,12 +451,41 @@ h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;m
 var SUPABASE_URL = 'https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
 var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI0NTk3MjYsImV4cCI6MjA2ODAzNTcyNn0.sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0';
 
-// 결제 방식 → 영수증 필드 토글
+// 결제 방식 → 영수증 필드 토글 + 계좌 이체 시 계좌번호 자동 복사
 document.getElementById('payMethodGroup').addEventListener('change', function(e){
   var rf = document.getElementById('receiptField');
-  if(e.target.value === '이체') rf.style.display = 'block';
-  else rf.style.display = 'none';
+  var acctBox = document.getElementById('acctCopyBox');
+  if(e.target.value === '이체'){
+    rf.style.display = 'block';
+    acctBox.style.display = 'block';
+    // 계좌번호 자동 복사
+    try{
+      navigator.clipboard.writeText('3333-14-5173594').then(function(){
+        showToast('✅ 계좌번호가 복사되었습니다!');
+      });
+    }catch(ex){}
+  } else {
+    rf.style.display = 'none';
+    acctBox.style.display = 'none';
+  }
 });
+
+// 영수증 종류 → 현금영수증 번호 입력란 토글
+document.getElementById('receiptField').addEventListener('change', function(e){
+  var crn = document.getElementById('cashReceiptNum');
+  if(e.target.value === '현금영수증') crn.style.display = 'block';
+  else crn.style.display = 'none';
+});
+
+// 토스트 알림
+function showToast(msg){
+  var old = document.getElementById('pbsToast'); if(old) old.remove();
+  var t = document.createElement('div'); t.id='pbsToast';
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:12px 24px;border-radius:100px;font-size:14px;font-weight:700;z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,.25);animation:fadeInUp .3s ease';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(function(){ t.remove(); },300); },2200);
+}
 
 // 폼 제출
 document.getElementById('applyForm').addEventListener('submit', async function(e){
@@ -533,19 +575,22 @@ document.getElementById('applyForm').addEventListener('submit', async function(e
 });
 
 function copyAcct(btn){
-  var t = '카카오뱅크 3333-14-5173594 (최해숙)';
+  var acct = '3333-14-5173594';
+  var full = '카카오뱅크 3333-14-5173594 (최해숙)';
   if(navigator.clipboard){
-    navigator.clipboard.writeText(t).then(function(){
+    navigator.clipboard.writeText(acct).then(function(){
       btn.textContent = '✅ 복사 완료!';
-      setTimeout(function(){btn.textContent='📋 계좌 복사';},2000);
+      showToast('✅ 계좌번호가 복사되었습니다!');
+      setTimeout(function(){btn.textContent='📋 계좌번호 복사';},2000);
     });
   } else {
     var ta = document.createElement('textarea');
-    ta.value = t; document.body.appendChild(ta);
+    ta.value = acct; document.body.appendChild(ta);
     ta.select(); document.execCommand('copy');
     document.body.removeChild(ta);
     btn.textContent = '✅ 복사 완료!';
-    setTimeout(function(){btn.textContent='📋 계좌 복사';},2000);
+    showToast('✅ 계좌번호가 복사되었습니다!');
+    setTimeout(function(){btn.textContent='📋 계좌번호 복사';},2000);
   }
 }
 </script>
