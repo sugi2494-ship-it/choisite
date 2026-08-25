@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>트레이닝 회차 리포트 | PBS 컬러랩 인증강사</title>
 <meta name="robots" content="noindex, nofollow" />
-<meta name="description" content="PBS 컬러랩 인증강사 트레이닝 회차 리포트 — 출석 확인, 교구 인수, 회차 후기를 제출합니다." />
+<meta name="description" content="PBS 컬러랩 인증강사 트레이닝 — 출석·후기·서명, 교구 인수 확인, 출강 확인." />
 <link rel="icon" href="/assets/common/pbs-logo.png" />
 <style>
   :root{
@@ -15,14 +15,11 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
-    background:var(--bg); color:var(--ink); line-height:1.6; -webkit-text-size-adjust:100%;
-  }
-  .top{
-    position:sticky; top:0; z-index:20; background:#fff; border-bottom:1px solid var(--line);
-    padding:12px 16px; display:flex; align-items:center; gap:10px;
-  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+
+  .top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);
+    padding:12px 16px;display:flex;align-items:center;gap:10px}
   .top .logo{width:26px;height:26px;border-radius:50%;background:var(--mg);color:#fff;
     display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex:0 0 auto}
   .top b{font-size:15px;letter-spacing:-.02em}
@@ -56,13 +53,10 @@
   .row{display:flex;gap:10px}
   .row > *{flex:1;min-width:0}
 
-  /* 선택 칩 */
   .chips{display:flex;gap:8px;flex-wrap:wrap}
-  .chips label{
-    flex:1 1 0;min-width:0;text-align:center;border:1.5px solid var(--line);border-radius:11px;
+  .chips label{flex:1 1 0;min-width:0;text-align:center;border:1.5px solid var(--line);border-radius:11px;
     padding:12px 6px;cursor:pointer;font-size:14.5px;font-weight:700;color:var(--ink-2);
     white-space:nowrap;transition:border-color .15s,background .15s,color .15s}
-  .chips.two label{flex:1 1 0;padding:12px 8px}
   .chips label.on{border-color:var(--mg);background:var(--mg-soft);color:var(--mg-d)}
   .chips input{position:absolute;opacity:0;pointer-events:none}
 
@@ -71,14 +65,17 @@
     padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;font-size:14.5px}
   .kit label.on{border-color:var(--mg);background:var(--mg-soft)}
   .kit input{width:21px;height:21px;accent-color:var(--mg);margin:1px 0 0;flex:0 0 auto}
-  .coachbox{background:#fdf2f8;border:1px solid #f2c9e0;border-radius:11px;padding:14px 15px;margin-top:4px;
-    font-size:14.5px;line-height:1.65;color:var(--ink);white-space:pre-wrap;word-break:break-word}
-  .coachbox .who{display:block;font-size:11px;font-weight:800;color:var(--mg);margin-bottom:6px;letter-spacing:.02em}
-  .coachnone{background:#fafafa;border:1px dashed #ddd;border-radius:11px;padding:13px;font-size:13px;color:var(--ink-3);margin-top:4px}
   .kitempty{background:#FFF9E8;border:1px solid #F0DFA8;border-radius:11px;padding:13px;
     font-size:13px;color:#6b5720}
-  #kitbody{display:none;margin-top:14px}
-  #kitbody.show{display:block}
+
+  .coachbox{background:#fdf2f8;border:1px solid #f2c9e0;border-radius:11px;padding:14px 15px;margin-top:4px;
+    font-size:14.5px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+  .coachbox .who{display:block;font-size:11px;font-weight:800;color:var(--mg);margin-bottom:6px}
+  .coachnone{background:#fafafa;border:1px dashed #ddd;border-radius:11px;padding:13px;
+    font-size:13px;color:var(--ink-3);margin-top:4px}
+  .info{background:#f4f7fb;border:1px solid #dbe4ef;border-radius:11px;padding:12px 14px;
+    font-size:14px;color:#33414f;margin-bottom:12px}
+  .info b{color:#1c2b3a}
 
   .sigbox{border:1.5px dashed var(--line);border-radius:12px;background:#fff;overflow:hidden}
   .sigbox.filled{border-style:solid;border-color:var(--mg)}
@@ -89,6 +86,8 @@
   .mini{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;
     font:inherit;font-size:12.5px;font-weight:700;color:var(--ink-2);cursor:pointer}
   .mini:active{background:#f2f2f4}
+  .stamp{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+  .stamp b{color:var(--mg-d)}
 
   .agree{display:flex;align-items:flex-start;gap:11px;background:var(--mg-soft);
     border:1.5px solid #F6C9DF;border-radius:11px;padding:13px;margin-top:12px;cursor:pointer}
@@ -129,7 +128,7 @@
   <div class="hero">
     <div class="k">TRAINING REPORT</div>
     <h1>오늘 일정 마치고,<br>3분만 남겨 주세요.</h1>
-    <p>출석과 후기를 남기면 트레이닝 기록에 반영됩니다. 교구를 받았거나 출강을 다녀오신 날은 확인 서명도 함께 해주세요.</p>
+    <p>출석과 후기를 남기면 트레이닝 기록에 반영됩니다.</p>
   </div>
 
   <!-- 1. 본인 확인 -->
@@ -146,63 +145,40 @@
     </div>
     <div class="fld">
       <label class="fl">무엇을 제출하시나요?<span class="req">*</span></label>
-      <div class="chips two" id="kind">
+      <div class="chips" id="kind">
         <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
         <label><input type="radio" name="kind" value="출강확인" />출강 확인</label>
+        <label><input type="radio" name="kind" value="교구인수" />교구 인수</label>
       </div>
     </div>
+    <button type="button" class="mini" id="loadmine" style="width:100%;padding:12px;font-size:14px">
+      내 일정 불러오기
+    </button>
+    <p class="msg" id="loadmsg" style="text-align:left"></p>
   </div>
 
-  <!-- 2-D. 출강 확인 -->
-  <div class="card" id="card-dispatch" style="display:none">
-    <h2><span class="num">2</span>출강 확인</h2>
-    <p class="hint">대표님이 등록한 내 출강 내역을 불러와 확인 서명합니다.</p>
-    <button type="button" class="mini" id="loadtasks" style="width:100%;padding:12px;font-size:14px">내 출강 내역 불러오기</button>
-    <p class="msg" id="taskmsg" style="text-align:left"></p>
-    <div id="tasks" class="kit" style="margin-top:4px"></div>
-    <label class="agree" id="feewrap" style="display:none">
-      <input type="checkbox" id="feeok" />
-      <span>
-        <b>위 강사비를 수령했습니다.</b>
-        <small>아직 못 받으셨으면 체크하지 말고 그대로 제출하세요. 대표님이 확인합니다.</small>
-      </span>
-    </label>
-  </div>
-
-  <!-- 2-C. 대표님 평가 -->
-  <div class="card" id="card-coach">
-    <h2><span class="num">2</span>대표님 평가<span class="opt">읽고 확인</span></h2>
-    <p class="hint">이번 회차에 대해 대표님이 남긴 평가입니다.</p>
-    <button type="button" class="mini" id="loadcoach" style="width:100%;padding:12px;font-size:14px">대표님 평가 불러오기</button>
-    <p class="msg" id="coachmsg" style="text-align:left"></p>
-    <div id="coachbox"></div>
-    <label class="agree" id="notewrap" style="display:none">
-      <input type="checkbox" id="noteok" />
-      <span>
-        <b>위 평가를 읽고 확인했습니다.</b>
-        <small>확인 여부가 대표님 화면에 함께 표시됩니다.</small>
-      </span>
-    </label>
-  </div>
-
-  <!-- 3. 출석 체크 -->
+  <!-- 2. 출석 체크 (교육 회차) -->
   <div class="card" id="card-attend">
-    <h2><span class="num">3</span>출석 체크</h2>
-    <p class="hint">오늘 참석한 회차를 선택해 주세요.</p>
+    <h2><span class="num">2</span>출석 체크</h2>
+    <p class="hint">참석한 회차를 선택하면 일자·시간·주제가 자동으로 채워집니다.</p>
+    <div class="fld">
+      <label class="fl" for="round">회차<span class="req">*</span></label>
+      <select id="round"><option value="">먼저 [내 일정 불러오기]를 눌러주세요</option></select>
+    </div>
+    <div id="roundinfo"></div>
     <div class="row">
       <div class="fld">
-        <label class="fl" for="round">회차<span class="req">*</span></label>
-        <select id="round">
-          <option value="">선택하세요</option>
-          <option>1회차</option><option>2회차</option><option>3회차</option><option>4회차</option>
-          <option>5회차</option><option>6회차</option><option>7회차</option><option>8회차</option>
-          <option>보충 회차</option>
-        </select>
-      </div>
-      <div class="fld">
-        <label class="fl" for="sdate">교육 날짜<span class="req">*</span></label>
+        <label class="fl" for="sdate">일자<span class="req">*</span></label>
         <input type="date" id="sdate" />
       </div>
+      <div class="fld">
+        <label class="fl" for="stime">시간</label>
+        <input type="time" id="stime" />
+      </div>
+    </div>
+    <div class="fld">
+      <label class="fl" for="topic">주제</label>
+      <input type="text" id="topic" placeholder="예: 시스템·시나리오 첫 교육" />
     </div>
     <div class="fld">
       <label class="fl">참석 방식<span class="req">*</span></label>
@@ -213,38 +189,79 @@
         <label><input type="radio" name="atype" value="기타" />기타</label>
       </div>
     </div>
-    <div class="row">
-      <div class="fld">
-        <label class="fl" for="stime">시작 시간</label>
-        <input type="time" id="stime" />
-      </div>
-      <div class="fld">
-        <label class="fl" for="etime">종료 시간</label>
-        <input type="time" id="etime" />
-      </div>
+  </div>
+
+  <!-- 2-D. 출강 확인 -->
+  <div class="card" id="card-dispatch" style="display:none">
+    <h2><span class="num">2</span>출강 확인</h2>
+    <p class="hint">대표님이 등록한 내 출강 내역입니다. 해당 건을 선택하세요.</p>
+    <div id="tasks" class="kit"></div>
+    <label class="agree" id="feewrap" style="display:none">
+      <input type="checkbox" id="feeok" />
+      <span>
+        <b>위 강사비를 수령했습니다.</b>
+        <small>아직 못 받으셨으면 체크하지 말고 그대로 제출하세요.</small>
+      </span>
+    </label>
+  </div>
+
+  <!-- 2-K. 교구 인수 -->
+  <div class="card" id="card-kit" style="display:none">
+    <h2><span class="num">2</span>교구 인수 확인</h2>
+    <p class="hint">받으신 교구를 모두 체크하고, 아래에 본인 이름을 적어 주세요.</p>
+    <div class="kit" id="kit"></div>
+    <div class="fld" style="margin-top:12px">
+      <label class="fl" for="kitmemo">추가로 받은 것 · 남길 말</label>
+      <textarea id="kitmemo" placeholder="예: 진단천 1세트는 다음에 받기로 했습니다" style="min-height:64px"></textarea>
+    </div>
+    <div class="fld">
+      <label class="fl" for="typed">본인 이름 (전자서명)<span class="req">*</span></label>
+      <input type="text" id="typed" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" />
+    </div>
+    <p class="stamp">작성 시각 <b id="nowtime">—</b> 이 함께 기록됩니다.</p>
+    <label class="agree" id="kitagreewrap">
+      <input type="checkbox" id="kitagree" />
+      <span>
+        <b>위 교구를 인수했음을 확인합니다.</b>
+        <small>이름·확인일시는 교구 인수 확인 목적으로만 사용합니다.</small>
+      </span>
+    </label>
+  </div>
+
+  <!-- 3. 대표님 평가 -->
+  <div class="card" id="card-coach">
+    <h2><span class="num">3</span>대표님 평가<span class="opt">읽고 확인</span></h2>
+    <p class="hint">이번 회차에 대해 대표님이 남긴 평가입니다.</p>
+    <div id="coachbox"><div class="coachnone">[내 일정 불러오기]를 누르면 표시됩니다.</div></div>
+    <label class="agree" id="notewrap" style="display:none">
+      <input type="checkbox" id="noteok" />
+      <span>
+        <b>위 평가를 읽고 확인했습니다.</b>
+        <small>확인 여부가 대표님 화면에 함께 표시됩니다.</small>
+      </span>
+    </label>
+  </div>
+
+  <!-- 4. 후기 -->
+  <div class="card" id="card-fb">
+    <h2><span class="num">4</span><span id="fbtitle">후기 작성</span></h2>
+    <p class="hint">짧게 한두 줄이어도 괜찮습니다.</p>
+    <div class="fld">
+      <label class="fl" for="q1"><span id="lq1">도움이 된 것 · 알게 된 것 한 가지</span></label>
+      <textarea id="q1" placeholder="예: 시나리오 순서를 잡아준 것이 가장 도움됐습니다"></textarea>
+    </div>
+    <div class="fld">
+      <label class="fl" for="q2"><span id="lq2">연습이 더 필요하다고 느낀 부분</span></label>
+      <textarea id="q2" placeholder="예: 진단천 넘기는 속도가 아직 느립니다"></textarea>
+    </div>
+    <div class="fld">
+      <label class="fl" for="q4">대표님께 하고 싶은 말 (선택)</label>
+      <textarea id="q4" placeholder="자유롭게 남겨 주세요" style="min-height:64px"></textarea>
     </div>
   </div>
 
-  <!-- 3. 교구 인수 (선택) -->
-  <div class="card" id="card-kit">
-    <h2><span class="num">4</span>교구 인수 확인<span class="opt">받은 날만</span></h2>
-    <p class="hint">오늘 교구를 받으셨나요?</p>
-    <div class="chips two" id="kitq">
-      <label class="on"><input type="radio" name="kitq" value="no" checked />아니요</label>
-      <label><input type="radio" name="kitq" value="yes" />네, 받았습니다</label>
-    </div>
-    <div id="kitbody">
-      <p class="hint" style="margin:0 0 10px">받으신 교구를 모두 체크해 주세요.</p>
-      <div class="kit" id="kit"></div>
-      <div class="fld" style="margin-top:12px">
-        <label class="fl" for="kitmemo">추가로 받은 것 · 남길 말</label>
-        <textarea id="kitmemo" placeholder="예: 진단천 1세트는 다음에 받기로 했습니다" style="min-height:64px"></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. 서명 -->
-  <div class="card">
+  <!-- 5. 서명 -->
+  <div class="card" id="card-sign">
     <h2><span class="num">5</span>서명</h2>
     <p class="hint">아래 칸에 손가락(또는 마우스)으로 이름을 적어 주세요.</p>
     <div class="sigbox" id="sigbox">
@@ -258,31 +275,9 @@
       <input type="checkbox" id="agree" />
       <span>
         <b id="agreetext">위와 같이 교육에 참석했음을 확인합니다.</b>
-        <small>서명 정보(이름·서명·확인일)는 출석 및 교구 인수 확인 목적으로만 사용합니다.</small>
+        <small>서명 정보(이름·서명·확인일)는 트레이닝 기록 목적으로만 사용합니다.</small>
       </span>
     </label>
-  </div>
-
-  <!-- 5. 후기 -->
-  <div class="card">
-    <h2><span class="num">6</span><span id="fbtitle">회차 후기</span></h2>
-    <p class="hint">짧게 한두 줄이어도 괜찮습니다. 다음 회차 준비에 반영됩니다.</p>
-    <div class="fld">
-      <label class="fl" for="q1"><span id="lq1">오늘 가장 도움이 된 것 한 가지</span></label>
-      <textarea id="q1" placeholder="예: 시나리오 순서를 잡아준 것이 가장 도움됐습니다"></textarea>
-    </div>
-    <div class="fld">
-      <label class="fl" for="q2"><span id="lq2">아직 어렵거나 더 연습이 필요한 부분</span></label>
-      <textarea id="q2" placeholder="예: 진단천 넘기는 속도가 아직 느립니다"></textarea>
-    </div>
-    <div class="fld">
-      <label class="fl" for="q3"><span id="lq3">다음 회차까지 스스로 준비할 것</span></label>
-      <textarea id="q3" placeholder="예: 시나리오 대본 소리내어 3번 읽기"></textarea>
-    </div>
-    <div class="fld">
-      <label class="fl" for="q4">대표님께 하고 싶은 말 (선택)</label>
-      <textarea id="q4" placeholder="자유롭게 남겨 주세요" style="min-height:64px"></textarea>
-    </div>
   </div>
 
   <p class="foot">PBS COLOR LAB · 인증강사 트레이닝<br />문의 1600-7218</p>
@@ -298,7 +293,7 @@
 <div class="wrap done" id="done">
   <div class="ic">✓</div>
   <h2>제출이 완료되었습니다</h2>
-  <p>출석과 후기가 기록되었습니다.<br />오늘도 수고 많으셨습니다.</p>
+  <p>기록에 반영되었습니다.<br />오늘도 수고 많으셨습니다.</p>
   <div class="box" id="donebox"></div>
   <p class="foot">PBS COLOR LAB · 문의 1600-7218</p>
 </div>
@@ -308,51 +303,52 @@
   var EP = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/trainee-report";
   var AK = "sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
   var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); };
+  var z = function(n){ return (n<10?"0":"")+n; };
 
-  /* 오늘 날짜 기본값 */
+  var TASKS = [], CONSULTS = [], KIT = [], pickedKey = "", loaded = false;
+
+  /* 오늘 날짜·시각 */
   (function(){
-    var d = new Date(), z = function(n){ return (n<10?"0":"")+n; };
+    var d = new Date();
     $("sdate").value = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
+    $("nowtime").textContent = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
   })();
+  setInterval(function(){
+    var d = new Date();
+    $("nowtime").textContent = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
+  }, 30000);
 
-  /* 대표님이 보낸 링크로 들어온 경우 — 이름·회차·날짜 자동 채움 */
+  /* 링크 파라미터 */
   var PRE = (function(){
-    var p = {}, q = (location.search || "").replace(/^\?/, "");
+    var p = {}, q = (location.search||"").replace(/^\?/,"");
     q.split("&").forEach(function(kv){
       if(!kv) return;
-      var a = kv.split("="), k = decodeURIComponent(a[0] || "");
-      p[k] = decodeURIComponent((a[1] || "").replace(/\+/g, " "));
+      var a = kv.split("="), k = decodeURIComponent(a[0]||"");
+      p[k] = decodeURIComponent((a[1]||"").replace(/\+/g," "));
     });
     return p;
   })();
   (function(){
     if(PRE.n) $("name").value = PRE.n;
     if(PRE.d) $("sdate").value = PRE.d;
-    if(PRE.r){
-      var sel = $("round");
-      var found = false;
-      for(var i = 0; i < sel.options.length; i++){
-        if(sel.options[i].value === PRE.r || sel.options[i].text === PRE.r){ sel.selectedIndex = i; found = true; break; }
-      }
-      if(!found){ var o = document.createElement("option"); o.text = PRE.r; sel.add(o); sel.value = PRE.r; }
-    }
     if(PRE.n || PRE.r){
       var h = document.querySelector(".hero");
       var who = PRE.n ? (PRE.n + " 선생님") : "선생님";
       var what = [PRE.r, PRE.d].filter(Boolean).join(" · ");
-      h.querySelector("h1").innerHTML = who + ",<br>" + (what ? what : "오늘 회차") + " 후기를<br>남겨 주세요.";
-      h.querySelector("p").textContent = "연락처 뒤 4자리만 넣고 서명하시면 됩니다. 회차와 날짜는 미리 채워져 있습니다.";
+      h.querySelector("h1").innerHTML = who + ",<br>" + (what || "오늘 회차") + " 후기를<br>남겨 주세요.";
+      h.querySelector("p").textContent = "연락처 뒤 4자리를 넣고 [내 일정 불러오기]를 눌러주세요.";
     }
   })();
 
-  /* 칩(라디오) 선택 표시 */
-  function chipGroup(wrapId, onChange){
-    var w = $(wrapId);
+  /* 칩 */
+  function chipGroup(id, cb){
+    var w = $(id);
     w.addEventListener("change", function(){
       Array.prototype.forEach.call(w.querySelectorAll("label"), function(l){
         l.classList.toggle("on", l.querySelector("input").checked);
       });
-      if(onChange) onChange();
+      if(cb) cb();
     });
   }
   function chipValue(nm){
@@ -361,148 +357,136 @@
   }
   chipGroup("atype");
 
-  /* 제출 유형 전환 : 교육 회차 ↔ 출강 확인 */
-  var TASKS = [], CONSULTS = [], pickedKey = "", coachLoaded = false;
-  function isDispatch(){ return chipValue("kind") === "출강확인"; }
+  function mode(){ return chipValue("kind"); }
   function applyKind(){
-    var d = isDispatch();
-    $("card-dispatch").style.display = d ? "" : "none";
-    $("card-coach").style.display    = d ? "none" : "";
-    $("card-attend").style.display   = d ? "none" : "";
-    $("card-kit").style.display      = d ? "none" : "";
-    $("fbtitle").textContent = d ? "현장 소감" : "회차 후기";
-    $("lq1").textContent = d ? "현장에서 가장 잘 됐던 것" : "오늘 가장 도움이 된 것 한 가지";
-    $("lq2").textContent = d ? "어려웠거나 아쉬웠던 것" : "아직 어렵거나 더 연습이 필요한 부분";
-    $("lq3").textContent = d ? "다음 출강 때 보완할 것" : "다음 회차까지 스스로 준비할 것";
-    $("agreetext").textContent = d
+    var m = mode();
+    $("card-attend").style.display   = (m === "회차") ? "" : "none";
+    $("card-dispatch").style.display = (m === "출강확인") ? "" : "none";
+    $("card-kit").style.display      = (m === "교구인수") ? "" : "none";
+    $("card-coach").style.display    = (m === "교구인수") ? "none" : "";
+    $("card-fb").style.display       = (m === "교구인수") ? "none" : "";
+    $("card-sign").style.display     = (m === "교구인수") ? "none" : "";
+    $("fbtitle").textContent = (m === "출강확인") ? "현장 소감" : "후기 작성";
+    $("lq1").textContent = (m === "출강확인") ? "현장에서 잘 됐던 것 · 알게 된 것" : "도움이 된 것 · 알게 된 것 한 가지";
+    $("lq2").textContent = (m === "출강확인") ? "보완이 더 필요하다고 느낀 부분" : "연습이 더 필요하다고 느낀 부분";
+    $("agreetext").textContent = (m === "출강확인")
       ? "위 출강 내용이 사실과 같음을 확인합니다."
-      : (chipValue("kitq") === "yes"
-          ? "위와 같이 교육에 참석했고, 위 교구를 인수했음을 확인합니다."
-          : "위와 같이 교육에 참석했음을 확인합니다.");
+      : "위와 같이 교육에 참석했음을 확인합니다.";
+    if(loaded) renderAll();
     check();
   }
   chipGroup("kind", applyKind);
 
-  /* 대표님 평가 불러오기 */
-  function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
-  $("loadcoach").addEventListener("click", function(){
-    var nm = $("name").value.trim(), l4 = $("last4").value, cm = $("coachmsg");
-    if(!nm || l4.length !== 4){ cm.className = "msg err"; cm.textContent = "위에 이름과 연락처 뒤 4자리를 먼저 입력해 주세요."; return; }
-    cm.className = "msg"; cm.textContent = "불러오는 중입니다...";
-    fetch(EP, {
-      method:"POST",
-      headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
-      body: JSON.stringify({ action:"my_tasks", name:nm, phone_last4:l4 })
-    })
+  /* 내 일정 불러오기 */
+  $("loadmine").addEventListener("click", function(){
+    var nm = $("name").value.trim(), l4 = $("last4").value, lm = $("loadmsg");
+    if(!nm || l4.length !== 4){ lm.className = "msg err"; lm.textContent = "이름과 연락처 뒤 4자리를 먼저 입력해 주세요."; return; }
+    lm.className = "msg"; lm.textContent = "불러오는 중입니다...";
+    fetch(EP, { method:"POST", headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
+      body: JSON.stringify({ action:"my_tasks", name:nm, phone_last4:l4 }) })
     .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
     .then(function(res){
       if(!res.ok || (res.j && res.j.error)){
-        cm.className = "msg err"; cm.textContent = (res.j && res.j.error) || "불러오지 못했습니다.";
-        $("coachbox").innerHTML = ""; $("notewrap").style.display = "none"; check(); return;
+        lm.className = "msg err"; lm.textContent = (res.j && res.j.error) || "불러오지 못했습니다."; return;
       }
       CONSULTS = (res.j && res.j.consults) || [];
       TASKS = (res.j && res.j.tasks) || [];
-      cm.textContent = "";
-      renderCoach();
+      loaded = true;
+      lm.className = "msg"; lm.textContent = "확인되었습니다.";
+      renderAll(); check();
     })
-    .catch(function(){ cm.className = "msg err"; cm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
+    .catch(function(){ lm.className = "msg err"; lm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
   });
 
+  function renderAll(){ renderRounds(); renderTasks(); }
+
+  /* 회차 선택 */
+  function renderRounds(){
+    var sel = $("round");
+    if(!CONSULTS.length){ sel.innerHTML = '<option value="">등록된 회차가 없습니다</option>'; return; }
+    sel.innerHTML = '<option value="">선택하세요</option>' + CONSULTS.map(function(c){
+      var lab = c.round + (c.date ? " · " + c.date : "") + (c.topic ? " · " + c.topic : "") + (c.signed ? " (제출완료)" : "");
+      return '<option value="'+esc(c.round)+'">'+esc(lab)+'</option>';
+    }).join("");
+    if(PRE.r){
+      for(var i=0;i<sel.options.length;i++){ if(sel.options[i].value === PRE.r){ sel.selectedIndex = i; break; } }
+    }
+    fillRound();
+  }
   function currentConsult(){
     var r = $("round").value;
-    for(var i = 0; i < CONSULTS.length; i++){ if(CONSULTS[i].round === r) return CONSULTS[i]; }
+    for(var i=0;i<CONSULTS.length;i++){ if(CONSULTS[i].round === r) return CONSULTS[i]; }
     return null;
   }
+  function fillRound(){
+    var c = currentConsult(), box = $("roundinfo");
+    if(!c){ box.innerHTML = ""; renderCoach(); check(); return; }
+    if(c.date) $("sdate").value = c.date;
+    if(c.time) $("stime").value = c.time;
+    if(c.topic) $("topic").value = c.topic;
+    if(c.method){
+      var r = document.querySelector('input[name="atype"][value="'+c.method+'"]');
+      if(r){ r.checked = true; $("atype").dispatchEvent(new Event("change")); }
+    }
+    box.innerHTML = '<div class="info"><b>'+esc(c.round)+'</b>'
+      + (c.date ? ' · '+esc(c.date) : '') + (c.time ? ' '+esc(c.time) : '')
+      + (c.topic ? '<br>'+esc(c.topic) : '')
+      + (c.signed ? '<br><span style="color:#b23b30;font-weight:700">이미 제출한 회차입니다</span>' : '')
+      + '</div>';
+    renderCoach(); check();
+  }
+  $("round").addEventListener("change", fillRound);
+
+  /* 대표 평가 */
   function renderCoach(){
     var box = $("coachbox"), c = currentConsult();
-    coachLoaded = true;
-    if(!c){
-      box.innerHTML = '<div class="coachnone">선택한 회차를 찾지 못했습니다. 위에서 회차를 골라주세요.</div>';
-      $("notewrap").style.display = "none"; check(); return;
+    if(!loaded){ box.innerHTML = '<div class="coachnone">[내 일정 불러오기]를 누르면 표시됩니다.</div>'; $("notewrap").style.display = "none"; return; }
+    if(mode() === "출강확인"){
+      var t = TASKS.filter(function(x){ return x.key === pickedKey; })[0];
+      if(t && String(t.coach||"").trim()){
+        box.innerHTML = '<div class="coachbox"><span class="who">'+esc([t.org,t.date].filter(Boolean).join(" · "))+'</span>'+esc(t.coach)+'</div>';
+        $("notewrap").style.display = ""; return;
+      }
+      box.innerHTML = '<div class="coachnone">이 출강 건에 등록된 평가가 없습니다.</div>';
+      $("notewrap").style.display = "none"; return;
     }
-    if(!String(c.coach || "").trim()){
+    if(!c){ box.innerHTML = '<div class="coachnone">위에서 회차를 선택해 주세요.</div>'; $("notewrap").style.display = "none"; return; }
+    if(!String(c.coach||"").trim()){
       box.innerHTML = '<div class="coachnone">이 회차에 등록된 평가가 없습니다. 그대로 후기만 남겨주세요.</div>';
-      $("notewrap").style.display = "none"; check(); return;
+      $("notewrap").style.display = "none"; return;
     }
-    var head = [c.round, c.date, c.topic].filter(Boolean).join(" · ");
-    box.innerHTML = '<div class="coachbox"><span class="who">' + esc(head) + '</span>' + esc(c.coach) + '</div>';
+    box.innerHTML = '<div class="coachbox"><span class="who">'+esc([c.round,c.date,c.topic].filter(Boolean).join(" · "))+'</span>'+esc(c.coach)+'</div>';
     $("notewrap").style.display = "";
-    check();
   }
-  $("round").addEventListener("change", function(){ if(coachLoaded) renderCoach(); });
   $("noteok").addEventListener("change", check);
 
-  /* 내 출강 내역 불러오기 */
-  $("loadtasks").addEventListener("click", function(){
-    var nm = $("name").value.trim(), l4 = $("last4").value;
-    var tm = $("taskmsg");
-    if(!nm || l4.length !== 4){ tm.className = "msg err"; tm.textContent = "위에 이름과 연락처 뒤 4자리를 먼저 입력해 주세요."; return; }
-    tm.className = "msg"; tm.textContent = "불러오는 중입니다...";
-    fetch(EP, {
-      method:"POST",
-      headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
-      body: JSON.stringify({ action:"my_tasks", name:nm, phone_last4:l4 })
-    })
-    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
-    .then(function(res){
-      if(!res.ok || (res.j && res.j.error)){
-        tm.className = "msg err"; tm.textContent = (res.j && res.j.error) || "불러오지 못했습니다.";
-        $("tasks").innerHTML = ""; return;
-      }
-      TASKS = (res.j && res.j.tasks) || [];
-      renderTasks(); tm.textContent = "";
-    })
-    .catch(function(){ tm.className = "msg err"; tm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
-  });
-
+  /* 출강 목록 */
   function renderTasks(){
     var box = $("tasks");
+    if(mode() !== "출강확인") return;
     var open = TASKS.filter(function(t){ return !t.signed; });
-    if(!TASKS.length){
-      box.innerHTML = '<div class="kitempty">등록된 출강 내역이 없습니다. 대표님께 문의해 주세요.</div>';
-      pickedKey = ""; $("feewrap").style.display = "none"; check(); return;
-    }
-    if(!open.length){
-      box.innerHTML = '<div class="kitempty">확인하지 않은 출강 건이 없습니다. 모두 서명이 끝났습니다.</div>';
-      pickedKey = ""; $("feewrap").style.display = "none"; check(); return;
-    }
-    box.innerHTML = open.map(function(t, i){
-      var sub = [t.date, t.position, t.fee].filter(Boolean).map(esc).join(" · ");
+    if(!TASKS.length){ box.innerHTML = '<div class="kitempty">등록된 출강 내역이 없습니다.</div>'; pickedKey=""; $("feewrap").style.display="none"; return; }
+    if(!open.length){ box.innerHTML = '<div class="kitempty">확인하지 않은 출강 건이 없습니다.</div>'; pickedKey=""; $("feewrap").style.display="none"; return; }
+    box.innerHTML = open.map(function(t,i){
+      var sub = [t.date,t.position,t.fee].filter(Boolean).map(esc).join(" · ");
       return '<label><input type="radio" name="task" class="taskchk" value="'+esc(t.key)+'" '+(open.length===1&&i===0?"checked":"")+' />'
-        + '<span><b>'+esc(t.org)+'</b><br><span style="color:#83838d;font-size:13px">'+sub+'</span></span></label>';
+        +'<span><b>'+esc(t.org)+'</b><br><span style="color:#83838d;font-size:13px">'+sub+'</span></span></label>';
     }).join("");
     Array.prototype.forEach.call(box.querySelectorAll(".taskchk"), function(c){
       c.addEventListener("change", function(){
-        Array.prototype.forEach.call(box.querySelectorAll("label"), function(l){
-          l.classList.toggle("on", l.querySelector("input").checked);
-        });
-        pickedKey = c.value; $("feewrap").style.display = ""; check();
+        Array.prototype.forEach.call(box.querySelectorAll("label"), function(l){ l.classList.toggle("on", l.querySelector("input").checked); });
+        pickedKey = c.value; $("feewrap").style.display = ""; renderCoach(); check();
       });
-      if(c.checked){ c.closest("label").classList.add("on"); pickedKey = c.value; $("feewrap").style.display = ""; }
+      if(c.checked){ c.closest("label").classList.add("on"); pickedKey = c.value; $("feewrap").style.display = ""; renderCoach(); }
     });
-    check();
   }
 
-  chipGroup("kitq", function(){
-    var yes = chipValue("kitq") === "yes";
-    $("kitbody").classList.toggle("show", yes);
-    $("agreetext").textContent = yes
-      ? "위와 같이 교육에 참석했고, 위 교구를 인수했음을 확인합니다."
-      : "위와 같이 교육에 참석했음을 확인합니다.";
-  });
-
-  /* 교구 품목 불러오기 */
-  var KIT = [];
+  /* 교구 품목 */
   function renderKit(){
     var box = $("kit");
-    if(!KIT.length){
-      box.innerHTML = '<div class="kitempty">등록된 교구 품목이 없습니다. 받으신 교구를 아래 칸에 직접 적어 주세요.</div>';
-      return;
-    }
+    if(!KIT.length){ box.innerHTML = '<div class="kitempty">등록된 교구 품목이 없습니다. 받으신 교구를 아래 칸에 직접 적어 주세요.</div>'; return; }
     box.innerHTML = KIT.map(function(it){
-      return '<label><input type="checkbox" class="kitchk" value="'+
-        String(it).replace(/"/g,'&quot;')+'" /><span>'+
-        String(it).replace(/</g,'&lt;')+'</span></label>';
+      return '<label><input type="checkbox" class="kitchk" value="'+esc(it)+'" /><span>'+esc(it)+'</span></label>';
     }).join("");
     Array.prototype.forEach.call(box.querySelectorAll(".kitchk"), function(c){
       c.addEventListener("change", function(){ c.closest("label").classList.toggle("on", c.checked); });
@@ -512,6 +496,10 @@
     .then(function(r){ return r.json(); })
     .then(function(j){ KIT = (j && j.kit_items) || []; renderKit(); })
     .catch(function(){ renderKit(); });
+
+  $("typed").addEventListener("input", check);
+  $("kitagree").addEventListener("change", check);
+  $("kitmemo").addEventListener("input", check);
 
   /* 서명 캔버스 */
   var cv = $("sig"), ctx = cv.getContext("2d"), drawn = false, drawing = false;
@@ -527,7 +515,7 @@
   function pos(e){
     var r = cv.getBoundingClientRect();
     var t = (e.touches && e.touches[0]) ? e.touches[0] : e;
-    return { x:t.clientX - r.left, y:t.clientY - r.top };
+    return { x:t.clientX-r.left, y:t.clientY-r.top };
   }
   function start(e){ e.preventDefault(); drawing = true; var p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); }
   function move(e){
@@ -550,13 +538,17 @@
 
   /* 제출 가능 여부 */
   function check(){
-    var base = $("name").value.trim().length > 0
-      && $("last4").value.replace(/[^0-9]/g,"").length === 4
-      && drawn && $("agree").checked;
-    var needNote = !isDispatch() && $("notewrap").style.display !== "none" && $("card-coach").style.display !== "none";
-    var ok = isDispatch()
-      ? (base && !!pickedKey)
-      : (base && $("round").value !== "" && $("sdate").value !== "" && (!needNote || $("noteok").checked));
+    var m = mode();
+    var base = $("name").value.trim().length > 0 && $("last4").value.replace(/[^0-9]/g,"").length === 4;
+    var ok = false;
+    if(m === "교구인수"){
+      ok = base && $("typed").value.trim().length > 0 && $("kitagree").checked;
+    } else {
+      var needNote = $("notewrap").style.display !== "none";
+      var sigOk = drawn && $("agree").checked;
+      if(m === "출강확인") ok = base && !!pickedKey && sigOk && (!needNote || $("noteok").checked);
+      else ok = base && $("round").value !== "" && $("sdate").value !== "" && sigOk && (!needNote || $("noteok").checked);
+    }
     $("go").disabled = !ok;
     return ok;
   }
@@ -567,87 +559,77 @@
   $("last4").addEventListener("input", function(){
     $("last4").value = $("last4").value.replace(/[^0-9]/g,"").slice(0,4);
   });
+  applyKind();
   check();
 
   /* 제출 */
   $("go").addEventListener("click", function(){
     if(!check()) return;
-    var m = $("msg"); m.className = "msg"; m.textContent = "제출 중입니다..."; $("go").disabled = true;
-
-    var disp = isDispatch();
-    var gotKit = !disp && chipValue("kitq") === "yes";
-    var checked = gotKit
-      ? Array.prototype.map.call(document.querySelectorAll(".kitchk:checked"), function(c){ return c.value; })
-      : [];
+    var m = mode(), msg = $("msg");
+    msg.className = "msg"; msg.textContent = "제출 중입니다..."; $("go").disabled = true;
 
     var payload = {
       action: "submit",
-      kind: disp ? "출강확인" : "회차",
+      kind: m,
       name: $("name").value.trim(),
-      phone_last4: $("last4").value,
-      signature: cv.toDataURL("image/png"),
-      feedback: disp ? {
-        "잘 된 점": $("q1").value.trim(),
-        "아쉬운 점": $("q2").value.trim(),
-        "다음에 보완할 것": $("q3").value.trim(),
-        "대표님께": $("q4").value.trim()
-      } : {
-        "도움된 점": $("q1").value.trim(),
-        "어려운 점": $("q2").value.trim(),
-        "다음까지 준비할 것": $("q3").value.trim(),
-        "대표님께": $("q4").value.trim()
-      }
+      phone_last4: $("last4").value
     };
 
-    if(disp){
-      payload.dispatch_key = pickedKey;
-      payload.fee_received = $("feeok").checked;
-      payload.note_confirmed = $("noteok").checked;
+    if(m === "교구인수"){
+      payload.typed_name = $("typed").value.trim();
+      payload.kit_items = Array.prototype.map.call(document.querySelectorAll(".kitchk:checked"), function(c){ return c.value; });
+      payload.kit_memo = $("kitmemo").value.trim();
+      payload.session_date = $("sdate").value || null;
     } else {
+      payload.signature = cv.toDataURL("image/png");
       payload.note_confirmed = $("noteok").checked;
-      payload.round = $("round").value;
-      payload.session_date = $("sdate").value;
-      payload.attended = true;
-      payload.attend_type = chipValue("atype");
-      payload.start_time = $("stime").value || "";
-      payload.end_time = $("etime").value || "";
-      payload.kit_received = gotKit;
-      payload.kit_items = checked;
-      payload.kit_confirmed = gotKit;
-      payload.kit_memo = gotKit ? $("kitmemo").value.trim() : "";
+      payload.feedback = {
+        "도움된 점·알게 된 것": $("q1").value.trim(),
+        "연습이 필요한 부분": $("q2").value.trim(),
+        "대표님께": $("q4").value.trim()
+      };
+      if(m === "출강확인"){
+        payload.dispatch_key = pickedKey;
+        payload.fee_received = $("feeok").checked;
+      } else {
+        payload.round = $("round").value;
+        payload.session_date = $("sdate").value;
+        payload.attended = true;
+        payload.attend_type = chipValue("atype");
+        payload.start_time = $("stime").value || "";
+        payload.end_time = "";
+      }
     }
 
-    fetch(EP, {
-      method:"POST",
-      headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
-      body: JSON.stringify(payload)
-    })
+    fetch(EP, { method:"POST", headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
+      body: JSON.stringify(payload) })
     .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
     .then(function(res){
       if(!res.ok || (res.j && res.j.error)){
-        m.className = "msg err";
-        m.textContent = (res.j && res.j.error) || "제출에 실패했습니다. 잠시 후 다시 시도해 주세요.";
+        msg.className = "msg err"; msg.textContent = (res.j && res.j.error) || "제출에 실패했습니다.";
         $("go").disabled = false; return;
       }
       var lines = [];
-      if(disp){
+      if(m === "교구인수"){
+        lines.push("<b>"+payload.name+"</b> · 교구 인수 확인");
+        lines.push("확인 " + $("nowtime").textContent);
+        lines.push(payload.kit_items.length ? (payload.kit_items.length + "개 품목 체크") : "품목 체크 없음");
+      } else if(m === "출강확인"){
         var t = TASKS.filter(function(x){ return x.key === pickedKey; })[0] || {};
         lines.push("<b>"+payload.name+"</b> · 출강 확인");
-        lines.push([t.org, t.date, t.position].filter(Boolean).join(" · "));
+        lines.push([t.org,t.date,t.position].filter(Boolean).join(" · "));
         if(t.fee) lines.push("강사비 " + t.fee + ($("feeok").checked ? " · 수령 확인" : " · 미수령"));
       } else {
         lines.push("<b>"+payload.name+"</b> · "+payload.round+" 출석");
-        lines.push(payload.session_date + " · " + payload.attend_type);
-        if(payload.start_time || payload.end_time) lines.push((payload.start_time||"") + " ~ " + (payload.end_time||""));
-        lines.push(gotKit ? ("교구 인수 확인 " + (checked.length ? checked.length + "개 품목" : "(품목 체크 없음)")) : "교구 인수 없음");
+        lines.push(payload.session_date + (payload.start_time ? " " + payload.start_time : "") + " · " + payload.attend_type);
+        if($("topic").value.trim()) lines.push($("topic").value.trim());
       }
       $("donebox").innerHTML = lines.filter(Boolean).join("<br />");
       $("form").style.display = "none"; $("bar").style.display = "none";
       $("done").style.display = "block"; window.scrollTo(0,0);
     })
     .catch(function(){
-      m.className = "msg err";
-      m.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요.";
+      msg.className = "msg err"; msg.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요.";
       $("go").disabled = false;
     });
   });

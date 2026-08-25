@@ -394,7 +394,7 @@ function findReview(name,round,date){
   if(typeof RPT==="undefined"||!RPT.length)return null;
   var nm=String(name||"").replace(/\s/g,"");
   var hit=RPT.filter(function(r){
-    if(r.kind==="출강확인")return false;
+    if(r.kind&&r.kind!=="회차")return false;
     if(String(r.name||"").replace(/\s/g,"")!==nm)return false;
     if(round&&r.round===round)return true;
     if(date&&r.session_date===date)return true;
@@ -493,8 +493,9 @@ function buildReports(){
   if(nb){if(nw>0){nb.textContent=nw;nb.className="nb show";}else{nb.className="nb";}}
   if(!list.length){box.innerHTML='<p style="padding:16px;color:#6b6e6b;font-size:13px">아직 제출된 리포트가 없습니다.</p>';return;}
   box.innerHTML=list.map(function(r){
-    var isD=(r.kind=="출강확인");
+    var isD=(r.kind=="출강확인"), isK=(r.kind=="교구인수");
     var when=isD?(r.dispatch_date||dstr(r.created_at).slice(0,10)):(r.session_date||dstr(r.created_at).slice(0,10));
+    if(isK)when=dstr(r.signed_at||r.created_at);
     var time=(!isD&&(r.start_time||r.end_time))?(" "+(r.start_time||"")+"~"+(r.end_time||"")):"";
     var kit="";
     if(isD){
@@ -502,6 +503,12 @@ function buildReports(){
         +esc(r.dispatch_org||"")+(r.dispatch_position?" · "+esc(r.dispatch_position):"")
         +(r.dispatch_fee?'<br>강사비 '+esc(r.dispatch_fee)+' — <b style="color:'+(r.fee_received?"#1b7a4a":"#b23b30")+'">'+(r.fee_received?"수령 확인":"미수령")+'</b>':'')
         +'</div>';
+    }else if(isK){
+      var kitems=(r.kit_items&&r.kit_items.length)?r.kit_items.map(esc).join(" · "):"(품목 체크 없음)";
+      kit='<div class="rpc-kit"><b>교구 인수 확인</b><br>'+kitems
+        +(r.kit_memo?'<br><span style="color:#6b6e6b">메모: '+esc(r.kit_memo)+'</span>':'')
+        +'<br><span style="color:#1b7a4a;font-weight:800">전자서명 '+esc(r.typed_name||"")+'</span>'
+        +' <span style="color:#6b6e6b">· '+esc(dstr(r.signed_at||r.created_at))+'</span></div>';
     }else if(r.kit_received){
       var items=(r.kit_items&&r.kit_items.length)?r.kit_items.map(esc).join(" · "):"(품목 체크 없음)";
       kit='<div class="rpc-kit"><b>교구 인수 확인</b><br>'+items+(r.kit_memo?'<br><span style="color:#6b6e6b">메모: '+esc(r.kit_memo)+'</span>':'')+'</div>';
@@ -510,9 +517,12 @@ function buildReports(){
       +'<div class="rpc-top">'
       +'<span class="rpc-name">'+esc(r.name)+'</span>'
       +(r.cohort?'<span class="rpc-tag">'+esc(r.cohort)+'</span>':'')
-      +(isD
+      +(isK
+        ?'<span class="rpc-tag mg">교구 인수</span>'
+        :isD
         ?'<span class="rpc-tag mg">출강 확인</span>'+(r.fee_received?'<span class="rpc-tag">강사비 수령</span>':'<span class="rpc-tag" style="border-color:#e6b8b3;background:#fdf1ef;color:#b23b30">강사비 미수령</span>')
         :'<span class="rpc-tag mg">'+esc(r.round||"")+'</span><span class="rpc-tag">'+esc(r.attend_type||"대면")+' 출석</span>'+(r.kit_received?'<span class="rpc-tag mg">교구 인수</span>':''))
+      +(r.note_confirmed?'<span class="rpc-tag">대표 평가 확인함</span>':'')
       +(r.status=="신규"?'<span class="rpc-tag new">NEW</span>':'')
       +'<span class="rpc-when">'+esc(when+time)+'</span>'
       +'</div>'
@@ -520,7 +530,7 @@ function buildReports(){
       +fbHtml(r.feedback)
       +(r.admin_memo?'<div class="rpc-meta"><b>대표 메모</b> '+esc(r.admin_memo)+'</div>':'')
       +'<div class="rpc-acts">'
-      +'<button class="mini" onclick="openSig(\''+r.id+'\')">서명 보기</button>'
+      +(isK?'':'<button class="mini" onclick="openSig(\''+r.id+'\')">서명 보기</button>')
       +'<button class="mini" onclick="rpMemo(\''+r.id+'\')">메모</button>'
       +(r.status=="신규"?'<button class="mini" onclick="rpRead(\''+r.id+'\')">확인함으로</button>':'')
       +'<button class="mini" style="color:#b23b30;border-color:#e6b8b3" onclick="rpDel(\''+r.id+'\')">삭제</button>'
