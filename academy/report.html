@@ -2,335 +2,435 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>인증강사 트레이닝 회차 리포트 | PBS 컬러랩</title>
-<meta name="robots" content="noindex,nofollow" />
-<meta name="description" content="PBS COLOR LAB 인증강사 트레이닝 회차 리포트 — 교구 인수확인과 회차 소감을 제출합니다." />
-<meta property="og:title" content="인증강사 트레이닝 회차 리포트 | PBS 컬러랩" />
-<meta property="og:description" content="교구 인수확인과 회차 소감을 폰에서 바로 제출하세요." />
-<meta property="og:image" content="https://www.pbscolor.com/assets/common/pbs-logo.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>트레이닝 회차 리포트 | PBS 컬러랩 인증강사</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="description" content="PBS 컬러랩 인증강사 트레이닝 회차 리포트 — 출석 확인, 교구 인수, 회차 후기를 제출합니다." />
+<link rel="icon" href="/assets/common/pbs-logo.png" />
 <style>
-:root{
-  --mg:#E5007F; --mg-d:#C2185B; --mg-s:#FFF0F7;
-  --ink:#1b1b1f; --ink2:#4a4a52; --ink3:#8a8a92;
-  --line:#e6e6ea; --bg:#f7f7f8; --card:#fff;
-  --ok:#137a4b; --warn:#b23b30;
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0}
-body{
-  background:var(--bg); color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
-  font-size:16px; line-height:1.6; padding-bottom:96px;
-}
-.top{background:#fff;border-bottom:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:20}
-.dot{width:26px;height:26px;border-radius:50%;background:var(--mg);flex:0 0 auto}
-.top b{font-size:15px;letter-spacing:-.01em}
-.top small{display:block;color:var(--ink3);font-size:11.5px;font-weight:600}
-.wrap{max-width:620px;margin:0 auto;padding:18px 16px}
-.hero{padding:6px 2px 18px}
-.hero h1{margin:0 0 8px;font-size:24px;line-height:1.3;letter-spacing:-.02em}
-.hero p{margin:0;color:var(--ink2);font-size:14.5px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 16px;margin-bottom:14px}
-.card h2{margin:0 0 4px;font-size:17px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
-.card h2 .num{background:var(--mg);color:#fff;font-size:12px;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 auto}
-.card .hint{margin:0 0 14px;color:var(--ink3);font-size:13px}
-label.f{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
-label.f:first-of-type{margin-top:0}
-label.f .req{color:var(--mg);margin-left:3px}
-input[type=text],input[type=tel],input[type=date],textarea,select{
-  width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;
-  font-size:16px;font-family:inherit;color:var(--ink);background:#fff;
-}
-textarea{min-height:96px;resize:vertical;line-height:1.6}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--mg)}
-.row{display:flex;gap:10px}
-.row>*{flex:1;min-width:0}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
-.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 15px;font-size:14px;font-weight:700;color:var(--ink2);cursor:pointer}
-.chip.on{border-color:var(--mg);background:var(--mg-s);color:var(--mg-d)}
-.tog{display:flex;align-items:center;gap:12px;background:var(--mg-s);border:1.5px solid #FBD3E6;border-radius:14px;padding:14px;cursor:pointer}
-.tog input{width:22px;height:22px;accent-color:var(--mg);margin:0;flex:0 0 auto}
-.tog b{font-size:15px}
-.tog small{display:block;color:var(--ink2);font-size:12.5px;font-weight:600}
-.kit{display:grid;gap:8px;margin-top:4px}
-.kititem{display:flex;align-items:center;gap:11px;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;cursor:pointer;background:#fff}
-.kititem input{width:21px;height:21px;accent-color:var(--mg);margin:0;flex:0 0 auto}
-.kititem.on{border-color:var(--mg);background:var(--mg-s)}
-.kititem span{font-size:14.5px;font-weight:600}
-.sigbox{border:2px dashed #d8d8de;border-radius:14px;background:#fff;position:relative;overflow:hidden;touch-action:none}
-.sigbox canvas{display:block;width:100%;height:190px}
-.sigph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c3c3ca;font-size:14px;font-weight:700;pointer-events:none}
-.sigbox.dirty .sigph{display:none}
-.sigbar{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-.sigbar small{color:var(--ink3);font-size:12.5px}
-.mini{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--ink2);cursor:pointer}
-.agree{display:flex;gap:11px;align-items:flex-start;margin-top:14px;border-top:1px solid var(--line);padding-top:14px;cursor:pointer}
-.agree input{width:22px;height:22px;accent-color:var(--mg);margin:2px 0 0;flex:0 0 auto}
-.agree span{font-size:14px;font-weight:600;line-height:1.55}
-.note{background:#fafafb;border:1px solid var(--line);border-radius:12px;padding:12px 13px;color:var(--ink2);font-size:12.5px;margin-top:12px}
-.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));z-index:30;backdrop-filter:saturate(180%) blur(8px)}
-.bar .in{max-width:620px;margin:0 auto}
-.btn{width:100%;border:0;border-radius:14px;background:var(--mg);color:#fff;font-size:17px;font-weight:800;padding:16px;cursor:pointer;font-family:inherit}
-.btn:disabled{background:#d9d9de;color:#fff;cursor:not-allowed}
-.msg{margin:9px 2px 0;font-size:13px;font-weight:700;text-align:center;min-height:18px}
-.msg.err{color:var(--warn)}
-.msg.ok{color:var(--ok)}
-.done{display:none;text-align:center;padding:44px 20px}
-.done .ic{width:74px;height:74px;border-radius:50%;background:var(--mg-s);color:var(--mg);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 18px}
-.done h2{margin:0 0 10px;font-size:22px}
-.done p{margin:0;color:var(--ink2);font-size:14.5px}
-.foot{text-align:center;color:var(--ink3);font-size:12px;padding:6px 0 4px}
-@media(min-width:640px){.hero h1{font-size:27px}.card{padding:22px 20px}}
+  :root{
+    --mg:#E5007F; --mg-d:#C2185B; --mg-soft:#FDEEF6;
+    --ink:#141416; --ink-2:#4a4a52; --ink-3:#83838d;
+    --line:#e6e6ea; --bg:#f7f7f8; --card:#fff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.6; -webkit-text-size-adjust:100%;
+  }
+  .top{
+    position:sticky; top:0; z-index:20; background:#fff; border-bottom:1px solid var(--line);
+    padding:12px 16px; display:flex; align-items:center; gap:10px;
+  }
+  .top .logo{width:26px;height:26px;border-radius:50%;background:var(--mg);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex:0 0 auto}
+  .top b{font-size:15px;letter-spacing:-.02em}
+  .top small{display:block;color:var(--ink-3);font-size:11.5px;font-weight:600}
+
+  .wrap{max-width:620px;margin:0 auto;padding:16px 16px 120px}
+
+  .hero{background:linear-gradient(135deg,var(--mg) 0%,var(--mg-d) 100%);
+    color:#fff;border-radius:16px;padding:22px 20px;margin-bottom:16px}
+  .hero .k{font-size:11.5px;font-weight:800;letter-spacing:.08em;opacity:.85}
+  .hero h1{margin:6px 0 8px;font-size:21px;line-height:1.32;letter-spacing:-.03em;font-weight:900}
+  .hero p{margin:0;font-size:13.5px;opacity:.93}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin-bottom:14px}
+  .card > h2{margin:0 0 4px;font-size:15.5px;letter-spacing:-.02em;display:flex;align-items:center;gap:7px}
+  .card > h2 .num{width:21px;height:21px;border-radius:50%;background:var(--mg);color:#fff;
+    font-size:11.5px;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto}
+  .card > h2 .opt{margin-left:auto;font-size:11px;font-weight:700;color:var(--ink-3);
+    border:1px solid var(--line);border-radius:20px;padding:2px 9px;letter-spacing:0}
+  .card > .hint{margin:0 0 14px;color:var(--ink-3);font-size:12.5px}
+
+  label.fl{display:block;font-size:13px;font-weight:700;margin:0 0 6px;color:var(--ink-2)}
+  label.fl .req{color:var(--mg);margin-left:3px}
+  .fld{margin-bottom:14px}
+  .fld:last-child{margin-bottom:0}
+  input[type=text],input[type=tel],input[type=date],input[type=time],select,textarea{
+    width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:10px;
+    font:inherit;font-size:15px;background:#fff;color:var(--ink)}
+  textarea{min-height:86px;resize:vertical;line-height:1.55}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--mg)}
+  .row{display:flex;gap:10px}
+  .row > *{flex:1;min-width:0}
+
+  /* 선택 칩 */
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chips label{
+    flex:1 1 0;min-width:0;text-align:center;border:1.5px solid var(--line);border-radius:11px;
+    padding:12px 6px;cursor:pointer;font-size:14.5px;font-weight:700;color:var(--ink-2);
+    white-space:nowrap;transition:border-color .15s,background .15s,color .15s}
+  .chips.two label{flex:1 1 0;padding:12px 8px}
+  .chips label.on{border-color:var(--mg);background:var(--mg-soft);color:var(--mg-d)}
+  .chips input{position:absolute;opacity:0;pointer-events:none}
+
+  .kit{display:grid;gap:8px}
+  .kit label{display:flex;align-items:flex-start;gap:11px;border:1.5px solid var(--line);border-radius:11px;
+    padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;font-size:14.5px}
+  .kit label.on{border-color:var(--mg);background:var(--mg-soft)}
+  .kit input{width:21px;height:21px;accent-color:var(--mg);margin:1px 0 0;flex:0 0 auto}
+  .kitempty{background:#FFF9E8;border:1px solid #F0DFA8;border-radius:11px;padding:13px;
+    font-size:13px;color:#6b5720}
+  #kitbody{display:none;margin-top:14px}
+  #kitbody.show{display:block}
+
+  .sigbox{border:1.5px dashed var(--line);border-radius:12px;background:#fff;overflow:hidden}
+  .sigbox.filled{border-style:solid;border-color:var(--mg)}
+  canvas#sig{display:block;width:100%;height:180px;touch-action:none;cursor:crosshair}
+  .sigbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;
+    border-top:1px solid var(--line);background:#fafafb}
+  .sigbar span{font-size:12px;color:var(--ink-3)}
+  .mini{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;
+    font:inherit;font-size:12.5px;font-weight:700;color:var(--ink-2);cursor:pointer}
+  .mini:active{background:#f2f2f4}
+
+  .agree{display:flex;align-items:flex-start;gap:11px;background:var(--mg-soft);
+    border:1.5px solid #F6C9DF;border-radius:11px;padding:13px;margin-top:12px;cursor:pointer}
+  .agree input{width:21px;height:21px;accent-color:var(--mg);margin:1px 0 0;flex:0 0 auto}
+  .agree b{font-size:14px}
+  .agree small{display:block;color:var(--ink-2);font-size:12px;margin-top:2px}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);
+    border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    backdrop-filter:saturate(180%) blur(8px)}
+  .bar .in{max-width:620px;margin:0 auto}
+  .btn{width:100%;border:0;border-radius:12px;background:var(--mg);color:#fff;
+    font:inherit;font-size:16px;font-weight:900;padding:15px;cursor:pointer;letter-spacing:-.02em}
+  .btn[disabled]{background:#cfcfd6;cursor:not-allowed}
+  .btn:active:not([disabled]){background:var(--mg-d)}
+  .msg{margin:9px 0 0;text-align:center;font-size:12.5px;color:var(--ink-3);min-height:18px}
+  .msg.err{color:#B3261E;font-weight:700}
+
+  .done{display:none;text-align:center;padding:44px 20px}
+  .done .ic{width:64px;height:64px;border-radius:50%;background:var(--mg);color:#fff;font-size:32px;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+  .done h2{margin:0 0 8px;font-size:20px;letter-spacing:-.02em}
+  .done p{margin:0;color:var(--ink-2);font-size:14px}
+  .done .box{margin:22px auto 0;max-width:420px;text-align:left;background:#fff;border:1px solid var(--line);
+    border-radius:12px;padding:16px;font-size:13.5px;color:var(--ink-2);line-height:1.9}
+  .foot{text-align:center;color:var(--ink-3);font-size:11.5px;margin-top:20px;line-height:1.7}
 </style>
 </head>
 <body>
 
-<div class="top"><span class="dot"></span><span><b>PBS COLOR LAB</b><small>인증강사 트레이닝</small></span></div>
+<div class="top">
+  <div class="logo">PB</div>
+  <div><b>PBS 컬러랩 인증강사</b><small>트레이닝 회차 리포트</small></div>
+</div>
 
 <div class="wrap" id="form">
+
   <div class="hero">
-    <h1>회차 리포트</h1>
-    <p>교육받은 회차의 <b>교구 인수확인</b>과 <b>소감</b>을 남겨주세요. 2~3분이면 끝납니다.</p>
+    <div class="k">TRAINING REPORT</div>
+    <h1>오늘 회차 마치고,<br>3분만 남겨 주세요.</h1>
+    <p>출석 확인과 후기를 남기면 트레이닝 기록에 반영됩니다. 교구를 받은 날은 인수 확인도 함께 해주세요.</p>
   </div>
 
   <!-- 1. 본인 확인 -->
   <div class="card">
     <h2><span class="num">1</span>본인 확인</h2>
-    <p class="hint">트레이닝 명단에 등록된 이름으로 입력해 주세요.</p>
-    <label class="f" for="name">이름<span class="req">*</span></label>
-    <input type="text" id="name" placeholder="예) 장연희" autocomplete="name" />
-    <label class="f" for="p4">연락처 뒤 4자리<span class="req">*</span></label>
-    <input type="tel" id="p4" inputmode="numeric" maxlength="4" placeholder="예) 1234" autocomplete="off" />
-  </div>
-
-  <!-- 2. 회차 -->
-  <div class="card">
-    <h2><span class="num">2</span>회차 · 교육일</h2>
-    <p class="hint">이번에 교육받은 회차를 선택하세요.</p>
-    <label class="f">회차<span class="req">*</span></label>
-    <div class="chips" id="rounds"></div>
-    <input type="text" id="roundEtc" placeholder="직접 입력 (예: 보충 회차)" style="margin-top:9px;display:none" />
-    <label class="f" for="sdate">교육받은 날짜</label>
-    <input type="date" id="sdate" />
-  </div>
-
-  <!-- 3. 교구 인수확인 -->
-  <div class="card">
-    <h2><span class="num">3</span>교구 인수확인</h2>
-    <p class="hint">이번 회차에 교구를 받으셨다면 확인·서명해 주세요.</p>
-    <label class="tog" for="gotKit">
-      <input type="checkbox" id="gotKit" />
-      <span><b>이번 회차에 교구를 받았습니다</b><small>받지 않았으면 체크하지 않고 넘어가세요</small></span>
-    </label>
-
-    <div id="kitArea" style="display:none">
-      <label class="f">받은 교구</label>
-      <div class="kit" id="kitList"></div>
-      <textarea id="kitMemo" placeholder="받은 교구와 수량을 적어주세요 (예: 진단천 6세트, 립스틱 3개, 진단지 800장)" style="margin-top:9px"></textarea>
-
-      <label class="f">서명<span class="req">*</span></label>
-      <div class="sigbox" id="sigbox">
-        <canvas id="sig"></canvas>
-        <div class="sigph">손가락(또는 마우스)으로 이름을 써주세요</div>
-      </div>
-      <div class="sigbar"><small>화면에 직접 서명해 주세요</small><button type="button" class="mini" id="sigClear">다시 쓰기</button></div>
-
-      <label class="agree" for="kitAgree">
-        <input type="checkbox" id="kitAgree" />
-        <span>위 교구를 <b>정상적으로 인수</b>하였으며, PBS COLOR LAB 교구는 인증강사 활동 목적으로만 사용하고 <b>제3자에게 양도·복제·배포하지 않을 것</b>에 동의합니다.</span>
-      </label>
+    <p class="hint">트레이닝실에 등록된 이름과 연락처로 확인합니다.</p>
+    <div class="fld">
+      <label class="fl" for="name">이름<span class="req">*</span></label>
+      <input type="text" id="name" placeholder="예: 장연희" autocomplete="name" />
+    </div>
+    <div class="fld">
+      <label class="fl" for="last4">연락처 뒤 4자리<span class="req">*</span></label>
+      <input type="tel" id="last4" inputmode="numeric" maxlength="4" placeholder="예: 1234" autocomplete="off" />
     </div>
   </div>
 
-  <!-- 4. 소감 -->
+  <!-- 2. 출석 체크 -->
   <div class="card">
-    <h2><span class="num">4</span>회차 소감</h2>
-    <p class="hint">짧게 한두 줄씩만 적어주셔도 됩니다. 다음 회차 준비에 반영됩니다.</p>
-    <label class="f" for="q1">오늘 가장 도움이 된 것<span class="req">*</span></label>
-    <textarea id="q1" placeholder="배운 것 중 가장 크게 남은 한 가지"></textarea>
-    <label class="f" for="q2">아직 어렵거나 더 연습이 필요한 부분</label>
-    <textarea id="q2" placeholder="솔직하게 적어주시면 다음 회차에서 보완합니다"></textarea>
-    <label class="f" for="q3">다음 회차까지 스스로 준비할 것</label>
-    <textarea id="q3" placeholder="예) 시나리오 대본 소리내어 3회 연습"></textarea>
-    <label class="f" for="q4">대표님께 하고 싶은 말 · 요청</label>
-    <textarea id="q4" placeholder="자유롭게 남겨주세요 (선택)"></textarea>
-
-    <div class="note">수집 항목: 이름 · 연락처 뒤 4자리 · 서명 · 작성 내용. <b>트레이닝 기록과 교구 인수확인 목적으로만</b> 사용하며 외부에 공개하지 않습니다.</div>
+    <h2><span class="num">2</span>출석 체크</h2>
+    <p class="hint">오늘 참석한 회차를 선택해 주세요.</p>
+    <div class="row">
+      <div class="fld">
+        <label class="fl" for="round">회차<span class="req">*</span></label>
+        <select id="round">
+          <option value="">선택하세요</option>
+          <option>1회차</option><option>2회차</option><option>3회차</option><option>4회차</option>
+          <option>5회차</option><option>6회차</option><option>7회차</option><option>8회차</option>
+          <option>보충 회차</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label class="fl" for="sdate">교육 날짜<span class="req">*</span></label>
+        <input type="date" id="sdate" />
+      </div>
+    </div>
+    <div class="fld">
+      <label class="fl">참석 방식<span class="req">*</span></label>
+      <div class="chips" id="atype">
+        <label class="on"><input type="radio" name="atype" value="대면" checked />대면</label>
+        <label><input type="radio" name="atype" value="줌" />줌</label>
+        <label><input type="radio" name="atype" value="전화" />전화</label>
+        <label><input type="radio" name="atype" value="기타" />기타</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="fld">
+        <label class="fl" for="stime">시작 시간</label>
+        <input type="time" id="stime" />
+      </div>
+      <div class="fld">
+        <label class="fl" for="etime">종료 시간</label>
+        <input type="time" id="etime" />
+      </div>
+    </div>
   </div>
 
-  <div class="foot">PBS COLOR LAB · 인증강사 트레이닝</div>
-</div>
+  <!-- 3. 교구 인수 (선택) -->
+  <div class="card">
+    <h2><span class="num">3</span>교구 인수 확인<span class="opt">받은 날만</span></h2>
+    <p class="hint">오늘 교구를 받으셨나요?</p>
+    <div class="chips two" id="kitq">
+      <label class="on"><input type="radio" name="kitq" value="no" checked />아니요</label>
+      <label><input type="radio" name="kitq" value="yes" />네, 받았습니다</label>
+    </div>
+    <div id="kitbody">
+      <p class="hint" style="margin:0 0 10px">받으신 교구를 모두 체크해 주세요.</p>
+      <div class="kit" id="kit"></div>
+      <div class="fld" style="margin-top:12px">
+        <label class="fl" for="kitmemo">추가로 받은 것 · 남길 말</label>
+        <textarea id="kitmemo" placeholder="예: 진단천 1세트는 다음에 받기로 했습니다" style="min-height:64px"></textarea>
+      </div>
+    </div>
+  </div>
 
-<div class="done" id="done">
-  <div class="ic">✓</div>
-  <h2>제출이 완료되었습니다</h2>
-  <p>남겨주신 내용은 트레이닝 기록에 반영됩니다.<br />수고 많으셨습니다 🙌</p>
+  <!-- 4. 서명 -->
+  <div class="card">
+    <h2><span class="num">4</span>서명</h2>
+    <p class="hint">아래 칸에 손가락(또는 마우스)으로 이름을 적어 주세요.</p>
+    <div class="sigbox" id="sigbox">
+      <canvas id="sig"></canvas>
+      <div class="sigbar">
+        <span id="sigstate">아직 서명하지 않았습니다</span>
+        <button type="button" class="mini" id="sigclear">다시 쓰기</button>
+      </div>
+    </div>
+    <label class="agree" id="agreewrap">
+      <input type="checkbox" id="agree" />
+      <span>
+        <b id="agreetext">위와 같이 교육에 참석했음을 확인합니다.</b>
+        <small>서명 정보(이름·서명·확인일)는 출석 및 교구 인수 확인 목적으로만 사용합니다.</small>
+      </span>
+    </label>
+  </div>
+
+  <!-- 5. 후기 -->
+  <div class="card">
+    <h2><span class="num">5</span>회차 후기</h2>
+    <p class="hint">짧게 한두 줄이어도 괜찮습니다. 다음 회차 준비에 반영됩니다.</p>
+    <div class="fld">
+      <label class="fl" for="q1">오늘 가장 도움이 된 것 한 가지</label>
+      <textarea id="q1" placeholder="예: 시나리오 순서를 잡아준 것이 가장 도움됐습니다"></textarea>
+    </div>
+    <div class="fld">
+      <label class="fl" for="q2">아직 어렵거나 더 연습이 필요한 부분</label>
+      <textarea id="q2" placeholder="예: 진단천 넘기는 속도가 아직 느립니다"></textarea>
+    </div>
+    <div class="fld">
+      <label class="fl" for="q3">다음 회차까지 스스로 준비할 것</label>
+      <textarea id="q3" placeholder="예: 시나리오 대본 소리내어 3번 읽기"></textarea>
+    </div>
+    <div class="fld">
+      <label class="fl" for="q4">대표님께 하고 싶은 말 (선택)</label>
+      <textarea id="q4" placeholder="자유롭게 남겨 주세요" style="min-height:64px"></textarea>
+    </div>
+  </div>
+
+  <p class="foot">PBS COLOR LAB · 인증강사 트레이닝<br />문의 1600-7218</p>
 </div>
 
 <div class="bar" id="bar">
   <div class="in">
     <button type="button" class="btn" id="go">제출하기</button>
-    <div class="msg" id="msg"></div>
+    <p class="msg" id="msg"></p>
   </div>
+</div>
+
+<div class="wrap done" id="done">
+  <div class="ic">✓</div>
+  <h2>제출이 완료되었습니다</h2>
+  <p>출석과 후기가 기록되었습니다.<br />오늘도 수고 많으셨습니다.</p>
+  <div class="box" id="donebox"></div>
+  <p class="foot">PBS COLOR LAB · 문의 1600-7218</p>
 </div>
 
 <script>
 (function(){
-  var KEY="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
-  var API="https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/trainee-report";
-  var $=function(id){return document.getElementById(id);};
-  var round="", sigDirty=false;
+  var EP = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/trainee-report";
+  var AK = "sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+  var $ = function(id){ return document.getElementById(id); };
 
   /* 오늘 날짜 기본값 */
   (function(){
-    var d=new Date(), z=function(n){return (n<10?"0":"")+n;};
-    $("sdate").value=d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
+    var d = new Date(), z = function(n){ return (n<10?"0":"")+n; };
+    $("sdate").value = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
   })();
 
-  /* 회차 칩 */
-  var ROUNDS=["1회차","2회차","3회차","4회차","5회차","6회차","기타"];
-  ROUNDS.forEach(function(r){
-    var b=document.createElement("button");
-    b.type="button"; b.className="chip"; b.textContent=r;
-    b.onclick=function(){
-      round=r;
-      Array.prototype.forEach.call(document.querySelectorAll("#rounds .chip"),function(c){c.classList.remove("on");});
-      b.classList.add("on");
-      $("roundEtc").style.display = (r==="기타") ? "block" : "none";
-      check();
-    };
-    $("rounds").appendChild(b);
+  /* 칩(라디오) 선택 표시 */
+  function chipGroup(wrapId, onChange){
+    var w = $(wrapId);
+    w.addEventListener("change", function(){
+      Array.prototype.forEach.call(w.querySelectorAll("label"), function(l){
+        l.classList.toggle("on", l.querySelector("input").checked);
+      });
+      if(onChange) onChange();
+    });
+  }
+  function chipValue(nm){
+    var el = document.querySelector('input[name="'+nm+'"]:checked');
+    return el ? el.value : "";
+  }
+  chipGroup("atype");
+  chipGroup("kitq", function(){
+    var yes = chipValue("kitq") === "yes";
+    $("kitbody").classList.toggle("show", yes);
+    $("agreetext").textContent = yes
+      ? "위와 같이 교육에 참석했고, 위 교구를 인수했음을 확인합니다."
+      : "위와 같이 교육에 참석했음을 확인합니다.";
   });
 
-  /* 교구 품목 목록 (관리자에서 설정한 목록) */
-  fetch(API,{headers:{apikey:KEY,Authorization:"Bearer "+KEY}})
-    .then(function(r){return r.json();})
-    .then(function(j){
-      var items=(j&&j.kit_items)||[];
-      if(!items.length) return;
-      items.forEach(function(it){
-        var l=document.createElement("label");
-        l.className="kititem";
-        l.innerHTML='<input type="checkbox" value="'+String(it).replace(/"/g,'&quot;')+'"><span></span>';
-        l.querySelector("span").textContent=it;
-        l.querySelector("input").onchange=function(){ l.classList.toggle("on", this.checked); };
-        $("kitList").appendChild(l);
-      });
-    })
-    .catch(function(){});
-
-  /* 교구 받았는지 토글 */
-  $("gotKit").onchange=function(){
-    $("kitArea").style.display=this.checked?"block":"none";
-    if(this.checked) setTimeout(fitCanvas,30);
-    check();
-  };
+  /* 교구 품목 불러오기 */
+  var KIT = [];
+  function renderKit(){
+    var box = $("kit");
+    if(!KIT.length){
+      box.innerHTML = '<div class="kitempty">등록된 교구 품목이 없습니다. 받으신 교구를 아래 칸에 직접 적어 주세요.</div>';
+      return;
+    }
+    box.innerHTML = KIT.map(function(it){
+      return '<label><input type="checkbox" class="kitchk" value="'+
+        String(it).replace(/"/g,'&quot;')+'" /><span>'+
+        String(it).replace(/</g,'&lt;')+'</span></label>';
+    }).join("");
+    Array.prototype.forEach.call(box.querySelectorAll(".kitchk"), function(c){
+      c.addEventListener("change", function(){ c.closest("label").classList.toggle("on", c.checked); });
+    });
+  }
+  fetch(EP, { headers:{ apikey:AK, Authorization:"Bearer "+AK } })
+    .then(function(r){ return r.json(); })
+    .then(function(j){ KIT = (j && j.kit_items) || []; renderKit(); })
+    .catch(function(){ renderKit(); });
 
   /* 서명 캔버스 */
-  var cv=$("sig"), ctx=cv.getContext("2d"), drawing=false, last=null;
-  function fitCanvas(){
-    var r=cv.getBoundingClientRect(); if(!r.width) return;
-    var dpr=Math.min(window.devicePixelRatio||1,2);
-    var data = sigDirty ? cv.toDataURL() : null;
-    cv.width=Math.round(r.width*dpr); cv.height=Math.round(190*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0); /* 누적 방지: 매번 초기화 */
-    ctx.lineWidth=2.6; ctx.lineCap="round"; ctx.lineJoin="round"; ctx.strokeStyle="#1b1b1f";
-    if(data){ var im=new Image(); im.onload=function(){ ctx.drawImage(im,0,0,r.width,190); }; im.src=data; }
+  var cv = $("sig"), ctx = cv.getContext("2d"), drawn = false, drawing = false;
+  function fit(){
+    var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    var data = drawn ? cv.toDataURL() : null;
+    cv.width = Math.round(r.width*dpr); cv.height = Math.round(r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.lineWidth = 2.6; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#141416";
+    ctx.fillStyle = "#fff"; ctx.fillRect(0,0,r.width,r.height);
+    if(data){ var im = new Image(); im.onload = function(){ ctx.drawImage(im,0,0,r.width,r.height); }; im.src = data; }
   }
   function pos(e){
-    var r=cv.getBoundingClientRect();
-    var t=(e.touches&&e.touches[0])||e;
-    return {x:t.clientX-r.left, y:t.clientY-r.top};
+    var r = cv.getBoundingClientRect();
+    var t = (e.touches && e.touches[0]) ? e.touches[0] : e;
+    return { x:t.clientX - r.left, y:t.clientY - r.top };
   }
-  function start(e){ e.preventDefault(); drawing=true; last=pos(e); }
+  function start(e){ e.preventDefault(); drawing = true; var p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); }
   function move(e){
     if(!drawing) return; e.preventDefault();
-    var p=pos(e);
-    ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
-    last=p;
-    if(!sigDirty){ sigDirty=true; $("sigbox").classList.add("dirty"); check(); }
+    var p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke();
+    if(!drawn){ drawn = true; $("sigstate").textContent = "서명이 입력되었습니다"; $("sigbox").classList.add("filled"); check(); }
   }
-  function end(){ drawing=false; }
-  cv.addEventListener("mousedown",start); cv.addEventListener("mousemove",move);
-  window.addEventListener("mouseup",end);
-  cv.addEventListener("touchstart",start,{passive:false});
-  cv.addEventListener("touchmove",move,{passive:false});
-  cv.addEventListener("touchend",end);
-  $("sigClear").onclick=function(){
-    ctx.clearRect(0,0,cv.width,cv.height);
-    sigDirty=false; $("sigbox").classList.remove("dirty"); check();
-  };
-  window.addEventListener("resize",function(){ if($("gotKit").checked) fitCanvas(); });
+  function end(){ if(drawing){ drawing = false; ctx.closePath(); } }
+  cv.addEventListener("mousedown", start); cv.addEventListener("mousemove", move);
+  window.addEventListener("mouseup", end);
+  cv.addEventListener("touchstart", start, {passive:false});
+  cv.addEventListener("touchmove", move, {passive:false});
+  cv.addEventListener("touchend", end);
+  $("sigclear").addEventListener("click", function(){
+    drawn = false; $("sigstate").textContent = "아직 서명하지 않았습니다";
+    $("sigbox").classList.remove("filled"); fit(); check();
+  });
+  window.addEventListener("resize", fit);
+  fit();
 
-  $("kitAgree").onchange=check;
-  ["name","p4","q1"].forEach(function(id){ $(id).oninput=check; });
-
-  function valid(){
-    if(!$("name").value.trim()) return "이름을 입력해 주세요.";
-    if($("p4").value.replace(/[^0-9]/g,"").length!==4) return "연락처 뒤 4자리를 입력해 주세요.";
-    if(!round) return "회차를 선택해 주세요.";
-    if(round==="기타" && !$("roundEtc").value.trim()) return "회차를 직접 입력해 주세요.";
-    if($("gotKit").checked){
-      if(!sigDirty) return "교구 인수 서명을 해주세요.";
-      if(!$("kitAgree").checked) return "교구 인수 동의에 체크해 주세요.";
-    }
-    if(!$("q1").value.trim()) return "가장 도움이 된 것을 한 줄 남겨주세요.";
-    return "";
-  }
+  /* 제출 가능 여부 */
   function check(){
-    var e=valid();
-    $("go").disabled=!!e;
-    if($("msg").classList.contains("err")) { $("msg").textContent=""; $("msg").className="msg"; }
+    var ok = $("name").value.trim().length > 0
+      && $("last4").value.replace(/[^0-9]/g,"").length === 4
+      && $("round").value !== ""
+      && $("sdate").value !== ""
+      && drawn && $("agree").checked;
+    $("go").disabled = !ok;
+    return ok;
   }
+  ["name","last4","round","sdate"].forEach(function(id){
+    $(id).addEventListener("input", check); $(id).addEventListener("change", check);
+  });
+  $("agree").addEventListener("change", check);
+  $("last4").addEventListener("input", function(){
+    $("last4").value = $("last4").value.replace(/[^0-9]/g,"").slice(0,4);
+  });
   check();
 
-  $("go").onclick=function(){
-    var e=valid();
-    if(e){ $("msg").className="msg err"; $("msg").textContent=e; return; }
-    $("go").disabled=true; $("msg").className="msg"; $("msg").textContent="제출 중입니다...";
+  /* 제출 */
+  $("go").addEventListener("click", function(){
+    if(!check()) return;
+    var m = $("msg"); m.className = "msg"; m.textContent = "제출 중입니다..."; $("go").disabled = true;
 
-    var picked=[];
-    Array.prototype.forEach.call(document.querySelectorAll("#kitList input:checked"),function(i){picked.push(i.value);});
+    var gotKit = chipValue("kitq") === "yes";
+    var checked = gotKit
+      ? Array.prototype.map.call(document.querySelectorAll(".kitchk:checked"), function(c){ return c.value; })
+      : [];
 
-    var payload={
-      action:"submit",
-      name:$("name").value.trim(),
-      phone_last4:$("p4").value.replace(/[^0-9]/g,""),
-      round: round==="기타" ? $("roundEtc").value.trim() : round,
-      session_date:$("sdate").value||null,
-      kit_confirmed:$("gotKit").checked && $("kitAgree").checked,
-      kit_items:picked,
-      kit_memo:$("gotKit").checked ? $("kitMemo").value.trim() : "",
-      signature:($("gotKit").checked && sigDirty) ? cv.toDataURL("image/png") : "",
-      feedback:{
-        "가장 도움이 된 것":$("q1").value.trim(),
-        "더 연습이 필요한 부분":$("q2").value.trim(),
-        "다음까지 준비할 것":$("q3").value.trim(),
-        "대표님께":$("q4").value.trim()
+    var payload = {
+      action: "submit",
+      name: $("name").value.trim(),
+      phone_last4: $("last4").value,
+      round: $("round").value,
+      session_date: $("sdate").value,
+      attended: true,
+      attend_type: chipValue("atype"),
+      start_time: $("stime").value || "",
+      end_time: $("etime").value || "",
+      kit_received: gotKit,
+      kit_items: checked,
+      kit_confirmed: gotKit,
+      kit_memo: gotKit ? $("kitmemo").value.trim() : "",
+      signature: cv.toDataURL("image/png"),
+      feedback: {
+        "도움된 점": $("q1").value.trim(),
+        "어려운 점": $("q2").value.trim(),
+        "다음까지 준비할 것": $("q3").value.trim(),
+        "대표님께": $("q4").value.trim()
       }
     };
 
-    fetch(API,{method:"POST",headers:{"Content-Type":"application/json",apikey:KEY,Authorization:"Bearer "+KEY},body:JSON.stringify(payload)})
-      .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
-      .then(function(res){
-        if(!res.ok || (res.j&&res.j.error)){
-          $("msg").className="msg err";
-          $("msg").textContent=(res.j&&res.j.error)||"제출에 실패했습니다. 잠시 후 다시 시도해 주세요.";
-          $("go").disabled=false;
-          return;
-        }
-        $("form").style.display="none";
-        $("bar").style.display="none";
-        $("done").style.display="block";
-        window.scrollTo(0,0);
-      })
-      .catch(function(){
-        $("msg").className="msg err";
-        $("msg").textContent="네트워크 오류입니다. 연결을 확인하고 다시 시도해 주세요.";
-        $("go").disabled=false;
-      });
-  };
+    fetch(EP, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
+    .then(function(res){
+      if(!res.ok || (res.j && res.j.error)){
+        m.className = "msg err";
+        m.textContent = (res.j && res.j.error) || "제출에 실패했습니다. 잠시 후 다시 시도해 주세요.";
+        $("go").disabled = false; return;
+      }
+      var lines = [];
+      lines.push("<b>"+payload.name+"</b> · "+payload.round+" 출석");
+      lines.push(payload.session_date + " · " + payload.attend_type);
+      if(payload.start_time || payload.end_time) lines.push((payload.start_time||"") + " ~ " + (payload.end_time||""));
+      lines.push(gotKit ? ("교구 인수 확인 " + (checked.length ? checked.length + "개 품목" : "(품목 체크 없음)")) : "교구 인수 없음");
+      $("donebox").innerHTML = lines.join("<br />");
+      $("form").style.display = "none"; $("bar").style.display = "none";
+      $("done").style.display = "block"; window.scrollTo(0,0);
+    })
+    .catch(function(){
+      m.className = "msg err";
+      m.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요.";
+      $("go").disabled = false;
+    });
+  });
 })();
 </script>
 </body>
