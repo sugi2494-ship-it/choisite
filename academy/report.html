@@ -149,6 +149,7 @@
         <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
         <label><input type="radio" name="kind" value="출강확인" />출강 확인</label>
         <label><input type="radio" name="kind" value="교구인수" />교구 인수</label>
+        <label><input type="radio" name="kind" value="계약확인" />과정 확인</label>
       </div>
     </div>
     <button type="button" class="mini" id="loadmine" style="width:100%;padding:12px;font-size:14px">
@@ -201,6 +202,25 @@
       <span>
         <b>위 강사비를 수령했습니다.</b>
         <small>아직 못 받으셨으면 체크하지 말고 그대로 제출하세요.</small>
+      </span>
+    </label>
+  </div>
+
+  <!-- 2-C. 과정 계약 확인 -->
+  <div class="card" id="card-course" style="display:none">
+    <h2><span class="num">2</span>과정 구성 확인</h2>
+    <p class="hint">신청하신 과정의 구성입니다. 내용을 확인하고 아래에 이름을 적어 주세요.</p>
+    <div id="coursebox"><div class="kitempty">[내 일정 불러오기]를 누르면 표시됩니다.</div></div>
+    <div class="fld" style="margin-top:12px">
+      <label class="fl" for="ctyped">본인 이름 (전자서명)<span class="req">*</span></label>
+      <input type="text" id="ctyped" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" />
+    </div>
+    <p class="stamp">작성 시각 <b id="nowtime2">—</b> 이 함께 기록됩니다.</p>
+    <label class="agree" id="cagreewrap">
+      <input type="checkbox" id="cagree" />
+      <span>
+        <b>위 과정 구성을 확인했으며, 이 내용으로 트레이닝을 진행하는 데 동의합니다.</b>
+        <small>교육 순서·일정·횟수는 진행 상황에 따라 조정될 수 있음을 확인했습니다.</small>
       </span>
     </label>
   </div>
@@ -306,17 +326,19 @@
   var esc = function(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); };
   var z = function(n){ return (n<10?"0":"")+n; };
 
-  var TASKS = [], CONSULTS = [], KIT = [], pickedKey = "", loaded = false;
+  var TASKS = [], CONSULTS = [], KIT = [], COURSE = null, KITDATE = "", pickedKey = "", loaded = false;
 
   /* 오늘 날짜·시각 */
   (function(){
     var d = new Date();
     $("sdate").value = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
-    $("nowtime").textContent = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
+    var nowtxt = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
+    $("nowtime").textContent = nowtxt; $("nowtime2").textContent = nowtxt;
   })();
   setInterval(function(){
     var d = new Date();
-    $("nowtime").textContent = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
+    var nowtxt = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
+    $("nowtime").textContent = nowtxt; $("nowtime2").textContent = nowtxt;
   }, 30000);
 
   /* 링크 파라미터 */
@@ -361,20 +383,25 @@
   function mode(){ return chipValue("kind"); }
   function applyKind(){
     var m = mode();
+    var quick = (m === "교구인수" || m === "계약확인");
     $("card-attend").style.display   = (m === "회차") ? "" : "none";
     $("card-dispatch").style.display = (m === "출강확인") ? "" : "none";
     $("card-kit").style.display      = (m === "교구인수") ? "" : "none";
-    $("card-coach").style.display    = (m === "교구인수") ? "none" : "";
-    $("card-fb").style.display       = (m === "교구인수") ? "none" : "";
-    $("card-sign").style.display     = (m === "교구인수") ? "none" : "";
+    $("card-course").style.display   = (m === "계약확인") ? "" : "none";
+    $("card-coach").style.display    = quick ? "none" : "";
+    $("card-fb").style.display       = quick ? "none" : "";
+    $("card-sign").style.display     = quick ? "none" : "";
     $("fbtitle").textContent = (m === "출강확인") ? "현장 소감" : "후기 작성";
     $("htitle").textContent = (m === "출강확인") ? "출강 확인서"
-      : (m === "교구인수") ? "교구 인수 확인서" : "인증강사 교육 트레이닝 후기";
+      : (m === "교구인수") ? "교구 인수 확인서"
+      : (m === "계약확인") ? "과정 구성 확인서" : "인증강사 교육 트레이닝 후기";
     if(!PRE.n && !PRE.r){
       $("hsub").textContent = (m === "출강확인")
         ? "출강 내용과 강사비 수령 여부를 확인하고 서명하는 양식입니다."
         : (m === "교구인수")
         ? "지급받은 교구를 확인하고 인수 사실을 기록하는 양식입니다."
+        : (m === "계약확인")
+        ? "신청하신 과정의 구성을 확인하고 동의를 기록하는 양식입니다."
         : "회차별 출석과 후기를 기록하는 공식 양식입니다. 제출 내용은 트레이닝 이력에 반영됩니다.";
     }
     $("lq1").textContent = (m === "출강확인") ? "현장에서 잘 됐던 것 · 알게 된 것" : "도움이 된 것 · 알게 된 것 한 가지";
@@ -401,6 +428,9 @@
       }
       CONSULTS = (res.j && res.j.consults) || [];
       TASKS = (res.j && res.j.tasks) || [];
+      COURSE = (res.j && res.j.course) || null;
+      if(res.j && res.j.kit_items && res.j.kit_items.length) KIT = res.j.kit_items;
+      KITDATE = (res.j && res.j.kit_date) || "";
       loaded = true;
       lm.className = "msg"; lm.textContent = "확인되었습니다.";
       renderAll(); check();
@@ -408,7 +438,22 @@
     .catch(function(){ lm.className = "msg err"; lm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
   });
 
-  function renderAll(){ renderRounds(); renderTasks(); }
+  function renderAll(){ renderRounds(); renderTasks(); renderCourse(); renderKit(); }
+  function renderCourse(){
+    var box = $("coursebox");
+    if(!COURSE){ box.innerHTML = '<div class="kitempty">신청 과정이 아직 등록되지 않았습니다. 대표님께 문의해 주세요.</div>'; return; }
+    var rows = (COURSE.steps||[]).map(function(x){
+      return '<tr><td style="padding:7px 9px;border-bottom:1px solid #efedf1;font-weight:800;color:#b0257a;white-space:nowrap;font-size:13px">'+esc(x[0])+'</td>'
+        +'<td style="padding:7px 9px;border-bottom:1px solid #efedf1;font-size:14px">'+esc(x[1])+'</td></tr>';
+    }).join("");
+    box.innerHTML = '<div style="background:#fdfafc;border:1px solid #ead9e6;border-radius:12px;padding:14px">'
+      + '<div style="font-size:17px;font-weight:800">'+esc(COURSE.title)+'</div>'
+      + '<div style="margin-top:4px;font-size:14px;color:#5c5f5c">'+esc(COURSE.price)+' · '+esc(COURSE.term)+'</div>'
+      + '<div style="margin-top:6px;font-size:15px;font-weight:800;color:#b0257a">'+esc(COURSE.total)+'</div>'
+      + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;margin-top:10px">'+rows+'</table></div>'
+      + '<div style="margin-top:10px;font-size:13.5px;line-height:1.65"><b>제공</b> · '+esc(COURSE.give||"")+'</div>'
+      + '<div style="margin-top:8px;font-size:12.5px;color:#83838d;line-height:1.65">'+esc(COURSE.note||"")+'</div></div>';
+  }
 
   /* 회차 선택 */
   function renderRounds(){
@@ -553,6 +598,8 @@
     var ok = false;
     if(m === "교구인수"){
       ok = base && $("typed").value.trim().length > 0 && $("kitagree").checked;
+    } else if(m === "계약확인"){
+      ok = base && !!COURSE && $("ctyped").value.trim().length > 0 && $("cagree").checked;
     } else {
       var needNote = $("notewrap").style.display !== "none";
       var sigOk = drawn && $("agree").checked;
@@ -566,6 +613,8 @@
     $(id).addEventListener("input", check); $(id).addEventListener("change", check);
   });
   $("agree").addEventListener("change", check);
+  $("ctyped").addEventListener("input", check);
+  $("cagree").addEventListener("change", check);
   $("last4").addEventListener("input", function(){
     $("last4").value = $("last4").value.replace(/[^0-9]/g,"").slice(0,4);
   });
@@ -585,7 +634,9 @@
       phone_last4: $("last4").value
     };
 
-    if(m === "교구인수"){
+    if(m === "계약확인"){
+      payload.typed_name = $("ctyped").value.trim();
+    } else if(m === "교구인수"){
       payload.typed_name = $("typed").value.trim();
       payload.kit_items = Array.prototype.map.call(document.querySelectorAll(".kitchk:checked"), function(c){ return c.value; });
       payload.kit_memo = $("kitmemo").value.trim();
@@ -620,7 +671,11 @@
         $("go").disabled = false; return;
       }
       var lines = [];
-      if(m === "교구인수"){
+      if(m === "계약확인"){
+        lines.push("<b>"+payload.name+"</b> · 과정 구성 확인");
+        lines.push(COURSE ? (COURSE.title+" · "+COURSE.price+" · "+COURSE.total) : "");
+        lines.push("확인 " + $("nowtime2").textContent);
+      } else if(m === "교구인수"){
         lines.push("<b>"+payload.name+"</b> · 교구 인수 확인");
         lines.push("확인 " + $("nowtime").textContent);
         lines.push(payload.kit_items.length ? (payload.kit_items.length + "개 품목 체크") : "품목 체크 없음");
