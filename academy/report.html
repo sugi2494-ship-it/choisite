@@ -124,8 +124,8 @@
 
   <div class="hero">
     <div class="k">TRAINING REPORT</div>
-    <h1>오늘 회차 마치고,<br>3분만 남겨 주세요.</h1>
-    <p>출석 확인과 후기를 남기면 트레이닝 기록에 반영됩니다. 교구를 받은 날은 인수 확인도 함께 해주세요.</p>
+    <h1>오늘 일정 마치고,<br>3분만 남겨 주세요.</h1>
+    <p>출석과 후기를 남기면 트레이닝 기록에 반영됩니다. 교구를 받았거나 출강을 다녀오신 날은 확인 서명도 함께 해주세요.</p>
   </div>
 
   <!-- 1. 본인 확인 -->
@@ -140,10 +140,33 @@
       <label class="fl" for="last4">연락처 뒤 4자리<span class="req">*</span></label>
       <input type="tel" id="last4" inputmode="numeric" maxlength="4" placeholder="예: 1234" autocomplete="off" />
     </div>
+    <div class="fld">
+      <label class="fl">무엇을 제출하시나요?<span class="req">*</span></label>
+      <div class="chips two" id="kind">
+        <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
+        <label><input type="radio" name="kind" value="출강확인" />출강 확인</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2-D. 출강 확인 -->
+  <div class="card" id="card-dispatch" style="display:none">
+    <h2><span class="num">2</span>출강 확인</h2>
+    <p class="hint">대표님이 등록한 내 출강 내역을 불러와 확인 서명합니다.</p>
+    <button type="button" class="mini" id="loadtasks" style="width:100%;padding:12px;font-size:14px">내 출강 내역 불러오기</button>
+    <p class="msg" id="taskmsg" style="text-align:left"></p>
+    <div id="tasks" class="kit" style="margin-top:4px"></div>
+    <label class="agree" id="feewrap" style="display:none">
+      <input type="checkbox" id="feeok" />
+      <span>
+        <b>위 강사비를 수령했습니다.</b>
+        <small>아직 못 받으셨으면 체크하지 말고 그대로 제출하세요. 대표님이 확인합니다.</small>
+      </span>
+    </label>
   </div>
 
   <!-- 2. 출석 체크 -->
-  <div class="card">
+  <div class="card" id="card-attend">
     <h2><span class="num">2</span>출석 체크</h2>
     <p class="hint">오늘 참석한 회차를 선택해 주세요.</p>
     <div class="row">
@@ -183,7 +206,7 @@
   </div>
 
   <!-- 3. 교구 인수 (선택) -->
-  <div class="card">
+  <div class="card" id="card-kit">
     <h2><span class="num">3</span>교구 인수 확인<span class="opt">받은 날만</span></h2>
     <p class="hint">오늘 교구를 받으셨나요?</p>
     <div class="chips two" id="kitq">
@@ -222,18 +245,18 @@
 
   <!-- 5. 후기 -->
   <div class="card">
-    <h2><span class="num">5</span>회차 후기</h2>
+    <h2><span class="num">5</span><span id="fbtitle">회차 후기</span></h2>
     <p class="hint">짧게 한두 줄이어도 괜찮습니다. 다음 회차 준비에 반영됩니다.</p>
     <div class="fld">
-      <label class="fl" for="q1">오늘 가장 도움이 된 것 한 가지</label>
+      <label class="fl" for="q1"><span id="lq1">오늘 가장 도움이 된 것 한 가지</span></label>
       <textarea id="q1" placeholder="예: 시나리오 순서를 잡아준 것이 가장 도움됐습니다"></textarea>
     </div>
     <div class="fld">
-      <label class="fl" for="q2">아직 어렵거나 더 연습이 필요한 부분</label>
+      <label class="fl" for="q2"><span id="lq2">아직 어렵거나 더 연습이 필요한 부분</span></label>
       <textarea id="q2" placeholder="예: 진단천 넘기는 속도가 아직 느립니다"></textarea>
     </div>
     <div class="fld">
-      <label class="fl" for="q3">다음 회차까지 스스로 준비할 것</label>
+      <label class="fl" for="q3"><span id="lq3">다음 회차까지 스스로 준비할 것</span></label>
       <textarea id="q3" placeholder="예: 시나리오 대본 소리내어 3번 읽기"></textarea>
     </div>
     <div class="fld">
@@ -287,6 +310,80 @@
     return el ? el.value : "";
   }
   chipGroup("atype");
+
+  /* 제출 유형 전환 : 교육 회차 ↔ 출강 확인 */
+  var TASKS = [], pickedKey = "";
+  function isDispatch(){ return chipValue("kind") === "출강확인"; }
+  function applyKind(){
+    var d = isDispatch();
+    $("card-dispatch").style.display = d ? "" : "none";
+    $("card-attend").style.display   = d ? "none" : "";
+    $("card-kit").style.display      = d ? "none" : "";
+    $("fbtitle").textContent = d ? "현장 소감" : "회차 후기";
+    $("lq1").textContent = d ? "현장에서 가장 잘 됐던 것" : "오늘 가장 도움이 된 것 한 가지";
+    $("lq2").textContent = d ? "어려웠거나 아쉬웠던 것" : "아직 어렵거나 더 연습이 필요한 부분";
+    $("lq3").textContent = d ? "다음 출강 때 보완할 것" : "다음 회차까지 스스로 준비할 것";
+    $("agreetext").textContent = d
+      ? "위 출강 내용이 사실과 같음을 확인합니다."
+      : (chipValue("kitq") === "yes"
+          ? "위와 같이 교육에 참석했고, 위 교구를 인수했음을 확인합니다."
+          : "위와 같이 교육에 참석했음을 확인합니다.");
+    check();
+  }
+  chipGroup("kind", applyKind);
+
+  /* 내 출강 내역 불러오기 */
+  $("loadtasks").addEventListener("click", function(){
+    var nm = $("name").value.trim(), l4 = $("last4").value;
+    var tm = $("taskmsg");
+    if(!nm || l4.length !== 4){ tm.className = "msg err"; tm.textContent = "위에 이름과 연락처 뒤 4자리를 먼저 입력해 주세요."; return; }
+    tm.className = "msg"; tm.textContent = "불러오는 중입니다...";
+    fetch(EP, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
+      body: JSON.stringify({ action:"my_tasks", name:nm, phone_last4:l4 })
+    })
+    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
+    .then(function(res){
+      if(!res.ok || (res.j && res.j.error)){
+        tm.className = "msg err"; tm.textContent = (res.j && res.j.error) || "불러오지 못했습니다.";
+        $("tasks").innerHTML = ""; return;
+      }
+      TASKS = (res.j && res.j.tasks) || [];
+      renderTasks(); tm.textContent = "";
+    })
+    .catch(function(){ tm.className = "msg err"; tm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
+  });
+
+  function renderTasks(){
+    var box = $("tasks");
+    var open = TASKS.filter(function(t){ return !t.signed; });
+    if(!TASKS.length){
+      box.innerHTML = '<div class="kitempty">등록된 출강 내역이 없습니다. 대표님께 문의해 주세요.</div>';
+      pickedKey = ""; $("feewrap").style.display = "none"; check(); return;
+    }
+    if(!open.length){
+      box.innerHTML = '<div class="kitempty">확인하지 않은 출강 건이 없습니다. 모두 서명이 끝났습니다.</div>';
+      pickedKey = ""; $("feewrap").style.display = "none"; check(); return;
+    }
+    box.innerHTML = open.map(function(t, i){
+      var esc = function(s){ return String(s||"").replace(/</g,"&lt;").replace(/"/g,"&quot;"); };
+      var sub = [t.date, t.position, t.fee].filter(Boolean).map(esc).join(" · ");
+      return '<label><input type="radio" name="task" class="taskchk" value="'+esc(t.key)+'" '+(open.length===1&&i===0?"checked":"")+' />'
+        + '<span><b>'+esc(t.org)+'</b><br><span style="color:#83838d;font-size:13px">'+sub+'</span></span></label>';
+    }).join("");
+    Array.prototype.forEach.call(box.querySelectorAll(".taskchk"), function(c){
+      c.addEventListener("change", function(){
+        Array.prototype.forEach.call(box.querySelectorAll("label"), function(l){
+          l.classList.toggle("on", l.querySelector("input").checked);
+        });
+        pickedKey = c.value; $("feewrap").style.display = ""; check();
+      });
+      if(c.checked){ c.closest("label").classList.add("on"); pickedKey = c.value; $("feewrap").style.display = ""; }
+    });
+    check();
+  }
+
   chipGroup("kitq", function(){
     var yes = chipValue("kitq") === "yes";
     $("kitbody").classList.toggle("show", yes);
@@ -354,11 +451,12 @@
 
   /* 제출 가능 여부 */
   function check(){
-    var ok = $("name").value.trim().length > 0
+    var base = $("name").value.trim().length > 0
       && $("last4").value.replace(/[^0-9]/g,"").length === 4
-      && $("round").value !== ""
-      && $("sdate").value !== ""
       && drawn && $("agree").checked;
+    var ok = isDispatch()
+      ? (base && !!pickedKey)
+      : (base && $("round").value !== "" && $("sdate").value !== "");
     $("go").disabled = !ok;
     return ok;
   }
@@ -376,33 +474,46 @@
     if(!check()) return;
     var m = $("msg"); m.className = "msg"; m.textContent = "제출 중입니다..."; $("go").disabled = true;
 
-    var gotKit = chipValue("kitq") === "yes";
+    var disp = isDispatch();
+    var gotKit = !disp && chipValue("kitq") === "yes";
     var checked = gotKit
       ? Array.prototype.map.call(document.querySelectorAll(".kitchk:checked"), function(c){ return c.value; })
       : [];
 
     var payload = {
       action: "submit",
+      kind: disp ? "출강확인" : "회차",
       name: $("name").value.trim(),
       phone_last4: $("last4").value,
-      round: $("round").value,
-      session_date: $("sdate").value,
-      attended: true,
-      attend_type: chipValue("atype"),
-      start_time: $("stime").value || "",
-      end_time: $("etime").value || "",
-      kit_received: gotKit,
-      kit_items: checked,
-      kit_confirmed: gotKit,
-      kit_memo: gotKit ? $("kitmemo").value.trim() : "",
       signature: cv.toDataURL("image/png"),
-      feedback: {
+      feedback: disp ? {
+        "잘 된 점": $("q1").value.trim(),
+        "아쉬운 점": $("q2").value.trim(),
+        "다음에 보완할 것": $("q3").value.trim(),
+        "대표님께": $("q4").value.trim()
+      } : {
         "도움된 점": $("q1").value.trim(),
         "어려운 점": $("q2").value.trim(),
         "다음까지 준비할 것": $("q3").value.trim(),
         "대표님께": $("q4").value.trim()
       }
     };
+
+    if(disp){
+      payload.dispatch_key = pickedKey;
+      payload.fee_received = $("feeok").checked;
+    } else {
+      payload.round = $("round").value;
+      payload.session_date = $("sdate").value;
+      payload.attended = true;
+      payload.attend_type = chipValue("atype");
+      payload.start_time = $("stime").value || "";
+      payload.end_time = $("etime").value || "";
+      payload.kit_received = gotKit;
+      payload.kit_items = checked;
+      payload.kit_confirmed = gotKit;
+      payload.kit_memo = gotKit ? $("kitmemo").value.trim() : "";
+    }
 
     fetch(EP, {
       method:"POST",
@@ -417,11 +528,18 @@
         $("go").disabled = false; return;
       }
       var lines = [];
-      lines.push("<b>"+payload.name+"</b> · "+payload.round+" 출석");
-      lines.push(payload.session_date + " · " + payload.attend_type);
-      if(payload.start_time || payload.end_time) lines.push((payload.start_time||"") + " ~ " + (payload.end_time||""));
-      lines.push(gotKit ? ("교구 인수 확인 " + (checked.length ? checked.length + "개 품목" : "(품목 체크 없음)")) : "교구 인수 없음");
-      $("donebox").innerHTML = lines.join("<br />");
+      if(disp){
+        var t = TASKS.filter(function(x){ return x.key === pickedKey; })[0] || {};
+        lines.push("<b>"+payload.name+"</b> · 출강 확인");
+        lines.push([t.org, t.date, t.position].filter(Boolean).join(" · "));
+        if(t.fee) lines.push("강사비 " + t.fee + ($("feeok").checked ? " · 수령 확인" : " · 미수령"));
+      } else {
+        lines.push("<b>"+payload.name+"</b> · "+payload.round+" 출석");
+        lines.push(payload.session_date + " · " + payload.attend_type);
+        if(payload.start_time || payload.end_time) lines.push((payload.start_time||"") + " ~ " + (payload.end_time||""));
+        lines.push(gotKit ? ("교구 인수 확인 " + (checked.length ? checked.length + "개 품목" : "(품목 체크 없음)")) : "교구 인수 없음");
+      }
+      $("donebox").innerHTML = lines.filter(Boolean).join("<br />");
       $("form").style.display = "none"; $("bar").style.display = "none";
       $("done").style.display = "block"; window.scrollTo(0,0);
     })
