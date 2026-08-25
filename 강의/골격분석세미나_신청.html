@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>골격분석 스타일링 원데이 세미나 · PBS COLOR LAB</title>
+<meta name="description" content="2026.9.6(일) 골격분석 스타일링 원데이 세미나. 선착순 6명 모집. Straight·Wave·Natural 3유형 골격진단부터 스타일링까지 하루 완성. PBS COLOR LAB 최해숙 대표 직강." />
+<meta property="og:title" content="골격분석 스타일링 원데이 세미나 · 2026.9.6" />
+<meta property="og:description" content="선착순 6명 모집. 골격 3유형 진단·스타일링 하루 완성. PBS COLOR LAB 최해숙 대표 직강." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.pbscolor.com/강의/골격분석세미나_신청.html" />
+<meta property="og:site_name" content="PBS COLOR LAB" />
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:image" content="https://www.pbscolor.com/og-main.jpg?v=3" />
+<style>
+:root{
+  --pink:#E14B8A;
+  --pink-deep:#C33A72;
+  --pink-soft:#FBE9F0;
+  --ink:#2B2230;
+  --muted:#8A7E86;
+  --line:#F0D9E3;
+  --dark:#221820;
+  --gold:#C8A870;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,sans-serif;
+  background:#FDF5F7;color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
+  padding-bottom:80px;
+}
+.wrap{max-width:620px;margin:0 auto;padding:0 20px;}
+.center{text-align:center;}
+.pink{color:var(--pink);}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#1a1028 0%,#2d1f3d 40%,#3a1f4a 100%);
+  padding:54px 0 42px;text-align:center;color:#fff;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(225,75,138,.25),transparent 70%);border-radius:50%;
+}
+.hero .kicker{
+  display:inline-block;font-size:11px;font-weight:900;letter-spacing:3px;
+  color:var(--gold);background:rgba(200,168,112,.12);border:1px solid rgba(200,168,112,.35);
+  padding:7px 16px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;
+}
+.hero h1{font-size:28px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;margin:0 0 10px;position:relative;}
+.hero .lead{font-size:16px;color:rgba(255,255,255,.75);margin:0 0 6px;font-weight:600;}
+.hero .date-badge{
+  display:inline-block;background:linear-gradient(135deg,var(--pink),var(--pink-deep));
+  color:#fff;font-size:15px;font-weight:900;padding:10px 24px;border-radius:100px;margin-top:16px;
+  box-shadow:0 6px 20px rgba(225,75,138,.35);
+}
+.hero .seats{
+  margin-top:12px;font-size:14px;color:rgba(255,255,255,.6);font-weight:700;
+}
+.hero .seats b{color:#FFD700;}
+
+/* SECTION */
+section{padding:40px 0;}
+h2.title{font-size:22px;font-weight:900;line-height:1.32;letter-spacing:-0.5px;margin:0 0 14px;}
+
+/* INFO CARDS */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 0;}
+.info-card{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center;
+}
+.info-card .ic{font-size:22px;margin-bottom:6px;}
+.info-card .lab{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:2px;}
+.info-card .val{font-size:15px;font-weight:900;color:var(--ink);}
+
+/* CURRICULUM */
+.curr-list{list-style:none;padding:0;margin:18px 0 0;}
+.curr-list li{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:14px 0;border-bottom:1px solid rgba(0,0,0,.06);
+}
+.curr-list li:last-child{border-bottom:none;}
+.curr-num{
+  flex:0 0 32px;height:32px;background:var(--pink);color:#fff;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;margin-top:2px;
+}
+.curr-txt b{display:block;font-size:15px;font-weight:800;margin-bottom:2px;}
+.curr-txt small{font-size:13px;color:var(--muted);}
+
+/* TARGET */
+.target-row{
+  display:flex;gap:10px;align-items:center;
+  padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06);
+}
+.target-row:last-child{border-bottom:none;}
+.target-row .ic{font-size:18px;flex:0 0 28px;text-align:center;}
+.target-row span{font-size:14px;font-weight:700;}
+
+/* BENEFIT */
+.benefit-list{list-style:none;padding:0;margin:14px 0 0;}
+.benefit-list li{
+  padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06);
+  font-size:14px;font-weight:700;display:flex;gap:10px;align-items:center;
+}
+.benefit-list li:last-child{border-bottom:none;}
+.benefit-list .ic{font-size:18px;flex:0 0 24px;text-align:center;}
+
+/* PRICING */
+.price-box{
+  background:#fff;border:2px solid var(--pink);border-radius:18px;padding:24px;margin:18px 0;
+  text-align:center;position:relative;overflow:hidden;
+}
+.price-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--pink),var(--pink-deep));
+}
+.price-box .label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:4px;}
+.price-box .amount{font-size:32px;font-weight:900;color:var(--pink-deep);}
+.price-box .amount small{font-size:14px;font-weight:600;color:var(--muted);}
+.price-box .includes{font-size:13px;color:var(--muted);margin-top:8px;}
+.price-box .re{
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:14px;color:var(--ink);
+}
+.price-box .re b{color:var(--pink-deep);}
+
+/* FORM */
+.form-card{
+  background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:28px 22px;margin-top:24px;
+}
+.form-card h2{font-size:21px;font-weight:900;margin:0 0 4px;}
+.form-card .lead{font-size:14px;color:var(--muted);margin:0 0 20px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:14px;font-weight:800;margin-bottom:6px;}
+.field .req{color:var(--pink);font-weight:900;}
+.field input[type="text"],
+.field input[type="tel"],
+.field input[type="email"]{
+  width:100%;padding:13px 14px;border:1px solid #ddd;border-radius:12px;
+  font-size:15px;font-family:inherit;transition:.2s;
+}
+.field input:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(225,75,138,.12);}
+.session-group{display:flex;flex-direction:column;gap:8px;}
+.session-opt{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  border:1px solid #e0d0d8;border-radius:12px;padding:14px;
+  transition:.15s;background:#fff;
+}
+.session-opt:has(input:checked){border-color:var(--pink);background:var(--pink-soft);box-shadow:0 0 0 2px rgba(225,75,138,.15);}
+.session-opt input[type="radio"]{accent-color:var(--pink);width:18px;height:18px;margin:0;flex:0 0 18px;}
+.session-opt .si{display:flex;flex-direction:column;gap:2px;}
+.session-opt .si b{font-size:15px;}
+.session-opt .si small{font-size:12.5px;color:var(--muted);}
+.terms{
+  max-height:200px;overflow-y:auto;border:1px solid #e0d0d8;border-radius:12px;
+  padding:16px;font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:12px;
+}
+.terms h4{color:var(--ink);margin:12px 0 4px;font-size:14px;}
+.terms h4:first-child{margin-top:0;}
+.agree{display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-size:14px;font-weight:700;}
+.agree input{accent-color:var(--pink);width:18px;height:18px;margin-top:3px;flex:0 0 18px;}
+.submit{
+  width:100%;padding:16px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,var(--pink),var(--pink-deep));
+  color:#fff;font-size:17px;font-weight:900;cursor:pointer;
+  font-family:inherit;box-shadow:0 6px 22px rgba(225,75,138,.35);transition:.2s;
+  margin-top:8px;
+}
+.submit:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(225,75,138,.45);}
+.submit:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.msg{padding:12px 16px;border-radius:12px;font-size:14px;font-weight:700;display:none;margin-top:12px;}
+.msg.err{background:#FFF0F0;color:#D32F2F;border:1px solid #FFCDD2;}
+.hint{font-size:13px;color:var(--muted);}
+
+/* DONE */
+.done{display:none;text-align:center;padding:36px 0;}
+.done .check{
+  width:64px;height:64px;background:linear-gradient(135deg,var(--pink),var(--pink-deep));
+  border-radius:50%;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;
+}
+.done .check svg{width:32px;height:32px;stroke:#fff;}
+.done h2{font-size:22px;font-weight:900;margin:0 0 8px;}
+.done p{font-size:15px;color:var(--muted);margin:0 0 20px;}
+.acct{
+  background:var(--pink-soft);border:1px solid var(--line);border-radius:14px;
+  padding:18px;font-size:15px;line-height:1.8;font-weight:700;
+}
+
+/* STICKY BAR */
+.sticky-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:999;
+  background:#fff;border-top:2px solid var(--pink);
+  box-shadow:0 -4px 20px rgba(0,0,0,.1);
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:12px 18px;
+}
+.sticky-bar .info{flex:1;min-width:0;}
+.sticky-bar .info .p{font-size:14px;font-weight:900;color:var(--ink);}
+.sticky-bar .info .s{font-size:12px;color:var(--muted);font-weight:600;}
+.sticky-bar .cta{
+  flex:0 0 auto;background:linear-gradient(135deg,var(--pink),var(--pink-deep));
+  color:#fff;font-weight:900;font-size:14px;padding:12px 20px;border-radius:100px;
+  text-decoration:none;white-space:nowrap;
+}
+
+/* TYPES VISUAL */
+.types-row{display:flex;gap:10px;margin:18px 0;justify-content:center;flex-wrap:wrap;}
+.type-chip{
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:14px 18px;text-align:center;flex:1;min-width:90px;max-width:160px;
+}
+.type-chip .emoji{font-size:28px;margin-bottom:4px;}
+.type-chip .en{font-size:11px;color:var(--pink);font-weight:800;letter-spacing:1px;}
+.type-chip .ko{font-size:14px;font-weight:900;margin-top:2px;}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="kicker">PBS COLOR LAB · ONE-DAY SEMINAR</div>
+    <h1>골격분석 스타일링<br>원데이 세미나</h1>
+    <div class="lead">Straight · Wave · Natural — 골격 3유형 진단부터 스타일링까지</div>
+    <div class="date-badge">📅 2026. 9. 6 (일) 10:00 – 17:00</div>
+    <div class="seats">🔥 <b>선착순 6명</b> 소수정예</div>
+  </div>
+</div>
+
+<!-- 골격 3유형 -->
+<section>
+  <div class="wrap center">
+    <h2 class="title">골격 3유형</h2>
+    <div class="types-row">
+      <div class="type-chip">
+        <div class="emoji">📐</div>
+        <div class="en">STRAIGHT</div>
+        <div class="ko">스트레이트</div>
+      </div>
+      <div class="type-chip">
+        <div class="emoji">🌊</div>
+        <div class="en">WAVE</div>
+        <div class="ko">웨이브</div>
+      </div>
+      <div class="type-chip">
+        <div class="emoji">🍃</div>
+        <div class="en">NATURAL</div>
+        <div class="ko">내추럴</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 세미나 정보 -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <h2 class="title center">세미나 안내</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="ic">📅</div>
+        <div class="lab">일시</div>
+        <div class="val">2026. 9. 6 (일)<br>10:00 – 17:00</div>
+      </div>
+      <div class="info-card">
+        <div class="ic">📍</div>
+        <div class="lab">장소</div>
+        <div class="val">PBS컬러랩<br><small style="color:var(--muted);font-weight:500">(오프라인)</small></div>
+      </div>
+      <div class="info-card">
+        <div class="ic">👩‍🏫</div>
+        <div class="lab">강사</div>
+        <div class="val">최해숙 대표</div>
+      </div>
+      <div class="info-card">
+        <div class="ic">👥</div>
+        <div class="lab">정원</div>
+        <div class="val">선착순 6명</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 커리큘럼 -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <h2 class="title">📚 커리큘럼</h2>
+    <ol class="curr-list">
+      <li><div class="curr-num">1</div><div class="curr-txt"><b>골격분석 3유형 이론</b><small>Straight · Wave · Natural 체계 이해</small></div></li>
+      <li><div class="curr-num">2</div><div class="curr-txt"><b>유형별 신체 특징</b><small>골격 유형에 따른 체형 특징과 차이점</small></div></li>
+      <li><div class="curr-num">3</div><div class="curr-txt"><b>골격진단 방법</b><small>실전 진단법 · 체크리스트 실습</small></div></li>
+      <li><div class="curr-num">4</div><div class="curr-txt"><b>유형별 핏과 스타일링</b><small>골격에 맞는 실루엣·핏 스타일링 전략</small></div></li>
+      <li><div class="curr-num">5</div><div class="curr-txt"><b>소재와 질감</b><small>유형별 어울리는 원단·소재·질감 가이드</small></div></li>
+      <li><div class="curr-num">6</div><div class="curr-txt"><b>악세사리 스타일링</b><small>골격 유형별 악세사리 선택법</small></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 대상 -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <h2 class="title">🎯 이런 분께 추천합니다</h2>
+    <div class="target-row"><span class="ic">🎨</span><span>퍼스널컬러 전문가</span></div>
+    <div class="target-row"><span class="ic">👔</span><span>이미지 컨설턴트 · 강사</span></div>
+    <div class="target-row"><span class="ic">👗</span><span>패션 스타일리스트</span></div>
+    <div class="target-row"><span class="ic">💄</span><span>뷰티 · 웨딩 종사자</span></div>
+  </div>
+</section>
+
+<!-- 특전 -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <h2 class="title">🎁 수강 특전</h2>
+    <ul class="benefit-list">
+      <li><span class="ic">📋</span>PBS 골격진단 체크지 50매 (비매품)</li>
+      <li><span class="ic">🃏</span>유형별 결과 카드 세트</li>
+      <li><span class="ic">📜</span>수료증 발급</li>
+      <li><span class="ic">💰</span>정규 국제자격 과정 등록 시 10만원 할인</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 수강료 -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="price-box">
+      <div class="label">원데이 세미나 수강료</div>
+      <div class="amount">495,000<small>원</small></div>
+      <div class="includes">교구 · 수료증 포함</div>
+      <div class="re">재수강 <b>100,000원</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 신청 폼 -->
+<section id="apply" style="padding-top:0;">
+  <div class="wrap">
+    <div class="form-card" id="formCard">
+      <h2>세미나 신청</h2>
+      <p class="lead">아래 내용을 작성해 주시면 접수 완료됩니다.</p>
+      <form id="applyForm" autocomplete="on">
+        <div class="field">
+          <label>이름 <span class="req">*</span></label>
+          <input type="text" name="name" required placeholder="성함을 입력해 주세요" />
+        </div>
+        <div class="field">
+          <label>연락처 <span class="req">*</span></label>
+          <input type="tel" name="phone" required placeholder="010-0000-0000" />
+        </div>
+        <div class="field">
+          <label>이메일 <small style="color:var(--muted)">(선택)</small></label>
+          <input type="email" name="email" placeholder="example@email.com" />
+        </div>
+        <div class="field">
+          <label>과정 선택 <span class="req">*</span></label>
+          <div class="session-group">
+            <label class="session-opt"><input type="radio" name="session" value="골격분석 원데이 세미나 · 일반 · 495,000원" required /><span class="si"><b>🟢 일반 수강 (495,000원)</b><small>교구 · 수료증 포함</small></span></label>
+            <label class="session-opt"><input type="radio" name="session" value="골격분석 원데이 세미나 · 재수강 · 100,000원" /><span class="si"><b>🔁 재수강 (100,000원)</b></span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>결제 방식 <span class="req">*</span></label>
+          <div class="session-group" id="payMethodGroup">
+            <label class="session-opt"><input type="radio" name="pay_method" value="이체" /><span class="si"><b>🏦 계좌 이체</b></span></label>
+            <label class="session-opt"><input type="radio" name="pay_method" value="카드" /><span class="si"><b>💳 카드 결제</b></span></label>
+          </div>
+        </div>
+        <div class="field" id="receiptField" style="display:none;">
+          <label>영수증 종류 <span class="req">*</span></label>
+          <div class="session-group">
+            <label class="session-opt"><input type="radio" name="receipt_type" value="세금계산서" /><span class="si"><b>📄 세금계산서</b></span></label>
+            <label class="session-opt"><input type="radio" name="receipt_type" value="현금영수증" /><span class="si"><b>🧾 현금영수증</b></span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>사전 규약 동의 <span class="req">*</span></label>
+          <div class="terms">
+            <h4>1. 신청 및 확정</h4>
+            신청 후 안내된 계좌로 수강료를 입금하시면 접수가 확정되며, 세미나 1주 전 상세 안내를 보내드립니다.
+            <h4>2. 환불 규정</h4>
+            · 세미나 7일 전 : <b>전액 환불</b><br>
+            · 세미나 3일 전 : <b>50% 환불</b><br>
+            · 세미나 당일 : <b>환불 불가</b>
+            <h4>3. 세미나 안내</h4>
+            · 교구(골격진단 체크지 50매, 결과 카드 세트)와 수료증이 포함되어 있습니다.<br>
+            · 점심시간(약 1시간)은 개별 식사입니다.<br>
+            · 실습이 포함되어 있으므로 편안한 복장을 권합니다.
+            <h4>4. 개인정보 수집·이용 동의</h4>
+            · 수집 항목 : 이름, 연락처, 이메일 등 신청 정보<br>
+            · 이용 목적 : 세미나 안내 및 서비스 제공<br>
+            · 보유 기간 : 행사 종료 후 1년 (관련 법령에 따름)<br>
+            동의를 거부하실 수 있으나, 거부 시 신청이 제한됩니다.
+          </div>
+          <label class="agree"><input type="checkbox" id="agreeChk" /><span>위 사전 규약 및 개인정보 수집·이용에 모두 동의합니다. (필수)</span></label>
+        </div>
+
+        <button type="submit" class="submit" id="submitBtn">세미나 신청하기</button>
+        <div class="msg err" id="errMsg"></div>
+        <p class="hint center" style="margin-top:14px;">제출 후 <b>접수 확인 안내</b>를 보내드립니다.</p>
+      </form>
+
+      <div class="done" id="doneScreen">
+        <div class="check">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h2>신청이 접수되었습니다 🎉</h2>
+        <p>골격분석 스타일링 원데이 세미나<br>2026. 9. 6 (일) 10:00 – 17:00</p>
+        <div class="acct" id="doneAcct">
+          수강료 입금계좌<br><b>카카오뱅크 3333-14-5173594</b><br><span style="font-size:13.5px;color:var(--muted)">예금주 : 최해숙</span><br>
+          <button type="button" onclick="copyAcct(this)" style="margin-top:12px;background:var(--pink);color:#fff;border:none;font-weight:800;font-size:15px;padding:12px 22px;border-radius:100px;cursor:pointer;font-family:inherit">📋 계좌 복사</button>
+        </div>
+        <div class="acct" id="doneCard" style="display:none;background:#EBF0FF;border:1px solid #B3C6FF;">
+          💳 카드 결제를 선택하셨습니다.<br>
+          <b>안내 문자로 카드 결제 방법을 보내드립니다.</b>
+        </div>
+        <div style="margin-top:16px;background:#FFF7E6;border:1px solid #F0D98A;border-radius:12px;padding:14px 16px;font-size:14px;color:#7a5a00;line-height:1.7;text-align:left">
+          📌 입금 확인 후 접수가 확정됩니다.<br>
+          📞 문의 : <a href="tel:01042857997" style="color:#7a5a00;font-weight:800">010-4285-7997</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="info">
+    <div class="p">🦴 골격분석 세미나 · 9/6(일)</div>
+    <div class="s">선착순 6명 · 495,000원</div>
+  </div>
+  <a href="#apply" class="cta">신청하기 →</a>
+</div>
+
+<script>
+var SUPABASE_URL = 'https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI0NTk3MjYsImV4cCI6MjA2ODAzNTcyNn0.sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0';
+
+// 결제 방식 → 영수증 필드 토글
+document.getElementById('payMethodGroup').addEventListener('change', function(e){
+  var rf = document.getElementById('receiptField');
+  if(e.target.value === '이체') rf.style.display = 'block';
+  else rf.style.display = 'none';
+});
+
+// 폼 제출
+document.getElementById('applyForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var form = this;
+  var btn = document.getElementById('submitBtn');
+  var errMsg = document.getElementById('errMsg');
+  errMsg.style.display = 'none';
+
+  var data = Object.fromEntries(new FormData(form).entries());
+
+  if(!data.name || !data.name.trim()){
+    errMsg.textContent = '이름을 입력해 주세요.';
+    errMsg.style.display = 'block'; return;
+  }
+  if(!data.phone || !data.phone.trim()){
+    errMsg.textContent = '연락처를 입력해 주세요.';
+    errMsg.style.display = 'block'; return;
+  }
+  if(!data.session){
+    errMsg.textContent = '과정을 선택해 주세요.';
+    errMsg.style.display = 'block'; return;
+  }
+  if(!data.pay_method){
+    errMsg.textContent = '결제 방식을 선택해 주세요.';
+    errMsg.style.display = 'block'; return;
+  }
+  if(data.pay_method === '이체' && !data.receipt_type){
+    errMsg.textContent = '영수증 종류를 선택해 주세요.';
+    errMsg.style.display = 'block'; return;
+  }
+  if(!document.getElementById('agreeChk').checked){
+    errMsg.textContent = '사전 규약에 동의하셔야 접수가 가능합니다.';
+    errMsg.style.display = 'block'; return;
+  }
+
+  data.agreed = true;
+  data.type = '골격분석세미나';
+  btn.disabled = true;
+  btn.textContent = '제출 중...';
+
+  try {
+    var res = await fetch(SUPABASE_URL + '/rest/v1/applications', {
+      method: 'POST',
+      headers: {
+        'apikey': ANON_KEY,
+        'Authorization': 'Bearer ' + ANON_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(data),
+    });
+    if(!res.ok){
+      var t = await res.text();
+      throw new Error(t || '제출에 실패했습니다.');
+    }
+    // 대표님께 텔레그램+이메일+SMS 알림
+    fetch(SUPABASE_URL + '/functions/v1/notify-application', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }).catch(function(){});
+
+    document.getElementById('formCard').querySelector('h2').style.display = 'none';
+    document.getElementById('formCard').querySelector('.lead').style.display = 'none';
+    form.style.display = 'none';
+
+    if(data.pay_method === '카드'){
+      document.getElementById('doneAcct').style.display = 'none';
+      document.getElementById('doneCard').style.display = 'block';
+    }
+    document.getElementById('doneScreen').style.display = 'block';
+
+    var sb = document.getElementById('stickyBar');
+    if(data.pay_method === '카드'){
+      if(sb) sb.innerHTML = '<div class="info"><div class="p" style="font-size:14px">💳 카드 결제 안내 문자를 보내드립니다</div><div class="s">확인 후 접수가 확정됩니다</div></div>';
+    } else {
+      if(sb) sb.innerHTML = '<div class="info"><div class="p" style="font-size:14px">입금계좌 <b>카카오뱅크 3333-14-5173594</b> (최해숙)</div><div class="s">입금 후 접수가 확정됩니다</div></div><button class="cta" onclick="copyAcct(this)" style="border:none;cursor:pointer;font-family:inherit">📋 계좌 복사</button>';
+    }
+    document.getElementById('apply').scrollIntoView({behavior:'smooth'});
+  } catch(err) {
+    errMsg.textContent = '제출 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 010-4285-7997로 연락 주세요.';
+    errMsg.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '세미나 신청하기';
+  }
+});
+
+function copyAcct(btn){
+  var t = '카카오뱅크 3333-14-5173594 (최해숙)';
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(t).then(function(){
+      btn.textContent = '✅ 복사 완료!';
+      setTimeout(function(){btn.textContent='📋 계좌 복사';},2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = t; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ 복사 완료!';
+    setTimeout(function(){btn.textContent='📋 계좌 복사';},2000);
+  }
+}
+</script>
+</body>
+</html>
