@@ -71,6 +71,10 @@
     padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;font-size:14.5px}
   .kit label.on{border-color:var(--mg);background:var(--mg-soft)}
   .kit input{width:21px;height:21px;accent-color:var(--mg);margin:1px 0 0;flex:0 0 auto}
+  .coachbox{background:#fdf2f8;border:1px solid #f2c9e0;border-radius:11px;padding:14px 15px;margin-top:4px;
+    font-size:14.5px;line-height:1.65;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+  .coachbox .who{display:block;font-size:11px;font-weight:800;color:var(--mg);margin-bottom:6px;letter-spacing:.02em}
+  .coachnone{background:#fafafa;border:1px dashed #ddd;border-radius:11px;padding:13px;font-size:13px;color:var(--ink-3);margin-top:4px}
   .kitempty{background:#FFF9E8;border:1px solid #F0DFA8;border-radius:11px;padding:13px;
     font-size:13px;color:#6b5720}
   #kitbody{display:none;margin-top:14px}
@@ -165,9 +169,25 @@
     </label>
   </div>
 
-  <!-- 2. 출석 체크 -->
+  <!-- 2-C. 대표님 평가 -->
+  <div class="card" id="card-coach">
+    <h2><span class="num">2</span>대표님 평가<span class="opt">읽고 확인</span></h2>
+    <p class="hint">이번 회차에 대해 대표님이 남긴 평가입니다.</p>
+    <button type="button" class="mini" id="loadcoach" style="width:100%;padding:12px;font-size:14px">대표님 평가 불러오기</button>
+    <p class="msg" id="coachmsg" style="text-align:left"></p>
+    <div id="coachbox"></div>
+    <label class="agree" id="notewrap" style="display:none">
+      <input type="checkbox" id="noteok" />
+      <span>
+        <b>위 평가를 읽고 확인했습니다.</b>
+        <small>확인 여부가 대표님 화면에 함께 표시됩니다.</small>
+      </span>
+    </label>
+  </div>
+
+  <!-- 3. 출석 체크 -->
   <div class="card" id="card-attend">
-    <h2><span class="num">2</span>출석 체크</h2>
+    <h2><span class="num">3</span>출석 체크</h2>
     <p class="hint">오늘 참석한 회차를 선택해 주세요.</p>
     <div class="row">
       <div class="fld">
@@ -207,7 +227,7 @@
 
   <!-- 3. 교구 인수 (선택) -->
   <div class="card" id="card-kit">
-    <h2><span class="num">3</span>교구 인수 확인<span class="opt">받은 날만</span></h2>
+    <h2><span class="num">4</span>교구 인수 확인<span class="opt">받은 날만</span></h2>
     <p class="hint">오늘 교구를 받으셨나요?</p>
     <div class="chips two" id="kitq">
       <label class="on"><input type="radio" name="kitq" value="no" checked />아니요</label>
@@ -225,7 +245,7 @@
 
   <!-- 4. 서명 -->
   <div class="card">
-    <h2><span class="num">4</span>서명</h2>
+    <h2><span class="num">5</span>서명</h2>
     <p class="hint">아래 칸에 손가락(또는 마우스)으로 이름을 적어 주세요.</p>
     <div class="sigbox" id="sigbox">
       <canvas id="sig"></canvas>
@@ -245,7 +265,7 @@
 
   <!-- 5. 후기 -->
   <div class="card">
-    <h2><span class="num">5</span><span id="fbtitle">회차 후기</span></h2>
+    <h2><span class="num">6</span><span id="fbtitle">회차 후기</span></h2>
     <p class="hint">짧게 한두 줄이어도 괜찮습니다. 다음 회차 준비에 반영됩니다.</p>
     <div class="fld">
       <label class="fl" for="q1"><span id="lq1">오늘 가장 도움이 된 것 한 가지</span></label>
@@ -342,11 +362,12 @@
   chipGroup("atype");
 
   /* 제출 유형 전환 : 교육 회차 ↔ 출강 확인 */
-  var TASKS = [], pickedKey = "";
+  var TASKS = [], CONSULTS = [], pickedKey = "", coachLoaded = false;
   function isDispatch(){ return chipValue("kind") === "출강확인"; }
   function applyKind(){
     var d = isDispatch();
     $("card-dispatch").style.display = d ? "" : "none";
+    $("card-coach").style.display    = d ? "none" : "";
     $("card-attend").style.display   = d ? "none" : "";
     $("card-kit").style.display      = d ? "none" : "";
     $("fbtitle").textContent = d ? "현장 소감" : "회차 후기";
@@ -361,6 +382,55 @@
     check();
   }
   chipGroup("kind", applyKind);
+
+  /* 대표님 평가 불러오기 */
+  function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+  $("loadcoach").addEventListener("click", function(){
+    var nm = $("name").value.trim(), l4 = $("last4").value, cm = $("coachmsg");
+    if(!nm || l4.length !== 4){ cm.className = "msg err"; cm.textContent = "위에 이름과 연락처 뒤 4자리를 먼저 입력해 주세요."; return; }
+    cm.className = "msg"; cm.textContent = "불러오는 중입니다...";
+    fetch(EP, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
+      body: JSON.stringify({ action:"my_tasks", name:nm, phone_last4:l4 })
+    })
+    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
+    .then(function(res){
+      if(!res.ok || (res.j && res.j.error)){
+        cm.className = "msg err"; cm.textContent = (res.j && res.j.error) || "불러오지 못했습니다.";
+        $("coachbox").innerHTML = ""; $("notewrap").style.display = "none"; check(); return;
+      }
+      CONSULTS = (res.j && res.j.consults) || [];
+      TASKS = (res.j && res.j.tasks) || [];
+      cm.textContent = "";
+      renderCoach();
+    })
+    .catch(function(){ cm.className = "msg err"; cm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
+  });
+
+  function currentConsult(){
+    var r = $("round").value;
+    for(var i = 0; i < CONSULTS.length; i++){ if(CONSULTS[i].round === r) return CONSULTS[i]; }
+    return null;
+  }
+  function renderCoach(){
+    var box = $("coachbox"), c = currentConsult();
+    coachLoaded = true;
+    if(!c){
+      box.innerHTML = '<div class="coachnone">선택한 회차를 찾지 못했습니다. 위에서 회차를 골라주세요.</div>';
+      $("notewrap").style.display = "none"; check(); return;
+    }
+    if(!String(c.coach || "").trim()){
+      box.innerHTML = '<div class="coachnone">이 회차에 등록된 평가가 없습니다. 그대로 후기만 남겨주세요.</div>';
+      $("notewrap").style.display = "none"; check(); return;
+    }
+    var head = [c.round, c.date, c.topic].filter(Boolean).join(" · ");
+    box.innerHTML = '<div class="coachbox"><span class="who">' + esc(head) + '</span>' + esc(c.coach) + '</div>';
+    $("notewrap").style.display = "";
+    check();
+  }
+  $("round").addEventListener("change", function(){ if(coachLoaded) renderCoach(); });
+  $("noteok").addEventListener("change", check);
 
   /* 내 출강 내역 불러오기 */
   $("loadtasks").addEventListener("click", function(){
@@ -397,7 +467,6 @@
       pickedKey = ""; $("feewrap").style.display = "none"; check(); return;
     }
     box.innerHTML = open.map(function(t, i){
-      var esc = function(s){ return String(s||"").replace(/</g,"&lt;").replace(/"/g,"&quot;"); };
       var sub = [t.date, t.position, t.fee].filter(Boolean).map(esc).join(" · ");
       return '<label><input type="radio" name="task" class="taskchk" value="'+esc(t.key)+'" '+(open.length===1&&i===0?"checked":"")+' />'
         + '<span><b>'+esc(t.org)+'</b><br><span style="color:#83838d;font-size:13px">'+sub+'</span></span></label>';
@@ -484,9 +553,10 @@
     var base = $("name").value.trim().length > 0
       && $("last4").value.replace(/[^0-9]/g,"").length === 4
       && drawn && $("agree").checked;
+    var needNote = !isDispatch() && $("notewrap").style.display !== "none" && $("card-coach").style.display !== "none";
     var ok = isDispatch()
       ? (base && !!pickedKey)
-      : (base && $("round").value !== "" && $("sdate").value !== "");
+      : (base && $("round").value !== "" && $("sdate").value !== "" && (!needNote || $("noteok").checked));
     $("go").disabled = !ok;
     return ok;
   }
@@ -532,7 +602,9 @@
     if(disp){
       payload.dispatch_key = pickedKey;
       payload.fee_received = $("feeok").checked;
+      payload.note_confirmed = $("noteok").checked;
     } else {
+      payload.note_confirmed = $("noteok").checked;
       payload.round = $("round").value;
       payload.session_date = $("sdate").value;
       payload.attended = true;
