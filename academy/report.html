@@ -295,6 +295,36 @@
     $("sdate").value = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
   })();
 
+  /* 대표님이 보낸 링크로 들어온 경우 — 이름·회차·날짜 자동 채움 */
+  var PRE = (function(){
+    var p = {}, q = (location.search || "").replace(/^\?/, "");
+    q.split("&").forEach(function(kv){
+      if(!kv) return;
+      var a = kv.split("="), k = decodeURIComponent(a[0] || "");
+      p[k] = decodeURIComponent((a[1] || "").replace(/\+/g, " "));
+    });
+    return p;
+  })();
+  (function(){
+    if(PRE.n) $("name").value = PRE.n;
+    if(PRE.d) $("sdate").value = PRE.d;
+    if(PRE.r){
+      var sel = $("round");
+      var found = false;
+      for(var i = 0; i < sel.options.length; i++){
+        if(sel.options[i].value === PRE.r || sel.options[i].text === PRE.r){ sel.selectedIndex = i; found = true; break; }
+      }
+      if(!found){ var o = document.createElement("option"); o.text = PRE.r; sel.add(o); sel.value = PRE.r; }
+    }
+    if(PRE.n || PRE.r){
+      var h = document.querySelector(".hero");
+      var who = PRE.n ? (PRE.n + " 선생님") : "선생님";
+      var what = [PRE.r, PRE.d].filter(Boolean).join(" · ");
+      h.querySelector("h1").innerHTML = who + ",<br>" + (what ? what : "오늘 회차") + " 후기를<br>남겨 주세요.";
+      h.querySelector("p").textContent = "연락처 뒤 4자리만 넣고 서명하시면 됩니다. 회차와 날짜는 미리 채워져 있습니다.";
+    }
+  })();
+
   /* 칩(라디오) 선택 표시 */
   function chipGroup(wrapId, onChange){
     var w = $(wrapId);
