@@ -1776,36 +1776,37 @@ function renderShop(){
         if(cfg['pos'+i])img.style.objectPosition=cfg['pos'+i];
       });
     })();
-    // 특강접수 중앙 모달 팝업 (2026-08-13 — 8/16 원데이 웹페이지 만들기 추가접수)
+    // 골격분석 스타일링 원데이 세미나 팝업 (2026-09-06)
     (function(){
-      var b=null;try{b=JSON.parse(localStorage.getItem('pbs_event_banner')||'null');}catch(e){}
       var old=document.getElementById('pbsEventModal');if(old)old.remove();
-      if(!b||!b.visible||(!b.title&&!b.src))return;
-      var sig=(b.title||'')+'|'+((b.src||'').length)+'|'+(b.link||b.url||'');
-      try{if(localStorage.getItem('pbs_event_dismiss')===sig)return;}catch(e){}
       // 오늘 하루 안 보기
-      var todayKey='pbs_event_today_'+sig;
+      var todayKey='pbs_bone_seminar_0906_today';
       try{var stored=localStorage.getItem(todayKey);if(stored){var d=new Date(stored);var now=new Date();if(d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()&&d.getDate()===now.getDate())return;}}catch(e){}
+      // 마감일 지나면 팝업 미표시
+      var deadline=new Date('2026-09-06T17:00:00+09:00');if(new Date()>deadline)return;
       // 중앙 모달 CSS (1회 주입)
       if(!document.getElementById('pbsModalCss')){var st=document.createElement('style');st.id='pbsModalCss';st.textContent='@keyframes pbsModalFade{0%{opacity:0}100%{opacity:1}}@keyframes pbsModalScale{0%{opacity:0;transform:scale(.92) translateY(16px)}100%{opacity:1;transform:none}}#pbsEventModal{animation:pbsModalFade .3s ease both}#pbsEventModal .pbs-modal-card{animation:pbsModalScale .35s cubic-bezier(.2,.85,.25,1) .05s both}';document.head.appendChild(st);}
-      var link=(b.link||b.url||'');
       var modal=document.createElement('div');modal.id='pbsEventModal';
-      modal.style.cssText='display:flex;position:fixed;inset:0;z-index:100000;background:rgba(10,8,14,.75);align-items:center;justify-content:center;padding:18px';
-      var content='<div style="padding:30px 24px 24px;text-align:center">'
-        +'<div style="font-size:12px;font-weight:900;color:rgba(255,255,255,.5);letter-spacing:.18em;margin-bottom:14px">PBS COLOR LAB</div>'
-        +'<div style="display:inline-block;background:linear-gradient(135deg,#E14B8A,#C33A72);color:#fff;font-size:13px;font-weight:900;padding:6px 18px;border-radius:100px;margin-bottom:16px">📋 특강접수</div>'
-        +'<div style="font-size:20px;font-weight:900;color:#fff;line-height:1.45;letter-spacing:-.4px">'+escHtml(plainText(b.title))+'</div>'
-        +(b.cta?'<div style="margin-top:20px">'+(link?'<a href="'+escHtml(link)+'" style="display:inline-block;background:#fff;color:#C33A72;font-weight:900;font-size:15px;padding:13px 32px;border-radius:100px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)">'+escHtml(plainText(b.cta))+'</a>':'')+'</div>':'')
-        +'</div>';
-      var card='<div class="pbs-modal-card" style="position:relative;width:100%;max-width:400px;background:#14121c;border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)">'
-        +content
+      modal.style.cssText='display:flex;position:fixed;inset:0;z-index:100000;background:rgba(10,8,14,.78);align-items:center;justify-content:center;padding:18px';
+      var card='<div class="pbs-modal-card" style="position:relative;width:100%;max-width:400px;background:linear-gradient(180deg,#1e1430 0%,#14121c 100%);border:1px solid rgba(225,75,138,.25);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)">'
         +'<button id="evModalClose" aria-label="닫기" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;line-height:1;z-index:3;transition:background .15s" onmouseover="this.style.background=\'rgba(255,255,255,.2)\'" onmouseout="this.style.background=\'rgba(255,255,255,.1)\'">✕</button>'
+        +'<div style="padding:32px 24px 20px;text-align:center">'
+        +'<div style="font-size:11px;font-weight:900;color:rgba(200,168,112,.8);letter-spacing:.22em;margin-bottom:14px">PBS COLOR LAB · ONE-DAY SEMINAR</div>'
+        +'<div style="display:inline-block;background:linear-gradient(135deg,#E14B8A,#C33A72);color:#fff;font-size:13px;font-weight:900;padding:6px 18px;border-radius:100px;margin-bottom:16px">🦴 세미나 모집</div>'
+        +'<div style="font-size:22px;font-weight:900;color:#fff;line-height:1.4;letter-spacing:-.5px">골격분석 스타일링<br>원데이 세미나</div>'
+        +'<div style="margin-top:12px;font-size:14px;color:rgba(255,255,255,.55);font-weight:600">Straight · Wave · Natural</div>'
+        +'<div style="margin-top:16px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">'
+        +'<span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 14px;font-size:13px;color:#fff;font-weight:700">📅 9/6(일) 10:00-17:00</span>'
+        +'<span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 14px;font-size:13px;color:#fff;font-weight:700">👥 선착순 6명</span>'
+        +'</div>'
+        +'<div style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.45)">수강료 <b style="color:#FFD700;font-size:16px">495,000원</b> <span style="color:rgba(255,255,255,.35)">(교구·수료증 포함)</span></div>'
+        +'<div style="margin-top:20px"><a href="/강의/골격분석세미나_신청.html" style="display:inline-block;background:#fff;color:#C33A72;font-weight:900;font-size:15px;padding:13px 36px;border-radius:100px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:.15s" onmouseover="this.style.transform=\'translateY(-1px)\';this.style.boxShadow=\'0 6px 20px rgba(0,0,0,.3)\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'0 4px 14px rgba(0,0,0,.25)\'">신청하기 →</a></div>'
+        +'</div>'
         +'<label style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-top:1px solid rgba(255,255,255,.08);cursor:pointer;font-size:13px;color:rgba(255,255,255,.45)">'
         +'<input type="checkbox" id="evTodayChk" style="width:16px;height:16px;accent-color:#E14B8A;margin:0">오늘 하루 안 보기</label>'
         +'</div>';
       modal.innerHTML=card;
       document.body.appendChild(modal);
-      // 배경 클릭 시 닫기
       modal.addEventListener('click',function(ev){if(ev.target===modal)closeModal();});
       var closeBtn=document.getElementById('evModalClose');
       if(closeBtn)closeBtn.addEventListener('click',function(ev){ev.preventDefault();ev.stopPropagation();closeModal();});
