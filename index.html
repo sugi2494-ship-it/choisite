@@ -107,7 +107,7 @@
   }
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=Playfair+Display:wght@700;900&display=swap');
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
     :root{
       --pink:#E5007F; --pink2:#C2006A; --pink3:#FF2D9B;
@@ -121,10 +121,15 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;overflow-x:hidden}
     body{
-      font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+      font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+      letter-spacing:-0.018em;
       background:var(--black);color:var(--white);line-height:1.72;word-break:keep-all;
       overflow-x:hidden;
     }
+    /* 프리미엄 정돈: 제목 자간 좁게, 굵기 대비로 위계 */
+    h1{letter-spacing:-0.045em}
+    h2,h3{font-weight:800;letter-spacing:-0.035em}
     a{text-decoration:none;color:inherit}
     img{display:block;max-width:100%}
     video,iframe{max-width:100%}
