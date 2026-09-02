@@ -35,8 +35,13 @@
     width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
   .runner{position:absolute;top:-20px;left:0;font-size:21px;transform:translateX(-50%);
     transition:left .9s cubic-bezier(.22,1,.36,1)}
-  .runner.go{animation:bob .8s ease-in-out infinite}
-  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-4px)}}
+  .runner.go{animation:walk 1.05s ease-in-out infinite}
+  @keyframes walk{
+    0%   {transform:translateX(-50%) translateY(0)    rotate(-3deg)}
+    25%  {transform:translateX(-50%) translateY(-3px) rotate(0deg)}
+    50%  {transform:translateX(-50%) translateY(0)    rotate(3deg)}
+    75%  {transform:translateX(-50%) translateY(-3px) rotate(0deg)}
+    100% {transform:translateX(-50%) translateY(0)    rotate(-3deg)}}
   .cheer{margin-top:11px;font-size:12.5px;font-weight:700;opacity:.95}
 
   .card{background:var(--card);border:1px solid var(--line);border-radius:15px;
@@ -52,6 +57,7 @@
     width:100%;padding:12px;font-size:16px;font-family:inherit;color:var(--ink);
     border:1px solid var(--line);border-radius:10px;background:var(--card)}
   textarea{min-height:74px;resize:vertical;line-height:1.6}
+  textarea.mini{min-height:56px}
   .fld{margin-bottom:12px}
   .btn{width:100%;padding:14px;border:0;border-radius:12px;background:var(--mg);color:#fff;
     font:inherit;font-size:16px;font-weight:800;cursor:pointer}
@@ -63,6 +69,7 @@
   .b-ok{background:var(--okbg);color:var(--ok);border:1px solid var(--okln)}
   .b-wait{background:var(--waitbg);color:var(--wait);border:1px solid var(--waitln)}
   .b-blue{background:var(--bluebg);color:var(--blue);border:1px solid var(--blueln)}
+  .b-act{background:var(--mg);color:#fff;border:1px solid var(--mg)}
 
   #whobar{display:none;background:var(--okbg);border:1px solid var(--okln);border-radius:12px;
     padding:11px 14px;margin-bottom:12px;align-items:center;gap:9px;flex-wrap:wrap}
@@ -76,13 +83,17 @@
     background:var(--bg);border-radius:10px;border-left:4px solid var(--mg);margin-bottom:9px}
   .grp-h .t{font-size:14px;font-weight:900}
   .grp-h .s{flex:1 1 100%;font-size:11.5px;color:var(--ink3);line-height:1.5}
+  .backbtn{display:block;width:100%;margin-bottom:12px;padding:12px;border:1px solid var(--line);
+    border-radius:12px;background:var(--card);font:inherit;font-size:14px;font-weight:800;
+    color:var(--ink2);cursor:pointer;text-align:left}
 
   .task{border:1px solid var(--line);border-radius:13px;margin-bottom:9px;background:var(--card);overflow:hidden}
   .task.done{border-color:var(--okln);background:#fbfefc}
   .task-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:14px;cursor:pointer}
   .task-h .no{flex:0 0 auto;font-size:13px;font-weight:900;border-radius:9px;padding:4px 10px}
   .task-h .arw{flex:0 0 auto;font-size:15px;color:var(--ink3);margin-left:auto}
-  .task-h .sub{flex:1 1 100%;font-size:13px;color:var(--ink2);line-height:1.5}
+  .task-h .day{flex:0 0 auto;font-size:14.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .task-h .sub{flex:1 1 100%;font-size:12.5px;color:var(--ink3);line-height:1.5}
   .task-b{padding:4px 14px 16px;border-top:1px solid var(--line)}
 
   .quote{border-radius:10px;padding:11px 12px;font-size:14px;line-height:1.6;margin-bottom:12px}
@@ -98,13 +109,6 @@
   .agree b{display:block;font-size:14px}
   .agree small{display:block;font-size:12px;color:var(--ink3);margin-top:2px;line-height:1.5}
 
-  .sigbox{border:1.5px dashed #d7c3d0;border-radius:12px;background:#fffdfe;overflow:hidden}
-  .sigbox.filled{border-style:solid;border-color:var(--mg)}
-  canvas{display:block;width:100%;height:170px;touch-action:none}
-  .sigbar{display:flex;align-items:center;justify-content:space-between;gap:8px;
-    padding:8px 11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink3)}
-  .sigbar button{background:none;border:1px solid var(--line);border-radius:8px;padding:5px 12px;
-    font:inherit;font-size:12.5px;cursor:pointer;color:var(--ink2)}
   .stamp{margin:8px 0 0;font-size:12.5px;color:var(--ink3)}
 
   .chips{display:flex;gap:7px;flex-wrap:wrap}
@@ -141,7 +145,7 @@
     <p id="hsub">이름과 연락처 뒤 4자리로 본인 확인 후 시작합니다.</p>
     <div class="prog" id="prog" style="display:none">
       <div class="prog-top"><span class="pct" id="pct">0%</span><span class="lbl" id="plbl"></span></div>
-      <div class="track"><div class="fill" id="fill"></div><div class="runner" id="runner">🏃‍♀️</div></div>
+      <div class="track"><div class="fill" id="fill"></div><div class="runner" id="runner">👩‍🏫</div></div>
       <div class="cheer" id="cheer"></div>
     </div>
   </div>
@@ -194,14 +198,20 @@
   function nowText(){ var d=new Date();
     return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes()); }
   function q1(sel){ return document.querySelector(sel); }
+  function dayTxt(v){
+    var a = String(v||"").split("-");
+    return a.length===3 ? (a[1].replace(/^0/,"")+"월 "+a[2].replace(/^0/,"")+"일") : (v||"");
+  }
   function cssq(v){ return (window.CSS && CSS.escape) ? CSS.escape(v) : String(v).replace(/["\\]/g,"\\$&"); }
 
   var GROUPS = [
     { k:"1 교육",        n:"1", nm:"교육",        sub:"리더십·비전 1회 · 기획안·프로필 작성 1회 (줌 교육 포함)", c:"#E5007F" },
     { k:"2 트레이닝",    n:"2", nm:"트레이닝",    sub:"퍼스널컬러 1:1·그룹 트레이닝",                          c:"#2d5f9e" },
+    { k:"__disp",        n:"3", nm:"현장 서브·동행 · 강의 출강", sub:"컨설팅 참관 포함",                      c:"#2d5f9e", disp:true },
     { k:"4 프로필 촬영", n:"4", nm:"프로필 촬영", sub:"",                                                      c:"#a3682a" },
     { k:"5 수료",        n:"5", nm:"수료",        sub:"강의 시연·피드백·수료식",                              c:"#6b4a9e" }
   ];
+  var GOPEN = {};
 
   var PRE = (function(){
     var p = {}, s = (location.search||"").replace(/^\?/,"");
@@ -210,7 +220,7 @@
     return p;
   })();
 
-  var NM = "", L4 = "", D = null, OPEN = null, SIG = {};
+  var NM = "", L4 = "", D = null, OPEN = null;
 
   function saveWho(n,l){ try{ sessionStorage.setItem("pbs_tr", JSON.stringify({n:n,l:l})); }catch(e){} }
   function loadWho(){ try{ return JSON.parse(sessionStorage.getItem("pbs_tr")||"null"); }catch(e){ return null; } }
@@ -288,7 +298,7 @@
     return { total:total, done:done, pct: total ? Math.round(done/total*100) : 0 };
   }
 
-  var CHEERS = ["시작이 반입니다. 화이팅!","좋아요, 잘 달리고 있어요!","절반 가까이 왔어요!","조금만 더, 거의 다 왔습니다!","마지막 한 걸음이에요!"];
+  var CHEERS = ["첫걸음을 떼셨어요. 화이팅!","또각또각, 잘 걸어가고 있어요!","절반 가까이 왔어요!","조금만 더, 거의 다 왔습니다!","마지막 한 걸음이에요!"];
   function paintProgress(){
     var p = progress();
     $("prog").style.display = "block";
@@ -301,7 +311,7 @@
       $("cheer").textContent = "전 과정 완주!";
       $("party").style.display = "block";
     } else {
-      $("runner").textContent = "🏃‍♀️";
+      $("runner").textContent = "👩‍🏫";
       $("runner").className = "runner" + (p.pct > 0 ? " go" : "");
       $("cheer").textContent = CHEERS[Math.min(CHEERS.length-1, Math.floor(p.pct/25))];
       $("party").style.display = "none";
@@ -316,33 +326,69 @@
       $("main").innerHTML = courseCard(true);
       wire(); return;
     }
+    /* 항목을 열면 그 항목만 — 집중 화면 */
+    var focus = !!OPEN && (OPEN.indexOf("r:")===0 || OPEN.indexOf("d:")===0);
+    if(focus){
+      var fg = null, fi = null;
+      GROUPS.forEach(function(g){
+        if(fg) return;
+        if(g.disp){
+          (D.tasks||[]).forEach(function(t,i){ if(OPEN === "d:"+t.key){ fg=g; fi=dispBox(t,i); } });
+        } else {
+          (D.consults||[]).filter(function(c){ return (c.group||"")===g.k; })
+            .forEach(function(c){ if(OPEN === "r:"+c.round){ fg=g; fi=roundBox(c); } });
+        }
+      });
+      if(!fg){
+        (D.consults||[]).forEach(function(c){ if(OPEN === "r:"+c.round){ fg={n:"",nm:"미분류",c:"#c98a1f"}; fi=roundBox(c); } });
+      }
+      if(fi){
+        $("main").innerHTML =
+          '<button type="button" class="backbtn" id="backlist">← 전체 목록으로</button>'
+          + '<div class="card"><h2><span class="n">'+(fg.n||"·")+'</span>'+esc(fg.nm)+'</h2>' + fi + '</div>';
+        wire();
+        var bb = $("backlist");
+        if(bb) bb.addEventListener("click", function(){ OPEN = null; render(); window.scrollTo({top:0,behavior:"smooth"}); });
+        return;
+      }
+      OPEN = null;
+    }
+
     var no = 0;
     if(D.course) h += courseCard(false, ++no);
     if((D.kit_items||[]).length) h += kitCard(++no);
 
-    h += '<div class="card"><h2><span class="n">'+(++no)+'</span>교육 회차</h2>'
-       + '<p class="hint">완료된 회차를 눌러 후기와 서명을 남겨 주세요.</p>';
-    var any = false;
+    h += '<div class="card"><h2><span class="n">'+(++no)+'</span>프로그램 진행</h2>'
+       + '<p class="hint">단계를 눌러 펼치고, 완료한 항목에 후기를 남겨 주세요.</p>';
     GROUPS.forEach(function(g){
-      var list = (D.consults||[]).filter(function(c){ return (c.group||"")===g.k; });
-      if(!list.length) return;
-      any = true;
-      h += '<div class="grp"><div class="grp-h" style="border-left-color:'+g.c+'">'
+      var items = g.disp ? (D.tasks||[])
+                         : (D.consults||[]).filter(function(c){ return (c.group||"")===g.k; });
+      var done = g.disp ? items.filter(function(t){ return !!mineDisp(t.key); }).length
+                        : items.filter(function(c){ return !!mineRound(c.round); }).length;
+      var op = !!GOPEN[g.k];
+      h += '<div class="grp">'
+        +  '<div class="grp-h" style="border-left-color:'+g.c+';cursor:pointer" data-grp="'+esc(g.k)+'">'
         +  '<span class="t" style="color:'+g.c+'">'+g.n+'. '+esc(g.nm)+'</span>'
+        +  '<span class="badge '+(items.length&&done>=items.length?"b-ok":"b-blue")+'">'+done+' / '+items.length+'</span>'
+        +  '<span class="arw" style="margin-left:auto;font-size:15px;color:var(--ink3)">'+(op?"▾":"▸")+'</span>'
         +  (g.sub ? '<span class="s">'+esc(g.sub)+'</span>' : '') + '</div>';
-      list.forEach(function(c){ h += roundBox(c); });
+      if(op){
+        if(!items.length) h += '<p class="hint" style="margin:0 0 4px 4px">아직 없습니다</p>';
+        else items.forEach(function(x,i){ h += g.disp ? dispBox(x,i) : roundBox(x); });
+      }
       h += '</div>';
     });
     var un = (D.consults||[]).filter(function(c){
-      return !GROUPS.some(function(g){ return g.k===(c.group||""); }); });
-    if(un.length){ any = true; un.forEach(function(c){ h += roundBox(c); }); }
-    if(!any) h += '<p class="hint" style="margin:0">아직 등록된 회차가 없습니다.</p>';
-    h += '</div>';
-
-    h += '<div class="card"><h2><span class="n">'+(++no)+'</span>현장 서브·동행 · 강의 출강</h2>'
-       + '<p class="hint">다녀온 건을 눌러 후기와 확인 서명을 남겨 주세요.</p>';
-    if(!(D.tasks||[]).length) h += '<p class="hint" style="margin:0">아직 등록된 건이 없습니다.</p>';
-    (D.tasks||[]).forEach(function(t,i){ h += dispBox(t,i); });
+      return !GROUPS.some(function(g){ return !g.disp && g.k===(c.group||""); }); });
+    if(un.length){
+      var uo = !!GOPEN["__un"];
+      h += '<div class="grp"><div class="grp-h" style="border-left-color:#c98a1f;cursor:pointer" data-grp="__un">'
+        +  '<span class="t" style="color:#a06a1f">미분류</span>'
+        +  '<span class="badge b-wait">'+un.length+'</span>'
+        +  '<span class="arw" style="margin-left:auto;font-size:15px;color:var(--ink3)">'+(uo?"▾":"▸")+'</span></div>';
+      if(uo) un.forEach(function(c){ h += roundBox(c); });
+      h += '</div>';
+    }
     h += '</div>';
 
     $("main").innerHTML = h;
@@ -411,32 +457,28 @@
   function roundBox(c){
     var id = "r:" + c.round, open = (OPEN === id), rv = mineRound(c.round);
     var done = !!rv, ready = (c.status === "완료");
-    var badge = done ? '<span class="badge b-ok">✅ 제출 완료</span>'
-      : (ready ? '<span class="badge b-wait">작성 필요</span>'
-               : '<span class="badge b-blue">'+esc(c.status||"예정")+'</span>');
-    var sub = [c.date, c.time, c.method, c.topic].filter(has).join(" · ");
+    var info = [c.time, c.method, c.topic].filter(has).join(" · ");
     var h = '<div class="task'+(done?" done":"")+'" data-box="'+esc(id)+'">'
-      + boxHead(id, (c.label||c.round), done?"var(--okbg)":"var(--soft)", done?"var(--ok)":"var(--mg-d)", badge, sub, open);
+      + '<div class="task-h" data-toggle="'+esc(id)+'">'
+      + '<span class="no" style="background:'+(done?"var(--okbg)":"var(--soft)")+';color:'+(done?"var(--ok)":"var(--mg-d)")+'">'
+      +   esc(c.label||c.round) + '</span>'
+      + (done ? '<span class="badge b-ok">✅ 회차 완료</span>'
+              : (ready ? '<span class="badge b-act">✍ 회차 후기 쓰러가기</span>'
+                       : '<span class="badge b-blue">'+esc(c.status||"예정")+'</span>'))
+      + '<span class="arw">'+(open?"▾":"▸")+'</span>'
+      + '<span class="day">'+esc(dayTxt(c.date))+'</span>'
+      + '<span class="sub">'+esc(info)+'</span></div>';
     if(open){
       h += '<div class="task-b">';
-      if(has(c.coach)) h += '<div class="quote q-coach"><b>대표님 평가·피드백</b>'+esc(c.coach)+'</div>';
+      if(has(c.coach)) h += '<div class="quote q-coach"><b>대표님 피드백</b>'+esc(c.coach)+'</div>';
       if(done){
         var t = fbText(rv);
         if(t) h += '<div class="quote q-mine"><b>내가 쓴 후기·소감</b>'+esc(t).replace(/\n/g,"<br />")+'</div>';
-        h += '<p class="stamp">제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
+        h += '<p class="stamp">'+esc(rv.typed_name||"")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
       } else if(!ready){
         h += '<p class="hint" style="margin:0">아직 진행 전인 회차입니다. 완료되면 작성할 수 있습니다.</p>';
       } else {
-        h += fields(id, "회차")
-          +  '<div class="fld"><label class="fl">참석 방식<span class="req">*</span></label>'
-          +  '<div class="chips" data-atype="'+esc(id)+'">'
-          +  ["대면","줌","전화","기타"].map(function(a,i){
-               return '<label class="'+(i===0?"on":"")+'"><input type="radio" name="at_'+esc(id)+'" value="'+a+'"'+(i===0?" checked":"")+' />'+a+'</label>'; }).join("")
-          +  '</div></div>'
-          +  sigBlock(id)
-          +  agreeBlock(id, "위 교육을 완료하였습니다.", "서명과 확인일시가 트레이닝 이력에 기록됩니다.")
-          +  '<button type="button" class="btn" data-submit="'+esc(id)+'" disabled>제출하기</button>'
-          +  '<p class="msg" data-msg="'+esc(id)+'"></p>';
+        h += oneField(id) + confirmBlock(id, "위 회차를 이수하였습니다.");
       }
       h += '</div>';
     }
@@ -445,59 +487,57 @@
 
   function dispBox(t, i){
     var id = "d:" + t.key, open = (OPEN === id), rv = mineDisp(t.key), done = !!rv;
-    var badge = done ? '<span class="badge b-ok">✅ 서명 완료</span>' : '<span class="badge b-wait">확인 필요</span>';
-    var sub = [t.date, t.org, t.position, t.fee].filter(has).join(" · ");
+    var info = [t.org, t.position, t.fee].filter(has).join(" · ");
     var h = '<div class="task'+(done?" done":"")+'" data-box="'+esc(id)+'">'
-      + boxHead(id, (i+1)+"회차", done?"var(--okbg)":"var(--bluebg)", done?"var(--ok)":"var(--blue)", badge, sub, open);
+      + '<div class="task-h" data-toggle="'+esc(id)+'">'
+      + '<span class="no" style="background:'+(done?"var(--okbg)":"var(--bluebg)")+';color:'+(done?"var(--ok)":"var(--blue)")+'">'+(i+1)+'회차</span>'
+      + (done ? '<span class="badge b-ok">✅ 확인 완료</span>' : '<span class="badge b-act">✍ 확인하러 가기</span>')
+      + '<span class="arw">'+(open?"▾":"▸")+'</span>'
+      + '<span class="day">'+esc(dayTxt(t.date))+'</span>'
+      + '<span class="sub">'+esc(info)+'</span></div>';
     if(open){
       h += '<div class="task-b">';
-      if(has(t.coach)) h += '<div class="quote q-coach"><b>대표님 평가·피드백</b>'+esc(t.coach)+'</div>';
+      if(has(t.coach)) h += '<div class="quote q-coach"><b>대표님 피드백</b>'+esc(t.coach)+'</div>';
       if(done){
         var tx = fbText(rv);
         if(tx) h += '<div class="quote q-mine"><b>내가 쓴 후기·소감</b>'+esc(tx).replace(/\n/g,"<br />")+'</div>';
-        h += '<p class="stamp">'+(rv.fee_received?"강사비 수령 확인":"강사비 미수령")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
+        h += '<p class="stamp">'+(rv.fee_received?"강사비 수령 확인 · ":"")+esc(rv.typed_name||"")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
       } else {
-        h += fields(id, "출강확인");
+        h += oneField(id);
         if(has(t.fee)){
           h += '<label class="agree" style="background:var(--bluebg);border-color:var(--blueln)">'
             +  '<input type="checkbox" data-fee="'+esc(id)+'" /><span>'
             +  '<b>강사비 '+esc(t.fee)+' 을(를) 수령했습니다.</b>'
             +  '<small>아직 못 받으셨으면 체크하지 말고 그대로 제출하세요.</small></span></label>';
         }
-        h += sigBlock(id)
-          +  agreeBlock(id, "위 교육을 완료하였습니다.", "출강 내용이 사실과 같음을 확인하며 서명합니다.")
-          +  '<button type="button" class="btn" data-submit="'+esc(id)+'" disabled>제출하기</button>'
-          +  '<p class="msg" data-msg="'+esc(id)+'"></p>';
+        h += confirmBlock(id, "위 일정을 이수하였습니다.");
       }
       h += '</div>';
     }
     return h + '</div>';
   }
 
-  function fields(id, kind){
-    var l1 = (kind==="출강확인") ? "현장에서 잘 됐던 것 · 알게 된 것" : "도움이 된 것 · 알게 된 것";
-    var l2 = (kind==="출강확인") ? "보완이 더 필요하다고 느낀 부분" : "연습이 더 필요하다고 느낀 부분";
-    return '<div class="fld"><label class="fl">'+l1+'</label>'
-      + '<textarea data-q1="'+esc(id)+'" placeholder="한두 줄이어도 괜찮습니다"></textarea></div>'
-      + '<div class="fld"><label class="fl">'+l2+'</label>'
-      + '<textarea data-q2="'+esc(id)+'" placeholder="솔직하게 적어 주세요"></textarea></div>'
-      + '<div class="fld"><label class="fl">대표님께 하고 싶은 말 (선택)</label>'
-      + '<textarea data-q4="'+esc(id)+'" style="min-height:62px"></textarea></div>';
+  function oneField(id){
+    return '<div class="fld"><label class="fl">후기 · 소감 한 줄</label>'
+      + '<textarea data-q1="'+esc(id)+'" class="mini" placeholder="도움이 된 것 · 연습이 더 필요한 것 · 하고 싶은 말"></textarea></div>';
   }
 
-  function agreeBlock(id, big, small){
+  function confirmBlock(id, txt){
     return '<label class="agree"><input type="checkbox" data-agree="'+esc(id)+'" /><span>'
-      + '<b>'+esc(big)+'</b><small>'+esc(small)+'</small></span></label>';
-  }
-
-  function sigBlock(id){
-    return '<div class="fld"><label class="fl">서명<span class="req">*</span></label>'
-      + '<div class="sigbox" data-sigbox="'+esc(id)+'"><canvas data-sig="'+esc(id)+'"></canvas>'
-      + '<div class="sigbar"><span data-sigstate="'+esc(id)+'">손가락으로 이름을 적어 주세요</span>'
-      + '<button type="button" data-sigclear="'+esc(id)+'">지우기</button></div></div></div>';
+      + '<b>'+esc(txt)+'</b><small>확인일시가 함께 기록됩니다.</small></span></label>'
+      + '<div class="fld"><label class="fl">본인 이름 (전자서명)<span class="req">*</span></label>'
+      + '<input type="text" data-typed="'+esc(id)+'" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" /></div>'
+      + '<p class="stamp">작성 시각 <b>'+nowText()+'</b></p>'
+      + '<button type="button" class="btn" data-submit="'+esc(id)+'" disabled>제출하기</button>'
+      + '<p class="msg" data-msg="'+esc(id)+'"></p>';
   }
 
   function wire(){
+    Array.prototype.forEach.call(document.querySelectorAll("[data-grp]"), function(el){
+      el.addEventListener("click", function(){
+        var k = el.dataset.grp; GOPEN[k] = !GOPEN[k]; render();
+      });
+    });
     Array.prototype.forEach.call(document.querySelectorAll("[data-toggle]"), function(el){
       el.addEventListener("click", function(){
         var id = el.dataset.toggle;
@@ -509,15 +549,11 @@
         }
       });
     });
-    Array.prototype.forEach.call(document.querySelectorAll("[data-sig]"), initSig);
-    Array.prototype.forEach.call(document.querySelectorAll(".chips[data-atype]"), function(w){
-      w.addEventListener("change", function(){
-        Array.prototype.forEach.call(w.querySelectorAll("label"), function(l){
-          l.classList.toggle("on", l.querySelector("input").checked); });
-      });
-    });
     Array.prototype.forEach.call(document.querySelectorAll("[data-agree]"), function(cb){
       cb.addEventListener("change", function(){ refresh(cb.dataset.agree); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-typed]"), function(tp){
+      tp.addEventListener("input", function(){ refresh(tp.dataset.typed); });
     });
     Array.prototype.forEach.call(document.querySelectorAll("[data-submit]"), function(b){
       b.addEventListener("click", function(){ submit(b.dataset.submit); });
@@ -543,50 +579,8 @@
     var btn = q1('[data-submit="'+cssq(id)+'"]');
     if(!btn) return;
     var agree = q1('[data-agree="'+cssq(id)+'"]');
-    btn.disabled = !( SIG[id] && SIG[id].drawn && agree && agree.checked );
-  }
-
-  function initSig(cv){
-    var id = cv.dataset.sig, ctx = cv.getContext("2d"), drawing = false, last = null;
-    SIG[id] = { cv: cv, drawn: false };
-    function fit(){
-      var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-      cv.width = Math.max(1, Math.round(r.width*dpr));
-      cv.height = Math.max(1, Math.round(r.height*dpr));
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-      ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#141416";
-    }
-    fit();
-    function pos(e){
-      var r = cv.getBoundingClientRect(), t = e.touches ? e.touches[0] : e;
-      return { x: t.clientX - r.left, y: t.clientY - r.top };
-    }
-    function start(e){ e.preventDefault(); drawing = true; last = pos(e); }
-    function move(e){
-      if(!drawing) return; e.preventDefault();
-      var p = pos(e);
-      ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
-      last = p;
-      if(!SIG[id].drawn){
-        SIG[id].drawn = true;
-        var st = q1('[data-sigstate="'+cssq(id)+'"]'); if(st) st.textContent = "서명이 입력되었습니다";
-        var bx = q1('[data-sigbox="'+cssq(id)+'"]'); if(bx) bx.classList.add("filled");
-        refresh(id);
-      }
-    }
-    function end(){ drawing = false; }
-    cv.addEventListener("mousedown",start); cv.addEventListener("mousemove",move);
-    window.addEventListener("mouseup",end);
-    cv.addEventListener("touchstart",start,{passive:false});
-    cv.addEventListener("touchmove",move,{passive:false});
-    cv.addEventListener("touchend",end);
-    var cl = q1('[data-sigclear="'+cssq(id)+'"]');
-    if(cl) cl.addEventListener("click", function(){
-      fit(); SIG[id].drawn = false;
-      var st = q1('[data-sigstate="'+cssq(id)+'"]'); if(st) st.textContent = "손가락으로 이름을 적어 주세요";
-      var bx = q1('[data-sigbox="'+cssq(id)+'"]'); if(bx) bx.classList.remove("filled");
-      refresh(id);
-    });
+    var typed = q1('[data-typed="'+cssq(id)+'"]');
+    btn.disabled = !( agree && agree.checked && typed && typed.value.trim() );
   }
 
   function val(attr, id){ var e = q1('['+attr+'="'+cssq(id)+'"]'); return e ? e.value.trim() : ""; }
@@ -597,18 +591,13 @@
     var isRound = id.indexOf("r:") === 0, key = id.slice(2);
     var p = { action:"submit", name:NM, phone_last4:L4,
       kind: isRound ? "회차" : "출강확인",
-      signature: SIG[id].cv.toDataURL("image/png"),
+      typed_name: val("data-typed", id),
       note_confirmed: true,
-      feedback: {
-        "도움된 점·알게 된 것": val("data-q1", id),
-        "연습이 필요한 부분": val("data-q2", id),
-        "대표님께": val("data-q4", id)
-      } };
+      feedback: { "후기·소감": val("data-q1", id) } };
     if(isRound){
       var c = (D.consults||[]).filter(function(x){ return x.round===key; })[0] || {};
-      var at = q1('[name="at_'+cssq(id)+'"]:checked');
       p.round = key; p.session_date = c.date || null; p.attended = true;
-      p.attend_type = at ? at.value : "대면"; p.start_time = c.time || ""; p.end_time = "";
+      p.attend_type = c.method || "대면"; p.start_time = c.time || ""; p.end_time = "";
     } else {
       var fee = q1('[data-fee="'+cssq(id)+'"]');
       p.dispatch_key = key; p.fee_received = !!(fee && fee.checked);
@@ -630,7 +619,7 @@
   function reload(){
     api({ action:"my_tasks", name:NM, phone_last4:L4 }, function(err, j){
       if(err) return;
-      D = j; SIG = {}; OPEN = null; render();
+      D = j; OPEN = null; render();
       window.scrollTo({top:0, behavior:"smooth"});
     });
   }
