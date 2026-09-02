@@ -519,7 +519,7 @@
           + (rv.photo_count ? ' · 사진 '+rv.photo_count+'장' : '') + '</p>';
       } else {
         h += oneField(id);
-        if(has(t.fee)){
+        if(has(t.fee) && t.position !== "참관실습"){
           h += '<label class="agree" style="background:var(--bluebg);border-color:var(--blueln)">'
             +  '<input type="checkbox" data-fee="'+esc(id)+'" /><span>'
             +  '<b>강사비 '+esc(t.fee)+' 을(를) 수령했습니다.</b>'
