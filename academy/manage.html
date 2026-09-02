@@ -410,9 +410,10 @@ function addTeacher(){TCH.push({name:"",brand:"",spec:"",photo:"",visible:true,m
 function delSelectedTeachers(){var idx=[];document.querySelectorAll("#teachers input[data-sel]").forEach(function(b){if(b.checked)idx.push(Number(b.dataset.sel));});if(!idx.length){alert("삭제할 강사를 앞의 체크박스로 선택해 주세요.");return;}if(!confirm("선택한 "+idx.length+"명을 삭제할까요? (저장을 눌러야 실제 반영됩니다)"))return;idx.sort(function(a,b){return b-a;}).forEach(function(i){TCH.splice(i,1);});buildTeachers();}
 function trainChecklist(t,i){var all=TRAIN_STEPS.slice();(t.customSteps||[]).forEach(function(s){if(all.indexOf(s)<0)all.push(s);});var html=all.map(function(s){var on=(t.train&&t.train[s])?"checked":"";var custom=TRAIN_STEPS.indexOf(s)<0;var del=custom?'<span data-delstep="'+i+'" data-step="'+esc(s)+'" title="이 항목 삭제" style="cursor:pointer;color:#c94a42;margin-left:2px;font-weight:800">✕</span>':'';return '<span style="display:inline-flex;align-items:center;gap:1px"><label class="mini" style="cursor:pointer;border:1px solid #e2e1db;padding:3px 8px;margin:0"><input type="checkbox" data-tri="'+i+'" data-tstep="'+esc(s)+'" '+on+' style="width:auto;margin-right:4px">'+esc(s)+'</label>'+del+'</span>';}).join("");html+='<button class="mini" data-addstep="'+i+'" style="border:1px dashed #b0257a;color:#b0257a">+ 항목 추가</button>';return html;}
 function dispSummary(dp){var p=[];if(dp.date)p.push(dp.date);if(dp.org)p.push(dp.org);if(dp.position)p.push(dp.position);if(dp.fee)p.push(dp.fee);return p.join(" · ")||"내용 없음 — 눌러서 작성";}
-function dispatchRows(t,i){var list=t.dispatch||[];var st='padding:9px;border:1px solid #e2e1db;border-radius:8px;font-size:14px;width:100%;font-family:inherit';var lb='font-size:11.5px;font-weight:800;color:#8a8f89;display:block;margin-bottom:3px';var rows=list.map(function(dp,di){var op=!!DIS_OPEN[i+"_"+di];var pos=DISP_POS.map(function(p){return '<option'+(dp.position===p?" selected":"")+'>'+p+'</option>';}).join("");var sg=findDispatchSign(t.name,dp.org,dp.date);
+function dispatchRows(t,i){var list=t.dispatch||[];var st='padding:9px;border:1px solid #e2e1db;border-radius:8px;font-size:14px;width:100%;font-family:inherit';var lb='font-size:11.5px;font-weight:800;color:#8a8f89;display:block;margin-bottom:3px';var DORD=idxByDate(list),DNUM={};DORD.forEach(function(di,k){DNUM[di]=k+1;});
+var rows=DORD.map(function(di){var dp=list[di];var op=!!DIS_OPEN[i+"_"+di];var pos=DISP_POS.map(function(p){return '<option'+(dp.position===p?" selected":"")+'>'+p+'</option>';}).join("");var sg=findDispatchSign(t.name,dp.org,dp.date);
 var head='<div data-disacc="'+i+'" data-di="'+di+'" style="display:flex;align-items:center;gap:8px;padding:12px 12px;cursor:pointer;background:'+(op?"#eef3fa":"#fff")+'">'
-+'<span style="flex:0 0 auto;font-weight:800;color:#2d5f9e;font-size:13.5px;background:#eaf1fa;border-radius:8px;padding:3px 9px">'+(di+1)+'회차</span>'
++'<span style="flex:0 0 auto;font-weight:800;color:#2d5f9e;font-size:13.5px;background:#eaf1fa;border-radius:8px;padding:3px 9px">'+DNUM[di]+'회차</span>'
 +'<span style="flex:1;min-width:0;font-size:13px;color:#5c5f5c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(dispSummary(dp))+'</span>'
 +((dp.review||"").trim()?'<span title="강사 후기 있음" style="flex:0 0 auto;font-size:12px">💬</span>':'')
 +(sg?'<span title="강사 확인 서명 완료" style="flex:0 0 auto;font-size:12px">✅</span>':'')
@@ -430,7 +431,7 @@ var dhead='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;ma
   +'<button class="mini" data-adddisp="'+i+'" style="flex:0 0 auto;border:1px dashed '+DGROUP.c+';color:'+DGROUP.c+';font-weight:800">+ 추가</button></div>';
 return dhead+rows;}
 function conSummary(c){var p=[];if(c.date){var d=c.date.split("-");p.push(d.length===3?(d[1]+"/"+d[2]):c.date);}if(c.time)p.push(c.time);if(c.method)p.push(c.method);if(c.topic)p.push(c.topic);return p.join(" · ")||"내용 없음 — 눌러서 작성";}
-function consultsRows(t,i){var list=t.consults||[];var GNUM={},gcnt={};list.forEach(function(c,ci){var k=(c.group||"__none");gcnt[k]=(gcnt[k]||0)+1;GNUM[ci]=gcnt[k];});var st='padding:9px;border:1px solid #e2e1db;border-radius:8px;font-size:14px;width:100%;font-family:inherit';var lb='font-size:11.5px;font-weight:800;color:#8a8f89;display:block;margin-bottom:3px';var rows=list.map(function(c,ci){var op=!!CON_OPEN[i+"_"+ci];var mopt=CMETHODS.map(function(m){return '<option'+(c.method===m?" selected":"")+'>'+m+'</option>';}).join("");var sopt=CSTAT.map(function(x){return '<option'+((c.status||"예정")===x?" selected":"")+'>'+x+'</option>';}).join("");var sv=c.status||"예정";var scol=sv==="완료"?"#328062":(sv==="진행중"?"#c98a1f":"#8a8f89");var sbg=sv==="완료"?"#e7f4ee":(sv==="진행중"?"#fdf3e0":"#f1f1ef");var rv=findReview(t.name,ci+1,c.date);
+function consultsRows(t,i){var list=t.consults||[];var GNUM={},gcnt={};idxByDate(list).forEach(function(ci){var k=(list[ci].group||"__none");gcnt[k]=(gcnt[k]||0)+1;GNUM[ci]=gcnt[k];});var st='padding:9px;border:1px solid #e2e1db;border-radius:8px;font-size:14px;width:100%;font-family:inherit';var lb='font-size:11.5px;font-weight:800;color:#8a8f89;display:block;margin-bottom:3px';var rows=list.map(function(c,ci){var op=!!CON_OPEN[i+"_"+ci];var mopt=CMETHODS.map(function(m){return '<option'+(c.method===m?" selected":"")+'>'+m+'</option>';}).join("");var sopt=CSTAT.map(function(x){return '<option'+((c.status||"예정")===x?" selected":"")+'>'+x+'</option>';}).join("");var sv=c.status||"예정";var scol=sv==="완료"?"#328062":(sv==="진행중"?"#c98a1f":"#8a8f89");var sbg=sv==="완료"?"#e7f4ee":(sv==="진행중"?"#fdf3e0":"#f1f1ef");var rv=findReview(t.name,ci+1,c.date);
 var head='<div data-conacc="'+i+'" data-ci="'+ci+'" style="display:flex;align-items:center;gap:8px;padding:12px 12px;cursor:pointer;background:'+(op?"#fbeef5":"#fff")+'">'
 +'<span style="flex:0 0 auto;font-weight:800;color:#b0257a;font-size:13.5px;background:#fbeef5;border-radius:8px;padding:3px 9px">'+GNUM[ci]+'회차</span>'
 +'<span style="flex:1;min-width:0;font-size:13px;color:#5c5f5c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(conSummary(c))+'</span>'
@@ -451,7 +452,7 @@ CGROUPS.forEach(function(g,gi){
       +'<span style="font-size:13.5px;font-weight:900;color:#2d5f9e">3. 현장 서브·동행 및 강의 출강</span>'
       +'<span style="flex:1 1 100%;font-size:11.5px;color:#6b7d92;line-height:1.5">아래 ⑤ 강의 출강 이력에서 함께 관리합니다 (컨설팅 참관 포함)</span></div>';
   }
-  var mine=[];list.forEach(function(c,ci){if(((c.group||""))===g.k)mine.push(ci);});
+  var mine=idxByDate(list,function(c){return (c.group||"")===g.k;});
   var done=mine.filter(function(ci){return list[ci].status==="완료";}).length;
   var full=done>=g.goal;
   out+='<div style="margin-bottom:14px">'
@@ -466,7 +467,7 @@ CGROUPS.forEach(function(g,gi){
       : '<p style="font-size:12.5px;color:#b4b4b0;margin:0 0 4px 4px">아직 없습니다</p>';
   out+='</div>';
 });
-var none=[];list.forEach(function(c,ci){if(!groupOf(c))none.push(ci);});
+var none=idxByDate(list,function(c){return !groupOf(c);});
 if(none.length){
   out+='<div style="margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;padding:8px 10px;background:#fdf3e0;border-radius:9px;border-left:4px solid #c98a1f">'
     +'<span style="font-size:13.5px;font-weight:900;color:#a06a1f">미분류</span>'
@@ -577,6 +578,9 @@ var CGROUPS=[
  {k:"5 수료",       n:"5", nm:"수료",          goal:1, sub:"강의 시연·피드백·수료식",                              c:"#6b4a9e"}
 ];
 var DGROUP={n:"3",nm:"현장 서브·동행 및 강의 출강",goal:3,sub:"컨설팅 참관 포함",c:"#2d5f9e"};
+function dtKey(x){return (String(x&&x.date||"9999-99-99"))+" "+(String(x&&x.time||"99:99"));}
+function idxByDate(list,pick){var a=[];list.forEach(function(c,i){if(!pick||pick(c,i))a.push(i);});
+  a.sort(function(p,q){var kp=dtKey(list[p]),kq=dtKey(list[q]);return kp<kq?-1:(kp>kq?1:p-q);});return a;}
 function groupOf(c){var g=(c&&c.group)||"";for(var i=0;i<CGROUPS.length;i++){if(CGROUPS[i].k===g)return CGROUPS[i];}return null;}
 /* ===== 과정 계약(상품별 커리큘럼) — 인증강사 안내페이지 기준 ===== */
 var COURSE={

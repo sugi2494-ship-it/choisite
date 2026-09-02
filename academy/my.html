@@ -200,8 +200,11 @@
     return ks.map(function(k){ return k + " — " + fb[k]; }).join("\n");
   }
 
+  function dtk(x){ return String((x&&x.date)||"9999-99-99") + " " + String((x&&x.time)||"99:99"); }
+  function byDate(a){ return (a||[]).slice().sort(function(p,q){ var kp=dtk(p),kq=dtk(q); return kp<kq?-1:(kp>kq?1:0); }); }
+
   function render(nm, l4, j){
-    var mine = j.mine || [], cons = j.consults || [], tasks = j.tasks || [], course = j.course;
+    var mine = j.mine || [], cons = byDate(j.consults||[]), tasks = byDate(j.tasks||[]), course = j.course;
     var link = function(k){ return RPT + "?n=" + encodeURIComponent(nm) + "&k=" + encodeURIComponent(k); };
     var h = "";
 
