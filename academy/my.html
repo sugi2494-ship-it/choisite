@@ -199,18 +199,15 @@
     var link = function(k){ return RPT + "?n=" + encodeURIComponent(nm) + "&k=" + encodeURIComponent(k); };
     var h = "";
 
-    h += '<div class="ro">이 화면은 <b>보기 전용</b>입니다. 내용은 대표님이 관리하시고, '
-       + '선생님은 <b>확인과 서명</b>만 하시면 됩니다.</div>';
-
     /* --- 과정 --- */
-    h += '<div class="card"><h2><span class="n">1</span>내 과정</h2>';
+    h += '<div class="card"><h2><span class="n">1</span>인증강사 전문가 프로그램</h2>';
     if(course){
-      h += '<p class="hint">'+esc(course.title)+' · '+esc(course.price)+' · '+esc(course.term)+'</p>';
+      h += '<p class="hint">'+esc(course.step||course.title)+' · '+esc(course.term)+'</p>';
       h += '<div style="font-size:15px;font-weight:800;color:var(--mg-d);margin-bottom:8px">'+esc(course.total)+'</div>';
       h += '<div>' + (j.agree_signed
-            ? '<span class="badge b-ok">✅ 과정 확인 서명 완료</span>'
-            : '<span class="badge b-wait">⏳ 과정 확인 서명 전</span>') + '</div>';
-      h += '<details style="margin-top:9px"><summary>전체 커리큘럼 보기 ▾</summary><div class="tw"><table>'
+            ? '<span class="badge b-ok">✅ 과정 서명 완료</span>'
+            : '<span class="badge b-wait">⏳ 과정 서명 전</span>') + '</div>';
+      h += '<details open style="margin-top:9px"><summary>전체 커리큘럼</summary><div class="tw"><table>'
         + '<tr><th>단계</th><th>교육 내용</th><th>완성되는 결과</th></tr>'
         + (course.steps||[]).map(function(x){
             return '<tr><td class="step">'+esc(x[0])+'</td><td class="body">'+esc(x[1])+'</td><td class="res">'+esc(x[2]||"")+'</td></tr>';
@@ -219,7 +216,7 @@
         + (course.give ? '<div style="margin-top:9px;font-size:13.5px;line-height:1.65"><b>제공</b> · '+esc(course.give)+'</div>' : '')
         + (course.note ? '<div style="margin-top:7px;font-size:12.5px;color:var(--ink3);line-height:1.6">'+esc(course.note)+'</div>' : '')
         + '</details>';
-      if(!j.agree_signed) h += '<a class="act" href="'+link("계약확인")+'">✍ 과정 확인 서명하러 가기</a>';
+      if(!j.agree_signed) h += '<a class="act" href="'+link("계약확인")+'">✍ 과정 서명하기</a>';
     } else {
       h += '<p class="hint">신청 과정이 아직 등록되지 않았습니다. 대표님께 문의해 주세요.</p>';
     }

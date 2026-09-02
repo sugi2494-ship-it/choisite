@@ -148,27 +148,30 @@
       연락처 인증하기
     </button>
     <p class="msg" id="loadmsg" style="text-align:left"></p>
-    <div id="gatemsg" style="display:none;margin-top:10px;background:#FDEEF6;border:1px solid #f0d8e7;
-      border-radius:11px;padding:12px 13px;font-size:13.5px;color:#b0257a;line-height:1.6">
-      <b>먼저 과정 구성을 확인하고 서명해 주세요.</b><br />
-      서명이 끝나면 회차·출강 제출을 이어서 하실 수 있습니다.
-    </div>
-    <div class="fld" style="margin-top:6px">
-      <div class="chips" id="kind">
-        <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
-        <label><input type="radio" name="kind" value="출강확인" />출강 확인</label>
-        <label><input type="radio" name="kind" value="교구인수" />교구 인수</label>
-        <label><input type="radio" name="kind" value="계약확인" />과정 확인</label>
-      </div>
-    </div>
   </div>
 
   <div id="whobar" style="display:none;background:#f3faf6;border:1px solid #bfe3d1;border-radius:12px;
-    padding:12px 14px;margin-bottom:12px;display:none;align-items:center;gap:9px;flex-wrap:wrap">
+    padding:12px 14px;margin-bottom:12px;align-items:center;gap:9px;flex-wrap:wrap">
     <span style="font-size:13.5px;font-weight:800;color:#1b7a4a">✅ 본인 확인 완료</span>
     <span id="whotxt" style="flex:1;min-width:0;font-size:13.5px;color:#3f4a44"></span>
     <button type="button" id="whoedit" style="flex:0 0 auto;background:none;border:0;padding:4px 2px;
-      font:inherit;font-size:12.5px;font-weight:800;color:#2d5f9e;text-decoration:underline;cursor:pointer">다른 항목 제출</button>
+      font:inherit;font-size:12.5px;font-weight:800;color:#2d5f9e;text-decoration:underline;cursor:pointer">처음부터</button>
+  </div>
+
+  <div id="gatemsg" style="display:none;background:#FDEEF6;border:1px solid #f0d8e7;
+    border-radius:12px;padding:13px 14px;margin-bottom:12px;font-size:13.5px;color:#b0257a;line-height:1.6">
+    <b>먼저 과정 구성을 확인하고 서명해 주세요.</b><br />
+    서명이 끝나면 회차·출강 제출을 이어서 하실 수 있습니다.
+  </div>
+
+  <div id="kindwrap" class="card" style="display:none">
+    <p class="hint" style="margin:0 0 8px">무엇을 제출하시나요?</p>
+    <div class="chips" id="kind">
+      <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
+      <label><input type="radio" name="kind" value="출강확인" />출강 확인</label>
+      <label><input type="radio" name="kind" value="교구인수" />교구 인수</label>
+      <label><input type="radio" name="kind" value="계약확인" />과정 확인</label>
+    </div>
   </div>
 
   <!-- 2. 출석 체크 (교육 회차) -->
@@ -463,47 +466,65 @@
       KITDATE = (res.j && res.j.kit_date) || "";
       loaded = true;
       AGREED = !!(res.j && res.j.agree_signed);
-      lm.className = "msg"; lm.textContent = "확인되었습니다.";
-      if(!AGREED && COURSE){
-        LOCK = true;
+      LOCK = (!AGREED && !!COURSE);
+      if(LOCK){
         var kr2 = document.querySelector('input[name="kind"][value="계약확인"]');
         if(kr2){ kr2.checked = true; $("kind").dispatchEvent(new Event("change")); }
-        $("kind").style.display = "none";
-        $("gatemsg").style.display = "block";
-      } else {
-        LOCK = false;
-        $("kind").style.display = "";
-        $("gatemsg").style.display = "none";
       }
+      lm.className = "msg"; lm.textContent = "";
       renderAll(); check();
-      focusTarget(nm);
+      applyStage(nm);
     })
     .catch(function(){ lm.className = "msg err"; lm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
   });
 
-  /* 링크로 특정 항목에 들어온 경우 — 본인확인·회차선택을 접고 바로 그 항목으로 */
-  function focusTarget(nm){
-    if(LOCK) return;                 /* 과정 확인이 먼저인 상태면 그대로 둔다 */
-    if(!PRE.r && !PRE.k) return;     /* 일반 접속이면 그대로 */
+  /* 본인 확인은 한 번만. 확인이 끝나면 지금 해야 할 것만 남긴다. */
+  function stageLabel(nm){
     var bits = [nm + " 선생님"];
+    var m = mode();
+    if(LOCK){ bits.push("과정 구성 확인"); return bits.join(" · "); }
     if(PRE.r){
       var c = null;
       for(var i=0;i<CONSULTS.length;i++){ if(CONSULTS[i].round === PRE.r){ c = CONSULTS[i]; break; } }
       if(c){ bits.push(c.label || c.round); if(c.date) bits.push(c.date); }
       else bits.push(PRE.r);
-      var rw = $("roundwrap"); if(rw) rw.style.display = "none";
-    } else if(PRE.k){
-      bits.push(PRE.k === "출강확인" ? "출강 확인" : (PRE.k === "교구인수" ? "교구 인수" : "과정 확인"));
+      return bits.join(" · ");
     }
-    $("whotxt").textContent = bits.join(" · ");
+    if(PRE.k){
+      bits.push(PRE.k === "출강확인" ? "출강 확인"
+        : (PRE.k === "교구인수" ? "교구 인수" : "과정 구성 확인"));
+      return bits.join(" · ");
+    }
+    bits.push(m === "출강확인" ? "출강 확인"
+      : (m === "교구인수" ? "교구 인수" : (m === "계약확인" ? "과정 구성 확인" : "교육 회차")));
+    return bits.join(" · ");
+  }
+  function applyStage(nm){
+    /* 1. 신원 확인은 끝났다 — 다시 묻지 않는다 */
     $("card-id").style.display = "none";
     $("whobar").style.display = "flex";
-    $("kind").style.display = "none";
+    $("whotxt").textContent = stageLabel(nm);
+
+    /* 2. 과정 서명 전이면 과정 구성만 */
+    if(LOCK){
+      $("gatemsg").style.display = "block";
+      $("kindwrap").style.display = "none";
+      var rw0 = $("roundwrap"); if(rw0) rw0.style.display = "";
+      return;
+    }
+    $("gatemsg").style.display = "none";
+
+    /* 3. 링크로 항목이 정해져 있으면 그 항목만, 아니면 고르게 한다 */
+    var pinned = !!(PRE.r || PRE.k);
+    $("kindwrap").style.display = pinned ? "none" : "";
+    var rw = $("roundwrap"); if(rw) rw.style.display = PRE.r ? "none" : "";
   }
   $("whoedit").addEventListener("click", function(){
+    PRE = {};                       /* 링크 고정 해제 */
     $("card-id").style.display = "";
     $("whobar").style.display = "none";
-    $("kind").style.display = "";
+    $("gatemsg").style.display = LOCK ? "block" : "none";
+    $("kindwrap").style.display = LOCK ? "none" : "";
     var rw = $("roundwrap"); if(rw) rw.style.display = "";
   });
 
@@ -520,8 +541,8 @@
         +'<td style="padding:7px 9px;border-bottom:1px solid #efedf1;font-size:13px;color:#83838d">'+esc(x[2]||"")+'</td></tr>';
     }).join("");
     box.innerHTML = '<div style="background:#fdfafc;border:1px solid #ead9e6;border-radius:12px;padding:14px">'
-      + '<div style="font-size:17px;font-weight:800">'+esc(COURSE.title)+'</div>'
-      + '<div style="margin-top:4px;font-size:14px;color:#5c5f5c">'+esc(COURSE.price)+' · '+esc(COURSE.term)+'</div>'
+      + '<div style="font-size:17px;font-weight:800">'+esc(COURSE.step||COURSE.title)+'</div>'
+      + '<div style="margin-top:4px;font-size:14px;color:#5c5f5c">'+esc(COURSE.term)+'</div>'
       + '<div style="margin-top:6px;font-size:15px;font-weight:800;color:#b0257a">'+esc(COURSE.total)+'</div>'
       + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;margin-top:10px">'+rows+'</table></div>'
       + '<div style="margin-top:10px;font-size:13.5px;line-height:1.65"><b>제공</b> · '+esc(COURSE.give||"")+'</div>'
@@ -749,7 +770,7 @@
       var lines = [];
       if(m === "계약확인"){
         lines.push("<b>"+payload.name+"</b> · 과정 구성 확인");
-        lines.push(COURSE ? (COURSE.title+" · "+COURSE.price+" · "+COURSE.total) : "");
+        lines.push(COURSE ? ((COURSE.step||COURSE.title)+" · "+COURSE.total) : "");
         lines.push("확인 " + $("nowtime2").textContent);
       } else if(m === "교구인수"){
         lines.push("<b>"+payload.name+"</b> · 교구 인수 확인");
