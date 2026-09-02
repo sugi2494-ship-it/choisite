@@ -358,7 +358,10 @@
           + '<div class="card"><h2><span class="n">'+(fg.n||"·")+'</span>'+esc(fg.nm)+'</h2>' + fi + '</div>';
         wire();
         var bb = $("backlist");
-        if(bb) bb.addEventListener("click", function(){ OPEN = null; render(); window.scrollTo({top:0,behavior:"smooth"}); });
+        if(bb) bb.addEventListener("click", function(){
+          if(history.state && history.state.pbs === "detail"){ history.back(); }
+          else { OPEN = null; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+        });
         return;
       }
       OPEN = null;
@@ -566,7 +569,10 @@
     Array.prototype.forEach.call(document.querySelectorAll("[data-toggle]"), function(el){
       el.addEventListener("click", function(){
         var id = el.dataset.toggle;
-        OPEN = (OPEN === id) ? null : id;
+        var opening = (OPEN !== id);
+        OPEN = opening ? id : null;
+        if(opening){ try{ history.pushState({pbs:"detail"}, "", location.href); }catch(e){} }
+        else { try{ if(history.state && history.state.pbs === "detail") history.back(); }catch(e){} }
         render();
         if(OPEN === id){
           var box = q1('[data-box="'+cssq(id)+'"]');
@@ -692,10 +698,16 @@
     });
   }
 
+  window.addEventListener("popstate", function(){
+    if(OPEN){ OPEN = null; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+  });
+
   function reload(){
     api({ action:"my_tasks", name:NM, phone_last4:L4 }, function(err, j){
       if(err) return;
-      D = j; OPEN = null; PHOTOS = {}; render();
+      D = j; PHOTOS = {};
+      if(OPEN){ OPEN = null; try{ if(history.state && history.state.pbs === "detail") history.back(); }catch(e){} }
+      render();
       window.scrollTo({top:0, behavior:"smooth"});
     });
   }
