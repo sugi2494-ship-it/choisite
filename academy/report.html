@@ -9,6 +9,7 @@
 <link rel="icon" href="/assets/common/pbs-logo.png" />
 <style>
   :root{
+    color-scheme: light;
     --mg:#E5007F; --mg-d:#C2185B; --mg-soft:#FDEEF6;
     --ink:#141416; --ink-2:#4a4a52; --ink-3:#83838d;
     --line:#e6e6ea; --bg:#f7f7f8; --card:#fff;
@@ -143,8 +144,11 @@
       <label class="fl" for="last4">연락처 뒤 4자리<span class="req">*</span></label>
       <input type="tel" id="last4" inputmode="numeric" maxlength="4" placeholder="예: 1234" autocomplete="off" />
     </div>
-    <div class="fld">
-      <label class="fl">무엇을 제출하시나요?<span class="req">*</span></label>
+    <button type="button" class="mini" id="loadmine" style="width:100%;padding:13px;font-size:15px;font-weight:800">
+      내 일정 불러오기
+    </button>
+    <p class="msg" id="loadmsg" style="text-align:left"></p>
+    <div class="fld" style="margin-top:6px">
       <div class="chips" id="kind">
         <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
         <label><input type="radio" name="kind" value="출강확인" />출강 확인</label>
@@ -152,10 +156,6 @@
         <label><input type="radio" name="kind" value="계약확인" />과정 확인</label>
       </div>
     </div>
-    <button type="button" class="mini" id="loadmine" style="width:100%;padding:12px;font-size:14px">
-      내 일정 불러오기
-    </button>
-    <p class="msg" id="loadmsg" style="text-align:left"></p>
   </div>
 
   <!-- 2. 출석 체크 (교육 회차) -->
@@ -351,6 +351,13 @@
     });
     return p;
   })();
+  function saveWho(nm, l4){
+    try{ sessionStorage.setItem("pbs_tr", JSON.stringify({ n: nm, l: l4 })); }catch(e){}
+  }
+  function loadWho(){
+    try{ return JSON.parse(sessionStorage.getItem("pbs_tr") || "null"); }catch(e){ return null; }
+  }
+  var AUTO = false;
   (function(){
     if(PRE.n) $("name").value = PRE.n;
     if(PRE.k){
@@ -358,9 +365,16 @@
       if(kr){ kr.checked = true; $("kind").dispatchEvent(new Event("change")); }
     }
     if(PRE.d) $("sdate").value = PRE.d;
-    if(PRE.n || PRE.r){
-      var who = [PRE.n ? PRE.n + " 선생님" : "", PRE.r, PRE.d].filter(Boolean).join(" · ");
-      $("hsub").textContent = who + " — 연락처 뒤 4자리를 넣고 [내 일정 불러오기]를 눌러주세요.";
+    if(PRE.n){
+      $("htitle").textContent = PRE.n + " 강사님 프로그램 트레이닝";
+      $("hsub").textContent = [PRE.r, PRE.d].filter(Boolean).join(" · ") || "확인·서명이 필요한 항목입니다.";
+    }
+    /* 내 진행표에서 넘어온 경우 다시 로그인하지 않도록 이어받기 */
+    var w = loadWho();
+    if(w && w.n && w.l && (!PRE.n || String(w.n).replace(/\s/g,"") === String(PRE.n).replace(/\s/g,""))){
+      if(!$("name").value) $("name").value = w.n;
+      $("last4").value = w.l;
+      AUTO = true;
     }
   })();
 
@@ -392,9 +406,11 @@
     $("card-fb").style.display       = quick ? "none" : "";
     $("card-sign").style.display     = quick ? "none" : "";
     $("fbtitle").textContent = (m === "출강확인") ? "현장 소감" : "후기 작성";
-    $("htitle").textContent = (m === "출강확인") ? "출강 확인서"
-      : (m === "교구인수") ? "교구 인수 확인서"
-      : (m === "계약확인") ? "과정 구성 확인서" : "인증강사 교육 트레이닝 후기";
+    if(!PRE.n){
+      $("htitle").textContent = (m === "출강확인") ? "출강 확인서"
+        : (m === "교구인수") ? "교구 인수 확인서"
+        : (m === "계약확인") ? "과정 구성 확인서" : "인증강사 교육 트레이닝 후기";
+    }
     if(!PRE.n && !PRE.r){
       $("hsub").textContent = (m === "출강확인")
         ? "출강 내용과 강사비 수령 여부를 확인하고 서명하는 양식입니다."
@@ -426,6 +442,7 @@
       if(!res.ok || (res.j && res.j.error)){
         lm.className = "msg err"; lm.textContent = (res.j && res.j.error) || "불러오지 못했습니다."; return;
       }
+      saveWho(nm, l4);
       CONSULTS = (res.j && res.j.consults) || [];
       TASKS = (res.j && res.j.tasks) || [];
       COURSE = (res.j && res.j.course) || null;
@@ -624,6 +641,9 @@
   });
   applyKind();
   check();
+  if(AUTO && $("name").value.trim() && $("last4").value.length === 4){
+    setTimeout(function(){ $("loadmine").click(); }, 60);
+  }
 
   /* 제출 */
   $("go").addEventListener("click", function(){

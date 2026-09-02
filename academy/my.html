@@ -7,6 +7,7 @@
 <meta name="robots" content="noindex, nofollow" />
 <style>
   :root{
+    color-scheme: light;
     --mg:#E5007F; --mg-d:#b0257a; --soft:#FDEEF6;
     --ink:#141416; --ink2:#4a4a52; --ink3:#83838d;
     --line:#e6e6ea; --bg:#f7f7f8; --card:#fff;
@@ -14,14 +15,6 @@
     --wait:#a06a1f; --waitbg:#fdf3e0; --waitln:#eddcb6;
     --blue:#2d5f9e; --bluebg:#eef3fa;
   }
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-    --ink:#f2f2f4; --ink2:#c7c7cf; --ink3:#9a9aa4; --line:#33333a;
-    --bg:#131315; --card:#1c1c20; --soft:#3a1028;
-    --okbg:#12301f; --okln:#1f5136; --waitbg:#332b12; --waitln:#5c4d1e; --bluebg:#1a2534}}
-  :root[data-theme="dark"]{
-    --ink:#f2f2f4; --ink2:#c7c7cf; --ink3:#9a9aa4; --line:#33333a;
-    --bg:#131315; --card:#1c1c20; --soft:#3a1028;
-    --okbg:#12301f; --okln:#1f5136; --waitbg:#332b12; --waitln:#5c4d1e; --bluebg:#1a2534}
   *{box-sizing:border-box}
   html,body{overflow-x:hidden}
   body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;
@@ -58,7 +51,6 @@
   .b-mg{background:var(--soft);color:var(--mg-d)}
   .b-blue{background:var(--bluebg);color:var(--blue)}
   .b-grey{background:#ececea;color:#7a7a80}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .b-grey{background:#2a2a30;color:#a0a0a8}}
 
   .grp{margin:0 0 14px}
   .grp-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 11px;
@@ -70,7 +62,6 @@
   .item .when{flex:1 1 100%;font-size:13.5px;color:var(--ink2);line-height:1.5;margin-top:3px}
   .quote{margin-top:8px;border-radius:9px;padding:9px 11px;font-size:13.5px;line-height:1.6}
   .q-coach{background:var(--soft);color:var(--ink2);border:1px solid #f0d8e7}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .q-coach{border-color:#4d1b38}}
   .q-mine{background:var(--okbg);color:var(--ink2);border:1px solid var(--okln)}
   .quote b{display:block;font-size:11px;font-weight:800;margin-bottom:3px;letter-spacing:.02em}
   .q-coach b{color:var(--mg-d)}
@@ -93,7 +84,6 @@
     color:var(--ink3);font-size:12.5px;text-align:center;line-height:1.8}
   .ro{background:var(--bluebg);border:1px solid #cddcee;border-radius:11px;padding:11px 13px;
     font-size:13px;color:var(--blue);margin-bottom:14px;line-height:1.6}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ro{border-color:#2b3d55}}
 </style>
 </head>
 <body>
@@ -173,6 +163,7 @@
         m.className = "msg err"; m.textContent = (res.j && res.j.error) || "불러오지 못했습니다.";
         $("open").disabled = false; return;
       }
+      try{ sessionStorage.setItem("pbs_tr", JSON.stringify({ n: nm, l: l4 })); }catch(e){}
       render(nm, l4, res.j);
     })
     .catch(function(){
@@ -320,7 +311,7 @@
     $("view").innerHTML = h;
     $("gate").style.display = "none";
     $("view").style.display = "block";
-    $("htitle").textContent = nm + " 선생님 진행표";
+    $("htitle").textContent = nm + " 강사님 프로그램 트레이닝";
     $("hsub").textContent = (j.cohort ? j.cohort + " · " : "") + "확인·서명이 필요한 것은 아래에서 바로 하실 수 있습니다.";
     window.scrollTo(0,0);
   }
