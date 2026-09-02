@@ -145,9 +145,14 @@
       <input type="tel" id="last4" inputmode="numeric" maxlength="4" placeholder="예: 1234" autocomplete="off" />
     </div>
     <button type="button" class="mini" id="loadmine" style="width:100%;padding:13px;font-size:15px;font-weight:800">
-      내 일정 불러오기
+      연락처 인증하기
     </button>
     <p class="msg" id="loadmsg" style="text-align:left"></p>
+    <div id="gatemsg" style="display:none;margin-top:10px;background:#FDEEF6;border:1px solid #f0d8e7;
+      border-radius:11px;padding:12px 13px;font-size:13.5px;color:#b0257a;line-height:1.6">
+      <b>먼저 과정 구성을 확인하고 서명해 주세요.</b><br />
+      서명이 끝나면 회차·출강 제출을 이어서 하실 수 있습니다.
+    </div>
     <div class="fld" style="margin-top:6px">
       <div class="chips" id="kind">
         <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
@@ -357,7 +362,7 @@
   function loadWho(){
     try{ return JSON.parse(sessionStorage.getItem("pbs_tr") || "null"); }catch(e){ return null; }
   }
-  var AUTO = false;
+  var AUTO = false, AGREED = false, LOCK = false;
   (function(){
     if(PRE.n) $("name").value = PRE.n;
     if(PRE.k){
@@ -449,7 +454,19 @@
       if(res.j && res.j.kit_items && res.j.kit_items.length) KIT = res.j.kit_items;
       KITDATE = (res.j && res.j.kit_date) || "";
       loaded = true;
+      AGREED = !!(res.j && res.j.agree_signed);
       lm.className = "msg"; lm.textContent = "확인되었습니다.";
+      if(!AGREED && COURSE){
+        LOCK = true;
+        var kr2 = document.querySelector('input[name="kind"][value="계약확인"]');
+        if(kr2){ kr2.checked = true; $("kind").dispatchEvent(new Event("change")); }
+        $("kind").style.display = "none";
+        $("gatemsg").style.display = "block";
+      } else {
+        LOCK = false;
+        $("kind").style.display = "";
+        $("gatemsg").style.display = "none";
+      }
       renderAll(); check();
     })
     .catch(function(){ lm.className = "msg err"; lm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
@@ -714,6 +731,14 @@
         if($("topic").value.trim()) lines.push($("topic").value.trim());
       }
       $("donebox").innerHTML = lines.filter(Boolean).join("<br />");
+      if(m === "계약확인"){
+        var back = document.createElement("a");
+        back.href = location.pathname + "?n=" + encodeURIComponent(payload.name);
+        back.textContent = "이어서 회차·출강 제출하기 →";
+        back.style.cssText = "display:block;margin:16px auto 0;max-width:320px;padding:13px;border-radius:11px;"
+          + "background:#E5007F;color:#fff;text-decoration:none;font-weight:800;font-size:15px;text-align:center";
+        $("donebox").parentNode.insertBefore(back, $("donebox").nextSibling);
+      }
       $("form").style.display = "none"; $("bar").style.display = "none";
       $("done").style.display = "block"; window.scrollTo(0,0);
     })
