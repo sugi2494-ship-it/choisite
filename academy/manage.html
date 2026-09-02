@@ -668,7 +668,7 @@ function kitBox(t,i){
    +'</div>';
 }
 function secHead(no,txt,sub,color){
-  return '<div style="display:flex;align-items:center;gap:9px;margin:0 0 9px"><span style="flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:'+color+';color:#fff;font-size:12.5px;font-weight:900;display:flex;align-items:center;justify-content:center">'+no+'</span><span style="font-size:15px;font-weight:800;color:#33303a">'+txt+'</span>'+(sub?'<span style="font-size:12px;color:#9a9a95">'+sub+'</span>':'')+'</div>';
+  return '<div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px;margin:0 0 9px"><span style="flex:0 0 auto;width:23px;height:23px;border-radius:50%;background:'+color+';color:#fff;font-size:12.5px;font-weight:900;display:flex;align-items:center;justify-content:center">'+no+'</span><span style="flex:0 0 auto;white-space:nowrap;font-size:15px;font-weight:800;color:#33303a;line-height:23px">'+txt+'</span>'+(sub?'<span style="flex:1 1 230px;min-width:0;font-size:12px;color:#9a9a95;line-height:1.45">'+sub+'</span>':'')+'</div>';
 }
 function trDispatchRow(t,dp){
   var wrap='margin-top:7px;border-radius:8px;padding:9px 11px;font-size:12.5px';
