@@ -671,7 +671,7 @@ function trDispatchRow(t,dp){
       +'<span style="font-size:11.5px;font-weight:800;color:'+(rv.fee_received?"#1b7a4a":"#b23b30")+'">강사비 '+(rv.fee_received?"수령 확인":"미수령")+'</span>'
       +(rv.note_confirmed?'<span style="font-size:11.5px;color:#5c6b60">평가 확인함</span>':'')
       +'<span style="margin-left:auto;color:#8a8f89;font-size:11px">'+esc(dstr(rv.created_at))+'</span>'
-      +'<button class="mini" style="padding:4px 9px;font-size:11px" onclick="openSig(\''+rv.id+'\')">서명</button>'
+      +'<button class="mini" style="padding:4px 9px;font-size:11px" onclick="openSig(\''+rv.id+'\')">서명·사진</button>'
       +'</div>'+body+'<div id="sig-'+rv.id+'"></div></div>';
   }
   var has=String(dp.feedback||"").trim();
@@ -698,13 +698,14 @@ function trReviewRow(t,ci,c,lbl){
     if(rv.attend_type)extra.push(esc(rv.attend_type)+" 출석");
     if(rv.start_time||rv.end_time)extra.push(esc((rv.start_time||"")+"~"+(rv.end_time||"")));
     if(rv.kit_received)extra.push("교구 인수 서명");
+    if(rv.photo_count)extra.push("📷 사진 "+rv.photo_count+"장");
     if(rv.note_confirmed)extra.push("대표 평가 확인함");
     return '<div style="'+wrap+';background:#eef8f1;border:1px solid #bfe3cd">'
       +'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">'
       +'<b style="color:#1b7a4a">✅ 강사 후기 도착</b>'
       +(extra.length?'<span style="color:#5c6b60;font-size:11.5px">'+extra.join(" · ")+'</span>':'')
       +'<span style="margin-left:auto;color:#8a8f89;font-size:11px">'+esc(dstr(rv.created_at))+'</span>'
-      +'<button class="mini" style="padding:4px 9px;font-size:11px" onclick="openSig(\''+rv.id+'\')">서명</button>'
+      +'<button class="mini" style="padding:4px 9px;font-size:11px" onclick="openSig(\''+rv.id+'\')">서명·사진</button>'
       +'</div>'+body
       +'<div id="sig-'+rv.id+'"></div></div>';
   }
@@ -810,11 +811,21 @@ function buildReports(){
 function openSig(id){
   var slot=document.getElementById("sig-"+id);if(!slot)return;
   if(slot.innerHTML){slot.innerHTML="";return;}
-  slot.innerHTML='<p style="font-size:12.5px;color:#6b6e6b;margin:8px 0 0">서명 불러오는 중...</p>';
+  slot.innerHTML='<p style="font-size:12.5px;color:#6b6e6b;margin:8px 0 0">불러오는 중...</p>';
   post(RP,{password:PW,action:"detail",id:id}).then(function(res){
     var row=res.j&&res.j.row;
-    if(!row||!row.signature){slot.innerHTML='<p style="font-size:12.5px;color:#b23b30;margin:8px 0 0">서명이 없습니다.</p>';return;}
-    slot.innerHTML='<img class="sigimg" src="'+row.signature+'" alt="서명" />';
+    if(!row){slot.innerHTML='<p style="font-size:12.5px;color:#b23b30;margin:8px 0 0">불러오지 못했습니다.</p>';return;}
+    var h="";
+    if(row.typed_name)h+='<div style="margin:8px 0 0;font-size:12.5px;color:#3f4a44">서명자 <b>'+esc(row.typed_name)+'</b>'+(row.signed_at?' · '+esc(String(row.signed_at).replace("T"," ").slice(0,16)):'')+'</div>';
+    if(row.signature)h+='<img class="sigimg" src="'+row.signature+'" alt="서명" />';
+    var ph=row.photos||[];
+    if(ph.length){
+      h+='<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:9px">'
+        + ph.map(function(src){return '<a href="'+src+'" target="_blank" rel="noopener"><img src="'+src+'" alt="결과 사진" style="width:104px;height:104px;object-fit:cover;border-radius:10px;border:1px solid #e2e1db;display:block" /></a>';}).join("")
+        + '</div><div style="font-size:11.5px;color:#8a8f89;margin-top:5px">사진을 누르면 크게 열립니다</div>';
+    }
+    if(!h)h='<p style="font-size:12.5px;color:#b23b30;margin:8px 0 0">기록된 서명·사진이 없습니다.</p>';
+    slot.innerHTML=h;
   }).catch(function(){slot.innerHTML='<p style="font-size:12.5px;color:#b23b30;margin:8px 0 0">불러오지 못했습니다.</p>';});
 }
 function rpRead(id){

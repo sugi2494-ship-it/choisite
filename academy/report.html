@@ -69,7 +69,7 @@
   .b-ok{background:var(--okbg);color:var(--ok);border:1px solid var(--okln)}
   .b-wait{background:var(--waitbg);color:var(--wait);border:1px solid var(--waitln)}
   .b-blue{background:var(--bluebg);color:var(--blue);border:1px solid var(--blueln)}
-  .b-act{background:var(--mg);color:#fff;border:1px solid var(--mg)}
+  .b-act{background:var(--mg);color:#fff;border:1px solid var(--mg);font-size:11.5px;padding:3px 10px}
 
   #whobar{display:none;background:var(--okbg);border:1px solid var(--okln);border-radius:12px;
     padding:11px 14px;margin-bottom:12px;align-items:center;gap:9px;flex-wrap:wrap}
@@ -92,8 +92,8 @@
   .task-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:14px;cursor:pointer}
   .task-h .no{flex:0 0 auto;font-size:13px;font-weight:900;border-radius:9px;padding:4px 10px}
   .task-h .arw{flex:0 0 auto;font-size:15px;color:var(--ink3);margin-left:auto}
-  .task-h .day{flex:0 0 auto;font-size:14.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
-  .task-h .sub{flex:1 1 100%;font-size:12.5px;color:var(--ink3);line-height:1.5}
+  .task-h .day{flex:0 0 auto;font-size:16px;font-weight:900;color:var(--ink);letter-spacing:-.02em}
+  .task-h .sub{flex:1 1 100%;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.55}
   .task-b{padding:4px 14px 16px;border-top:1px solid var(--line)}
 
   .quote{border-radius:10px;padding:11px 12px;font-size:14px;line-height:1.6;margin-bottom:12px}
@@ -110,6 +110,16 @@
   .agree small{display:block;font-size:12px;color:var(--ink3);margin-top:2px;line-height:1.5}
 
   .stamp{margin:8px 0 0;font-size:12.5px;color:var(--ink3)}
+  .filebtn{display:block;text-align:center;padding:12px;border:1.5px dashed var(--line);
+    border-radius:11px;font-size:14px;font-weight:700;color:var(--ink2);cursor:pointer;background:var(--card)}
+  .filebtn input{display:none}
+  .thumbs{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+  .thumbs .th{position:relative;width:76px;height:76px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+  .thumbs .th img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumbs .th button{position:absolute;top:2px;right:2px;width:22px;height:22px;border:0;border-radius:50%;
+    background:rgba(0,0,0,.55);color:#fff;font-size:13px;line-height:1;cursor:pointer;padding:0}
+  .shots{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+  .shots img{width:92px;height:92px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
 
   .chips{display:flex;gap:7px;flex-wrap:wrap}
   .chips label{flex:1 1 0;min-width:0;border:1.5px solid var(--line);border-radius:11px;
@@ -211,7 +221,7 @@
     { k:"4 프로필 촬영", n:"4", nm:"프로필 촬영", sub:"",                                                      c:"#a3682a" },
     { k:"5 수료",        n:"5", nm:"수료",        sub:"강의 시연·피드백·수료식",                              c:"#6b4a9e" }
   ];
-  var GOPEN = {};
+  var GOPEN = {}, PROGOPEN = true;
 
   var PRE = (function(){
     var p = {}, s = (location.search||"").replace(/^\?/,"");
@@ -220,7 +230,7 @@
     return p;
   })();
 
-  var NM = "", L4 = "", D = null, OPEN = null;
+  var NM = "", L4 = "", D = null, OPEN = null, PHOTOS = {};
 
   function saveWho(n,l){ try{ sessionStorage.setItem("pbs_tr", JSON.stringify({n:n,l:l})); }catch(e){} }
   function loadWho(){ try{ return JSON.parse(sessionStorage.getItem("pbs_tr")||"null"); }catch(e){ return null; } }
@@ -358,8 +368,11 @@
     if(D.course) h += courseCard(false, ++no);
     if((D.kit_items||[]).length) h += kitCard(++no);
 
-    h += '<div class="card"><h2><span class="n">'+(++no)+'</span>프로그램 진행</h2>'
+    var pOpen = (PROGOPEN !== false);
+    h += '<div class="card"><h2 id="proghead" style="cursor:pointer"><span class="n">'+(++no)+'</span>프로그램 진행'
+       + '<span style="margin-left:auto;font-size:15px;color:var(--ink3)">'+(pOpen?"▾":"▸")+'</span></h2>'
        + '<p class="hint">단계를 눌러 펼치고, 완료한 항목에 후기를 남겨 주세요.</p>';
+    if(!pOpen){ h += '</div>'; $("main").innerHTML = h; wire(); return; }
     GROUPS.forEach(function(g){
       var items = g.disp ? (D.tasks||[])
                          : (D.consults||[]).filter(function(c){ return (c.group||"")===g.k; });
@@ -413,7 +426,7 @@
     }
     if(!D.agree_signed){
       h += '<div class="fld" style="margin-top:14px"><label class="fl" for="ctyped">본인 이름 (전자서명)<span class="req">*</span></label>'
-        +  '<input type="text" id="ctyped" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" /></div>'
+        +  '<input type="text" id="ctyped" placeholder="이름을 입력하세요" autocomplete="off" /></div>'
         +  '<p class="stamp">작성 시각 <b>'+nowText()+'</b> 이 함께 기록됩니다.</p>'
         +  '<label class="agree"><input type="checkbox" id="cagree" /><span>'
         +  '<b>위 과정 구성을 확인했으며, 이 내용으로 트레이닝을 진행하는 데 동의합니다.</b>'
@@ -433,7 +446,7 @@
       h += '<div style="margin-top:8px"><span class="badge b-ok">✅ 인수 서명 완료</span></div>';
     } else {
       h += '<div class="fld" style="margin-top:12px"><label class="fl" for="ktyped">본인 이름 (전자서명)<span class="req">*</span></label>'
-        +  '<input type="text" id="ktyped" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" /></div>'
+        +  '<input type="text" id="ktyped" placeholder="이름을 입력하세요" autocomplete="off" /></div>'
         +  '<div class="fld"><label class="fl" for="kmemo">남길 말 (선택)</label>'
         +  '<textarea id="kmemo" placeholder="예: 진단천 1세트는 다음에 받기로 했습니다" style="min-height:62px"></textarea></div>'
         +  '<p class="stamp">작성 시각 <b>'+nowText()+'</b> 이 함께 기록됩니다.</p>'
@@ -463,7 +476,7 @@
       + '<span class="no" style="background:'+(done?"var(--okbg)":"var(--soft)")+';color:'+(done?"var(--ok)":"var(--mg-d)")+'">'
       +   esc(c.label||c.round) + '</span>'
       + (done ? '<span class="badge b-ok">✅ 회차 완료</span>'
-              : (ready ? '<span class="badge b-act">✍ 회차 후기 쓰러가기</span>'
+              : (ready ? '<span class="badge b-act">확인입력하기</span>'
                        : '<span class="badge b-blue">'+esc(c.status||"예정")+'</span>'))
       + '<span class="arw">'+(open?"▾":"▸")+'</span>'
       + '<span class="day">'+esc(dayTxt(c.date))+'</span>'
@@ -473,8 +486,9 @@
       if(has(c.coach)) h += '<div class="quote q-coach"><b>대표님 피드백</b>'+esc(c.coach)+'</div>';
       if(done){
         var t = fbText(rv);
-        if(t) h += '<div class="quote q-mine"><b>내가 쓴 후기·소감</b>'+esc(t).replace(/\n/g,"<br />")+'</div>';
-        h += '<p class="stamp">'+esc(rv.typed_name||"")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
+        if(t) h += '<div class="quote q-mine"><b>내가 쓴 후기</b>'+esc(t).replace(/\n/g,"<br />")+'</div>';
+        h += '<p class="stamp">'+esc(rv.typed_name||"")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))
+          + (rv.photo_count ? ' · 사진 '+rv.photo_count+'장' : '') + '</p>';
       } else if(!ready){
         h += '<p class="hint" style="margin:0">아직 진행 전인 회차입니다. 완료되면 작성할 수 있습니다.</p>';
       } else {
@@ -491,7 +505,7 @@
     var h = '<div class="task'+(done?" done":"")+'" data-box="'+esc(id)+'">'
       + '<div class="task-h" data-toggle="'+esc(id)+'">'
       + '<span class="no" style="background:'+(done?"var(--okbg)":"var(--bluebg)")+';color:'+(done?"var(--ok)":"var(--blue)")+'">'+(i+1)+'회차</span>'
-      + (done ? '<span class="badge b-ok">✅ 확인 완료</span>' : '<span class="badge b-act">✍ 확인하러 가기</span>')
+      + (done ? '<span class="badge b-ok">✅ 확인 완료</span>' : '<span class="badge b-act">확인입력하기</span>')
       + '<span class="arw">'+(open?"▾":"▸")+'</span>'
       + '<span class="day">'+esc(dayTxt(t.date))+'</span>'
       + '<span class="sub">'+esc(info)+'</span></div>';
@@ -500,8 +514,9 @@
       if(has(t.coach)) h += '<div class="quote q-coach"><b>대표님 피드백</b>'+esc(t.coach)+'</div>';
       if(done){
         var tx = fbText(rv);
-        if(tx) h += '<div class="quote q-mine"><b>내가 쓴 후기·소감</b>'+esc(tx).replace(/\n/g,"<br />")+'</div>';
-        h += '<p class="stamp">'+(rv.fee_received?"강사비 수령 확인 · ":"")+esc(rv.typed_name||"")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
+        if(tx) h += '<div class="quote q-mine"><b>내가 쓴 후기</b>'+esc(tx).replace(/\n/g,"<br />")+'</div>';
+        h += '<p class="stamp">'+(rv.fee_received?"강사비 수령 확인 · ":"")+esc(rv.typed_name||"")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))
+          + (rv.photo_count ? ' · 사진 '+rv.photo_count+'장' : '') + '</p>';
       } else {
         h += oneField(id);
         if(has(t.fee)){
@@ -518,21 +533,31 @@
   }
 
   function oneField(id){
-    return '<div class="fld"><label class="fl">후기 · 소감 한 줄</label>'
-      + '<textarea data-q1="'+esc(id)+'" class="mini" placeholder="도움이 된 것 · 연습이 더 필요한 것 · 하고 싶은 말"></textarea></div>';
+    return '<div class="fld"><label class="fl">후기 및 느낀점 · 하고 싶은 말</label>'
+      + '<textarea data-q1="'+esc(id)+'" class="mini" placeholder="한두 줄이어도 괜찮습니다"></textarea></div>'
+      + photoField(id);
+  }
+
+  function photoField(id){
+    return '<div class="fld"><label class="fl">결과 사진 (최대 3장, 선택)</label>'
+      + '<label class="filebtn">사진 고르기'
+      + '<input type="file" accept="image/*" multiple data-photo="'+esc(id)+'" /></label>'
+      + '<div class="thumbs" data-thumbs="'+esc(id)+'"></div></div>';
   }
 
   function confirmBlock(id, txt){
     return '<label class="agree"><input type="checkbox" data-agree="'+esc(id)+'" /><span>'
       + '<b>'+esc(txt)+'</b><small>확인일시가 함께 기록됩니다.</small></span></label>'
       + '<div class="fld"><label class="fl">본인 이름 (전자서명)<span class="req">*</span></label>'
-      + '<input type="text" data-typed="'+esc(id)+'" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" /></div>'
+      + '<input type="text" data-typed="'+esc(id)+'" placeholder="이름을 입력하세요" autocomplete="off" /></div>'
       + '<p class="stamp">작성 시각 <b>'+nowText()+'</b></p>'
       + '<button type="button" class="btn" data-submit="'+esc(id)+'" disabled>제출하기</button>'
       + '<p class="msg" data-msg="'+esc(id)+'"></p>';
   }
 
   function wire(){
+    var ph = $("proghead");
+    if(ph) ph.addEventListener("click", function(){ PROGOPEN = !PROGOPEN; render(); });
     Array.prototype.forEach.call(document.querySelectorAll("[data-grp]"), function(el){
       el.addEventListener("click", function(){
         var k = el.dataset.grp; GOPEN[k] = !GOPEN[k]; render();
@@ -555,6 +580,19 @@
     Array.prototype.forEach.call(document.querySelectorAll("[data-typed]"), function(tp){
       tp.addEventListener("input", function(){ refresh(tp.dataset.typed); });
     });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-photo]"), function(inp){
+      var id = inp.dataset.photo;
+      if(!PHOTOS[id]) PHOTOS[id] = [];
+      paintThumbs(id);
+      inp.addEventListener("change", function(){
+        var files = Array.prototype.slice.call(inp.files || []);
+        var room = 3 - (PHOTOS[id]||[]).length;
+        files.slice(0, Math.max(0, room)).forEach(function(f){
+          resizeImg(f, function(src){ if(src){ PHOTOS[id].push(src); paintThumbs(id); } });
+        });
+        inp.value = "";
+      });
+    });
     Array.prototype.forEach.call(document.querySelectorAll("[data-submit]"), function(b){
       b.addEventListener("click", function(){ submit(b.dataset.submit); });
     });
@@ -575,6 +613,43 @@
     }
   }
 
+  function resizeImg(file, cb){
+    var fr = new FileReader();
+    fr.onload = function(){
+      var im = new Image();
+      im.onload = function(){
+        var max = 1000, w = im.width, h = im.height;
+        if(w > max || h > max){ if(w >= h){ h = Math.round(h*max/w); w = max; } else { w = Math.round(w*max/h); h = max; } }
+        var cv = document.createElement("canvas");
+        cv.width = w; cv.height = h;
+        cv.getContext("2d").drawImage(im, 0, 0, w, h);
+        var q = 0.72, out = cv.toDataURL("image/jpeg", q);
+        while(out.length > 380000 && q > 0.35){ q -= 0.12; out = cv.toDataURL("image/jpeg", q); }
+        cb(out);
+      };
+      im.onerror = function(){ cb(null); };
+      im.src = fr.result;
+    };
+    fr.onerror = function(){ cb(null); };
+    fr.readAsDataURL(file);
+  }
+
+  function paintThumbs(id){
+    var box = q1('[data-thumbs="'+cssq(id)+'"]');
+    if(!box) return;
+    var list = PHOTOS[id] || [];
+    box.innerHTML = list.map(function(src, i){
+      return '<div class="th"><img src="'+src+'" alt="" /><button type="button" data-delph="'+esc(id)+'" data-i="'+i+'">✕</button></div>';
+    }).join("");
+    Array.prototype.forEach.call(box.querySelectorAll("[data-delph]"), function(b){
+      b.addEventListener("click", function(){
+        PHOTOS[id].splice(Number(b.dataset.i), 1); paintThumbs(id);
+      });
+    });
+    var fb = q1('[data-photo="'+cssq(id)+'"]');
+    if(fb && fb.parentNode) fb.parentNode.style.display = (list.length >= 3) ? "none" : "block";
+  }
+
   function refresh(id){
     var btn = q1('[data-submit="'+cssq(id)+'"]');
     if(!btn) return;
@@ -593,7 +668,8 @@
       kind: isRound ? "회차" : "출강확인",
       typed_name: val("data-typed", id),
       note_confirmed: true,
-      feedback: { "후기·소감": val("data-q1", id) } };
+      photos: (PHOTOS[id] || []).slice(0, 3),
+      feedback: { "후기 및 느낀점": val("data-q1", id) } };
     if(isRound){
       var c = (D.consults||[]).filter(function(x){ return x.round===key; })[0] || {};
       p.round = key; p.session_date = c.date || null; p.attended = true;
@@ -619,7 +695,7 @@
   function reload(){
     api({ action:"my_tasks", name:NM, phone_last4:L4 }, function(err, j){
       if(err) return;
-      D = j; OPEN = null; render();
+      D = j; OPEN = null; PHOTOS = {}; render();
       window.scrollTo({top:0, behavior:"smooth"});
     });
   }
