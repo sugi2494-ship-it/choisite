@@ -198,6 +198,7 @@
 <script>
 (function(){
   var EP = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/trainee-report";
+  var EPX = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/trainee-extra";
   var AK = "sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
   function $(id){ return document.getElementById(id); }
   function esc(v){ return String(v==null?"":v).replace(/[&<>"']/g, function(m){
@@ -255,7 +256,7 @@
       $("whotxt").textContent = NM + " 선생님" + (D.cohort ? " · " + D.cohort : "");
       $("htitle").textContent = NM + " 강사님 프로그램 트레이닝";
       $("hsub").textContent = "지금 해야 할 것만 아래에 있습니다.";
-      pickInitialOpen(); render(); window.scrollTo(0,0);
+      pickInitialOpen(); render(); loadExtra(function(){ render(); }); window.scrollTo(0,0);
     });
   });
 
@@ -281,6 +282,17 @@
       else cb(null, res.j);
     })
     .catch(function(){ cb("네트워크 오류입니다. 잠시 후 다시 시도해 주세요."); });
+  }
+
+  function loadExtra(cb){
+    fetch(EPX, { method:"POST", headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
+      body: JSON.stringify({ action:"extra", name:NM, phone_last4:L4 }) })
+    .then(function(r){ return r.json(); })
+    .then(function(j){
+      if(D && j && j.ok){ D.admin_photos = j.admin_photos || {}; D.kit_note = j.kit_note || ""; }
+      if(cb) cb();
+    })
+    .catch(function(){ if(cb) cb(); });
   }
 
   function pickInitialOpen(){
@@ -445,13 +457,15 @@
     h += '<p class="hint">'+(has(D.kit_date)? esc(D.kit_date)+' 제공' : '받으신 교구입니다')+'</p>';
     (D.kit_items||[]).forEach(function(x){
       h += '<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:7px;font-size:14px">'+esc(x)+'</div>'; });
+    if(has(D.kit_note)){
+      h += '<div style="margin-top:9px;background:#fdf2f8;border:1px solid #f6cfe4;border-radius:10px;padding:10px 12px;font-size:13.5px;line-height:1.6;color:#7a2050">'
+        +  '<b style="color:#c2185b">대표님 메모</b> · '+esc(D.kit_note)+'</div>';
+    }
     if(D.kit_signed){
       h += '<div style="margin-top:8px"><span class="badge b-ok">✅ 인수 서명 완료</span></div>';
     } else {
       h += '<div class="fld" style="margin-top:12px"><label class="fl" for="ktyped">본인 이름 (전자서명)<span class="req">*</span></label>'
         +  '<input type="text" id="ktyped" placeholder="이름을 입력하세요" autocomplete="off" /></div>'
-        +  '<div class="fld"><label class="fl" for="kmemo">남길 말 (선택)</label>'
-        +  '<textarea id="kmemo" placeholder="예: 진단천 1세트는 다음에 받기로 했습니다" style="min-height:62px"></textarea></div>'
         +  '<p class="stamp">작성 시각 <b>'+nowText()+'</b> 이 함께 기록됩니다.</p>'
         +  '<label class="agree"><input type="checkbox" id="kagree" /><span>'
         +  '<b>위 교구를 인수했음을 확인합니다.</b>'
@@ -487,6 +501,7 @@
     if(open){
       h += '<div class="task-b">';
       if(has(c.coach)) h += '<div class="quote q-coach"><b>대표님 피드백</b>'+esc(c.coach)+'</div>';
+      h += adminShots(c.round);
       if(done){
         var t = fbText(rv);
         if(t) h += '<div class="quote q-mine"><b>내가 쓴 후기</b>'+esc(t).replace(/\n/g,"<br />")+'</div>';
@@ -515,6 +530,7 @@
     if(open){
       h += '<div class="task-b">';
       if(has(t.coach)) h += '<div class="quote q-coach"><b>대표님 피드백</b>'+esc(t.coach)+'</div>';
+      h += adminShots(t.key);
       if(done){
         var tx = fbText(rv);
         if(tx) h += '<div class="quote q-mine"><b>내가 쓴 후기</b>'+esc(tx).replace(/\n/g,"<br />")+'</div>';
@@ -541,9 +557,19 @@
       + photoField(id);
   }
 
+  function adminShots(ref){
+    var a = (D && D.admin_photos && D.admin_photos[ref]) || [];
+    if(!a.length) return "";
+    var h = '<div class="fld"><label class="fl">대표님이 올린 사진</label><div class="thumbs">';
+    a.forEach(function(src){
+      h += '<a href="'+src+'" target="_blank" rel="noopener" style="display:inline-block"><img src="'+src+'" alt="대표님 사진" /></a>';
+    });
+    return h + '</div></div>';
+  }
+
   function photoField(id){
-    return '<div class="fld"><label class="fl">결과 사진 (최대 3장, 선택)</label>'
-      + '<label class="filebtn">사진 고르기'
+    return '<div class="fld"><label class="fl">사진첨부 (최대 3장, 선택)</label>'
+      + '<label class="filebtn">사진첨부'
       + '<input type="file" accept="image/*" multiple data-photo="'+esc(id)+'" /></label>'
       + '<div class="thumbs" data-thumbs="'+esc(id)+'"></div></div>';
   }
@@ -615,7 +641,7 @@
       var g = function(){ ks.disabled = !(kt.value.trim() && ka.checked); };
       kt.addEventListener("input", g); ka.addEventListener("change", g); g();
       ks.addEventListener("click", function(){
-        submitTyped("교구인수", kt.value.trim(), ($("kmemo")||{}).value||"", $("kmsg"), ks); });
+        submitTyped("교구인수", kt.value.trim(), "", $("kmsg"), ks); });
     }
   }
 
@@ -708,6 +734,7 @@
       D = j; PHOTOS = {};
       if(OPEN){ OPEN = null; try{ if(history.state && history.state.pbs === "detail") history.back(); }catch(e){} }
       render();
+      loadExtra(function(){ render(); });
       window.scrollTo({top:0, behavior:"smooth"});
     });
   }
