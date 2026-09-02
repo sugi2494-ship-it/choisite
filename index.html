@@ -782,6 +782,11 @@ html[data-theme="light"] .subdesc{color:#555!important;}
 html[data-theme="light"] .sns-btn{background:#fff!important;color:#20202A!important;border-color:rgba(0,0,0,.15)!important;}
 html[data-theme="light"] .inquiry-form{background:#fff!important;border:1px solid rgba(0,0,0,.08)!important;}
 html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
+    /* ── 추가 정돈: 밝은 모드 가독성 + 아랍어(RTL) 헤더 ── */
+    html[data-theme="light"] #shop [style*="color:rgba(255,255,255"]{color:#5a5a62!important;}
+    html[data-theme="light"] #shop h3[style*="color:#fff"]{color:#1a1a22!important;}
+    html[data-theme="light"] .contact a[style*="color:rgba(255,255,255"]{color:#3a2b33!important;background:rgba(0,0,0,.045)!important;border-color:rgba(0,0,0,.16)!important;}
+    html[dir="rtl"] .topbar,html[dir="rtl"] .topbar .in{direction:ltr}
 </style>
 <script>(function(){try{if(localStorage.getItem('pbs_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 </head>
