@@ -3,139 +3,158 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>인증강사 교육 트레이닝 후기 | PBS 컬러랩</title>
+<title>인증강사 프로그램 트레이닝 | PBS 컬러랩</title>
 <meta name="robots" content="noindex, nofollow" />
-<meta name="description" content="PBS 컬러랩 인증강사 트레이닝 — 출석·후기·서명, 교구 인수 확인, 출강 확인." />
-<link rel="icon" href="/assets/common/pbs-logo.png" />
 <style>
   :root{
     color-scheme: light;
-    --mg:#E5007F; --mg-d:#C2185B; --mg-soft:#FDEEF6;
-    --ink:#141416; --ink-2:#4a4a52; --ink-3:#83838d;
+    --mg:#E5007F; --mg-d:#b0257a; --soft:#FDEEF6;
+    --ink:#141416; --ink2:#4a4a52; --ink3:#83838d;
     --line:#e6e6ea; --bg:#f7f7f8; --card:#fff;
+    --ok:#1b7a4a; --okbg:#e7f4ee; --okln:#bfe3d1;
+    --wait:#a06a1f; --waitbg:#fdf3e0; --waitln:#eddcb6;
+    --blue:#2d5f9e; --bluebg:#eef3fa; --blueln:#cddcee;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+  html,body{overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+  .wrap{max-width:720px;margin:0 auto;padding:16px 15px 80px}
 
-  .top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);
-    padding:12px 16px;display:flex;align-items:center;gap:10px}
-  .top .logo{width:26px;height:26px;border-radius:50%;background:var(--mg);color:#fff;
-    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex:0 0 auto}
-  .top b{font-size:15px;letter-spacing:-.02em}
-  .top small{display:block;color:var(--ink-3);font-size:11.5px;font-weight:600}
+  .hero{background:linear-gradient(135deg,var(--mg),var(--mg-d));color:#fff;
+    border-radius:18px;padding:20px 18px 18px;margin-bottom:14px}
+  .hero .k{font-size:11px;font-weight:800;letter-spacing:.1em;opacity:.85}
+  .hero h1{margin:6px 0 4px;font-size:21px;font-weight:900;letter-spacing:-.03em}
+  .hero p{margin:0;font-size:13.5px;opacity:.94}
+  .prog{margin-top:16px}
+  .prog-top{display:flex;align-items:baseline;gap:8px;margin-bottom:9px}
+  .prog-top .pct{font-size:27px;font-weight:900;letter-spacing:-.03em;line-height:1}
+  .prog-top .lbl{font-size:12.5px;opacity:.9}
+  .track{position:relative;height:10px;border-radius:20px;background:rgba(255,255,255,.28)}
+  .fill{position:absolute;left:0;top:0;bottom:0;border-radius:20px;background:#fff;
+    width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+  .runner{position:absolute;top:-20px;left:0;font-size:21px;transform:translateX(-50%);
+    transition:left .9s cubic-bezier(.22,1,.36,1)}
+  .runner.go{animation:bob .8s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-4px)}}
+  .cheer{margin-top:11px;font-size:12.5px;font-weight:700;opacity:.95}
 
-  .wrap{max-width:620px;margin:0 auto;padding:16px 16px 120px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:15px;
+    padding:16px 15px;margin-bottom:12px}
+  .card h2{margin:0 0 4px;font-size:16.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card h2 .n{width:23px;height:23px;border-radius:50%;background:var(--mg);color:#fff;
+    font-size:12.5px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .hint{margin:0 0 12px;font-size:13px;color:var(--ink3);line-height:1.55}
 
-  .hero{background:linear-gradient(135deg,var(--mg) 0%,var(--mg-d) 100%);
-    color:#fff;border-radius:16px;padding:22px 20px;margin-bottom:16px}
-  .hero .k{font-size:11.5px;font-weight:800;letter-spacing:.08em;opacity:.85}
-  .hero h1{margin:6px 0 8px;font-size:21px;line-height:1.32;letter-spacing:-.03em;font-weight:900}
-  .hero p{margin:0;font-size:13.5px;opacity:.93}
+  label.fl{display:block;font-size:12.5px;font-weight:800;color:var(--ink2);margin-bottom:5px}
+  .req{color:var(--mg);margin-left:2px}
+  input[type=text],input[type=tel],textarea{
+    width:100%;padding:12px;font-size:16px;font-family:inherit;color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;background:var(--card)}
+  textarea{min-height:74px;resize:vertical;line-height:1.6}
+  .fld{margin-bottom:12px}
+  .btn{width:100%;padding:14px;border:0;border-radius:12px;background:var(--mg);color:#fff;
+    font:inherit;font-size:16px;font-weight:800;cursor:pointer}
+  .btn:disabled{background:#c9c9cd;cursor:not-allowed}
+  .msg{margin:9px 0 0;font-size:13.5px;color:var(--ink3);min-height:1em}
+  .msg.err{color:#b23b30}
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin-bottom:14px}
-  .card > h2{margin:0 0 4px;font-size:15.5px;letter-spacing:-.02em;display:flex;align-items:center;gap:7px}
-  .card > h2 .num{width:21px;height:21px;border-radius:50%;background:var(--mg);color:#fff;
-    font-size:11.5px;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto}
-  .card > h2 .opt{margin-left:auto;font-size:11px;font-weight:700;color:var(--ink-3);
-    border:1px solid var(--line);border-radius:20px;padding:2px 9px;letter-spacing:0}
-  .card > .hint{margin:0 0 14px;color:var(--ink-3);font-size:12.5px}
+  .badge{display:inline-block;font-size:11.5px;font-weight:800;border-radius:20px;padding:3px 10px;white-space:nowrap}
+  .b-ok{background:var(--okbg);color:var(--ok);border:1px solid var(--okln)}
+  .b-wait{background:var(--waitbg);color:var(--wait);border:1px solid var(--waitln)}
+  .b-blue{background:var(--bluebg);color:var(--blue);border:1px solid var(--blueln)}
 
-  label.fl{display:block;font-size:13px;font-weight:700;margin:0 0 6px;color:var(--ink-2)}
-  label.fl .req{color:var(--mg);margin-left:3px}
-  .fld{margin-bottom:14px}
-  .fld:last-child{margin-bottom:0}
-  input[type=text],input[type=tel],input[type=date],input[type=time],select,textarea{
-    width:100%;padding:12px 13px;border:1.5px solid var(--line);border-radius:10px;
-    font:inherit;font-size:15px;background:#fff;color:var(--ink)}
-  textarea{min-height:86px;resize:vertical;line-height:1.55}
-  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--mg)}
-  .row{display:flex;gap:10px}
-  .row > *{flex:1;min-width:0}
+  #whobar{display:none;background:var(--okbg);border:1px solid var(--okln);border-radius:12px;
+    padding:11px 14px;margin-bottom:12px;align-items:center;gap:9px;flex-wrap:wrap}
+  #whobar .t{font-size:13.5px;font-weight:800;color:var(--ok)}
+  #whobar .s{flex:1;min-width:0;font-size:13.5px;color:#3f4a44}
+  #whobar button{background:none;border:0;padding:4px 2px;font:inherit;font-size:12.5px;
+    font-weight:800;color:var(--blue);text-decoration:underline;cursor:pointer}
 
-  .chips{display:flex;gap:8px;flex-wrap:wrap}
-  .chips label{flex:1 1 0;min-width:0;text-align:center;border:1.5px solid var(--line);border-radius:11px;
-    padding:12px 6px;cursor:pointer;font-size:14.5px;font-weight:700;color:var(--ink-2);
-    white-space:nowrap;transition:border-color .15s,background .15s,color .15s}
-  .chips label.on{border-color:var(--mg);background:var(--mg-soft);color:var(--mg-d)}
+  .grp{margin-bottom:16px}
+  .grp-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 11px;
+    background:var(--bg);border-radius:10px;border-left:4px solid var(--mg);margin-bottom:9px}
+  .grp-h .t{font-size:14px;font-weight:900}
+  .grp-h .s{flex:1 1 100%;font-size:11.5px;color:var(--ink3);line-height:1.5}
+
+  .task{border:1px solid var(--line);border-radius:13px;margin-bottom:9px;background:var(--card);overflow:hidden}
+  .task.done{border-color:var(--okln);background:#fbfefc}
+  .task-h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:14px;cursor:pointer}
+  .task-h .no{flex:0 0 auto;font-size:13px;font-weight:900;border-radius:9px;padding:4px 10px}
+  .task-h .arw{flex:0 0 auto;font-size:15px;color:var(--ink3);margin-left:auto}
+  .task-h .sub{flex:1 1 100%;font-size:13px;color:var(--ink2);line-height:1.5}
+  .task-b{padding:4px 14px 16px;border-top:1px solid var(--line)}
+
+  .quote{border-radius:10px;padding:11px 12px;font-size:14px;line-height:1.6;margin-bottom:12px}
+  .q-coach{background:var(--soft);border:1px solid #f0d8e7;color:var(--ink2)}
+  .q-mine{background:var(--okbg);border:1px solid var(--okln);color:var(--ink2)}
+  .quote b{display:block;font-size:11px;font-weight:800;margin-bottom:4px;letter-spacing:.02em}
+  .q-coach b{color:var(--mg-d)}
+  .q-mine b{color:var(--ok)}
+
+  .agree{display:flex;gap:10px;align-items:flex-start;background:var(--soft);border:1px solid #f0d8e7;
+    border-radius:11px;padding:12px 13px;margin:12px 0;cursor:pointer}
+  .agree input{width:21px;height:21px;flex:0 0 auto;margin:1px 0 0;accent-color:var(--mg)}
+  .agree b{display:block;font-size:14px}
+  .agree small{display:block;font-size:12px;color:var(--ink3);margin-top:2px;line-height:1.5}
+
+  .sigbox{border:1.5px dashed #d7c3d0;border-radius:12px;background:#fffdfe;overflow:hidden}
+  .sigbox.filled{border-style:solid;border-color:var(--mg)}
+  canvas{display:block;width:100%;height:170px;touch-action:none}
+  .sigbar{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:8px 11px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink3)}
+  .sigbar button{background:none;border:1px solid var(--line);border-radius:8px;padding:5px 12px;
+    font:inherit;font-size:12.5px;cursor:pointer;color:var(--ink2)}
+  .stamp{margin:8px 0 0;font-size:12.5px;color:var(--ink3)}
+
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chips label{flex:1 1 0;min-width:0;border:1.5px solid var(--line);border-radius:11px;
+    padding:11px 6px;text-align:center;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .chips label.on{border-color:var(--mg);background:var(--soft);color:var(--mg-d);font-weight:800}
   .chips input{position:absolute;opacity:0;pointer-events:none}
 
-  .kit{display:grid;gap:8px}
-  .kit label{display:flex;align-items:flex-start;gap:11px;border:1.5px solid var(--line);border-radius:11px;
-    padding:12px 13px;cursor:pointer;transition:border-color .15s,background .15s;font-size:14.5px}
-  .kit label.on{border-color:var(--mg);background:var(--mg-soft)}
-  .kit input{width:21px;height:21px;accent-color:var(--mg);margin:1px 0 0;flex:0 0 auto}
-  .kitempty{background:#FFF9E8;border:1px solid #F0DFA8;border-radius:11px;padding:13px;
-    font-size:13px;color:#6b5720}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;color:var(--ink3);font-weight:800;white-space:nowrap}
+  td.step{font-weight:800;color:var(--mg-d);white-space:nowrap;font-size:13px}
+  td.body{font-size:14px}
+  td.res{font-size:13px;color:var(--ink3)}
 
-  .coachbox{background:#fdf2f8;border:1px solid #f2c9e0;border-radius:11px;padding:14px 15px;margin-top:4px;
-    font-size:14.5px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
-  .coachbox .who{display:block;font-size:11px;font-weight:800;color:var(--mg);margin-bottom:6px}
-  .coachnone{background:#fafafa;border:1px dashed #ddd;border-radius:11px;padding:13px;
-    font-size:13px;color:var(--ink-3);margin-top:4px}
-  .info{background:#f4f7fb;border:1px solid #dbe4ef;border-radius:11px;padding:12px 14px;
-    font-size:14px;color:#33414f;margin-bottom:12px}
-  .info b{color:#1c2b3a}
+  #party{display:none;background:linear-gradient(135deg,#fff4fa,#fdeef6);
+    border:1.5px solid #f3c9e0;border-radius:18px;padding:26px 20px;text-align:center;margin-bottom:14px}
+  #party .em{font-size:46px;line-height:1;margin-bottom:10px;animation:pop .9s ease-out}
+  @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+  #party h3{margin:0 0 6px;font-size:19px;font-weight:900;color:var(--mg-d);letter-spacing:-.02em}
+  #party p{margin:0;font-size:14px;color:var(--ink2);line-height:1.65}
 
-  .sigbox{border:1.5px dashed var(--line);border-radius:12px;background:#fff;overflow:hidden}
-  .sigbox.filled{border-style:solid;border-color:var(--mg)}
-  canvas#sig{display:block;width:100%;height:180px;touch-action:none;cursor:crosshair}
-  .sigbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;
-    border-top:1px solid var(--line);background:#fafafb}
-  .sigbar span{font-size:12px;color:var(--ink-3)}
-  .mini{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;
-    font:inherit;font-size:12.5px;font-weight:700;color:var(--ink-2);cursor:pointer}
-  .mini:active{background:#f2f2f4}
-  .stamp{font-size:12.5px;color:var(--ink-3);margin-top:8px}
-  .stamp b{color:var(--mg-d)}
-
-  .agree{display:flex;align-items:flex-start;gap:11px;background:var(--mg-soft);
-    border:1.5px solid #F6C9DF;border-radius:11px;padding:13px;margin-top:12px;cursor:pointer}
-  .agree input{width:21px;height:21px;accent-color:var(--mg);margin:1px 0 0;flex:0 0 auto}
-  .agree b{font-size:14px}
-  .agree small{display:block;color:var(--ink-2);font-size:12px;margin-top:2px}
-
-  .bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);
-    border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-    backdrop-filter:saturate(180%) blur(8px)}
-  .bar .in{max-width:620px;margin:0 auto}
-  .btn{width:100%;border:0;border-radius:12px;background:var(--mg);color:#fff;
-    font:inherit;font-size:16px;font-weight:900;padding:15px;cursor:pointer;letter-spacing:-.02em}
-  .btn[disabled]{background:#cfcfd6;cursor:not-allowed}
-  .btn:active:not([disabled]){background:var(--mg-d)}
-  .msg{margin:9px 0 0;text-align:center;font-size:12.5px;color:var(--ink-3);min-height:18px}
-  .msg.err{color:#B3261E;font-weight:700}
-
-  .done{display:none;text-align:center;padding:44px 20px}
-  .done .ic{width:64px;height:64px;border-radius:50%;background:var(--mg);color:#fff;font-size:32px;
-    display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
-  .done h2{margin:0 0 8px;font-size:20px;letter-spacing:-.02em}
-  .done p{margin:0;color:var(--ink-2);font-size:14px}
-  .done .box{margin:22px auto 0;max-width:420px;text-align:left;background:#fff;border:1px solid var(--line);
-    border-radius:12px;padding:16px;font-size:13.5px;color:var(--ink-2);line-height:1.9}
-  .foot{text-align:center;color:var(--ink-3);font-size:11.5px;margin-top:20px;line-height:1.7}
+  footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);
+    color:var(--ink3);font-size:12.5px;text-align:center;line-height:1.8}
 </style>
 </head>
 <body>
-
-<div class="top">
-  <div class="logo">PB</div>
-  <div><b>PBS 컬러랩</b><small>인증강사 교육 트레이닝 관리</small></div>
-</div>
-
-<div class="wrap" id="form">
+<div class="wrap">
 
   <div class="hero">
     <div class="k">PBS COLOR LAB · 인증강사 트레이닝</div>
-    <h1 id="htitle">인증강사 교육 트레이닝 후기</h1>
-    <p id="hsub">회차별 출석과 후기를 기록하는 공식 양식입니다. 제출 내용은 트레이닝 이력에 반영됩니다.</p>
+    <h1 id="htitle">인증강사 프로그램 트레이닝</h1>
+    <p id="hsub">이름과 연락처 뒤 4자리로 본인 확인 후 시작합니다.</p>
+    <div class="prog" id="prog" style="display:none">
+      <div class="prog-top"><span class="pct" id="pct">0%</span><span class="lbl" id="plbl"></span></div>
+      <div class="track"><div class="fill" id="fill"></div><div class="runner" id="runner">🏃‍♀️</div></div>
+      <div class="cheer" id="cheer"></div>
+    </div>
   </div>
 
-  <!-- 1. 본인 확인 -->
+  <div id="party">
+    <div class="em">🎉💐</div>
+    <h3>드디어 PBS컬러랩 인증강사가 되었어요!</h3>
+    <p>모든 과정을 완주하셨습니다. 축하합니다 — 이제 현장에서 만나요.</p>
+  </div>
+
   <div class="card" id="card-id">
-    <h2><span class="num">1</span>본인 확인</h2>
-    <p class="hint">트레이닝실에 등록된 이름과 연락처로 확인합니다.</p>
+    <h2><span class="n">1</span>본인 확인</h2>
+    <p class="hint">트레이닝실에 등록된 이름과 연락처로 확인합니다. 본인 것만 열립니다.</p>
     <div class="fld">
       <label class="fl" for="name">이름<span class="req">*</span></label>
       <input type="text" id="name" placeholder="예: 장연희" autocomplete="name" />
@@ -144,665 +163,477 @@
       <label class="fl" for="last4">연락처 뒤 4자리<span class="req">*</span></label>
       <input type="tel" id="last4" inputmode="numeric" maxlength="4" placeholder="예: 1234" autocomplete="off" />
     </div>
-    <button type="button" class="mini" id="loadmine" style="width:100%;padding:13px;font-size:15px;font-weight:800">
-      연락처 인증하기
-    </button>
-    <p class="msg" id="loadmsg" style="text-align:left"></p>
+    <button type="button" class="btn" id="go">시작하기</button>
+    <p class="msg" id="loadmsg"></p>
   </div>
 
-  <div id="whobar" style="display:none;background:#f3faf6;border:1px solid #bfe3d1;border-radius:12px;
-    padding:12px 14px;margin-bottom:12px;align-items:center;gap:9px;flex-wrap:wrap">
-    <span style="font-size:13.5px;font-weight:800;color:#1b7a4a">✅ 본인 확인 완료</span>
-    <span id="whotxt" style="flex:1;min-width:0;font-size:13.5px;color:#3f4a44"></span>
-    <button type="button" id="whoedit" style="flex:0 0 auto;background:none;border:0;padding:4px 2px;
-      font:inherit;font-size:12.5px;font-weight:800;color:#2d5f9e;text-decoration:underline;cursor:pointer">처음부터</button>
+  <div id="whobar">
+    <span class="t">✅ 본인 확인</span>
+    <span class="s" id="whotxt"></span>
+    <button type="button" id="whoedit">처음부터</button>
   </div>
 
-  <div id="gatemsg" style="display:none;background:#FDEEF6;border:1px solid #f0d8e7;
-    border-radius:12px;padding:13px 14px;margin-bottom:12px;font-size:13.5px;color:#b0257a;line-height:1.6">
-    <b>먼저 과정 구성을 확인하고 서명해 주세요.</b><br />
-    서명이 끝나면 회차·출강 제출을 이어서 하실 수 있습니다.
-  </div>
+  <div id="main"></div>
 
-  <div id="kindwrap" class="card" style="display:none">
-    <p class="hint" style="margin:0 0 8px">무엇을 제출하시나요?</p>
-    <div class="chips" id="kind">
-      <label class="on"><input type="radio" name="kind" value="회차" checked />교육 회차</label>
-      <label><input type="radio" name="kind" value="출강확인" />출강 확인</label>
-      <label><input type="radio" name="kind" value="교구인수" />교구 인수</label>
-      <label><input type="radio" name="kind" value="계약확인" />과정 확인</label>
-    </div>
-  </div>
-
-  <!-- 2. 출석 체크 (교육 회차) -->
-  <div class="card" id="card-attend">
-    <h2><span class="num">2</span>출석 체크</h2>
-    <p class="hint">참석한 회차를 선택하면 일자·시간·주제가 자동으로 채워집니다.</p>
-    <div class="fld" id="roundwrap">
-      <label class="fl" for="round">회차<span class="req">*</span></label>
-      <select id="round"><option value="">먼저 [연락처 인증하기]를 눌러주세요</option></select>
-    </div>
-    <div id="roundinfo"></div>
-    <div class="row">
-      <div class="fld">
-        <label class="fl" for="sdate">일자<span class="req">*</span></label>
-        <input type="date" id="sdate" />
-      </div>
-      <div class="fld">
-        <label class="fl" for="stime">시간</label>
-        <input type="time" id="stime" />
-      </div>
-    </div>
-    <div class="fld">
-      <label class="fl" for="topic">주제</label>
-      <input type="text" id="topic" placeholder="예: 시스템·시나리오 첫 교육" />
-    </div>
-    <div class="fld">
-      <label class="fl">참석 방식<span class="req">*</span></label>
-      <div class="chips" id="atype">
-        <label class="on"><input type="radio" name="atype" value="대면" checked />대면</label>
-        <label><input type="radio" name="atype" value="줌" />줌</label>
-        <label><input type="radio" name="atype" value="전화" />전화</label>
-        <label><input type="radio" name="atype" value="기타" />기타</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2-D. 출강 확인 -->
-  <div class="card" id="card-dispatch" style="display:none">
-    <h2><span class="num">2</span>출강 확인</h2>
-    <p class="hint">대표님이 등록한 내 출강 내역입니다. 해당 건을 선택하세요.</p>
-    <div id="tasks" class="kit"></div>
-    <label class="agree" id="feewrap" style="display:none">
-      <input type="checkbox" id="feeok" />
-      <span>
-        <b>위 강사비를 수령했습니다.</b>
-        <small>아직 못 받으셨으면 체크하지 말고 그대로 제출하세요.</small>
-      </span>
-    </label>
-  </div>
-
-  <!-- 2-C. 과정 계약 확인 -->
-  <div class="card" id="card-course" style="display:none">
-    <h2><span class="num">2</span>과정 구성 확인</h2>
-    <p class="hint">신청하신 과정의 구성입니다. 내용을 확인하고 아래에 이름을 적어 주세요.</p>
-    <div id="coursebox"><div class="kitempty">[내 일정 불러오기]를 누르면 표시됩니다.</div></div>
-    <div class="fld" style="margin-top:12px">
-      <label class="fl" for="ctyped">본인 이름 (전자서명)<span class="req">*</span></label>
-      <input type="text" id="ctyped" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" />
-    </div>
-    <p class="stamp">작성 시각 <b id="nowtime2">—</b> 이 함께 기록됩니다.</p>
-    <label class="agree" id="cagreewrap">
-      <input type="checkbox" id="cagree" />
-      <span>
-        <b>위 과정 구성을 확인했으며, 이 내용으로 트레이닝을 진행하는 데 동의합니다.</b>
-        <small>교육 순서·일정·횟수는 진행 상황에 따라 조정될 수 있음을 확인했습니다.</small>
-      </span>
-    </label>
-  </div>
-
-  <!-- 2-K. 교구 인수 -->
-  <div class="card" id="card-kit" style="display:none">
-    <h2><span class="num">2</span>교구 인수 확인</h2>
-    <p class="hint">받으신 교구를 모두 체크하고, 아래에 본인 이름을 적어 주세요.</p>
-    <div class="kit" id="kit"></div>
-    <div class="fld" style="margin-top:12px">
-      <label class="fl" for="kitmemo">추가로 받은 것 · 남길 말</label>
-      <textarea id="kitmemo" placeholder="예: 진단천 1세트는 다음에 받기로 했습니다" style="min-height:64px"></textarea>
-    </div>
-    <div class="fld">
-      <label class="fl" for="typed">본인 이름 (전자서명)<span class="req">*</span></label>
-      <input type="text" id="typed" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" />
-    </div>
-    <p class="stamp">작성 시각 <b id="nowtime">—</b> 이 함께 기록됩니다.</p>
-    <label class="agree" id="kitagreewrap">
-      <input type="checkbox" id="kitagree" />
-      <span>
-        <b>위 교구를 인수했음을 확인합니다.</b>
-        <small>이름·확인일시는 교구 인수 확인 목적으로만 사용합니다.</small>
-      </span>
-    </label>
-  </div>
-
-  <!-- 3. 대표님 평가 -->
-  <div class="card" id="card-coach">
-    <h2><span class="num">3</span>대표님 평가<span class="opt">읽고 확인</span></h2>
-    <p class="hint">이번 회차에 대해 대표님이 남긴 평가입니다.</p>
-    <div id="coachbox"><div class="coachnone">[내 일정 불러오기]를 누르면 표시됩니다.</div></div>
-    <label class="agree" id="notewrap" style="display:none">
-      <input type="checkbox" id="noteok" />
-      <span>
-        <b>위 평가를 읽고 확인했습니다.</b>
-        <small>확인 여부가 대표님 화면에 함께 표시됩니다.</small>
-      </span>
-    </label>
-  </div>
-
-  <!-- 4. 후기 -->
-  <div class="card" id="card-fb">
-    <h2><span class="num">4</span><span id="fbtitle">후기 작성</span></h2>
-    <p class="hint">짧게 한두 줄이어도 괜찮습니다.</p>
-    <div class="fld">
-      <label class="fl" for="q1"><span id="lq1">도움이 된 것 · 알게 된 것 한 가지</span></label>
-      <textarea id="q1" placeholder="예: 시나리오 순서를 잡아준 것이 가장 도움됐습니다"></textarea>
-    </div>
-    <div class="fld">
-      <label class="fl" for="q2"><span id="lq2">연습이 더 필요하다고 느낀 부분</span></label>
-      <textarea id="q2" placeholder="예: 진단천 넘기는 속도가 아직 느립니다"></textarea>
-    </div>
-    <div class="fld">
-      <label class="fl" for="q4">대표님께 하고 싶은 말 (선택)</label>
-      <textarea id="q4" placeholder="자유롭게 남겨 주세요" style="min-height:64px"></textarea>
-    </div>
-  </div>
-
-  <!-- 5. 서명 -->
-  <div class="card" id="card-sign">
-    <h2><span class="num">5</span>서명</h2>
-    <p class="hint">아래 칸에 손가락(또는 마우스)으로 이름을 적어 주세요.</p>
-    <div class="sigbox" id="sigbox">
-      <canvas id="sig"></canvas>
-      <div class="sigbar">
-        <span id="sigstate">아직 서명하지 않았습니다</span>
-        <button type="button" class="mini" id="sigclear">다시 쓰기</button>
-      </div>
-    </div>
-    <label class="agree" id="agreewrap">
-      <input type="checkbox" id="agree" />
-      <span>
-        <b id="agreetext">위와 같이 교육에 참석했음을 확인합니다.</b>
-        <small>서명 정보(이름·서명·확인일)는 트레이닝 기록 목적으로만 사용합니다.</small>
-      </span>
-    </label>
-  </div>
-
-  <p class="foot">PBS COLOR LAB · 인증강사 트레이닝<br />문의 1600-7218</p>
-</div>
-
-<div class="bar" id="bar">
-  <div class="in">
-    <button type="button" class="btn" id="go">제출하기</button>
-    <p class="msg" id="msg"></p>
-  </div>
-</div>
-
-<div class="wrap done" id="done">
-  <div class="ic">✓</div>
-  <h2>제출이 완료되었습니다</h2>
-  <p>제출 내용이 트레이닝 이력에 반영되었습니다.</p>
-  <div class="box" id="donebox"></div>
-  <p class="foot">PBS COLOR LAB · 문의 1600-7218</p>
+  <footer>
+    PBS COLOR LAB · 인증강사 트레이닝실<br />
+    문의 1600-7218
+  </footer>
 </div>
 
 <script>
 (function(){
   var EP = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/trainee-report";
   var AK = "sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
-  var $ = function(id){ return document.getElementById(id); };
-  var esc = function(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); };
-  var z = function(n){ return (n<10?"0":"")+n; };
+  function $(id){ return document.getElementById(id); }
+  function esc(v){ return String(v==null?"":v).replace(/[&<>"']/g, function(m){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; }); }
+  function has(v){ return String(v==null?"":v).trim().length > 0; }
+  function d16(v){ return String(v||"").replace("T"," ").slice(0,16); }
+  function z(n){ return (n<10?"0":"")+n; }
+  function nowText(){ var d=new Date();
+    return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes()); }
+  function q1(sel){ return document.querySelector(sel); }
+  function cssq(v){ return (window.CSS && CSS.escape) ? CSS.escape(v) : String(v).replace(/["\\]/g,"\\$&"); }
 
-  var TASKS = [], CONSULTS = [], KIT = [], COURSE = null, KITDATE = "", pickedKey = "", loaded = false;
+  var GROUPS = [
+    { k:"1 교육",        n:"1", nm:"교육",        sub:"리더십·비전 1회 · 기획안·프로필 작성 1회 (줌 교육 포함)", c:"#E5007F" },
+    { k:"2 트레이닝",    n:"2", nm:"트레이닝",    sub:"퍼스널컬러 1:1·그룹 트레이닝",                          c:"#2d5f9e" },
+    { k:"4 프로필 촬영", n:"4", nm:"프로필 촬영", sub:"",                                                      c:"#a3682a" },
+    { k:"5 수료",        n:"5", nm:"수료",        sub:"강의 시연·피드백·수료식",                              c:"#6b4a9e" }
+  ];
 
-  /* 오늘 날짜·시각 */
-  (function(){
-    var d = new Date();
-    $("sdate").value = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
-    var nowtxt = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
-    $("nowtime").textContent = nowtxt; $("nowtime2").textContent = nowtxt;
-  })();
-  setInterval(function(){
-    var d = new Date();
-    var nowtxt = d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())+" "+z(d.getHours())+":"+z(d.getMinutes());
-    $("nowtime").textContent = nowtxt; $("nowtime2").textContent = nowtxt;
-  }, 30000);
-
-  /* 링크 파라미터 */
   var PRE = (function(){
-    var p = {}, q = (location.search||"").replace(/^\?/,"");
-    q.split("&").forEach(function(kv){
-      if(!kv) return;
-      var a = kv.split("="), k = decodeURIComponent(a[0]||"");
-      p[k] = decodeURIComponent((a[1]||"").replace(/\+/g," "));
-    });
+    var p = {}, s = (location.search||"").replace(/^\?/,"");
+    s.split("&").forEach(function(kv){ if(!kv) return; var a = kv.split("=");
+      p[decodeURIComponent(a[0]||"")] = decodeURIComponent((a[1]||"").replace(/\+/g," ")); });
     return p;
   })();
-  function saveWho(nm, l4){
-    try{ sessionStorage.setItem("pbs_tr", JSON.stringify({ n: nm, l: l4 })); }catch(e){}
-  }
-  function loadWho(){
-    try{ return JSON.parse(sessionStorage.getItem("pbs_tr") || "null"); }catch(e){ return null; }
-  }
-  var AUTO = false, AGREED = false, LOCK = false;
+
+  var NM = "", L4 = "", D = null, OPEN = null, SIG = {};
+
+  function saveWho(n,l){ try{ sessionStorage.setItem("pbs_tr", JSON.stringify({n:n,l:l})); }catch(e){} }
+  function loadWho(){ try{ return JSON.parse(sessionStorage.getItem("pbs_tr")||"null"); }catch(e){ return null; } }
+
+  if(PRE.n){ $("name").value = PRE.n; $("htitle").textContent = PRE.n + " 강사님 프로그램 트레이닝"; }
+
+  function canGo(){ return !!($("name").value.trim() && $("last4").value.replace(/[^0-9]/g,"").length===4); }
+  function sync(){ $("go").disabled = !canGo(); }
+  $("name").addEventListener("input", sync);
+  $("last4").addEventListener("input", function(){
+    $("last4").value = $("last4").value.replace(/[^0-9]/g,"").slice(0,4); sync(); });
+
+  $("go").addEventListener("click", function(){
+    if(!canGo()) return;
+    NM = $("name").value.trim(); L4 = $("last4").value;
+    var m = $("loadmsg"); m.className = "msg"; m.textContent = "불러오는 중입니다..."; $("go").disabled = true;
+    api({ action:"my_tasks", name:NM, phone_last4:L4 }, function(err, j){
+      if(err){ m.className="msg err"; m.textContent = err; $("go").disabled = false; return; }
+      D = j; saveWho(NM, L4); m.textContent = "";
+      $("card-id").style.display = "none";
+      $("whobar").style.display = "flex";
+      $("whotxt").textContent = NM + " 선생님" + (D.cohort ? " · " + D.cohort : "");
+      $("htitle").textContent = NM + " 강사님 프로그램 트레이닝";
+      $("hsub").textContent = "지금 해야 할 것만 아래에 있습니다.";
+      pickInitialOpen(); render(); window.scrollTo(0,0);
+    });
+  });
+
+  $("whoedit").addEventListener("click", function(){
+    try{ sessionStorage.removeItem("pbs_tr"); }catch(e){}
+    location.href = location.pathname;
+  });
+
   (function(){
-    if(PRE.n) $("name").value = PRE.n;
-    if(PRE.k){
-      var kr = document.querySelector('input[name="kind"][value="'+PRE.k+'"]');
-      if(kr){ kr.checked = true; $("kind").dispatchEvent(new Event("change")); }
-    }
-    if(PRE.d) $("sdate").value = PRE.d;
-    if(PRE.n){
-      $("htitle").textContent = PRE.n + " 강사님 프로그램 트레이닝";
-      $("hsub").textContent = [PRE.r, PRE.d].filter(Boolean).join(" · ") || "확인·서명이 필요한 항목입니다.";
-    }
-    /* 내 진행표에서 넘어온 경우 다시 로그인하지 않도록 이어받기 */
     var w = loadWho();
     if(w && w.n && w.l && (!PRE.n || String(w.n).replace(/\s/g,"") === String(PRE.n).replace(/\s/g,""))){
-      if(!$("name").value) $("name").value = w.n;
-      $("last4").value = w.l;
-      AUTO = true;
-    }
+      $("name").value = w.n; $("last4").value = w.l; sync();
+      setTimeout(function(){ $("go").click(); }, 40);
+    } else { sync(); }
   })();
 
-  /* 칩 */
-  function chipGroup(id, cb){
-    var w = $(id);
-    w.addEventListener("change", function(){
-      Array.prototype.forEach.call(w.querySelectorAll("label"), function(l){
-        l.classList.toggle("on", l.querySelector("input").checked);
-      });
-      if(cb) cb();
-    });
-  }
-  function chipValue(nm){
-    var el = document.querySelector('input[name="'+nm+'"]:checked');
-    return el ? el.value : "";
-  }
-  chipGroup("atype");
-
-  function mode(){ return chipValue("kind"); }
-  function applyKind(){
-    var m = mode();
-    var quick = (m === "교구인수" || m === "계약확인");
-    $("card-attend").style.display   = (m === "회차") ? "" : "none";
-    $("card-dispatch").style.display = (m === "출강확인") ? "" : "none";
-    $("card-kit").style.display      = (m === "교구인수") ? "" : "none";
-    $("card-course").style.display   = (m === "계약확인") ? "" : "none";
-    $("card-coach").style.display    = quick ? "none" : "";
-    $("card-fb").style.display       = quick ? "none" : "";
-    $("card-sign").style.display     = quick ? "none" : "";
-    $("fbtitle").textContent = (m === "출강확인") ? "현장 소감" : "후기 작성";
-    if(!PRE.n){
-      $("htitle").textContent = (m === "출강확인") ? "출강 확인서"
-        : (m === "교구인수") ? "교구 인수 확인서"
-        : (m === "계약확인") ? "과정 구성 확인서" : "인증강사 교육 트레이닝 후기";
-    }
-    if(!PRE.n && !PRE.r){
-      $("hsub").textContent = (m === "출강확인")
-        ? "출강 내용과 강사비 수령 여부를 확인하고 서명하는 양식입니다."
-        : (m === "교구인수")
-        ? "지급받은 교구를 확인하고 인수 사실을 기록하는 양식입니다."
-        : (m === "계약확인")
-        ? "신청하신 과정의 구성을 확인하고 동의를 기록하는 양식입니다."
-        : "회차별 출석과 후기를 기록하는 공식 양식입니다. 제출 내용은 트레이닝 이력에 반영됩니다.";
-    }
-    $("lq1").textContent = (m === "출강확인") ? "현장에서 잘 됐던 것 · 알게 된 것" : "도움이 된 것 · 알게 된 것 한 가지";
-    $("lq2").textContent = (m === "출강확인") ? "보완이 더 필요하다고 느낀 부분" : "연습이 더 필요하다고 느낀 부분";
-    $("agreetext").textContent = (m === "출강확인")
-      ? "위 출강 내용이 사실과 같음을 확인합니다."
-      : "위와 같이 교육에 참석했음을 확인합니다.";
-    if(loaded) renderAll();
-    check();
-  }
-  chipGroup("kind", applyKind);
-
-  /* 내 일정 불러오기 */
-  $("loadmine").addEventListener("click", function(){
-    var nm = $("name").value.trim(), l4 = $("last4").value, lm = $("loadmsg");
-    if(!nm || l4.length !== 4){ lm.className = "msg err"; lm.textContent = "이름과 연락처 뒤 4자리를 먼저 입력해 주세요."; return; }
-    lm.className = "msg"; lm.textContent = "불러오는 중입니다...";
-    fetch(EP, { method:"POST", headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
-      body: JSON.stringify({ action:"my_tasks", name:nm, phone_last4:l4 }) })
-    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
-    .then(function(res){
-      if(!res.ok || (res.j && res.j.error)){
-        lm.className = "msg err"; lm.textContent = (res.j && res.j.error) || "불러오지 못했습니다."; return;
-      }
-      saveWho(nm, l4);
-      CONSULTS = (res.j && res.j.consults) || [];
-      TASKS = (res.j && res.j.tasks) || [];
-      COURSE = (res.j && res.j.course) || null;
-      if(res.j && res.j.kit_items && res.j.kit_items.length) KIT = res.j.kit_items;
-      KITDATE = (res.j && res.j.kit_date) || "";
-      loaded = true;
-      AGREED = !!(res.j && res.j.agree_signed);
-      LOCK = (!AGREED && !!COURSE);
-      if(LOCK){
-        var kr2 = document.querySelector('input[name="kind"][value="계약확인"]');
-        if(kr2){ kr2.checked = true; $("kind").dispatchEvent(new Event("change")); }
-      }
-      lm.className = "msg"; lm.textContent = "";
-      renderAll(); check();
-      applyStage(nm);
-    })
-    .catch(function(){ lm.className = "msg err"; lm.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요."; });
-  });
-
-  /* 본인 확인은 한 번만. 확인이 끝나면 지금 해야 할 것만 남긴다. */
-  function stageLabel(nm){
-    var bits = [nm + " 선생님"];
-    var m = mode();
-    if(LOCK){ bits.push("과정 구성 확인"); return bits.join(" · "); }
-    if(PRE.r){
-      var c = null;
-      for(var i=0;i<CONSULTS.length;i++){ if(CONSULTS[i].round === PRE.r){ c = CONSULTS[i]; break; } }
-      if(c){ bits.push(c.label || c.round); if(c.date) bits.push(c.date); }
-      else bits.push(PRE.r);
-      return bits.join(" · ");
-    }
-    if(PRE.k){
-      bits.push(PRE.k === "출강확인" ? "출강 확인"
-        : (PRE.k === "교구인수" ? "교구 인수" : "과정 구성 확인"));
-      return bits.join(" · ");
-    }
-    bits.push(m === "출강확인" ? "출강 확인"
-      : (m === "교구인수" ? "교구 인수" : (m === "계약확인" ? "과정 구성 확인" : "교육 회차")));
-    return bits.join(" · ");
-  }
-  function applyStage(nm){
-    /* 1. 신원 확인은 끝났다 — 다시 묻지 않는다 */
-    $("card-id").style.display = "none";
-    $("whobar").style.display = "flex";
-    $("whotxt").textContent = stageLabel(nm);
-
-    /* 2. 과정 서명 전이면 과정 구성만 */
-    if(LOCK){
-      $("gatemsg").style.display = "block";
-      $("kindwrap").style.display = "none";
-      var rw0 = $("roundwrap"); if(rw0) rw0.style.display = "";
-      return;
-    }
-    $("gatemsg").style.display = "none";
-
-    /* 3. 링크로 항목이 정해져 있으면 그 항목만, 아니면 고르게 한다 */
-    var pinned = !!(PRE.r || PRE.k);
-    $("kindwrap").style.display = pinned ? "none" : "";
-    var rw = $("roundwrap"); if(rw) rw.style.display = PRE.r ? "none" : "";
-  }
-  $("whoedit").addEventListener("click", function(){
-    PRE = {};                       /* 링크 고정 해제 */
-    $("card-id").style.display = "";
-    $("whobar").style.display = "none";
-    $("gatemsg").style.display = LOCK ? "block" : "none";
-    $("kindwrap").style.display = LOCK ? "none" : "";
-    var rw = $("roundwrap"); if(rw) rw.style.display = "";
-  });
-
-  function renderAll(){ renderRounds(); renderTasks(); renderCourse(); renderKit(); }
-  function renderCourse(){
-    var box = $("coursebox");
-    if(!COURSE){ box.innerHTML = '<div class="kitempty">신청 과정이 아직 등록되지 않았습니다. 대표님께 문의해 주세요.</div>'; return; }
-    var rows = '<tr><th style="text-align:left;padding:7px 9px;border-bottom:1.5px solid #ead9e6;font-size:11.5px;color:#9a9aa2;font-weight:800">단계</th>'
-      + '<th style="text-align:left;padding:7px 9px;border-bottom:1.5px solid #ead9e6;font-size:11.5px;color:#9a9aa2;font-weight:800">교육 내용</th>'
-      + '<th style="text-align:left;padding:7px 9px;border-bottom:1.5px solid #ead9e6;font-size:11.5px;color:#9a9aa2;font-weight:800">완성되는 결과</th></tr>'
-      + (COURSE.steps||[]).map(function(x){
-      return '<tr><td style="padding:7px 9px;border-bottom:1px solid #efedf1;font-weight:800;color:#b0257a;white-space:nowrap;font-size:13px">'+esc(x[0])+'</td>'
-        +'<td style="padding:7px 9px;border-bottom:1px solid #efedf1;font-size:14px">'+esc(x[1])+'</td>'
-        +'<td style="padding:7px 9px;border-bottom:1px solid #efedf1;font-size:13px;color:#83838d">'+esc(x[2]||"")+'</td></tr>';
-    }).join("");
-    box.innerHTML = '<div style="background:#fdfafc;border:1px solid #ead9e6;border-radius:12px;padding:14px">'
-      + '<div style="font-size:17px;font-weight:800">'+esc(COURSE.step||COURSE.title)+'</div>'
-      + '<div style="margin-top:4px;font-size:14px;color:#5c5f5c">'+esc(COURSE.term)+'</div>'
-      + '<div style="margin-top:6px;font-size:15px;font-weight:800;color:#b0257a">'+esc(COURSE.total)+'</div>'
-      + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;margin-top:10px">'+rows+'</table></div>'
-      + '<div style="margin-top:10px;font-size:13.5px;line-height:1.65"><b>제공</b> · '+esc(COURSE.give||"")+'</div>'
-      + '<div style="margin-top:8px;font-size:12.5px;color:#83838d;line-height:1.65">'+esc(COURSE.note||"")+'</div></div>';
-  }
-
-  /* 회차 선택 */
-  function renderRounds(){
-    var sel = $("round");
-    if(!CONSULTS.length){ sel.innerHTML = '<option value="">등록된 회차가 없습니다</option>'; return; }
-    sel.innerHTML = '<option value="">선택하세요</option>' + CONSULTS.map(function(c){
-      var lab = (c.label || c.round) + (c.date ? " · " + c.date : "") + (c.topic ? " · " + c.topic : "") + (c.signed ? " (제출완료)" : "");
-      return '<option value="'+esc(c.round)+'">'+esc(lab)+'</option>';
-    }).join("");
-    if(PRE.r){
-      for(var i=0;i<sel.options.length;i++){ if(sel.options[i].value === PRE.r){ sel.selectedIndex = i; break; } }
-    }
-    fillRound();
-  }
-  function currentConsult(){
-    var r = $("round").value;
-    for(var i=0;i<CONSULTS.length;i++){ if(CONSULTS[i].round === r) return CONSULTS[i]; }
-    return null;
-  }
-  function fillRound(){
-    var c = currentConsult(), box = $("roundinfo");
-    if(!c){ box.innerHTML = ""; renderCoach(); check(); return; }
-    if(c.date) $("sdate").value = c.date;
-    if(c.time) $("stime").value = c.time;
-    if(c.topic) $("topic").value = c.topic;
-    if(c.method){
-      var r = document.querySelector('input[name="atype"][value="'+c.method+'"]');
-      if(r){ r.checked = true; $("atype").dispatchEvent(new Event("change")); }
-    }
-    box.innerHTML = '<div class="info"><b>'+esc(c.round)+'</b>'
-      + (c.date ? ' · '+esc(c.date) : '') + (c.time ? ' '+esc(c.time) : '')
-      + (c.topic ? '<br>'+esc(c.topic) : '')
-      + (c.signed ? '<br><span style="color:#b23b30;font-weight:700">이미 제출한 회차입니다</span>' : '')
-      + '</div>';
-    renderCoach(); check();
-  }
-  $("round").addEventListener("change", fillRound);
-
-  /* 대표 평가 */
-  function renderCoach(){
-    var box = $("coachbox"), c = currentConsult();
-    if(!loaded){ box.innerHTML = '<div class="coachnone">[내 일정 불러오기]를 누르면 표시됩니다.</div>'; $("notewrap").style.display = "none"; return; }
-    if(mode() === "출강확인"){
-      var t = TASKS.filter(function(x){ return x.key === pickedKey; })[0];
-      if(t && String(t.coach||"").trim()){
-        box.innerHTML = '<div class="coachbox"><span class="who">'+esc([t.org,t.date].filter(Boolean).join(" · "))+'</span>'+esc(t.coach)+'</div>';
-        $("notewrap").style.display = ""; return;
-      }
-      box.innerHTML = '<div class="coachnone">이 출강 건에 등록된 평가가 없습니다.</div>';
-      $("notewrap").style.display = "none"; return;
-    }
-    if(!c){ box.innerHTML = '<div class="coachnone">위에서 회차를 선택해 주세요.</div>'; $("notewrap").style.display = "none"; return; }
-    if(!String(c.coach||"").trim()){
-      box.innerHTML = '<div class="coachnone">이 회차에 등록된 평가가 없습니다. 그대로 후기만 남겨주세요.</div>';
-      $("notewrap").style.display = "none"; return;
-    }
-    box.innerHTML = '<div class="coachbox"><span class="who">'+esc([c.round,c.date,c.topic].filter(Boolean).join(" · "))+'</span>'+esc(c.coach)+'</div>';
-    $("notewrap").style.display = "";
-  }
-  $("noteok").addEventListener("change", check);
-
-  /* 출강 목록 */
-  function renderTasks(){
-    var box = $("tasks");
-    if(mode() !== "출강확인") return;
-    var open = TASKS.filter(function(t){ return !t.signed; });
-    if(!TASKS.length){ box.innerHTML = '<div class="kitempty">등록된 출강 내역이 없습니다.</div>'; pickedKey=""; $("feewrap").style.display="none"; return; }
-    if(!open.length){ box.innerHTML = '<div class="kitempty">확인하지 않은 출강 건이 없습니다.</div>'; pickedKey=""; $("feewrap").style.display="none"; return; }
-    box.innerHTML = open.map(function(t,i){
-      var sub = [t.date,t.position,t.fee].filter(Boolean).map(esc).join(" · ");
-      return '<label><input type="radio" name="task" class="taskchk" value="'+esc(t.key)+'" '+(open.length===1&&i===0?"checked":"")+' />'
-        +'<span><b>'+esc(t.org)+'</b><br><span style="color:#83838d;font-size:13px">'+sub+'</span></span></label>';
-    }).join("");
-    Array.prototype.forEach.call(box.querySelectorAll(".taskchk"), function(c){
-      c.addEventListener("change", function(){
-        Array.prototype.forEach.call(box.querySelectorAll("label"), function(l){ l.classList.toggle("on", l.querySelector("input").checked); });
-        pickedKey = c.value; $("feewrap").style.display = ""; renderCoach(); check();
-      });
-      if(c.checked){ c.closest("label").classList.add("on"); pickedKey = c.value; $("feewrap").style.display = ""; renderCoach(); }
-    });
-  }
-
-  /* 교구 품목 */
-  function renderKit(){
-    var box = $("kit");
-    if(!KIT.length){ box.innerHTML = '<div class="kitempty">등록된 교구 품목이 없습니다. 받으신 교구를 아래 칸에 직접 적어 주세요.</div>'; return; }
-    box.innerHTML = KIT.map(function(it){
-      return '<label><input type="checkbox" class="kitchk" value="'+esc(it)+'" /><span>'+esc(it)+'</span></label>';
-    }).join("");
-    Array.prototype.forEach.call(box.querySelectorAll(".kitchk"), function(c){
-      c.addEventListener("change", function(){ c.closest("label").classList.toggle("on", c.checked); });
-    });
-  }
-  fetch(EP, { headers:{ apikey:AK, Authorization:"Bearer "+AK } })
-    .then(function(r){ return r.json(); })
-    .then(function(j){ KIT = (j && j.kit_items) || []; renderKit(); })
-    .catch(function(){ renderKit(); });
-
-  $("typed").addEventListener("input", check);
-  $("kitagree").addEventListener("change", check);
-  $("kitmemo").addEventListener("input", check);
-
-  /* 서명 캔버스 */
-  var cv = $("sig"), ctx = cv.getContext("2d"), drawn = false, drawing = false;
-  function fit(){
-    var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-    var data = drawn ? cv.toDataURL() : null;
-    cv.width = Math.round(r.width*dpr); cv.height = Math.round(r.height*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.lineWidth = 2.6; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#141416";
-    ctx.fillStyle = "#fff"; ctx.fillRect(0,0,r.width,r.height);
-    if(data){ var im = new Image(); im.onload = function(){ ctx.drawImage(im,0,0,r.width,r.height); }; im.src = data; }
-  }
-  function pos(e){
-    var r = cv.getBoundingClientRect();
-    var t = (e.touches && e.touches[0]) ? e.touches[0] : e;
-    return { x:t.clientX-r.left, y:t.clientY-r.top };
-  }
-  function start(e){ e.preventDefault(); drawing = true; var p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); }
-  function move(e){
-    if(!drawing) return; e.preventDefault();
-    var p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke();
-    if(!drawn){ drawn = true; $("sigstate").textContent = "서명이 입력되었습니다"; $("sigbox").classList.add("filled"); check(); }
-  }
-  function end(){ if(drawing){ drawing = false; ctx.closePath(); } }
-  cv.addEventListener("mousedown", start); cv.addEventListener("mousemove", move);
-  window.addEventListener("mouseup", end);
-  cv.addEventListener("touchstart", start, {passive:false});
-  cv.addEventListener("touchmove", move, {passive:false});
-  cv.addEventListener("touchend", end);
-  $("sigclear").addEventListener("click", function(){
-    drawn = false; $("sigstate").textContent = "아직 서명하지 않았습니다";
-    $("sigbox").classList.remove("filled"); fit(); check();
-  });
-  window.addEventListener("resize", fit);
-  fit();
-
-  /* 제출 가능 여부 */
-  function check(){
-    var m = mode();
-    var base = $("name").value.trim().length > 0 && $("last4").value.replace(/[^0-9]/g,"").length === 4;
-    var ok = false;
-    if(m === "교구인수"){
-      ok = base && $("typed").value.trim().length > 0 && $("kitagree").checked;
-    } else if(m === "계약확인"){
-      ok = base && !!COURSE && $("ctyped").value.trim().length > 0 && $("cagree").checked;
-    } else {
-      var needNote = $("notewrap").style.display !== "none";
-      var sigOk = drawn && $("agree").checked;
-      if(m === "출강확인") ok = base && !!pickedKey && sigOk && (!needNote || $("noteok").checked);
-      else ok = base && $("round").value !== "" && $("sdate").value !== "" && sigOk && (!needNote || $("noteok").checked);
-    }
-    $("go").disabled = !ok;
-    return ok;
-  }
-  ["name","last4","round","sdate"].forEach(function(id){
-    $(id).addEventListener("input", check); $(id).addEventListener("change", check);
-  });
-  $("agree").addEventListener("change", check);
-  $("ctyped").addEventListener("input", check);
-  $("cagree").addEventListener("change", check);
-  $("last4").addEventListener("input", function(){
-    $("last4").value = $("last4").value.replace(/[^0-9]/g,"").slice(0,4);
-  });
-  applyKind();
-  check();
-  if(AUTO && $("name").value.trim() && $("last4").value.length === 4){
-    setTimeout(function(){ $("loadmine").click(); }, 60);
-  }
-
-  /* 제출 */
-  $("go").addEventListener("click", function(){
-    if(!check()) return;
-    var m = mode(), msg = $("msg");
-    msg.className = "msg"; msg.textContent = "제출 중입니다..."; $("go").disabled = true;
-
-    var payload = {
-      action: "submit",
-      kind: m,
-      name: $("name").value.trim(),
-      phone_last4: $("last4").value
-    };
-
-    if(m === "계약확인"){
-      payload.typed_name = $("ctyped").value.trim();
-    } else if(m === "교구인수"){
-      payload.typed_name = $("typed").value.trim();
-      payload.kit_items = Array.prototype.map.call(document.querySelectorAll(".kitchk:checked"), function(c){ return c.value; });
-      payload.kit_memo = $("kitmemo").value.trim();
-      payload.session_date = $("sdate").value || null;
-    } else {
-      payload.signature = cv.toDataURL("image/png");
-      payload.note_confirmed = $("noteok").checked;
-      payload.feedback = {
-        "도움된 점·알게 된 것": $("q1").value.trim(),
-        "연습이 필요한 부분": $("q2").value.trim(),
-        "대표님께": $("q4").value.trim()
-      };
-      if(m === "출강확인"){
-        payload.dispatch_key = pickedKey;
-        payload.fee_received = $("feeok").checked;
-      } else {
-        payload.round = $("round").value;
-        payload.session_date = $("sdate").value;
-        payload.attended = true;
-        payload.attend_type = chipValue("atype");
-        payload.start_time = $("stime").value || "";
-        payload.end_time = "";
-      }
-    }
-
+  function api(payload, cb){
     fetch(EP, { method:"POST", headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
       body: JSON.stringify(payload) })
-    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
+    .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
     .then(function(res){
-      if(!res.ok || (res.j && res.j.error)){
-        msg.className = "msg err"; msg.textContent = (res.j && res.j.error) || "제출에 실패했습니다.";
-        $("go").disabled = false; return;
-      }
-      var lines = [];
-      if(m === "계약확인"){
-        lines.push("<b>"+payload.name+"</b> · 과정 구성 확인");
-        lines.push(COURSE ? ((COURSE.step||COURSE.title)+" · "+COURSE.total) : "");
-        lines.push("확인 " + $("nowtime2").textContent);
-      } else if(m === "교구인수"){
-        lines.push("<b>"+payload.name+"</b> · 교구 인수 확인");
-        lines.push("확인 " + $("nowtime").textContent);
-        lines.push(payload.kit_items.length ? (payload.kit_items.length + "개 품목 체크") : "품목 체크 없음");
-      } else if(m === "출강확인"){
-        var t = TASKS.filter(function(x){ return x.key === pickedKey; })[0] || {};
-        lines.push("<b>"+payload.name+"</b> · 출강 확인");
-        lines.push([t.org,t.date,t.position].filter(Boolean).join(" · "));
-        if(t.fee) lines.push("강사비 " + t.fee + ($("feeok").checked ? " · 수령 확인" : " · 미수령"));
-      } else {
-        lines.push("<b>"+payload.name+"</b> · "+payload.round+" 출석");
-        lines.push(payload.session_date + (payload.start_time ? " " + payload.start_time : "") + " · " + payload.attend_type);
-        if($("topic").value.trim()) lines.push($("topic").value.trim());
-      }
-      $("donebox").innerHTML = lines.filter(Boolean).join("<br />");
-      if(m === "계약확인"){
-        var back = document.createElement("a");
-        back.href = location.pathname + "?n=" + encodeURIComponent(payload.name);
-        back.textContent = "이어서 회차·출강 제출하기 →";
-        back.style.cssText = "display:block;margin:16px auto 0;max-width:320px;padding:13px;border-radius:11px;"
-          + "background:#E5007F;color:#fff;text-decoration:none;font-weight:800;font-size:15px;text-align:center";
-        $("donebox").parentNode.insertBefore(back, $("donebox").nextSibling);
-      }
-      $("form").style.display = "none"; $("bar").style.display = "none";
-      $("done").style.display = "block"; window.scrollTo(0,0);
+      if(!res.ok || (res.j && res.j.error)) cb((res.j && res.j.error) || "요청을 처리하지 못했습니다.");
+      else cb(null, res.j);
     })
-    .catch(function(){
-      msg.className = "msg err"; msg.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요.";
-      $("go").disabled = false;
+    .catch(function(){ cb("네트워크 오류입니다. 잠시 후 다시 시도해 주세요."); });
+  }
+
+  function pickInitialOpen(){
+    if(!D) return;
+    if(D.course && !D.agree_signed){ OPEN = "course"; return; }
+    if(PRE.r){ OPEN = "r:" + PRE.r; return; }
+    if(PRE.k === "교구인수"){ OPEN = "kit"; return; }
+    if(PRE.k === "계약확인"){ OPEN = "course"; return; }
+    OPEN = null;
+  }
+
+  function mineRound(r){ return (D.mine||[]).filter(function(x){ return x.kind==="회차" && x.round===r; })[0] || null; }
+  function mineDisp(k){ return (D.mine||[]).filter(function(x){ return x.kind==="출강확인" && x.dispatch_key===k; })[0] || null; }
+  function fbText(r){
+    var fb=(r&&r.feedback)||{}, ks=Object.keys(fb).filter(function(k){ return has(fb[k]); });
+    return ks.length ? ks.map(function(k){ return k+" — "+fb[k]; }).join("\n") : "";
+  }
+
+  function progress(){
+    var total = 0, done = 0;
+    if(D.course){ total++; if(D.agree_signed) done++; }
+    if((D.kit_items||[]).length){ total++; if(D.kit_signed) done++; }
+    (D.consults||[]).forEach(function(c){ if(c.status==="완료"){ total++; if(mineRound(c.round)) done++; } });
+    (D.tasks||[]).forEach(function(t){ total++; if(mineDisp(t.key)) done++; });
+    return { total:total, done:done, pct: total ? Math.round(done/total*100) : 0 };
+  }
+
+  var CHEERS = ["시작이 반입니다. 화이팅!","좋아요, 잘 달리고 있어요!","절반 가까이 왔어요!","조금만 더, 거의 다 왔습니다!","마지막 한 걸음이에요!"];
+  function paintProgress(){
+    var p = progress();
+    $("prog").style.display = "block";
+    $("pct").textContent = p.pct + "%";
+    $("plbl").textContent = p.done + " / " + p.total + " 완료";
+    $("fill").style.width = p.pct + "%";
+    $("runner").style.left = p.pct + "%";
+    if(p.pct >= 100){
+      $("runner").textContent = "🏆"; $("runner").className = "runner";
+      $("cheer").textContent = "전 과정 완주!";
+      $("party").style.display = "block";
+    } else {
+      $("runner").textContent = "🏃‍♀️";
+      $("runner").className = "runner" + (p.pct > 0 ? " go" : "");
+      $("cheer").textContent = CHEERS[Math.min(CHEERS.length-1, Math.floor(p.pct/25))];
+      $("party").style.display = "none";
+    }
+  }
+
+  function render(){
+    paintProgress();
+    var h = "";
+
+    if(D.course && !D.agree_signed){
+      $("main").innerHTML = courseCard(true);
+      wire(); return;
+    }
+    var no = 0;
+    if(D.course) h += courseCard(false, ++no);
+    if((D.kit_items||[]).length) h += kitCard(++no);
+
+    h += '<div class="card"><h2><span class="n">'+(++no)+'</span>교육 회차</h2>'
+       + '<p class="hint">완료된 회차를 눌러 후기와 서명을 남겨 주세요.</p>';
+    var any = false;
+    GROUPS.forEach(function(g){
+      var list = (D.consults||[]).filter(function(c){ return (c.group||"")===g.k; });
+      if(!list.length) return;
+      any = true;
+      h += '<div class="grp"><div class="grp-h" style="border-left-color:'+g.c+'">'
+        +  '<span class="t" style="color:'+g.c+'">'+g.n+'. '+esc(g.nm)+'</span>'
+        +  (g.sub ? '<span class="s">'+esc(g.sub)+'</span>' : '') + '</div>';
+      list.forEach(function(c){ h += roundBox(c); });
+      h += '</div>';
     });
-  });
+    var un = (D.consults||[]).filter(function(c){
+      return !GROUPS.some(function(g){ return g.k===(c.group||""); }); });
+    if(un.length){ any = true; un.forEach(function(c){ h += roundBox(c); }); }
+    if(!any) h += '<p class="hint" style="margin:0">아직 등록된 회차가 없습니다.</p>';
+    h += '</div>';
+
+    h += '<div class="card"><h2><span class="n">'+(++no)+'</span>현장 서브·동행 · 강의 출강</h2>'
+       + '<p class="hint">다녀온 건을 눌러 후기와 확인 서명을 남겨 주세요.</p>';
+    if(!(D.tasks||[]).length) h += '<p class="hint" style="margin:0">아직 등록된 건이 없습니다.</p>';
+    (D.tasks||[]).forEach(function(t,i){ h += dispBox(t,i); });
+    h += '</div>';
+
+    $("main").innerHTML = h;
+    wire();
+  }
+
+  function courseCard(gate, no){
+    var c = D.course, open = (OPEN === "course") || gate;
+    var h = '<div class="card"><h2><span class="n">'+(no||1)+'</span>과정 구성 확인</h2>';
+    h += '<p class="hint">'+esc(c.step||c.title)+' · '+esc(c.term)+'</p>';
+    h += '<div style="font-size:15.5px;font-weight:800;color:var(--mg-d);margin-bottom:6px">'+esc(c.total)+'</div>';
+    h += '<div>' + (D.agree_signed ? '<span class="badge b-ok">✅ 과정 서명 완료</span>'
+                                   : '<span class="badge b-wait">⏳ 과정 서명 전</span>') + '</div>';
+    if(open){
+      h += '<div class="tw"><table><tr><th>단계</th><th>교육 내용</th><th>완성되는 결과</th></tr>'
+        + (c.steps||[]).map(function(x){
+            return '<tr><td class="step">'+esc(x[0])+'</td><td class="body">'+esc(x[1])+'</td>'
+                 + '<td class="res">'+esc(x[2]||"")+'</td></tr>'; }).join("")
+        + '</table></div>';
+      if(has(c.give)) h += '<div style="margin-top:10px;font-size:13.5px;line-height:1.65"><b>제공</b> · '+esc(c.give)+'</div>';
+      if(has(c.note)) h += '<div style="margin-top:7px;font-size:12.5px;color:var(--ink3);line-height:1.6">'+esc(c.note)+'</div>';
+    }
+    if(!D.agree_signed){
+      h += '<div class="fld" style="margin-top:14px"><label class="fl" for="ctyped">본인 이름 (전자서명)<span class="req">*</span></label>'
+        +  '<input type="text" id="ctyped" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" /></div>'
+        +  '<p class="stamp">작성 시각 <b>'+nowText()+'</b> 이 함께 기록됩니다.</p>'
+        +  '<label class="agree"><input type="checkbox" id="cagree" /><span>'
+        +  '<b>위 과정 구성을 확인했으며, 이 내용으로 트레이닝을 진행하는 데 동의합니다.</b>'
+        +  '<small>교육 순서·일정·횟수는 진행 상황에 따라 조정될 수 있음을 확인했습니다.</small></span></label>'
+        +  '<button type="button" class="btn" id="csubmit" disabled>과정 확인 서명하기</button>'
+        +  '<p class="msg" id="cmsg"></p>';
+    }
+    return h + '</div>';
+  }
+
+  function kitCard(no){
+    var h = '<div class="card"><h2><span class="n">'+(no||2)+'</span>교구 인수</h2>';
+    h += '<p class="hint">'+(has(D.kit_date)? esc(D.kit_date)+' 제공' : '받으신 교구입니다')+'</p>';
+    (D.kit_items||[]).forEach(function(x){
+      h += '<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:7px;font-size:14px">'+esc(x)+'</div>'; });
+    if(D.kit_signed){
+      h += '<div style="margin-top:8px"><span class="badge b-ok">✅ 인수 서명 완료</span></div>';
+    } else {
+      h += '<div class="fld" style="margin-top:12px"><label class="fl" for="ktyped">본인 이름 (전자서명)<span class="req">*</span></label>'
+        +  '<input type="text" id="ktyped" placeholder="위에 적으신 이름과 똑같이 입력하세요" autocomplete="off" /></div>'
+        +  '<div class="fld"><label class="fl" for="kmemo">남길 말 (선택)</label>'
+        +  '<textarea id="kmemo" placeholder="예: 진단천 1세트는 다음에 받기로 했습니다" style="min-height:62px"></textarea></div>'
+        +  '<p class="stamp">작성 시각 <b>'+nowText()+'</b> 이 함께 기록됩니다.</p>'
+        +  '<label class="agree"><input type="checkbox" id="kagree" /><span>'
+        +  '<b>위 교구를 인수했음을 확인합니다.</b>'
+        +  '<small>이름·확인일시는 교구 인수 확인 목적으로만 사용합니다.</small></span></label>'
+        +  '<button type="button" class="btn" id="ksubmit" disabled>교구 인수 서명하기</button>'
+        +  '<p class="msg" id="kmsg"></p>';
+    }
+    return h + '</div>';
+  }
+
+  function boxHead(id, noTxt, noBg, noCol, badge, sub, open){
+    return '<div class="task-h" data-toggle="'+esc(id)+'">'
+      + '<span class="no" style="background:'+noBg+';color:'+noCol+'">'+esc(noTxt)+'</span>'
+      + badge
+      + '<span class="arw">'+(open?"▾":"▸")+'</span>'
+      + '<span class="sub">'+esc(sub)+'</span></div>';
+  }
+
+  function roundBox(c){
+    var id = "r:" + c.round, open = (OPEN === id), rv = mineRound(c.round);
+    var done = !!rv, ready = (c.status === "완료");
+    var badge = done ? '<span class="badge b-ok">✅ 제출 완료</span>'
+      : (ready ? '<span class="badge b-wait">작성 필요</span>'
+               : '<span class="badge b-blue">'+esc(c.status||"예정")+'</span>');
+    var sub = [c.date, c.time, c.method, c.topic].filter(has).join(" · ");
+    var h = '<div class="task'+(done?" done":"")+'" data-box="'+esc(id)+'">'
+      + boxHead(id, (c.label||c.round), done?"var(--okbg)":"var(--soft)", done?"var(--ok)":"var(--mg-d)", badge, sub, open);
+    if(open){
+      h += '<div class="task-b">';
+      if(has(c.coach)) h += '<div class="quote q-coach"><b>대표님 평가·피드백</b>'+esc(c.coach)+'</div>';
+      if(done){
+        var t = fbText(rv);
+        if(t) h += '<div class="quote q-mine"><b>내가 쓴 후기·소감</b>'+esc(t).replace(/\n/g,"<br />")+'</div>';
+        h += '<p class="stamp">제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
+      } else if(!ready){
+        h += '<p class="hint" style="margin:0">아직 진행 전인 회차입니다. 완료되면 작성할 수 있습니다.</p>';
+      } else {
+        h += fields(id, "회차")
+          +  '<div class="fld"><label class="fl">참석 방식<span class="req">*</span></label>'
+          +  '<div class="chips" data-atype="'+esc(id)+'">'
+          +  ["대면","줌","전화","기타"].map(function(a,i){
+               return '<label class="'+(i===0?"on":"")+'"><input type="radio" name="at_'+esc(id)+'" value="'+a+'"'+(i===0?" checked":"")+' />'+a+'</label>'; }).join("")
+          +  '</div></div>'
+          +  sigBlock(id)
+          +  agreeBlock(id, "위 교육을 완료하였습니다.", "서명과 확인일시가 트레이닝 이력에 기록됩니다.")
+          +  '<button type="button" class="btn" data-submit="'+esc(id)+'" disabled>제출하기</button>'
+          +  '<p class="msg" data-msg="'+esc(id)+'"></p>';
+      }
+      h += '</div>';
+    }
+    return h + '</div>';
+  }
+
+  function dispBox(t, i){
+    var id = "d:" + t.key, open = (OPEN === id), rv = mineDisp(t.key), done = !!rv;
+    var badge = done ? '<span class="badge b-ok">✅ 서명 완료</span>' : '<span class="badge b-wait">확인 필요</span>';
+    var sub = [t.date, t.org, t.position, t.fee].filter(has).join(" · ");
+    var h = '<div class="task'+(done?" done":"")+'" data-box="'+esc(id)+'">'
+      + boxHead(id, (i+1)+"회차", done?"var(--okbg)":"var(--bluebg)", done?"var(--ok)":"var(--blue)", badge, sub, open);
+    if(open){
+      h += '<div class="task-b">';
+      if(has(t.coach)) h += '<div class="quote q-coach"><b>대표님 평가·피드백</b>'+esc(t.coach)+'</div>';
+      if(done){
+        var tx = fbText(rv);
+        if(tx) h += '<div class="quote q-mine"><b>내가 쓴 후기·소감</b>'+esc(tx).replace(/\n/g,"<br />")+'</div>';
+        h += '<p class="stamp">'+(rv.fee_received?"강사비 수령 확인":"강사비 미수령")+' · 제출 '+esc(d16(rv.signed_at||rv.created_at))+'</p>';
+      } else {
+        h += fields(id, "출강확인");
+        if(has(t.fee)){
+          h += '<label class="agree" style="background:var(--bluebg);border-color:var(--blueln)">'
+            +  '<input type="checkbox" data-fee="'+esc(id)+'" /><span>'
+            +  '<b>강사비 '+esc(t.fee)+' 을(를) 수령했습니다.</b>'
+            +  '<small>아직 못 받으셨으면 체크하지 말고 그대로 제출하세요.</small></span></label>';
+        }
+        h += sigBlock(id)
+          +  agreeBlock(id, "위 교육을 완료하였습니다.", "출강 내용이 사실과 같음을 확인하며 서명합니다.")
+          +  '<button type="button" class="btn" data-submit="'+esc(id)+'" disabled>제출하기</button>'
+          +  '<p class="msg" data-msg="'+esc(id)+'"></p>';
+      }
+      h += '</div>';
+    }
+    return h + '</div>';
+  }
+
+  function fields(id, kind){
+    var l1 = (kind==="출강확인") ? "현장에서 잘 됐던 것 · 알게 된 것" : "도움이 된 것 · 알게 된 것";
+    var l2 = (kind==="출강확인") ? "보완이 더 필요하다고 느낀 부분" : "연습이 더 필요하다고 느낀 부분";
+    return '<div class="fld"><label class="fl">'+l1+'</label>'
+      + '<textarea data-q1="'+esc(id)+'" placeholder="한두 줄이어도 괜찮습니다"></textarea></div>'
+      + '<div class="fld"><label class="fl">'+l2+'</label>'
+      + '<textarea data-q2="'+esc(id)+'" placeholder="솔직하게 적어 주세요"></textarea></div>'
+      + '<div class="fld"><label class="fl">대표님께 하고 싶은 말 (선택)</label>'
+      + '<textarea data-q4="'+esc(id)+'" style="min-height:62px"></textarea></div>';
+  }
+
+  function agreeBlock(id, big, small){
+    return '<label class="agree"><input type="checkbox" data-agree="'+esc(id)+'" /><span>'
+      + '<b>'+esc(big)+'</b><small>'+esc(small)+'</small></span></label>';
+  }
+
+  function sigBlock(id){
+    return '<div class="fld"><label class="fl">서명<span class="req">*</span></label>'
+      + '<div class="sigbox" data-sigbox="'+esc(id)+'"><canvas data-sig="'+esc(id)+'"></canvas>'
+      + '<div class="sigbar"><span data-sigstate="'+esc(id)+'">손가락으로 이름을 적어 주세요</span>'
+      + '<button type="button" data-sigclear="'+esc(id)+'">지우기</button></div></div></div>';
+  }
+
+  function wire(){
+    Array.prototype.forEach.call(document.querySelectorAll("[data-toggle]"), function(el){
+      el.addEventListener("click", function(){
+        var id = el.dataset.toggle;
+        OPEN = (OPEN === id) ? null : id;
+        render();
+        if(OPEN === id){
+          var box = q1('[data-box="'+cssq(id)+'"]');
+          if(box) box.scrollIntoView({block:"center", behavior:"smooth"});
+        }
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-sig]"), initSig);
+    Array.prototype.forEach.call(document.querySelectorAll(".chips[data-atype]"), function(w){
+      w.addEventListener("change", function(){
+        Array.prototype.forEach.call(w.querySelectorAll("label"), function(l){
+          l.classList.toggle("on", l.querySelector("input").checked); });
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-agree]"), function(cb){
+      cb.addEventListener("change", function(){ refresh(cb.dataset.agree); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-submit]"), function(b){
+      b.addEventListener("click", function(){ submit(b.dataset.submit); });
+    });
+
+    var ct = $("ctyped"), ca = $("cagree"), cs = $("csubmit");
+    if(ct && ca && cs){
+      var f = function(){ cs.disabled = !(ct.value.trim() && ca.checked); };
+      ct.addEventListener("input", f); ca.addEventListener("change", f); f();
+      cs.addEventListener("click", function(){
+        submitTyped("계약확인", ct.value.trim(), "", $("cmsg"), cs); });
+    }
+    var kt = $("ktyped"), ka = $("kagree"), ks = $("ksubmit");
+    if(kt && ka && ks){
+      var g = function(){ ks.disabled = !(kt.value.trim() && ka.checked); };
+      kt.addEventListener("input", g); ka.addEventListener("change", g); g();
+      ks.addEventListener("click", function(){
+        submitTyped("교구인수", kt.value.trim(), ($("kmemo")||{}).value||"", $("kmsg"), ks); });
+    }
+  }
+
+  function refresh(id){
+    var btn = q1('[data-submit="'+cssq(id)+'"]');
+    if(!btn) return;
+    var agree = q1('[data-agree="'+cssq(id)+'"]');
+    btn.disabled = !( SIG[id] && SIG[id].drawn && agree && agree.checked );
+  }
+
+  function initSig(cv){
+    var id = cv.dataset.sig, ctx = cv.getContext("2d"), drawing = false, last = null;
+    SIG[id] = { cv: cv, drawn: false };
+    function fit(){
+      var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+      cv.width = Math.max(1, Math.round(r.width*dpr));
+      cv.height = Math.max(1, Math.round(r.height*dpr));
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#141416";
+    }
+    fit();
+    function pos(e){
+      var r = cv.getBoundingClientRect(), t = e.touches ? e.touches[0] : e;
+      return { x: t.clientX - r.left, y: t.clientY - r.top };
+    }
+    function start(e){ e.preventDefault(); drawing = true; last = pos(e); }
+    function move(e){
+      if(!drawing) return; e.preventDefault();
+      var p = pos(e);
+      ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
+      last = p;
+      if(!SIG[id].drawn){
+        SIG[id].drawn = true;
+        var st = q1('[data-sigstate="'+cssq(id)+'"]'); if(st) st.textContent = "서명이 입력되었습니다";
+        var bx = q1('[data-sigbox="'+cssq(id)+'"]'); if(bx) bx.classList.add("filled");
+        refresh(id);
+      }
+    }
+    function end(){ drawing = false; }
+    cv.addEventListener("mousedown",start); cv.addEventListener("mousemove",move);
+    window.addEventListener("mouseup",end);
+    cv.addEventListener("touchstart",start,{passive:false});
+    cv.addEventListener("touchmove",move,{passive:false});
+    cv.addEventListener("touchend",end);
+    var cl = q1('[data-sigclear="'+cssq(id)+'"]');
+    if(cl) cl.addEventListener("click", function(){
+      fit(); SIG[id].drawn = false;
+      var st = q1('[data-sigstate="'+cssq(id)+'"]'); if(st) st.textContent = "손가락으로 이름을 적어 주세요";
+      var bx = q1('[data-sigbox="'+cssq(id)+'"]'); if(bx) bx.classList.remove("filled");
+      refresh(id);
+    });
+  }
+
+  function val(attr, id){ var e = q1('['+attr+'="'+cssq(id)+'"]'); return e ? e.value.trim() : ""; }
+
+  function submit(id){
+    var msg = q1('[data-msg="'+cssq(id)+'"]'), btn = q1('[data-submit="'+cssq(id)+'"]');
+    msg.className = "msg"; msg.textContent = "제출 중입니다..."; btn.disabled = true;
+    var isRound = id.indexOf("r:") === 0, key = id.slice(2);
+    var p = { action:"submit", name:NM, phone_last4:L4,
+      kind: isRound ? "회차" : "출강확인",
+      signature: SIG[id].cv.toDataURL("image/png"),
+      note_confirmed: true,
+      feedback: {
+        "도움된 점·알게 된 것": val("data-q1", id),
+        "연습이 필요한 부분": val("data-q2", id),
+        "대표님께": val("data-q4", id)
+      } };
+    if(isRound){
+      var c = (D.consults||[]).filter(function(x){ return x.round===key; })[0] || {};
+      var at = q1('[name="at_'+cssq(id)+'"]:checked');
+      p.round = key; p.session_date = c.date || null; p.attended = true;
+      p.attend_type = at ? at.value : "대면"; p.start_time = c.time || ""; p.end_time = "";
+    } else {
+      var fee = q1('[data-fee="'+cssq(id)+'"]');
+      p.dispatch_key = key; p.fee_received = !!(fee && fee.checked);
+    }
+    api(p, function(err){
+      if(err){ msg.className="msg err"; msg.textContent = err; btn.disabled = false; return; }
+      reload();
+    });
+  }
+
+  function submitTyped(kind, typed, memo, msg, btn){
+    msg.className = "msg"; msg.textContent = "제출 중입니다..."; btn.disabled = true;
+    api({ action:"submit", name:NM, phone_last4:L4, kind:kind, typed_name:typed, kit_memo:memo }, function(err){
+      if(err){ msg.className="msg err"; msg.textContent = err; btn.disabled = false; return; }
+      reload();
+    });
+  }
+
+  function reload(){
+    api({ action:"my_tasks", name:NM, phone_last4:L4 }, function(err, j){
+      if(err) return;
+      D = j; SIG = {}; OPEN = null; render();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+  }
 })();
 </script>
 </body>
