@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>내 트레이닝 진행표 | PBS 인증강사</title>
+<meta name="robots" content="noindex, nofollow" />
+<style>
+  :root{
+    --mg:#E5007F; --mg-d:#b0257a; --soft:#FDEEF6;
+    --ink:#141416; --ink2:#4a4a52; --ink3:#83838d;
+    --line:#e6e6ea; --bg:#f7f7f8; --card:#fff;
+    --ok:#1b7a4a; --okbg:#e7f4ee; --okln:#bfe3d1;
+    --wait:#a06a1f; --waitbg:#fdf3e0; --waitln:#eddcb6;
+    --blue:#2d5f9e; --bluebg:#eef3fa;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ink:#f2f2f4; --ink2:#c7c7cf; --ink3:#9a9aa4; --line:#33333a;
+    --bg:#131315; --card:#1c1c20; --soft:#3a1028;
+    --okbg:#12301f; --okln:#1f5136; --waitbg:#332b12; --waitln:#5c4d1e; --bluebg:#1a2534}}
+  :root[data-theme="dark"]{
+    --ink:#f2f2f4; --ink2:#c7c7cf; --ink3:#9a9aa4; --line:#33333a;
+    --bg:#131315; --card:#1c1c20; --soft:#3a1028;
+    --okbg:#12301f; --okln:#1f5136; --waitbg:#332b12; --waitln:#5c4d1e; --bluebg:#1a2534}
+  *{box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+  .wrap{max-width:720px;margin:0 auto;padding:18px 15px 70px}
+
+  .hero{background:linear-gradient(135deg,var(--mg),var(--mg-d));color:#fff;
+    border-radius:16px;padding:20px 18px;margin-bottom:16px}
+  .hero .k{font-size:11px;font-weight:800;letter-spacing:.1em;opacity:.85}
+  .hero h1{margin:6px 0 5px;font-size:21px;font-weight:900;letter-spacing:-.03em}
+  .hero p{margin:0;font-size:13.5px;opacity:.94}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:15px 15px;margin-bottom:12px}
+  .card h2{margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card h2 .n{width:23px;height:23px;border-radius:50%;background:var(--mg);color:#fff;
+    font-size:12.5px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .hint{margin:0 0 10px;font-size:13px;color:var(--ink3);line-height:1.55}
+
+  label.fl{display:block;font-size:12.5px;font-weight:800;color:var(--ink2);margin-bottom:5px}
+  input[type=text],input[type=tel]{width:100%;padding:13px;font-size:16px;font-family:inherit;
+    border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+  .row2{display:grid;grid-template-columns:1fr 130px;gap:9px}
+  @media(max-width:420px){.row2{grid-template-columns:1fr}}
+  button.go{width:100%;padding:14px;border:0;border-radius:11px;background:var(--mg);color:#fff;
+    font:inherit;font-size:16px;font-weight:800;cursor:pointer;margin-top:11px}
+  button.go:disabled{background:#c9c9cd;cursor:not-allowed}
+  .msg{margin:9px 0 0;font-size:13.5px;color:var(--ink3);min-height:1em}
+  .msg.err{color:#b23b30}
+
+  .badge{display:inline-block;font-size:11.5px;font-weight:800;border-radius:20px;padding:3px 10px;white-space:nowrap}
+  .b-ok{background:var(--okbg);color:var(--ok);border:1px solid var(--okln)}
+  .b-wait{background:var(--waitbg);color:var(--wait);border:1px solid var(--waitln)}
+  .b-mg{background:var(--soft);color:var(--mg-d)}
+  .b-blue{background:var(--bluebg);color:var(--blue)}
+  .b-grey{background:#ececea;color:#7a7a80}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .b-grey{background:#2a2a30;color:#a0a0a8}}
+
+  .grp{margin:0 0 14px}
+  .grp-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 11px;
+    background:var(--bg);border-radius:10px;border-left:4px solid var(--mg);margin-bottom:8px}
+  .grp-h .t{font-size:14px;font-weight:900}
+  .grp-h .s{flex:1 1 100%;font-size:11.5px;color:var(--ink3);line-height:1.5}
+  .item{border:1px solid var(--line);border-radius:11px;padding:11px 12px;margin-bottom:7px;background:var(--card)}
+  .item .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .item .when{flex:1 1 100%;font-size:13.5px;color:var(--ink2);line-height:1.5;margin-top:3px}
+  .quote{margin-top:8px;border-radius:9px;padding:9px 11px;font-size:13.5px;line-height:1.6}
+  .q-coach{background:var(--soft);color:var(--ink2);border:1px solid #f0d8e7}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .q-coach{border-color:#4d1b38}}
+  .q-mine{background:var(--okbg);color:var(--ink2);border:1px solid var(--okln)}
+  .quote b{display:block;font-size:11px;font-weight:800;margin-bottom:3px;letter-spacing:.02em}
+  .q-coach b{color:var(--mg-d)}
+  .q-mine b{color:var(--ok)}
+
+  a.act{display:block;text-align:center;margin-top:9px;padding:12px;border-radius:10px;
+    background:var(--mg);color:#fff;text-decoration:none;font-weight:800;font-size:14.5px}
+  a.act.sub{background:transparent;border:1.5px solid var(--mg);color:var(--mg)}
+
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;color:var(--ink3);font-weight:800;white-space:nowrap}
+  td.step{font-weight:800;color:var(--mg-d);white-space:nowrap;font-size:13px}
+  td.body{font-size:14px}
+  td.res{font-size:13px;color:var(--ink3)}
+  details summary{cursor:pointer;font-size:13.5px;font-weight:800;color:var(--blue);padding:4px 0}
+
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);
+    color:var(--ink3);font-size:12.5px;text-align:center;line-height:1.8}
+  .ro{background:var(--bluebg);border:1px solid #cddcee;border-radius:11px;padding:11px 13px;
+    font-size:13px;color:var(--blue);margin-bottom:14px;line-height:1.6}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ro{border-color:#2b3d55}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="k">PBS COLOR LAB · 인증강사 트레이닝</div>
+    <h1 id="htitle">내 트레이닝 진행표</h1>
+    <p id="hsub">내 진행 상황을 한눈에 보고, 확인·서명이 필요한 것만 처리합니다.</p>
+  </div>
+
+  <!-- 로그인 -->
+  <div class="card" id="gate">
+    <h2><span class="n">1</span>본인 확인</h2>
+    <p class="hint">등록된 강사만 볼 수 있습니다. 본인 것만 열립니다.</p>
+    <div class="row2">
+      <div>
+        <label class="fl" for="name">이름</label>
+        <input type="text" id="name" placeholder="예: 장연희" autocomplete="name" />
+      </div>
+      <div>
+        <label class="fl" for="last4">연락처 뒤 4자리</label>
+        <input type="tel" id="last4" inputmode="numeric" maxlength="4" placeholder="1234" autocomplete="off" />
+      </div>
+    </div>
+    <button type="button" class="go" id="open">내 진행표 열기</button>
+    <p class="msg" id="msg"></p>
+  </div>
+
+  <div id="view" style="display:none"></div>
+
+  <footer>
+    PBS COLOR LAB · 인증강사 트레이닝실<br />
+    문의 1600-7218
+  </footer>
+</div>
+
+<script>
+(function(){
+  var EP = "https://oqxlsnyuwtmjmbhgzjoz.supabase.co/functions/v1/trainee-report";
+  var AK = "sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
+  var RPT = "https://www.pbscolor.com/academy/report.html";
+  function $(id){ return document.getElementById(id); }
+  function esc(v){ return String(v==null?"":v).replace(/[&<>"']/g, function(m){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]; }); }
+  function has(v){ return String(v==null?"":v).trim().length > 0; }
+  function d10(v){ return String(v||"").replace("T"," ").slice(0,16); }
+
+  var PRE = (function(){
+    var p = {}, q = (location.search||"").replace(/^\?/,"");
+    q.split("&").forEach(function(kv){
+      if(!kv) return; var a = kv.split("=");
+      p[decodeURIComponent(a[0]||"")] = decodeURIComponent((a[1]||"").replace(/\+/g," "));
+    });
+    return p;
+  })();
+  if(PRE.n) $("name").value = PRE.n;
+
+  function check(){
+    $("open").disabled = !( $("name").value.trim() && $("last4").value.replace(/[^0-9]/g,"").length === 4 );
+  }
+  $("name").addEventListener("input", check);
+  $("last4").addEventListener("input", function(){
+    $("last4").value = $("last4").value.replace(/[^0-9]/g,"").slice(0,4); check();
+  });
+  check();
+
+  $("open").addEventListener("click", function(){
+    var nm = $("name").value.trim(), l4 = $("last4").value, m = $("msg");
+    m.className = "msg"; m.textContent = "불러오는 중입니다...";
+    $("open").disabled = true;
+    fetch(EP, { method:"POST", headers:{ "Content-Type":"application/json", apikey:AK, Authorization:"Bearer "+AK },
+      body: JSON.stringify({ action:"my_tasks", name:nm, phone_last4:l4 }) })
+    .then(function(r){ return r.json().then(function(j){ return { ok:r.ok, j:j }; }); })
+    .then(function(res){
+      if(!res.ok || (res.j && res.j.error)){
+        m.className = "msg err"; m.textContent = (res.j && res.j.error) || "불러오지 못했습니다.";
+        $("open").disabled = false; return;
+      }
+      render(nm, l4, res.j);
+    })
+    .catch(function(){
+      m.className = "msg err"; m.textContent = "네트워크 오류입니다. 잠시 후 다시 시도해 주세요.";
+      $("open").disabled = false;
+    });
+  });
+
+  /* 그룹 정의 — 관리자 화면과 동일 */
+  var GROUPS = [
+    { k:"1 교육",        n:"1", nm:"교육",       goal:2, sub:"리더십·비전 1회 · 기획안·프로필 작성 1회 (줌 교육 포함)", c:"#E5007F" },
+    { k:"2 트레이닝",    n:"2", nm:"트레이닝",   goal:3, sub:"퍼스널컬러 1:1·그룹 트레이닝",                          c:"#2d5f9e" },
+    { k:"4 프로필 촬영", n:"4", nm:"프로필 촬영", goal:1, sub:"",                                                     c:"#a3682a" },
+    { k:"5 수료",        n:"5", nm:"수료",       goal:1, sub:"강의 시연·피드백·수료식",                              c:"#6b4a9e" }
+  ];
+
+  function mineFor(mine, pick){
+    for(var i=0;i<mine.length;i++){ if(pick(mine[i])) return mine[i]; }
+    return null;
+  }
+  function fbText(r){
+    var fb = (r && r.feedback) || {};
+    var ks = Object.keys(fb).filter(function(k){ return has(fb[k]); });
+    if(!ks.length) return "";
+    return ks.map(function(k){ return k + " — " + fb[k]; }).join("\n");
+  }
+
+  function render(nm, l4, j){
+    var mine = j.mine || [], cons = j.consults || [], tasks = j.tasks || [], course = j.course;
+    var link = function(k){ return RPT + "?n=" + encodeURIComponent(nm) + "&k=" + encodeURIComponent(k); };
+    var h = "";
+
+    h += '<div class="ro">이 화면은 <b>보기 전용</b>입니다. 내용은 대표님이 관리하시고, '
+       + '선생님은 <b>확인과 서명</b>만 하시면 됩니다.</div>';
+
+    /* --- 과정 --- */
+    h += '<div class="card"><h2><span class="n">1</span>내 과정</h2>';
+    if(course){
+      h += '<p class="hint">'+esc(course.title)+' · '+esc(course.price)+' · '+esc(course.term)+'</p>';
+      h += '<div style="font-size:15px;font-weight:800;color:var(--mg-d);margin-bottom:8px">'+esc(course.total)+'</div>';
+      h += '<div>' + (j.agree_signed
+            ? '<span class="badge b-ok">✅ 과정 확인 서명 완료</span>'
+            : '<span class="badge b-wait">⏳ 과정 확인 서명 전</span>') + '</div>';
+      h += '<details style="margin-top:9px"><summary>전체 커리큘럼 보기 ▾</summary><div class="tw"><table>'
+        + '<tr><th>단계</th><th>교육 내용</th><th>완성되는 결과</th></tr>'
+        + (course.steps||[]).map(function(x){
+            return '<tr><td class="step">'+esc(x[0])+'</td><td class="body">'+esc(x[1])+'</td><td class="res">'+esc(x[2]||"")+'</td></tr>';
+          }).join("")
+        + '</table></div>'
+        + (course.give ? '<div style="margin-top:9px;font-size:13.5px;line-height:1.65"><b>제공</b> · '+esc(course.give)+'</div>' : '')
+        + (course.note ? '<div style="margin-top:7px;font-size:12.5px;color:var(--ink3);line-height:1.6">'+esc(course.note)+'</div>' : '')
+        + '</details>';
+      if(!j.agree_signed) h += '<a class="act" href="'+link("계약확인")+'">✍ 과정 확인 서명하러 가기</a>';
+    } else {
+      h += '<p class="hint">신청 과정이 아직 등록되지 않았습니다. 대표님께 문의해 주세요.</p>';
+    }
+    h += '</div>';
+
+    /* --- 교구 --- */
+    var kit = j.kit_items || [];
+    h += '<div class="card"><h2><span class="n">2</span>교구</h2>';
+    if(kit.length){
+      h += '<p class="hint">'+(j.kit_date ? esc(j.kit_date)+' 제공' : '제공일 미기재')+'</p>';
+      h += '<div>'+kit.map(function(x){ return '<div class="item" style="padding:9px 11px">'+esc(x)+'</div>'; }).join("")+'</div>';
+      h += '<div style="margin-top:9px">' + (j.kit_signed
+            ? '<span class="badge b-ok">✅ 인수 서명 완료</span>'
+            : '<span class="badge b-wait">⏳ 인수 서명 전</span>') + '</div>';
+      if(!j.kit_signed) h += '<a class="act sub" href="'+link("교구인수")+'">✍ 교구 인수 서명하러 가기</a>';
+    } else {
+      h += '<p class="hint">아직 등록된 교구가 없습니다.</p>';
+    }
+    h += '</div>';
+
+    /* --- 회차 --- */
+    h += '<div class="card"><h2><span class="n">3</span>교육 회차</h2>'
+       + '<p class="hint">완료된 회차만 후기를 남길 수 있습니다.</p>';
+    GROUPS.forEach(function(g){
+      var list = cons.filter(function(c){ return (c.group||"") === g.k; });
+      var done = list.filter(function(c){ return c.status === "완료"; }).length;
+      h += '<div class="grp"><div class="grp-h" style="border-left-color:'+g.c+'">'
+        + '<span class="t" style="color:'+g.c+'">'+g.n+'. '+esc(g.nm)+'</span>'
+        + '<span class="badge '+(done>=g.goal?"b-ok":"b-grey")+'">'+done+' / '+g.goal+'회</span>'
+        + (g.sub ? '<span class="s">'+esc(g.sub)+'</span>' : '')
+        + '</div>';
+      if(!list.length){
+        h += '<p style="font-size:13px;color:var(--ink3);margin:0 0 4px 4px">아직 없습니다</p>';
+      } else {
+        list.forEach(function(c){
+          var rv = mineFor(mine, function(r){ return r.kind === "회차" && r.round === c.round; });
+          h += '<div class="item"><div class="top">'
+            + '<span class="badge b-mg">'+esc((c.label||c.round))+'</span>'
+            + '<span class="badge '+(c.status==="완료"?"b-ok":"b-grey")+'">'+esc(c.status||"예정")+'</span>'
+            + (rv ? '<span class="badge b-ok">✅ 후기 제출함</span>' : '')
+            + '<span class="when">'+esc([c.date, c.time, c.method, c.topic].filter(has).join(" · "))+'</span>'
+            + '</div>';
+          if(has(c.coach)) h += '<div class="quote q-coach"><b>대표님 평가</b>'+esc(c.coach)+'</div>';
+          if(rv){
+            var t = fbText(rv);
+            if(t) h += '<div class="quote q-mine"><b>내가 쓴 후기</b>'+esc(t).replace(/\n/g,"<br />")+'</div>';
+            h += '<div style="margin-top:7px;font-size:12px;color:var(--ink3)">제출 '+esc(d10(rv.signed_at||rv.created_at))+'</div>';
+          } else if(c.status === "완료"){
+            h += '<a class="act sub" href="'+RPT+'?n='+encodeURIComponent(nm)+'&r='+encodeURIComponent(c.round)+'&d='+encodeURIComponent(c.date||"")+'">✍ 이 회차 후기 쓰러 가기</a>';
+          }
+          h += '</div>';
+        });
+      }
+      h += '</div>';
+    });
+    h += '</div>';
+
+    /* --- 현장 서브·출강 --- */
+    h += '<div class="card"><h2><span class="n">4</span>현장 서브·동행 · 강의 출강</h2>'
+       + '<div class="grp"><div class="grp-h" style="border-left-color:#2d5f9e">'
+       + '<span class="t" style="color:#2d5f9e">3. 현장 서브·동행 및 강의 출강</span>'
+       + '<span class="badge '+(tasks.length>=3?"b-ok":"b-grey")+'">'+tasks.length+' / 3회</span>'
+       + '<span class="s">컨설팅 참관 포함</span></div>';
+    if(!tasks.length){
+      h += '<p style="font-size:13px;color:var(--ink3);margin:0 0 4px 4px">아직 없습니다</p>';
+    } else {
+      tasks.forEach(function(d, k){
+        var sg = mineFor(mine, function(r){ return r.kind === "출강확인" && r.dispatch_key === d.key; });
+        h += '<div class="item"><div class="top">'
+          + '<span class="badge b-blue">'+(k+1)+'회차</span>'
+          + (sg ? '<span class="badge b-ok">✅ 확인 서명 완료</span>' : '<span class="badge b-wait">⏳ 확인 서명 전</span>')
+          + '<span class="when">'+esc([d.date, d.org, d.position, d.fee].filter(has).join(" · "))+'</span>'
+          + '</div>';
+        if(has(d.coach)) h += '<div class="quote q-coach"><b>대표님 평가</b>'+esc(d.coach)+'</div>';
+        if(sg){
+          var t2 = fbText(sg);
+          if(t2) h += '<div class="quote q-mine"><b>내가 쓴 후기</b>'+esc(t2).replace(/\n/g,"<br />")+'</div>';
+          h += '<div style="margin-top:7px;font-size:12px;color:var(--ink3)">'
+             + (sg.fee_received ? "강사비 수령 확인" : "강사비 미수령")
+             + ' · 제출 '+esc(d10(sg.signed_at||sg.created_at))+'</div>';
+        } else {
+          h += '<a class="act sub" href="'+link("출강확인")+'">✍ 확인 서명하러 가기</a>';
+        }
+        h += '</div>';
+      });
+    }
+    h += '</div></div>';
+
+    $("view").innerHTML = h;
+    $("gate").style.display = "none";
+    $("view").style.display = "block";
+    $("htitle").textContent = nm + " 선생님 진행표";
+    $("hsub").textContent = (j.cohort ? j.cohort + " · " : "") + "확인·서명이 필요한 것은 아래에서 바로 하실 수 있습니다.";
+    window.scrollTo(0,0);
+  }
+})();
+</script>
+</body>
+</html>
