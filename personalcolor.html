@@ -64,6 +64,10 @@ h1{font-size:clamp(22px,6vw,30px);font-weight:700;line-height:1.35;margin-bottom
 .result-hero .kicker{font-size:12px;font-weight:600;letter-spacing:.1em;opacity:.88}
 .result-hero h2{font-size:32px;font-weight:700;margin:8px 0 4px}
 .result-hero .en{font-size:13px;opacity:.85;font-weight:700}
+.result-hero .oneline{font-size:13.5px;opacity:.96;font-weight:600;line-height:1.55;margin-top:14px;border-top:1px solid rgba(255,255,255,.28);padding-top:12px}
+.keychips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:0 0 16px}
+.keychips span{font-size:12px;font-weight:700;color:var(--pink);background:#FCE4EC;border-radius:999px;padding:5px 11px}
+.result-card h3 .sub{color:var(--ink-soft);font-weight:600;font-size:12.5px;margin-left:2px}
 .result-card{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:22px 20px;margin-bottom:16px}
 .result-card h3{font-size:14px;color:var(--pink);font-weight:700;margin-bottom:8px}
 .result-card p{font-size:14.5px;color:var(--ink-soft)}
@@ -153,25 +157,50 @@ const QUESTIONS = [
 const RESULTS = {
   springwarm:{
     key:'봄웜', en:'SPRING WARM', title:'봄웜 타입',
-    desc:'노란빛이 도는 화사하고 맑은 피부에, 생기 있는 코랄·피치·아이보리가 얼굴을 환하게 살려주는 타입입니다. 반대로 차가운 버건디나 잿빛 그레이는 얼굴을 칙칙해 보이게 할 수 있어요.',
-    colors:[['코랄','#FF7F6E'],['피치','#FFB4A2'],['아이보리','#F3E9D2'],['그린어패','#8FBF7F']]
+    oneline:'밝고 화사한 웜톤 — 생기 있고 사랑스러운 이미지',
+    desc:'노란빛이 도는 화사하고 맑은 피부에, 생기 있는 코랄·피치·아이보리가 얼굴을 환하게 살려주는 타입입니다. 밝고 선명한 웜톤을 얼굴 가까이 두면 혈색이 좋아 보여요.',
+    colors:[['코랄','#FF7F6E'],['피치','#FFB4A2'],['살몬핑크','#FF9E8A'],['라이트옐로우','#FCE38A'],['애플그린','#8FBF7F'],['아이보리','#F3E9D2']],
+    avoid:[['버건디','#5E1F2E'],['잿빛그레이','#8C8B90'],['블랙','#1A1A1A'],['딥네이비','#22314F']],
+    makeup:'립·블러셔는 코랄·피치·살구빛이 찰떡이에요. 베이스는 노란기 도는 밝은 웜 아이보리 톤이 자연스럽고, 쨍한 자주·보라 립은 피하는 게 좋아요.',
+    hair:'허니브라운·카라멜브라운·오렌지빛 브라운. 애쉬(재)빛보다 따뜻한 갈색이 얼굴을 화사하게 살려줍니다.',
+    fashion:'맑고 밝은 색 + 골드 액세서리 + 가벼운 소재가 잘 맞아요. 기본템은 아이보리·카멜·라이트데님·웜베이지를 추천합니다.',
+    keys:['화사','러블리','생기']
   },
   autumnwarm:{
     key:'가을웜', en:'AUTUMN WARM', title:'가을웜 타입',
-    desc:'노란빛이 깊게 도는 차분한 피부에, 카멜·브릭·올리브·머스터드처럼 깊고 따뜻한 색이 고급스럽게 어울리는 타입입니다. 파스텔이나 형광기 있는 색은 얼굴과 옷이 따로 노는 느낌을 줄 수 있어요.',
-    colors:[['카멜','#C08552'],['브릭','#B5502D'],['올리브','#7C7C3F'],['머스터드','#C99A2E']]
+    oneline:'깊고 그윽한 웜톤 — 고급스럽고 성숙한 이미지',
+    desc:'노란빛이 깊게 도는 차분한 피부에, 카멜·브릭·올리브·머스터드처럼 깊고 따뜻한 색이 고급스럽게 어울리는 타입입니다. 톤다운된 어스컬러가 특히 잘 받아요.',
+    colors:[['카멜','#C08552'],['브릭','#B5502D'],['테라코타','#C1663F'],['올리브','#7C7C3F'],['머스터드','#C99A2E'],['카키','#6B6A45']],
+    avoid:[['형광핑크','#FF4FA3'],['파스텔블루','#BFE0F5'],['순백색','#FFFFFF'],['쨍한블루','#2E6BE6']],
+    makeup:'립·블러셔는 브릭·테라코타·MLBB 브라운이 잘 어울려요. 베이스는 웜 베이지 톤, 형광·파스텔 계열은 피하는 게 좋아요.',
+    hair:'다크브라운·초콜릿·카퍼(구릿빛)·레드브라운처럼 깊고 따뜻한 색이 고급스럽게 어울립니다.',
+    fashion:'톤다운된 어스컬러 + 골드·앤티크 액세서리 + 스웨이드·니트 소재가 잘 맞아요. 기본템은 카멜·다크브라운·카키·아이보리.',
+    keys:['고급','성숙','그윽']
   },
   summercool:{
     key:'여름쿨', en:'SUMMER COOL', title:'여름쿨 타입',
-    desc:'푸른빛이 도는 맑은 피부에, 라벤더·소프트블루·로즈핑크처럼 부드럽고 시원한 색이 잘 어울리는 타입입니다. 쨍한 오렌지나 노란기 강한 브라운은 피부를 어두워 보이게 할 수 있어요.',
-    colors:[['라벤더','#B9A6D9'],['소프트블루','#A9C6E8'],['로즈핑크','#E8AFC0'],['그레이지','#B7AFA6']]
+    oneline:'부드럽고 시원한 쿨톤 — 청초하고 우아한 이미지',
+    desc:'푸른빛이 도는 맑은 피부에, 라벤더·소프트블루·로즈핑크처럼 부드럽고 시원한 색이 잘 어울리는 타입입니다. 뿌옇고 부드러운 뮤트 톤이 얼굴을 화사하게 해줘요.',
+    colors:[['라벤더','#B9A6D9'],['소프트블루','#A9C6E8'],['로즈핑크','#E8AFC0'],['민트','#A9D9C6'],['스카이블루','#9FC3E8'],['그레이지','#B7AFA6']],
+    avoid:[['쨍한오렌지','#FF6A1E'],['머스터드','#C99A2E'],['카멜','#C08552'],['골드브라운','#9A6A2E']],
+    makeup:'립·블러셔는 로즈·핑크·MLBB 핑크가 잘 어울려요. 베이스는 핑크빛 밝은 톤, 노란기 강한 오렌지 립은 피하는 게 좋아요.',
+    hair:'애쉬브라운·라벤더애쉬·소프트브라운처럼 차분하고 부드러운 색이 청초하게 어울립니다.',
+    fashion:'부드러운 파스텔·뮤트톤 + 실버 액세서리 + 부드러운 소재가 잘 맞아요. 기본템은 소프트화이트·라이트그레이·소프트네이비.',
+    keys:['청초','우아','부드러움']
   },
   wintercool:{
     key:'겨울쿨', en:'WINTER COOL', title:'겨울쿨 타입',
-    desc:'희고 차가운 피부와 또렷한 이목구비에, 블랙·퓨어화이트·로열블루처럼 선명하고 대비 강한 색이 얼굴을 살려주는 타입입니다. 탁하고 흐릿한 색은 얼굴이 흐려 보이게 할 수 있어요.',
-    colors:[['블랙','#1A1A1A'],['퓨어화이트','#FFFFFF'],['로열블루','#2E4AA8'],['마젠타','#E6007E']]
+    oneline:'선명하고 도시적인 쿨톤 — 세련되고 카리스마 있는 이미지',
+    desc:'희고 차가운 피부와 또렷한 이목구비에, 블랙·퓨어화이트·로열블루처럼 선명하고 대비 강한 색이 얼굴을 살려주는 타입입니다. 흐릿한 색보다 뚜렷한 색이 포인트예요.',
+    colors:[['블랙','#1A1A1A'],['퓨어화이트','#FFFFFF'],['로열블루','#2E4AA8'],['마젠타','#E6007E'],['버건디','#7A1F3D'],['아이시핑크','#F3C6DA']],
+    avoid:[['노란베이지','#D8C08A'],['카멜','#C08552'],['올리브','#7C7C3F'],['흐린파스텔','#DED3C7']],
+    makeup:'립·블러셔는 레드·마젠타·플럼처럼 선명한 색이 잘 어울려요. 베이스는 핑크·뉴트럴 밝은 톤, 노란기 베이지 립은 피하는 게 좋아요.',
+    hair:'블랙·블루블랙·다크애쉬·딥버건디처럼 선명하고 차가운 색이 세련되게 어울립니다.',
+    fashion:'선명한 원색·모노톤 대비 + 실버·화이트골드 액세서리 + 매끈한 소재가 잘 맞아요. 기본템은 블랙·퓨어화이트·네이비.',
+    keys:['세련','도시적','카리스마']
   }
 };
+function pal(arr){return arr.map(function(a){var name=a[0],hex=a[1];return '<span class="swatch"><i style="background:'+hex+';'+(hex==='#FFFFFF'?'border:1px solid #ddd':'')+'"></i>'+name+'</span>';}).join('');}
 
 let current = 0;
 const answers = [];
@@ -243,15 +272,32 @@ function showResult(){
       <div class="kicker">MY PERSONAL COLOR</div>
       <h2>${r.title}</h2>
       <div class="en">${r.en}</div>
+      <div class="oneline">${r.oneline}</div>
+    </div>
+    <div class="keychips">${r.keys.map(k=>`<span>#${k}</span>`).join('')}</div>
+    <div class="result-card">
+      <h3>🎨 이런 색이 잘 어울려요</h3>
+      <p>${r.desc}</p>
+      <div class="palette">${pal(r.colors)}</div>
     </div>
     <div class="result-card">
-      <h3>이런 색이 잘 어울려요</h3>
-      <p>${r.desc}</p>
-      <div class="palette">
-        ${r.colors.map(([name,hex])=>`<span class="swatch"><i style="background:${hex};${hex==='#FFFFFF'?'border:1px solid #ddd':''}"></i>${name}</span>`).join('')}
-      </div>
+      <h3>🚫 이런 색은 피하는 게 좋아요</h3>
+      <p>아래 색을 얼굴 가까이 두면 칙칙하거나 흐려 보일 수 있어요.</p>
+      <div class="palette">${pal(r.avoid)}</div>
     </div>
-    <div class="disclaimer">🔍 이 결과는 8문항 자가진단 기반의 <b>참고용 방향</b>입니다. 12톤까지 세밀하게 나뉘는 정확한 퍼스널컬러는 PBS COLOR LAB 현장 1:1 진단에서 컬러 드레이프로 확인하실 수 있어요.</div>
+    <div class="result-card">
+      <h3>💄 메이크업 · 립</h3>
+      <p>${r.makeup}</p>
+    </div>
+    <div class="result-card">
+      <h3>💇‍♀️ 헤어 컬러</h3>
+      <p>${r.hair}</p>
+    </div>
+    <div class="result-card">
+      <h3>👗 패션 · 스타일</h3>
+      <p>${r.fashion}</p>
+    </div>
+    <div class="disclaimer">🔍 이 결과는 8문항 자가진단 기반의 <b>참고용 방향</b>입니다. 실제로는 봄·여름·가을·겨울이 각각 3톤씩 <b>12톤</b>으로 세밀하게 나뉘고, 골격·얼굴형까지 함께 봐야 나에게 꼭 맞는 색과 스타일이 정해져요. 정확한 진단은 PBS COLOR LAB 현장 1:1 컬러 드레이프에서 확인하실 수 있어요.</div>
     <div class="result-cta">
       <a class="btn btn-primary" href="/consulting#programs">📍 1:1 정확한 진단 예약하기 →</a>
       <a class="btn btn-outline" href="/consulting#consulting-form" style="text-align:center">✉ 사전 상담 신청</a>
