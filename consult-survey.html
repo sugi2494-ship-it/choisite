@@ -64,6 +64,22 @@ form.card{background:#fff;border:1px solid var(--line);border-radius:var(--radiu
 .chip{font-size:13px;font-weight:700;color:var(--ink-2);background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:8px 13px;cursor:pointer;user-select:none}
 .chip.on{background:var(--pink);color:#fff;border-color:var(--pink)}
 .reflinks input{margin-bottom:8px}
+.field.two{display:flex;gap:12px}
+.field.two>div{flex:1;min-width:0}
+.field.two label{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
+.uphelp{font-size:13.5px;color:var(--ink-2);margin:0 0 14px;background:var(--pink-tint);border:1px solid var(--pink-line);border-radius:12px;padding:11px 13px}
+.uphelp b{color:var(--pink-deep)}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;
+  border:1.5px dashed var(--pink-line);border-radius:14px;padding:20px 14px;background:var(--bg-2);cursor:pointer;transition:.15s}
+.drop:hover,.drop:active{border-color:var(--pink);background:var(--pink-tint)}
+.drop-ic{font-size:26px}
+.drop-tx{font-size:14.5px;font-weight:700;color:var(--pink-deep)}
+.drop-sub{font-size:12px;color:var(--ink-3)}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.thumb{position:relative;width:74px;height:74px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#fff}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb button{position:absolute;top:2px;right:2px;width:20px;height:20px;border:0;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:13px;line-height:1;cursor:pointer;padding:0}
+.upnote{font-size:13px;color:var(--pink-deep);background:var(--pink-tint);border:1px solid var(--pink-line);border-radius:10px;padding:10px 12px;margin-bottom:12px}
 .consent{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--ink-2);margin:10px 0 18px}
 .consent a{color:var(--pink);text-decoration:underline}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;font-size:16px;padding:14px 24px;border-radius:999px;cursor:pointer;border:0;width:100%}
@@ -161,6 +177,16 @@ footer a{color:#e7dfe4}
         <label>연락처 <span class="star">*</span></label>
         <input id="sPhone" required placeholder="010-0000-0000" inputmode="tel" autocomplete="tel" />
       </div>
+      <div class="field two">
+        <div>
+          <label>나이 <span class="hint">(선택)</span></label>
+          <input id="sAge" inputmode="numeric" placeholder="예: 30대 초반 / 35" />
+        </div>
+        <div>
+          <label>직업 <span class="hint">(선택)</span></label>
+          <input id="sJob" placeholder="예: 사무직 / 강사 / 자영업" />
+        </div>
+      </div>
       <div class="field">
         <label>예약(방문) 예정일 <span class="hint">(선택)</span></label>
         <input id="sDate" type="date" />
@@ -207,6 +233,10 @@ footer a{color:#e7dfe4}
           <span class="chip">부드러운 소재</span><span class="chip">도톰한 소재</span>
           <span class="chip">얇고 하늘한 소재</span><span class="chip">신축성 있는 소재</span>
         </div>
+      </div>
+      <div class="field">
+        <label>시도해봤는데 <b>가장 안 어울려서</b> 고민인 스타일 <span class="hint">(선택)</span></label>
+        <textarea id="sMismatch" rows="2" placeholder="예: 오버핏을 입으면 더 커 보여요 / 파스텔 색을 입으면 아파 보인다는 말을 들어요"></textarea>
       </div>
 
       <div class="grp-title">컬러 &amp; 피부 (퍼스널컬러 참고)</div>
@@ -275,9 +305,35 @@ footer a{color:#e7dfe4}
         <textarea id="sRequest" rows="3" placeholder="예: 결과에 맞춘 쇼핑 리스트도 받고 싶어요 / 피부가 예민해요"></textarea>
       </div>
 
+      <div class="grp-title">사진 첨부</div>
+      <p class="uphelp">얼굴과 평소 옷차림 사진을 미리 보내주시면, 대표가 상담 전에 방향을 훨씬 정확히 잡을 수 있어요. <b>가능한 범위</b>에서 편하게 올려주세요.</p>
+
+      <div class="field">
+        <label>얼굴 사진 <span class="hint">(정면·자연광, 노메이크업이면 더 좋아요 · 여러 장 가능)</span></label>
+        <label class="drop" for="facePhotos">
+          <span class="drop-ic">📷</span>
+          <span class="drop-tx">사진 선택 / 촬영하기</span>
+          <span class="drop-sub">JPG·PNG · 한 장씩 또는 여러 장</span>
+        </label>
+        <input id="facePhotos" type="file" accept="image/*" multiple hidden />
+        <div class="thumbs" id="faceThumbs"></div>
+      </div>
+
+      <div class="field">
+        <label>전신·평소 옷차림 사진 <span class="hint">(즐겨 입는 코디, 옷장 사진도 좋아요 · 여러 장 가능)</span></label>
+        <label class="drop" for="bodyPhotos">
+          <span class="drop-ic">👗</span>
+          <span class="drop-tx">사진 선택 / 촬영하기</span>
+          <span class="drop-sub">JPG·PNG · 한 장씩 또는 여러 장</span>
+        </label>
+        <input id="bodyPhotos" type="file" accept="image/*" multiple hidden />
+        <div class="thumbs" id="bodyThumbs"></div>
+      </div>
+      <div class="upnote" id="upnote" style="display:none"></div>
+
       <label class="consent">
         <input type="checkbox" id="sConsent" />
-        <span><b>개인정보 수집·이용 동의</b> — 상담 준비를 위해 입력하신 정보를 수집하며, 상담 완료 후 관련 법령에 따라 처리합니다. <a href="https://www.pbscolor.com/privacy" target="_blank" rel="noopener">처리방침</a></span>
+        <span><b>개인정보 수집·이용 동의</b> — 상담 준비를 위해 입력하신 정보와 <b>첨부하신 사진</b>을 수집하며, 상담 완료 후 관련 법령에 따라 처리합니다. <a href="https://www.pbscolor.com/privacy" target="_blank" rel="noopener">처리방침</a></span>
       </label>
       <button type="submit" class="btn btn-primary" id="submitBtn">사전 질문지 제출하기</button>
       <a class="btn btn-naver" id="naverBtn" href="https://naver.me/GSD0VrvO" target="_blank" rel="noopener">아직 예약 전이라면 · 네이버 예약하기</a>
@@ -303,7 +359,8 @@ var CONFIG={
   SUPA_URL:"https://oqxlsnyuwtmjmbhgzjoz.supabase.co",
   SUPA_KEY:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8",
   NAVER_BOOKING_URL:"https://naver.me/GSD0VrvO",
-  ADMIN_EMAIL:"sugi2494@gmail.com"
+  ADMIN_EMAIL:"sugi2494@gmail.com",
+  STORAGE_BUCKET:"intake-uploads"
 };
 document.getElementById('naverBtn').href=CONFIG.NAVER_BOOKING_URL;
 
@@ -326,16 +383,62 @@ Array.prototype.forEach.call(document.querySelectorAll('.chips'),function(box){
     });
   });
 });
+/* ── 사진 첨부 (intake-uploads 버킷, 익명 업로드) ── */
+var photoStore={face:[],body:[]};
+function setupPhoto(inputId,thumbsId,key){
+  var input=document.getElementById(inputId);
+  input.addEventListener('change',function(){
+    Array.prototype.forEach.call(input.files,function(f){
+      if(f&&f.type.indexOf('image')===0) photoStore[key].push(f);
+    });
+    input.value='';
+    renderThumbs(key,thumbsId);
+  });
+}
+function renderThumbs(key,thumbsId){
+  var box=document.getElementById(thumbsId);box.innerHTML='';
+  photoStore[key].forEach(function(f,idx){
+    var d=document.createElement('div');d.className='thumb';
+    var img=document.createElement('img');img.src=URL.createObjectURL(f);
+    var b=document.createElement('button');b.type='button';b.textContent='×';
+    b.onclick=function(){photoStore[key].splice(idx,1);renderThumbs(key,thumbsId);};
+    d.appendChild(img);d.appendChild(b);box.appendChild(d);
+  });
+}
+setupPhoto('facePhotos','faceThumbs','face');
+setupPhoto('bodyPhotos','bodyThumbs','body');
+
+function extOf(f){var m=(f.name||'').match(/\.([a-zA-Z0-9]+)$/);var e=m?m[1].toLowerCase():'';if(!e){var t=(f.type||'').split('/')[1];e=t||'jpg';}return e;}
+function uploadOne(f,folder,i){
+  var name=folder+'/'+Date.now()+'_'+i+'_'+Math.random().toString(36).slice(2,7)+'.'+extOf(f);
+  var url=CONFIG.SUPA_URL+'/storage/v1/object/'+CONFIG.STORAGE_BUCKET+'/'+name;
+  return fetch(url,{method:'POST',headers:{apikey:CONFIG.SUPA_KEY,Authorization:'Bearer '+CONFIG.SUPA_KEY,'Content-Type':f.type||'image/jpeg','x-upsert':'true'},body:f})
+    .then(function(r){if(!r.ok)throw new Error('upload '+r.status);return CONFIG.SUPA_URL+'/storage/v1/object/public/'+CONFIG.STORAGE_BUCKET+'/'+name;});
+}
+function uploadAllPhotos(folder,onProgress){
+  var jobs=[];
+  photoStore.face.forEach(function(f,i){jobs.push({label:'얼굴',f:f,i:'face'+i});});
+  photoStore.body.forEach(function(f,i){jobs.push({label:'전신/옷',f:f,i:'body'+i});});
+  if(!jobs.length)return Promise.resolve([]);
+  var out=[],done=0;
+  return jobs.reduce(function(p,job){
+    return p.then(function(){
+      return uploadOne(job.f,folder,job.i).then(function(u){out.push({label:job.label,url:u});done++;if(onProgress)onProgress(done,jobs.length);});
+    });
+  },Promise.resolve()).then(function(){return out;});
+}
+
 function picked(id){return Array.prototype.filter.call(document.querySelectorAll('#'+id+' .chip.on'),function(){return true;}).map(function(c){return c.textContent.trim();});}
 function join(a){return a.length?a.join(', '):'-';}
 function v(id){var el=document.getElementById(id);return el?el.value.trim():'';}
 
 /* pbs_inquiries 행 생성 */
-function toInquiryRow(){
+function toInquiryRow(photoUrls){
   var refs=[v('sRef1'),v('sRef2'),v('sRef3')].filter(function(x){return x;});
   var L=[
     '▶ 토탈·웨딩 사전 진단 질문지',
     '컨설팅 종류: '+v('sType'),
+    '나이: '+(v('sAge')||'-')+' / 직업: '+(v('sJob')||'-'),
     '예약 예정일: '+(v('sDate')||'-'),
     '── 신청 이유 ──',
     '신청 이유(선택): '+join(picked('reasonChips')),
@@ -344,6 +447,7 @@ function toInquiryRow(){
     '자주 입는 스타일: '+join(picked('styleChips')),
     '선호 핏: '+join(picked('fitChips')),
     '선호 소재감: '+join(picked('fabricChips')),
+    '안 어울려 고민인 스타일: '+(v('sMismatch')||'-'),
     '── 컬러/피부 ──',
     '햇볕 반응: '+join(picked('sunChips')),
     '즐겨 바르는 립: '+join(picked('lipChips')),
@@ -357,10 +461,15 @@ function toInquiryRow(){
     '참고 이미지 링크: '+(refs.length?refs.join(' | '):'-'),
     '── 행사/요청 ──',
     '특별한 행사: '+(v('sEvent')||'-'),
-    '요청·질문: '+(v('sRequest')||'-'),
-    '── 동의 ──',
-    '개인정보 수집·이용 동의: 예'
+    '요청·질문: '+(v('sRequest')||'-')
   ];
+  if(photoUrls&&photoUrls.length){
+    L.push('── 첨부 사진 ('+photoUrls.length+'장) ──');
+    photoUrls.forEach(function(p,i){L.push('['+p.label+' '+(i+1)+'] '+p.url);});
+  }else{
+    L.push('── 첨부 사진 ──','(없음)');
+  }
+  L.push('── 동의 ──','개인정보 수집·이용 동의: 예');
   return {
     name:v('sName'),
     phone:v('sPhone'),
@@ -372,27 +481,45 @@ function toInquiryRow(){
   };
 }
 
+function postInquiry(row){
+  return fetch(CONFIG.SUPA_URL+'/rest/v1/pbs_inquiries',{
+    method:'POST',
+    headers:{apikey:CONFIG.SUPA_KEY,Authorization:'Bearer '+CONFIG.SUPA_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify(row)
+  }).then(function(r){if(!r.ok)throw new Error('save failed '+r.status);});
+}
+function resetSubmit(btn){
+  btn.disabled=false;btn.textContent='사전 질문지 제출하기';
+  document.getElementById('okmsg').style.display='none';
+}
 function submitSurvey(e){
   e.preventDefault();
   var name=v('sName'),phone=v('sPhone');
   if(!name||!phone){alert('성함과 연락처를 입력해 주세요.');return false;}
   if(!document.getElementById('sConsent').checked){alert('개인정보 수집·이용에 동의해 주세요.');return false;}
-  var row=toInquiryRow();
-  var btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='제출 중…';
-  document.getElementById('okmsg').style.display='block';
-  fetch(CONFIG.SUPA_URL+'/rest/v1/pbs_inquiries',{
-    method:'POST',
-    headers:{apikey:CONFIG.SUPA_KEY,Authorization:'Bearer '+CONFIG.SUPA_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},
-    body:JSON.stringify(row)
-  }).then(function(r){
-    if(!r.ok)throw new Error('save failed '+r.status);
+  var btn=document.getElementById('submitBtn');btn.disabled=true;
+  var ok=document.getElementById('okmsg');ok.style.display='block';
+  var totalPhotos=photoStore.face.length+photoStore.body.length;
+  var folder='consult/'+(phone.replace(/[^0-9]/g,'')||'x')+'_'+Date.now();
+  btn.textContent=totalPhotos?'사진 업로드 중…':'제출 중…';
+  ok.textContent=totalPhotos?('사진 업로드 중… (0/'+totalPhotos+') 잠시만 기다려 주세요'):'제출 중입니다…';
+
+  uploadAllPhotos(folder,function(done,total){
+    ok.textContent='사진 업로드 중… ('+done+'/'+total+') 잠시만 기다려 주세요';
+  }).then(function(urls){
+    ok.textContent='제출 중입니다…';btn.textContent='제출 중…';
+    return postInquiry(toInquiryRow(urls));
+  }).then(function(){
     document.getElementById('surveyForm').style.display='none';
     document.getElementById('done').style.display='block';
     window.scrollTo({top:0,behavior:'smooth'});
-  }).catch(function(){
-    btn.disabled=false;btn.textContent='사전 질문지 제출하기';
-    document.getElementById('okmsg').style.display='none';
-    alert('제출에 실패했습니다. 잠시 후 다시 시도하시거나 1600-7218로 연락 주세요.');
+  }).catch(function(err){
+    resetSubmit(btn);
+    if((''+err).indexOf('upload')>-1){
+      alert('사진 업로드 중 문제가 있었어요. 사진을 빼고 제출하시거나, 잠시 후 다시 시도해 주세요. (문의 1600-7218)');
+    }else{
+      alert('제출에 실패했습니다. 잠시 후 다시 시도하시거나 1600-7218로 연락 주세요.');
+    }
   });
   return false;
 }
