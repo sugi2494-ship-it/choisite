@@ -207,10 +207,10 @@
   .flip-grid{display:grid;gap:18px;margin-top:30px}
   @media(min-width:640px){.flip-grid{grid-template-columns:repeat(2,1fr)}}
   @media(min-width:980px){.flip-grid{grid-template-columns:repeat(3,1fr)}}
-  .flip{background:transparent;perspective:1200px;min-height:270px;cursor:pointer}
-  .flip-in{position:relative;width:100%;height:100%;min-height:270px;transition:transform .6s;transform-style:preserve-3d}
+  .flip{background:transparent;perspective:1200px;cursor:pointer}
+  .flip-in{position:relative;display:grid;min-height:270px;transition:transform .6s;transform-style:preserve-3d}
   .flip.on .flip-in{transform:rotateY(180deg)}
-  .flip-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  .flip-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;
     border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);
     display:flex;flex-direction:column;background:var(--surface)}
   .flip-front .tag{align-self:flex-start;font-size:13px;font-weight:600;color:var(--pink-strong);
@@ -219,7 +219,7 @@
   .flip-front p{margin:0;font-size:15.5px;color:var(--ink-soft)}
   .flip-front .who{margin-top:14px;font-size:14.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
   .flip-front .more{margin-top:auto;font-size:14px;font-weight:500;color:var(--pink);padding-top:14px}
-  .flip-back{transform:rotateY(180deg);background:linear-gradient(160deg,#fff,var(--pink-tint));overflow:auto}
+  .flip-back{transform:rotateY(180deg);background:linear-gradient(160deg,#fff,var(--pink-tint))}
   .flip-back h4{font-size:17px;font-weight:700;margin:0 0 8px;color:var(--pink-strong)}
   .flip-back dl{margin:0}
   .flip-back dt{font-size:13px;font-weight:600;color:var(--pink);margin-top:10px}
@@ -268,6 +268,27 @@
   .incl li::before{content:"✓";position:absolute;left:0;color:var(--pink);font-weight:600}
   .card .btn{margin-top:auto}
   .note-inline{font-size:13.5px;color:var(--ink-soft);margin-top:10px;text-align:center}
+
+  /* 프로그램 아코디언 (클릭해서 펼치기) */
+  .prog-list{display:flex;flex-direction:column;gap:12px;margin-top:26px}
+  .prog{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:border-color .15s}
+  .prog[open]{border-color:#F0C0D8;box-shadow:var(--shadow-lg)}
+  .prog>summary{list-style:none;cursor:pointer;padding:18px 20px;display:flex;align-items:center;gap:14px}
+  .prog>summary::-webkit-details-marker{display:none}
+  .prog>summary:hover{background:var(--bg)}
+  .prog .s-main{flex:1;min-width:0}
+  .prog .s-tag{display:inline-block;font-size:12px;font-weight:600;color:var(--pink-strong);background:var(--pink-soft);border-radius:999px;padding:3px 11px;margin-bottom:7px}
+  .prog.feat .s-tag{color:#fff;background:var(--pink)}
+  .prog .s-title{font-size:18px;font-weight:700;line-height:1.35;display:block}
+  .prog .s-sub{font-size:14px;color:var(--ink-soft);margin-top:3px;display:block}
+  .prog .chev{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--pink-soft);color:var(--pink-strong);display:flex;align-items:center;justify-content:center;font-size:15px;transition:transform .25s}
+  .prog[open] .chev{transform:rotate(180deg)}
+  .prog-body{padding:2px 20px 20px}
+  .prog-body .price-rows{margin-top:0}
+  .prog-help{margin-top:16px;background:linear-gradient(160deg,#fff,var(--pink-tint));border:1px solid #F0C0D8;border-radius:var(--radius);padding:22px 24px;text-align:center}
+  .prog-help h3{font-size:18px;font-weight:700;margin-bottom:6px}
+  .prog-help p{color:var(--ink-soft);font-size:15px;margin-bottom:16px}
+  .prog-help .btn{margin:0 6px 8px}
   .single-note{margin-top:22px;background:var(--pink-tint);border:1px solid #F8D4E6;border-radius:14px;padding:18px 20px;font-size:16px}
   .single-note b{color:var(--pink-strong)}
 
@@ -643,79 +664,95 @@
       <b>단일 진단이란?</b> 퍼스널컬러 · 골격진단 · 얼굴분석 · 휴먼컬러 상담 중 <b>원하는 1개 서비스</b>를 선택해 받는 진단입니다. (2개 = 2종 진단 · 전체 종합 = 토탈 컨설팅)
     </div>
 
-    <div class="cards">
-      <div class="card">
-        <span class="tag">1인 컨설팅</span>
-        <h3>1인 퍼스널컬러·골격진단</h3>
-        <p class="sub" data-cms="c1_sub">색·체형·얼굴을 나에게 맞게 정리하고 싶은 분</p>
-        <div class="price-rows">
-          <div class="price-row"><span class="lbl">단일 진단 (1택)</span><span class="amt" data-cms="c1_p1">100,000원</span></div>
-          <div class="price-row"><span class="lbl">2종 진단</span><span class="amt" data-cms="c1_p2">180,000원</span></div>
-          <div class="price-row hi"><span class="lbl">토탈 컨설팅</span><span class="amt" data-cms="c1_p3">255,000원</span></div>
-        </div>
-        <ul class="incl"><li>퍼스널컬러</li><li>골격진단</li><li>얼굴이미지 분석</li><li>컬러카드 및 개인 결과지</li><li>의상·메이크업·헤어·립 안내</li></ul>
-        <a class="btn btn-primary btn-sm naver-btn" href="#" target="_blank" rel="noopener">1인 컨설팅 네이버 예약</a>
-      </div>
+    <p class="sec-desc" style="margin-top:-6px;font-size:14.5px">아래 프로그램을 <b>눌러서 펼치면</b> 가격과 구성이 자세히 보입니다.</p>
 
-      <div class="card">
-        <span class="tag">2인 이상</span>
-        <h3>친구·커플 컨설팅</h3>
-        <p class="sub" data-cms="c2_sub">함께 받되, 결과는 개인별로 분석해 드립니다</p>
-        <div class="price-rows">
-          <div class="price-row"><span class="lbl">단일 진단 (1인)</span><span class="amt" data-cms="c2_p1">80,000원</span></div>
-          <div class="price-row"><span class="lbl">2종 진단 (1인)</span><span class="amt" data-cms="c2_p2">144,000원</span></div>
-          <div class="price-row hi"><span class="lbl">토탈 컨설팅 (1인)</span><span class="amt" data-cms="c2_p3">204,000원</span></div>
+    <div class="prog-list">
+      <details class="prog" open>
+        <summary>
+          <span class="s-main"><span class="s-tag">1인 컨설팅</span><span class="s-title">1인 퍼스널컬러·골격진단</span><span class="s-sub" data-cms="c1_sub">색·체형·얼굴을 나에게 맞게 정리하고 싶은 분</span></span>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="prog-body">
+          <div class="price-rows">
+            <div class="price-row"><span class="lbl">단일 진단 (1택)</span><span class="amt" data-cms="c1_p1">100,000원</span></div>
+            <div class="price-row"><span class="lbl">2종 진단</span><span class="amt" data-cms="c1_p2">180,000원</span></div>
+            <div class="price-row hi"><span class="lbl">토탈 컨설팅</span><span class="amt" data-cms="c1_p3">255,000원</span></div>
+          </div>
+          <ul class="incl"><li>퍼스널컬러</li><li>골격진단</li><li>얼굴이미지 분석</li><li>컬러카드 및 개인 결과지</li><li>의상·메이크업·헤어·립 안내</li></ul>
+          <a class="btn btn-primary btn-sm naver-btn" href="#" target="_blank" rel="noopener">1인 컨설팅 네이버 예약</a>
         </div>
-        <ul class="incl"><li>친구·가족·커플 동반 진행</li><li>개인별 결과 분석</li><li>컬러카드 및 개인 결과지</li></ul>
-        <a class="btn btn-primary btn-sm naver-btn" href="#" target="_blank" rel="noopener">2인 이상 네이버 예약</a>
-      </div>
+      </details>
 
-      <div class="card">
-        <span class="tag">학생</span>
-        <h3>학생 퍼스널컬러</h3>
-        <p class="sub" data-cms="c3_sub">중·고등학생과 대학생을 위한 프로그램</p>
-        <div class="price-rows">
-          <div class="price-row"><span class="lbl">단일 진단</span><span class="amt" data-cms="c3_p1">60,000원</span></div>
-          <div class="price-row"><span class="lbl">2종 진단</span><span class="amt" data-cms="c3_p2">100,000원</span></div>
-          <div class="price-row hi"><span class="lbl">학생 토탈</span><span class="amt" data-cms="c3_p3">150,000원</span></div>
+      <details class="prog">
+        <summary>
+          <span class="s-main"><span class="s-tag">2인 이상</span><span class="s-title">친구·커플 컨설팅</span><span class="s-sub" data-cms="c2_sub">함께 받되, 결과는 개인별로 분석해 드립니다</span></span>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="prog-body">
+          <div class="price-rows">
+            <div class="price-row"><span class="lbl">단일 진단 (1인)</span><span class="amt" data-cms="c2_p1">80,000원</span></div>
+            <div class="price-row"><span class="lbl">2종 진단 (1인)</span><span class="amt" data-cms="c2_p2">144,000원</span></div>
+            <div class="price-row hi"><span class="lbl">토탈 컨설팅 (1인)</span><span class="amt" data-cms="c2_p3">204,000원</span></div>
+          </div>
+          <ul class="incl"><li>친구·가족·커플 동반 진행</li><li>개인별 결과 분석</li><li>컬러카드 및 개인 결과지</li></ul>
+          <a class="btn btn-primary btn-sm naver-btn" href="#" target="_blank" rel="noopener">2인 이상 네이버 예약</a>
         </div>
-        <ul class="incl"><li>퍼스널컬러</li><li>면접 이미지</li><li>데일리 스타일 컨설팅</li></ul>
-        <a class="btn btn-primary btn-sm naver-btn" href="#" target="_blank" rel="noopener">학생 컨설팅 네이버 예약</a>
-      </div>
+      </details>
 
-      <div class="card feature">
-        <span class="tag">웨딩</span>
-        <h3>웨딩 이미지 컨설팅</h3>
-        <p class="sub" data-cms="c4_sub">드레스·메이크업·헤어·부케를 준비하는 신부</p>
-        <div class="price-rows">
-          <div class="price-row"><span class="lbl">신부 웨딩 컨설팅</span><span class="amt" data-cms="c4_p1">280,000원</span></div>
-          <div class="price-row hi"><span class="lbl">웨딩 토탈 컨설팅</span><span class="amt" data-cms="c4_p2">450,000원</span></div>
+      <details class="prog">
+        <summary>
+          <span class="s-main"><span class="s-tag">학생</span><span class="s-title">학생 퍼스널컬러</span><span class="s-sub" data-cms="c3_sub">중·고등학생과 대학생을 위한 프로그램</span></span>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="prog-body">
+          <div class="price-rows">
+            <div class="price-row"><span class="lbl">단일 진단</span><span class="amt" data-cms="c3_p1">60,000원</span></div>
+            <div class="price-row"><span class="lbl">2종 진단</span><span class="amt" data-cms="c3_p2">100,000원</span></div>
+            <div class="price-row hi"><span class="lbl">학생 토탈</span><span class="amt" data-cms="c3_p3">150,000원</span></div>
+          </div>
+          <ul class="incl"><li>퍼스널컬러</li><li>면접 이미지</li><li>데일리 스타일 컨설팅</li></ul>
+          <a class="btn btn-primary btn-sm naver-btn" href="#" target="_blank" rel="noopener">학생 컨설팅 네이버 예약</a>
         </div>
-        <ul class="incl"><li>신부 퍼스널컬러</li><li>드레스 화이트톤·소재·라인</li><li>메이크업·헤어</li><li>부케·액세서리 종합 안내</li></ul>
-        <a class="btn btn-ghost btn-sm" href="#consulting-form" data-prefill="웨딩 컨설팅">웨딩 사전 상담 신청</a>
-        <p class="note-inline">웨딩은 사전 설문 후 담당자가 일정을 확정합니다</p>
-      </div>
+      </details>
 
-      <div class="card feature">
-        <span class="tag">VIP · 최해숙 대표</span>
-        <h3>최해숙 대표 VIP 컨설팅</h3>
-        <p class="sub" data-cms="c5_sub">직업·라이프스타일까지 연결하는 1:1 프리미엄 브랜딩</p>
-        <div class="price-rows">
-          <div class="price-row"><span class="lbl">VIP 컨설팅</span><span class="amt" data-cms="c5_p1">350,000원</span></div>
-          <div class="price-row hi"><span class="lbl">VIP + 최해숙 쇼퍼</span><span class="amt" data-cms="c5_p2">500,000원</span></div>
+      <details class="prog feat">
+        <summary>
+          <span class="s-main"><span class="s-tag">웨딩</span><span class="s-title">웨딩 이미지 컨설팅</span><span class="s-sub" data-cms="c4_sub">드레스·메이크업·헤어·부케를 준비하는 신부</span></span>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="prog-body">
+          <div class="price-rows">
+            <div class="price-row"><span class="lbl">신부 웨딩 컨설팅</span><span class="amt" data-cms="c4_p1">280,000원</span></div>
+            <div class="price-row hi"><span class="lbl">웨딩 토탈 컨설팅</span><span class="amt" data-cms="c4_p2">450,000원</span></div>
+          </div>
+          <ul class="incl"><li>신부 퍼스널컬러</li><li>드레스 화이트톤·소재·라인</li><li>메이크업·헤어</li><li>부케·액세서리 종합 안내</li></ul>
+          <a class="btn btn-ghost btn-sm" href="#consulting-form" data-prefill="웨딩 컨설팅">웨딩 사전 상담 신청</a>
+          <p class="note-inline">웨딩은 사전 설문 후 담당자가 일정을 확정합니다</p>
         </div>
-        <ul class="incl"><li>퍼스널컬러·골격·얼굴이미지 분석</li><li>직업·라이프스타일 연계</li><li>1:1 프리미엄 이미지 브랜딩</li></ul>
-        <a class="btn btn-ghost btn-sm" href="#consulting-form" data-prefill="VIP 대표 컨설팅">VIP 사전 상담 신청</a>
-        <p class="note-inline">VIP는 사전 설문 후 담당자가 일정을 확정합니다</p>
-      </div>
+      </details>
 
-      <div class="card" style="justify-content:center;background:linear-gradient(160deg,#fff,var(--pink-tint));border-color:#F0C0D8">
-        <span class="tag">처음이라면</span>
-        <h3>어떤 걸 골라야 할지 모르겠다면?</h3>
-        <p class="sub">무료 자가진단으로 성향을 먼저 확인하고, 사전 상담으로 안내받으세요.</p>
-        <a class="btn btn-outline btn-sm" href="#diag" style="margin-bottom:10px">무료 자가진단 먼저</a>
-        <a class="btn btn-primary btn-sm" href="#consulting-form">사전 상담 신청</a>
-      </div>
+      <details class="prog feat">
+        <summary>
+          <span class="s-main"><span class="s-tag">VIP · 최해숙 대표</span><span class="s-title">최해숙 대표 VIP 컨설팅</span><span class="s-sub" data-cms="c5_sub">직업·라이프스타일까지 연결하는 1:1 프리미엄 브랜딩</span></span>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="prog-body">
+          <div class="price-rows">
+            <div class="price-row"><span class="lbl">VIP 컨설팅</span><span class="amt" data-cms="c5_p1">350,000원</span></div>
+            <div class="price-row hi"><span class="lbl">VIP + 최해숙 쇼퍼</span><span class="amt" data-cms="c5_p2">500,000원</span></div>
+          </div>
+          <ul class="incl"><li>퍼스널컬러·골격·얼굴이미지 분석</li><li>직업·라이프스타일 연계</li><li>1:1 프리미엄 이미지 브랜딩</li></ul>
+          <a class="btn btn-ghost btn-sm" href="#consulting-form" data-prefill="VIP 대표 컨설팅">VIP 사전 상담 신청</a>
+          <p class="note-inline">VIP는 사전 설문 후 담당자가 일정을 확정합니다</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="prog-help">
+      <h3>어떤 걸 골라야 할지 모르겠다면?</h3>
+      <p>무료 자가진단으로 성향을 먼저 확인하고, 사전 상담으로 안내받으세요.</p>
+      <a class="btn btn-outline btn-sm" href="#diag">무료 자가진단 먼저</a>
+      <a class="btn btn-primary btn-sm" href="#consulting-form">사전 상담 신청</a>
     </div>
   </div>
 </section>
@@ -1234,7 +1271,7 @@ document.getElementById('preForm').addEventListener('submit', function(e){
     var empty = document.getElementById('reviewsEmpty');
     if(!grid) return;
     function pick(o,keys){ for(var i=0;i<keys.length;i++){ var v=o[keys[i]]; if(v!=null && String(v).trim()!=='') return String(v); } return ''; }
-    fetch(CONFIG.SUPA_URL+'/rest/v1/pbs_testimonials?select=*&approved=eq.true&order=created_at.desc&limit=8',
+    fetch(CONFIG.SUPA_URL+'/rest/v1/pbs_testimonials?select=*&approved=eq.true&or=(source_board_id.is.null,source_board_id.not.in.(20,21,22,23,24,36))&order=created_at.desc&limit=8',
       {headers:{apikey:CONFIG.SUPA_KEY,Authorization:'Bearer '+CONFIG.SUPA_KEY}})
      .then(function(r){ return r.ok ? r.json() : []; })
      .then(function(rows){
