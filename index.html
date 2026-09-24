@@ -3,6 +3,7 @@
 <head>
   <meta name="naver-site-verification" content="aa30fba0ba73162f5d59a0fa5dc0f19b427b84a8" />
   <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Freesentation/subsets/Freesentation-dynamic-subset.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>최해숙 PBS COLOR LAB｜울산 퍼스널컬러·기관교육·전문가 양성</title>
   <meta name="description" content="PBS COLOR LAB 최해숙 대표의 공식 홈페이지. 울산 퍼스널컬러·골격진단·얼굴분석 개인 컨설팅, 기업·공공기관 교육, 퍼스널컬러 전문가·인증강사 양성, 글로벌 K‑Beauty 협업을 진행합니다." />
@@ -129,6 +130,9 @@
     }
     /* 프리미엄 정돈: 제목 자간 좁게, 굵기 대비로 위계 */
     h1{letter-spacing:-0.045em}
+    /* ═══ 제목 글씨체: Freesentation (본문·버튼은 Pretendard 유지) ═══ */
+    .hero h1{font-family:"Freesentation","Pretendard","Apple SD Gothic Neo",sans-serif;letter-spacing:-0.03em}
+    h2, h3, .sec-label, .about h2, .programs h2{font-family:"Freesentation","Pretendard","Apple SD Gothic Neo",sans-serif}
     h2,h3{font-weight:800;letter-spacing:-0.035em}
     a{text-decoration:none;color:inherit}
     img{display:block;max-width:100%}
@@ -140,6 +144,21 @@
       background:rgba(8,8,16,.82);backdrop-filter:blur(18px);
       border-bottom:1px solid var(--line);
     }
+
+    /* ═══ 4분기 공개교육 띠배너 ═══ */
+    .q4-strip{position:relative;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(90deg,#E5007F,#C2006A);color:#fff;
+      font-size:13px;line-height:1.35;padding:8px 40px 8px 16px;text-align:center;
+      border-bottom:1px solid rgba(255,255,255,.14)}
+    .q4-strip-link{display:inline-flex;align-items:center;gap:9px;color:#fff;text-decoration:none;font-weight:600;flex-wrap:wrap;justify-content:center}
+    .q4-strip-link:hover{opacity:.92}
+    .q4-strip-dot{width:7px;height:7px;border-radius:50%;background:#FFD24A;box-shadow:0 0 0 0 rgba(255,210,74,.6);animation:q4pulse 1.8s infinite;flex:none}
+    @keyframes q4pulse{0%{box-shadow:0 0 0 0 rgba(255,210,74,.6)}70%{box-shadow:0 0 0 7px rgba(255,210,74,0)}100%{box-shadow:0 0 0 0 rgba(255,210,74,0)}}
+    .q4-strip-go{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.55);border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+    .q4-strip-close{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;opacity:.85;padding:4px 8px}
+    .q4-strip-close:hover{opacity:1}
+    @media(max-width:560px){.q4-strip{font-size:12px;padding:7px 32px 7px 12px}.q4-strip-go{display:none}}
+
     .nav{
       max-width:var(--max);margin:0 auto;padding:14px 22px;
       display:flex;align-items:center;justify-content:space-between;gap:16px;
@@ -836,6 +855,16 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
       <button class="burger" id="burger">☰</button>
     </div>
   </nav>
+
+  <!-- ═══ 4분기 공개교육과정 띠배너 ═══ -->
+  <div id="q4Strip" class="q4-strip">
+    <a href="https://forms.gle/3hMkSqtYepNBLvPj6" target="_blank" rel="noopener" class="q4-strip-link">
+      <span class="q4-strip-dot"></span>
+      <span id="q4StripText">2026 4분기 공개교육과정 접수 중 · 퍼스널컬러 자격과정 얼리버드 선착순 3명 (9/30 18시 마감)</span>
+      <span class="q4-strip-go">신청 →</span>
+    </a>
+    <button type="button" class="q4-strip-close" id="q4StripClose" aria-label="닫기">×</button>
+  </div>
 </header>
 
 <main>
@@ -1016,6 +1045,61 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
   else { el.textContent='접수 마감'; }
 })();
 </script>
+
+<!-- ═══ 2026 4분기 공개교육과정 공지 ═══ -->
+<style>
+  #q4courses .q4-rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 14px;-webkit-overflow-scrolling:touch}
+  #q4courses .q4-rail img{scroll-snap-align:center;flex:0 0 auto;width:246px;height:auto;border-radius:16px;box-shadow:0 8px 24px rgba(229,0,127,.14);border:1px solid #F3D3E4}
+  #q4courses .q4-rail::-webkit-scrollbar{height:8px}
+  #q4courses .q4-rail::-webkit-scrollbar-thumb{background:#E5007F;border-radius:999px}
+  #q4courses .q4-rail::-webkit-scrollbar-track{background:#F6DCEB;border-radius:999px}
+  #q4courses .q4-hint{font-size:12px;color:#B06;text-align:center;margin:2px 0 20px}
+  @media(max-width:560px){#q4courses .q4-rail img{width:210px}}
+</style>
+<section id="q4courses" style="background:#FFF5FA;padding:56px 16px 60px;border-top:1px solid #F6DCEB">
+  <div style="max-width:1120px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:26px">
+      <div style="display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.06em;color:#fff;background:#E5007F;border-radius:999px;padding:5px 14px;margin-bottom:14px">2026 4분기 접수 중</div>
+      <h2 style="font-size:26px;font-weight:800;color:#111;margin:0 0 10px;letter-spacing:-.03em">2026 4분기 공개교육과정</h2>
+      <p style="font-size:14.5px;color:#666;margin:0 auto;max-width:560px;line-height:1.65">10 · 11 · 12월 일정 공개. 과정을 고르고 바로 신청하세요.</p>
+    </div>
+
+    <!-- 자격과정 카드뉴스 -->
+    <div class="q4-rail" role="list" aria-label="K-BEAUTY 퍼스널컬러 스타일리스트 자격과정 안내">
+      <img src="assets/q4/cn1_cover.webp" loading="lazy" width="1080" height="1350" alt="2026 K-BEAUTY 퍼스널컬러 스타일리스트 자격과정 모집 — 10/17~18, 12/12~13, 대표 강사 직강">
+      <img src="assets/q4/cn3_curriculum.webp" loading="lazy" width="1080" height="1350" alt="2일 커리큘럼 — 이론·진단(Day1), 스타일링·실전 롤플레잉·자격시험(Day2)">
+      <img src="assets/q4/cn4_instructor.webp" loading="lazy" width="1080" height="1350" alt="대표 강사 최해숙 — PBS컬러랩 대표, AICI KC챕터 부회장">
+      <img src="assets/q4/cn5_apply.webp" loading="lazy" width="1080" height="1350" alt="모집 안내 — 얼리버드 990,000원 선착순 3명, 9/30 18시까지, 자격증 발급비 100,000원 별도">
+    </div>
+    <div class="q4-hint">← 옆으로 넘겨보세요 →</div>
+
+    <!-- 자격과정 요약 + 신청 (SEO/GEO용 텍스트) -->
+    <div style="max-width:680px;margin:0 auto 44px;background:#fff;border:2px solid #E5007F;border-radius:20px;padding:24px 24px;box-shadow:0 10px 30px rgba(229,0,127,.12);text-align:center">
+      <div style="font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 12px;display:inline-block;margin-bottom:12px">얼리버드 · 선착순 3명</div>
+      <h3 style="font-size:19px;font-weight:800;color:#111;margin:0 0 8px;letter-spacing:-.02em">K-BEAUTY 퍼스널컬러 스타일리스트 자격과정</h3>
+      <div style="font-size:14px;color:#555;line-height:1.7;margin-bottom:12px">10/17(토)~18(일) · 12/12(토)~13(일) · 2일 과정 · 10:00~17:00 · 오프라인(울산)</div>
+      <div style="margin-bottom:2px"><span style="font-size:14px;color:#999;text-decoration:line-through">1,210,000원</span></div>
+      <div style="font-size:23px;font-weight:800;color:#E5007F;margin-bottom:6px">얼리버드 990,000원</div>
+      <div style="font-size:12px;color:#777;line-height:1.6;margin-bottom:18px">선착순 3명 · 9/30 18시까지 접수·결제 완료 시 · 자격증 발급비 100,000원 별도</div>
+      <a href="https://forms.gle/3hMkSqtYepNBLvPj6" target="_blank" rel="noopener" style="display:block;text-align:center;background:#E5007F;color:#fff;font-weight:700;font-size:15px;text-decoration:none;border-radius:12px;padding:14px">자격과정 신청하기 →</a>
+    </div>
+
+    <!-- 전체 4분기 일정표 -->
+    <div style="text-align:center;margin-bottom:14px">
+      <h3 style="font-size:20px;font-weight:800;color:#111;margin:0 0 6px;letter-spacing:-.02em">9 · 10 · 11 · 12월 전체 일정</h3>
+      <p style="font-size:13.5px;color:#777;margin:0 auto;max-width:520px;line-height:1.6">퍼스널컬러 · 컬러강점 · 골격분석 · 얼굴분석 · 컬러리딩테라피 · 휴먼컬러 · DTL 리더십</p>
+    </div>
+    <a href="/academy/courses#schedule" style="display:block;max-width:760px;margin:0 auto 22px">
+      <img src="assets/q4/schedule.webp" loading="lazy" width="1080" height="1350" alt="2026 4분기 공개교육과정 전체 일정 — 9월 DTL 리더십, 10월 얼굴분석·컬러강점·컬러리딩테라피·K-BEAUTY 퍼스널컬러 스타일리스트, 11월 골격분석·휴먼컬러·컬러강점, 12월 퍼스널컬러·골격분석·얼굴분석·DTL 리더십" style="width:100%;height:auto;border-radius:20px;box-shadow:0 10px 30px rgba(229,0,127,.12);border:1px solid #F3D3E4">
+    </a>
+
+    <!-- 보조 CTA -->
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:680px;margin:0 auto">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfbeJVkauyX3bSGxMmrbye9Hzk6KTT-lBHlFDQ9gqDl-alTxA/viewform" target="_blank" rel="noopener" style="flex:1 1 240px;text-align:center;background:#fff;color:#E5007F;font-weight:700;font-size:14.5px;text-decoration:none;border:1.5px solid #E5007F;border-radius:12px;padding:13px">DTL 리더십 신청 (ZOOM) →</a>
+      <a href="/academy/courses#schedule" style="flex:1 1 240px;text-align:center;background:#E5007F;color:#fff;font-weight:700;font-size:14.5px;text-decoration:none;border-radius:12px;padding:13px">4분기 전체 일정 보기 →</a>
+    </div>
+  </div>
+</section>
 
 <!-- ═══ 개인 컨설팅 (아코디언 · 서비스 카드 아래) ═══ -->
 <section id="consulting" style="background:transparent;padding:0 16px">
@@ -2820,5 +2904,17 @@ document.addEventListener('click',function(e){if(menu.classList.contains('open')
 })();
 </script>
 
+<script>
+/* 4분기 띠배너 — 닫기 + 마감 후 문구 자동 전환(2026-09-30 18:00 KST) */
+(function(){
+  var strip=document.getElementById('q4Strip'); if(!strip) return;
+  try{ if(new Date() >= new Date('2026-09-30T18:00:00+09:00')){
+    var t=document.getElementById('q4StripText');
+    if(t) t.textContent='2026 4분기 공개교육과정 접수 중';
+  } }catch(e){}
+  var btn=document.getElementById('q4StripClose');
+  if(btn) btn.addEventListener('click',function(){ strip.style.display='none'; });
+})();
+</script>
 </body>
 </html>
