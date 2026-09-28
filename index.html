@@ -858,9 +858,9 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
 
   <!-- ═══ 4분기 공개교육과정 띠배너 ═══ -->
   <div id="q4Strip" class="q4-strip">
-    <a href="https://forms.gle/3hMkSqtYepNBLvPj6" target="_blank" rel="noopener" class="q4-strip-link">
+    <a href="/강의/공개교육과정.html" class="q4-strip-link">
       <span class="q4-strip-dot"></span>
-      <span id="q4StripText">2026 4분기 공개교육과정 접수 중 · 퍼스널컬러 자격과정 얼리버드 선착순 3명 (9/30 18시 마감)</span>
+      <span id="q4StripText">2026 4분기 공개교육과정 접수 중 · 컬러강점 2급 10/3 · 퍼스널컬러 10/17 · 골격 11/14</span>
       <span class="q4-strip-go">신청 →</span>
     </a>
     <button type="button" class="q4-strip-close" id="q4StripClose" aria-label="닫기">×</button>
@@ -1048,41 +1048,56 @@ html[data-theme="light"] .inquiry-form h3{color:#1a1a22!important;}
 
 <!-- ═══ 2026 4분기 공개교육과정 공지 ═══ -->
 <style>
-  #q4courses .q4-rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 14px;-webkit-overflow-scrolling:touch}
-  #q4courses .q4-rail img{scroll-snap-align:center;flex:0 0 auto;width:246px;height:auto;border-radius:16px;box-shadow:0 8px 24px rgba(229,0,127,.14);border:1px solid #F3D3E4}
-  #q4courses .q4-rail::-webkit-scrollbar{height:8px}
-  #q4courses .q4-rail::-webkit-scrollbar-thumb{background:#E5007F;border-radius:999px}
-  #q4courses .q4-rail::-webkit-scrollbar-track{background:#F6DCEB;border-radius:999px}
-  #q4courses .q4-hint{font-size:12px;color:#B06;text-align:center;margin:2px 0 20px}
-  @media(max-width:560px){#q4courses .q4-rail img{width:210px}}
+  #q4courses .q4-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1040px;margin:0 auto 18px}
+  #q4courses .q4-card{display:flex;flex-direction:column;background:#fff;border:1px solid #F3D3E4;border-radius:20px;overflow:hidden;text-decoration:none;color:#111;box-shadow:0 8px 24px rgba(229,0,127,.10);transition:transform .2s,box-shadow .2s}
+  #q4courses .q4-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(229,0,127,.18)}
+  #q4courses .q4-card img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;display:block;background:#F6DCEB}
+  #q4courses .q4-card-body{padding:16px 18px 20px;display:flex;flex-direction:column;flex:1}
+  #q4courses .q4-card-date{font-size:12.5px;font-weight:800;color:#E5007F;margin-bottom:6px}
+  #q4courses .q4-card-tt{font-size:17px;font-weight:800;margin:0 0 8px;letter-spacing:-.02em;line-height:1.35}
+  #q4courses .q4-card-desc{font-size:13.5px;color:#666;line-height:1.6;margin:0 0 14px;flex:1}
+  #q4courses .q4-card-go{display:block;text-align:center;background:#E5007F;color:#fff;font-weight:700;font-size:14px;border-radius:12px;padding:12px}
+  @media(max-width:860px){#q4courses .q4-cards{grid-template-columns:1fr;max-width:440px}}
 </style>
 <section id="q4courses" style="background:#FFF5FA;padding:56px 16px 60px;border-top:1px solid #F6DCEB">
   <div style="max-width:1120px;margin:0 auto">
     <div style="text-align:center;margin-bottom:26px">
       <div style="display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.06em;color:#fff;background:#E5007F;border-radius:999px;padding:5px 14px;margin-bottom:14px">2026 4분기 접수 중</div>
       <h2 style="font-size:26px;font-weight:800;color:#111;margin:0 0 10px;letter-spacing:-.03em">2026 4분기 공개교육과정</h2>
-      <p style="font-size:14.5px;color:#666;margin:0 auto;max-width:560px;line-height:1.65">10 · 11 · 12월 일정 공개. 과정을 고르고 바로 신청하세요.</p>
+      <p style="font-size:14.5px;color:#666;margin:0 auto;max-width:560px;line-height:1.65">10 · 11 · 12월 대표 과정. 원하는 과정을 고르고 바로 신청하세요.</p>
     </div>
 
-    <!-- 자격과정 카드뉴스 -->
-    <div class="q4-rail" role="list" aria-label="K-BEAUTY 퍼스널컬러 스타일리스트 자격과정 안내">
-      <img src="assets/q4/cn1_cover.webp" loading="lazy" width="1080" height="1350" alt="2026 K-BEAUTY 퍼스널컬러 스타일리스트 자격과정 모집 — 10/17~18, 12/12~13, 대표 강사 직강">
-      <img src="assets/q4/cn3_curriculum.webp" loading="lazy" width="1080" height="1350" alt="2일 커리큘럼 — 이론·진단(Day1), 스타일링·실전 롤플레잉·자격시험(Day2)">
-      <img src="assets/q4/cn4_instructor.webp" loading="lazy" width="1080" height="1350" alt="대표 강사 최해숙 — PBS컬러랩 대표, AICI KC챕터 부회장">
-      <img src="assets/q4/cn5_apply.webp" loading="lazy" width="1080" height="1350" alt="모집 안내 — 얼리버드 990,000원 선착순 3명, 9/30 18시까지, 자격증 발급비 100,000원 별도">
+    <!-- 대표 3과정 카드 → 과정별 신청 페이지 (강의/공개교육과정.html 과 동일 구성) -->
+    <div class="q4-cards">
+      <a class="q4-card" href="/강의/신청_컬러강점전문가2급.html">
+        <img src="/강의/cs-cert-01.jpg" loading="lazy" width="1080" height="1350" alt="컬러강점 전문가 2급 자격과정 — 2026 10/3(토) · PBS컬러랩">
+        <div class="q4-card-body">
+          <div class="q4-card-date">10/3(토) · 10:00–15:00</div>
+          <h3 class="q4-card-tt">컬러강점 전문가 2급 자격과정</h3>
+          <p class="q4-card-desc">진단지가 있는 강점 교육 콘텐츠. 진단부터 수업 운영까지 하루에. 소수정예 8명.</p>
+          <span class="q4-card-go">자세히 · 신청하기 →</span>
+        </div>
+      </a>
+      <a class="q4-card" href="/강의/신청_퍼스널컬러자격과정.html">
+        <img src="/강의/pc-cert-01-cover.jpg" loading="lazy" width="1080" height="1350" alt="K-Beauty 퍼스널컬러 스타일리스트 자격과정 — 2026 10/17(토)–18(일) · PBS컬러랩">
+        <div class="q4-card-body">
+          <div class="q4-card-date">10/17(토)–18(일) · 2일</div>
+          <h3 class="q4-card-tt">K-Beauty 퍼스널컬러 스타일리스트 자격과정</h3>
+          <p class="q4-card-desc">이론 → 진단 → 스타일링 → 실전까지. 대표 강사 직강, 선착순 6명.</p>
+          <span class="q4-card-go">자세히 · 신청하기 →</span>
+        </div>
+      </a>
+      <a class="q4-card" href="/강의/신청_골격진단세미나.html">
+        <img src="/강의/sk-sem-01.jpg" loading="lazy" width="1080" height="1350" alt="여성 골격분석 이미지 세미나 — 2026 11/14(토) · PBS컬러랩">
+        <div class="q4-card-body">
+          <div class="q4-card-date">11/14(토) · 10:00–17:00</div>
+          <h3 class="q4-card-tt">여성 골격분석 이미지 세미나</h3>
+          <p class="q4-card-desc">골격은 옷의 형태·소재·핏을 결정. 하루 만에 진단 기준을 세우는 원데이 세미나.</p>
+          <span class="q4-card-go">자세히 · 신청하기 →</span>
+        </div>
+      </a>
     </div>
-    <div class="q4-hint">← 옆으로 넘겨보세요 →</div>
-
-    <!-- 자격과정 요약 + 신청 (SEO/GEO용 텍스트) -->
-    <div style="max-width:680px;margin:0 auto 44px;background:#fff;border:2px solid #E5007F;border-radius:20px;padding:24px 24px;box-shadow:0 10px 30px rgba(229,0,127,.12);text-align:center">
-      <div style="font-size:11px;font-weight:800;color:#fff;background:#E5007F;border-radius:999px;padding:4px 12px;display:inline-block;margin-bottom:12px">얼리버드 · 선착순 3명</div>
-      <h3 style="font-size:19px;font-weight:800;color:#111;margin:0 0 8px;letter-spacing:-.02em">K-BEAUTY 퍼스널컬러 스타일리스트 자격과정</h3>
-      <div style="font-size:14px;color:#555;line-height:1.7;margin-bottom:12px">10/17(토)~18(일) · 12/12(토)~13(일) · 2일 과정 · 10:00~17:00 · 오프라인(울산)</div>
-      <div style="margin-bottom:2px"><span style="font-size:14px;color:#999;text-decoration:line-through">1,210,000원</span></div>
-      <div style="font-size:23px;font-weight:800;color:#E5007F;margin-bottom:6px">얼리버드 990,000원</div>
-      <div style="font-size:12px;color:#777;line-height:1.6;margin-bottom:18px">선착순 3명 · 9/30 18시까지 접수·결제 완료 시 · 자격증 발급비 100,000원 별도</div>
-      <a href="https://forms.gle/3hMkSqtYepNBLvPj6" target="_blank" rel="noopener" style="display:block;text-align:center;background:#E5007F;color:#fff;font-weight:700;font-size:15px;text-decoration:none;border-radius:12px;padding:14px">자격과정 신청하기 →</a>
-    </div>
+    <div style="text-align:center;margin:0 0 44px"><a href="/강의/공개교육과정.html" style="font-size:14px;font-weight:700;color:#C2006A;text-decoration:none;border-bottom:1.5px solid #E5007F;padding-bottom:2px">공개교육과정 한눈에 보기 →</a></div>
 
     <!-- 전체 4분기 일정표 -->
     <div style="text-align:center;margin-bottom:14px">
@@ -2905,13 +2920,9 @@ document.addEventListener('click',function(e){if(menu.classList.contains('open')
 </script>
 
 <script>
-/* 4분기 띠배너 — 닫기 + 마감 후 문구 자동 전환(2026-09-30 18:00 KST) */
+/* 4분기 띠배너 — 닫기 */
 (function(){
   var strip=document.getElementById('q4Strip'); if(!strip) return;
-  try{ if(new Date() >= new Date('2026-09-30T18:00:00+09:00')){
-    var t=document.getElementById('q4StripText');
-    if(t) t.textContent='2026 4분기 공개교육과정 접수 중';
-  } }catch(e){}
   var btn=document.getElementById('q4StripClose');
   if(btn) btn.addEventListener('click',function(){ strip.style.display='none'; });
 })();
