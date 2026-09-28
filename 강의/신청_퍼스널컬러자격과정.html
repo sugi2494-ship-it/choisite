@@ -153,10 +153,10 @@
       });
       if (!res.ok) throw new Error(await res.text());
       // 대표님께는 신청 저장 시 자동으로 텔레그램 알림이 발송됩니다(DB 트리거).
-      // 고객 자동 안내 문자(과정명 반영)는 서버 함수 업데이트 후 활성화 예정 — 그때 아래 주석을 해제.
-      // fetch(`${SUPABASE_URL}/functions/v1/notify-application`, { method:"POST",
-      //   headers:{ "Authorization":`Bearer ${ANON_KEY}`, "Content-Type":"application/json" },
-      //   body: JSON.stringify(Object.assign({ course: COURSE }, data)) }).catch(()=>{});
+      // 고객 자동 안내 문자(과정명 반영) — notify-application v17. 방금 저장된 신청이 있을 때만 발송됨.
+      fetch(`${SUPABASE_URL}/functions/v1/notify-application`, { method:"POST",
+        headers:{ "Authorization":`Bearer ${ANON_KEY}`, "Content-Type":"application/json" },
+        body: JSON.stringify(Object.assign({ course: COURSE }, data)) }).catch(()=>{});
       $("#applyCard").style.display = "none";
       $("#done").style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });

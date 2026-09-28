@@ -120,6 +120,7 @@
     try{
       const res = await fetch(`${SUPABASE_URL}/rest/v1/applications`, { method:"POST", headers:{ "apikey":ANON_KEY, "Authorization":`Bearer ${ANON_KEY}`, "Content-Type":"application/json", "Prefer":"return=minimal" }, body: JSON.stringify(data) });
       if(!res.ok) throw new Error(await res.text());
+      fetch(`${SUPABASE_URL}/functions/v1/notify-application`, { method:"POST", headers:{ "Authorization":`Bearer ${ANON_KEY}`, "Content-Type":"application/json" }, body: JSON.stringify(Object.assign({ course: COURSE }, data)) }).catch(()=>{}); // 고객 자동 안내 문자(과정명 반영) — 방금 저장된 신청이 있을 때만 발송
       $("#applyCard").style.display="none"; $("#done").style.display="block"; window.scrollTo({top:0,behavior:"smooth"});
     }catch(ex){ err.textContent="제출 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 010-4285-7997로 연락 주세요."; err.style.display="block"; btn.disabled=false; btn.textContent="신청서 제출하기"; }
   });
