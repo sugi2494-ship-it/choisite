@@ -144,6 +144,23 @@ footer a{color:#c9ccd2;text-decoration:none}footer .cp{text-align:center;color:#
 .cbbtn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(20,30,60,.14)}
 .cb-sub{text-align:center;font-size:12.5px;color:var(--sub);margin-top:16px}
 @media(max-width:640px){.cb-btns{grid-template-columns:repeat(2,1fr)}}
+.oneday{padding:44px 0 8px}
+.oneday .od-card{background:#fff;border:2px solid #E5007F;border-radius:20px;padding:22px 22px 20px;box-shadow:0 10px 30px rgba(229,0,127,.10);max-width:760px;margin:0 auto}
+.oneday .od-card h3{font-size:20px;font-weight:800;margin:8px 0 8px;letter-spacing:-.02em}
+.oneday .od-meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.oneday .od-meta span{font-size:13px;background:#FFF0F7;color:#8a0048;border-radius:999px;padding:6px 12px;font-weight:700}
+.oneday .od-dates{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.oneday .od-dates button{border:0;border-radius:14px;background:#E5007F;color:#fff;font:inherit;font-size:16px;font-weight:800;padding:14px 8px;cursor:pointer;line-height:1.3}
+.oneday .od-dates button small{display:block;font-size:12px;font-weight:600;opacity:.9}
+.oneday .od-dates button:hover{background:#C2006A}
+.oneday .od-hook{color:#E5007F;font-weight:800;font-size:15px;margin:0 0 6px}
+.oneday .od-more{text-align:center;font-size:13.5px;color:#666;margin:16px auto 0;max-width:760px}
+.oneday .od-more a{color:#C2006A;font-weight:700}
+@media(max-width:520px){.oneday .od-dates{grid-template-columns:1fr}}
+.odnotice{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;background:linear-gradient(90deg,#E5007F,#C2006A);color:#fff;text-decoration:none;font-size:14px;font-weight:600;padding:10px 14px;text-align:center;line-height:1.4}
+.odnotice b{background:#fff;color:#C2006A;border-radius:999px;padding:1px 9px;font-size:12px}
+.odnotice .go{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.6);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.odnotice .dot{width:7px;height:7px;border-radius:50%;background:#FFD24A;flex:none}
 </style>
 </head>
 <body>
@@ -153,6 +170,7 @@ footer a{color:#c9ccd2;text-decoration:none}footer .cp{text-align:center;color:#
 <span class="sp"></span><a class="ncta" href="#apply">상담·신청</a>
 </div></nav>
 
+<a class="odnotice" href="#oneday" onclick="setTimeout(function(){pick('얼굴분석 이미지스타일링 원데이 · 10/5(월)')},50);return true;"><span class="dot"></span><b>공지</b> 10/5(월) 얼굴분석 이미지스타일링 원데이 신청 접수 중 <span class="go">신청하기 →</span></a>
 <header class="hero"><div class="wrap">
 <div class="eyebrow">PBS COLOR LAB · 전문가 자격과정</div>
 <h1>내면부터 외면까지,<br><em>컬러 콘텐츠 전문가</em>로 완성됩니다</h1>
@@ -160,11 +178,28 @@ footer a{color:#c9ccd2;text-decoration:none}footer .cp{text-align:center;color:#
 <div class="chips">
 <span class="chip"><b>1만+</b> 명 교육</span><span class="chip"><b>KBS·UBC</b> 방송 출연</span>
 <span class="chip"><b>국내외</b> 글로벌 활동</span></div>
-<div class="hbtns"><a class="btn primary" href="#apply">자격과정 상담·신청 →</a><a class="btn ghost" href="#stage-inner">과정 한눈에 보기 ↓</a></div>
+<div class="hbtns"><a class="btn primary" href="#apply">자격과정 상담·신청 →</a><a class="btn ghost" href="#stage-inner">과정 한눈에 보기 ↓</a><a class="btn ghost" href="#oneday">원데이 클래스 신청 ↓</a></div>
 <p class="freehook">처음이라 망설여지세요? <a href="/book48.html">무료 3분 컬러강점 진단</a>으로 가볍게 시작해 보세요.</p>
 </div></header>
 
 
+
+<section class="oneday" id="oneday"><div class="wrap">
+<div class="sec-h"><div class="k">ONE-DAY CLASS</div><h2>원데이 클래스</h2><p>하루에 끝나는 수료 과정입니다. 원하는 날짜를 누르고 아래에서 신청해 주세요.</p></div>
+<article class="od-card">
+<div class="cc-tags"><span class="cc-tag">원데이 세미나</span><span class="cc-badge off">🎨 오프라인</span></div>
+<h3>얼굴분석 이미지스타일링 원데이</h3>
+<p class="od-hook">퍼스널컬러 다음 단계, 이제 얼굴까지 읽어보세요</p>
+<p class="cc-intro">얼굴형·비율·이목구비 분석 → 맞춤 이미지·메이크업·헤어 제안까지 하루에 배웁니다.</p>
+<div class="od-meta"><span>🕙 10:00–15:00</span><span>📍 PBS컬러랩 (오프라인)</span><span>💳 295,000원</span><span>🎓 인증강사 10만원 할인</span><span>👥 선착순 6명</span></div>
+<div class="od-dates">
+<button type="button" onclick="pick('얼굴분석 이미지스타일링 원데이 · 10/5(월)')">10/5 (월)<small>신청하기 →</small></button>
+<button type="button" onclick="pick('얼굴분석 이미지스타일링 원데이 · 11/21(토)')">11/21 (토)<small>신청하기 →</small></button>
+<button type="button" onclick="pick('얼굴분석 이미지스타일링 원데이 · 12/26(토)')">12/26 (토)<small>신청하기 →</small></button>
+</div>
+</article>
+<p class="od-more">자격과정 공개 일정(컬러강점 2급 · K-뷰티 퍼스널컬러 · 골격분석 세미나)은 <a href="/강의/공개교육과정.html">4분기 공개교육과정</a>에서 바로 신청할 수 있습니다.</p>
+</div></section>
 
 <section class="why"><div class="wrap">
 <div class="sec-h"><div class="k">WHY PBS</div><h2>왜 PBS 자격과정인가</h2><p>자격증에 그치지 않습니다. 나를 이해하는 것에서 이미지 완성까지, 실제로 쓸 수 있는 힘을 단계별로 갖춥니다.</p></div>
@@ -361,7 +396,7 @@ footer a{color:#c9ccd2;text-decoration:none}footer .cp{text-align:center;color:#
 <label>이름 *</label><input id="ap_name" autocomplete="name">
 <label>연락처 *</label><input id="ap_phone" inputmode="tel" placeholder="010-0000-0000">
 <label>이메일</label><input id="ap_email" inputmode="email">
-<label>관심 과정 *</label><select id="ap_course"><option value="">과정을 선택하세요</option><option value="휴먼컬러 자격과정">휴먼컬러 자격과정</option><option value="컬러 수비학 자격과정">컬러 수비학 자격과정</option><option value="컬러테라피(컬러리딩) 자격과정">컬러테라피(컬러리딩) 자격과정</option><option value="컬러강점 2급 자격과정">컬러강점 2급 자격과정</option><option value="컬러강점 1급 자격과정">컬러강점 1급 자격과정</option><option value="DTL 리더십 자격과정">DTL 리더십 자격과정</option><option value="K-뷰티 퍼스널컬러 자격과정">K-뷰티 퍼스널컬러 자격과정</option><option value="일본 ICPA 골격분석이미지컨설턴트 국제자격과정">일본 ICPA 골격분석이미지컨설턴트 국제자격과정</option><option value="얼굴분석 이미지 컨설턴트 과정">얼굴분석 이미지 컨설턴트 과정</option><option value="전체 상담">아직 고민 중 · 전체 상담</option></select>
+<label>관심 과정 *</label><select id="ap_course"><option value="">과정을 선택하세요</option><option value="얼굴분석 이미지스타일링 원데이 · 10/5(월)">[원데이] 얼굴분석 이미지스타일링 · 10/5(월)</option><option value="얼굴분석 이미지스타일링 원데이 · 11/21(토)">[원데이] 얼굴분석 이미지스타일링 · 11/21(토)</option><option value="얼굴분석 이미지스타일링 원데이 · 12/26(토)">[원데이] 얼굴분석 이미지스타일링 · 12/26(토)</option><option value="휴먼컬러 자격과정">휴먼컬러 자격과정</option><option value="컬러 수비학 자격과정">컬러 수비학 자격과정</option><option value="컬러테라피(컬러리딩) 자격과정">컬러테라피(컬러리딩) 자격과정</option><option value="컬러강점 2급 자격과정">컬러강점 2급 자격과정</option><option value="컬러강점 1급 자격과정">컬러강점 1급 자격과정</option><option value="DTL 리더십 자격과정">DTL 리더십 자격과정</option><option value="K-뷰티 퍼스널컬러 자격과정">K-뷰티 퍼스널컬러 자격과정</option><option value="일본 ICPA 골격분석이미지컨설턴트 국제자격과정">일본 ICPA 골격분석이미지컨설턴트 국제자격과정</option><option value="얼굴분석 이미지 컨설턴트 과정">얼굴분석 이미지 컨설턴트 과정</option><option value="전체 상담">아직 고민 중 · 전체 상담</option></select>
 <div class="agree"><input type="checkbox" id="ap_agree"><label for="ap_agree" style="font-weight:400;margin:0">상담을 위한 개인정보(이름·연락처) 수집·이용에 동의합니다.</label></div>
 <div id="formmsg"></div>
 <button type="submit" class="subbtn" id="subbtn">상담 신청하기</button>
@@ -400,7 +435,7 @@ function submitApp(e){e.preventDefault();
  btn.disabled=true;msg.style.color='#6b6e6b';msg.textContent='접수 중...';
  var course=g('ap_course')||'전체 상담';
  var note='[이메일:'+(g('ap_email')||'-')+'] [관심과정:'+course+']';
- var body={name:g('ap_name'),phone:g('ap_phone'),want_to_make:course,message:note,memo:'source:courses_apply',session:'자격과정',agreed:true};
+ var body={name:g('ap_name'),phone:g('ap_phone'),want_to_make:course,message:note,memo:'source:courses_apply',session:(/원데이/.test(course)?'원데이 · '+course:'자격과정'),agreed:true};
  fetch(API,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(body)})
  .then(function(r){if(!r.ok)throw 0;document.getElementById('formcard').style.display='none';var d=document.getElementById('done');d.style.display='block';d.scrollIntoView({behavior:'smooth'});})
  .catch(function(){btn.disabled=false;msg.style.color='#c2185b';msg.textContent='접수 중 오류가 발생했어요. 전화(1600-7218)로 문의해 주세요.';});
