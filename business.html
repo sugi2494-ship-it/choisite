@@ -505,12 +505,12 @@ footer a{color:#e7dfe4}footer .fm{font-size:13px;color:#9b9298;line-height:1.9}
             <span style="color:rgba(255,255,255,.85);font-size:13px">제안서·견적은 무료로 전달드립니다.</span>
           </div>
         </div>
-        <!-- ▼ 배포 전: Formspree form ID로 YOUR_FORM_ID 교체 -->
-        <form class="req" id="reqForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <!-- 접수: Supabase applications 테이블 저장 → 대표 텔레그램 알림(tg_notify) -->
+        <form class="req" id="reqForm" novalidate>
+          <div id="ok" role="status" style="display:none;background:var(--magenta-soft);border:1px solid var(--magenta-line);border-radius:12px;padding:14px;margin-bottom:14px;color:var(--magenta-deep);font-weight:700">문의가 접수되었습니다. 빠르게 확인 후 연락드리겠습니다. 감사합니다.</div>
           <input type="hidden" name="source" value="business" />
           <input type="hidden" name="_subject" value="[PBS COLOR LAB Business] 기업·공공기관 교육 문의" />
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-          <div id="ok" style="display:none;background:var(--magenta-soft);border:1px solid var(--magenta-line);border-radius:12px;padding:14px;margin-bottom:14px;color:var(--magenta-deep);font-weight:700">문의가 접수되었습니다. 빠르게 확인 후 연락드리겠습니다. 감사합니다.</div>
           <div class="f-row">
             <div class="fg"><label>기관명 <span class="r">*</span></label><input required name="org" placeholder="예: ○○시청 / ○○기업" /></div>
             <div class="fg"><label>담당자명 <span class="r">*</span></label><input required name="name" placeholder="담당자 성함" /></div>
@@ -560,14 +560,22 @@ footer a{color:#e7dfe4}footer .fm{font-size:13px;color:#9b9298;line-height:1.9}
 
 <script>
 document.querySelectorAll('.faq-q').forEach(function(q){q.addEventListener('click',function(){q.parentElement.classList.toggle('open')})});
+var SB_URL="https://oqxlsnyuwtmjmbhgzjoz.supabase.co/rest/v1/applications",SB_KEY="sb_publishable_mn7lAEbiyw1ArefbUh9R7w_fZOdW5g0";
 document.getElementById('reqForm').addEventListener('submit',function(e){
   e.preventDefault();var f=e.target,btn=document.getElementById('sub'),ok=document.getElementById('ok');
-  if(f.action.indexOf('YOUR_FORM_ID')>-1){alert('폼 접수 주소(Formspree form ID)가 아직 설정되지 않았습니다.\nform action의 YOUR_FORM_ID를 교체하면 실제 접수됩니다.\n\n지금은 1600-7218 또는 sugi2494@gmail.com으로 문의해 주세요.');return;}
-  var data=new FormData(f);btn.disabled=true;btn.textContent='전송 중…';
-  fetch(f.action,{method:'POST',body:data,headers:{'Accept':'application/json'}}).then(function(r){
-    if(r.ok){f.reset();f.style.display='none';ok.style.display='block';ok.scrollIntoView({behavior:'smooth',block:'center'});}
-    else{r.json().then(function(d){alert((d.errors&&d.errors.map(function(x){return x.message}).join(', '))||'전송 실패. 1600-7218로 문의해 주세요.');});btn.disabled=false;btn.textContent='교육·행사 견적 문의 보내기';}
-  }).catch(function(){alert('네트워크 오류. 1600-7218 또는 sugi2494@gmail.com으로 문의해 주세요.');btn.disabled=false;btn.textContent='교육·행사 견적 문의 보내기';});
+  if(f._gotcha.value)return;
+  if(!f.checkValidity()){f.reportValidity();return;}
+  var v=function(n){return (f.elements[n]&&f.elements[n].value||'').trim();};
+  var body={name:v('name'),phone:v('phone'),email:v('email'),affiliation:v('org'),job:v('target'),
+    session:'기업·기관 교육 견적 문의',type:'기업문의',want_to_make:'기업·공공기관 교육',
+    message:'[기관] '+v('org')+'\n[대상] '+(v('target')||'-')+'\n[일정·인원] '+(v('plan')||'-')+'\n[요청] '+(v('message')||'-'),
+    memo:'source:business',agreed:true};
+  btn.disabled=true;btn.textContent='전송 중…';
+  fetch(SB_URL,{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(body)})
+  .then(function(r){
+    if(r.ok){f.reset();Array.prototype.forEach.call(f.children,function(c){if(c!==ok)c.style.display='none';});ok.style.display='block';ok.scrollIntoView({behavior:'smooth',block:'center'});}
+    else{throw new Error(r.status);}
+  }).catch(function(){alert('전송에 실패했습니다. 잠시 후 다시 시도하시거나 1600-7218 / sugi2494@gmail.com으로 문의해 주세요.');btn.disabled=false;btn.textContent='교육·행사 견적 문의 보내기';});
 });
 </script>
 </body>
