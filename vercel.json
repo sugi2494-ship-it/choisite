@@ -1,6 +1,11 @@
 {
   "cleanUrls": false,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/ulsan-personal-color", "destination": "/consulting", "permanent": true },
+    { "source": "/shopinfo/:path*", "destination": "/", "permanent": true },
+    { "source": "/board/:path*", "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
