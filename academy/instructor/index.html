@@ -394,17 +394,17 @@ if(e&&e.gallery&&e.gallery.length){var g=document.querySelector(".tgal");if(g){v
 <div class="mp6-card">
 <button class="mp6-x" onclick="mp6Close()" aria-label="닫기">&times;</button>
 <div class="mp6-eyebrow">PBS COLOR LAB · 강사 양성</div>
-<div class="mp6-big">인증강사<br><span>6기 모집</span></div>
+<div class="mp6-big">인증강사<br><span>7기 모집</span></div>
 <div class="mp6-sub">자격증을 넘어,<br>실제로 강의 나가는 강사로</div>
-<div class="mp6-date">📅 7/30–8/10 모집 · 8/15 발표</div>
+<div class="mp6-date">📅 10/21–10/31 모집 · 11/1 발표</div><br><div class="mp6-date" style="margin-top:8px;background:#f3f3f6;color:#141428">🎓 11월 한 달 · 트레이닝 10회</div>
 <div class="mp6-desc">강의안 · 현장 실습 · 1:1 코칭 · 프로필 브랜딩까지<br>당신의 첫 강의부터 활동까지 함께 만듭니다.</div>
 <a class="mp6-btn" href="#apply" onclick="mp6Apply();return false;">인증강사 지원하기 →</a>
 <div class="mp6-foot"><label><input type="checkbox" id="mp6hide" style="width:auto;margin-right:5px;vertical-align:middle">오늘 하루 보지 않기</label> · 문의 010-4285-7997</div>
 </div>
 </div>
 <script>
-function mp6Close(){var h=document.getElementById("mp6hide");if(h&&h.checked){try{localStorage.setItem("pbs6hide",new Date().toDateString());}catch(e){}}var o=document.getElementById("mp6");if(o)o.style.display="none";}
+function mp6Close(){var h=document.getElementById("mp6hide");if(h&&h.checked){try{localStorage.setItem("pbs7hide",new Date().toDateString());}catch(e){}}var o=document.getElementById("mp6");if(o)o.style.display="none";}
 function mp6Apply(){mp6Close();if(typeof openApply==="function")openApply();else{var a=document.getElementById("apply");if(a)a.scrollIntoView({behavior:"smooth"});}}
-(function(){try{var END=new Date("2026-08-16T23:59:59");if(new Date()>END)return;if(localStorage.getItem("pbs6hide")===new Date().toDateString())return;}catch(e){}var o=document.getElementById("mp6");if(o)setTimeout(function(){o.style.display="flex";},700);})();
+(function(){try{var END=new Date("2026-11-01T23:59:59");if(new Date()>END)return;if(localStorage.getItem("pbs7hide")===new Date().toDateString())return;}catch(e){}var o=document.getElementById("mp6");if(o)setTimeout(function(){o.style.display="flex";},700);})();
 </script>
 </body></html>
