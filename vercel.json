@@ -62,6 +62,14 @@
     {
       "source": "/academy/classroom",
       "destination": "/academy/classroom/index.html"
+    },
+    {
+      "source": "/coach",
+      "destination": "/coach/index.html"
+    },
+    {
+      "source": "/coach/plan",
+      "destination": "/coach/plan.html"
     }
   ]
 }
