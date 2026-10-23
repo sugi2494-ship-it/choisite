@@ -132,7 +132,7 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--mute);font-
   </header>
 
   <section class="hero">
-    <div class="eyebrow">WEB ④ · CHAPTER 2 GOAL &amp; GROW</div>
+    <div class="eyebrow">WEB ④ · CHAPTER 3 MY AI COACH</div>
     <h1>나의 강점으로<br>세우는 <em>목표 플랜</em></h1>
     <p class="lead">STEP 1 컬러강점 누르기 → STEP 2 목표 적기(또는 워크북 사진) → STEP 3 코치 이름 → STEP 4 맨 아래 글을 <b>한 번만 복사</b>해서 Claude에 붙여넣기. 이것으로 나만의 코치가 완성됩니다.</p>
     <div class="dday"><b id="dd">D-64</b><span>2026년 12월 25일 크리스마스까지 · 이번 플랜의 마감</span></div>
@@ -223,10 +223,19 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--mute);font-
         <li><b>4</b><span>코치 답이 끝나면 <strong>"다음"</strong>이라고 보내기<em>세 번까지: ① 이달의 계획(13쪽) → ② 첫 코칭 · 강점 인터뷰 → ③ 자주 하는 일 맡기기</em></span></li>
         <li><b>5</b><span>이 채팅에 <strong>별표(즐겨찾기)</strong><em>내일부터 같은 채팅에 "아침 체크인"만 보내면 됩니다</em></span></li>
       </ol>
-      <div class="signal"><span>아침 체크인</span><span>저녁 체크인</span><span>주간 리뷰</span><span>다음</span></div>
+      <div class="signal"><span>아침 체크인</span><span>결정 도와줘: [고민]</span><span>주간 리뷰 · 일요일 저녁</span><span>월간 점검 · 말일</span><span>다음</span></div>
       <a class="btn ghost" href="https://claude.ai" target="_blank" rel="noopener">Claude 열기</a>
       <details class="more"><summary>복사될 글 미리 보기</summary>
         <pre id="allOut" class="tapcopy" role="button" tabindex="0" aria-label="눌러서 전체 질문 복사" data-btn="cpAll"></pre>
+      </details>
+      <details class="more"><summary>더 오래 쓰고 싶다면 · 프로젝트 지침 (선택)</summary>
+        <ol class="how">
+          <li><b>1</b><span>Claude → 프로젝트 → 새 프로젝트 → 이름 「나의 컬러 코치」</span></li>
+          <li><b>2</b><span>아래 버튼으로 지침을 복사해 프로젝트 지침(Instructions)에 붙여넣고 저장</span></li>
+          <li><b>3</b><span>프로젝트 안 새 채팅에서 "아침 체크인". 지침은 모든 채팅에 자동 적용됩니다</span></li>
+        </ol>
+        <button class="btn ghost" type="button" id="cpSetup" data-copy="setupOut">프로젝트 지침 복사하기</button>
+        <pre id="setupOut" class="tapcopy" role="button" tabindex="0" aria-label="눌러서 프로젝트 지침 복사" data-btn="cpSetup"></pre>
       </details>
     </div>
 
@@ -386,7 +395,9 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--mute);font-
       '\n[대화 방식]\n' +
       '- "아침 체크인"을 받으면 아침 브리핑: ① 오늘의 상태 체크 — 끌리는 컬러 · 에너지 점수(1~10) · 지금 기분 한 마디를 한 번에 묻고, 답을 보고 내 엔진이 과열됐는지(서두름 · 혼자 다 하려 함 등) 에너지가 떨어졌는지 짚어 줘. 과열이면 아래 보색 질문 하나를 던지고, 에너지가 4점 이하면 오늘 할 일을 줄여 줘 → ② 내가 오늘 할 일을 말하면 우선순위 4칸으로 나눠 1순위(급한 불: 급하고 중요) · 2순위(큰 돌: 중요하지만 급하지 않음, 시간 먼저 막기) · 3순위(끼어드는 일: 짧게 끝내거나 맡기기) · 4순위(시간 도둑: 오늘은 하지 않기)로 브리핑 → ③ 1순위 첫 20분 행동과 오늘 쓸 기어 하나 정하기. 월간 계획이 있으면 그 계획을 기준으로 순위를 정해 줘.\n' +
       '- "저녁 체크인"을 받으면: 오늘 쓴 기어 → 오늘 잘한 일 하나 → 내일 이어 갈 한 가지\n' +
-      '- "주간 리뷰"를 받으면: 이번 주 목표 진행 점검 → 다음 주 할 일 3가지 함께 정하기\n' +
+      '- "결정 도와줘: [고민]"을 받으면: ① 12월 25일 목표와 이달 목표에 얼마나 도움이 되는지(크게 · 조금 · 거의 안 됨) ② 우선순위 4칸 중 어디인지 ③ 내 엔진 · 기어로 잘할 수 있는 일인지 짚고 → "할 것 · 미룰 것 · 맡길 것 · 안 할 것" 중 하나를 이유 한 줄과 함께 추천해 줘. 최종 결정은 내가 해.\n' +
+      '- "주간 리뷰"(매주 일요일 저녁)를 받으면: 이번 주 빨간 개구리를 몇 번 먹었는지 · 목표 진행 · 잘한 점 하나 · 아쉬운 점 하나를 물은 뒤, 코치로서 피드백 한 줄(칭찬 하나 + 다음 주에 바꿀 점 하나)을 주고 → 다음 주 큰 돌(2칸) 3개를 함께 정해 줘.\n' +
+      '- "월간 점검"(매달 마지막 날)을 받으면: 이달 목표 3개의 결과 · 잘한 점 · 아쉬운 점을 정리하고, 12월 25일까지 남은 기간을 보고 다음 달 목표 3개와 키맨을 제안해 줘.\n' +
       '- 아침 체크인이 아니어도 내 엔진이 과열된 신호가 보이면 보색 질문을 하나 던져 줘.\n' + ovLines() + '\n' +
       '- 답은 짧게, 질문은 한 번에 하나씩. 정답을 주기보다 내가 스스로 정하도록 질문으로 이끌어 줘.\n' +
       '- 질문할 때는 바로 고를 수 있는 보기 2~3개를 함께 줘. 내가 모른다고 하면 무리 없는 쪽으로 가정하고 진행해 줘.\n' +
@@ -448,9 +459,9 @@ footer{border-top:1px solid var(--line);padding-top:16px;color:var(--mute);font-
       '- 워크북 사진을 첨부했다면 사진 속 목표를 먼저 읽고 정리해 보여 줘.\n' +
       '- 되묻지 말고 지금 정보만으로 바로 써 줘. 모르는 숫자나 사정은 무리 없는 쪽으로 가정하고 (가정)이라고 표시해 줘.\n' +
       '- 격려 문장보다 날짜와 행동으로, 폰 한 화면씩 읽기 쉽게 짧게. 어려운 말 없이.\n' +
-      '- 이 대화가 나의 코치 대화방이야. 앞으로 이 대화에서 "아침 체크인 · 저녁 체크인 · 주간 리뷰"를 보내면 위 [대화 방식]대로 해 줘.';
+      '- 이 대화가 나의 코치 대화방이야. 앞으로 이 대화에서 "아침 체크인 · 저녁 체크인 · 결정 도와줘 · 주간 리뷰 · 월간 점검"을 보내면 위 [대화 방식]대로 해 줘.';
   }
-  function render(){ show($('allOut'), tidy(allText())); }
+  function render(){ show($('allOut'), tidy(allText())); show($('setupOut'), tidy(setupText())); }
 
   // 저장 · 불러오기 (이 기기에만)
   var t;
