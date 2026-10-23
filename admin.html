@@ -253,6 +253,7 @@ a{text-decoration:none;color:inherit}
   <div class="tabs">
     <button class="tb on" onclick="tab('inq',this)">📩 문의 <span class="bdn" id="inqN"></span></button>
     <button class="tb" onclick="tab('tst',this)">💬 소감 <span class="bdn" id="tstN"></span></button>
+    <button class="tb" onclick="tab('home',this)">🏠 메인 대문</button>
     <button class="tb" onclick="tab('gal',this)">🖼 갤러리</button>
     <button class="tb" onclick="tab('glb',this)">🌏 글로벌 사진</button>
     <button class="tb" onclick="tab('str',this)">🛍 스토어 <span class="bdn" id="strN"></span></button>
@@ -395,6 +396,18 @@ a{text-decoration:none;color:inherit}
     <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:12px;line-height:1.6">· <b>PDF 업로드</b>를 누르면 파일이 서버에 올라가고 링크가 자동으로 채워집니다.<br>· 저장 후 홈페이지/강의실을 새로고침하면 반영됩니다.<br>· 교육생 자료 = 수강생이 받는 공개자료, 강사 강의안 = 비밀번호(8808)로 열리는 강의 슬라이드.</p>
     <input type="file" id="pdfFile" accept="application/pdf,.pdf" style="display:none">
     <div id="upState" style="font-size:12.5px;font-weight:700;margin-top:8px;color:#7ED0A5"></div>
+  </div>
+
+  <!-- 메인 대문 사진 -->
+  <div class="pane" id="p-home">
+    <div class="st">🏠 메인 대문 사진 <span style="font-size:12px;font-weight:500;color:rgba(255,255,255,.45)">메인 카드 4장 + 대표 소개 사진</span></div>
+    <div id="homeList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px"></div>
+    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+      <button class="sbtn" onclick="saveHome()">✓ 대문 사진 저장</button>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:12px;line-height:1.7">· 가로로 긴 사진(가로:세로 = 4:3)이 가장 잘 맞습니다. 휴대폰 사진도 그대로 올려도 됩니다.<br>· 얼굴이 잘리면 <b>사진 위치</b>를 '위쪽 보이기'로 바꾸고 저장하세요.<br>· 저장 후 홈페이지를 새로고침하면 반영됩니다.</p>
+    <input type="file" id="homeFile" accept="image/*" style="display:none">
+    <div id="homeState" style="font-size:12.5px;font-weight:700;margin-top:8px;color:#7ED0A5"></div>
   </div>
 
   <!-- 소개(프로필) -->
@@ -599,6 +612,7 @@ function tab(id,btn){
   document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on');});
   document.getElementById('p-'+id).classList.add('on');btn.classList.add('on');
+  if(id==='home')renderHome();
   if(id==='gal')renderGal();
   if(id==='glb'){renderGlb();renderGGal();}
   if(id==='cfg')loadCfg();
@@ -1384,6 +1398,52 @@ function pickPdf(target){_pdfTarget=target;var fi=document.getElementById('pdfFi
   });
 })();
 
+
+// ── 메인 대문 사진 (pbs_site_config · key=home_doors) ──
+var HOME_SLOTS=[['personal','01 개인 컨설팅','/assets/consulting/hero-v.jpg'],['corp','02 기업·기관 교육','/assets/home/door-corp.jpg'],['academy','03 전문가 아카데미','/assets/home/door-academy.jpg'],['global','04 Global K-Beauty','/assets/global/stage-dubai.jpg'],['founder','대표 소개 사진','/assets/home/founder-cutout.webp']];
+var _homeData={},_homeTarget=null;
+function renderHome(){
+  try{_homeData=JSON.parse(localStorage.getItem('pbs_home_doors')||'{}')||{};}catch(e){_homeData={};}
+  var h='';
+  HOME_SLOTS.forEach(function(sl){
+    var k=sl[0],d=_homeData[k]||{},src=d.src||sl[2],pos=d.pos||'center';
+    h+='<div class="card" style="padding:12px">'
+     +'<p style="font-size:13px;font-weight:800;margin-bottom:8px">'+sl[1]+'</p>'
+     +'<div style="aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#222;margin-bottom:10px"><img id="hd_img_'+k+'" src="'+src+'" style="width:100%;height:100%;object-fit:cover;object-position:center '+pos+'"></div>'
+     +'<label style="font-size:12px;color:rgba(255,255,255,.55)">사진 위치</label>'
+     +'<select id="hd_pos_'+k+'" onchange="document.getElementById(\'hd_img_'+k+'\').style.objectPosition=\'center \'+this.value" style="width:100%;margin:4px 0 10px;padding:8px;border-radius:8px;background:#1b1b24;color:#fff;border:1px solid rgba(255,255,255,.15)">'
+     +['top','center','bottom'].map(function(v){return '<option value="'+v+'"'+(v===pos?' selected':'')+'>'+({top:'위쪽 보이기 (얼굴이 잘릴 때)',center:'가운데',bottom:'아래쪽 보이기'})[v]+'</option>';}).join('')
+     +'</select>'
+     +'<div style="display:flex;gap:6px"><button class="sbtn" style="flex:1;font-size:12px;padding:8px" onclick="pickHome(\''+k+'\')">📷 사진 바꾸기</button>'
+     +'<button class="dbtn" style="font-size:12px;padding:8px" onclick="resetHome(\''+k+'\')">기본</button></div>'
+     +'</div>';
+  });
+  document.getElementById('homeList').innerHTML=h;
+}
+function pickHome(k){_homeTarget=k;var fi=document.getElementById('homeFile');fi.value='';fi.click();}
+function resetHome(k){var sl=HOME_SLOTS.filter(function(x){return x[0]===k})[0];delete _homeData[k];document.getElementById('hd_img_'+k).src=sl[2];document.getElementById('hd_pos_'+k).value='center';document.getElementById('hd_img_'+k).style.objectPosition='center center';}
+(function(){
+  var fi=document.getElementById('homeFile'); if(!fi)return;
+  fi.addEventListener('change',function(){
+    var file=fi.files&&fi.files[0]; if(!file||!_homeTarget)return;
+    var st=document.getElementById('homeState'); st.style.color='#E7C15B'; st.textContent='업로드 중… '+file.name;
+    var ext=(file.name.match(/\.[A-Za-z0-9]+$/)||['.jpg'])[0].toLowerCase();
+    var path='home/door_'+_homeTarget+'_'+Date.now()+ext, k=_homeTarget;
+    fetch(SUPA_URL+'/storage/v1/object/site/'+encodeURIComponent(path),{method:'POST',
+      headers:{apikey:SUPA_KEY,Authorization:'Bearer '+SUPA_KEY,'Content-Type':file.type||'image/jpeg','x-upsert':'true'},body:file})
+    .then(function(r){
+      if(r.ok){var url=SUPA_URL+'/storage/v1/object/public/site/'+encodeURIComponent(path);
+        _homeData[k]=Object.assign({},_homeData[k]||{},{src:url});document.getElementById('hd_img_'+k).src=url;
+        st.style.color='#7ED0A5'; st.textContent='✓ 업로드 완료 — [대문 사진 저장]을 눌러야 홈페이지에 반영됩니다.';}
+      else{r.text().then(function(t){st.style.color='#F2A0A0';st.textContent='업로드 실패: '+t;});}
+    }).catch(function(e){st.style.color='#F2A0A0';st.textContent='업로드 오류: '+e;});
+  });
+})();
+function saveHome(){
+  HOME_SLOTS.forEach(function(sl){var k=sl[0];var pos=document.getElementById('hd_pos_'+k).value;
+    if(_homeData[k]||pos!=='center'){_homeData[k]=Object.assign({},_homeData[k]||{},{pos:pos});}});
+  saveConfig('home_doors',_homeData,'메인 대문 사진');
+}
 </script>
 </body>
 </html>
