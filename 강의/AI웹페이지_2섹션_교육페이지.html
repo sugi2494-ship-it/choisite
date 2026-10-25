@@ -64,6 +64,11 @@ ol.steps li::before{counter-increment:st;content:counter(st);position:absolute;l
 ul.chk{list-style:none;}
 ul.chk li{position:relative;padding:7px 0 7px 30px;font-size:14.5px;}
 ul.chk li::before{content:'';position:absolute;left:0;top:10px;width:16px;height:16px;border:2px solid var(--teal);border-radius:4px;}
+ul.chk li{cursor:pointer;user-select:none;transition:.1s;}
+ul.chk li:hover{color:var(--teal);}
+ul.chk li.on{color:var(--gray);}
+ul.chk li.on::before{background:var(--teal);border-color:var(--teal);}
+ul.chk li.on::after{content:'✓';position:absolute;left:3px;top:7px;color:#fff;font-size:12px;font-weight:900;}
 .tip{background:var(--cream);border-radius:10px;padding:12px 15px;font-size:14px;color:var(--ink);margin-top:14px;}
 .tip b{color:var(--teald);}
 .nav2{display:flex;justify-content:space-between;gap:10px;margin-top:20px;}
@@ -310,7 +315,7 @@ function openAct(k){const d=LIST[k];
  h+=`<div class="block"><div class="lh"><span class="ic">▌</span>복붙 프롬프트 <span style="font-weight:700;color:var(--gray);font-size:12.5px">— 내 상황에 맞는 것만 골라 쓰세요</span></div>`;
  d.p.forEach(([lb,tx])=>{h+=`<div class="prompt"><button class="cp" onclick="cpy(this)">📋 복사</button><div class="pl">${lb}</div><pre>${esc(tx)}</pre></div>`;});
  h+=`</div>`;
- h+=`<div class="block"><div class="lh"><span class="ic">✓</span>체크리스트 — 다 되면 다음 활동으로</div><ul class="chk">${d.chk.map(c=>`<li>${c}</li>`).join('')}</ul></div>`;
+ h+=`<div class="block"><div class="lh"><span class="ic">✓</span>체크리스트 — 다 되면 다음 활동으로</div><ul class="chk">${d.chk.map(c=>`<li onclick="this.classList.toggle('on')">${c}</li>`).join('')}</ul></div>`;
  const prev=k>0?k-1:null, next=k<LIST.length-1?k+1:null;
  h+=`<div class="nav2"><button ${prev===null?'disabled':''} onclick="openAct(${prev})">← 이전 활동</button><button class="next" ${next===null?'disabled':''} onclick="openAct(${next})">${next===null?'🎉 마지막 활동':'다음 활동 →'}</button></div>`;
  h+=`<div class="foot">커넥트온브릿지 · AI 웹페이지 전문가 마스터과정 · ${SEC}섹션</div>`;
