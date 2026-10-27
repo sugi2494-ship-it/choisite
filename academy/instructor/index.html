@@ -391,20 +391,19 @@ if(e&&e.gallery&&e.gallery.length){var g=document.querySelector(".tgal");if(g){v
 @media(max-width:440px){.mp6-big{font-size:38px}.mp6-card{padding:26px 22px}}
 </style>
 <div id="mp6" class="mp6-overlay" onclick="if(event.target===this)mp6Close()">
-<div class="mp6-card">
-<button class="mp6-x" onclick="mp6Close()" aria-label="닫기">&times;</button>
-<div class="mp6-eyebrow">PBS COLOR LAB · 강사 양성</div>
-<div class="mp6-big">인증강사<br><span>7기 모집</span></div>
-<div class="mp6-sub">자격증을 넘어,<br>실제로 강의 나가는 강사로</div>
-<div class="mp6-date">📅 10/21–10/31 모집 · 11/1 발표</div><br><div class="mp6-date" style="margin-top:8px;background:#f3f3f6;color:#141428">🎓 11월 한 달 · 트레이닝 10회</div>
-<div class="mp6-desc">강의안 · 현장 실습 · 1:1 코칭 · 프로필 브랜딩까지<br>당신의 첫 강의부터 활동까지 함께 만듭니다.</div>
-<a class="mp6-btn" href="#apply" onclick="mp6Apply();return false;">인증강사 지원하기 →</a>
-<div class="mp6-foot"><label><input type="checkbox" id="mp6hide" style="width:auto;margin-right:5px;vertical-align:middle">오늘 하루 보지 않기</label> · 문의 010-4285-7997</div>
+<div class="mp6-card" style="padding:0;overflow:hidden;border-top:0;max-width:420px;background:#0d0b0f">
+<button class="mp6-x" onclick="mp6Close()" aria-label="닫기" style="color:#fff;z-index:2;top:8px;right:8px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.55);font-size:22px">&times;</button>
+<a href="#apply" onclick="mp6Apply();return false;" style="display:block"><img src="/assets/academy/instructor7-cover.jpg" alt="자격증은 땄는데, 현장에 가보지도 못했다면. 전문가를, 현장으로. PBS 인증강사 7기 모집 10월 21일~11월 10일" width="720" height="900" style="display:block;width:100%;height:auto"></a>
+<div style="padding:18px 20px 16px">
+<div style="color:#fff;font-weight:800;font-size:15px">인증강사 7기 모집 · <span style="color:#E5007F">10/21 – 11/10</span></div>
+<a class="mp6-btn" href="#apply" onclick="mp6Apply();return false;" style="margin-top:12px">인증강사 지원하기 →</a>
+<div class="mp6-foot" style="color:#8a8290"><label><input type="checkbox" id="mp6hide" style="width:auto;margin-right:5px;vertical-align:middle">오늘 하루 보지 않기</label> · 문의 010-4285-7997</div>
+</div>
 </div>
 </div>
 <script>
 function mp6Close(){var h=document.getElementById("mp6hide");if(h&&h.checked){try{localStorage.setItem("pbs7hide",new Date().toDateString());}catch(e){}}var o=document.getElementById("mp6");if(o)o.style.display="none";}
 function mp6Apply(){mp6Close();if(typeof openApply==="function")openApply();else{var a=document.getElementById("apply");if(a)a.scrollIntoView({behavior:"smooth"});}}
-(function(){try{var END=new Date("2026-11-01T23:59:59");if(new Date()>END)return;if(localStorage.getItem("pbs7hide")===new Date().toDateString())return;}catch(e){}var o=document.getElementById("mp6");if(o)setTimeout(function(){o.style.display="flex";},700);})();
+(function(){try{var END=new Date("2026-11-10T23:59:59");if(new Date()>END)return;if(localStorage.getItem("pbs7hide")===new Date().toDateString())return;}catch(e){}var o=document.getElementById("mp6");if(o)setTimeout(function(){o.style.display="flex";},700);})();
 </script>
 </body></html>
