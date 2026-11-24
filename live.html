@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cut, interactive-widget=resizes-content" />
+<meta name="theme-color" content="#ffffff" />
+<title>실시간 강의 소통 · PBS COLOR LAB 최해숙</title>
+<meta name="description" content="PBS COLOR LAB 최해숙 강의 실시간 소통방 — 질문, 채팅, 강의 자료를 휴대폰으로 바로." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="canonical" href="https://www.pbscolor.com/live.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="PBS COLOR LAB" />
+<meta property="og:title" content="최해숙 강의 실시간 소통방" />
+<meta property="og:description" content="질문 · 채팅 · 강의 자료실" />
+<meta property="og:image" content="https://www.pbscolor.com/og-main.jpg" />
+<meta property="og:url" content="https://www.pbscolor.com/live.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/assets/pbs-logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --ink:#111; --ink2:#3D3D3D; --ink3:#6E6E6E; --ink4:#9A9A9A;
+  --line:#E7E7E7; --bg:#fff; --bg2:#FAFAFA; --bg3:#F3F3F3;
+  --pbs:#E5007F; --pbs-deep:#C2006A; --pbs-hot:#FF2D9B; --tint:#FFEEF7;
+  --ok:#0E9F6E;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  background:var(--bg2); color:var(--ink); font-size:16px; line-height:1.6;
+  word-break:keep-all; overflow-wrap:anywhere; -webkit-font-smoothing:antialiased; letter-spacing:-0.012em;
+}
+button,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--pbs);outline-offset:2px}
+.app{max-width:640px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;background:#fff;box-shadow:0 0 0 1px var(--line)}
+
+/* 헤더 */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-row{display:flex;align-items:center;gap:10px;padding:12px 18px 10px}
+.top-row img{height:24px;width:auto;object-fit:contain}
+.brand{font-size:13px;font-weight:800;letter-spacing:.1em}
+.live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--pbs)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--pbs);animation:pulse 1.6s infinite}
+.live.off{color:var(--ink4)} .live.off i{background:var(--ink4);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(229,0,127,.5)}70%{box-shadow:0 0 0 8px rgba(229,0,127,0)}100%{box-shadow:0 0 0 0 rgba(229,0,127,0)}}
+.title{padding:0 18px 12px;font-size:19px;font-weight:800;line-height:1.35;letter-spacing:-.025em}
+.me{padding:0 18px 12px;font-size:13px;color:var(--ink3)}
+.me b{color:var(--ink);font-weight:700}
+.me button{color:var(--pbs);font-weight:700;font-size:13px;margin-left:6px;text-decoration:underline;text-underline-offset:3px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);padding:0 10px}
+.tab{padding:12px 0 11px;font-size:15px;font-weight:700;color:var(--ink3);border-bottom:2.5px solid transparent;position:relative}
+.tab.on{color:var(--ink);border-bottom-color:var(--pbs)}
+.tab .badge{position:absolute;top:8px;margin-left:3px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--pbs);color:#fff;font-size:11px;font-weight:800;line-height:18px;display:none}
+.tab .badge.show{display:inline-block}
+
+/* 스포트라이트 */
+.spot{display:none;margin:14px 18px 0;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--pbs),var(--pbs-hot));color:#fff}
+.spot.show{display:block}
+.spot small{display:block;font-size:11.5px;font-weight:800;letter-spacing:.12em;opacity:.9;margin-bottom:4px}
+.spot p{font-size:16px;font-weight:700;line-height:1.5}
+.spot em{display:block;font-style:normal;font-size:12.5px;opacity:.85;margin-top:6px}
+
+/* 본문 */
+.pane{display:none;flex:1;padding:14px 18px 130px}
+.pane.on{display:block}
+.sortbar{display:flex;gap:6px;margin-bottom:12px}
+.chip{padding:6px 12px;border-radius:20px;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--ink3);background:#fff}
+.chip.on{border-color:var(--ink);color:#fff;background:var(--ink)}
+.empty{padding:44px 10px;text-align:center;color:var(--ink4);font-size:14.5px}
+.empty b{display:block;font-size:30px;margin-bottom:6px}
+
+.q{display:flex;gap:12px;padding:14px 14px 14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:10px;transition:border-color .2s}
+.q.mine{border-color:#F7B3D6;background:#FFF9FC}
+.q.done{opacity:.62}
+.q.new{animation:pop .5s ease}
+@keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
+.q-body{flex:1;min-width:0}
+.q-meta{font-size:12.5px;color:var(--ink3);margin-bottom:3px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.q-meta b{color:var(--ink2);font-weight:700}
+.tag{font-size:11px;font-weight:800;padding:1px 7px;border-radius:6px}
+.tag.ans{background:#E7F7EF;color:var(--ok)}
+.tag.spot-t{background:var(--tint);color:var(--pbs)}
+.q-text{font-size:15.5px;line-height:1.55;white-space:pre-wrap}
+.like{flex:none;align-self:flex-start;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:48px;padding:7px 6px;border-radius:12px;border:1px solid var(--line);font-size:12.5px;font-weight:800;color:var(--ink3);background:#fff}
+.like svg{width:18px;height:18px}
+.like.on{border-color:var(--pbs);color:var(--pbs);background:var(--tint)}
+
+.msg{display:flex;flex-direction:column;align-items:flex-start;margin-bottom:10px}
+.msg .who{font-size:12px;color:var(--ink3);margin:0 4px 3px;font-weight:600}
+.msg .bub{max-width:82%;padding:9px 13px;border-radius:16px 16px 16px 4px;background:var(--bg3);font-size:15px;line-height:1.5;white-space:pre-wrap}
+.msg.mine{align-items:flex-end}
+.msg.mine .bub{background:var(--ink);color:#fff;border-radius:16px 16px 4px 16px}
+.msg.host .bub{background:var(--tint);border:1px solid #F7B3D6;color:var(--ink)}
+.msg.host .who{color:var(--pbs);font-weight:800}
+.msg time{font-size:11px;color:var(--ink4);margin:2px 6px 0}
+
+.mat{color:inherit;text-decoration:none;display:flex;align-items:center;gap:14px;padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:10px}
+.mat .ic{flex:none;width:42px;height:42px;border-radius:11px;background:var(--tint);color:var(--pbs);display:grid;place-items:center;font-size:12px;font-weight:900;letter-spacing:.02em}
+.mat .t{flex:1;min-width:0;font-size:15.5px;font-weight:700;line-height:1.4}
+.mat .t small{display:block;font-size:12px;color:var(--ink4);font-weight:500;margin-top:2px}
+.mat .go{flex:none;font-size:13px;font-weight:800;color:#fff;background:var(--pbs);padding:9px 14px;border-radius:10px}
+
+/* 입력창 */
+.composer{position:fixed;left:0;right:0;bottom:0;z-index:30;pointer-events:none}
+.composer-in{pointer-events:auto;max-width:640px;margin:0 auto;background:#fff;border-top:1px solid var(--line);padding:10px 12px calc(10px + var(--safe-b));display:flex;gap:8px;align-items:flex-end}
+.composer textarea{flex:1;resize:none;border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;font-size:16px;line-height:1.45;max-height:120px;background:var(--bg2);outline:none}
+.composer textarea:focus{border-color:var(--pbs);background:#fff}
+.send{flex:none;height:46px;padding:0 18px;border-radius:14px;background:var(--pbs);color:#fff;font-weight:800;font-size:15px}
+.send:disabled{background:#F2A6CC}
+.composer .hint{position:absolute;left:0;right:0;bottom:100%;text-align:center;pointer-events:none}
+.composer.hide{display:none}
+.counter{font-size:11px;color:var(--ink4);text-align:right;padding:0 16px 2px;max-width:640px;margin:0 auto;background:#fff}
+
+/* 입장 화면 */
+.gate{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 26px 60px}
+.gate .logo{height:44px;width:auto;align-self:flex-start;object-fit:contain;margin-bottom:26px}
+.gate .eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.16em;color:var(--pbs);margin-bottom:8px}
+.gate h1{font-size:28px;line-height:1.3;font-weight:800;letter-spacing:-.03em;margin-bottom:8px}
+.gate .sub{color:var(--ink3);font-size:15px;margin-bottom:28px}
+.field{display:block;margin-bottom:14px}
+.field span{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:6px}
+.field input{width:100%;height:54px;border:1.5px solid var(--line);border-radius:14px;padding:0 16px;font-size:17px;outline:none;background:#fff}
+.field input:focus{border-color:var(--pbs)}
+.field input.code{text-transform:uppercase;letter-spacing:.3em;font-weight:800;text-align:center;font-size:22px}
+.btn{width:100%;height:56px;border-radius:14px;background:var(--pbs);color:#fff;font-size:17px;font-weight:800;margin-top:6px}
+.btn:active{background:var(--pbs-deep)}
+.err{min-height:22px;color:#D72C2C;font-size:13.5px;font-weight:600;margin-top:10px;text-align:center}
+.note{margin-top:22px;font-size:12.5px;color:var(--ink4);text-align:center;line-height:1.6}
+.closed{padding:16px;margin:14px 18px 0;border-radius:14px;background:var(--bg3);color:var(--ink2);font-size:14px;font-weight:600;text-align:center;display:none}
+.closed.show{display:block}
+
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:24px;font-size:14px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.foot{padding:18px;text-align:center;font-size:11.5px;color:var(--ink4);letter-spacing:.06em}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- 입장 -->
+  <section class="gate" id="gate">
+    <img class="logo" src="/assets/pbs-logo.png" alt="PBS COLOR LAB" />
+    <p class="eyebrow">LIVE CLASS</p>
+    <h1 id="gateTitle">강의 실시간 소통방</h1>
+    <p class="sub">질문 · 채팅 · 강의 자료</p>
+    <label class="field" id="codeField">
+      <span>입장 코드</span>
+      <input class="code" id="codeIn" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="ABCDE" />
+    </label>
+    <label class="field">
+      <span>닉네임</span>
+      <input id="nickIn" maxlength="20" autocomplete="nickname" placeholder="화면에 보일 이름" />
+    </label>
+    <button class="btn" id="enterBtn">입장하기</button>
+    <p class="err" id="gateErr"></p>
+    <p class="note">이름 대신 닉네임 사용 가능 · 연락처 입력 없음</p>
+  </section>
+
+  <!-- 강의방 -->
+  <div id="room" hidden style="display:flex;flex-direction:column;flex:1">
+    <header class="top">
+      <div class="top-row">
+        <img src="/assets/pbs-logo.png" alt="" />
+        <span class="brand">LIVE CLASS</span>
+        <span class="live" id="liveDot"><i></i>LIVE</span>
+      </div>
+      <h1 class="title" id="roomTitle"></h1>
+      <p class="me"><b id="meNick"></b> 님으로 참여 중<button id="renameBtn">변경</button></p>
+      <nav class="tabs" role="tablist">
+        <button class="tab on" data-tab="q" role="tab">질문<span class="badge" id="bq"></span></button>
+        <button class="tab" data-tab="c" role="tab" id="chatTab">채팅<span class="badge" id="bc"></span></button>
+        <button class="tab" data-tab="m" role="tab">자료실<span class="badge" id="bm"></span></button>
+      </nav>
+    </header>
+
+    <div class="spot" id="spot"><small>지금 답변 중인 질문</small><p id="spotText"></p><em id="spotWho"></em></div>
+    <div class="closed" id="closedNote">종료된 강의 · 질문과 자료는 계속 볼 수 있음</div>
+
+    <section class="pane on" id="pane-q">
+      <div class="sortbar">
+        <button class="chip on" data-sort="top">공감순</button>
+        <button class="chip" data-sort="new">최신순</button>
+      </div>
+      <div id="qList"></div>
+    </section>
+    <section class="pane" id="pane-c"><div id="cList"></div></section>
+    <section class="pane" id="pane-m"><div id="mList"></div></section>
+    <p class="foot">PBS COLOR LAB · 최해숙</p>
+  </div>
+</div>
+
+<div class="composer hide" id="composer">
+  <div class="composer-in">
+    <textarea id="msgIn" rows="1" maxlength="300" placeholder="강사님께 질문하기"></textarea>
+    <button class="send" id="sendBtn" disabled>보내기</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const SB_URL = 'https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const store = {
+    get(k, d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v);}catch(e){return d;} },
+    set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  };
+
+  let room = null, msgs = new Map(), mats = [], tab = 'q', sort = 'top', channel = null;
+  let nick = store.get('pbs_live_nick', '');
+  let liked = new Set(store.get('pbs_live_liked', []));
+  let mine = new Set(store.get('pbs_live_mine', []));
+  const seen = { q: 0, c: 0, m: 0 };
+
+  const params = new URLSearchParams(location.search);
+  const urlCode = (params.get('r') || '').toUpperCase().trim();
+  if (urlCode) { $('#codeIn').value = urlCode; $('#codeField').hidden = true; }
+  if (nick) $('#nickIn').value = nick;
+
+  function toast(t){ const el = $('#toast'); el.textContent = t; el.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove('show'), 1800); }
+  function hm(ts){ const d = new Date(ts); return d.toLocaleTimeString('ko-KR', {hour:'numeric', minute:'2-digit'}); }
+
+  // 코드만으로 방 제목 미리 보이기
+  if (urlCode) sb.from('live_rooms').select('title').eq('code', urlCode).maybeSingle().then(({data}) => { if (data) $('#gateTitle').textContent = data.title; });
+
+  async function enter(){
+    const code = $('#codeIn').value.toUpperCase().trim();
+    const n = $('#nickIn').value.trim();
+    $('#gateErr').textContent = '';
+    if (code.length < 5) return $('#gateErr').textContent = '입장 코드 5자리 확인';
+    if (!n) return $('#gateErr').textContent = '닉네임 입력';
+    $('#enterBtn').disabled = true;
+    const { data, error } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id').eq('code', code).maybeSingle();
+    $('#enterBtn').disabled = false;
+    if (error || !data) return $('#gateErr').textContent = '강의방을 찾을 수 없음 · 코드 확인';
+    nick = n; store.set('pbs_live_nick', nick);
+    room = data;
+    if (!urlCode) history.replaceState(null, '', '?r=' + code);
+    $('#gate').hidden = true; $('#room').hidden = false;
+    $('#meNick').textContent = nick;
+    applyRoom();
+    await loadAll();
+    subscribe();
+    setTab('q');
+  }
+  $('#enterBtn').onclick = enter;
+  [$('#codeIn'), $('#nickIn')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') enter(); }));
+  $('#renameBtn').onclick = () => {
+    const n = prompt('새 닉네임', nick);
+    if (n && n.trim()) { nick = n.trim().slice(0,20); store.set('pbs_live_nick', nick); $('#meNick').textContent = nick; }
+  };
+
+  function applyRoom(){
+    $('#roomTitle').textContent = room.title;
+    document.title = room.title + ' · 실시간 소통 · PBS COLOR LAB';
+    $('#liveDot').classList.toggle('off', !room.is_open);
+    $('#liveDot').lastChild.textContent = room.is_open ? 'LIVE' : '종료';
+    $('#closedNote').classList.toggle('show', !room.is_open);
+    $('#chatTab').hidden = !room.chat_on && tab !== 'c';
+    renderSpot(); updateComposer();
+  }
+
+  async function loadAll(){
+    const [m, a] = await Promise.all([
+      sb.from('live_messages').select('*').eq('room_id', room.id).order('created_at').limit(1000),
+      sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at', {ascending:false})
+    ]);
+    msgs = new Map((m.data || []).map(x => [x.id, x]));
+    mats = a.data || [];
+    renderAll();
+  }
+
+  function subscribe(){
+    if (channel) sb.removeChannel(channel);
+    channel = sb.channel('live-' + room.id)
+      .on('postgres_changes', {event:'*', schema:'public', table:'live_messages', filter:'room_id=eq.' + room.id}, p => {
+        if (p.eventType === 'DELETE') msgs.delete(p.old.id);
+        else { const isNew = !msgs.has(p.new.id); msgs.set(p.new.id, p.new); if (isNew) p.new._new = true; }
+        renderAll();
+      })
+      .on('postgres_changes', {event:'DELETE', schema:'public', table:'live_messages'}, p => { if (msgs.delete(p.old.id)) renderAll(); })
+      .on('postgres_changes', {event:'*', schema:'public', table:'live_materials', filter:'room_id=eq.' + room.id}, () => reloadMats())
+      .on('postgres_changes', {event:'DELETE', schema:'public', table:'live_materials'}, () => reloadMats())
+      .on('postgres_changes', {event:'UPDATE', schema:'public', table:'live_rooms', filter:'id=eq.' + room.id}, p => { Object.assign(room, p.new); applyRoom(); renderAll(); })
+      .subscribe();
+  }
+  async function reloadMats(){
+    const { data } = await sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at', {ascending:false});
+    mats = data || []; renderMats(); badges();
+  }
+  // 연결이 끊겨도 30초마다 맞춤
+  setInterval(() => { if (room && document.visibilityState === 'visible') loadAll(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') loadAll(); });
+
+  function renderAll(){ renderQ(); renderC(); renderMats(); renderSpot(); badges(); }
+
+  function renderSpot(){
+    const s = room && room.spotlight_id ? msgs.get(room.spotlight_id) : null;
+    $('#spot').classList.toggle('show', !!s);
+    if (s) { $('#spotText').textContent = s.body; $('#spotWho').textContent = '— ' + s.nickname; }
+  }
+
+  const heart = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 4.4 2.5.8-1.4 2.3-2.5 4.4-2.5 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg>';
+  function renderQ(){
+    let list = [...msgs.values()].filter(m => m.kind === 'question');
+    list.sort(sort === 'top'
+      ? (a,b) => (a.answered - b.answered) || (b.likes - a.likes) || (new Date(b.created_at) - new Date(a.created_at))
+      : (a,b) => new Date(b.created_at) - new Date(a.created_at));
+    $('#qList').innerHTML = list.length ? list.map(m => `
+      <article class="q${mine.has(m.id)?' mine':''}${m.answered?' done':''}${m._new?' new':''}">
+        <div class="q-body">
+          <div class="q-meta"><b>${esc(m.nickname)}</b><span>${hm(m.created_at)}</span>
+            ${room.spotlight_id===m.id?'<span class="tag spot-t">답변 중</span>':''}
+            ${m.answered?'<span class="tag ans">답변 완료</span>':''}</div>
+          <p class="q-text">${esc(m.body)}</p>
+        </div>
+        <button class="like${liked.has(m.id)?' on':''}" data-like="${m.id}" aria-label="공감">${heart}${m.likes}</button>
+      </article>`).join('')
+      : '<div class="empty"><b>?</b>첫 질문의 주인공<br>궁금한 점 바로 남기기</div>';
+    list.forEach(m => delete m._new);
+  }
+
+  function renderC(){
+    const list = [...msgs.values()].filter(m => m.kind === 'chat').sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+    const box = $('#cList');
+    const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 140;
+    box.innerHTML = list.length ? list.map(m => `
+      <div class="msg${mine.has(m.id)?' mine':''}${m.is_host?' host':''}">
+        ${mine.has(m.id)?'':`<span class="who">${esc(m.nickname)}</span>`}
+        <div class="bub">${esc(m.body)}</div><time>${hm(m.created_at)}</time>
+      </div>`).join('')
+      : '<div class="empty"><b>💬</b>인사 한마디로 시작</div>';
+    if (tab === 'c' && atBottom) window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  function fileKind(u){ const e = (u.split('?')[0].split('.').pop() || '').toLowerCase();
+    if (['pdf'].includes(e)) return 'PDF'; if (['jpg','jpeg','png','gif','webp'].includes(e)) return 'IMG';
+    if (['ppt','pptx'].includes(e)) return 'PPT'; if (['doc','docx','hwp','hwpx'].includes(e)) return 'DOC';
+    if (['mp4','mov'].includes(e)) return 'VIDEO'; return 'LINK'; }
+  function renderMats(){
+    $('#mList').innerHTML = mats.length ? mats.map(a => `
+      <a class="mat" href="${esc(a.url)}" target="_blank" rel="noopener">
+        <span class="ic">${fileKind(a.url)}</span>
+        <span class="t">${esc(a.title)}<small>${new Date(a.created_at).toLocaleDateString('ko-KR')} 공유</small></span>
+        <span class="go">열기</span>
+      </a>`).join('')
+      : '<div class="empty"><b>📁</b>강의 자료 준비 중<br>공유되면 여기에 바로 표시</div>';
+  }
+
+  function counts(){ const v = [...msgs.values()]; return { q: v.filter(m=>m.kind==='question').length, c: v.filter(m=>m.kind==='chat').length, m: mats.length }; }
+  function badges(){
+    const n = counts();
+    if (!seen.init) { Object.assign(seen, n, {init:true}); }
+    seen[tab] = n[tab];
+    for (const k of ['q','c','m']) { const d = n[k] - seen[k]; const b = $('#b'+k); b.textContent = d > 99 ? '99+' : d; b.classList.toggle('show', d > 0 && k !== tab); }
+  }
+
+  function setTab(t){
+    tab = t;
+    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+    document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'pane-' + t));
+    badges(); updateComposer();
+    if (t === 'c') setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 30); else window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('.tab').forEach(b => b.onclick = () => setTab(b.dataset.tab));
+  document.querySelectorAll('.chip').forEach(b => b.onclick = () => { sort = b.dataset.sort; document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x===b)); renderQ(); });
+
+  function updateComposer(){
+    const show = room && room.is_open && (tab === 'q' || (tab === 'c' && room.chat_on));
+    $('#composer').classList.toggle('hide', !show);
+    $('#msgIn').placeholder = tab === 'q' ? '강사님께 질문하기' : '메시지 보내기';
+  }
+
+  const ta = $('#msgIn');
+  ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, 120) + 'px'; $('#sendBtn').disabled = !ta.value.trim(); });
+  ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && window.matchMedia('(pointer:fine)').matches) { e.preventDefault(); send(); } });
+  $('#sendBtn').onclick = send;
+
+  let sending = false;
+  async function send(){
+    const body = ta.value.trim(); if (!body || sending) return;
+    sending = true; $('#sendBtn').disabled = true;
+    const kind = tab === 'c' ? 'chat' : 'question';
+    const { data, error } = await sb.rpc('live_post', { p_code: room.code, p_kind: kind, p_nick: nick, p_body: body });
+    sending = false;
+    if (error) { toast(/잠시/.test(error.message) ? '조금 천천히 보내기' : /종료/.test(error.message) ? '종료된 강의' : '전송 실패 · 다시 시도'); $('#sendBtn').disabled = false; return; }
+    mine.add(data); store.set('pbs_live_mine', [...mine].slice(-300));
+    ta.value = ''; ta.style.height = 'auto';
+    if (kind === 'question') toast('질문 등록 완료');
+    if (!msgs.has(data)) await loadAll();
+    renderAll();
+  }
+
+  document.addEventListener('click', async e => {
+    const b = e.target.closest('[data-like]'); if (!b) return;
+    const id = +b.dataset.like; const on = !liked.has(id);
+    on ? liked.add(id) : liked.delete(id); store.set('pbs_live_liked', [...liked]);
+    const m = msgs.get(id); if (m) { m.likes = Math.max(0, m.likes + (on?1:-1)); renderQ(); }
+    await sb.rpc('live_like', { p_id: id, p_delta: on ? 1 : -1 });
+  });
+
+  if (urlCode && nick) enter();
+})();
+</script>
+</body>
+</html>
