@@ -785,6 +785,112 @@ html.intro-on:not(.intro-play) .rib{opacity:0}
  .book.new .bk-btns .btn{width:100%!important;padding:13px 14px!important;white-space:normal}
 }
 
+/* ═══ PBS 디자인 v2 (2026-11) — 검정=무대 · 흰색=읽는 곳 · 핑크=누르는 곳 ═══ */
+/* 띠 배너: 짙은 회색 + 누르는 문구만 핑크 */
+html[lang="ko"] .rib{background:#1C1720;border-bottom:1px solid rgba(255,255,255,.08)}
+.rib:hover{background:#251E2A}
+.rib .rib-go{color:#FF5BAE;text-decoration:none;font-weight:700}
+/* 금색 제거 → 차분한 회색 */
+:root{--gold:rgba(244,241,246,.6)}
+.kicker::before{background:currentColor;opacity:.5}
+/* 첫 화면: 무지개 고리 → 대표 사진 + 신간 */
+.hero h1 em{background:none;color:var(--mag);-webkit-text-fill-color:currentColor}
+.hero .mini{display:none}
+.hero .sub{color:rgba(244,241,246,.82);font-size:clamp(16px,1.25vw,19px)}
+html[data-theme="light"] .hero .sub{color:var(--ink-mute)}
+.hero .dl>.btn.line{background:none;border:0;border-bottom:1px solid currentColor;border-radius:0;padding:4px 2px;margin-left:14px}
+.hero .dl>.btn.line svg{display:none}
+.hero .dl>.btn.line::after{content:"→";margin-left:2px}
+.stat b{font-size:28px}.stat span{font-size:13px;color:var(--ink-mute)}
+.visual.v2pic{top:auto!important;bottom:0;right:max(var(--gut),calc((100vw - 1440px)/2 + var(--gut)))!important;width:auto!important;height:calc(100% - 130px);max-height:760px;aspect-ratio:auto;transform:none!important;opacity:1!important;display:flex;align-items:flex-end;justify-content:center;pointer-events:auto}
+.visual.v2pic::before{content:"";position:absolute;left:50%;top:45%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(229,0,127,.22),rgba(110,59,214,.10) 55%,transparent 75%);z-index:-1}
+.visual.v2pic::after{display:none!important}
+.v2pic .me{height:100%;width:auto;display:block;filter:drop-shadow(0 30px 60px rgba(0,0,0,.45))}
+.v2pic .pname{position:absolute;right:-8px;top:42%;text-align:right;color:var(--ink)}
+.v2pic .pname b{display:block;font-size:20px;font-weight:800}
+.v2pic .pname span{font-size:11px;letter-spacing:.2em;color:var(--ink-mute)}
+.v2pic .bookcard{position:absolute;left:-40px;bottom:110px;display:flex;align-items:center;gap:12px;background:#fff;color:#16121C;padding:10px 16px 10px 10px;border-radius:14px;box-shadow:0 20px 50px -14px rgba(0,0,0,.55);transition:transform .2s}
+.v2pic .bookcard:hover{transform:translateY(-3px)}
+.v2pic .bookcard img{width:44px;height:auto;border-radius:3px;box-shadow:0 6px 14px -6px rgba(0,0,0,.4)}
+.v2pic .bookcard small{display:block;font-size:11px;font-weight:800;color:var(--mag);letter-spacing:.06em}
+.v2pic .bookcard strong{font-size:14px;font-weight:800;white-space:nowrap}
+@media (max-width:900px){
+ .hero .wrap{padding-top:330px!important}
+ .visual.v2pic{left:0!important;right:0!important;top:0!important;bottom:auto!important;width:100%!important;height:320px;max-height:none;overflow:hidden;align-items:flex-start}
+ .visual.v2pic::before{top:60%;width:120%}
+ .v2pic:after{content:"";display:block!important;position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(to top,var(--bg),transparent)}
+ .v2pic .me{height:auto;width:250px;margin:24px 0 0 80px}
+ .v2pic .pname{right:auto;left:22px;top:96px;text-align:left;z-index:2}
+ .v2pic .pname b{font-size:18px}
+ .v2pic .bookcard{left:20px;bottom:30px;z-index:2;padding:8px 12px 8px 8px}
+ .v2pic .bookcard img{width:38px}
+ .v2pic .bookcard strong{font-size:13.5px}
+ .hero .dl>.btn.line{margin:6px 0 0;justify-content:flex-start!important;width:auto!important;align-self:flex-start;padding:4px 2px!important}
+ .cta-row .dl{width:auto!important}
+ .stat b{font-size:22px}
+}
+/* 읽는 구역 = 흰색 계열 (검정은 첫 화면·공개교육 띠·영상·푸터만) */
+.band,.events,.doors,.method,.founder,.voices,.site,.faq,.contact{
+ --ink:#17131B;--ink-mute:#4B4651;--ink-faint:#6F6975;--line:rgba(23,19,27,.10);--gold:#6F6975;color:var(--ink)}
+.band,.doors,.founder,.site,.contact{--bg:#FFFFFF;--bg2:#F7F3F5;background:#FFFFFF!important}
+.events,.method,.voices,.faq{--bg:#FFFFFF;--bg2:#FAF7F5;background:#FAF7F5!important}
+.events{--bg2:#FFFFFF}
+.contact::before{opacity:.35}
+.door,.vc,.cc,.inq,.shop{border-color:var(--line)}
+.door,.vc,.cc{box-shadow:0 1px 0 rgba(23,19,27,.02)}
+.door:hover,.cc:hover{box-shadow:0 22px 40px -26px rgba(40,10,30,.35)}
+/* 핑크 줄이기: 번호·연도·별점·태그·따옴표는 무채색 */
+.door .no{color:var(--ink-faint)}
+.door:hover .go{background:var(--ink);border-color:var(--ink);color:#fff}
+.yr b{color:var(--ink)}
+.vc::before{color:rgba(23,19,27,.08)}
+.vc .tag{background:#F1ECEF;color:var(--ink-mute)}
+.ev-list b{color:var(--ink)}
+.fq-l summary::after{color:var(--ink-mute)}
+.fq-l details a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.shop .go{color:var(--ink)}
+.f-name span,.cc small,.mv small,.shop small{color:var(--ink-faint)}
+.f-cta .tl{border-bottom-color:var(--ink)}
+.voices .st{color:#17131B!important}
+/* 글씨 키우기 */
+.founder p,.events p,.method p,.doors p,.voices p,.faq p,.contact p{font-size:max(1em,15.5px)}
+.chips a{border-color:rgba(23,19,27,.18)}
+.inq input,.inq textarea{border-color:rgba(23,19,27,.16)}
+
+/* 문의 구역 v2.1 — 입력칸이 바로 보이게 */
+.contact .cc{background:#FAF7F5;border:1px solid #E6DFE3}
+.contact .cc small{color:#6F6975;font-size:12px!important}
+.contact .cc h3{font-size:22px;font-weight:800}
+.contact .cc p{color:#4B4651}
+.contact .cc .go{background:#fff;border:1.5px solid #17131B;color:#17131B}
+.contact .cc:hover .go{background:#17131B;color:#fff;border-color:#17131B}
+.contact .cc.main .go{background:var(--mag);border-color:var(--mag);color:#fff}
+.contact .inq{margin-top:40px;padding:44px 48px;background:#FAF7F5;border:1px solid #E6DFE3;border-radius:24px;display:grid;grid-template-columns:minmax(220px,300px) 1fr;column-gap:56px;align-items:start}
+.contact .inq>*{grid-column:2}
+.contact .inq-hd{grid-column:1;grid-row:1/span 4;display:block;margin:0;position:sticky;top:120px}
+.contact .inq-hd h3{font-size:28px;line-height:1.3;letter-spacing:-.02em}
+.contact .inq-hd p{margin-top:12px;font-size:16px;line-height:1.7;color:#4B4651}
+.contact .inq-hd::after{content:"";display:block;width:40px;height:3px;background:var(--mag);margin-top:22px;border-radius:2px}
+.contact .inq-g{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 16px}
+.contact .inq-g span{font-size:14.5px!important;font-weight:700;color:#17131B}
+.contact .inq input,.contact .inq textarea{background:#fff;border:1.5px solid #D3CBD0;border-radius:12px;padding:15px 16px;font-size:16px;color:#17131B;transition:border-color .15s,box-shadow .15s}
+.contact .inq input:hover,.contact .inq textarea:hover{border-color:#B3A9AF}
+.contact .inq input:focus,.contact .inq textarea:focus{border-color:var(--mag);box-shadow:0 0 0 4px rgba(229,0,127,.12)}
+.contact .inq textarea{min-height:140px}
+.contact .inq .agree{color:#4B4651;font-size:14.5px;margin:22px 0 20px}
+.contact .inq .btn{justify-self:start;padding:18px 44px;font-size:17px}
+.contact .c-direct{margin-top:48px}
+.contact .c-direct a,.contact .c-direct em{background:#fff;border-color:#D3CBD0;color:#17131B}
+@media (max-width:860px){
+ .contact .inq{display:block;padding:26px 20px}
+ .contact .inq-hd{position:static;margin-bottom:22px}
+ .contact .inq-hd h3{font-size:22px}
+ .contact .inq-hd p{font-size:15px;margin-top:6px}
+ .contact .inq-hd::after{margin-top:14px}
+ .contact .inq-g{grid-template-columns:1fr}
+ .contact .inq .btn{width:100%;justify-content:center}
+}
+
 </style>
 </head>
 <body>
@@ -819,7 +925,7 @@ html.intro-on:not(.intro-play) .rib{opacity:0}
 <main>
 <!-- ① 표지 -->
 <section class="hero" id="home">
-  <div class="visual" aria-hidden="true"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="wheel"></div></div>
+  <div class="visual v2pic"><img class="me" src="/assets/home/founder-cutout.webp" alt="PBS COLOR LAB 최해숙 대표" fetchpriority="high"><div class="pname" aria-hidden="true"><b>최해숙</b><span>MARIA CHOI</span></div><a class="bookcard" href="#about"><img src="/assets/home/book-color.jpg" alt="" width="48" height="67"><span><small>NEW 신간</small><strong>《나는 왜 이 컬러에 끌릴까?》</strong></span></a></div>
   <div class="wrap">
     <div class="kicker"><span data-t="h.k">Personal Color Company</span></div>
     <h1><span data-t="h.t"><span class="ln"><em>퍼스널컬러</em> 전문기업</span><span class="ln">PBS COLOR LAB</span></span></h1>
