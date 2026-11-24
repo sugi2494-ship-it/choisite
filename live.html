@@ -278,27 +278,35 @@ button{cursor:pointer;border:0;background:none}
     renderAll();
   }
 
+  let channels = [];
   function subscribe(){
-    if (channel) sb.removeChannel(channel);
-    channel = sb.channel('live-' + room.id)
-      .on('postgres_changes', {event:'*', schema:'public', table:'live_messages', filter:'room_id=eq.' + room.id}, p => {
-        if (p.eventType === 'DELETE') msgs.delete(p.old.id);
-        else { const isNew = !msgs.has(p.new.id); msgs.set(p.new.id, p.new); if (isNew) p.new._new = true; }
+    channels.forEach(c => sb.removeChannel(c)); channels = [];
+    const mine_ = r => r && r.room_id === room.id;
+    channels.push(sb.channel('lm-' + room.id)
+      .on('postgres_changes', {event:'*', schema:'public', table:'live_messages'}, p => {
+        if (p.eventType === 'DELETE') { if (msgs.delete(p.old.id)) renderAll(); return; }
+        if (!mine_(p.new)) return;
+        const isNew = !msgs.has(p.new.id); msgs.set(p.new.id, p.new); if (isNew) p.new._new = true;
         renderAll();
-      })
-      .on('postgres_changes', {event:'DELETE', schema:'public', table:'live_messages'}, p => { if (msgs.delete(p.old.id)) renderAll(); })
-      .on('postgres_changes', {event:'*', schema:'public', table:'live_materials', filter:'room_id=eq.' + room.id}, () => reloadMats())
-      .on('postgres_changes', {event:'DELETE', schema:'public', table:'live_materials'}, () => reloadMats())
-      .on('postgres_changes', {event:'UPDATE', schema:'public', table:'live_rooms', filter:'id=eq.' + room.id}, p => { Object.assign(room, p.new); applyRoom(); renderAll(); })
-      .subscribe();
+      }).subscribe());
+    channels.push(sb.channel('la-' + room.id)
+      .on('postgres_changes', {event:'*', schema:'public', table:'live_materials'}, () => reloadMats()).subscribe());
+    channels.push(sb.channel('lr-' + room.id)
+      .on('postgres_changes', {event:'UPDATE', schema:'public', table:'live_rooms'}, p => {
+        if (p.new && p.new.id === room.id) { Object.assign(room, p.new); applyRoom(); renderAll(); }
+      }).subscribe());
+  }
+  async function refreshRoom(){
+    const { data } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id').eq('id', room.id).maybeSingle();
+    if (data) { Object.assign(room, data); applyRoom(); }
   }
   async function reloadMats(){
     const { data } = await sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at', {ascending:false});
     mats = data || []; renderMats(); badges();
   }
   // 연결이 끊겨도 30초마다 맞춤
-  setInterval(() => { if (room && document.visibilityState === 'visible') loadAll(); }, 30000);
-  document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') loadAll(); });
+  setInterval(() => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); } }, 20000);
+  document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); subscribe(); } });
 
   function renderAll(){ renderQ(); renderC(); renderMats(); renderSpot(); badges(); }
 
