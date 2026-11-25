@@ -124,7 +124,7 @@ button{cursor:pointer;border:0;background:none}
 .field span{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:6px}
 .field input{width:100%;height:54px;border:1.5px solid var(--line);border-radius:14px;padding:0 16px;font-size:17px;outline:none;background:#fff}
 .field input:focus{border-color:var(--pbs)}
-.field input.code{text-transform:uppercase;letter-spacing:.3em;font-weight:800;text-align:center;font-size:22px}
+.field input.code{text-transform:uppercase;letter-spacing:.18em;font-weight:800;text-align:center;font-size:22px}
 .btn{width:100%;height:56px;border-radius:14px;background:var(--pbs);color:#fff;font-size:17px;font-weight:800;margin-top:6px}
 .btn:active{background:var(--pbs-deep)}
 .err{min-height:22px;color:#D72C2C;font-size:13.5px;font-weight:600;margin-top:10px;text-align:center}
@@ -149,7 +149,7 @@ button{cursor:pointer;border:0;background:none}
     <p class="sub">질문 · 채팅 · 강의 자료</p>
     <label class="field" id="codeField">
       <span>입장 코드</span>
-      <input class="code" id="codeIn" maxlength="5" autocomplete="off" autocapitalize="characters" placeholder="ABCDE" />
+      <input class="code" id="codeIn" maxlength="10" inputmode="numeric" autocomplete="off" autocapitalize="characters" placeholder="20271004" />
     </label>
     <label class="field">
       <span>닉네임</span>
@@ -232,10 +232,10 @@ button{cursor:pointer;border:0;background:none}
   if (urlCode) sb.from('live_rooms').select('title').eq('code', urlCode).maybeSingle().then(({data}) => { if (data) $('#gateTitle').textContent = data.title; });
 
   async function enter(){
-    const code = $('#codeIn').value.toUpperCase().trim();
+    const code = $('#codeIn').value.toUpperCase().replace(/\s+/g,'');
     const n = $('#nickIn').value.trim();
     $('#gateErr').textContent = '';
-    if (code.length < 5) return $('#gateErr').textContent = '입장 코드 5자리 확인';
+    if (code.length < 4) return $('#gateErr').textContent = '입장 코드 확인';
     if (!n) return $('#gateErr').textContent = '닉네임 입력';
     $('#enterBtn').disabled = true;
     const { data, error } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id').eq('code', code).maybeSingle();

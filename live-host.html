@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#16121B" />
+<title>강의 진행 화면 · PBS COLOR LAB</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="/assets/pbs-logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --ink:#111; --ink2:#3D3D3D; --ink3:#6E6E6E; --ink4:#9A9A9A;
+  --line:#E7E7E7; --bg2:#FAFAFA; --bg3:#F3F3F3;
+  --pbs:#E5007F; --pbs-deep:#C2006A; --pbs-hot:#FF2D9B; --tint:#FFEEF7;
+  --stage:#16121B; --stage2:#211A28; --ok:#0E9F6E;
+  --side:380px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  color:var(--ink);font-size:15px;line-height:1.55;word-break:keep-all;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased;letter-spacing:-.012em;background:var(--stage)}
+button,input,textarea,select{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--pbs);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* 로그인 / 방 목록 */
+.screen{position:fixed;inset:0;overflow:auto;background:var(--bg2);display:flex;align-items:flex-start;justify-content:center;padding:60px 20px}
+.card{width:100%;max-width:560px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px}
+.card .logo{height:40px;margin-bottom:22px}
+.eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.16em;color:var(--pbs);margin-bottom:6px}
+.card h1{font-size:26px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px}
+.card .sub{color:var(--ink3);margin-bottom:24px}
+.in{width:100%;height:50px;border:1.5px solid var(--line);border-radius:12px;padding:0 16px;font-size:16px;outline:none;background:#fff}
+.in:focus{border-color:var(--pbs)}
+.btn{height:50px;padding:0 22px;border-radius:12px;background:var(--pbs);color:#fff;font-weight:800;font-size:15.5px;white-space:nowrap}
+.btn:hover{background:var(--pbs-deep)}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.row{display:flex;gap:8px}
+.err{min-height:20px;color:#D72C2C;font-size:13.5px;font-weight:600;margin-top:10px}
+.rooms{margin-top:26px;border-top:1px solid var(--line)}
+.room-item{display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--line)}
+.room-item .t{flex:1;min-width:0}
+.room-item b{display:block;font-size:16px}
+.room-item small{color:var(--ink3);font-size:13px}
+.room-item .code{font-weight:800;letter-spacing:.12em;color:var(--pbs)}
+.pill{font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:8px;background:var(--bg3);color:var(--ink3);margin-left:6px}
+.pill.on{background:var(--tint);color:var(--pbs)}
+.link-s{font-size:13px;color:var(--ink3);text-decoration:underline;text-underline-offset:3px;margin-top:18px;display:inline-block}
+
+/* 진행 화면 */
+.host{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:52px minmax(0,1fr)}
+.host.no-side{grid-template-columns:minmax(0,1fr) 0}
+.bar{grid-column:1/3;display:flex;align-items:center;gap:10px;padding:0 14px;background:#0E0B12;color:#fff;border-bottom:1px solid #2A2232}
+.bar img{height:28px;background:#fff;border-radius:7px;padding:3px 6px}
+.bar .ttl{font-weight:800;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
+.bar .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--pbs-hot)}
+.bar .live i{width:8px;height:8px;border-radius:50%;background:var(--pbs-hot);animation:pulse 1.6s infinite}
+.bar .live.off{color:#888}.bar .live.off i{background:#888;animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,45,155,.55)}70%{box-shadow:0 0 0 8px rgba(255,45,155,0)}100%{box-shadow:0 0 0 0 rgba(255,45,155,0)}}
+.bar .code{font-weight:800;letter-spacing:.08em;font-size:14px;color:#fff;background:#2A2232;padding:4px 10px;border-radius:8px}
+.bar .sp{flex:1}
+.tb{height:34px;padding:0 12px;border-radius:9px;background:#2A2232;color:#EDE6F2;font-size:13px;font-weight:700;white-space:nowrap}
+.tb:hover{background:#3A2F45}
+.tb.pink{background:var(--pbs);color:#fff}.tb.pink:hover{background:var(--pbs-deep)}
+.tb.on{background:#fff;color:var(--ink)}
+
+.stage{position:relative;background:var(--stage);display:flex;flex-direction:column;min-width:0;min-height:0}
+.canvas-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+#slide{max-width:100%;max-height:100%;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.45);border-radius:4px}
+.nav-zone{position:absolute;top:0;bottom:0;width:30%;cursor:pointer}
+.nav-zone.l{left:0}.nav-zone.r{right:0}
+.slide-foot{height:44px;display:flex;align-items:center;justify-content:center;gap:10px;color:#BDB3C6;font-size:13px;font-weight:700}
+.slide-foot button{width:34px;height:30px;border-radius:8px;background:#2A2232;color:#fff;font-size:16px}
+.slide-foot button:hover{background:#3A2F45}
+.empty-stage{color:#CFC5D8;text-align:center;max-width:460px}
+.empty-stage b{display:block;font-size:22px;color:#fff;margin-bottom:8px}
+.empty-stage p{font-size:14.5px;line-height:1.7;margin-bottom:20px}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:700;background:rgba(22,18,27,.7)}
+
+/* QR 크게 */
+.qr-full{position:absolute;inset:0;z-index:5;background:#fff;display:flex;align-items:center;justify-content:center;gap:6vw;padding:4vw}
+.qr-full .qrbox{width:min(42vh,36vw);aspect-ratio:1}
+.qr-full .qrbox svg{width:100%;height:100%}
+.qr-full h2{font-size:clamp(28px,3.4vw,54px);font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-bottom:18px}
+.qr-full .eyebrow{font-size:clamp(13px,1.1vw,17px)}
+.qr-full .step{font-size:clamp(16px,1.5vw,24px);color:var(--ink2);margin-bottom:8px}
+.qr-full .bigcode{display:inline-block;margin-top:18px;font-size:clamp(28px,3vw,48px);font-weight:900;letter-spacing:.1em;color:var(--pbs)}
+.qr-full .url{font-size:clamp(13px,1.1vw,17px);color:var(--ink3);margin-top:6px}
+.qr-full .close{position:absolute;top:16px;right:16px}
+
+/* 오른쪽 소통 칸 */
+.side{background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-left:1px solid #2A2232}
+.host.no-side .side{display:none}
+.spot{margin:12px 12px 0;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,var(--pbs),var(--pbs-hot));color:#fff;position:relative}
+.spot small{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;opacity:.9}
+.spot p{font-size:16px;font-weight:700;line-height:1.45;margin-top:3px;padding-right:44px}
+.spot em{display:block;font-style:normal;font-size:12px;opacity:.85;margin-top:4px}
+.spot button{position:absolute;top:10px;right:10px;font-size:12px;font-weight:800;color:var(--pbs);background:#fff;border-radius:8px;padding:4px 8px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);margin-top:8px}
+.tab{padding:10px 0 9px;font-size:14.5px;font-weight:700;color:var(--ink3);border-bottom:2.5px solid transparent}
+.tab.on{color:var(--ink);border-bottom-color:var(--pbs)}
+.tab span{font-size:12px;color:var(--pbs);margin-left:3px}
+.list{flex:1;min-height:0;overflow:auto;padding:12px}
+.q{border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px;background:#fff}
+.q.spotted{border-color:var(--pbs);background:var(--tint)}
+.q.done{opacity:.55}
+.q.fresh{animation:pop .6s ease}
+@keyframes pop{0%{background:#FFF3B0}100%{background:#fff}}
+.q-meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3)}
+.q-meta b{color:var(--ink2)}
+.q-meta .likes{margin-left:auto;color:var(--pbs);font-weight:800}
+.q-text{font-size:15px;line-height:1.5;margin:3px 0 8px;white-space:pre-wrap}
+.acts{display:flex;gap:6px}
+.acts button{font-size:12px;font-weight:700;padding:4px 9px;border-radius:7px;border:1px solid var(--line);color:var(--ink2)}
+.acts button:hover{border-color:var(--ink)}
+.acts .p{border-color:var(--pbs);color:var(--pbs)}
+.acts .del{margin-left:auto;color:var(--ink4)}
+.msg{margin-bottom:9px}
+.msg .who{font-size:12px;color:var(--ink3);font-weight:600}
+.msg .bub{display:inline-block;max-width:100%;margin-top:2px;padding:7px 11px;border-radius:12px 12px 12px 4px;background:var(--bg3);font-size:14.5px;white-space:pre-wrap}
+.msg.host .who{color:var(--pbs);font-weight:800}
+.msg.host .bub{background:var(--tint)}
+.msg .x{font-size:11px;color:var(--ink4);margin-left:6px;visibility:hidden}
+.msg:hover .x{visibility:visible}
+.mat{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.mat a{flex:1;min-width:0;font-weight:700;font-size:14.5px;color:inherit;text-decoration:none}
+.mat a:hover{color:var(--pbs)}
+.mat button{font-size:12px;color:var(--ink4)}
+.addbox{border:1.5px dashed var(--line);border-radius:12px;padding:12px;margin-bottom:12px;display:grid;gap:8px}
+.addbox .in{height:40px;font-size:14px}
+.addbox .btn{height:40px;font-size:14px}
+.small-btn{height:40px;border-radius:10px;border:1.5px solid var(--line);font-weight:700;font-size:13.5px;background:#fff}
+.small-btn:hover{border-color:var(--pbs);color:var(--pbs)}
+.empty{padding:30px 6px;text-align:center;color:var(--ink4);font-size:14px}
+.compose{border-top:1px solid var(--line);padding:10px;display:flex;gap:6px}
+.compose input{flex:1;height:42px;border:1.5px solid var(--line);border-radius:10px;padding:0 12px;outline:none}
+.compose input:focus{border-color:var(--pbs)}
+.compose button{height:42px;padding:0 14px;border-radius:10px;background:var(--pbs);color:#fff;font-weight:800}
+.side-foot{display:flex;align-items:center;gap:12px;padding:10px 12px;border-top:1px solid var(--line);background:var(--bg2)}
+.side-foot .qr{width:76px;height:76px;flex:none;background:#fff;border:1px solid var(--line);border-radius:8px;padding:4px;cursor:pointer}
+.side-foot .qr svg{width:100%;height:100%}
+.side-foot b{display:block;font-size:13px}
+.side-foot .c{font-size:20px;font-weight:900;letter-spacing:.08em;color:var(--pbs);line-height:1.2}
+.side-foot small{color:var(--ink3);font-size:11.5px}
+.sw{display:flex;gap:6px;margin-top:4px}
+.sw button{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:7px;border:1px solid var(--line);background:#fff}
+.sw button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:24px;font-size:14px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.host:fullscreen{background:var(--stage)}
+@media (max-width:900px){ :root{--side:320px} .bar .ttl{display:none} }
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<section class="screen" id="login">
+  <div class="card">
+    <img class="logo" src="/assets/pbs-logo.png" alt="PBS COLOR LAB" />
+    <p class="eyebrow">LIVE CLASS · HOST</p>
+    <h1>강의 진행 화면</h1>
+    <p class="sub">대표님 전용 · 비밀번호 입력</p>
+    <div class="row">
+      <input class="in" id="pwIn" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" />
+      <button class="btn" id="loginBtn">들어가기</button>
+    </div>
+    <p class="err" id="loginErr"></p>
+  </div>
+</section>
+
+<!-- 방 목록 -->
+<section class="screen" id="lobby" hidden>
+  <div class="card">
+    <img class="logo" src="/assets/pbs-logo.png" alt="PBS COLOR LAB" />
+    <p class="eyebrow">LIVE CLASS · HOST</p>
+    <h1>강의방</h1>
+    <p class="sub">새 강의방 만들기 또는 기존 방 열기</p>
+    <div class="row">
+      <input class="in" id="titleIn" maxlength="80" placeholder="강의 제목 (예: 컬러 콘서트)" />
+      <button class="btn" id="createBtn">만들기</button>
+    </div>
+    <p class="err" id="lobbyErr"></p>
+    <div class="rooms" id="roomList"></div>
+    <button class="link-s" id="pwChangeBtn">비밀번호 변경</button>
+    <button class="link-s" id="logoutBtn" style="margin-left:14px">로그아웃</button>
+  </div>
+</section>
+
+<!-- 진행 화면 -->
+<div class="host" id="host" hidden>
+  <header class="bar">
+    <img src="/assets/pbs-logo.png" alt="" />
+    <span class="ttl" id="hTitle"></span>
+    <span class="live" id="hLive"><i></i><span>LIVE</span></span>
+    <span class="code" id="hCode"></span>
+    <span class="sp"></span>
+    <button class="tb" id="pdfBtn">PDF 올리기</button>
+    <button class="tb pink" id="qrBtn">QR 크게</button>
+    <button class="tb" id="sideBtn">소통 칸 숨기기</button>
+    <button class="tb" id="fsBtn">전체화면</button>
+    <button class="tb" id="backBtn">방 목록</button>
+    <input type="file" id="pdfFile" accept="application/pdf,.pdf" hidden />
+  </header>
+
+  <main class="stage">
+    <div class="canvas-wrap" id="canvasWrap">
+      <div class="empty-stage" id="emptyStage">
+        <b>강의 PDF 올리기</b>
+        <p>PPT에서 '다른 이름으로 저장 → PDF' 후 올리기<br>방향키 · 스페이스 · 프레젠터 리모컨으로 넘기기</p>
+        <button class="btn" id="pdfBtn2">PDF 선택</button>
+      </div>
+      <canvas id="slide" hidden></canvas>
+      <div class="nav-zone l" id="navL" hidden></div>
+      <div class="nav-zone r" id="navR" hidden></div>
+      <div class="loading" id="loading" hidden>PDF 불러오는 중</div>
+    </div>
+    <div class="slide-foot" id="slideFoot" hidden>
+      <button id="prevBtn" aria-label="이전">‹</button>
+      <span id="pageNo">1 / 1</span>
+      <button id="nextBtn" aria-label="다음">›</button>
+    </div>
+
+    <div class="qr-full" id="qrFull" hidden>
+      <button class="tb close" id="qrClose" style="background:var(--ink)">닫기</button>
+      <div class="qrbox" id="qrBig"></div>
+      <div>
+        <p class="eyebrow">LIVE CLASS</p>
+        <h2 id="qrTitle"></h2>
+        <p class="step">① 휴대폰 카메라로 QR 찍기</p>
+        <p class="step">② 닉네임 입력</p>
+        <p class="step">③ 질문 · 채팅 · 강의 자료</p>
+        <span class="bigcode" id="qrCode"></span>
+        <p class="url">pbscolor.com/live.html · 입장 코드</p>
+      </div>
+    </div>
+  </main>
+
+  <aside class="side">
+    <div class="spot" id="spot" hidden>
+      <small>지금 답변 중</small><p id="spotText"></p><em id="spotWho"></em>
+      <button id="spotOff">내리기</button>
+    </div>
+    <nav class="tabs">
+      <button class="tab on" data-tab="q">질문<span id="cq"></span></button>
+      <button class="tab" data-tab="c">채팅<span id="cc"></span></button>
+      <button class="tab" data-tab="m">자료실<span id="cm"></span></button>
+    </nav>
+    <div class="list" id="listQ"></div>
+    <div class="list" id="listC" hidden></div>
+    <div class="list" id="listM" hidden>
+      <div class="addbox">
+        <button class="small-btn" id="matFileBtn">파일 올리기 (PDF · 이미지 · 문서, 50MB까지)</button>
+        <input type="file" id="matFile" hidden />
+        <input class="in" id="matTitle" placeholder="링크 제목" />
+        <div class="row"><input class="in" id="matUrl" placeholder="https:// 링크" /><button class="btn" id="matAdd">추가</button></div>
+        <button class="small-btn" id="shareSlides">지금 강의 PDF를 자료실에 공유</button>
+      </div>
+      <div id="matList"></div>
+    </div>
+    <div class="compose" id="compose" hidden>
+      <input id="sayIn" maxlength="500" placeholder="강사 메시지 보내기" />
+      <button id="sayBtn">보내기</button>
+    </div>
+    <div class="side-foot">
+      <div class="qr" id="qrSmall" title="QR 크게"></div>
+      <div>
+        <b>입장 코드</b>
+        <div class="c" id="sCode"></div>
+        <div class="sw">
+          <button id="openSw">강의 진행 중</button>
+          <button id="chatSw">채팅 켜짐</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script>
+(() => {
+  const SB_URL = 'https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+  const AUD_URL = 'https://www.pbscolor.com/live.html?r=';
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+  if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const ss = { get(k){ try{return sessionStorage.getItem(k)}catch(e){return null} }, set(k,v){ try{ v==null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v)}catch(e){} } };
+  const ls = { get(k,d){ try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d} }, set(k,v){ try{localStorage.setItem(k,JSON.stringify(v))}catch(e){} } };
+  const toast = t => { const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),2000); };
+  const hm = ts => new Date(ts).toLocaleTimeString('ko-KR',{hour:'numeric',minute:'2-digit'});
+  const show = id => ['login','lobby','host'].forEach(x => $('#'+x).hidden = x !== id);
+
+  let pw = ss.get('pbs_live_pw') || '';
+  let room = null, msgs = new Map(), mats = [], tab = 'q', channels = [], token = null;
+  let pdf = null, page = 1, rendering = false, pendingPage = null;
+
+  /* ── 로그인 ── */
+  async function login(p){
+    p = (p||'').replace(/\s+/g,'');
+    const { data, error } = await sb.rpc('live_host_rooms', { p_pw: p });
+    if (error) { $('#loginErr').textContent = '비밀번호 확인'; ss.set('pbs_live_pw', null); show('login'); return false; }
+    pw = p; ss.set('pbs_live_pw', p);
+    renderRooms(data || []);
+    const want = new URLSearchParams(location.search).get('r');
+    const r = want && (data||[]).find(x => x.code === want.toUpperCase());
+    if (r) openRoom(r); else show('lobby');
+    return true;
+  }
+  $('#loginBtn').onclick = () => login($('#pwIn').value);
+  $('#pwIn').addEventListener('keydown', e => { if (e.key==='Enter') login($('#pwIn').value); });
+
+  function renderRooms(list){
+    $('#roomList').innerHTML = list.length ? list.map(r => `
+      <div class="room-item">
+        <div class="t"><b>${esc(r.title)}<span class="pill ${r.is_open?'on':''}">${r.is_open?'진행 중':'종료'}</span></b>
+        <small><span class="code">${r.code}</span> · ${new Date(r.created_at).toLocaleDateString('ko-KR')}</small></div>
+        <button class="btn ghost" data-code="${r.id}" style="padding:0 14px">코드 변경</button><button class="btn ghost" data-open="${r.id}">열기</button>
+      </div>`).join('') : '<p class="empty">아직 만든 강의방 없음</p>';
+    $('#roomList').querySelectorAll('[data-open]').forEach(b => b.onclick = () => openRoom(list.find(x => x.id === b.dataset.open)));
+    $('#roomList').querySelectorAll('[data-code]').forEach(b => b.onclick = async () => {
+      const r = list.find(x => x.id === b.dataset.code);
+      const n = prompt('새 입장 코드 (영문·숫자 4~10자, 예: 20271004)', r.code); if (!n) return;
+      const { error } = await sb.rpc('live_host_room', { p_pw: pw, p_room: r.id, p_field: 'code', p_value: n });
+      if (error) return toast(/이미/.test(error.message) ? '이미 쓰는 코드' : '영문·숫자 4~10자로 입력');
+      toast('입장 코드 변경 완료 · QR도 새 코드로 바뀜'); refreshLobby();
+    });
+  }
+  async function refreshLobby(){ const { data } = await sb.rpc('live_host_rooms', { p_pw: pw }); renderRooms(data||[]); }
+
+  $('#createBtn').onclick = async () => {
+    const t = $('#titleIn').value.trim(); if (!t) return $('#lobbyErr').textContent = '강의 제목 입력';
+    const { data, error } = await sb.rpc('live_host_create', { p_pw: pw, p_title: t });
+    if (error) return $('#lobbyErr').textContent = '만들기 실패 · 다시 시도';
+    $('#titleIn').value = ''; openRoom(Array.isArray(data) ? data[0] : data);
+  };
+  $('#titleIn').addEventListener('keydown', e => { if (e.key==='Enter') $('#createBtn').click(); });
+  $('#logoutBtn').onclick = () => { ss.set('pbs_live_pw', null); pw=''; show('login'); };
+  $('#pwChangeBtn').onclick = async () => {
+    const n = prompt('새 비밀번호 (6자 이상)'); if (!n) return;
+    const v = n.replace(/\s+/g,'');
+    const { error } = await sb.rpc('live_host_change_pw', { p_pw: pw, p_new: v });
+    if (error) return toast('변경 실패 · 6자 이상');
+    pw = v; ss.set('pbs_live_pw', v); toast('비밀번호 변경 완료');
+  };
+
+  /* ── 방 열기 ── */
+  async function openRoom(r){
+    room = r; token = null;
+    history.replaceState(null, '', '?r=' + r.code);
+    show('host');
+    applyRoom(); drawQR();
+    await loadAll(); subscribe();
+    const { data } = await sb.from('live_rooms').select('*').eq('id', room.id).maybeSingle();
+    if (data) { Object.assign(room, data); applyRoom(); }
+    if (room.slides_url) loadPdf(room.slides_url, ls.get('pbs_live_page_' + room.id, 1));
+    else resetStage();
+  }
+  $('#backBtn').onclick = () => { channels.forEach(c => sb.removeChannel(c)); channels=[]; room=null; history.replaceState(null,'','?'); refreshLobby(); show('lobby'); };
+
+  function applyRoom(){
+    $('#hTitle').textContent = room.title; $('#qrTitle').innerHTML = room.title.split(' · ').map(esc).join('<br>');
+    document.title = room.title + ' · 진행 화면';
+    $('#hCode').textContent = room.code; $('#sCode').textContent = room.code; $('#qrCode').textContent = room.code;
+    $('#hLive').classList.toggle('off', !room.is_open); $('#hLive').lastChild.textContent = room.is_open ? 'LIVE' : '종료';
+    $('#openSw').textContent = room.is_open ? '강의 진행 중' : '강의 종료됨'; $('#openSw').classList.toggle('on', room.is_open);
+    $('#chatSw').textContent = room.chat_on ? '채팅 켜짐' : '채팅 꺼짐'; $('#chatSw').classList.toggle('on', room.chat_on);
+    renderSpot();
+  }
+  function drawQR(){
+    const q = qrcode(0, 'M'); q.addData(AUD_URL + room.code); q.make();
+    const svg = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+    $('#qrSmall').innerHTML = svg; $('#qrBig').innerHTML = svg;
+  }
+
+  async function hostRoom(field, value){
+    const { error } = await sb.rpc('live_host_room', { p_pw: pw, p_room: room.id, p_field: field, p_value: String(value) });
+    if (error) { toast('저장 실패'); return false; }
+    if (field==='spotlight') room.spotlight_id = value ? +value : null;
+    else if (field==='slides') room.slides_url = value || null;
+    else if (field==='slides_name') room.slides_name = value;
+    else room[field] = value === true || value === 'true' ? true : value === false || value === 'false' ? false : value;
+    applyRoom(); renderQ(); return true;
+  }
+  $('#openSw').onclick = () => { if (room.is_open && !confirm('강의를 종료할까요? 청중 입력창이 닫힘')) return; hostRoom('is_open', !room.is_open); };
+  $('#chatSw').onclick = () => hostRoom('chat_on', !room.chat_on);
+
+  /* ── 데이터 ── */
+  async function loadAll(){
+    const [m, a] = await Promise.all([
+      sb.from('live_messages').select('*').eq('room_id', room.id).order('created_at').limit(2000),
+      sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at', {ascending:false})
+    ]);
+    msgs = new Map((m.data||[]).map(x => [x.id, x])); mats = a.data || [];
+    renderAll();
+  }
+  function subscribe(){
+    channels.forEach(c => sb.removeChannel(c)); channels = [];
+    channels.push(sb.channel('hm-'+room.id).on('postgres_changes',{event:'*',schema:'public',table:'live_messages'}, p => {
+      if (p.eventType==='DELETE') { if (msgs.delete(p.old.id)) renderAll(); return; }
+      if (!room || p.new.room_id !== room.id) return;
+      const isNew = !msgs.has(p.new.id); msgs.set(p.new.id, p.new); if (isNew) p.new._fresh = true; renderAll();
+    }).subscribe());
+    channels.push(sb.channel('ha-'+room.id).on('postgres_changes',{event:'*',schema:'public',table:'live_materials'}, () => reloadMats()).subscribe());
+    channels.push(sb.channel('hr-'+room.id).on('postgres_changes',{event:'UPDATE',schema:'public',table:'live_rooms'}, p => {
+      if (room && p.new.id === room.id) { Object.assign(room, p.new); applyRoom(); renderQ(); }
+    }).subscribe());
+  }
+  async function reloadMats(){ const { data } = await sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at',{ascending:false}); mats = data||[]; renderM(); counts(); }
+  setInterval(() => { if (room && document.visibilityState==='visible') loadAll(); }, 20000);
+
+  function renderAll(){ renderQ(); renderC(); renderM(); renderSpot(); counts(); }
+  function counts(){
+    const v=[...msgs.values()];
+    $('#cq').textContent = v.filter(m=>m.kind==='question'&&!m.answered).length || '';
+    $('#cc').textContent = v.filter(m=>m.kind==='chat').length || '';
+    $('#cm').textContent = mats.length || '';
+  }
+  function renderSpot(){
+    const s = room && room.spotlight_id ? msgs.get(room.spotlight_id) : null;
+    $('#spot').hidden = !s;
+    if (s) { $('#spotText').textContent = s.body; $('#spotWho').textContent = '— ' + s.nickname; }
+  }
+  $('#spotOff').onclick = () => hostRoom('spotlight', '');
+
+  function renderQ(){
+    const list = [...msgs.values()].filter(m=>m.kind==='question')
+      .sort((a,b) => (a.answered-b.answered) || (b.likes-a.likes) || (new Date(a.created_at)-new Date(b.created_at)));
+    $('#listQ').innerHTML = list.length ? list.map(m => `
+      <div class="q${room.spotlight_id===m.id?' spotted':''}${m.answered?' done':''}${m._fresh?' fresh':''}">
+        <div class="q-meta"><b>${esc(m.nickname)}</b>${hm(m.created_at)}<span class="likes">♥ ${m.likes}</span></div>
+        <p class="q-text">${esc(m.body)}</p>
+        <div class="acts">
+          ${room.spotlight_id===m.id ? `<button data-a="unspot" data-id="${m.id}">내리기</button>` : `<button class="p" data-a="spot" data-id="${m.id}">화면에 띄우기</button>`}
+          <button data-a="answered" data-id="${m.id}">${m.answered?'답변 취소':'답변 완료'}</button>
+          <button class="del" data-a="delete" data-id="${m.id}">삭제</button>
+        </div>
+      </div>`).join('') : '<p class="empty">아직 질문 없음<br>QR 크게 띄워 참여 안내</p>';
+    list.forEach(m => delete m._fresh);
+  }
+  function renderC(){
+    const box = $('#listC'); const atBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 60;
+    const list = [...msgs.values()].filter(m=>m.kind==='chat').sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+    box.innerHTML = list.length ? list.map(m => `
+      <div class="msg${m.is_host?' host':''}"><span class="who">${esc(m.nickname)} · ${hm(m.created_at)}</span><button class="x" data-a="delete" data-id="${m.id}">삭제</button><br>
+      <span class="bub">${esc(m.body)}</span></div>`).join('') : '<p class="empty">채팅 없음</p>';
+    if (atBottom) box.scrollTop = box.scrollHeight;
+  }
+  function renderM(){
+    $('#matList').innerHTML = mats.length ? mats.map(a => `
+      <div class="mat"><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a><button data-mdel="${a.id}">삭제</button></div>`).join('')
+      : '<p class="empty">공유한 자료 없음</p>';
+  }
+
+  document.addEventListener('click', async e => {
+    const b = e.target.closest('[data-a]');
+    if (b) {
+      const id = +b.dataset.id, a = b.dataset.a;
+      if (a==='spot') return hostRoom('spotlight', id);
+      if (a==='unspot') return hostRoom('spotlight', '');
+      if (a==='delete' && !confirm('이 글을 삭제할까요?')) return;
+      const { error } = await sb.rpc('live_host_msg', { p_pw: pw, p_id: id, p_action: a });
+      if (error) return toast('처리 실패');
+      if (a==='delete') { msgs.delete(id); if (room.spotlight_id===id) hostRoom('spotlight',''); }
+      else { const m = msgs.get(id); if (m) m.answered = !m.answered; }
+      renderAll(); return;
+    }
+    const d = e.target.closest('[data-mdel]');
+    if (d) {
+      if (!confirm('자료실에서 내릴까요?')) return;
+      await sb.rpc('live_host_material', { p_pw: pw, p_room: room.id, p_title: '', p_url: '', p_delete_id: +d.dataset.mdel });
+      reloadMats();
+    }
+  });
+
+  document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+    tab = t.dataset.tab;
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x===t));
+    $('#listQ').hidden = tab!=='q'; $('#listC').hidden = tab!=='c'; $('#listM').hidden = tab!=='m';
+    $('#compose').hidden = tab!=='c';
+    if (tab==='c') { const b=$('#listC'); b.scrollTop=b.scrollHeight; }
+  });
+  async function say(){
+    const v = $('#sayIn').value.trim(); if (!v) return;
+    const { error } = await sb.rpc('live_host_say', { p_pw: pw, p_room: room.id, p_body: v });
+    if (error) return toast('전송 실패');
+    $('#sayIn').value = ''; loadAll();
+  }
+  $('#sayBtn').onclick = say;
+  $('#sayIn').addEventListener('keydown', e => { if (e.key==='Enter' && !e.isComposing) say(); });
+
+  /* ── 업로드 ── */
+  async function getToken(){
+    if (token) return token;
+    const { data, error } = await sb.rpc('live_host_upload_token', { p_pw: pw, p_room: room.id });
+    if (error || !data) throw new Error('token'); token = data; return token;
+  }
+  async function upload(file){
+    if (file.size > 50*1024*1024) throw new Error('size');
+    const t = await getToken();
+    const ext = (file.name.split('.').pop()||'bin').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,6) || 'bin';
+    const path = `${t}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+    const { error } = await sb.storage.from('live-materials').upload(path, file, { contentType: file.type || undefined, upsert: false });
+    if (error) throw error;
+    return sb.storage.from('live-materials').getPublicUrl(path).data.publicUrl;
+  }
+  $('#matFileBtn').onclick = () => $('#matFile').click();
+  $('#matFile').onchange = async e => {
+    const f = e.target.files[0]; e.target.value=''; if (!f) return;
+    toast('올리는 중');
+    try {
+      const url = await upload(f);
+      const title = f.name.replace(/\.[^.]+$/,'');
+      const { error } = await sb.rpc('live_host_material', { p_pw: pw, p_room: room.id, p_title: title, p_url: url });
+      if (error) throw error; toast('자료실 공유 완료'); reloadMats();
+    } catch(err) { toast(String(err.message)==='size' ? '50MB 이하 파일만 가능' : '올리기 실패'); }
+  };
+  $('#matAdd').onclick = async () => {
+    const title = $('#matTitle').value.trim(), url = $('#matUrl').value.trim();
+    if (!title || !/^https:\/\//.test(url)) return toast('제목과 https:// 링크 입력');
+    const { error } = await sb.rpc('live_host_material', { p_pw: pw, p_room: room.id, p_title: title, p_url: url });
+    if (error) return toast('추가 실패');
+    $('#matTitle').value=''; $('#matUrl').value=''; toast('자료실 공유 완료'); reloadMats();
+  };
+  $('#shareSlides').onclick = async () => {
+    if (!room.slides_url) return toast('먼저 강의 PDF 올리기');
+    const { error } = await sb.rpc('live_host_material', { p_pw: pw, p_room: room.id, p_title: room.slides_name || '강의 자료 PDF', p_url: room.slides_url });
+    if (error) return toast('공유 실패'); toast('자료실 공유 완료'); reloadMats();
+  };
+
+  /* ── PDF 강의 ── */
+  const pickPdf = () => $('#pdfFile').click();
+  $('#pdfBtn').onclick = pickPdf; $('#pdfBtn2').onclick = pickPdf;
+  $('#pdfFile').onchange = async e => {
+    const f = e.target.files[0]; e.target.value=''; if (!f) return;
+    if (!/pdf$/i.test(f.name) && f.type !== 'application/pdf') return toast('PDF 파일만 가능');
+    $('#loading').hidden = false; $('#loading').textContent = 'PDF 올리는 중';
+    const local = URL.createObjectURL(f);
+    try {
+      await loadPdf(local, 1);
+      const url = await upload(f);
+      await hostRoom('slides', url); await hostRoom('slides_name', f.name.replace(/\.pdf$/i,''));
+      toast('강의 PDF 저장 완료 · 다른 PC에서도 바로 열림');
+    } catch(err) {
+      toast(String(err.message)==='size' ? '50MB 이하 PDF만 저장 · 이 PC에서는 사용 가능' : 'PDF 저장 실패 · 이 PC에서는 사용 가능');
+    } finally { $('#loading').hidden = true; }
+  };
+  function resetStage(){ pdf=null; $('#slide').hidden=true; $('#emptyStage').hidden=false; $('#slideFoot').hidden=true; $('#navL').hidden=$('#navR').hidden=true; }
+  async function loadPdf(src, startPage){
+    if (!window.pdfjsLib) { toast('PDF 기능을 불러오지 못함 · 새로고침'); return; }
+    $('#loading').hidden = false; $('#loading').textContent = 'PDF 불러오는 중';
+    try {
+      pdf = await pdfjsLib.getDocument({ url: src }).promise;
+      page = Math.min(Math.max(1, startPage||1), pdf.numPages);
+      $('#emptyStage').hidden = true; $('#slide').hidden = false; $('#slideFoot').hidden = false; $('#navL').hidden=$('#navR').hidden=false;
+      await render(page);
+    } catch(e) { toast('PDF 열기 실패'); resetStage(); }
+    finally { $('#loading').hidden = true; }
+  }
+  async function render(n){
+    if (!pdf) return;
+    if (rendering) { pendingPage = n; return; }
+    rendering = true;
+    const pg = await pdf.getPage(n);
+    const wrap = $('#canvasWrap'); const W = wrap.clientWidth - 36, H = wrap.clientHeight - 36;
+    const base = pg.getViewport({ scale: 1 });
+    const scale = Math.min(W / base.width, H / base.height);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const vp = pg.getViewport({ scale: scale * dpr });
+    const c = $('#slide'); c.width = vp.width; c.height = vp.height;
+    c.style.width = (vp.width/dpr) + 'px'; c.style.height = (vp.height/dpr) + 'px';
+    await pg.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+    $('#pageNo').textContent = `${n} / ${pdf.numPages}`;
+    if (room) ls.set('pbs_live_page_' + room.id, n);
+    rendering = false;
+    if (pendingPage !== null) { const p = pendingPage; pendingPage = null; render(p); }
+    if (n < pdf.numPages) pdf.getPage(n+1);
+  }
+  const go = d => { if (!pdf) return; const n = Math.min(Math.max(1, page + d), pdf.numPages); if (n !== page) { page = n; render(page); } };
+  $('#prevBtn').onclick = () => go(-1); $('#nextBtn').onclick = () => go(1);
+  $('#navL').onclick = () => go(-1); $('#navR').onclick = () => go(1);
+  document.addEventListener('keydown', e => {
+    if ($('#host').hidden) return;
+    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)) { e.preventDefault(); go(1); }
+    else if (['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); go(-1); }
+    else if (e.key==='Home') { page=1; render(1); }
+    else if (e.key==='End' && pdf) { page=pdf.numPages; render(page); }
+    else if (e.key==='q' || e.key==='Q') toggleQR();
+    else if (e.key==='Escape' && !$('#qrFull').hidden) toggleQR(false);
+  });
+  let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => render(page), 150); });
+
+  /* ── 화면 전환 ── */
+  function toggleQR(force){ const h = $('#qrFull'); h.hidden = force === undefined ? !h.hidden : !force; $('#qrBtn').textContent = h.hidden ? 'QR 크게' : 'QR 닫기'; }
+  $('#qrBtn').onclick = () => toggleQR(); $('#qrClose').onclick = () => toggleQR(false); $('#qrSmall').onclick = () => toggleQR(true);
+  $('#sideBtn').onclick = () => {
+    const h = $('#host'); h.classList.toggle('no-side');
+    $('#sideBtn').textContent = h.classList.contains('no-side') ? '소통 칸 보이기' : '소통 칸 숨기기';
+    setTimeout(() => render(page), 60);
+  };
+  $('#fsBtn').onclick = () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); };
+  document.addEventListener('fullscreenchange', () => { $('#fsBtn').textContent = document.fullscreenElement ? '전체화면 끝' : '전체화면'; setTimeout(() => render(page), 120); });
+
+  if (pw) login(pw); else show('login');
+})();
+</script>
+</body>
+</html>
