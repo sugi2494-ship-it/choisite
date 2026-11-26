@@ -111,6 +111,12 @@ button{cursor:pointer;border:0;background:none}
 .mat .t small{display:block;font-size:12px;color:var(--ink4);font-weight:500;margin-top:2px}
 .mat .go{flex:none;font-size:13px;font-weight:800;color:#fff;background:var(--pbs);padding:9px 14px;border-radius:10px}
 
+.att-img{display:block;margin-top:2px}
+.att-img img{display:block;max-width:min(240px,70vw);max-height:280px;border-radius:12px;border:1px solid var(--line);background:#fff}
+.att-file{display:inline-flex;align-items:center;gap:8px;margin-top:2px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;max-width:240px}
+.att-file span{flex:none;font-size:10.5px;font-weight:900;color:var(--pbs);background:var(--tint);padding:3px 6px;border-radius:6px}
+.clip{flex:none;width:46px;height:46px;border-radius:14px;border:1.5px solid var(--line);background:#fff;font-size:20px;line-height:1}
+.clip:disabled{opacity:.5}
 /* 입력창 */
 .composer{position:fixed;left:0;right:0;bottom:0;z-index:30;pointer-events:none}
 .composer-in{pointer-events:auto;max-width:640px;margin:0 auto;background:#fff;border-top:1px solid var(--line);padding:10px 12px calc(10px + var(--safe-b));display:flex;gap:8px;align-items:flex-end}
@@ -197,6 +203,8 @@ button{cursor:pointer;border:0;background:none}
 
 <div class="composer hide" id="composer">
   <div class="composer-in">
+    <button class="clip" id="clipBtn" aria-label="사진·파일 보내기">📎</button>
+    <input type="file" id="clipFile" hidden />
     <textarea id="msgIn" rows="1" maxlength="300" placeholder="메시지 보내기"></textarea>
     <button class="send" id="sendBtn" disabled>보내기</button>
   </div>
@@ -221,6 +229,40 @@ button{cursor:pointer;border:0;background:none}
   let liked = new Set(store.get('pbs_live_liked', []));
   let mine = new Set(store.get('pbs_live_mine', []));
   const seen = { c: 0, m: 0 };
+
+  /* 채팅 첨부: 사진은 휴대폰에서 줄여서 올림 */
+  const ATT_ACCEPT = 'image/*,.pdf,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.hwp,.hwpx,.txt';
+  function shrinkImage(file, max = 1600){
+    return new Promise(res => {
+      if (!/^image\/(jpeg|png|webp|heic|heif)/.test(file.type) ) return res(file);
+      const url = URL.createObjectURL(file); const img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, max / Math.max(img.width, img.height));
+        if (k === 1 && file.size < 1.5e6 && file.type !== 'image/heic') { URL.revokeObjectURL(url); return res(file); }
+        const cv = document.createElement('canvas'); cv.width = Math.round(img.width*k); cv.height = Math.round(img.height*k);
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
+        cv.toBlob(b => res(b ? new File([b], (file.name||'photo').replace(/\.[^.]+$/,'') + '.jpg', {type:'image/jpeg'}) : file), 'image/jpeg', 0.85);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); res(file); };
+      img.src = url;
+    });
+  }
+  async function uploadChatFile(roomId, file){
+    const f = await shrinkImage(file);
+    if (f.size > 15*1024*1024) throw new Error('size');
+    const ext = ((f.name||'').split('.').pop()||'bin').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5) || 'bin';
+    const path = `${roomId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+    const { error } = await sb.storage.from('live-chat').upload(path, f, { contentType: f.type || 'application/octet-stream', upsert: false });
+    if (error) throw error;
+    return { url: sb.storage.from('live-chat').getPublicUrl(path).data.publicUrl, name: file.name || '사진', kind: /^image\//.test(f.type) ? 'image' : 'file' };
+  }
+  function attachHTML(m){
+    if (!m.attach_url) return '';
+    const u = esc(m.attach_url);
+    if (m.attach_kind === 'image') return `<a class="att-img" href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="${esc(m.attach_name||'사진')}" loading="lazy"></a>`;
+    const ext = ((m.attach_name||'').split('.').pop()||'파일').toUpperCase().slice(0,4);
+    return `<a class="att-file" href="${u}" target="_blank" rel="noopener"><span>${esc(ext)}</span>${esc(m.attach_name||'파일')}</a>`;
+  }
 
   const params = new URLSearchParams(location.search);
   const urlCode = (params.get('r') || '').toUpperCase().trim();
@@ -345,7 +387,7 @@ button{cursor:pointer;border:0;background:none}
     box.innerHTML = list.length ? list.map(m => `
       <div class="msg${mine.has(m.id)?' mine':''}${m.is_host?' host':''}">
         ${mine.has(m.id)?'':`<span class="who">${esc(m.nickname)}</span>`}
-        <div class="bub">${esc(m.body)}</div><time>${hm(m.created_at)}</time>
+        ${m.body ? `<div class="bub">${esc(m.body)}</div>` : ''}${attachHTML(m)}<time>${hm(m.created_at)}</time>
       </div>`).join('')
       : '<div class="empty"><b>💬</b>지금 끌리는 컬러를 남겨 주세요</div>';
     if (tab === 'c' && atBottom) window.scrollTo(0, document.body.scrollHeight);
@@ -392,13 +434,32 @@ button{cursor:pointer;border:0;background:none}
   ta.addEventListener('input', () => { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, 120) + 'px'; $('#sendBtn').disabled = !ta.value.trim(); });
   ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && window.matchMedia('(pointer:fine)').matches) { e.preventDefault(); send(); } });
   $('#sendBtn').onclick = send;
+  $('#clipFile').accept = ATT_ACCEPT;
+  $('#clipBtn').onclick = () => $('#clipFile').click();
+  $('#clipFile').onchange = async e => {
+    const f = e.target.files[0]; e.target.value = ''; if (!f || !room) return;
+    $('#clipBtn').disabled = true; toast('올리는 중');
+    try {
+      const a = await uploadChatFile(room.id, f);
+      const cap = ta.value.trim();
+      const { data, error } = await sb.rpc('live_post2', { p_code: room.code, p_nick: nick, p_body: cap, p_attach_url: a.url, p_attach_name: a.name, p_attach_kind: a.kind });
+      if (error) throw error;
+      mine.add(data); store.set('pbs_live_mine', [...mine].slice(-300));
+      ta.value = ''; ta.style.height = 'auto'; $('#sendBtn').disabled = true;
+      toast(a.kind === 'image' ? '사진 보내기 완료' : '파일 보내기 완료');
+      await loadAll(); setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 50);
+    } catch(err) {
+      const m = String(err && err.message || '');
+      toast(m === 'size' ? '15MB 이하 파일만 가능' : /mime|type/i.test(m) ? '보낼 수 없는 파일 형식' : /잠시/.test(m) ? '조금 천천히 보내기' : '보내기 실패 · 다시 시도');
+    } finally { $('#clipBtn').disabled = false; }
+  };
 
   let sending = false;
   async function send(){
     const body = ta.value.trim(); if (!body || sending) return;
     sending = true; $('#sendBtn').disabled = true;
     const kind = 'chat';
-    const { data, error } = await sb.rpc('live_post', { p_code: room.code, p_kind: kind, p_nick: nick, p_body: body });
+    const { data, error } = await sb.rpc('live_post2', { p_code: room.code, p_nick: nick, p_body: body });
     sending = false;
     if (error) { toast(/잠시/.test(error.message) ? '조금 천천히 보내기' : /종료/.test(error.message) ? '종료된 강의' : '전송 실패 · 다시 시도'); $('#sendBtn').disabled = false; return; }
     mine.add(data); store.set('pbs_live_mine', [...mine].slice(-300));

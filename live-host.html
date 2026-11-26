@@ -136,6 +136,10 @@ button{cursor:pointer;border:0;background:none}
 .draw-note{margin-top:12px;font-size:13px;color:#BDB3C6;min-height:20px}
 .draw-foot{margin-top:6px;display:flex;gap:14px}
 .draw-foot button{font-size:12.5px;color:#BDB3C6;text-decoration:underline;text-underline-offset:3px}
+.att-img{display:block;margin-top:2px}
+.att-img img{display:block;max-width:220px;max-height:280px;border-radius:12px;border:1px solid var(--line);background:#fff}
+.att-file{display:inline-flex;align-items:center;gap:8px;margin-top:2px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;font-size:14px;font-weight:600;max-width:240px}
+.att-file span{flex:none;font-size:10.5px;font-weight:900;color:var(--pbs);background:var(--tint);padding:3px 6px;border-radius:6px}
 /* 오른쪽 소통 칸 */
 .side{background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-left:1px solid #2A2232}
 #host.no-side .side{display:none}
@@ -334,6 +338,8 @@ button{cursor:pointer;border:0;background:none}
       <div id="matList"></div>
     </div>
     <div class="compose" id="compose">
+      <button id="clipBtn" title="사진·파일 보내기" style="background:#fff;color:var(--ink);border:1.5px solid var(--line);padding:0 11px">📎</button>
+      <input type="file" id="clipFile" hidden />
       <input id="sayIn" maxlength="500" placeholder="강사 메시지 보내기" />
       <button id="sayBtn">보내기</button>
     </div>
@@ -527,7 +533,7 @@ button{cursor:pointer;border:0;background:none}
     box.innerHTML = list.length ? list.map(m => `
       <div class="msg${m.is_host?' host':''}${room.spotlight_id===m.id?' spotted':''}"><span class="who">${esc(m.nickname)} · ${hm(m.created_at)}</span>
       ${room.spotlight_id===m.id?`<button class="x on" data-a="unspot" data-id="${m.id}">내리기</button>`:`<button class="x" data-a="spot" data-id="${m.id}">화면에 띄우기</button>`}<button class="x" data-a="delete" data-id="${m.id}">삭제</button><br>
-      <span class="bub">${esc(m.body)}</span></div>`).join('') : '<p class="empty">아직 채팅 없음<br>표지 QR로 입장 안내</p>';
+      ${m.body ? `<span class="bub">${esc(m.body)}</span>` : ''}${attachHTML(m)}</div>`).join('') : '<p class="empty">아직 채팅 없음<br>표지 QR로 입장 안내</p>';
     if (atBottom) box.scrollTop = box.scrollHeight;
   }
   function renderM(){
@@ -566,12 +572,57 @@ button{cursor:pointer;border:0;background:none}
   });
   async function say(){
     const v = $('#sayIn').value.trim(); if (!v) return;
-    const { error } = await sb.rpc('live_host_say', { p_pw: pw, p_room: room.id, p_body: v });
+    const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: v });
     if (error) return toast('전송 실패');
     $('#sayIn').value = ''; $('#sayIn').blur(); loadAll();
   }
   $('#sayBtn').onclick = say;
+  $('#clipFile').accept = ATT_ACCEPT;
+  $('#clipBtn').onclick = () => $('#clipFile').click();
+  $('#clipFile').onchange = async e => {
+    const f = e.target.files[0]; e.target.value = ''; if (!f || !room) return;
+    toast('올리는 중');
+    try {
+      const a = await uploadChatFile(room.id, f);
+      const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: $('#sayIn').value.trim(), p_attach_url: a.url, p_attach_name: a.name, p_attach_kind: a.kind });
+      if (error) throw error; $('#sayIn').value = ''; toast('보내기 완료'); loadAll();
+    } catch(err) { toast(String(err && err.message) === 'size' ? '15MB 이하 파일만 가능' : '보내기 실패 · 채팅이 켜져 있는지 확인'); }
+  };
   $('#sayIn').addEventListener('keydown', e => { if (e.key==='Enter' && !e.isComposing) say(); });
+
+  /* 채팅 첨부: 사진은 휴대폰에서 줄여서 올림 */
+  const ATT_ACCEPT = 'image/*,.pdf,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.hwp,.hwpx,.txt';
+  function shrinkImage(file, max = 1600){
+    return new Promise(res => {
+      if (!/^image\/(jpeg|png|webp|heic|heif)/.test(file.type) ) return res(file);
+      const url = URL.createObjectURL(file); const img = new Image();
+      img.onload = () => {
+        const k = Math.min(1, max / Math.max(img.width, img.height));
+        if (k === 1 && file.size < 1.5e6 && file.type !== 'image/heic') { URL.revokeObjectURL(url); return res(file); }
+        const cv = document.createElement('canvas'); cv.width = Math.round(img.width*k); cv.height = Math.round(img.height*k);
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
+        cv.toBlob(b => res(b ? new File([b], (file.name||'photo').replace(/\.[^.]+$/,'') + '.jpg', {type:'image/jpeg'}) : file), 'image/jpeg', 0.85);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); res(file); };
+      img.src = url;
+    });
+  }
+  async function uploadChatFile(roomId, file){
+    const f = await shrinkImage(file);
+    if (f.size > 15*1024*1024) throw new Error('size');
+    const ext = ((f.name||'').split('.').pop()||'bin').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5) || 'bin';
+    const path = `${roomId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+    const { error } = await sb.storage.from('live-chat').upload(path, f, { contentType: f.type || 'application/octet-stream', upsert: false });
+    if (error) throw error;
+    return { url: sb.storage.from('live-chat').getPublicUrl(path).data.publicUrl, name: file.name || '사진', kind: /^image\//.test(f.type) ? 'image' : 'file' };
+  }
+  function attachHTML(m){
+    if (!m.attach_url) return '';
+    const u = esc(m.attach_url);
+    if (m.attach_kind === 'image') return `<a class="att-img" href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="${esc(m.attach_name||'사진')}" loading="lazy"></a>`;
+    const ext = ((m.attach_name||'').split('.').pop()||'파일').toUpperCase().slice(0,4);
+    return `<a class="att-file" href="${u}" target="_blank" rel="noopener"><span>${esc(ext)}</span>${esc(m.attach_name||'파일')}</a>`;
+  }
 
   /* ── 업로드 ── */
   async function getToken(){
