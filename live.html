@@ -226,6 +226,17 @@ button{cursor:pointer;border:0;background:none}
 
   let room = null, msgs = new Map(), mats = [], tab = 'c', sort = 'top', channel = null;
   let nick = store.get('pbs_live_nick', '');
+  let clientId = store.get('pbs_live_cid', '');
+  if (!clientId) { clientId = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); store.set('pbs_live_cid', clientId); }
+  let presCh = null;
+  function presence(){
+    try {
+      sb.rpc('live_join', { p_code: room.code, p_client: clientId, p_nick: nick });
+      if (presCh) sb.removeChannel(presCh);
+      presCh = sb.channel('pres-' + room.id, { config: { presence: { key: clientId } } });
+      presCh.subscribe(st => { if (st === 'SUBSCRIBED') presCh.track({ nick, at: Date.now() }); });
+    } catch(e) {}
+  }
   let liked = new Set(store.get('pbs_live_liked', []));
   let mine = new Set(store.get('pbs_live_mine', []));
   const seen = { c: 0, m: 0 };
@@ -292,14 +303,14 @@ button{cursor:pointer;border:0;background:none}
     $('#meNick').textContent = nick;
     applyRoom();
     await loadAll();
-    subscribe();
+    subscribe(); presence();
     setTab('c');
   }
   $('#enterBtn').onclick = enter;
   [$('#codeIn'), $('#nickIn')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') enter(); }));
   $('#renameBtn').onclick = () => {
     const n = prompt('새 닉네임', nick);
-    if (n && n.trim()) { nick = n.trim().slice(0,20); store.set('pbs_live_nick', nick); $('#meNick').textContent = nick; }
+    if (n && n.trim()) { nick = n.trim().slice(0,20); store.set('pbs_live_nick', nick); $('#meNick').textContent = nick; if (room) presence(); }
   };
 
   function applyRoom(){
@@ -350,7 +361,7 @@ button{cursor:pointer;border:0;background:none}
   }
   // 연결이 끊겨도 30초마다 맞춤
   setInterval(() => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); } }, 20000);
-  document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); subscribe(); } });
+  document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); subscribe(); presence(); } });
 
   function renderAll(){ renderC(); renderMats(); renderSpot(); badges(); }
 

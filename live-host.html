@@ -65,6 +65,17 @@ button{cursor:pointer;border:0;background:none}
 .bar .live.off{color:#888}.bar .live.off i{background:#888;animation:none}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,45,155,.55)}70%{box-shadow:0 0 0 8px rgba(255,45,155,0)}100%{box-shadow:0 0 0 0 rgba(255,45,155,0)}}
 .bar .sp{flex:1}
+.b-count{flex:none;display:flex;flex-direction:column;align-items:flex-start;line-height:1.1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:7px 14px;cursor:pointer}
+.b-count b{font-size:28px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums}
+.b-count b + span{font-size:12px;font-weight:700;color:#F3D6E8;margin-left:4px}
+.b-count{flex-direction:row;flex-wrap:wrap;align-items:baseline;max-width:150px}
+.b-count em{flex-basis:100%;font-style:normal;font-size:11.5px;color:#CDB9C9;margin-top:3px}
+.ppl{display:flex;justify-content:space-between;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line);font-size:14.5px}
+.ppl b{font-weight:700}
+.ppl small{font-size:11.5px;color:var(--ink4)}
+.ppl .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9C9C9;margin-right:8px}
+.ppl .dot.on{background:#0E9F6E}
+.ppl-head{font-size:13px;color:var(--ink3);margin:2px 4px 8px}
 .b-join{display:flex;align-items:center;gap:12px;flex:none;background:#fff;color:var(--ink);border-radius:12px;padding:6px 6px 6px 14px}
 .b-txt{display:flex;flex-direction:column;line-height:1.25;text-align:right}
 .b-txt small{font-size:12px;font-weight:700;color:var(--ink3)}
@@ -150,7 +161,7 @@ button{cursor:pointer;border:0;background:none}
 .spot p{font-size:16px;font-weight:700;line-height:1.45;margin-top:3px;padding-right:44px}
 .spot em{display:block;font-style:normal;font-size:12px;opacity:.85;margin-top:4px}
 .spot button{position:absolute;top:10px;right:10px;font-size:12px;font-weight:800;color:var(--pbs);background:#fff;border-radius:8px;padding:4px 8px}
-.tabs{display:grid;grid-template-columns:repeat(2,1fr);border-bottom:1px solid var(--line);margin-top:8px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);margin-top:8px}
 .tab{padding:10px 0 9px;font-size:14.5px;font-weight:700;color:var(--ink3);border-bottom:2.5px solid transparent}
 .tab.on{color:var(--ink);border-bottom-color:var(--pbs)}
 .tab span{font-size:12px;color:var(--pbs);margin-left:3px}
@@ -189,9 +200,9 @@ button{cursor:pointer;border:0;background:none}
 .small-btn:hover{border-color:var(--pbs);color:var(--pbs)}
 .empty{padding:30px 6px;text-align:center;color:var(--ink4);font-size:14px}
 .compose{border-top:1px solid var(--line);padding:10px;display:flex;gap:6px}
-.compose input{flex:1;height:42px;border:1.5px solid var(--line);border-radius:10px;padding:0 12px;outline:none}
+.compose input{flex:1;min-width:0;height:42px;border:1.5px solid var(--line);border-radius:10px;padding:0 12px;outline:none}
 .compose input:focus{border-color:var(--pbs)}
-.compose button{height:42px;padding:0 14px;border-radius:10px;background:var(--pbs);color:#fff;font-weight:800}
+.compose button{height:42px;padding:0 14px;border-radius:10px;background:var(--pbs);color:#fff;font-weight:800;white-space:nowrap;flex:none}
 .side-foot{display:flex;align-items:center;gap:12px;padding:10px 12px;border-top:1px solid var(--line);background:var(--bg2)}
 .side-foot .qr{width:76px;height:76px;flex:none;background:#fff;border:1px solid var(--line);border-radius:8px;padding:4px;cursor:pointer}
 .side-foot .qr svg{width:100%;height:100%}
@@ -251,6 +262,7 @@ button{cursor:pointer;border:0;background:none}
       <span id="hSub"></span>
     </div>
     <span class="live" id="hLive"><i></i><span>LIVE</span></span>
+    <div class="b-count" id="hCount" title="참가자 목록 보기"><b id="cNow">0</b><span>명 접속 중</span><em id="cAll">누적 입장 0명</em></div>
     <span class="sp"></span>
     <div class="b-join">
       <div class="b-txt"><small>늦게 오신 분 · QR로 입장</small><b>입장 코드 <span id="hCode"></span></b><em>닉네임: 행운권 번호 + 이름</em></div>
@@ -325,10 +337,12 @@ button{cursor:pointer;border:0;background:none}
     </div>
     <nav class="tabs">
       <button class="tab on" data-tab="c">채팅<span id="cc"></span></button>
+      <button class="tab" data-tab="p">참가자<span id="cp"></span></button>
       <button class="tab" data-tab="m">자료실<span id="cm"></span></button>
     </nav>
     <div class="list" id="listQ" hidden></div>
     <div class="list" id="listC"></div>
+    <div class="list" id="listP" hidden></div>
     <div class="list" id="listM" hidden>
       <div class="addbox">
         <button class="small-btn" id="matFileBtn">파일 올리기 (PDF · 이미지 · 문서, 50MB까지)</button>
@@ -441,7 +455,7 @@ button{cursor:pointer;border:0;background:none}
     history.replaceState(null, '', '?r=' + r.code);
     show('host');
     applyRoom(); drawQR();
-    await loadAll(); subscribe();
+    await loadAll(); subscribe(); presenceHost(); loadJoins();
     const { data } = await sb.from('live_rooms').select('*').eq('id', room.id).maybeSingle();
     if (data) { Object.assign(room, data); applyRoom(); }
     if (room.slides_url) loadPdf(room.slides_url, ls.get('pbs_live_page_' + room.id, 1));
@@ -499,7 +513,38 @@ button{cursor:pointer;border:0;background:none}
     }).subscribe());
   }
   async function reloadMats(){ const { data } = await sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at',{ascending:false}); mats = data||[]; renderM(); counts(); }
-  setInterval(() => { if (room && document.visibilityState==='visible') loadAll(); }, 20000);
+  setInterval(() => { if (room && document.visibilityState==='visible') { loadAll(); loadJoins(); } }, 20000);
+
+  let online = new Map(), joins = [], presH = null;
+  function presenceHost(){
+    if (presH) sb.removeChannel(presH);
+    presH = sb.channel('pres-' + room.id, { config: { presence: { key: 'host-' + Math.random().toString(36).slice(2,8) } } });
+    presH.on('presence', { event: 'sync' }, () => {
+      const st = presH.presenceState(); online = new Map();
+      Object.entries(st).forEach(([k, arr]) => { if (k.startsWith('host-')) return; const last = arr[arr.length-1] || {}; online.set(k, last.nick || ''); });
+      showCount(); if (tab === 'p') renderP();
+    }).subscribe();
+  }
+  async function loadJoins(){
+    const { data } = await sb.rpc('live_host_joins', { p_pw: pw, p_room: room.id });
+    if (Array.isArray(data)) { joins = data; showCount(); if (tab === 'p') renderP(); }
+  }
+  function showCount(){
+    $('#cNow').textContent = online.size;
+    $('#cAll').textContent = '누적 입장 ' + Math.max(joins.length, online.size) + '명';
+    $('#cp').textContent = online.size || '';
+  }
+  const numOf = n => { const m = String(n).match(/^\s*(\d+)/); return m ? +m[1] : 1e9; };
+  function renderP(){
+    const map = new Map(joins.map(j => [j.client_id, j.nickname]));
+    online.forEach((n, k) => { if (!map.has(k)) map.set(k, n); else if (n) map.set(k, n); });
+    const rows = [...map.entries()].map(([k, n]) => ({ k, n, on: online.has(k) }))
+      .sort((a,b) => (numOf(a.n) - numOf(b.n)) || a.n.localeCompare(b.n, 'ko'));
+    const nums = rows.map(r => numOf(r.n)).filter(x => x < 1e9);
+    $('#listP').innerHTML = `<p class="ppl-head">지금 ${online.size}명 접속 · 누적 ${rows.length}명${nums.length ? ` · 행운권 번호 ${Math.min(...nums)}~${Math.max(...nums)}` : ''}</p>` +
+      (rows.length ? rows.map(r => `<div class="ppl"><span><i class="dot${r.on?' on':''}"></i><b>${esc(r.n)}</b></span><small>${r.on?'접속 중':'나감'}</small></div>`).join('') : '<p class="empty">아직 입장한 사람 없음</p>');
+  }
+  $('#hCount').onclick = () => document.querySelector('.tab[data-tab=p]').click();
 
   function renderAll(){ renderQ(); renderC(); renderM(); renderSpot(); counts(); }
   function counts(){
@@ -568,7 +613,7 @@ button{cursor:pointer;border:0;background:none}
   document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
     tab = t.dataset.tab;
     document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x===t));
-    $('#listQ').hidden = tab!=='q'; $('#listC').hidden = tab!=='c'; $('#listM').hidden = tab!=='m';
+    $('#listQ').hidden = tab!=='q'; $('#listC').hidden = tab!=='c'; $('#listM').hidden = tab!=='m'; $('#listP').hidden = tab!=='p'; if (tab==='p') renderP();
     $('#compose').hidden = tab!=='c';
     if (tab==='c') { const b=$('#listC'); b.scrollTop=b.scrollHeight; }
   });
