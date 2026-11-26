@@ -356,7 +356,7 @@ button{cursor:pointer;border:0;background:none}
         <div class="draw-set" id="drawSet">
           <span class="pool" id="poolInfo">참가자 0명</span>
           <label><input type="checkbox" id="poolOnline"> 지금 접속 중만</label>
-          <label>인원 <input id="dCnt" type="number" value="1" min="1" max="10"></label>
+          <input id="dCnt" type="hidden" value="1">
           <button class="btn" id="drawGo">추첨하기 (리모컨 ▶)</button>
         </div>
         <p class="draw-note" id="drawNote"></p>
@@ -1103,7 +1103,7 @@ button{cursor:pointer;border:0;background:none}
     $('#drawGift').textContent = g ? '🎁 ' + g.name : '선물을 골라 주세요';
     $('#giftSponsor').textContent = g && g.sponsor ? `협찬: ${g.sponsor}님 · 남은 수량 ${giftLeft(g)}개` : (g ? `남은 수량 ${giftLeft(g)}개` : '');
     if (g && g.image_url) { $('#giftImg').src = g.image_url; $('#giftImg').hidden = false; } else $('#giftImg').hidden = true;
-    if (g) $('#dCnt').value = Math.max(1, Math.min(giftLeft(g) || 1, 10));
+    if (g) $('#dCnt').value = giftLeft(g);
   }
   $('#giftList').addEventListener('click', async e => {
     const del = e.target.closest('[data-gdel]');
@@ -1144,10 +1144,9 @@ button{cursor:pointer;border:0;background:none}
   $('#drawGo').onclick = async () => {
     if (!giftSel) return toast('왼쪽에서 선물을 먼저 골라 주세요');
     await loadJoins();
-    const n = parseInt($('#dCnt').value, 10);
     const left = giftLeft(giftSel);
-    if (!(n >= 1 && n <= 10)) return toast('인원 확인');
-    if (left < n && !confirm(`남은 수량(${left}개)보다 많이 뽑을까요?`)) return;
+    if (left < 1) return toast('이 선물은 추첨 완료');
+    const n = Math.min(left, 10);
     const pool = poolList().list;
     if (pool.length < n) return toast(`추첨 대상이 ${pool.length}명뿐`);
     const pick = [...pool]; const picks = [];
