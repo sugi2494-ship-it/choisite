@@ -81,7 +81,7 @@ button{cursor:pointer;border:0;background:none}
 #wpNames span{font-size:22px;font-weight:900;color:#fff;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--pbs),#7B2FBE)}
 #wpNames span.me{background:linear-gradient(135deg,#FFC94D,#FF2D9B);box-shadow:0 0 0 4px #FFE8A3}
 .wp-me{margin-top:14px;font-size:17px;font-weight:800;color:var(--pbs)}
-#wpClose{margin-top:18px;height:44px;padding:0 26px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800}
+#wpClose,#gpClose{margin-top:18px;height:44px;padding:0 26px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800}
 .eb{display:inline-block;font-size:10.5px;font-weight:900;letter-spacing:.04em;color:#fff;padding:2px 6px;border-radius:6px;margin-right:6px;vertical-align:1px}
 .eng-row{display:flex;align-items:center;gap:6px;padding:0 18px 12px;flex-wrap:wrap}
 .eng-row span{font-size:12.5px;color:var(--ink3);font-weight:700;margin-right:2px}
@@ -95,6 +95,9 @@ button{cursor:pointer;border:0;background:none}
 .att-link{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--pbs),#7B2FBE);color:#fff;text-decoration:none;font-weight:800;font-size:15.5px;max-width:300px;box-shadow:0 6px 18px rgba(229,0,127,.25)}
 .att-link::after{content:'→';font-size:20px}
 .bub a{color:inherit;text-decoration:underline;word-break:break-all}
+#gpNames{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-height:46vh;overflow:auto}
+#gpNames span{font-size:16px;font-weight:800;color:#fff;padding:7px 13px;border-radius:999px}
+#gpNames span.me{box-shadow:0 0 0 3px #16121B}
 /* 본문 */
 .pane{display:none;flex:1;padding:14px 18px 130px}
 .pane.on{display:block}
@@ -238,6 +241,7 @@ button{cursor:pointer;border:0;background:none}
     <button class="send" id="sendBtn" disabled>보내기</button>
   </div>
 </div>
+<div class="win-pop" id="grpPop" hidden><div class="wp-card"><p class="wp-ey" id="gpEy"></p><h2 id="gpTitle"></h2><div id="gpNames"></div><p class="wp-me" id="gpMe" hidden></p><button id="gpClose">닫기</button></div></div>
 <div class="win-pop" id="winPop" hidden><div class="wp-card"><p class="wp-ey" id="wpEy">🎁 행운권 당첨</p><h2 id="wpGift"></h2><div id="wpNames"></div><p class="wp-me" id="wpMe" hidden>축하합니다! 무대 앞으로 와 주세요 🎉</p><button id="wpClose">닫기</button></div></div>
 <div class="toast" id="toast"></div>
 
@@ -328,7 +332,7 @@ button{cursor:pointer;border:0;background:none}
     if (code.length < 4) return $('#gateErr').textContent = '입장 코드 확인';
     if (!n) return $('#gateErr').textContent = '닉네임 입력';
     $('#enterBtn').disabled = true;
-    const { data, error } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text').eq('code', code).maybeSingle();
+    const { data, error } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text,group_call').eq('code', code).maybeSingle();
     $('#enterBtn').disabled = false;
     if (error || !data) return $('#gateErr').textContent = '강의방을 찾을 수 없음 · 코드 확인';
     nick = n; store.set('pbs_live_nick', nick);
@@ -358,6 +362,20 @@ button{cursor:pointer;border:0;background:none}
   });
   showEng();
 
+  let lastGroup;
+  function showGroup(raw){
+    let g; try { g = JSON.parse(raw); } catch(e) { return; }
+    if (!g || !ENG[g.e]) return;
+    const C = ENG[g.e].c, meIn = (g.names||[]).some(n => String(n).trim() === nick.trim()) || engine === g.e;
+    $('#gpEy').textContent = '🎨 컬러 엔진 그룹'; $('#gpEy').style.color = C;
+    $('#gpTitle').innerHTML = `<span style="color:${C}">${g.e}</span> ${ENG[g.e].k} 엔진 · ${(g.names||[]).length}명`;
+    $('#gpNames').innerHTML = (g.names||[]).map(n => `<span class="${String(n).trim()===nick.trim()?'me':''}" style="background:${C}">${esc(n)}</span>`).join('');
+    $('#gpMe').hidden = !meIn; $('#gpMe').style.color = C;
+    $('#gpMe').textContent = `🙋 우리 그룹이에요! 손을 들어 주세요`;
+    $('#grpPop').hidden = false; clearTimeout(showGroup._t); showGroup._t = setTimeout(() => $('#grpPop').hidden = true, meIn ? 15000 : 9000);
+    if (meIn && navigator.vibrate) navigator.vibrate([150,80,150]);
+  }
+  $('#gpClose').onclick = () => $('#grpPop').hidden = true;
   let lastDraw;
   function showWin(t){
     const parts = t.split(' · '); const gift = parts.length > 1 ? parts.shift() : '';
@@ -378,6 +396,8 @@ button{cursor:pointer;border:0;background:none}
     $('#draw').classList.toggle('show', !!room.draw_text); $('#drawText').textContent = room.draw_text || '';
     if (room.draw_text && room.draw_text !== lastDraw) { if (lastDraw !== undefined) showWin(room.draw_text); }
     lastDraw = room.draw_text || null;
+    if (room.group_call && room.group_call !== lastGroup && lastGroup !== undefined) showGroup(room.group_call);
+    lastGroup = room.group_call || null;
     renderSpot(); updateComposer();
   }
 
@@ -410,7 +430,7 @@ button{cursor:pointer;border:0;background:none}
       }).subscribe());
   }
   async function refreshRoom(){
-    const { data } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text').eq('id', room.id).maybeSingle();
+    const { data } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text,group_call').eq('id', room.id).maybeSingle();
     if (data) { Object.assign(room, data); applyRoom(); }
   }
   async function reloadMats(){
@@ -419,7 +439,7 @@ button{cursor:pointer;border:0;background:none}
   }
   // 연결이 끊겨도 30초마다 맞춤
   setInterval(() => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); } }, 20000);
-  document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); subscribe(); presence(); } });
+  document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') { const e2 = store.get('pbs_live_engine', null); if (e2 !== engine) { engine = e2; showEng(); } refreshRoom(); loadAll(); subscribe(); presence(); } });
 
   function renderAll(){ renderC(); renderMats(); renderSpot(); badges(); }
 

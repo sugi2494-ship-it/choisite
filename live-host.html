@@ -205,6 +205,20 @@ button{cursor:pointer;border:0;background:none}
 .eb{display:inline-block;font-size:10px;font-weight:900;color:#fff;padding:1px 6px;border-radius:5px;margin-right:5px;vertical-align:1px}
 .eng-sum{display:flex;gap:6px;flex-wrap:wrap;margin:0 4px 10px}
 .eng-sum span{font-size:12.5px;font-weight:800;color:#fff;padding:4px 9px;border-radius:8px}
+.grp-full{position:absolute;inset:0;z-index:6;background:#16121B;color:#fff;display:flex;flex-direction:column;padding:2.2vh 2vw 1.5vh}
+.grp-full .close{position:absolute;top:14px;right:14px}
+.grp-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2vw;margin-right:70px}
+.grp-btns button{border-radius:16px;padding:1.6vh 1vw;color:#fff;font-weight:900;font-size:clamp(18px,1.9vw,30px);line-height:1.15;border:4px solid transparent;transition:transform .15s}
+.grp-btns button small{display:block;font-size:.5em;font-weight:700;opacity:.92;margin-top:4px}
+.grp-btns button.on{border-color:#fff;transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.grp-show{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:2.5vh;overflow:auto}
+.grp-hint{color:#BDB3C6;font-size:18px;margin-top:10vh}
+.grp-title{font-size:clamp(30px,3.6vw,60px);font-weight:900;letter-spacing:-.02em;margin-bottom:2vh;text-align:center}
+.grp-title small{display:block;font-size:.42em;font-weight:700;opacity:.85;margin-top:6px}
+.grp-names{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:95%}
+.grp-names span{font-size:clamp(20px,2.1vw,34px);font-weight:800;padding:.4em .9em;border-radius:999px;background:#fff;animation:pop2 .45s ease both}
+.grp-foot{display:flex;justify-content:center;padding-top:8px}
+.grp-foot button{font-size:12.5px;color:#BDB3C6;text-decoration:underline;text-underline-offset:3px}
 /* 오른쪽 소통 칸 */
 .side{background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-left:1px solid #2A2232}
 #host.no-side .side{display:none}
@@ -324,6 +338,7 @@ button{cursor:pointer;border:0;background:none}
   <div class="tools" id="tools">
     <button class="tb" id="pdfBtn">PDF 올리기</button>
     <button class="tb" id="bgmBtn" style="background:#7B2FBE;color:#fff">🎵 대기 음악 켜기</button>
+    <button class="tb" id="grpBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff">🎨 엔진 그룹</button>
     <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B">🎁 행운권 추첨</button>
     <button class="tb pink" id="qrBtn">QR 크게</button>
     <button class="tb" id="sideBtn">소통 칸 숨기기</button>
@@ -377,6 +392,13 @@ button{cursor:pointer;border:0;background:none}
         <p class="draw-note" id="drawNote"></p>
         <div class="draw-foot"><button class="sound-sw" id="soundSw">🔊 소리 켜짐</button><button id="drawClear">청중 화면에서 내리기</button><button id="drawReset">당첨 기록 초기화</button></div>
       </section>
+    </div>
+
+    <div class="grp-full" id="grpFull" hidden>
+      <button class="tb close" id="grpClose" style="background:var(--ink)">닫기</button>
+      <div class="grp-btns" id="grpBtns"></div>
+      <div class="grp-show" id="grpShow"><p class="grp-hint">엔진을 누르면 그 그룹 참가자가 화면과 휴대폰에 떠요</p></div>
+      <div class="grp-foot"><button id="grpClear">청중 휴대폰에서 내리기</button></div>
     </div>
 
     <div class="qr-full" id="qrFull" hidden>
@@ -874,7 +896,7 @@ button{cursor:pointer;border:0;background:none}
     else if (e.key==='End' && pdf) { page=pdf.numPages; render(page); }
     else if (e.key==='q' || e.key==='Q') toggleQR();
     else if (e.key==='m' || e.key==='M') $('#bgmBtn').click();
-    else if (e.key==='Escape') { if (!$('#qrFull').hidden) toggleQR(false); if (!$('#drawFull').hidden) showDraw(false); }
+    else if (e.key==='Escape') { if (!$('#qrFull').hidden) toggleQR(false); if (!$('#drawFull').hidden) showDraw(false); $('#grpFull').hidden = true; }
   });
   let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => render(page), 150); });
 
@@ -1239,6 +1261,26 @@ button{cursor:pointer;border:0;background:none}
   $('#drawReset').onclick = async () => { if (!confirm('모든 선물의 당첨 기록을 지울까요? 이미 뽑힌 사람도 다시 뽑힐 수 있음')) return; await sb.rpc('live_host_gift_win', { p_pw: pw, p_room: room.id, p_id: null, p_winners: [], p_reset: true }); loadGifts(); updatePool(); toast('당첨 기록 초기화'); };
 
   let toolT; document.addEventListener('mousemove', () => { const t = $('#tools'); if (!t) return; t.classList.add('show'); clearTimeout(toolT); toolT = setTimeout(() => t.classList.remove('show'), 2500); });
+
+  /* 엔진 그룹 발표 */
+  const ENGK = { RED:'빨강', YELLOW:'노랑', GREEN:'초록', BLUE:'파랑' };
+  let grpSel = null;
+  function grpCounts(){ const c = { RED:0, YELLOW:0, GREEN:0, BLUE:0 }; people().forEach(p => { if (c[p.e] !== undefined) c[p.e]++; }); return c; }
+  function renderGrpBtns(){
+    const c = grpCounts();
+    $('#grpBtns').innerHTML = ['RED','YELLOW','GREEN','BLUE'].map(e => `<button data-grp="${e}" class="${grpSel===e?'on':''}" style="background:${ENGC[e]}">${e}<small>${ENGK[e]} · ${c[e]}명</small></button>`).join('');
+  }
+  function showGroup(e){
+    grpSel = e; renderGrpBtns();
+    const names = people().filter(p => p.e === e).map(p => p.n).sort((a,b) => (numOf(a)-numOf(b)) || a.localeCompare(b,'ko'));
+    $('#grpShow').innerHTML = `<div class="grp-title" style="color:${ENGC[e]}">${e} 엔진 그룹<small style="color:#fff">${ENGK[e]} · ${names.length}명</small></div>
+      <div class="grp-names">${names.length ? names.map((n,i) => `<span style="color:${ENGC[e]};animation-delay:${Math.min(i*0.05,1.5)}s">${esc(n)}</span>`).join('') : '<p class="grp-hint" style="margin-top:2vh">아직 이 엔진을 고른 사람이 없어요</p>'}</div>`;
+    hostRoom('group', JSON.stringify({ e, names, t: Date.now() }));
+  }
+  $('#grpBtns').addEventListener('click', e => { const b = e.target.closest('[data-grp]'); if (b) showGroup(b.dataset.grp); });
+  $('#grpBtn').onclick = async () => { const f = $('#grpFull'); f.hidden = !f.hidden; if (!f.hidden) { $('#qrFull').hidden = true; $('#drawFull').hidden = true; await loadJoins(); renderGrpBtns(); } };
+  $('#grpClose').onclick = () => { $('#grpFull').hidden = true; };
+  $('#grpClear').onclick = () => hostRoom('group', '').then(ok => ok && toast('청중 휴대폰에서 내림'));
 
   /* ── 화면 전환 ── */
   function toggleQR(force){ const h = $('#qrFull'); h.hidden = force === undefined ? !h.hidden : !force; $('#qrBtn').textContent = h.hidden ? 'QR 크게' : 'QR 닫기'; }
