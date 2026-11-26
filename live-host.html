@@ -123,6 +123,8 @@ button{cursor:pointer;border:0;background:none}
 .draw-nums.done .ball:nth-child(3){animation-delay:.7s}
 @keyframes bang{0%{transform:scale(.2) rotate(-200deg);filter:brightness(2)}100%{transform:scale(1) rotate(0);filter:none}}
 .draw-full.flash{animation:flash .6s ease}
+.draw-full.shake{animation:flash .6s ease, quake .5s .05s ease}
+@keyframes quake{0%,100%{transform:none}20%{transform:translate(-8px,4px)}40%{transform:translate(7px,-5px)}60%{transform:translate(-5px,-3px)}80%{transform:translate(4px,5px)}}
 @keyframes flash{0%{background-color:#fff}100%{}}
 #confetti{position:absolute;inset:0;pointer-events:none;z-index:1}
 .draw-full > *:not(#confetti){position:relative;z-index:2}
@@ -577,7 +579,7 @@ button{cursor:pointer;border:0;background:none}
     $('#sayIn').value = ''; $('#sayIn').blur(); loadAll();
   }
   $('#sayBtn').onclick = say;
-  $('#clipFile').accept = ATT_ACCEPT;
+  $('#clipFile').accept = 'image/*,.pdf,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.hwp,.hwpx,.txt';
   $('#clipBtn').onclick = () => $('#clipFile').click();
   $('#clipFile').onchange = async e => {
     const f = e.target.files[0]; e.target.value = ''; if (!f || !room) return;
@@ -910,6 +912,49 @@ button{cursor:pointer;border:0;background:none}
   const bgmLabel = () => $('#bgmBtn').textContent = BGM.playing ? '🎵 대기 음악 끄기' : '🎵 대기 음악 켜기';
   $('#bgmBtn').onclick = () => { if (TOUCH.playing) TOUCH.stop(1); BGM.playing ? BGM.stop() : BGM.start(); bgmLabel(); };
 
+  /* 오도방정 축하: 관중 환호 + 박수 + 휘파람 + 에어혼 (직접 합성) */
+  function party(c, t){
+    const out = c.createGain(); out.gain.value = 0.9; out.connect(c.destination);
+    const nb = noiseBuf(c, 1.0);
+    // 박수: 짧은 손뼉 소리 수백 개를 5초 동안 흩뿌림
+    for (let i = 0; i < 520; i++){
+      const tt = t + 0.05 + Math.pow(Math.random(), 1.6) * 5.2;
+      const src = c.createBufferSource(); src.buffer = nb;
+      const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 900 + Math.random()*1800; bp.Q.value = 1.2;
+      const g = c.createGain(); const fade = Math.max(0.15, 1 - (tt - t) / 6);
+      const v = (0.05 + Math.random()*0.09) * fade;
+      g.gain.setValueAtTime(v, tt); g.gain.exponentialRampToValueAtTime(0.0001, tt + 0.03 + Math.random()*0.03);
+      src.connect(bp).connect(g).connect(out); src.start(tt, Math.random()*0.8, 0.07);
+    }
+    // 환호 "와아아": 사람 목소리 대역을 흔들며 크게 부풀었다 잦아듦
+    [[700,1150],[500,1700],[900,2400]].forEach(([f1,f2], k) => {
+      const src = c.createBufferSource(); src.buffer = noiseBuf(c, 4.5);
+      const b1 = c.createBiquadFilter(); b1.type = 'bandpass'; b1.frequency.value = f1; b1.Q.value = 3;
+      const b2 = c.createBiquadFilter(); b2.type = 'bandpass'; b2.frequency.value = f2; b2.Q.value = 4;
+      const lfo = c.createOscillator(); lfo.frequency.value = 5 + k*1.7; const lg = c.createGain(); lg.gain.value = f1*0.12; lfo.connect(lg).connect(b1.frequency);
+      const g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 0.35); g.gain.setValueAtTime(0.5, t + 1.4); g.gain.exponentialRampToValueAtTime(0.0001, t + 4.3);
+      src.connect(b1); src.connect(b2); b1.connect(g); b2.connect(g); g.connect(out);
+      src.start(t); lfo.start(t); src.stop(t+4.5); lfo.stop(t+4.5);
+    });
+    // 휘파람 "휘이익~"
+    [0.25, 0.9, 1.7, 2.6].forEach((d, k) => {
+      const o = c.createOscillator(); o.type = 'sine'; const st = t + d;
+      o.frequency.setValueAtTime(1600 + k*150, st); o.frequency.exponentialRampToValueAtTime(3000 + k*200, st + 0.35); o.frequency.exponentialRampToValueAtTime(2200, st + 0.7);
+      const g = c.createGain(); g.gain.setValueAtTime(0.0001, st); g.gain.exponentialRampToValueAtTime(0.07, st + 0.05); g.gain.exponentialRampToValueAtTime(0.0001, st + 0.75);
+      o.connect(g).connect(out); o.start(st); o.stop(st + 0.8);
+    });
+    // 에어혼 "빠아앙 빵빵!"
+    [[0.0,0.55],[0.7,0.18],[0.95,0.5]].forEach(([d,len]) => {
+      const st = t + 0.15 + d;
+      [233.08, 293.66, 349.23].forEach(f => {
+        const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = (Math.random()-0.5)*14;
+        const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2600;
+        const g = c.createGain(); g.gain.setValueAtTime(0.0001, st); g.gain.exponentialRampToValueAtTime(0.05, st + 0.03); g.gain.setValueAtTime(0.05, st + len - 0.05); g.gain.exponentialRampToValueAtTime(0.0001, st + len);
+        o.connect(lp).connect(g).connect(out); o.start(st); o.stop(st + len + 0.05);
+      });
+    });
+  }
+
   /* 추첨 통 속 색 공 */
   function fillDrum(){
     const d = $('#drum'); d.innerHTML = '';
@@ -925,16 +970,19 @@ button{cursor:pointer;border:0;background:none}
   fillDrum();
 
   /* 색종이 */
+  let confParts = [], confRun = false;
   function confetti(){
-    const cv = $('#confetti'), box = $('#drawFull'); cv.width = box.clientWidth; cv.height = box.clientHeight;
-    const g = cv.getContext('2d'); const parts = [];
-    for (let i=0;i<220;i++) parts.push({ x: cv.width/2 + (Math.random()-.5)*cv.width*0.3, y: cv.height*0.45, vx: (Math.random()-.5)*18, vy: -Math.random()*18-6, s: 6+Math.random()*8, c: PAL[i%PAL.length], r: Math.random()*6, vr: (Math.random()-.5)*0.4 });
-    const t0 = performance.now();
-    (function frame(now){
+    const cv = $('#confetti'), box = $('#drawFull'); if (cv.width !== box.clientWidth) { cv.width = box.clientWidth; cv.height = box.clientHeight; }
+    const W = cv.width, H = cv.height;
+    for (let i=0;i<320;i++) confParts.push({ x: W/2 + (Math.random()-.5)*W*0.5, y: H*0.5, vx: (Math.random()-.5)*22, vy: -Math.random()*20-6, s: 6+Math.random()*9, c: PAL[i%PAL.length], r: Math.random()*6, vr: (Math.random()-.5)*0.4 });
+    if (confRun) return; confRun = true;
+    const g = cv.getContext('2d');
+    (function frame(){
       g.clearRect(0,0,cv.width,cv.height);
-      parts.forEach(p => { p.vy += 0.45; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.r += p.vr; g.save(); g.translate(p.x,p.y); g.rotate(p.r); g.fillStyle = p.c; g.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); g.restore(); });
-      if (now - t0 < 4500) requestAnimationFrame(frame); else g.clearRect(0,0,cv.width,cv.height);
-    })(t0);
+      confParts.forEach(p => { p.vy += 0.42; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.r += p.vr; g.save(); g.translate(p.x,p.y); g.rotate(p.r); g.fillStyle = p.c; g.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); g.restore(); });
+      confParts = confParts.filter(p => p.y < cv.height + 40);
+      if (confParts.length) requestAnimationFrame(frame); else { g.clearRect(0,0,cv.width,cv.height); confRun = false; }
+    })();
   }
 
   $('#drawGo').onclick = async () => {
@@ -965,8 +1013,9 @@ button{cursor:pointer;border:0;background:none}
     balls.forEach((b, i) => { b.firstChild.nodeValue = picks[i]; b.style.background = `radial-gradient(circle at 35% 30%, #fff9, transparent 45%), ${colors[i % colors.length]}`; });
     box.className = 'draw-nums done';
     const full = $('#drawFull'); full.classList.remove('flash'); void full.offsetWidth; full.classList.add('flash');
-    if (soundOn) { try { fanfare(ac(), ac().currentTime + 0.02); } catch(e){} }
-    confetti();
+    if (soundOn) { try { const c = ac(); fanfare(c, c.currentTime + 0.02); party(c, c.currentTime + 0.05); } catch(e){} }
+    confetti(); setTimeout(confetti, 900); setTimeout(confetti, 1900);
+    full.classList.remove('shake'); void full.offsetWidth; full.classList.add('shake');
     $('#drawGo').disabled = false; $('#drawSet').style.visibility = '';
     ls.set(wonKey(), [...won, ...picks].sort((a,b)=>a-b)); noteWon();
     const gift = $('#dGift').value.trim();
