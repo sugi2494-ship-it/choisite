@@ -231,7 +231,7 @@ button{cursor:pointer;border:0;background:none}
   let presCh = null;
   function presence(){
     try {
-      sb.rpc('live_join', { p_code: room.code, p_client: clientId, p_nick: nick });
+      sb.rpc('live_join', { p_code: room.code, p_client: clientId, p_nick: nick }).then(() => {}, () => {});
       if (presCh) sb.removeChannel(presCh);
       presCh = sb.channel('pres-' + room.id, { config: { presence: { key: clientId } } });
       presCh.subscribe(st => { if (st === 'SUBSCRIBED') presCh.track({ nick, at: Date.now() }); });
