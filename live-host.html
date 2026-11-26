@@ -178,7 +178,7 @@ button{cursor:pointer;border:0;background:none}
     <p class="eyebrow">LIVE CLASS · HOST</p>
     <h1>강의방</h1>
     <p class="sub">새 강의방 만들기 또는 기존 방 열기</p>
-    <div class="row">
+    <div class="row" id="createRow" hidden>
       <input class="in" id="titleIn" maxlength="80" placeholder="강의 제목 (예: 컬러 콘서트)" />
       <button class="btn" id="createBtn">만들기</button>
     </div>
@@ -201,7 +201,7 @@ button{cursor:pointer;border:0;background:none}
     <button class="tb pink" id="qrBtn">QR 크게</button>
     <button class="tb" id="sideBtn">소통 칸 숨기기</button>
     <button class="tb" id="fsBtn">전체화면</button>
-    <button class="tb" id="backBtn">방 목록</button>
+    <button class="tb" id="backBtn" hidden>방 목록</button>
     <input type="file" id="pdfFile" accept="application/pdf,.pdf" hidden />
   </header>
 
@@ -308,11 +308,15 @@ button{cursor:pointer;border:0;background:none}
     if (error) { $('#loginErr').textContent = '비밀번호 확인'; ss.set('pbs_live_pw', null); show('login'); return false; }
     pw = p; ss.set('pbs_live_pw', p);
     renderRooms(data || []);
-    const want = new URLSearchParams(location.search).get('r');
-    const r = want && (data||[]).find(x => x.code === want.toUpperCase());
+    const qs = new URLSearchParams(location.search);
+    const want = qs.get('r');
+    const list = data || [];
+    const r = (want && list.find(x => x.code === want.toUpperCase()))
+      || (!qs.has('rooms') && (list.find(x => x.is_open) || list[0]));
     if (r) openRoom(r); else show('lobby');
     return true;
   }
+  if (new URLSearchParams(location.search).has('rooms')) $('#createRow').hidden = false;
   $('#loginBtn').onclick = () => login($('#pwIn').value);
   $('#pwIn').addEventListener('keydown', e => { if (e.key==='Enter') login($('#pwIn').value); });
 
