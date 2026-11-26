@@ -365,6 +365,7 @@ button{cursor:pointer;border:0;background:none}
   let lastGroup;
   function showGroup(raw){
     let g; try { g = JSON.parse(raw); } catch(e) { return; }
+    if (g && g.type === 'teams') return showTeam(g);
     if (!g || !ENG[g.e]) return;
     const C = ENG[g.e].c, meIn = (g.names||[]).some(n => String(n).trim() === nick.trim()) || engine === g.e;
     $('#gpEy').textContent = '🎨 컬러 엔진 그룹'; $('#gpEy').style.color = C;
@@ -376,6 +377,19 @@ button{cursor:pointer;border:0;background:none}
     if (meIn && navigator.vibrate) navigator.vibrate([150,80,150]);
   }
   $('#gpClose').onclick = () => $('#grpPop').hidden = true;
+  function showTeam(g){
+    const me = nick.trim(); const ti = (g.teams||[]).findIndex(t => t.m.some(m => String(m.n).trim() === me));
+    if (ti < 0) return;
+    const t = g.teams[ti], called = g.cur === ti;
+    if (g.cur !== null && g.cur !== undefined && !called) return;
+    $('#gpEy').textContent = called ? '📣 지금 우리 팀 차례!' : '🤝 오늘의 컬러 팀'; $('#gpEy').style.color = 'var(--pbs)';
+    $('#gpTitle').innerHTML = `나는 <span style="color:var(--pbs)">${t.no}팀</span>`;
+    $('#gpNames').innerHTML = t.m.map(m => `<span class="${String(m.n).trim()===me?'me':''}" style="background:${ENG[m.e]?ENG[m.e].c:'#9A9A9A'}">${m.e?m.e+' · ':''}${esc(m.n)}</span>`).join('');
+    $('#gpMe').hidden = false; $('#gpMe').style.color = 'var(--pbs)';
+    $('#gpMe').textContent = called ? '👋 일어나서 손 흔들어 주세요!' : '이따 만나서 인사하고 명함 교환해요';
+    $('#grpPop').hidden = false; clearTimeout(showGroup._t); showGroup._t = setTimeout(() => $('#grpPop').hidden = true, 15000);
+    if (called && navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
+  }
   let lastDraw;
   function showWin(t){
     const parts = t.split(' · '); const gift = parts.length > 1 ? parts.shift() : '';
