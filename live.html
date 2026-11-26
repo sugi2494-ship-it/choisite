@@ -50,7 +50,7 @@ button{cursor:pointer;border:0;background:none}
 .me{padding:0 18px 12px;font-size:13px;color:var(--ink3)}
 .me b{color:var(--ink);font-weight:700}
 .me button{color:var(--pbs);font-weight:700;font-size:13px;margin-left:6px;text-decoration:underline;text-underline-offset:3px}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);padding:0 10px}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);padding:0 10px}
 .tab{padding:12px 0 11px;font-size:15px;font-weight:700;color:var(--ink3);border-bottom:2.5px solid transparent;position:relative}
 .tab.on{color:var(--ink);border-bottom-color:var(--pbs)}
 .tab .badge{position:absolute;top:8px;margin-left:3px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--pbs);color:#fff;font-size:11px;font-weight:800;line-height:18px;display:none}
@@ -63,6 +63,10 @@ button{cursor:pointer;border:0;background:none}
 .spot p{font-size:16px;font-weight:700;line-height:1.5}
 .spot em{display:block;font-style:normal;font-size:12.5px;opacity:.85;margin-top:6px}
 
+.draw{display:none;margin:14px 18px 0;padding:16px;border-radius:14px;background:#16121B;color:#fff;text-align:center}
+.draw.show{display:block;animation:pop .5s ease}
+.draw small{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;color:#FFC94D}
+.draw p{font-size:26px;font-weight:900;letter-spacing:.02em;margin-top:4px;line-height:1.3}
 /* 본문 */
 .pane{display:none;flex:1;padding:14px 18px 130px}
 .pane.on{display:block}
@@ -146,7 +150,7 @@ button{cursor:pointer;border:0;background:none}
     <img class="logo" src="/assets/pbs-logo.png" alt="PBS COLOR LAB" />
     <p class="eyebrow">LIVE CLASS</p>
     <h1 id="gateTitle">강의 실시간 소통방</h1>
-    <p class="sub">질문 · 채팅 · 강의 자료</p>
+    <p class="sub">실시간 채팅 · 강의 자료</p>
     <label class="field" id="codeField">
       <span>입장 코드</span>
       <input class="code" id="codeIn" maxlength="10" inputmode="numeric" autocomplete="off" autocapitalize="characters" placeholder="20271004" />
@@ -171,23 +175,16 @@ button{cursor:pointer;border:0;background:none}
       <h1 class="title" id="roomTitle"></h1>
       <p class="me"><b id="meNick"></b> 님으로 참여 중<button id="renameBtn">변경</button></p>
       <nav class="tabs" role="tablist">
-        <button class="tab on" data-tab="q" role="tab">질문<span class="badge" id="bq"></span></button>
-        <button class="tab" data-tab="c" role="tab" id="chatTab">채팅<span class="badge" id="bc"></span></button>
+        <button class="tab on" data-tab="c" role="tab" id="chatTab">채팅<span class="badge" id="bc"></span></button>
         <button class="tab" data-tab="m" role="tab">자료실<span class="badge" id="bm"></span></button>
       </nav>
     </header>
 
-    <div class="spot" id="spot"><small>지금 답변 중인 질문</small><p id="spotText"></p><em id="spotWho"></em></div>
-    <div class="closed" id="closedNote">종료된 강의 · 질문과 자료는 계속 볼 수 있음</div>
+    <div class="draw" id="draw"><small>🎁 행운권 당첨</small><p id="drawText"></p></div>
+    <div class="spot" id="spot"><small>지금 소개하는 글</small><p id="spotText"></p><em id="spotWho"></em></div>
+    <div class="closed" id="closedNote">종료된 강의 · 채팅과 자료는 계속 볼 수 있음</div>
 
-    <section class="pane on" id="pane-q">
-      <div class="sortbar">
-        <button class="chip on" data-sort="top">공감순</button>
-        <button class="chip" data-sort="new">최신순</button>
-      </div>
-      <div id="qList"></div>
-    </section>
-    <section class="pane" id="pane-c"><div id="cList"></div></section>
+    <section class="pane on" id="pane-c"><div id="cList"></div></section>
     <section class="pane" id="pane-m"><div id="mList"></div></section>
     <p class="foot">PBS COLOR LAB · 최해숙</p>
   </div>
@@ -195,7 +192,7 @@ button{cursor:pointer;border:0;background:none}
 
 <div class="composer hide" id="composer">
   <div class="composer-in">
-    <textarea id="msgIn" rows="1" maxlength="300" placeholder="강사님께 질문하기"></textarea>
+    <textarea id="msgIn" rows="1" maxlength="300" placeholder="메시지 보내기"></textarea>
     <button class="send" id="sendBtn" disabled>보내기</button>
   </div>
 </div>
@@ -214,11 +211,11 @@ button{cursor:pointer;border:0;background:none}
     set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
   };
 
-  let room = null, msgs = new Map(), mats = [], tab = 'q', sort = 'top', channel = null;
+  let room = null, msgs = new Map(), mats = [], tab = 'c', sort = 'top', channel = null;
   let nick = store.get('pbs_live_nick', '');
   let liked = new Set(store.get('pbs_live_liked', []));
   let mine = new Set(store.get('pbs_live_mine', []));
-  const seen = { q: 0, c: 0, m: 0 };
+  const seen = { c: 0, m: 0 };
 
   const params = new URLSearchParams(location.search);
   const urlCode = (params.get('r') || '').toUpperCase().trim();
@@ -238,7 +235,7 @@ button{cursor:pointer;border:0;background:none}
     if (code.length < 4) return $('#gateErr').textContent = '입장 코드 확인';
     if (!n) return $('#gateErr').textContent = '닉네임 입력';
     $('#enterBtn').disabled = true;
-    const { data, error } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id').eq('code', code).maybeSingle();
+    const { data, error } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id,draw_text').eq('code', code).maybeSingle();
     $('#enterBtn').disabled = false;
     if (error || !data) return $('#gateErr').textContent = '강의방을 찾을 수 없음 · 코드 확인';
     nick = n; store.set('pbs_live_nick', nick);
@@ -249,7 +246,7 @@ button{cursor:pointer;border:0;background:none}
     applyRoom();
     await loadAll();
     subscribe();
-    setTab('q');
+    setTab('c');
   }
   $('#enterBtn').onclick = enter;
   [$('#codeIn'), $('#nickIn')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') enter(); }));
@@ -264,7 +261,7 @@ button{cursor:pointer;border:0;background:none}
     $('#liveDot').classList.toggle('off', !room.is_open);
     $('#liveDot').lastChild.textContent = room.is_open ? 'LIVE' : '종료';
     $('#closedNote').classList.toggle('show', !room.is_open);
-    $('#chatTab').hidden = !room.chat_on && tab !== 'c';
+    $('#draw').classList.toggle('show', !!room.draw_text); $('#drawText').textContent = room.draw_text || '';
     renderSpot(); updateComposer();
   }
 
@@ -297,7 +294,7 @@ button{cursor:pointer;border:0;background:none}
       }).subscribe());
   }
   async function refreshRoom(){
-    const { data } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id').eq('id', room.id).maybeSingle();
+    const { data } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id,draw_text').eq('id', room.id).maybeSingle();
     if (data) { Object.assign(room, data); applyRoom(); }
   }
   async function reloadMats(){
@@ -308,7 +305,7 @@ button{cursor:pointer;border:0;background:none}
   setInterval(() => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); } }, 20000);
   document.addEventListener('visibilitychange', () => { if (room && document.visibilityState === 'visible') { refreshRoom(); loadAll(); subscribe(); } });
 
-  function renderAll(){ renderQ(); renderC(); renderMats(); renderSpot(); badges(); }
+  function renderAll(){ renderC(); renderMats(); renderSpot(); badges(); }
 
   function renderSpot(){
     const s = room && room.spotlight_id ? msgs.get(room.spotlight_id) : null;
@@ -345,7 +342,7 @@ button{cursor:pointer;border:0;background:none}
         ${mine.has(m.id)?'':`<span class="who">${esc(m.nickname)}</span>`}
         <div class="bub">${esc(m.body)}</div><time>${hm(m.created_at)}</time>
       </div>`).join('')
-      : '<div class="empty"><b>💬</b>인사 한마디로 시작</div>';
+      : '<div class="empty"><b>💬</b>지금 끌리는 컬러를 남겨 주세요</div>';
     if (tab === 'c' && atBottom) window.scrollTo(0, document.body.scrollHeight);
   }
 
@@ -363,12 +360,12 @@ button{cursor:pointer;border:0;background:none}
       : '<div class="empty"><b>📁</b>강의 자료 준비 중<br>공유되면 여기에 바로 표시</div>';
   }
 
-  function counts(){ const v = [...msgs.values()]; return { q: v.filter(m=>m.kind==='question').length, c: v.filter(m=>m.kind==='chat').length, m: mats.length }; }
+  function counts(){ const v = [...msgs.values()]; return { c: v.filter(m=>m.kind==='chat').length, m: mats.length }; }
   function badges(){
     const n = counts();
     if (!seen.init) { Object.assign(seen, n, {init:true}); }
     seen[tab] = n[tab];
-    for (const k of ['q','c','m']) { const d = n[k] - seen[k]; const b = $('#b'+k); b.textContent = d > 99 ? '99+' : d; b.classList.toggle('show', d > 0 && k !== tab); }
+    for (const k of ['c','m']) { const d = n[k] - seen[k]; const b = $('#b'+k); b.textContent = d > 99 ? '99+' : d; b.classList.toggle('show', d > 0 && k !== tab); }
   }
 
   function setTab(t){
@@ -379,12 +376,11 @@ button{cursor:pointer;border:0;background:none}
     if (t === 'c') setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 30); else window.scrollTo(0, 0);
   }
   document.querySelectorAll('.tab').forEach(b => b.onclick = () => setTab(b.dataset.tab));
-  document.querySelectorAll('.chip').forEach(b => b.onclick = () => { sort = b.dataset.sort; document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x===b)); renderQ(); });
-
+  
   function updateComposer(){
-    const show = room && room.is_open && (tab === 'q' || (tab === 'c' && room.chat_on));
+    const show = room && room.is_open && tab === 'c' && room.chat_on;
     $('#composer').classList.toggle('hide', !show);
-    $('#msgIn').placeholder = tab === 'q' ? '강사님께 질문하기' : '메시지 보내기';
+    $('#msgIn').placeholder = '메시지 보내기';
   }
 
   const ta = $('#msgIn');
@@ -396,7 +392,7 @@ button{cursor:pointer;border:0;background:none}
   async function send(){
     const body = ta.value.trim(); if (!body || sending) return;
     sending = true; $('#sendBtn').disabled = true;
-    const kind = tab === 'c' ? 'chat' : 'question';
+    const kind = 'chat';
     const { data, error } = await sb.rpc('live_post', { p_code: room.code, p_kind: kind, p_nick: nick, p_body: body });
     sending = false;
     if (error) { toast(/잠시/.test(error.message) ? '조금 천천히 보내기' : /종료/.test(error.message) ? '종료된 강의' : '전송 실패 · 다시 시도'); $('#sendBtn').disabled = false; return; }

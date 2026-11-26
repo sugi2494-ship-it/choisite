@@ -51,8 +51,8 @@ button{cursor:pointer;border:0;background:none}
 .link-s{font-size:13px;color:var(--ink3);text-decoration:underline;text-underline-offset:3px;margin-top:18px;display:inline-block}
 
 /* 진행 화면 */
-.host{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:52px minmax(0,1fr)}
-.host.no-side{grid-template-columns:minmax(0,1fr) 0}
+#host{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:52px minmax(0,1fr)}
+#host.no-side{grid-template-columns:minmax(0,1fr) 0}
 .bar{grid-column:1/3;display:flex;align-items:center;gap:10px;padding:0 14px;background:#0E0B12;color:#fff;border-bottom:1px solid #2A2232}
 .bar img{height:28px;background:#fff;border-radius:7px;padding:3px 6px}
 .bar .ttl{font-weight:800;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
@@ -91,15 +91,47 @@ button{cursor:pointer;border:0;background:none}
 .qr-full .url{font-size:clamp(13px,1.1vw,17px);color:var(--ink3);margin-top:6px}
 .qr-full .close{position:absolute;top:16px;right:16px}
 
+/* 행운권 추첨 */
+.draw-full{position:absolute;inset:0;z-index:6;background:radial-gradient(circle at 50% 40%,#3A1230,#16121B 70%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3vw}
+.draw-full .close{position:absolute;top:16px;right:16px}
+.draw-full .eyebrow{color:#FFC94D;font-size:clamp(13px,1.1vw,17px)}
+.draw-full h2{font-size:clamp(24px,2.6vw,44px);font-weight:800;margin:4px 0 1.5vh}
+.drum{position:relative;width:min(30vh,24vw);aspect-ratio:1;border-radius:50%;margin:0 auto 2vh;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.18),rgba(255,255,255,.04) 60%);border:3px solid rgba(255,255,255,.25);box-shadow:inset 0 0 40px rgba(255,255,255,.08)}
+.drum i{position:absolute;width:11%;aspect-ratio:1;border-radius:50%;box-shadow:inset -4px -6px 10px rgba(0,0,0,.25),inset 4px 4px 8px rgba(255,255,255,.45)}
+.drum.spin i{animation:jig .35s ease-in-out infinite alternate}
+@keyframes jig{to{transform:translate(var(--dx),var(--dy)) rotate(180deg)}}
+.draw-nums{display:flex;gap:3vw;justify-content:center;flex-wrap:wrap;margin-bottom:2.5vh;min-height:clamp(110px,min(13vw,22vh),220px)}
+.ball{width:clamp(110px,min(13vw,22vh),220px);aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-weight:900;font-size:clamp(54px,7vw,120px);line-height:1;font-variant-numeric:tabular-nums;box-shadow:inset -14px -18px 30px rgba(0,0,0,.28),inset 12px 12px 24px rgba(255,255,255,.4),0 14px 40px rgba(0,0,0,.35);transition:background .08s}
+.ball small{font-size:.26em;font-weight:800;opacity:.9;margin-top:.15em}
+.draw-nums.rolling .ball{animation:shake .12s linear infinite}
+@keyframes shake{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(-4px,3px) rotate(-6deg)}50%{transform:translate(3px,-3px) rotate(5deg)}75%{transform:translate(-2px,-4px) rotate(-3deg)}100%{transform:translate(0,0)}}
+.draw-nums.done .ball{animation:bang .7s cubic-bezier(.2,1.6,.4,1) both}
+.draw-nums.done .ball:nth-child(2){animation-delay:.35s}
+.draw-nums.done .ball:nth-child(3){animation-delay:.7s}
+@keyframes bang{0%{transform:scale(.2) rotate(-200deg);filter:brightness(2)}100%{transform:scale(1) rotate(0);filter:none}}
+.draw-full.flash{animation:flash .6s ease}
+@keyframes flash{0%{background-color:#fff}100%{}}
+#confetti{position:absolute;inset:0;pointer-events:none;z-index:1}
+.draw-full > *:not(#confetti){position:relative;z-index:2}
+.draw-full .close{position:absolute}
+.sound-sw{font-size:12.5px;color:#BDB3C6;text-decoration:underline;text-underline-offset:3px}
+.draw-set{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.08);padding:12px 14px;border-radius:14px}
+.draw-set label{font-size:14px;font-weight:700;color:#EDE6F2;display:flex;align-items:center;gap:6px}
+.draw-set input{height:40px;width:74px;border-radius:9px;border:0;padding:0 10px;font-size:16px;font-weight:700;color:var(--ink)}
+.draw-set .wide input{width:200px;font-weight:500}
+.draw-set .btn{height:42px}
+.draw-note{margin-top:12px;font-size:13px;color:#BDB3C6;min-height:20px}
+.draw-foot{margin-top:6px;display:flex;gap:14px}
+.draw-foot button{font-size:12.5px;color:#BDB3C6;text-decoration:underline;text-underline-offset:3px}
 /* 오른쪽 소통 칸 */
 .side{background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-left:1px solid #2A2232}
-.host.no-side .side{display:none}
+#host.no-side .side{display:none}
 .spot{margin:12px 12px 0;padding:12px 14px;border-radius:12px;background:linear-gradient(135deg,var(--pbs),var(--pbs-hot));color:#fff;position:relative}
 .spot small{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;opacity:.9}
 .spot p{font-size:16px;font-weight:700;line-height:1.45;margin-top:3px;padding-right:44px}
 .spot em{display:block;font-style:normal;font-size:12px;opacity:.85;margin-top:4px}
 .spot button{position:absolute;top:10px;right:10px;font-size:12px;font-weight:800;color:var(--pbs);background:#fff;border-radius:8px;padding:4px 8px}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);margin-top:8px}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);border-bottom:1px solid var(--line);margin-top:8px}
 .tab{padding:10px 0 9px;font-size:14.5px;font-weight:700;color:var(--ink3);border-bottom:2.5px solid transparent}
 .tab.on{color:var(--ink);border-bottom-color:var(--pbs)}
 .tab span{font-size:12px;color:var(--pbs);margin-left:3px}
@@ -123,8 +155,10 @@ button{cursor:pointer;border:0;background:none}
 .msg .bub{display:inline-block;max-width:100%;margin-top:2px;padding:7px 11px;border-radius:12px 12px 12px 4px;background:var(--bg3);font-size:14.5px;white-space:pre-wrap}
 .msg.host .who{color:var(--pbs);font-weight:800}
 .msg.host .bub{background:var(--tint)}
-.msg .x{font-size:11px;color:var(--ink4);margin-left:6px;visibility:hidden}
-.msg:hover .x{visibility:visible}
+.msg .x{font-size:11px;font-weight:700;color:var(--ink4);margin-left:8px;visibility:hidden}
+.msg:hover .x,.msg .x.on{visibility:visible}
+.msg .x[data-a=spot]{color:var(--pbs)}
+.msg.spotted .bub{outline:2px solid var(--pbs)}
 .mat{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
 .mat a{flex:1;min-width:0;font-weight:700;font-size:14.5px;color:inherit;text-decoration:none}
 .mat a:hover{color:var(--pbs)}
@@ -150,7 +184,7 @@ button{cursor:pointer;border:0;background:none}
 .sw button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:24px;font-size:14px;font-weight:600;opacity:0;transition:.25s;z-index:60;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%)}
-.host:fullscreen{background:var(--stage)}
+#host:fullscreen{background:var(--stage)}
 @media (max-width:900px){ :root{--side:320px} .bar .ttl{display:none} }
 </style>
 </head>
@@ -198,6 +232,7 @@ button{cursor:pointer;border:0;background:none}
     <span class="code" id="hCode"></span>
     <span class="sp"></span>
     <button class="tb" id="pdfBtn">PDF 올리기</button>
+    <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B">🎁 행운권 추첨</button>
     <button class="tb pink" id="qrBtn">QR 크게</button>
     <button class="tb" id="sideBtn">소통 칸 숨기기</button>
     <button class="tb" id="fsBtn">전체화면</button>
@@ -223,6 +258,23 @@ button{cursor:pointer;border:0;background:none}
       <button id="nextBtn" aria-label="다음">›</button>
     </div>
 
+    <div class="draw-full" id="drawFull" hidden>
+      <button class="tb close" id="drawClose" style="background:var(--ink)">닫기</button>
+      <p class="eyebrow">LUCKY DRAW</p>
+      <h2 id="drawGift">행운권 추첨</h2>
+      <canvas id="confetti"></canvas>
+      <div class="drum" id="drum"></div>
+      <div class="draw-nums" id="drawNums"></div>
+      <div class="draw-set" id="drawSet">
+        <label>번호 <input id="dMin" type="number" value="1" min="1"> ~ <input id="dMax" type="number" value="100" min="1"></label>
+        <label>인원 <input id="dCnt" type="number" value="2" min="1" max="10"></label>
+        <label class="wide">선물 <input id="dGift" placeholder="예) 컬러 팔찌 세트"></label>
+        <button class="btn" id="drawGo">추첨하기</button>
+      </div>
+      <p class="draw-note" id="drawNote"></p>
+      <div class="draw-foot"><button class="sound-sw" id="soundSw">🔊 소리 켜짐</button><button id="drawClear">청중 화면에서 내리기</button><button id="drawReset">당첨 기록 초기화</button></div>
+    </div>
+
     <div class="qr-full" id="qrFull" hidden>
       <button class="tb close" id="qrClose" style="background:var(--ink)">닫기</button>
       <div class="qrbox" id="qrBig"></div>
@@ -240,16 +292,15 @@ button{cursor:pointer;border:0;background:none}
 
   <aside class="side">
     <div class="spot" id="spot" hidden>
-      <small>지금 답변 중</small><p id="spotText"></p><em id="spotWho"></em>
+      <small>지금 소개하는 글</small><p id="spotText"></p><em id="spotWho"></em>
       <button id="spotOff">내리기</button>
     </div>
     <nav class="tabs">
-      <button class="tab on" data-tab="q">질문<span id="cq"></span></button>
-      <button class="tab" data-tab="c">채팅<span id="cc"></span></button>
+      <button class="tab on" data-tab="c">채팅<span id="cc"></span></button>
       <button class="tab" data-tab="m">자료실<span id="cm"></span></button>
     </nav>
-    <div class="list" id="listQ"></div>
-    <div class="list" id="listC" hidden></div>
+    <div class="list" id="listQ" hidden></div>
+    <div class="list" id="listC"></div>
     <div class="list" id="listM" hidden>
       <div class="addbox">
         <button class="small-btn" id="matFileBtn">파일 올리기 (PDF · 이미지 · 문서, 50MB까지)</button>
@@ -260,7 +311,7 @@ button{cursor:pointer;border:0;background:none}
       </div>
       <div id="matList"></div>
     </div>
-    <div class="compose" id="compose" hidden>
+    <div class="compose" id="compose">
       <input id="sayIn" maxlength="500" placeholder="강사 메시지 보내기" />
       <button id="sayBtn">보내기</button>
     </div>
@@ -298,7 +349,7 @@ button{cursor:pointer;border:0;background:none}
   const show = id => ['login','lobby','host'].forEach(x => $('#'+x).hidden = x !== id);
 
   let pw = ss.get('pbs_live_pw') || '';
-  let room = null, msgs = new Map(), mats = [], tab = 'q', channels = [], token = null;
+  let room = null, msgs = new Map(), mats = [], tab = 'c', channels = [], token = null;
   let pdf = null, page = 1, rendering = false, pendingPage = null;
 
   /* ── 로그인 ── */
@@ -389,8 +440,9 @@ button{cursor:pointer;border:0;background:none}
     if (field==='spotlight') room.spotlight_id = value ? +value : null;
     else if (field==='slides') room.slides_url = value || null;
     else if (field==='slides_name') room.slides_name = value;
+    else if (field==='draw') room.draw_text = value || null;
     else room[field] = value === true || value === 'true' ? true : value === false || value === 'false' ? false : value;
-    applyRoom(); renderQ(); return true;
+    applyRoom(); renderAll(); return true;
   }
   $('#openSw').onclick = () => { if (room.is_open && !confirm('강의를 종료할까요? 청중 입력창이 닫힘')) return; hostRoom('is_open', !room.is_open); };
   $('#chatSw').onclick = () => hostRoom('chat_on', !room.chat_on);
@@ -413,7 +465,7 @@ button{cursor:pointer;border:0;background:none}
     }).subscribe());
     channels.push(sb.channel('ha-'+room.id).on('postgres_changes',{event:'*',schema:'public',table:'live_materials'}, () => reloadMats()).subscribe());
     channels.push(sb.channel('hr-'+room.id).on('postgres_changes',{event:'UPDATE',schema:'public',table:'live_rooms'}, p => {
-      if (room && p.new.id === room.id) { Object.assign(room, p.new); applyRoom(); renderQ(); }
+      if (room && p.new.id === room.id) { Object.assign(room, p.new); applyRoom(); renderAll(); }
     }).subscribe());
   }
   async function reloadMats(){ const { data } = await sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at',{ascending:false}); mats = data||[]; renderM(); counts(); }
@@ -422,7 +474,6 @@ button{cursor:pointer;border:0;background:none}
   function renderAll(){ renderQ(); renderC(); renderM(); renderSpot(); counts(); }
   function counts(){
     const v=[...msgs.values()];
-    $('#cq').textContent = v.filter(m=>m.kind==='question'&&!m.answered).length || '';
     $('#cc').textContent = v.filter(m=>m.kind==='chat').length || '';
     $('#cm').textContent = mats.length || '';
   }
@@ -452,8 +503,9 @@ button{cursor:pointer;border:0;background:none}
     const box = $('#listC'); const atBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 60;
     const list = [...msgs.values()].filter(m=>m.kind==='chat').sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
     box.innerHTML = list.length ? list.map(m => `
-      <div class="msg${m.is_host?' host':''}"><span class="who">${esc(m.nickname)} · ${hm(m.created_at)}</span><button class="x" data-a="delete" data-id="${m.id}">삭제</button><br>
-      <span class="bub">${esc(m.body)}</span></div>`).join('') : '<p class="empty">채팅 없음</p>';
+      <div class="msg${m.is_host?' host':''}${room.spotlight_id===m.id?' spotted':''}"><span class="who">${esc(m.nickname)} · ${hm(m.created_at)}</span>
+      ${room.spotlight_id===m.id?`<button class="x on" data-a="unspot" data-id="${m.id}">내리기</button>`:`<button class="x" data-a="spot" data-id="${m.id}">화면에 띄우기</button>`}<button class="x" data-a="delete" data-id="${m.id}">삭제</button><br>
+      <span class="bub">${esc(m.body)}</span></div>`).join('') : '<p class="empty">아직 채팅 없음<br>표지 QR로 입장 안내</p>';
     if (atBottom) box.scrollTop = box.scrollHeight;
   }
   function renderM(){
@@ -494,7 +546,7 @@ button{cursor:pointer;border:0;background:none}
     const v = $('#sayIn').value.trim(); if (!v) return;
     const { error } = await sb.rpc('live_host_say', { p_pw: pw, p_room: room.id, p_body: v });
     if (error) return toast('전송 실패');
-    $('#sayIn').value = ''; loadAll();
+    $('#sayIn').value = ''; $('#sayIn').blur(); loadAll();
   }
   $('#sayBtn').onclick = say;
   $('#sayIn').addEventListener('keydown', e => { if (e.key==='Enter' && !e.isComposing) say(); });
@@ -591,15 +643,134 @@ button{cursor:pointer;border:0;background:none}
   $('#navL').onclick = () => go(-1); $('#navR').onclick = () => go(1);
   document.addEventListener('keydown', e => {
     if ($('#host').hidden) return;
-    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (e.key === 'PageDown' || e.key === 'PageUp') { e.preventDefault(); go(e.key === 'PageDown' ? 1 : -1); return; }
+    const tag = document.activeElement.tagName;
+    if (['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+    if (tag === 'BUTTON' && (e.key === 'Enter' || e.key === ' ')) return;
     if (['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)) { e.preventDefault(); go(1); }
     else if (['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); go(-1); }
     else if (e.key==='Home') { page=1; render(1); }
     else if (e.key==='End' && pdf) { page=pdf.numPages; render(page); }
     else if (e.key==='q' || e.key==='Q') toggleQR();
-    else if (e.key==='Escape' && !$('#qrFull').hidden) toggleQR(false);
+    else if (e.key==='Escape') { if (!$('#qrFull').hidden) toggleQR(false); if (!$('#drawFull').hidden) showDraw(false); }
   });
   let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => render(page), 150); });
+
+  /* ── 행운권 추첨 ── */
+  const wonKey = () => 'pbs_live_won_' + (room ? room.id : '');
+  const getWon = () => ls.get(wonKey(), []);
+  function showDraw(on){ $('#drawFull').hidden = !on; if (on) { $('#qrFull').hidden = true; noteWon(); } }
+  function noteWon(){ const w = getWon(); $('#drawNote').textContent = w.length ? `지금까지 당첨: ${w.join(', ')}번 (다시 뽑히지 않음)` : '같은 번호는 두 번 뽑히지 않음'; }
+  $('#drawBtn').onclick = () => showDraw($('#drawFull').hidden);
+  $('#drawClose').onclick = () => showDraw(false);
+  const PAL = ['#E5007F','#FF3366','#F5A623','#00A878','#0077B6','#7B2FBE','#FF2D9B','#00B4D8'];
+  const rnd = k => { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] % k; };
+  let soundOn = ls.get('pbs_live_sound', true);
+  const setSoundLabel = () => $('#soundSw').textContent = soundOn ? '🔊 소리 켜짐' : '🔇 소리 꺼짐';
+  setSoundLabel();
+  $('#soundSw').onclick = () => { soundOn = !soundOn; ls.set('pbs_live_sound', soundOn); setSoundLabel(); };
+
+  /* 두구두구 + 팡파레 (직접 합성한 소리, 외부 음원 없음) */
+  let AC = null;
+  function ac(){ if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); return AC; }
+  function noiseBuf(c, dur){ const b = c.createBuffer(1, c.sampleRate*dur, c.sampleRate); const d = b.getChannelData(0); for (let i=0;i<d.length;i++) d[i] = Math.random()*2-1; return b; }
+  function drumroll(c, t0, dur){
+    let t = t0, gap = 0.11; const nb = noiseBuf(c, 0.2);
+    while (t < t0 + dur){
+      const p = (t - t0) / dur;
+      const src = c.createBufferSource(); src.buffer = nb;
+      const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1700 + p*900; bp.Q.value = 0.9;
+      const g = c.createGain(); const v = 0.12 + p*0.45;
+      g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+      const o = c.createOscillator(); o.type = 'triangle'; o.frequency.setValueAtTime(190, t); o.frequency.exponentialRampToValueAtTime(90, t+0.08);
+      const og = c.createGain(); og.gain.setValueAtTime(v*0.5, t); og.gain.exponentialRampToValueAtTime(0.001, t+0.08);
+      src.connect(bp).connect(g).connect(c.destination); o.connect(og).connect(c.destination);
+      src.start(t); src.stop(t+0.1); o.start(t); o.stop(t+0.09);
+      t += gap; gap = Math.max(0.035, gap * 0.965);
+    }
+  }
+  function fanfare(c, t){
+    const nb = noiseBuf(c, 1.6); const src = c.createBufferSource(); src.buffer = nb;
+    const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 4000;
+    const g = c.createGain(); g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.001, t+1.5);
+    src.connect(hp).connect(g).connect(c.destination); src.start(t);
+    const kick = c.createOscillator(); const kg = c.createGain(); kick.frequency.setValueAtTime(140, t); kick.frequency.exponentialRampToValueAtTime(40, t+0.3);
+    kg.gain.setValueAtTime(0.9, t); kg.gain.exponentialRampToValueAtTime(0.001, t+0.4); kick.connect(kg).connect(c.destination); kick.start(t); kick.stop(t+0.4);
+    [[523.25,0],[659.25,0.12],[783.99,0.24],[1046.5,0.36]].forEach(([f,d]) => {
+      ['triangle','sawtooth'].forEach((type,k) => {
+        const o = c.createOscillator(); o.type = type; o.frequency.value = f*(k?1.003:1);
+        const og = c.createGain(); const st = t + d; const len = d === 0.36 ? 1.4 : 0.5;
+        og.gain.setValueAtTime(0.0001, st); og.gain.exponentialRampToValueAtTime(k?0.04:0.16, st+0.02); og.gain.exponentialRampToValueAtTime(0.001, st+len);
+        o.connect(og).connect(c.destination); o.start(st); o.stop(st+len+0.05);
+      });
+    });
+  }
+
+  /* 추첨 통 속 색 공 */
+  function fillDrum(){
+    const d = $('#drum'); d.innerHTML = '';
+    for (let i=0;i<26;i++){
+      const el = document.createElement('i'); const ang = Math.random()*Math.PI*2, r = Math.random()*36;
+      el.style.left = (50 + Math.cos(ang)*r - 5.5) + '%'; el.style.top = (50 + Math.sin(ang)*r - 5.5) + '%';
+      el.style.background = PAL[i % PAL.length];
+      el.style.setProperty('--dx', (Math.random()*60-30) + 'px'); el.style.setProperty('--dy', (Math.random()*60-30) + 'px');
+      el.style.animationDuration = (0.18 + Math.random()*0.3) + 's';
+      d.appendChild(el);
+    }
+  }
+  fillDrum();
+
+  /* 색종이 */
+  function confetti(){
+    const cv = $('#confetti'), box = $('#drawFull'); cv.width = box.clientWidth; cv.height = box.clientHeight;
+    const g = cv.getContext('2d'); const parts = [];
+    for (let i=0;i<220;i++) parts.push({ x: cv.width/2 + (Math.random()-.5)*cv.width*0.3, y: cv.height*0.45, vx: (Math.random()-.5)*18, vy: -Math.random()*18-6, s: 6+Math.random()*8, c: PAL[i%PAL.length], r: Math.random()*6, vr: (Math.random()-.5)*0.4 });
+    const t0 = performance.now();
+    (function frame(now){
+      g.clearRect(0,0,cv.width,cv.height);
+      parts.forEach(p => { p.vy += 0.45; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.r += p.vr; g.save(); g.translate(p.x,p.y); g.rotate(p.r); g.fillStyle = p.c; g.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); g.restore(); });
+      if (now - t0 < 4500) requestAnimationFrame(frame); else g.clearRect(0,0,cv.width,cv.height);
+    })(t0);
+  }
+
+  $('#drawGo').onclick = async () => {
+    const lo = parseInt($('#dMin').value, 10), hi = parseInt($('#dMax').value, 10), n = parseInt($('#dCnt').value, 10);
+    if (!(lo >= 1 && hi >= lo && n >= 1 && n <= 10)) return toast('번호 범위와 인원 확인');
+    const won = new Set(getWon());
+    const pool = []; for (let i = lo; i <= hi; i++) if (!won.has(i)) pool.push(i);
+    if (pool.length < n) return toast('남은 번호가 부족함');
+    const picks = [];
+    for (let k = 0; k < n; k++) picks.push(pool.splice(rnd(pool.length), 1)[0]);
+    picks.sort((a,b) => a-b);
+    const colors = [...PAL].sort(() => Math.random()-.5);
+    const DUR = 3.6;
+    $('#drawGo').disabled = true;
+    $('#drawSet').style.visibility = 'hidden';
+    if (soundOn) { try { const c = ac(); drumroll(c, c.currentTime + 0.05, DUR); } catch(e){} }
+    const drum = $('#drum'); drum.hidden = false; drum.classList.add('spin');
+    const box = $('#drawNums'); box.className = 'draw-nums rolling';
+    box.innerHTML = picks.map(() => '<div class="ball">?<small>번</small></div>').join('');
+    const balls = [...box.children]; const t0 = Date.now();
+    await new Promise(res => { const tick = () => {
+      balls.forEach(b => { b.firstChild.nodeValue = lo + rnd(hi - lo + 1); b.style.background = `radial-gradient(circle at 35% 30%, #fff8, transparent 45%), ${PAL[rnd(PAL.length)]}`; });
+      const p = (Date.now()-t0)/(DUR*1000);
+      if (p < 1) setTimeout(tick, 50 + p*120); else res();
+    }; tick(); });
+    drum.classList.remove('spin');
+    balls.forEach((b, i) => { b.firstChild.nodeValue = picks[i]; b.style.background = `radial-gradient(circle at 35% 30%, #fff9, transparent 45%), ${colors[i % colors.length]}`; });
+    box.className = 'draw-nums done';
+    const full = $('#drawFull'); full.classList.remove('flash'); void full.offsetWidth; full.classList.add('flash');
+    if (soundOn) { try { fanfare(ac(), ac().currentTime + 0.02); } catch(e){} }
+    confetti();
+    $('#drawGo').disabled = false; $('#drawSet').style.visibility = '';
+    ls.set(wonKey(), [...won, ...picks].sort((a,b)=>a-b)); noteWon();
+    const gift = $('#dGift').value.trim();
+    $('#drawGift').textContent = gift ? `🎁 ${gift} 당첨` : '🎁 행운권 당첨';
+    await hostRoom('draw', (gift ? gift + ' · ' : '') + picks.map(x => x + '번').join(' · '));
+  };
+  $('#dGift').addEventListener('input', () => { const g = $('#dGift').value.trim(); $('#drawGift').textContent = g ? `🎁 ${g}` : '행운권 추첨'; });
+  $('#drawClear').onclick = () => hostRoom('draw', '').then(ok => ok && toast('청중 화면에서 내림'));
+  $('#drawReset').onclick = () => { if (confirm('당첨 기록을 지울까요? 이미 뽑힌 번호도 다시 뽑힐 수 있음')) { ls.set(wonKey(), []); noteWon(); } };
 
   /* ── 화면 전환 ── */
   function toggleQR(force){ const h = $('#qrFull'); h.hidden = force === undefined ? !h.hidden : !force; $('#qrBtn').textContent = h.hidden ? 'QR 크게' : 'QR 닫기'; }
