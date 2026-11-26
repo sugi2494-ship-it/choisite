@@ -51,17 +51,28 @@ button{cursor:pointer;border:0;background:none}
 .link-s{font-size:13px;color:var(--ink3);text-decoration:underline;text-underline-offset:3px;margin-top:18px;display:inline-block}
 
 /* 진행 화면 */
-#host{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:52px minmax(0,1fr)}
+#host{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr) var(--side);grid-template-rows:92px minmax(0,1fr)}
 #host.no-side{grid-template-columns:minmax(0,1fr) 0}
-.bar{grid-column:1/3;display:flex;align-items:center;gap:10px;padding:0 14px;background:#0E0B12;color:#fff;border-bottom:1px solid #2A2232}
-.bar img{height:28px;background:#fff;border-radius:7px;padding:3px 6px}
-.bar .ttl{font-weight:800;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
-.bar .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--pbs-hot)}
+.bar{grid-column:1/3;display:flex;align-items:center;gap:16px;padding:0 18px;background:linear-gradient(90deg,#0E0B12,#2A0F22 55%,#0E0B12);color:#fff;border-bottom:2px solid var(--pbs)}
+.bar img{height:40px;background:#fff;border-radius:10px;padding:4px 8px;flex:none}
+.b-title{display:flex;flex-direction:column;min-width:0;gap:2px}
+.b-title b{font-size:clamp(20px,1.9vw,30px);font-weight:900;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b-title span{font-size:clamp(13px,1.05vw,17px);color:#F3D6E8;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--pbs-hot);flex:none;align-self:flex-start;margin-top:18px}
 .bar .live i{width:8px;height:8px;border-radius:50%;background:var(--pbs-hot);animation:pulse 1.6s infinite}
 .bar .live.off{color:#888}.bar .live.off i{background:#888;animation:none}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,45,155,.55)}70%{box-shadow:0 0 0 8px rgba(255,45,155,0)}100%{box-shadow:0 0 0 0 rgba(255,45,155,0)}}
-.bar .code{font-weight:800;letter-spacing:.08em;font-size:14px;color:#fff;background:#2A2232;padding:4px 10px;border-radius:8px}
 .bar .sp{flex:1}
+.b-join{display:flex;align-items:center;gap:12px;flex:none;background:#fff;color:var(--ink);border-radius:12px;padding:6px 6px 6px 14px}
+.b-txt{display:flex;flex-direction:column;line-height:1.25;text-align:right}
+.b-txt small{font-size:12px;font-weight:700;color:var(--ink3)}
+.b-txt b{font-size:17px;font-weight:900}
+.b-txt b span{color:var(--pbs);letter-spacing:.04em}
+.b-txt em{font-style:normal;font-size:11.5px;color:var(--ink3)}
+.b-qr{width:76px;height:76px}
+.b-qr svg{width:100%;height:100%;display:block}
+.tools{position:fixed;top:100px;left:14px;z-index:20;display:flex;gap:6px;flex-wrap:wrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.tools.show,.tools:hover{opacity:1;pointer-events:auto}
 .tb{height:34px;padding:0 12px;border-radius:9px;background:#2A2232;color:#EDE6F2;font-size:13px;font-weight:700;white-space:nowrap}
 .tb:hover{background:#3A2F45}
 .tb.pink{background:var(--pbs);color:#fff}.tb.pink:hover{background:var(--pbs-deep)}
@@ -227,10 +238,18 @@ button{cursor:pointer;border:0;background:none}
 <div class="host" id="host" hidden>
   <header class="bar">
     <img src="/assets/pbs-logo.png" alt="" />
-    <span class="ttl" id="hTitle"></span>
+    <div class="b-title">
+      <b id="hTitle"></b>
+      <span id="hSub"></span>
+    </div>
     <span class="live" id="hLive"><i></i><span>LIVE</span></span>
-    <span class="code" id="hCode"></span>
     <span class="sp"></span>
+    <div class="b-join">
+      <div class="b-txt"><small>늦게 오신 분 · QR로 입장</small><b>입장 코드 <span id="hCode"></span></b><em>닉네임: 행운권 번호 + 이름</em></div>
+      <div class="b-qr" id="qrBar"></div>
+    </div>
+  </header>
+  <div class="tools" id="tools">
     <button class="tb" id="pdfBtn">PDF 올리기</button>
     <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B">🎁 행운권 추첨</button>
     <button class="tb pink" id="qrBtn">QR 크게</button>
@@ -238,7 +257,7 @@ button{cursor:pointer;border:0;background:none}
     <button class="tb" id="fsBtn">전체화면</button>
     <button class="tb" id="backBtn" hidden>방 목록</button>
     <input type="file" id="pdfFile" accept="application/pdf,.pdf" hidden />
-  </header>
+  </div>
 
   <main class="stage">
     <div class="canvas-wrap" id="canvasWrap">
@@ -269,7 +288,7 @@ button{cursor:pointer;border:0;background:none}
         <label>번호 <input id="dMin" type="number" value="1" min="1"> ~ <input id="dMax" type="number" value="100" min="1"></label>
         <label>인원 <input id="dCnt" type="number" value="2" min="1" max="10"></label>
         <label class="wide">선물 <input id="dGift" placeholder="예) 컬러 팔찌 세트"></label>
-        <button class="btn" id="drawGo">추첨하기</button>
+        <button class="btn" id="drawGo">추첨하기 (리모컨 ▶)</button>
       </div>
       <p class="draw-note" id="drawNote"></p>
       <div class="draw-foot"><button class="sound-sw" id="soundSw">🔊 소리 켜짐</button><button id="drawClear">청중 화면에서 내리기</button><button id="drawReset">당첨 기록 초기화</button></div>
@@ -420,7 +439,7 @@ button{cursor:pointer;border:0;background:none}
   $('#backBtn').onclick = () => { channels.forEach(c => sb.removeChannel(c)); channels=[]; room=null; history.replaceState(null,'','?'); refreshLobby(); show('lobby'); };
 
   function applyRoom(){
-    $('#hTitle').textContent = room.title; $('#qrTitle').innerHTML = room.title.split(' · ').map(esc).join('<br>');
+    $('#hTitle').textContent = room.title; $('#hSub').textContent = room.subtitle || ''; $('#qrTitle').innerHTML = esc(room.title) + (room.subtitle ? '<br><span style="font-size:.5em;font-weight:700;color:var(--ink3)">' + esc(room.subtitle) + '</span>' : '');
     document.title = room.title + ' · 진행 화면';
     $('#hCode').textContent = room.code; $('#sCode').textContent = room.code; $('#qrCode').textContent = room.code;
     $('#hLive').classList.toggle('off', !room.is_open); $('#hLive').lastChild.textContent = room.is_open ? 'LIVE' : '종료';
@@ -431,7 +450,7 @@ button{cursor:pointer;border:0;background:none}
   function drawQR(){
     const q = qrcode(0, 'M'); q.addData(AUD_URL + room.code); q.make();
     const svg = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
-    $('#qrSmall').innerHTML = svg; $('#qrBig').innerHTML = svg;
+    $('#qrSmall').innerHTML = svg; $('#qrBig').innerHTML = svg; $('#qrBar').innerHTML = svg;
   }
 
   async function hostRoom(field, value){
@@ -643,6 +662,7 @@ button{cursor:pointer;border:0;background:none}
   $('#navL').onclick = () => go(-1); $('#navR').onclick = () => go(1);
   document.addEventListener('keydown', e => {
     if ($('#host').hidden) return;
+    if (!$('#drawFull').hidden && ['PageDown','ArrowRight',' ','Enter'].includes(e.key) && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); if (!$('#drawGo').disabled) $('#drawGo').click(); return; }
     if (e.key === 'PageDown' || e.key === 'PageUp') { e.preventDefault(); go(e.key === 'PageDown' ? 1 : -1); return; }
     const tag = document.activeElement.tagName;
     if (['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
@@ -659,7 +679,7 @@ button{cursor:pointer;border:0;background:none}
   /* ── 행운권 추첨 ── */
   const wonKey = () => 'pbs_live_won_' + (room ? room.id : '');
   const getWon = () => ls.get(wonKey(), []);
-  function showDraw(on){ $('#drawFull').hidden = !on; if (on) { $('#qrFull').hidden = true; noteWon(); } }
+  function showDraw(on){ $('#drawFull').hidden = !on; if (on) { $('#qrFull').hidden = true; noteWon(); $('#drum').classList.add('spin'); $('#drawGo').focus(); } }
   function noteWon(){ const w = getWon(); $('#drawNote').textContent = w.length ? `지금까지 당첨: ${w.join(', ')}번 (다시 뽑히지 않음)` : '같은 번호는 두 번 뽑히지 않음'; }
   $('#drawBtn').onclick = () => showDraw($('#drawFull').hidden);
   $('#drawClose').onclick = () => showDraw(false);
@@ -756,7 +776,7 @@ button{cursor:pointer;border:0;background:none}
       const p = (Date.now()-t0)/(DUR*1000);
       if (p < 1) setTimeout(tick, 50 + p*120); else res();
     }; tick(); });
-    drum.classList.remove('spin');
+    drum.classList.remove('spin'); setTimeout(() => { if (!$('#drawFull').hidden) drum.classList.add('spin'); }, 3000);
     balls.forEach((b, i) => { b.firstChild.nodeValue = picks[i]; b.style.background = `radial-gradient(circle at 35% 30%, #fff9, transparent 45%), ${colors[i % colors.length]}`; });
     box.className = 'draw-nums done';
     const full = $('#drawFull'); full.classList.remove('flash'); void full.offsetWidth; full.classList.add('flash');
@@ -771,6 +791,8 @@ button{cursor:pointer;border:0;background:none}
   $('#dGift').addEventListener('input', () => { const g = $('#dGift').value.trim(); $('#drawGift').textContent = g ? `🎁 ${g}` : '행운권 추첨'; });
   $('#drawClear').onclick = () => hostRoom('draw', '').then(ok => ok && toast('청중 화면에서 내림'));
   $('#drawReset').onclick = () => { if (confirm('당첨 기록을 지울까요? 이미 뽑힌 번호도 다시 뽑힐 수 있음')) { ls.set(wonKey(), []); noteWon(); } };
+
+  let toolT; document.addEventListener('mousemove', () => { const t = $('#tools'); if (!t) return; t.classList.add('show'); clearTimeout(toolT); toolT = setTimeout(() => t.classList.remove('show'), 2500); });
 
   /* ── 화면 전환 ── */
   function toggleQR(force){ const h = $('#qrFull'); h.hidden = force === undefined ? !h.hidden : !force; $('#qrBtn').textContent = h.hidden ? 'QR 크게' : 'QR 닫기'; }

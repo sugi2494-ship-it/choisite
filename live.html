@@ -173,6 +173,7 @@ button{cursor:pointer;border:0;background:none}
         <span class="live" id="liveDot"><i></i>LIVE</span>
       </div>
       <h1 class="title" id="roomTitle"></h1>
+      <p class="me" id="roomSub" style="margin-top:-8px;color:var(--pbs-deep);font-weight:600"></p>
       <p class="me"><b id="meNick"></b> 님으로 참여 중<button id="renameBtn">변경</button></p>
       <nav class="tabs" role="tablist">
         <button class="tab on" data-tab="c" role="tab" id="chatTab">채팅<span class="badge" id="bc"></span></button>
@@ -226,7 +227,7 @@ button{cursor:pointer;border:0;background:none}
   function hm(ts){ const d = new Date(ts); return d.toLocaleTimeString('ko-KR', {hour:'numeric', minute:'2-digit'}); }
 
   // 코드만으로 방 제목 미리 보이기
-  if (urlCode) sb.from('live_rooms').select('title').eq('code', urlCode).maybeSingle().then(({data}) => { if (data) $('#gateTitle').textContent = data.title; });
+  if (urlCode) sb.from('live_rooms').select('title,subtitle').eq('code', urlCode).maybeSingle().then(({data}) => { if (data) { $('#gateTitle').textContent = data.title; if (data.subtitle) document.querySelector('.gate .sub').textContent = data.subtitle; } });
 
   async function enter(){
     const code = $('#codeIn').value.toUpperCase().replace(/\s+/g,'');
@@ -235,7 +236,7 @@ button{cursor:pointer;border:0;background:none}
     if (code.length < 4) return $('#gateErr').textContent = '입장 코드 확인';
     if (!n) return $('#gateErr').textContent = '닉네임 입력';
     $('#enterBtn').disabled = true;
-    const { data, error } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id,draw_text').eq('code', code).maybeSingle();
+    const { data, error } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text').eq('code', code).maybeSingle();
     $('#enterBtn').disabled = false;
     if (error || !data) return $('#gateErr').textContent = '강의방을 찾을 수 없음 · 코드 확인';
     nick = n; store.set('pbs_live_nick', nick);
@@ -256,7 +257,7 @@ button{cursor:pointer;border:0;background:none}
   };
 
   function applyRoom(){
-    $('#roomTitle').textContent = room.title;
+    $('#roomTitle').textContent = room.title; $('#roomSub').textContent = room.subtitle || ''; $('#roomSub').hidden = !room.subtitle;
     document.title = room.title + ' · 실시간 소통 · PBS COLOR LAB';
     $('#liveDot').classList.toggle('off', !room.is_open);
     $('#liveDot').lastChild.textContent = room.is_open ? 'LIVE' : '종료';
@@ -294,7 +295,7 @@ button{cursor:pointer;border:0;background:none}
       }).subscribe());
   }
   async function refreshRoom(){
-    const { data } = await sb.from('live_rooms').select('id,code,title,is_open,chat_on,spotlight_id,draw_text').eq('id', room.id).maybeSingle();
+    const { data } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text').eq('id', room.id).maybeSingle();
     if (data) { Object.assign(room, data); applyRoom(); }
   }
   async function reloadMats(){
