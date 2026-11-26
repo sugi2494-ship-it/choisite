@@ -891,6 +891,20 @@ html[data-theme="light"] .hero .sub{color:var(--ink-mute)}
  .contact .inq .btn{width:100%;justify-content:center}
 }
 
+/* 휴대폰 첫 화면 보정 (2026-11-27): 사진이 고정 헤더에 가리지 않게 */
+@media (max-width:900px){
+ .visual.v2pic{top:70px!important;height:268px}
+ .v2pic .me{width:214px;margin:4px 0 0 92px}
+ .v2pic .pname{top:44px}
+ .v2pic .bookcard{bottom:20px}
+ .hero .wrap{padding-top:348px!important}
+ .hero .kicker{margin-bottom:12px!important}
+}
+@media (max-width:370px){
+ .v2pic .me{width:200px;margin-left:84px}
+ .v2pic .bookcard strong{font-size:12.5px}
+}
+
 </style>
 </head>
 <body>
