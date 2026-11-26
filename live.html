@@ -82,6 +82,19 @@ button{cursor:pointer;border:0;background:none}
 #wpNames span.me{background:linear-gradient(135deg,#FFC94D,#FF2D9B);box-shadow:0 0 0 4px #FFE8A3}
 .wp-me{margin-top:14px;font-size:17px;font-weight:800;color:var(--pbs)}
 #wpClose{margin-top:18px;height:44px;padding:0 26px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800}
+.eb{display:inline-block;font-size:10.5px;font-weight:900;letter-spacing:.04em;color:#fff;padding:2px 6px;border-radius:6px;margin-right:6px;vertical-align:1px}
+.eng-row{display:flex;align-items:center;gap:6px;padding:0 18px 12px;flex-wrap:wrap}
+.eng-row span{font-size:12.5px;color:var(--ink3);font-weight:700;margin-right:2px}
+.eng-row button{height:30px;padding:0 12px;border-radius:15px;font-size:13px;font-weight:800;border:2px solid var(--c);color:var(--c);background:#fff}
+.eng-row button.on{background:var(--c);color:#fff}
+.eng-row button[data-eng=RED]{--c:#FF3366}.eng-row button[data-eng=YELLOW]{--c:#E0951A}.eng-row button[data-eng=GREEN]{--c:#00A878}.eng-row button[data-eng=BLUE]{--c:#0077B6}
+.rename{display:flex;gap:6px;padding:0 18px 10px}
+.rename input{flex:1;min-width:0;height:40px;border:1.5px solid var(--pbs);border-radius:10px;padding:0 12px;font-size:16px;outline:none}
+.rename button{height:40px;padding:0 14px;border-radius:10px;background:var(--pbs);color:#fff;font-weight:800;font-size:14px}
+.rename button.ghost{background:var(--bg3);color:var(--ink2)}
+.att-link{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--pbs),#7B2FBE);color:#fff;text-decoration:none;font-weight:800;font-size:15.5px;max-width:300px;box-shadow:0 6px 18px rgba(229,0,127,.25)}
+.att-link::after{content:'→';font-size:20px}
+.bub a{color:inherit;text-decoration:underline;word-break:break-all}
 /* 본문 */
 .pane{display:none;flex:1;padding:14px 18px 130px}
 .pane.on{display:block}
@@ -195,7 +208,11 @@ button{cursor:pointer;border:0;background:none}
       </div>
       <h1 class="title" id="roomTitle"></h1>
       <p class="me" id="roomSub" style="margin-top:-8px;color:var(--pbs-deep);font-weight:600"></p>
-      <p class="me"><b id="meNick"></b> 님으로 참여 중<button id="renameBtn">변경</button></p>
+      <p class="me" id="meRow"><span class="eb" id="meEng" hidden></span><b id="meNick"></b> 님으로 참여 중<button id="renameBtn">이름 바꾸기</button></p>
+      <div class="rename" id="renameBox" hidden><input id="renameIn" maxlength="20" placeholder="새 닉네임"><button id="renameOk">저장</button><button id="renameNo" class="ghost">취소</button></div>
+      <div class="eng-row"><span>내 컬러 엔진</span>
+        <button data-eng="RED">빨강</button><button data-eng="YELLOW">노랑</button><button data-eng="GREEN">초록</button><button data-eng="BLUE">파랑</button>
+      </div>
       <nav class="tabs" role="tablist">
         <button class="tab on" data-tab="c" role="tab" id="chatTab">채팅<span class="badge" id="bc"></span></button>
         <button class="tab" data-tab="m" role="tab">자료실<span class="badge" id="bm"></span></button>
@@ -239,15 +256,19 @@ button{cursor:pointer;border:0;background:none}
 
   let room = null, msgs = new Map(), mats = [], tab = 'c', sort = 'top', channel = null;
   let nick = store.get('pbs_live_nick', '');
+  const ENG = { RED:{k:'빨강',c:'#FF3366'}, YELLOW:{k:'노랑',c:'#E0951A'}, GREEN:{k:'초록',c:'#00A878'}, BLUE:{k:'파랑',c:'#0077B6'} };
+  let engine = store.get('pbs_live_engine', null);
+  const engBadge = e => ENG[e] ? `<span class="eb" style="background:${ENG[e].c}">${e}</span>` : '';
+  const linkify = t => esc(t).replace(/https:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
   let clientId = store.get('pbs_live_cid', '');
   if (!clientId) { clientId = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); store.set('pbs_live_cid', clientId); }
   let presCh = null;
   function presence(){
     try {
-      sb.rpc('live_join', { p_code: room.code, p_client: clientId, p_nick: nick }).then(() => {}, () => {});
+      sb.rpc('live_join2', { p_code: room.code, p_client: clientId, p_nick: nick, p_engine: engine }).then(() => {}, () => {});
       if (presCh) sb.removeChannel(presCh);
       presCh = sb.channel('pres-' + room.id, { config: { presence: { key: clientId } } });
-      presCh.subscribe(st => { if (st === 'SUBSCRIBED') presCh.track({ nick, at: Date.now() }); });
+      presCh.subscribe(st => { if (st === 'SUBSCRIBED') presCh.track({ nick, engine, at: Date.now() }); });
     } catch(e) {}
   }
   let liked = new Set(store.get('pbs_live_liked', []));
@@ -283,6 +304,7 @@ button{cursor:pointer;border:0;background:none}
   function attachHTML(m){
     if (!m.attach_url) return '';
     const u = esc(m.attach_url);
+    if (m.attach_kind === 'link') return `<a class="att-link" href="${u}" target="_blank" rel="noopener">${esc(m.attach_name || '열기')}</a>`;
     if (m.attach_kind === 'image') return `<a class="att-img" href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="${esc(m.attach_name||'사진')}" loading="lazy"></a>`;
     const ext = ((m.attach_name||'').split('.').pop()||'파일').toUpperCase().slice(0,4);
     return `<a class="att-file" href="${u}" target="_blank" rel="noopener"><span>${esc(ext)}</span>${esc(m.attach_name||'파일')}</a>`;
@@ -321,10 +343,20 @@ button{cursor:pointer;border:0;background:none}
   }
   $('#enterBtn').onclick = enter;
   [$('#codeIn'), $('#nickIn')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') enter(); }));
-  $('#renameBtn').onclick = () => {
-    const n = prompt('새 닉네임', nick);
-    if (n && n.trim()) { nick = n.trim().slice(0,20); store.set('pbs_live_nick', nick); $('#meNick').textContent = nick; if (room) presence(); }
-  };
+  $('#renameBtn').onclick = () => { $('#renameBox').hidden = false; $('#renameIn').value = nick; $('#renameIn').focus(); };
+  $('#renameNo').onclick = () => { $('#renameBox').hidden = true; };
+  const doRename = () => { const n = $('#renameIn').value.trim(); if (!n) return; nick = n.slice(0,20); store.set('pbs_live_nick', nick); $('#meNick').textContent = nick; $('#renameBox').hidden = true; if (room) presence(); toast('이름 변경 완료'); };
+  $('#renameOk').onclick = doRename;
+  $('#renameIn').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) doRename(); });
+  function showEng(){
+    document.querySelectorAll('.eng-row button').forEach(b => b.classList.toggle('on', b.dataset.eng === engine));
+    const me = $('#meEng'); me.hidden = !ENG[engine]; if (ENG[engine]) { me.textContent = engine; me.style.background = ENG[engine].c; }
+  }
+  document.querySelectorAll('.eng-row button').forEach(b => b.onclick = () => {
+    engine = engine === b.dataset.eng ? null : b.dataset.eng; store.set('pbs_live_engine', engine); showEng();
+    if (room) presence(); toast(engine ? `내 엔진: ${ENG[engine].k} ${engine}` : '엔진 선택 해제');
+  });
+  showEng();
 
   let lastDraw;
   function showWin(t){
@@ -423,8 +455,8 @@ button{cursor:pointer;border:0;background:none}
     const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 140;
     box.innerHTML = list.length ? list.map(m => `
       <div class="msg${mine.has(m.id)?' mine':''}${m.is_host?' host':''}">
-        ${mine.has(m.id)?'':`<span class="who">${esc(m.nickname)}</span>`}
-        ${m.body ? `<div class="bub">${esc(m.body)}</div>` : ''}${attachHTML(m)}<time>${hm(m.created_at)}</time>
+        ${mine.has(m.id)?'':`<span class="who">${engBadge(m.engine)}${esc(m.nickname)}</span>`}
+        ${m.body ? `<div class="bub">${linkify(m.body)}</div>` : ''}${attachHTML(m)}<time>${hm(m.created_at)}</time>
       </div>`).join('')
       : '<div class="empty"><b>💬</b>지금 끌리는 컬러를 남겨 주세요</div>';
     if (tab === 'c' && atBottom) window.scrollTo(0, document.body.scrollHeight);
@@ -479,7 +511,7 @@ button{cursor:pointer;border:0;background:none}
     try {
       const a = await uploadChatFile(room.id, f);
       const cap = ta.value.trim();
-      const { data, error } = await sb.rpc('live_post2', { p_code: room.code, p_nick: nick, p_body: cap, p_attach_url: a.url, p_attach_name: a.name, p_attach_kind: a.kind });
+      const { data, error } = await sb.rpc('live_post3', { p_code: room.code, p_client: clientId, p_nick: nick, p_engine: engine, p_body: cap, p_attach_url: a.url, p_attach_name: a.name, p_attach_kind: a.kind });
       if (error) throw error;
       mine.add(data); store.set('pbs_live_mine', [...mine].slice(-300));
       ta.value = ''; ta.style.height = 'auto'; $('#sendBtn').disabled = true;
@@ -496,7 +528,7 @@ button{cursor:pointer;border:0;background:none}
     const body = ta.value.trim(); if (!body || sending) return;
     sending = true; $('#sendBtn').disabled = true;
     const kind = 'chat';
-    const { data, error } = await sb.rpc('live_post2', { p_code: room.code, p_nick: nick, p_body: body });
+    const { data, error } = await sb.rpc('live_post3', { p_code: room.code, p_client: clientId, p_nick: nick, p_engine: engine, p_body: body });
     sending = false;
     if (error) { toast(/잠시/.test(error.message) ? '조금 천천히 보내기' : /종료/.test(error.message) ? '종료된 강의' : '전송 실패 · 다시 시도'); $('#sendBtn').disabled = false; return; }
     mine.add(data); store.set('pbs_live_mine', [...mine].slice(-300));
