@@ -186,7 +186,7 @@ button{cursor:pointer;border:0;background:none}
 .gift-now img{width:clamp(70px,8vh,110px);height:clamp(70px,8vh,110px);border-radius:14px;object-fit:cover;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 .gift-now h2{margin:0!important;text-align:left}
 .gift-now p{text-align:left;color:#F3D6E8;font-size:clamp(13px,1.2vw,18px);font-weight:600;margin-top:4px}
-.ball.name{font-size:clamp(22px,2.6vw,40px);padding:0 10px;text-align:center;word-break:keep-all}
+.ball.name{font-size:clamp(24px,2.8vw,44px);padding:0 14px;text-align:center;word-break:keep-all;line-height:1.15}
 .ball .nm{font-size:.22em;font-weight:800;margin-top:.25em;max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ball.name .nm{display:none}
 .pool{font-size:14px;font-weight:800;color:#fff;background:rgba(255,255,255,.12);padding:8px 12px;border-radius:9px}
@@ -1138,8 +1138,7 @@ button{cursor:pointer;border:0;background:none}
   function ballHTML(nick, color){
     const np = numPart(nick);
     const bg = `background:radial-gradient(circle at 35% 30%, #fff9, transparent 45%), ${color}`;
-    return np ? `<div class="ball" style="${bg}">${esc(np.num)}<small class="nm">${esc(np.name || '')}</small></div>`
-              : `<div class="ball name" style="${bg}">${esc(nick)}</div>`;
+    return `<div class="ball name" style="${bg}">${esc(nick)}</div>`;
   }
 
   $('#drawGo').onclick = async () => {
