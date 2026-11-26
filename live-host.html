@@ -1125,12 +1125,17 @@ button{cursor:pointer;border:0;background:none}
 
   /* 추첨 대상: 입장한 참가자 닉네임 */
   function poolList(){
-    const map = new Map(joins.map(j => [j.client_id, j.nickname]));
-    online.forEach((n, k) => { if (n) map.set(k, n); });
-    let list = [...map.entries()].map(([cid, nick]) => ({ cid, nick }));
-    if ($('#poolOnline').checked) list = list.filter(p => online.has(p.cid));
-    const won = new Set(gifts.flatMap(g => (g.winners || []).map(w => w.cid)));
-    return { all: list.length, list: list.filter(p => !won.has(p.cid)) };
+    // 닉네임 기준: 입장 기록 + 지금 접속 + 채팅 쓴 사람 (같은 닉네임은 한 명)
+    const byNick = new Map();
+    const add = (nick, cid, on) => { const k = String(nick||'').trim(); if (!k) return; const p = byNick.get(k) || { nick: k, cid: cid || 'n:' + k, on: false }; if (cid && p.cid.startsWith('n:')) p.cid = cid; p.on = p.on || !!on; byNick.set(k, p); };
+    joins.forEach(j => add(j.nickname, j.client_id, online.has(j.client_id)));
+    online.forEach((n, k) => add(n, k, true));
+    [...msgs.values()].forEach(m => { if (!m.is_host) add(m.nickname, null, false); });
+    let list = [...byNick.values()];
+    if ($('#poolOnline').checked) list = list.filter(p => p.on);
+    const wonC = new Set(), wonN = new Set();
+    gifts.forEach(g => (g.winners || []).forEach(w => { wonC.add(w.cid); wonN.add(String(w.nick).trim()); }));
+    return { all: list.length, list: list.filter(p => !wonC.has(p.cid) && !wonN.has(p.nick)) };
   }
   function updatePool(){ const p = poolList(); $('#poolInfo').textContent = `추첨 대상 ${p.list.length}명` + (p.all !== p.list.length ? ` (당첨자 ${p.all - p.list.length}명 제외)` : ''); }
   $('#poolOnline').onchange = updatePool;
@@ -1147,7 +1152,7 @@ button{cursor:pointer;border:0;background:none}
     const left = giftLeft(giftSel);
     if (left < 1) return toast('이 선물은 추첨 완료');
     const n = Math.min(left, 10);
-    const pool = poolList().list;
+    await loadAll(); const pool = poolList().list;
     if (pool.length < n) return toast(`추첨 대상이 ${pool.length}명뿐`);
     const pick = [...pool]; const picks = [];
     for (let k = 0; k < n; k++) picks.push(pick.splice(rnd(pick.length), 1)[0]);
