@@ -26,7 +26,7 @@
 {"@context":"https://schema.org","@type":"WebSite","@id":"https://www.pbscolor.com/#website","url":"https://www.pbscolor.com/","name":"PBS COLOR LAB","alternateName":"PBS컬러랩","inLanguage":"ko","publisher":{"@id":"https://www.pbscolor.com/#organization"}}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Book","name":"나는 왜 이 컬러에 끌릴까?","alternativeHeadline":"나를 움직이는 힘, 컬러강점","author":{"@id":"https://www.pbscolor.com/#choi-haesook","@type":"Person","name":"최해숙"},"publisher":{"@type":"Organization","name":"나비의활주로"},"inLanguage":"ko","image":"https://www.pbscolor.com/assets/home/book-color.jpg","about":["컬러강점","4엔진 12기어","컬러 엔진 진단"],"url":"https://www.pbscolor.com/#about"}
+{"@context":"https://schema.org","@type":"Book","name":"나는 왜 이 컬러에 끌릴까?","alternativeHeadline":"나를 움직이는 힘, 컬러강점","author":{"@id":"https://www.pbscolor.com/#choi-haesook","@type":"Person","name":"최해숙"},"publisher":{"@type":"Organization","name":"나비의활주로"},"inLanguage":"ko","image":"https://www.pbscolor.com/assets/home/book-color.jpg","about":["컬러강점","4엔진 12기어","컬러 엔진 진단"],"datePublished":"2026-12-03","url":"https://product.kyobobook.co.kr/detail/S000221982260","sameAs":["https://product.kyobobook.co.kr/detail/S000221982260"]}
 </script>
 <script type="application/ld+json">
   {
@@ -905,6 +905,11 @@ html[data-theme="light"] .hero .sub{color:var(--ink-mute)}
  .v2pic .bookcard strong{font-size:12.5px}
 }
 
+/* 신간 카드 → 교보문고 */
+.v2pic .bookcard .bk-buy{display:block;font-style:normal;font-size:12px;font-weight:700;color:#4B4651;margin-top:3px}
+.v2pic .bookcard:hover .bk-buy{color:var(--mag)}
+@media (max-width:900px){.v2pic .bookcard .bk-buy{font-size:11.5px;margin-top:1px}}
+
 </style>
 </head>
 <body>
@@ -939,7 +944,7 @@ html[data-theme="light"] .hero .sub{color:var(--ink-mute)}
 <main>
 <!-- ① 표지 -->
 <section class="hero" id="home">
-  <div class="visual v2pic"><img class="me" src="/assets/home/founder-cutout.webp" alt="PBS COLOR LAB 최해숙 대표" fetchpriority="high"><div class="pname" aria-hidden="true"><b>최해숙</b><span>MARIA CHOI</span></div><a class="bookcard" href="#about"><img src="/assets/home/book-color.jpg" alt="" width="48" height="67"><span><small>NEW 신간</small><strong>《나는 왜 이 컬러에 끌릴까?》</strong></span></a></div>
+  <div class="visual v2pic"><img class="me" src="/assets/home/founder-cutout.webp" alt="PBS COLOR LAB 최해숙 대표" fetchpriority="high"><div class="pname" aria-hidden="true"><b>최해숙</b><span>MARIA CHOI</span></div><a class="bookcard" href="https://product.kyobobook.co.kr/detail/S000221982260" target="_blank" rel="noopener" aria-label="《나는 왜 이 컬러에 끌릴까?》 교보문고에서 구매하기"><img src="/assets/home/book-color.jpg" alt="" width="48" height="67"><span><small>NEW 신간</small><strong>《나는 왜 이 컬러에 끌릴까?》</strong><em class="bk-buy">교보문고에서 구매 →</em></span></a></div>
   <div class="wrap">
     <div class="kicker"><span data-t="h.k">Personal Color Company</span></div>
     <h1><span data-t="h.t"><span class="ln"><em>퍼스널컬러</em> 전문기업</span><span class="ln">PBS COLOR LAB</span></span></h1>
@@ -1085,13 +1090,14 @@ html[data-theme="light"] .hero .sub{color:var(--ink-mute)}
       </ul>
       <div class="books">
         <div class="book new">
-          <div class="bk-top"><img src="/assets/home/book-color.jpg" alt="최해숙 저서 나는 왜 이 컬러에 끌릴까? 표지" width="96" height="134" loading="lazy">
+          <div class="bk-top"><a href="https://product.kyobobook.co.kr/detail/S000221982260" target="_blank" rel="noopener" aria-label="교보문고에서 구매"><img src="/assets/home/book-color.jpg" alt="최해숙 저서 나는 왜 이 컬러에 끌릴까? 표지" width="96" height="134" loading="lazy"></a>
           <div><span class="bk-tag">NEW 신간</span>
           <h3>《나는 왜 이 컬러에 끌릴까?》</h3>
           <p class="bk-sub">나를 움직이는 힘, 컬러강점</p>
           <p class="bk-pub">최해숙 지음 · 나비의활주로</p></div></div>
           <div class="bk-btns">
             <a class="btn solid" href="/book48.html">48문항 컬러 엔진 진단하기</a>
+            <a class="btn line" href="https://product.kyobobook.co.kr/detail/S000221982260" target="_blank" rel="noopener">📚 교보문고에서 구매</a>
             <a class="btn line" href="https://forms.gle/gGhsiRNV2MLCq2yC7" target="_blank" rel="noopener">2027 컬러콘서트 신청</a>
           </div>
         </div>
