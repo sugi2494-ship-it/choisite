@@ -61,16 +61,27 @@ button{cursor:pointer;border:0;background:none}
 .tab .badge.show{display:inline-block}
 
 /* 스포트라이트 */
-.spot{display:none;margin:14px 18px 0;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--pbs),var(--pbs-hot));color:#fff}
+.spot{display:none;margin:8px 12px;padding:10px 14px;border-radius:14px;background:linear-gradient(135deg,var(--pbs),var(--pbs-hot));color:#fff}
 .spot.show{display:block}
 .spot small{display:block;font-size:11.5px;font-weight:800;letter-spacing:.12em;opacity:.9;margin-bottom:4px}
 .spot p{font-size:16px;font-weight:700;line-height:1.5}
 .spot em{display:block;font-style:normal;font-size:12.5px;opacity:.85;margin-top:6px}
 
-.draw{display:none;margin:14px 18px 0;padding:16px;border-radius:14px;background:#16121B;color:#fff;text-align:center}
+.draw{display:none;margin:8px 12px;padding:10px 12px;border-radius:14px;background:#16121B;color:#fff;text-align:center}
 .draw.show{display:block;animation:pop .5s ease}
 .draw small{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;color:#FFC94D}
-.draw p{font-size:26px;font-weight:900;letter-spacing:.02em;margin-top:4px;line-height:1.3}
+.draw p{font-size:20px;font-weight:900;letter-spacing:.02em;margin-top:4px;line-height:1.3}
+.win-pop{position:fixed;inset:0;z-index:80;background:rgba(22,18,27,.78);display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.wp-card{width:100%;max-width:420px;background:#fff;border-radius:22px;padding:26px 22px;text-align:center;animation:popIn .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes popIn{from{transform:scale(.6)}to{transform:scale(1)}}
+.wp-ey{font-size:13px;font-weight:900;letter-spacing:.12em;color:var(--pbs)}
+.wp-card h2{font-size:22px;font-weight:900;margin:6px 0 14px;line-height:1.3}
+#wpNames{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+#wpNames span{font-size:22px;font-weight:900;color:#fff;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--pbs),#7B2FBE)}
+#wpNames span.me{background:linear-gradient(135deg,#FFC94D,#FF2D9B);box-shadow:0 0 0 4px #FFE8A3}
+.wp-me{margin-top:14px;font-size:17px;font-weight:800;color:var(--pbs)}
+#wpClose{margin-top:18px;height:44px;padding:0 26px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800}
 /* 본문 */
 .pane{display:none;flex:1;padding:14px 18px 130px}
 .pane.on{display:block}
@@ -189,10 +200,11 @@ button{cursor:pointer;border:0;background:none}
         <button class="tab on" data-tab="c" role="tab" id="chatTab">채팅<span class="badge" id="bc"></span></button>
         <button class="tab" data-tab="m" role="tab">자료실<span class="badge" id="bm"></span></button>
       </nav>
+      <div class="draw" id="draw"><small>🎁 행운권 당첨</small><p id="drawText"></p></div>
+      <div class="spot" id="spot"><small>지금 소개하는 글</small><p id="spotText"></p><em id="spotWho"></em></div>
     </header>
 
-    <div class="draw" id="draw"><small>🎁 행운권 당첨</small><p id="drawText"></p></div>
-    <div class="spot" id="spot"><small>지금 소개하는 글</small><p id="spotText"></p><em id="spotWho"></em></div>
+
     <div class="closed" id="closedNote">종료된 강의 · 채팅과 자료는 계속 볼 수 있음</div>
 
     <section class="pane on" id="pane-c"><div id="cList"></div></section>
@@ -209,6 +221,7 @@ button{cursor:pointer;border:0;background:none}
     <button class="send" id="sendBtn" disabled>보내기</button>
   </div>
 </div>
+<div class="win-pop" id="winPop" hidden><div class="wp-card"><p class="wp-ey" id="wpEy">🎁 행운권 당첨</p><h2 id="wpGift"></h2><div id="wpNames"></div><p class="wp-me" id="wpMe" hidden>축하합니다! 무대 앞으로 와 주세요 🎉</p><button id="wpClose">닫기</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -313,6 +326,17 @@ button{cursor:pointer;border:0;background:none}
     if (n && n.trim()) { nick = n.trim().slice(0,20); store.set('pbs_live_nick', nick); $('#meNick').textContent = nick; if (room) presence(); }
   };
 
+  let lastDraw;
+  function showWin(t){
+    const parts = t.split(' · '); const gift = parts.length > 1 ? parts.shift() : '';
+    $('#wpGift').textContent = gift ? gift : '행운권 추첨';
+    const meWon = parts.some(n => n.trim() === nick.trim());
+    $('#wpNames').innerHTML = parts.map(n => `<span class="${n.trim() === nick.trim() ? 'me' : ''}">${esc(n)}</span>`).join('');
+    $('#wpMe').hidden = !meWon; $('#wpEy').textContent = meWon ? '🎉 당첨을 축하합니다' : '🎁 행운권 당첨';
+    $('#winPop').hidden = false; clearTimeout(showWin._t); showWin._t = setTimeout(() => $('#winPop').hidden = true, meWon ? 20000 : 9000);
+    if (navigator.vibrate && meWon) navigator.vibrate([200,100,200,100,400]);
+  }
+  $('#wpClose').onclick = () => $('#winPop').hidden = true;
   function applyRoom(){
     $('#roomTitle').textContent = room.title; $('#roomSub').textContent = room.subtitle || ''; $('#roomSub').hidden = !room.subtitle;
     document.title = room.title + ' · 실시간 소통 · PBS COLOR LAB';
@@ -320,6 +344,8 @@ button{cursor:pointer;border:0;background:none}
     $('#liveDot').lastChild.textContent = room.is_open ? 'LIVE' : '종료';
     $('#closedNote').classList.toggle('show', !room.is_open);
     $('#draw').classList.toggle('show', !!room.draw_text); $('#drawText').textContent = room.draw_text || '';
+    if (room.draw_text && room.draw_text !== lastDraw) { if (lastDraw !== undefined) showWin(room.draw_text); }
+    lastDraw = room.draw_text || null;
     renderSpot(); updateComposer();
   }
 
