@@ -220,7 +220,7 @@ button{cursor:pointer;border:0;background:none}
 .grp-foot{display:flex;justify-content:center;padding-top:8px}
 .grp-foot button{font-size:12.5px;color:#BDB3C6;text-decoration:underline;text-underline-offset:3px}
 button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65%,#0077B6)!important}
-.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;width:100%}
+.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;width:100%}
 .team{background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.12);border-radius:14px;padding:10px 12px;cursor:pointer;text-align:left;color:#fff}
 .team b{display:block;font-size:16px;margin-bottom:6px}
 .team div{font-size:14.5px;font-weight:700;margin:3px 0;display:flex;gap:6px;align-items:center}
@@ -229,11 +229,18 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
 .team-focus h3{font-size:clamp(34px,4.2vw,70px);font-weight:900;margin-bottom:1vh}
 .team-focus p{font-size:clamp(16px,1.6vw,26px);color:#F3D6E8;margin-bottom:3vh}
 .team-focus .row{display:flex;gap:2vw;justify-content:center;flex-wrap:wrap}
-.team-focus .m{min-width:clamp(150px,15vw,260px);padding:2.4vh 1.4vw;border-radius:20px;color:#fff;animation:pop2 .5s ease both}
+.team-focus .row{max-width:1100px;margin:0 auto}
+.team-focus .m{min-width:clamp(140px,12vw,220px);padding:1.8vh 1.2vw;border-radius:20px;color:#fff;animation:pop2 .5s ease both}
 .team-focus .m small{display:block;font-size:clamp(13px,1.1vw,18px);font-weight:800;opacity:.9}
-.team-focus .m b{display:block;font-size:clamp(24px,2.6vw,44px);font-weight:900;margin-top:4px}
+.team-focus .m b{display:block;font-size:clamp(20px,2vw,34px);font-weight:900;margin-top:4px}
 .team-nav{display:flex;gap:10px;justify-content:center;margin-top:3vh}
 .team-nav button{height:42px;padding:0 18px;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-weight:800}
+.mingle{display:flex;align-items:center;justify-content:center;gap:12px;padding-top:6px}
+.mingle .mt{font-size:28px;font-weight:900;font-variant-numeric:tabular-nums;color:#FFC94D;min-width:92px;text-align:center}
+.mingle.run .mt{font-size:clamp(40px,4.6vw,76px);color:#fff;text-shadow:0 0 30px rgba(255,201,77,.6)}
+.mingle select{height:38px;border-radius:9px;border:0;padding:0 8px;font-weight:700}
+.mingle button{height:42px;padding:0 18px;border-radius:12px;background:linear-gradient(135deg,#FF3366,#7B2FBE);color:#fff;font-weight:900;font-size:15px}
+.mingle.run select{display:none}
 /* 오른쪽 소통 칸 */
 .side{background:#fff;display:flex;flex-direction:column;min-height:0;overflow:hidden;border-left:1px solid #2A2232}
 #host.no-side .side{display:none}
@@ -413,6 +420,9 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
       <button class="tb close" id="grpClose" style="background:var(--ink)">닫기</button>
       <div class="grp-btns" id="grpBtns"></div>
       <div class="grp-show" id="grpShow"><p class="grp-hint">엔진을 누르면 그 그룹 참가자가 화면과 휴대폰에 떠요</p></div>
+      <div class="mingle" id="mingle"><span class="mt" id="mTime">05:00</span>
+        <select id="mMin"><option value="3">3분</option><option value="5" selected>5분</option><option value="7">7분</option><option value="10">10분</option></select>
+        <button id="mGo">🎶 만남 타임 시작</button></div>
       <div class="grp-foot"><button id="grpClear">청중 휴대폰에서 내리기</button></div>
     </div>
 
@@ -1278,6 +1288,64 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
 
   let toolT; document.addEventListener('mousemove', () => { const t = $('#tools'); if (!t) return; t.classList.add('show'); clearTimeout(toolT); toolT = setTimeout(() => t.classList.remove('show'), 2500); });
 
+  /* 만남 타임 음악 — 신나는 반복 음악 (직접 작곡·합성) */
+  const MINGLE = (() => {
+    let master = null, timer = null, step = 0, nextT = 0, playing = false;
+    const BPM = 118, S16 = 60 / BPM / 4;
+    const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+    const CH = [[43,[55,59,62,67]],[38,[54,57,62,66]],[40,[55,59,64,67]],[36,[55,60,64,67]]]; // G D Em C
+    const RIFF = [0,null,2,1,null,3,2,null,1,null,3,2,null,1,0,null];
+    function tone(c, type, f, t, dur, vol, cut){
+      const o = c.createOscillator(); o.type = type; o.frequency.value = f;
+      const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = cut || 5000;
+      const g = c.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(lp).connect(g).connect(master); o.start(t); o.stop(t + dur + 0.05);
+    }
+    let nb = null;
+    function noise(c, t, v, f, len, type){
+      if (!nb) { nb = c.createBuffer(1, c.sampleRate*0.3, c.sampleRate); const d = nb.getChannelData(0); for (let i=0;i<d.length;i++) d[i] = Math.random()*2-1; }
+      const src = c.createBufferSource(); src.buffer = nb; const fl = c.createBiquadFilter(); fl.type = type || 'highpass'; fl.frequency.value = f;
+      const g = c.createGain(); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      src.connect(fl).connect(g).connect(master); src.start(t); src.stop(t + len + 0.02);
+    }
+    function kick(c, t){ const o = c.createOscillator(); const g = c.createGain(); o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(45, t+0.15); g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.0001, t+0.22); o.connect(g).connect(master); o.start(t); o.stop(t+0.25); }
+    function schedule(c){
+      while (nextT < c.currentTime + 0.25){
+        const bar = Math.floor(step/16)%4, s = step%16, t = nextT; const [root, ch] = CH[bar];
+        if (s % 4 === 0) kick(c, t);
+        if (s === 4 || s === 12) { noise(c, t, 0.32, 1200, 0.12, 'bandpass'); noise(c, t+0.012, 0.22, 1600, 0.1, 'bandpass'); }
+        if (s % 2 === 1) noise(c, t, 0.06, 8000, 0.04);
+        if (s % 2 === 0) tone(c, 'square', mtof(root + (s % 8 === 6 ? 12 : 0)), t, S16*1.6, 0.07, 900);
+        if (s === 0 || s === 8) ch.forEach(n => tone(c, 'sawtooth', mtof(n), t, S16*6, 0.018, 2200));
+        if (RIFF[s] !== null) tone(c, 'triangle', mtof(ch[RIFF[s]] + 12), t, S16*1.5, 0.07, 6000);
+        step++; nextT += S16;
+      }
+    }
+    return {
+      get playing(){ return playing; },
+      start(){ if (playing) return; const c = ac(); playing = true; master = c.createGain(); master.gain.value = 0.0001; master.connect(c.destination);
+        master.gain.exponentialRampToValueAtTime(0.9, c.currentTime + 1.5); step = 0; nextT = c.currentTime + 0.1; schedule(c); timer = setInterval(() => schedule(c), 60); },
+      stop(fade = 1.5){ if (!playing) return; playing = false; const c = ac(), m = master; m.gain.cancelScheduledValues(c.currentTime); m.gain.setValueAtTime(Math.max(m.gain.value, 0.0002), c.currentTime);
+        m.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + fade); setTimeout(() => { clearInterval(timer); try { m.disconnect(); } catch(e){} }, fade*1000 + 300); }
+    };
+  })();
+  let mingleEnd = 0, mingleTick = null;
+  const mmss = sec => String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(sec%60).padStart(2,'0');
+  function mingleStop(done){
+    clearInterval(mingleTick); mingleTick = null; MINGLE.stop(); $('#mingle').classList.remove('run'); $('#mGo').textContent = '🎶 만남 타임 시작';
+    $('#mTime').textContent = mmss(parseInt($('#mMin').value,10)*60);
+    if (done) { if (soundOn) { try { const c = ac(); fanfare(c, c.currentTime + 0.05); } catch(e){} } toast('만남 타임 끝! 자리로 돌아와 주세요'); }
+  }
+  $('#mMin').onchange = () => { if (!mingleTick) $('#mTime').textContent = mmss(parseInt($('#mMin').value,10)*60); };
+  $('#mGo').onclick = () => {
+    if (mingleTick) return mingleStop(false);
+    if (BGM.playing) { BGM.stop(0.8); bgmLabel(); } if (TOUCH.playing) TOUCH.stop(0.8);
+    mingleEnd = Date.now() + parseInt($('#mMin').value,10)*60000;
+    $('#mingle').classList.add('run'); $('#mGo').textContent = '■ 멈추기'; MINGLE.start();
+    const tick = () => { const left = Math.max(0, Math.round((mingleEnd - Date.now())/1000)); $('#mTime').textContent = mmss(left); if (left <= 0) mingleStop(true); };
+    tick(); mingleTick = setInterval(tick, 250);
+  };
+
   /* 엔진 그룹 발표 */
   const ENGK = { RED:'빨강', YELLOW:'노랑', GREEN:'초록', BLUE:'파랑' };
   let grpSel = null;
@@ -1285,7 +1353,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   function renderGrpBtns(){
     const c = grpCounts();
     $('#grpBtns').innerHTML = ['RED','YELLOW','GREEN','BLUE'].map(e => `<button data-grp="${e}" class="${grpSel===e?'on':''}" style="background:${ENGC[e]}">${e}<small>${ENGK[e]} · ${c[e]}명</small></button>`).join('')
-      + `<button data-grp="TEAM" class="team-btn ${grpSel==='TEAM'?'on':''}">🤝 컬러 팀<small>4색 섞어 만나기</small></button>`;
+      + `<button data-grp="TEAM" class="team-btn ${grpSel==='TEAM'?'on':''}">🤝 컬러 팀<small>색깔별 2명씩 8명</small></button>`;
   }
   function showGroup(e){
     grpSel = e; renderGrpBtns();
@@ -1300,7 +1368,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   function makeTeams(){
     const ps = people().filter(p => p.n);
     if (ps.length < 2) { toast('참가자가 2명 이상 필요해요'); return null; }
-    const k = Math.max(1, Math.round(ps.length / 4));
+    const k = Math.max(1, Math.round(ps.length / 8));
     const T = Array.from({length:k}, (_, i) => ({ no: i+1, m: [] }));
     let idx = 0;
     ['RED','YELLOW','GREEN','BLUE',null].forEach(e => {
