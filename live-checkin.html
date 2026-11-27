@@ -11,9 +11,9 @@
 <link rel="icon" href="/assets/pbs-logo.png" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <style>
-:root{--pbs:#E6007E;--ink:#1E1622;--ink2:#4A3F50;--ink3:#8B7F90;--line:#EADDE6;--ok:#12A15A}
+:root{--pbs:#E6007E;--ink:#1E1622;--ink2:#4A3F50;--ink3:#8B7F90;--line:#EADDE6;--ok:#12A15A;--c30:#B4530A;--c5:#1F5FAE;--cf:#7B2FBE;--sl:#0E7490}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Pretendard Variable","Pretendard",system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);background:#F7F2F6;font-size:15px;line-height:1.45;word-break:keep-all;-webkit-font-smoothing:antialiased}
+body{font-family:"Pretendard Variable","Pretendard",system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);background:#F7F2F6;font-size:14px;line-height:1.35;word-break:keep-all;-webkit-font-smoothing:antialiased}
 button,input{font-family:inherit;font-size:inherit;color:inherit;border:0;background:none}
 button{cursor:pointer}
 [hidden]{display:none!important}
@@ -22,96 +22,132 @@ button{cursor:pointer}
 .login input{width:100%;height:52px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;font-size:18px;text-align:center;letter-spacing:.2em}
 .login button{width:100%;height:52px;border-radius:12px;background:var(--pbs);color:#fff;font-weight:800;font-size:16px;margin-top:10px}
 .err{color:#D21;font-size:13px;margin-top:8px;min-height:18px}
-header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:3px solid var(--pbs);padding:14px 22px 12px}
-.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.top h1{font-size:20px;font-weight:900}.top h1 small{font-size:13px;color:var(--pbs);margin-left:6px}
-.stats{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
-.st{background:#FBF5F9;border-radius:12px;padding:6px 14px;text-align:center;min-width:92px}
-.st b{display:block;font-size:24px;font-weight:900;line-height:1.15}.st span{font-size:12px;color:var(--ink3);font-weight:600}
-.st.ok b{color:var(--ok)}.st.wk b{color:#D97706}.st.bk b{color:#B4530A}
-.tools{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center}
-.search{flex:1;min-width:220px;height:48px;border:2px solid var(--line);border-radius:12px;padding:0 16px;font-size:18px;background:#fff}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:3px solid var(--pbs);padding:10px 16px}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.top h1{font-size:18px;font-weight:900;white-space:nowrap}.top h1 small{font-size:12px;color:var(--pbs);margin-left:6px}
+.stats{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.st{background:#FBF5F9;border-radius:10px;padding:4px 10px;text-align:center;min-width:78px}
+.st b{display:block;font-size:20px;font-weight:900;line-height:1.2}.st span{font-size:11px;color:var(--ink3);font-weight:700;white-space:nowrap}
+.st.ok b{color:var(--ok)}.st.t30 b{color:var(--c30)}.st.t5 b{color:var(--c5)}.st.tf b{color:var(--cf)}.st.vp b{color:#B8860B}.st.bk b{color:#9A3412}.st.mn b{color:var(--ink)}
+.tools{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center}
+.search{flex:1;min-width:200px;height:42px;border:2px solid var(--line);border-radius:10px;padding:0 14px;font-size:16px;background:#fff}
 .search:focus{outline:none;border-color:var(--pbs)}
-.flt{display:flex;background:#F1E8EE;border-radius:12px;padding:4px}
-.flt button{height:40px;padding:0 14px;border-radius:9px;font-weight:700;font-size:14px;color:var(--ink2)}
+.flt{display:flex;background:#F1E8EE;border-radius:10px;padding:3px;flex-wrap:wrap}
+.flt button{height:36px;padding:0 10px;border-radius:8px;font-weight:700;font-size:13px;color:var(--ink2)}
 .flt button.on{background:#fff;color:var(--pbs);box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.voice{height:48px;padding:0 16px;border-radius:12px;background:#F1E8EE;color:var(--ink2);font-weight:800}
+.voice{height:42px;padding:0 12px;border-radius:10px;background:#F1E8EE;color:var(--ink2);font-weight:800;font-size:13px}
 .voice.on{background:#7B2FBE;color:#fff}
-.welcome{position:fixed;left:50%;top:30%;transform:translate(-50%,-50%) scale(.7);opacity:0;z-index:40;background:linear-gradient(135deg,#E6007E,#7B2FBE);color:#fff;border-radius:28px;padding:34px 54px;text-align:center;box-shadow:0 30px 80px rgba(230,0,126,.35);transition:.35s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
-.welcome.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.welcome small{display:block;font-size:18px;font-weight:700;opacity:.85;margin-bottom:6px}
-.welcome b{display:block;font-size:46px;font-weight:900;line-height:1.2}
-.welcome em{display:block;font-style:normal;font-size:16px;margin-top:10px;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px}
-.add{height:48px;padding:0 18px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800}
-main{padding:14px 22px 80px;max-width:1100px;margin:0 auto}
-.row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:10px 14px;margin-bottom:8px;border:2px solid transparent}
-.row.on{border-color:#BFE8D0;background:#F3FBF6}
-.row .nm{flex:1;min-width:0}
-.row .nm b{font-size:19px;font-weight:800}
-.tag{display:inline-block;font-size:12px;font-weight:800;border-radius:7px;padding:2px 8px;margin-left:8px;vertical-align:3px}
-.t-cp{background:#FDE8F3;color:#C0006A}.t-wk{background:#FFF1D6;color:#B45309}.t-bk{background:#FFE9D6;color:#B4530A}
-.row .sub{font-size:13px;color:var(--ink3);margin-top:2px}
-.row .tel{font-size:16px;font-weight:700;color:var(--ink2);width:56px;text-align:center;letter-spacing:.05em}
-.btn{height:50px;min-width:112px;padding:0 16px;border-radius:12px;font-weight:800;font-size:16px;background:#F1E8EE;color:var(--ink2)}
-.btn.chk.on{background:var(--ok);color:#fff}
-.btn.bk{min-width:96px;background:#FFF4EA;color:#B4530A;border:2px dashed #F3C79A}
-.btn.bk.on{background:#B4530A;color:#fff;border-style:solid;border-color:#B4530A}
-.btn.del{min-width:0;width:44px;padding:0;background:none;color:#C8B9C3;font-size:20px}
-.time{font-size:12px;color:var(--ok);font-weight:700;width:104px;text-align:right;white-space:nowrap}
-.empty{text-align:center;color:var(--ink3);padding:40px}
-.modal{position:fixed;inset:0;background:rgba(22,18,27,.5);display:flex;align-items:center;justify-content:center;z-index:20}
-.modal>div{background:#fff;border-radius:18px;padding:22px;width:min(380px,92vw)}
-.modal h3{font-size:18px;margin-bottom:12px}
-.modal input[type=text]{width:100%;height:50px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;font-size:17px;margin-bottom:10px}
-.modal label{display:flex;align-items:center;gap:8px;font-size:15px;margin:4px 0 12px}
-.modal .mb{display:flex;gap:8px}.modal .mb button{flex:1;height:48px;border-radius:12px;font-weight:800}
-.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;opacity:0;transition:.25s;z-index:30}
+main{padding:10px 16px 40px}
+table{width:100%;border-collapse:separate;border-spacing:0 4px}
+thead th{position:sticky;top:var(--hh,108px);z-index:3;background:#2A2030;color:#fff;font-size:12px;font-weight:700;padding:7px 6px;text-align:center;white-space:nowrap}
+thead th:first-child{border-radius:8px 0 0 8px}thead th:last-child{border-radius:0 8px 8px 0}
+thead th.l{text-align:left}
+tbody td{background:#fff;padding:5px 6px;text-align:center;vertical-align:middle}
+tbody td:first-child{border-radius:10px 0 0 10px}tbody td:last-child{border-radius:0 10px 10px 0}
+tr.in td{background:#F1FAF4}
+.no{font-weight:800;color:var(--ink3);width:38px}
+.nm{text-align:left!important;min-width:170px}
+.nm b{font-size:16px;font-weight:800}
+.nm .org{display:block;font-size:11px;color:var(--ink3);max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:5px;vertical-align:2px}
+.t-cp{background:#FDE8F3;color:#C0006A}.t-wk{background:#FFF1D6;color:#B45309}
+.t-vp{background:#F1E6FB;color:var(--cf)}.t-vp.off{background:none;color:#D3C7CF;border:1px dashed #E7DDE4;font-weight:600}
+.tel{font-weight:700;color:var(--ink2);width:48px;letter-spacing:.04em}
+.seg{display:inline-flex;border-radius:9px;overflow:hidden;border:1.5px solid #E7DEE5}
+.seg button{height:34px;padding:0 8px;font-size:12px;font-weight:800;color:#A99BA6;background:#fff;white-space:nowrap}
+.seg button+button{border-left:1.5px solid #E7DEE5}
+.seg button.on[data-t="30000"]{background:var(--c30);color:#fff}.seg button.on[data-t="5000"]{background:var(--c5);color:#fff}.seg button.on[data-t="free"]{background:var(--cf);color:#fff}.seg button.on[data-t="vip"]{background:#B8860B;color:#fff}
+.seg.none{border-color:#F59E0B;box-shadow:0 0 0 2px #FEF3C7}
+.ck{width:64px;height:38px;border-radius:9px;background:#F1E8EE;color:#B9ABB5;font-weight:900;font-size:13px;white-space:nowrap}
+.ck.on{color:#fff}
+.ck.c-in.on{background:var(--ok)}.ck.c-paid.on{background:#0F766E}.ck.c-book.on{background:#9A3412}
+.ck small{display:block;font-size:9.5px;font-weight:700;opacity:.85;margin-top:-1px}
+.na{color:#D9CED6;font-weight:700}
+.sale{display:inline-flex;align-items:center;gap:4px}
+.sale .q{width:28px;height:30px;border-radius:7px;background:#F1E8EE;font-weight:900;font-size:16px}
+.sale b{min-width:30px;font-size:14px;font-weight:900;color:var(--sl)}
+.sale .p{height:30px;padding:0 7px;border-radius:7px;font-size:12px;font-weight:800;background:#ECFEFF;color:#7FB3BD;border:1.5px solid #CDEFF4}
+.sale .p.on{background:var(--sl);color:#fff;border-color:var(--sl)}
+.sale.wait .p{animation:blink 1s infinite}
+@keyframes blink{50%{border-color:#F59E0B;background:#FEF3C7}}
+.del{color:#C8B9C3;font-size:18px;width:26px}
+tr.add td{background:#FFFBEB;border-top:2px dashed #F3D79A}
+tr.add input{height:38px;border:1.5px solid #EAD9A8;border-radius:9px;padding:0 10px;font-size:15px;background:#fff;width:100%}
+tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);color:#fff;font-weight:800;white-space:nowrap}
+.empty td{color:var(--ink3);padding:24px!important}
+.pop{position:fixed;inset:0;background:rgba(22,18,27,.45);display:flex;align-items:center;justify-content:center;z-index:50}
+.pop>div{background:#fff;border-radius:20px;padding:24px;width:min(380px,92vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.pop .pq{font-size:22px;font-weight:900}.pop .ps{color:var(--ink2);margin:6px 0 16px;font-weight:600}
+.pop button{display:block;width:100%;height:54px;border-radius:14px;font-weight:900;font-size:17px;margin-top:8px}
+.pop .pb1{background:var(--ok);color:#fff}.pop .pb2{background:#F1E8EE;color:var(--ink)}.pop .pb3{background:none;color:var(--ink3);height:40px;font-size:14px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;font-weight:700;opacity:0;transition:.25s;z-index:30}
 .toast.show{opacity:1;transform:translateX(-50%)}
-.live{font-size:12px;color:var(--ink3);margin-left:4px}
-@media (max-width:640px){header,main{padding-left:12px;padding-right:12px}.row{flex-wrap:wrap}.time{display:none}.btn{min-width:96px}}
+.live{font-size:12px;color:var(--ink3);margin-top:6px}
+.welcome{position:fixed;left:50%;top:32%;transform:translate(-50%,-50%) scale(.7);opacity:0;z-index:40;background:linear-gradient(135deg,#E6007E,#7B2FBE);color:#fff;border-radius:28px;padding:30px 50px;text-align:center;box-shadow:0 30px 80px rgba(230,0,126,.35);transition:.35s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.welcome.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.welcome small{display:block;font-size:17px;font-weight:700;opacity:.85;margin-bottom:6px}
+.welcome b{display:block;font-size:44px;font-weight:900;line-height:1.2}
+.welcome em{display:block;font-style:normal;font-size:16px;margin-top:10px;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px}
 </style>
 </head>
 <body>
 <section class="login" id="login">
   <h1>📋 참석 체크</h1>
-  <p>운영 전용 · 강의 진행 화면과 같은 비밀번호</p>
+  <p>운영 전용 · 입구 담당자는 대표님이 보내 준 링크로 들어오세요</p>
   <input id="pwIn" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" />
   <button id="pwBtn">들어가기</button>
   <p class="err" id="loginErr"></p>
 </section>
 
 <div id="app" hidden>
-  <header>
+  <header id="hdr">
     <div class="top">
       <h1>📋 참석 체크<small id="roomTitle"></small></h1>
       <div class="stats">
-        <div class="st ok"><b id="sIn">0</b><span>명단 출석 / <em id="sAll" style="font-style:normal">0</em></span></div>
-        <div class="st wk"><b id="sWk">0</b><span>현장 등록</span></div>
-        <div class="st"><b id="sTot">0</b><span>총 입장</span></div>
-        <div class="st bk"><b id="sBk">0</b><span>책 드림 / <em id="sBkAll" style="font-style:normal">0</em></span></div>
+        <div class="st ok"><b id="sIn">0</b><span id="sInSub">출석</span></div>
+        <div class="st t30"><b id="s30">0명</b><span id="s30Sub">3만원 · 받음 0</span></div>
+        <div class="st t5"><b id="s5">0명</b><span id="s5Sub">5천원 · 받음 0</span></div>
+        <div class="st tf"><b id="sFree">0명</b><span id="sFreeSub">초대</span></div>
+        <div class="st vp"><b id="sVip">0명</b><span id="sVipSub">내빈</span></div>
+        <div class="st mn"><b id="sMoney">0원</b><span>받은 참가비</span></div>
+        <div class="st bk"><b id="sBooks">0권</b><span id="sBooksSub">책 나감</span></div>
       </div>
     </div>
     <div class="tools">
-      <input class="search" id="q" placeholder="🔍 이름 또는 전화 뒤 4자리" autocomplete="off" />
+      <input class="search" id="q" placeholder="🔍 이름 · 전화 뒤 4자리 · 번호" autocomplete="off" />
       <div class="flt" id="flt">
-        <button data-f="all" class="on">전체</button><button data-f="no">미출석</button><button data-f="in">출석</button><button data-f="wk">현장 등록</button><button data-f="bk">📕 책</button>
+        <button data-f="all" class="on">전체</button><button data-f="no">미출석</button><button data-f="in">출석</button><button data-f="30000">3만원</button><button data-f="5000">5천원</button><button data-f="free">초대</button><button data-f="vip">내빈</button><button data-f="none">구분 미정</button><button data-f="unpaid">참가비 미수</button><button data-f="wk">현장</button>
       </div>
-      <button class="add" id="addBtn">+ 현장 등록</button>
       <button class="voice" id="voiceBtn">🔇 환영 음성 켜기</button>
     </div>
   </header>
-  <main><div id="list"></div><p class="live" id="sync"></p></main>
+  <main>
+    <table>
+      <thead><tr><th>No</th><th class="l">이름</th><th>전화</th><th>참가 구분</th><th>출석</th><th>참가비 받음</th><th>책 드림</th><th>현장 책 구매</th><th></th></tr></thead>
+      <tbody id="list"></tbody>
+      <tbody>
+        <tr class="add">
+          <td class="no" id="nextNo">+</td>
+          <td class="nm"><input id="aName" maxlength="20" placeholder="➕ 현장 참가자 이름" /></td>
+          <td><input id="aTel" maxlength="4" inputmode="numeric" placeholder="뒤4" style="width:64px;text-align:center" /></td>
+          <td><div class="seg" id="aTier"><button data-t="30000">3만원·책</button><button data-t="5000">5천원</button><button data-t="free">초대</button><button data-t="vip">내빈</button></div></td>
+          <td colspan="4" style="text-align:left;color:#92400E;font-size:12px;font-weight:700">등록하면 바로 출석 체크 · 참가비·책은 등록 후 그 줄에서 체크</td>
+          <td><button class="go" id="aGo">등록</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="live" id="sync"></p>
+  </main>
 </div>
-
-<div class="modal" id="addM" hidden><div>
-  <h3>현장 등록 (명단에 없는 분)</h3>
-  <input type="text" id="aName" placeholder="이름" maxlength="20" />
-  <input type="text" id="aTel" placeholder="전화 뒤 4자리 (선택)" maxlength="4" inputmode="numeric" />
-  <label><input type="checkbox" id="aBook" /> 📕 현장에서 책을 드리는 분</label>
-  <div class="mb"><button id="aNo" style="background:#F1E8EE">취소</button><button id="aOk" style="background:#E6007E;color:#fff">등록 + 출석</button></div>
+<div class="pop" id="bookPop" hidden><div>
+  <p class="pq"><b id="bpName"></b>님 출석</p>
+  <p class="ps">📕 책 받으실 분이에요. 책도 지금 드렸나요?</p>
+  <button class="pb1" id="bpBoth">✅ 출석 + 📕 책 드림</button>
+  <button class="pb2" id="bpOnly">출석만 (책은 나중에)</button>
+  <button class="pb3" id="bpNo">취소</button>
 </div></div>
 <div class="toast" id="toast"></div>
-<div class="welcome" id="welcome"><small>QR 입장</small><b id="wName"></b><span id="wMsg" style="font-size:24px;font-weight:800">환영합니다 🎉</span><em id="wBook" hidden>📕 책 드릴 분이에요</em></div>
+<div class="welcome" id="welcome"><small>QR 입장</small><b id="wName"></b><span style="font-size:24px;font-weight:800">환영합니다 🎉</span><em id="wBook" hidden>📕 책 드릴 분이에요</em></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -125,8 +161,21 @@ main{padding:14px 22px 80px;max-width:1100px;margin:0 auto}
   const toast = t => { const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); };
   const hm = ts => new Date(ts).toLocaleTimeString('ko-KR',{hour:'numeric',minute:'2-digit'});
   const key = s => String(s||'').replace(/\s/g,'').toLowerCase();
-  let pw = ss.get('pbs_live_pw') || '', room = null, list = [], flt = 'all', timer = null, busy = false;
+  const won = n => n.toLocaleString('ko-KR') + '원';
+  const FEE = { '30000': 30000, '5000': 5000 };
+  const staffK = new URLSearchParams(location.search).get('k');
+  let pw = staffK || ss.get('pbs_live_pw') || '', room = null, list = [], flt = 'all', timer = null, busy = 0;
+  const pend = {};            /* 현장 구매: 결제 방법 고르기 전 임시 권수 */
+  let aTier = 'free';
 
+  async function start(){
+    $('#login').hidden = true; $('#app').hidden = false;
+    const fixTop = () => document.documentElement.style.setProperty('--hh', $('#hdr').offsetHeight + 'px');
+    fixTop(); window.addEventListener('resize', fixTop);
+    await load(); clearInterval(timer); timer = setInterval(() => { if (!busy && !document.hidden && !isTyping()) load(); }, 4000);
+    segSet('aTier', aTier);
+  }
+  const isTyping = () => ['aName','aTel'].includes(document.activeElement && document.activeElement.id) && ($('#aName').value || $('#aTel').value);
   async function login(p){
     $('#loginErr').textContent = '';
     const { data, error } = await sb.rpc('live_host_rooms', { p_pw: p });
@@ -135,25 +184,151 @@ main{padding:14px 22px 80px;max-width:1100px;margin:0 auto}
     const rooms = Array.isArray(data) ? data : [];
     room = rooms.find(r => r.is_open && r.code === '20271004') || rooms.find(r => r.is_open) || rooms[0];
     if (!room) { $('#loginErr').textContent = '열린 강의방이 없어요'; return; }
-    $('#roomTitle').textContent = room.title || '';
-    $('#login').hidden = true; $('#app').hidden = false;
-    await load(); clearInterval(timer); timer = setInterval(() => { if (!busy && !document.hidden) load(); }, 4000);
-    $('#q').focus();
+    $('#roomTitle').textContent = room.title || ''; start();
+  }
+  async function staffLogin(k){
+    const { data, error } = await sb.rpc('live_staff_room', { p_token: k });
+    if (error || !data) { $('#loginErr').textContent = '입구 체크 링크가 맞지 않아요 — 대표님께 링크를 다시 받아 주세요'; return; }
+    room = data; $('#roomTitle').textContent = (room.title || '') + ' · 입구용'; start();
   }
   $('#pwBtn').onclick = () => login($('#pwIn').value.trim());
   $('#pwIn').addEventListener('keydown', e => { if (e.key === 'Enter') login($('#pwIn').value.trim()); });
-  if (pw) login(pw);
+  if (staffK) staffLogin(staffK); else if (pw) login(pw);
 
-  /* ── 환영 음성 (QR로 새로 들어온 분) ── */
+  async function load(){
+    const { data, error } = await sb.rpc('live_host_att', { p_pw: pw, p_room: room.id });
+    if (error) { $('#sync').textContent = '⚠ 연결 확인 중…'; return; }
+    list = Array.isArray(data) ? data : [];
+    $('#sync').textContent = '자동 새로고침 · ' + new Date().toLocaleTimeString('ko-KR');
+    render(); detectNew();
+  }
+
+  function stats(){
+    const inN = list.filter(a => a.checked_at).length;
+    $('#sIn').textContent = inN + '명'; $('#sInSub').textContent = `출석 / ${list.length}`;
+    const T = t => list.filter(a => a.tier === t), P = t => T(t).filter(a => a.fee_paid_at).length;
+    $('#s30').textContent = T('30000').length + '명'; $('#s30Sub').textContent = `3만원 · 받음 ${P('30000')} (${won(P('30000') * 30000)})`;
+    $('#s5').textContent = T('5000').length + '명'; $('#s5Sub').textContent = `5천원 · 받음 ${P('5000')} (${won(P('5000') * 5000)})`;
+    const IN = t => T(t).filter(a => a.checked_at).length;
+    $('#sFree').textContent = T('free').length + '명'; $('#sFreeSub').textContent = `초대 · 출석 ${IN('free')}`;
+    $('#sVip').textContent = T('vip').length + '명'; $('#sVipSub').textContent = `내빈 · 출석 ${IN('vip')}`;
+    $('#sMoney').textContent = won(P('30000') * 30000 + P('5000') * 5000);
+    const given = list.filter(a => a.tier === '30000' && a.book_given_at).length;
+    const sold = list.reduce((n, a) => n + (a.sale_qty || 0), 0);
+    const sc = p => list.filter(a => a.sale_pay === p).reduce((n, a) => n + a.sale_qty, 0);
+    $('#sBooks').textContent = (given + sold) + '권';
+    $('#sBooksSub').textContent = `책 나감 · 3만원 ${given} · 현장 판매 ${sold} (현금 ${sc('현금')} · 카드 ${sc('카드')})`;
+    $('#nextNo').textContent = (list.reduce((m, a) => Math.max(m, a.seq || 0), 63) + 1);
+  }
+  function tierSeg(a){
+    return `<div class="seg${a.tier ? '' : ' none'}" title="${a.tier ? '' : '구분 미정 — 확인 후 눌러 주세요'}">` +
+      [['30000','3만원·책'],['5000','5천원'],['free','초대'],['vip','내빈']].map(([t, l]) => `<button data-id="${a.id}" data-f="tier" data-t="${t}" class="${a.tier === t ? 'on' : ''}">${l}</button>`).join('') + '</div>';
+  }
+  function saleCell(a){
+    const p = pend[a.id], qty = p != null ? p : (a.sale_qty || 0), wait = p != null && p > 0;
+    return `<div class="sale${wait ? ' wait' : ''}"><button class="q" data-id="${a.id}" data-f="sq" data-d="-1">−</button><b>${qty}권</b><button class="q" data-id="${a.id}" data-f="sq" data-d="1">＋</button>` +
+      ['현금','카드'].map(m => `<button class="p${!wait && a.sale_qty > 0 && a.sale_pay === m ? ' on' : ''}" data-id="${a.id}" data-f="sp" data-m="${m}">${m === '현금' ? '💵현금' : '💳카드'}</button>`).join('') + '</div>';
+  }
+  function render(){
+    stats();
+    const q = key($('#q').value);
+    let L = list.filter(a => !q || key(a.name).includes(q) || (a.tel4 || '').includes(q) || String(a.seq) === q);
+    const F = { no: a => !a.checked_at, in: a => a.checked_at, '30000': a => a.tier === '30000', '5000': a => a.tier === '5000', free: a => a.tier === 'free', vip: a => a.tier === 'vip', none: a => !a.tier, unpaid: a => FEE[a.tier] && !a.fee_paid_at, wk: a => a.walkin };
+    if (F[flt]) L = L.filter(F[flt]);
+    $('#list').innerHTML = L.length ? L.map(a => {
+      const fee = FEE[a.tier];
+      return `<tr class="${a.checked_at ? 'in' : ''}">
+        <td class="no">${a.seq || ''}</td>
+        <td class="nm"><b>${esc(a.name)}</b>${a.companion ? `<span class="tag t-cp">${esc(a.companion)} 동반</span>` : ''}${a.walkin ? '<span class="tag t-wk">현장</span>' : ''}${a.org ? `<span class="org">${esc(a.org)}</span>` : ''}</td>
+        <td class="tel">${esc(a.tel4 || '')}</td>
+        <td>${tierSeg(a)}</td>
+        <td><button class="ck c-in${a.checked_at ? ' on' : ''}" data-id="${a.id}" data-f="check">${a.checked_at ? `출석✓<small>${hm(a.checked_at)}${a.checked_by === 'QR' ? ' QR' : ''}</small>` : '출석'}</button></td>
+        <td>${fee ? `<button class="ck c-paid${a.fee_paid_at ? ' on' : ''}" data-id="${a.id}" data-f="paid">${a.fee_paid_at ? `받음✓<small>${won(fee)}</small>` : `${fee / 10000 >= 1 ? '3만' : '5천'} 받기`}</button>` : '<span class="na">—</span>'}</td>
+        <td>${a.tier === '30000' ? `<button class="ck c-book${a.book_given_at ? ' on' : ''}" data-id="${a.id}" data-f="book">${a.book_given_at ? '📕드림✓' : '📕 책'}</button>` : '<span class="na">—</span>'}</td>
+        <td>${saleCell(a)}</td>
+        <td>${a.walkin ? `<button class="del" data-id="${a.id}" data-f="del" title="현장 등록 지우기">✕</button>` : ''}</td>
+      </tr>`;
+    }).join('') : `<tr class="empty"><td colspan="9">${q ? '검색 결과가 없어요 — 맨 아래 칸에서 현장 참가자로 등록하세요' : '해당하는 분이 없어요'}</td></tr>`;
+  }
+  $('#q').addEventListener('input', render);
+  $('#q').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; render(); } });
+  $('#flt').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; flt = b.dataset.f; document.querySelectorAll('#flt button').forEach(x => x.classList.toggle('on', x === b)); render(); });
+
+  async function rpc(name, args, okMsg){
+    busy++; const { error } = await sb.rpc(name, Object.assign({ p_pw: pw, p_room: room.id }, args)); busy--;
+    if (error) { toast('저장 실패 — 다시 눌러 주세요'); load(); return false; }
+    if (okMsg) toast(okMsg); load(); return true;
+  }
+  $('#list').addEventListener('click', async e => {
+    const b = e.target.closest('[data-id]'); if (!b) return;
+    const a = list.find(x => x.id === +b.dataset.id); if (!a) return;
+    const f = b.dataset.f, nm = a.name;
+    if (f === 'tier') {
+      const t = b.dataset.t; if (a.tier === t) return;
+      if (a.tier && (a.fee_paid_at || a.book_given_at) && !confirm(`${nm}님 구분을 바꾸면 참가비·책 체크가 바뀔 수 있어요. 바꿀까요?`)) return;
+      a.tier = t; a.book = t === '30000'; if (!FEE[t]) a.fee_paid_at = null; if (t !== '30000') a.book_given_at = null; render();
+      return rpc('live_host_att_tier', { p_id: a.id, p_tier: t });
+    }
+    if (f === 'sq') { const cur = pend[a.id] != null ? pend[a.id] : (a.sale_qty || 0); const n = Math.max(0, Math.min(50, cur + +b.dataset.d));
+      if (a.sale_pay && a.sale_qty > 0 && pend[a.id] == null) { if (n === 0 && !confirm(`${nm}님 현장 구매 기록을 지울까요?`)) return; a.sale_qty = n || null; render(); return rpc('live_host_att_sale', { p_id: a.id, p_qty: n, p_pay: n ? a.sale_pay : null }, n ? `💳 ${nm}님 ${n}권 · ${a.sale_pay}` : '구매 기록 지움'); }
+      pend[a.id] = n; if (!n) delete pend[a.id]; render(); if (n) toast('현금 / 카드를 눌러 주세요'); return; }
+    if (f === 'sp') { const m = b.dataset.m; const n = pend[a.id] != null ? pend[a.id] : (a.sale_qty || 1);
+      delete pend[a.id]; a.sale_qty = n; a.sale_pay = m; render();
+      return rpc('live_host_att_sale', { p_id: a.id, p_qty: n, p_pay: m }, `💳 ${nm}님 ${n}권 · ${m}`); }
+    let on;
+    if (f === 'check' && !a.checked_at && a.tier === '30000' && !a.book_given_at) return askBook(a);
+    if (f === 'check') { on = !a.checked_at; if (!on && !confirm(`${nm}님 출석을 취소할까요?`)) return; a.checked_at = on ? new Date().toISOString() : null; a.checked_by = on ? '직접' : null; }
+    else if (f === 'paid') { on = !a.fee_paid_at; if (!on && !confirm(`${nm}님 참가비 받음을 취소할까요?`)) return; a.fee_paid_at = on ? new Date().toISOString() : null; }
+    else if (f === 'book') { on = !a.book_given_at; if (!on && !confirm(`${nm}님 책 드림을 취소할까요?`)) return; a.book_given_at = on ? new Date().toISOString() : null; }
+    else if (f === 'vip') { on = !a.vip; if (!on && !confirm(`${nm}님 내빈 표시를 뺄까요?`)) return; a.vip = on; }
+    else if (f === 'del') { if (!confirm(`현장 등록 '${nm}'을(를) 지울까요?`)) return; on = true; list = list.filter(x => x !== a); }
+    else return;
+    render();
+    const msg = f === 'check' && on ? `✅ ${nm}님 출석` : f === 'paid' && on ? `💰 ${nm}님 참가비 받음` : f === 'book' && on ? `📕 ${nm}님 책 드림` : '';
+    rpc('live_host_att_set', { p_id: a.id, p_field: f, p_on: on }, msg);
+  });
+
+  /* 📕 책 대상자: 출석 누르면 책 같이 묻기 */
+  let bpFor = null;
+  function askBook(a){ bpFor = a; $('#bpName').textContent = a.name; $('#bookPop').hidden = false; $('#bpBoth').focus(); }
+  async function bpDo(withBook){
+    const a = bpFor; $('#bookPop').hidden = true; if (!a) return; bpFor = null;
+    a.checked_at = new Date().toISOString(); a.checked_by = '직접'; if (withBook) a.book_given_at = a.checked_at; render();
+    busy++;
+    const r1 = await sb.rpc('live_host_att_set', { p_pw: pw, p_room: room.id, p_id: a.id, p_field: 'check', p_on: true });
+    const r2 = withBook ? await sb.rpc('live_host_att_set', { p_pw: pw, p_room: room.id, p_id: a.id, p_field: 'book', p_on: true }) : {};
+    busy--;
+    toast(r1.error || r2.error ? '저장 실패 — 다시 눌러 주세요' : withBook ? `✅ ${a.name}님 출석 + 📕 책 드림` : `✅ ${a.name}님 출석 (책은 나중에)`); load();
+  }
+  $('#bpBoth').onclick = () => bpDo(true);
+  $('#bpOnly').onclick = () => bpDo(false);
+  $('#bpNo').onclick = () => { $('#bookPop').hidden = true; bpFor = null; };
+  document.addEventListener('keydown', e => { if (!$('#bookPop').hidden && e.key === 'Escape') $('#bpNo').click(); });
+
+  /* 현장 참가자 등록 (맨 아래 줄) */
+  const segSet = (id, v) => document.querySelectorAll(`#${id} button`).forEach(x => x.classList.toggle('on', x.dataset.t === v));
+  $('#aTier').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; aTier = b.dataset.t; segSet('aTier', aTier); });
+  $('#aTel').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4); });
+  async function addWalkin(){
+    const n = $('#aName').value.trim(); if (!n) { $('#aName').focus(); return toast('이름을 넣어 주세요'); }
+    if (list.some(a => key(a.name) === key(n)) && !confirm(`'${n}'님이 이미 명단에 있어요. 그래도 새로 등록할까요?`)) return;
+    busy++; const { error } = await sb.rpc('live_host_att_add3', { p_pw: pw, p_room: room.id, p_name: n, p_tel4: $('#aTel').value.trim(), p_tier: aTier }); busy--;
+    if (error) return toast('등록 실패 — 다시 눌러 주세요');
+    $('#aName').value = ''; $('#aTel').value = ''; toast(`✅ ${n}님 현장 등록 + 출석`); load();
+  }
+  $('#aGo').onclick = addWalkin;
+  ['aName','aTel'].forEach(id => $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) addWalkin(); }));
+
+  /* 환영 음성 (QR로 새로 들어온 분) */
   let voiceOn = false, seen = null, queue = [], playing = false, koVoice = null;
-  const pickVoice = () => { try { const v = speechSynthesis.getVoices(); koVoice = v.find(x => /ko[-_]KR/i.test(x.lang) && /female|여|Heami|SunHi|Yuna|Google/i.test(x.name)) || v.find(x => /^ko/i.test(x.lang)) || null; } catch(e){} };
+  const pickVoice = () => { try { const v = speechSynthesis.getVoices(); koVoice = v.find(x => /ko[-_]KR/i.test(x.lang) && /female|Heami|SunHi|Yuna|Google/i.test(x.name)) || v.find(x => /^ko/i.test(x.lang)) || null; } catch(e){} };
   if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
-  const callName = n => String(n||'').replace(/\(.*?\)/g,'').trim();
+  const callName = n => String(n || '').replace(/\(.*?\)/g, '').trim();
   function say(text){ return new Promise(res => { try { const u = new SpeechSynthesisUtterance(text); u.lang = 'ko-KR'; if (koVoice) u.voice = koVoice; u.rate = 1; u.pitch = 1.1; u.onend = u.onerror = () => res(); speechSynthesis.speak(u); setTimeout(res, 6000); } catch(e){ res(); } }); }
   async function nextWelcome(){
     if (playing || !queue.length) return; playing = true;
     const a = queue.shift(); const nm = callName(a.name);
-    $('#wName').textContent = nm + '님'; $('#wBook').hidden = !a.book; $('#welcome').classList.add('show');
+    $('#wName').textContent = nm + '님'; $('#wBook').hidden = a.tier !== '30000'; $('#welcome').classList.add('show');
     await Promise.all([voiceOn ? say(`${nm}님, 환영합니다!`) : null, new Promise(r => setTimeout(r, 3000))]);
     $('#welcome').classList.remove('show'); await new Promise(r => setTimeout(r, 450));
     playing = false; nextWelcome();
@@ -169,68 +344,6 @@ main{padding:14px 22px 80px;max-width:1100px;margin:0 auto}
     $('#voiceBtn').textContent = voiceOn ? '🔊 환영 음성 켜짐' : '🔇 환영 음성 켜기';
     if (voiceOn) { if (!('speechSynthesis' in window)) { toast('이 브라우저는 음성을 지원하지 않아요 — 크롬을 써 주세요'); return; } pickVoice(); say('환영 음성이 켜졌습니다'); }
     else { try { speechSynthesis.cancel(); } catch(e){} }
-  };
-
-  async function load(){
-    const { data, error } = await sb.rpc('live_host_att', { p_pw: pw, p_room: room.id });
-    if (error) { $('#sync').textContent = '⚠ 연결 확인 중…'; return; }
-    list = Array.isArray(data) ? data : [];
-    $('#sync').textContent = '자동 새로고침 · ' + new Date().toLocaleTimeString('ko-KR');
-    render(); detectNew();
-  }
-  function render(){
-    const reg = list.filter(a => !a.walkin), wk = list.filter(a => a.walkin);
-    const books = list.filter(a => a.book);
-    $('#sIn').textContent = reg.filter(a => a.checked_at).length; $('#sAll').textContent = reg.length;
-    $('#sWk').textContent = wk.length;
-    $('#sTot').textContent = list.filter(a => a.checked_at).length;
-    $('#sBk').textContent = books.filter(a => a.book_given_at).length; $('#sBkAll').textContent = books.length;
-    const q = key($('#q').value);
-    let L = list.filter(a => !q || key(a.name).includes(q) || (a.tel4 || '').includes(q));
-    if (flt === 'no') L = L.filter(a => !a.checked_at);
-    if (flt === 'in') L = L.filter(a => a.checked_at);
-    if (flt === 'wk') L = L.filter(a => a.walkin);
-    if (flt === 'bk') L = L.filter(a => a.book);
-    L.sort((a,b) => a.name.localeCompare(b.name, 'ko'));
-    $('#list').innerHTML = L.length ? L.map(a => `
-      <div class="row${a.checked_at ? ' on' : ''}">
-        <div class="nm"><b>${esc(a.name)}</b>${a.companion ? `<span class="tag t-cp">${esc(a.companion)} 동반</span>` : ''}${a.walkin ? '<span class="tag t-wk">현장 등록</span>' : ''}${a.book ? '<span class="tag t-bk">📕 책</span>' : ''}
-          ${a.org ? `<div class="sub">${esc(a.org)}</div>` : ''}</div>
-        <span class="tel">${esc(a.tel4 || '')}</span>
-        <span class="time">${a.checked_at ? hm(a.checked_at) + (a.checked_by === 'QR' ? ' · QR' : ' · 직접') : ''}</span>
-        ${a.book ? `<button class="btn bk${a.book_given_at ? ' on' : ''}" data-id="${a.id}" data-f="book">${a.book_given_at ? '📕 드림 ✓' : '📕 책 드리기'}</button>` : ''}
-        <button class="btn chk${a.checked_at ? ' on' : ''}" data-id="${a.id}" data-f="check">${a.checked_at ? '출석 ✓' : '출석 체크'}</button>
-        ${a.walkin ? `<button class="btn del" data-id="${a.id}" data-f="del" title="현장 등록 지우기">✕</button>` : ''}
-      </div>`).join('') : `<p class="empty">${q ? '검색 결과가 없어요 — 명단에 없는 분이면 "+ 현장 등록"' : '명단이 비어 있어요'}</p>`;
-  }
-  $('#q').addEventListener('input', render);
-  $('#q').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value=''; render(); } });
-  $('#flt').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; flt = b.dataset.f; document.querySelectorAll('#flt button').forEach(x => x.classList.toggle('on', x === b)); render(); });
-  $('#list').addEventListener('click', async e => {
-    const b = e.target.closest('[data-id]'); if (!b) return;
-    const a = list.find(x => x.id === +b.dataset.id); if (!a) return;
-    const f = b.dataset.f;
-    let on;
-    if (f === 'check') { on = !a.checked_at; if (!on && !confirm(`${a.name}님 출석을 취소할까요?`)) return; }
-    else if (f === 'book') { on = !a.book_given_at; if (!on && !confirm(`${a.name}님 책 드림 표시를 취소할까요?`)) return; }
-    else if (f === 'del') { if (!confirm(`현장 등록 '${a.name}'을(를) 지울까요?`)) return; on = true; }
-    busy = true;
-    if (f === 'check') { a.checked_at = on ? new Date().toISOString() : null; a.checked_by = on ? '직접' : null; }
-    if (f === 'book') a.book_given_at = on ? new Date().toISOString() : null;
-    if (f === 'del') list = list.filter(x => x !== a);
-    render();
-    const { error } = await sb.rpc('live_host_att_set', { p_pw: pw, p_room: room.id, p_id: a.id, p_field: f, p_on: on });
-    busy = false;
-    if (error) toast('저장 실패 — 다시 눌러 주세요'); else if (f === 'check' && on) { toast(`✅ ${a.name}님 출석`); $('#q').value=''; $('#q').focus(); }
-    load();
-  });
-  $('#addBtn').onclick = () => { $('#addM').hidden = false; $('#aName').value = $('#q').value.replace(/\d/g,'').trim(); $('#aTel').value=''; $('#aBook').checked=false; $('#aName').focus(); };
-  $('#aNo').onclick = () => $('#addM').hidden = true;
-  $('#aOk').onclick = async () => {
-    const n = $('#aName').value.trim(); if (n.length < 2) return toast('이름 입력');
-    const { error } = await sb.rpc('live_host_att_add', { p_pw: pw, p_room: room.id, p_name: n, p_tel4: $('#aTel').value.trim(), p_book: $('#aBook').checked });
-    if (error) return toast('등록 실패');
-    $('#addM').hidden = true; $('#q').value=''; toast(`✅ ${n}님 현장 등록 + 출석`); load();
   };
 })();
 </script>
