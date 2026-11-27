@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2027, 나의 컬러 · 최해숙의 컬러콘서트</title>
+<meta name="description" content="생년월일시로 사주 원국·평생흐름·대운·세운·월운을 계산하고 풀어 주는 만세력">
+<style>
+:root{
+  --ink:#1a1714; --sub:#6e6559; --line:#e2dacc; --bg:#faf7f1; --card:#ffffff;
+  --gold:#a8813a; --gold-s:#c9a45f; --red:#9e3b32; --green:#3c6b4a; --blue:#2f5b7a;
+  --w-mok:#3c7a4e; --w-hwa:#b4453a; --w-to:#b08a2e; --w-geum:#6c7682; --w-su:#3a4f74;
+  --shadow:0 1px 3px rgba(26,23,20,.07),0 8px 24px rgba(26,23,20,.05);
+  --tint:rgba(128,120,100,.09);
+}
+:root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+  --ink:#ece6dc; --sub:#9e9486; --line:#36312a; --bg:#15130f; --card:#1e1b16;
+  --gold:#d6ab63; --gold-s:#a8813a; --red:#d4756a; --green:#7bb089; --blue:#7aa8c9;
+  --w-mok:#6fb584; --w-hwa:#e08578; --w-to:#dcb75c; --w-geum:#b4bcc7; --w-su:#7f9fd0;
+  --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+  --tint:rgba(220,210,190,.07);
+}}
+:root[data-theme="dark"]{
+  --ink:#ece6dc; --sub:#9e9486; --line:#36312a; --bg:#15130f; --card:#1e1b16;
+  --gold:#d6ab63; --gold-s:#a8813a; --red:#d4756a; --green:#7bb089; --blue:#7aa8c9;
+  --w-mok:#6fb584; --w-hwa:#e08578; --w-to:#dcb75c; --w-geum:#b4bcc7; --w-su:#7f9fd0;
+  --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+  --tint:rgba(220,210,190,.07);
+}
+*{box-sizing:border-box}
+html,body{overflow-x:hidden}
+html{scroll-behavior:smooth;scroll-padding-top:60px}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,system-ui,sans-serif;
+  line-height:1.8;font-size:16px;letter-spacing:-.01em;-webkit-text-size-adjust:100%}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 80px}
+header{text-align:center;padding:46px 0 26px}
+header .k{font-size:11px;letter-spacing:.5em;color:var(--gold);margin-bottom:14px}
+header h1{font-size:30px;margin:0 0 10px;font-weight:800;letter-spacing:-.03em}
+header p{margin:0;color:var(--sub);font-size:14px}
+.theme{margin-top:14px;border:1px solid var(--line);background:var(--card);color:var(--sub);
+  border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:inherit}
+.theme:hover{border-color:var(--gold)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:22px;margin:18px 0;box-shadow:var(--shadow)}
+h2{font-size:19px;margin:46px 0 4px;padding-bottom:10px;border-bottom:2px solid var(--ink);font-weight:700}
+h2 .n{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;
+  background:var(--ink);color:var(--bg);border-radius:50%;font-size:12px;margin-right:8px;vertical-align:2px}
+h3{font-size:16.5px;margin:24px 0 4px;color:var(--gold);font-weight:700}
+p{margin:10px 0}
+.sub{color:var(--sub);font-size:13.5px}
+
+/* 입력 */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+label{display:block;font-size:12.5px;color:var(--sub);margin-bottom:5px;font-weight:600}
+input,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;
+  background:var(--bg);color:var(--ink);font-size:15.5px;font-family:inherit}
+input:focus,select:focus{outline:2px solid var(--gold-s);outline-offset:1px}
+.row3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg button{flex:1;padding:10px 4px;border:0;background:var(--bg);color:var(--sub);
+  font-size:14px;font-family:inherit;cursor:pointer;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;margin:4px 0;cursor:pointer}
+.chk input{width:auto;margin:0}
+details summary{cursor:pointer;font-size:13.5px;color:var(--sub);padding:8px 0;font-weight:600}
+.go{width:100%;padding:16px;border:0;border-radius:11px;background:var(--ink);color:var(--bg);
+  font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:16px;letter-spacing:.02em}
+.go:hover{opacity:.9}
+.err{color:var(--red);font-size:13.5px;margin-top:8px}
+
+/* 인쇄 툴바 */
+.ptools{display:flex;gap:8px;margin:22px 0 0}
+.ptools button{flex:1;padding:11px 8px;border:1px solid var(--gold);background:rgba(168,129,58,.1);
+  color:var(--gold);border-radius:10px;font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer}
+.ptools button:hover{background:rgba(168,129,58,.2)}
+.printonly{display:none}
+/* 삶의 지혜 */
+.wintro{background:rgba(168,129,58,.1);border:1px solid var(--gold);border-radius:12px;padding:16px 18px;margin:20px 0}
+.wans{font-size:17.5px;line-height:1.75;font-weight:600;margin:12px 0 10px;padding-left:14px;
+  border-left:4px solid var(--gold)}
+.wdo{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin:14px 0;
+  box-shadow:var(--shadow)}
+.wdoh{font-size:12.5px;font-weight:700;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.wdo ul{margin:4px 0 0}
+.wwhy{font-size:11.5px;color:var(--sub);margin:10px 0 0;padding-top:8px;border-top:1px dashed var(--line);line-height:1.6}
+.wfinal{background:#2c3a2f;color:#f3efe6;border-radius:12px;padding:24px 22px;margin:18px 0;font-size:16.5px;line-height:1.85}
+.wfinal b{color:#e8c87c}
+.wsign{text-align:right;color:#b9b3a4;font-size:13.5px;margin-top:14px !important}
+/* 체계 탭 */
+.systabs{display:flex;gap:8px;margin:26px 0 0}
+.systabs{overflow-x:auto;white-space:nowrap}
+.systabs button{flex:1 0 auto;min-width:92px;padding:13px 10px;border:1px solid var(--line);background:var(--card);
+  color:var(--sub);border-radius:11px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer}
+.systabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* 남인도식 차트 */
+.sichart{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);
+  gap:3px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  aspect-ratio:1/1;max-width:430px;margin:14px auto;font-size:11.5px}
+.sic{background:var(--card);padding:5px 4px;position:relative;overflow:hidden;line-height:1.35}
+.sic .rn{font-size:9.5px;color:var(--sub);font-weight:600}
+.sic .gl{font-weight:700;font-size:12px}
+.sic.lag{background:rgba(168,129,58,.14);box-shadow:inset 0 0 0 2px var(--gold)}
+.sic.mid{background:var(--bg);display:flex;align-items:center;justify-content:center;text-align:center;
+  flex-direction:column;font-size:12px;color:var(--sub)}
+.dasha{width:100%;font-size:13px}
+.dasha td,.dasha th{padding:6px 5px}
+/* 차트 휠 */
+.wheel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin:14px 0}
+.wheel svg{display:block;width:100%;height:auto}
+.ptable td.rx{color:var(--red);font-weight:700}
+.el{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.el div{border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;background:var(--card)}
+.el b{display:block;font-size:21px}
+.el span{font-size:11.5px;color:var(--sub)}
+/* 섹션 내비 */
+.nav{position:sticky;top:0;z-index:20;background:var(--bg);margin:0 -16px;padding:8px 16px;
+  border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+.nav a{display:inline-block;font-size:13px;color:var(--sub);text-decoration:none;padding:5px 11px;
+  border:1px solid var(--line);border-radius:16px;margin-right:5px;background:var(--card);font-weight:600}
+.nav a:hover{border-color:var(--gold);color:var(--gold)}
+
+/* 원국판 */
+.pillars{display:grid;grid-template-columns:52px repeat(4,1fr);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px;background:var(--card)}
+.pillars>div{padding:7px 3px;text-align:center;border-bottom:1px solid var(--line);border-left:1px solid var(--line)}
+.pillars>div:nth-child(5n+1){border-left:0;background:var(--tint);color:var(--sub);font-size:11.5px;font-weight:600}
+.pillars .hd{background:var(--tint);font-weight:700;font-size:12.5px;color:var(--ink)}
+.glyph{font-size:30px;line-height:1.25;font-weight:700;padding:6px 0 !important}
+.glyph small{display:block;font-size:10.5px;font-weight:500;opacity:.75;line-height:1.2}
+.ohmok{color:var(--w-mok)}.ohhwa{color:var(--w-hwa)}.ohto{color:var(--w-to)}
+.ohgeum{color:var(--w-geum)}.ohsu{color:var(--w-su)}
+.jj{font-size:11px;line-height:1.55;color:var(--sub)}
+
+/* 다섯 질문 */
+.qsub{display:block;font-size:12.5px;font-weight:400;color:var(--sub);letter-spacing:0;margin-top:3px}
+.qs{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.qs:first-child{border-top:0;padding-top:0}
+.qsb{flex:0 0 auto;font-size:10.5px;font-weight:700;letter-spacing:.02em;color:var(--c);
+  border:1px solid var(--c);border-radius:5px;padding:2px 6px;margin-top:2px;white-space:nowrap}
+.qst{font-size:14px;line-height:1.75;word-break:keep-all}
+.f4{display:flex;gap:13px;align-items:flex-start;padding:15px 16px;border:1px solid var(--line);
+  border-radius:12px;background:var(--card);margin-bottom:9px}
+.f4n{flex:0 0 auto;width:25px;height:25px;border-radius:50%;background:var(--ink);color:var(--bg);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-top:2px}
+.f4k{font-size:11.5px;color:var(--sub);letter-spacing:.03em;margin-bottom:4px}
+.f4t{font-size:15px;line-height:1.75;word-break:keep-all}
+@media (max-width:560px){.qs{flex-direction:column;gap:5px}.qsb{margin-top:0}.qst{font-size:13.5px}.f4t{font-size:14px}}
+/* 콘서트 모드 */
+body.concert .evtcard,body.concert .gift{display:none !important}
+body.concert #chero{display:block}
+#chero h1{font-size:44px;line-height:1.18;margin:0 0 14px;letter-spacing:-.02em}
+@media (max-width:560px){#chero h1{font-size:34px}}
+.takecard{display:flex;gap:16px;align-items:center;border:2px solid var(--gold);border-radius:14px;
+  padding:16px 18px;margin:20px 0 0;background:var(--card);box-shadow:var(--shadow)}
+.tkchip{width:58px;height:58px;border-radius:50%;flex:0 0 auto;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.tkk{font-size:12px;letter-spacing:.1em;color:var(--gold);font-weight:700}
+.tkn{font-size:25px;font-weight:800;line-height:1.2;margin:2px 0 3px}
+.tkd{font-size:12.5px;color:var(--sub);line-height:1.6;word-break:keep-all}
+@media(max-width:560px){.tkchip{width:46px;height:46px}.tkn{font-size:21px}}
+.cmore{text-align:center;margin:30px 0 0}
+.cmore button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:11px;
+  padding:13px 22px;font:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.cmore button:hover{border-color:var(--gold)}
+.cmore p{font-size:12.5px;color:var(--sub);margin:9px 0 0}
+.cmg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0}
+.cmc{border:1px solid var(--line);border-radius:11px;background:var(--card);padding:11px 11px 12px;position:relative}
+.cmc.on{box-shadow:inset 0 0 0 2px var(--gold)}
+.cmc .cmh{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:700}
+.cmc .cmh span{font-size:10.5px;color:var(--sub);font-weight:400}
+.cmc .cbar{height:9px;border-radius:5px;margin:8px 0 7px}
+.cmc .cmn{font-size:12.5px;font-weight:700}
+.cmc .cmt{font-size:11.5px;color:var(--sub);line-height:1.55;margin-top:3px;word-break:keep-all}
+@media (max-width:560px){.cmg{grid-template-columns:repeat(2,1fr)}}
+/* 선물 안내 */
+.gift{display:inline-block;text-align:center;border:1px dashed var(--gold);border-radius:12px;
+  padding:12px 18px;margin:0 auto 18px;background:var(--tint);font-size:14px;line-height:1.75;max-width:30em}
+.gift .gl{display:block;font-size:10.5px;letter-spacing:.1em;color:var(--gold);font-weight:700;margin-bottom:4px}
+.gift .gs{display:block;font-size:12px;color:var(--sub);margin-top:6px}
+/* 행사 안내 카드 */
+.evtcard{margin:34px 0 0;padding:22px 20px;border:1px solid var(--line);border-radius:14px;
+  background:var(--card);text-align:center}
+.ec1{font-size:11px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.ec2{font-size:22px;line-height:1.4;margin:6px 0 16px}
+.ecg{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;text-align:left}
+.eci{border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:var(--bg)}
+.eci span{display:block;font-size:10.5px;color:var(--sub);letter-spacing:.04em;margin-bottom:4px}
+.eci b{font-size:12.5px;line-height:1.55;font-weight:700;word-break:keep-all}
+.ecn{font-size:11.5px;color:var(--sub);margin:12px 0 14px}
+.ecb{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.ecb a{padding:12px 20px;font-size:14.5px}
+.evtdone{font-size:12.5px;color:var(--sub);margin:10px 0 0}
+@media (max-width:560px){.ecg{grid-template-columns:repeat(2,1fr)}.ec2{font-size:19px}
+  .ecb a{width:100%;max-width:300px}}
+/* 행사 랜딩 */
+#hero{text-align:center;padding:30px 0 22px}
+.brandbar{display:flex;justify-content:center;align-items:center;gap:9px;margin-bottom:14px}
+.brandbar span{font-size:11.5px;letter-spacing:.14em;font-weight:700;padding:4px 10px;border-radius:999px}
+.bb1{background:var(--ink);color:var(--bg)}
+.bb2{border:1px solid var(--line);color:var(--sub)}
+.evt{font-size:12.5px;color:var(--sub);letter-spacing:.01em;margin-bottom:12px}
+#hero h1{font-size:40px;line-height:1.2;margin:0 0 12px;letter-spacing:-.02em}
+.hsub{font-size:15px;line-height:1.75;color:var(--sub);margin:0 auto 22px;max-width:30em;word-break:keep-all}
+.hbtn{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.hbtn a,.ecb a{display:inline-block;padding:14px 24px;border-radius:11px;font-size:15.5px;font-weight:700;
+  text-decoration:none;border:1px solid var(--ink)}
+.hb1{background:var(--ink);color:var(--bg)}
+.hb2{background:var(--card);color:var(--ink);border-color:var(--line)}
+.hb2:hover{border-color:var(--gold)}
+.hnote{font-size:12px;color:var(--sub);margin:0 0 20px}
+.hnote .lk{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;
+  border:1px solid var(--line);border-radius:4px;padding:1px 5px;margin-right:5px;vertical-align:1px}
+.theme.corner{position:absolute;top:14px;right:0;padding:7px 11px;font-size:14px}
+.wrap{position:relative}
+.howto{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 24px}
+.ht{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--sub);
+  border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px 7px 7px}
+.hn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;
+  background:var(--ink);color:var(--bg);font-size:11px;font-weight:700;flex:0 0 auto}
+.booth{margin:30px 0 0}
+.boothg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.bo{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:11px 10px;text-align:center}
+.bo b{display:block;font-size:13px;margin-bottom:3px}
+.bo span{font-size:11px;color:var(--sub);line-height:1.45;word-break:keep-all}
+.sitefoot{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);text-align:center}
+.sitefoot .sf1{font-size:14px;font-weight:700;letter-spacing:.02em}
+.sitefoot .sf2{font-size:12px;color:var(--sub);margin-top:5px;line-height:1.7}
+.sitefoot a{color:var(--gold)}
+@media (max-width:560px){#hero h1{font-size:30px}.hsub{font-size:14px}
+  .hbtn a{width:100%;max-width:320px}.boothg{grid-template-columns:repeat(2,1fr)}}
+/* 휴먼컬러 */
+.hcyear{display:flex;align-items:center;gap:16px;padding:18px;border:1px solid var(--line);
+  border-radius:14px;background:var(--card);margin:16px 0}
+.hcchip{width:64px;height:64px;border-radius:50%;flex:0 0 auto;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.hcyk{font-size:12.5px;color:var(--sub)}
+.hcyn{font-size:26px;font-weight:800;line-height:1.25;margin:2px 0}
+.hcyn .hcc{font-size:14px;font-weight:700;color:var(--sub);vertical-align:4px}
+.hcye{font-size:12.5px;color:var(--sub);letter-spacing:.02em}
+.hcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.hcm{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:9px 9px 10px;position:relative}
+.hcm.on{box-shadow:inset 0 0 0 2px var(--gold)}
+.hcmh{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;gap:4px}
+.hcmh .sub{font-size:10.5px}
+.hcbar{height:8px;border-radius:4px;margin:7px 0 6px}
+.hcmn{font-size:12.5px;font-weight:700;line-height:1.3}
+.hcmk{font-size:10.5px;color:var(--sub);line-height:1.4;margin-top:2px;word-break:keep-all}
+.hcnow{position:absolute;top:-8px;right:7px;font-size:9.5px;font-weight:700;color:var(--bg);
+  background:var(--gold);border-radius:4px;padding:1px 5px}
+.hcrow{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin:12px 0}
+.hcy{text-align:center;opacity:.6}
+.hcy.on{opacity:1;font-weight:800}
+.hcyy{font-size:10.5px;margin-top:3px}
+.hcyc{font-size:10px;color:var(--sub)}
+@media (max-width:560px){.hcgrid{grid-template-columns:repeat(3,1fr)}
+  .hcyn{font-size:21px}.hcchip{width:52px;height:52px}
+  .hcrow{grid-template-columns:repeat(5,1fr)}}
+/* 자미두수 명반 */
+.zwgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:16px 0}
+.zwc{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:7px 7px 6px;
+  min-height:118px;display:flex;flex-direction:column;font-size:11.5px;line-height:1.5}
+.zwc .zh{display:flex;justify-content:space-between;align-items:baseline;gap:4px;margin-bottom:4px}
+.zwc .zg{font-weight:700;font-size:12.5px;letter-spacing:.02em}
+.zwc .zn{font-size:10.5px;opacity:.72}
+.zwc .zm{font-weight:700;font-size:12.5px;line-height:1.55;word-break:keep-all}
+.zwc .zs{margin-top:3px;opacity:.72;font-size:10.5px;word-break:keep-all}
+.zwc .zd{margin-top:auto;padding-top:4px;font-size:10px;opacity:.6;letter-spacing:.01em}
+.zwc.myung{box-shadow:inset 0 0 0 2px var(--gold);background:var(--tint)}
+.zwc.daenow{background:var(--tint)}
+.zwc.daenow .zd{opacity:1;font-weight:700;color:var(--gold)}
+.zwmid{grid-column:2 / 4;grid-row:2 / 4;border:1px solid var(--line);background:var(--card);
+  border-radius:9px;padding:12px;display:flex;flex-direction:column;justify-content:center;
+  gap:5px;font-size:12.5px;line-height:1.7}
+.zwmid b{font-size:13px}
+.sh{display:inline-block;font-size:9.5px;padding:0 3px;margin-left:2px;border-radius:3px;
+  border:1px solid currentColor;vertical-align:1px;font-weight:700}
+.sh0{color:var(--green)}.sh1{color:var(--gold)}.sh2{color:var(--blue)}.sh3{color:var(--red)}
+@media (max-width:560px){.zwc{min-height:100px;font-size:10.5px;padding:6px 5px}
+  .zwc .zg{font-size:11.5px}.zwc .zm{font-size:11.5px}.zwmid{font-size:11.5px;padding:9px}}
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+.badge{font-size:12.5px;padding:5px 11px;border-radius:20px;border:1px solid var(--line);
+  background:var(--card);color:var(--sub)}
+.badge b{color:var(--ink)}
+.badge.hi{border-color:var(--gold);background:rgba(168,129,58,.1)}
+.badge.hi b{color:var(--gold)}
+
+.ohbar{display:flex;height:28px;border-radius:7px;overflow:hidden;margin:10px 0 6px;border:1px solid var(--line)}
+.ohbar span{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11.5px;font-weight:700;min-width:0}
+.ohlegend{display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--sub)}
+.ohlegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card)}
+th,td{border:1px solid var(--line);padding:7px 6px;text-align:center}
+th{background:var(--tint);font-weight:600;font-size:12.5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--line)}
+.scroll table{border:0}
+.scroll table.wide{min-width:560px}
+.scroll th:first-child,.scroll td:first-child{border-left:0}
+.now{background:rgba(168,129,58,.18);font-weight:700}
+
+.box{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);
+  padding:15px 17px;margin:16px 0;border-radius:4px;box-shadow:var(--shadow)}
+.box.red{border-left-color:var(--red)}
+.box.green{border-left-color:var(--green)}
+.box.blue{border-left-color:var(--blue)}
+.box h4{margin:0 0 6px;font-size:15.5px}
+.oracle{white-space:pre-line}
+.kw{display:inline-block;font-size:12px;padding:3px 10px;border-radius:14px;
+  background:rgba(168,129,58,.13);color:var(--gold);margin:3px 4px 0 0;font-weight:600}
+ul{padding-left:19px;margin:9px 0}li{margin:5px 0}
+.hidden{display:none}
+
+/* 종합 요약 */
+.sumgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+@media(max-width:480px){.sumgrid{grid-template-columns:1fr}}
+.sumcell{border:1px solid var(--line);border-radius:10px;padding:13px 15px;background:var(--card)}
+.sumcell .lb{font-size:11.5px;color:var(--sub);font-weight:600;letter-spacing:.04em}
+.sumcell .vl{font-size:19px;font-weight:700;margin:2px 0 3px}
+.sumcell .ds{font-size:13px;color:var(--sub);line-height:1.6}
+
+/* 차트 */
+.chartwrap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 10px 6px;margin:14px 0}
+.chartwrap svg{display:block;width:100%;height:auto}
+
+/* 월운 */
+.ybar{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 6px}
+.ybar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;
+  padding:7px 14px;font-size:15px;cursor:pointer;font-family:inherit;font-weight:700}
+.ybar button:hover{border-color:var(--gold)}
+.ybar .yv{font-size:19px;font-weight:800;min-width:92px;text-align:center}
+.mrow{display:grid;grid-template-columns:54px 60px 1fr 54px;gap:0;align-items:center;
+  border-bottom:1px solid var(--line);padding:9px 2px;font-size:13.5px}
+.mrow:last-child{border-bottom:0}
+.mrow.on{background:rgba(168,129,58,.12);border-radius:8px}
+.mrow .mg{font-size:17px;font-weight:700;text-align:center}
+.mrow .mg small{display:block;font-size:10px;font-weight:500;color:var(--sub)}
+.mrow .md{color:var(--sub);font-size:11.5px;text-align:center;line-height:1.4}
+.mrow .mt{padding:0 8px;line-height:1.55}
+.mrow .mt b{font-size:13px}
+.mrow .ms{text-align:center;font-weight:700;font-size:12.5px}
+.sbar{height:5px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:3px}
+.sbar i{display:block;height:100%}
+
+footer{margin-top:52px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--sub);line-height:1.75}
+@media print{
+  :root,:root[data-theme="light"]{
+    --ink:#17150f; --sub:#4a463d; --line:#c8c2b4; --bg:#ffffff; --card:#ffffff;
+    --gold:#8a6a28; --red:#8d342c; --green:#2f5a3d; --blue:#28506b; --tint:#efece4;
+    --w-mok:#2f6440; --w-hwa:#9c3a30; --w-to:#8e6e22; --w-geum:#555d68; --w-su:#2f4260;
+    --shadow:none;
+  }
+  *{-webkit-print-color-adjust:exact !important; print-color-adjust:exact !important}
+  html,body{background:#fff !important}
+  .nav,.systabs,.ptools,.go,#form,.theme,.ybar button,header .k,header .theme,
+  #hero,.howto,.booth,.sitefoot,.evtcard{display:none !important}
+  header{padding:0 !important;border:0 !important}
+  header h1,header p{display:none !important}
+  .printonly{display:block !important}
+  .phead{border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:6px}
+  .pht{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .phs{font-size:12px;color:var(--sub);margin-top:4px}
+  .wrap{max-width:none;padding:0 !important}
+  body{font-size:9.8pt;line-height:1.5}
+  p{margin:4px 0}
+  ul,ol{margin:4px 0;padding-left:15px}
+  li{margin:1px 0}
+  h2{font-size:12.5pt;margin:11px 0 3px;break-after:avoid;page-break-after:avoid}
+  h3{font-size:10.8pt;margin:9px 0 3px}
+  h4{font-size:10.2pt;margin:0 0 3px}
+  h3,h4{break-after:avoid;page-break-after:avoid}
+  .chartwrap,.wheel,.sichart,.el,.sumgrid,.pillars,.zwgrid,.hcgrid,.cmg,.hcyear,.f4,.eci{
+    break-inside:avoid;page-break-inside:avoid}
+  .box,.wdo,.card,.wfinal,.wintro{break-inside:auto;page-break-inside:auto;orphans:2;widows:2}
+  .box{padding:8px 11px;margin:7px 0}
+  .wdo{border:0 !important;background:none !important;padding:0 !important;margin:4px 0 !important}
+  .wdoh{font-size:9pt;margin:0 0 1px}
+  .qs{padding:5px 0}
+  .badges{margin:7px 0}
+  .badge{padding:2px 7px}
+  .wans{break-after:avoid;page-break-after:avoid}
+  tr,li{break-inside:avoid;page-break-inside:avoid}
+  .scroll{overflow:visible !important;border:0 !important}
+  .scroll table,table.wide{min-width:0 !important;font-size:8.5pt}
+  th,td{padding:4px 3px}
+  .glyph{font-size:20px}
+  .wheel svg,.chartwrap svg{max-height:120mm}
+  .sichart{max-width:150mm}
+  footer{font-size:8pt;break-before:auto}
+  body.printall #outColor, body.printall #outWise, body.printall #out, body.printall #outAstro, body.printall #outVedic, body.printall #outZiwei{
+    break-before:page; page-break-before:always}
+  a{color:inherit;text-decoration:none}
+  /* 표지 */
+  .pcover{text-align:center;padding:38mm 0 0;break-after:page;page-break-after:always}
+  .pcb{font-size:10pt;letter-spacing:.5em;color:var(--gold);font-weight:700}
+  .pct{font-size:30pt;font-weight:800;letter-spacing:-.02em;margin:10px 0 6px}
+  .pcs{font-size:10pt;color:var(--sub)}
+  .pcg{display:flex;justify-content:center;gap:7mm;margin:16mm 0 12mm}
+  .pcg span{display:block}
+  .pcg b{display:block;font-size:26pt;font-weight:800;line-height:1.1}
+  .pcg i{display:block;font-size:8.5pt;font-style:normal;color:var(--sub);margin-top:3px}
+  .pcd{font-size:13pt;font-weight:700;margin:0 0 4mm}
+  .pcf{font-size:8.5pt;color:var(--sub);margin-top:24mm}
+  /* 엑기스 */
+  .pdh{font-size:14pt;margin:0 0 3px}
+  .pdn{font-size:9.5pt;color:var(--sub);margin:0 0 7px}
+  .pdt{width:100%;border-collapse:collapse;font-size:9.6pt}
+  .pdt th{width:26mm;text-align:left;vertical-align:top;background:var(--tint);
+    border:1px solid var(--line);padding:6px 7px;font-size:9pt;white-space:nowrap}
+  .pdt td{border:1px solid var(--line);padding:6px 8px;line-height:1.55}
+  .pdt tr.pdhi th{background:var(--ink);color:var(--bg)}
+  .pdt tr.pdhi td{font-weight:700}
+  .pdn2{font-size:8.5pt;color:var(--sub);margin:7px 0 0}
+  .pdt td{text-align:left}
+  #pdigest:not(:empty) ~ #printhead{display:none !important}
+  .pdg{break-after:page;page-break-after:always}
+  @page{size:A4;margin:11mm 11mm 13mm}
+}
+
+/* ===== 현장용 ===== */
+.askq{font-size:17px;font-weight:800;letter-spacing:-.02em;margin:0 0 10px;text-align:center}
+.row3.big input{padding:16px 10px;font-size:19px;text-align:center;font-weight:700}
+.row3.big input::placeholder{font-weight:500;font-size:15px}
+#form .go{font-size:18px;padding:18px;margin-top:14px}
+.more{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.more summary{font-size:13.5px;color:var(--gold);font-weight:700;text-align:center;list-style:none;cursor:pointer}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:" \25BE"}
+.more[open] summary::after{content:" \25B4"}
+.moreb{padding-top:12px}
+.tiny{font-size:11.5px;color:var(--sub);text-align:center;margin:12px 0 0;line-height:1.6}
+.calcsum{font-size:12px;color:var(--sub);font-weight:700;padding:6px 0;cursor:pointer}
+.hsub{margin-bottom:0 !important}
+header#chero{padding-bottom:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header id="chero">
+  <div class="brandbar"><span class="bb1">PBS컬러랩</span><span class="bb2">컬러주역</span></div>
+  <div class="evt">최해숙의 컬러콘서트 참석자를 위한 자리</div>
+  <h1>2027년 새해<br>컬러리듬</h1>
+  <p class="hsub">생년월일만 넣으면 <b>올해 나의 색</b>과 <b>열두 달의 흐름</b>이 나온단다.</p>
+  <button class="theme corner" id="themeBtn" type="button">◐</button>
+</header>
+<div class="card" id="form">
+  <div class="askq">생년월일을 넣거라</div>
+  <div class="row3 big">
+    <input id="by" type="number" inputmode="numeric" placeholder="연도">
+    <input id="bm" type="number" inputmode="numeric" placeholder="월">
+    <input id="bd" type="number" inputmode="numeric" placeholder="일">
+  </div>
+  <button class="go" id="goBtn" type="button">내 2027 컬러 보기</button>
+
+  <details class="more">
+    <summary>더 정확히 보려거든 &mdash; 태어난 시각 &middot; 성별 &middot; 음력</summary>
+    <div class="moreb">
+      <p class="sub" style="margin:0 0 10px">태어난 시각을 넣으면 <b>&#12300;나를 살리는 색&#12301;</b>이 더 정확해진단다. 모르면 비워 두어도 좋구나.</p>
+      <div class="row2">
+        <input id="bh" type="number" inputmode="numeric" placeholder="시 (0~23)">
+        <input id="bmin" type="number" inputmode="numeric" placeholder="분">
+      </div>
+      <label class="chk" style="margin-top:8px"><input type="checkbox" id="noTime"> 태어난 시각을 모른다</label>
+      <label style="margin-top:14px">성별</label>
+      <div class="seg" id="genderSeg">
+        <button type="button" data-v="M" aria-pressed="false">남자</button>
+        <button type="button" data-v="F" aria-pressed="true">여자</button>
+      </div>
+      <label style="margin-top:14px">양력 &middot; 음력</label>
+      <div class="seg" id="calSeg">
+        <button type="button" data-v="S" aria-pressed="true">양력</button>
+        <button type="button" data-v="L" aria-pressed="false">음력(평달)</button>
+        <button type="button" data-v="LL" aria-pressed="false">음력(윤달)</button>
+      </div>
+      <label style="margin-top:14px" for="city">태어난 곳</label>
+      <select id="city"></select>
+      <div class="row2 hidden" id="lonWrap" style="margin-top:8px">
+        <input id="lon" type="number" step="0.001" placeholder="경도">
+        <input id="lat" type="number" step="0.001" placeholder="위도">
+      </div>
+      <label style="margin-top:14px" for="name">이름 (선택)</label>
+      <input id="name" placeholder="이름" autocomplete="off">
+      <label class="chk" style="margin-top:14px"><input type="checkbox" id="useLon" checked> 경도 보정</label>
+      <label class="chk"><input type="checkbox" id="useEot" checked> 균시차 보정</label>
+      <label class="chk"><input type="checkbox" id="useDst" checked> 서머타임 자동 적용</label>
+      <label class="chk"><input type="checkbox" id="yajasi"> 야자시설</label>
+    </div>
+  </details>
+
+  <p class="tiny">넣으신 생년월일은 <b>이 기기 안에서만 계산</b>되며, 어디에도 저장되지 않는단다.</p>
+  <div class="err hidden" id="err"></div>
+</div>
+
+<div class="ptools hidden" id="ptools">
+  <button type="button" onclick="savePDF('all')">📄 전체를 PDF로 저장</button>
+  <button type="button" onclick="savePDF('one')">보고 있는 탭만 저장</button>
+</div>
+<div class="systabs hidden" id="systabs"></div>
+<div id="pdigest" class="printonly"></div>
+<div id="printhead" class="printonly"></div>
+<div id="outConcert" class="hidden"></div>
+<div id="outCross"></div>
+<div id="outColor" class="hidden"></div>
+<div id="outWise" class="hidden"></div>
+<div id="out" class="hidden"></div>
+<div id="outAstro" class="hidden"></div>
+<div id="outVedic" class="hidden"></div>
+<div id="outZiwei" class="hidden"></div>
+
+<div class="sitefoot">
+  <div class="sf1">PBS컬러랩 · 컬러주역</div>
+  <div class="sf2">퍼스널컬러 · 컬러강점 · 휴먼컬러 · 골격진단 · 얼굴분석<br>
+    인스타그램 <a href="https://instagram.com/pbscolor_ceo" target="_blank" rel="noopener">@pbscolor_ceo</a>
+    · <a href="http://product.kyobobook.co.kr/detail/S000221982260" target="_blank" rel="noopener">책 보러 가기</a></div>
+</div>
+
+<footer><details><summary class="calcsum">계산 기준 보기</summary>
+  <b>계산 기준</b> · 절기는 태양의 겉보기 황경이 15° 배수가 되는 순간을 천문 계산으로 구해 1900~2050년을 내장했다(한국천문연구원 발표 시각과 1분 이내 일치). 음력은 한국천문연구원 음력 자료를 따른다. 년주는 입춘, 월주·월운은 각 절(節) 입기 시각을 경계로 삼는다.<br>
+  <b>서양 점성술</b> · 행성 위치는 태양중심 궤도 급수를 내장해 브라우저에서 직접 계산한다. 1900~2050년 전 구간에서 실제 천체력과 황경 오차 10초(각) 이내로 맞추었고, 역행 구간과 상승궁·천정도 독립 검증을 거쳤다. 좌표는 회귀황도(트로피컬) 기준이며, 하우스는 플라시두스·홀사인·이퀄 중에서 고를 수 있다.<br>
+  <b>인도 점성학</b> · 서양 점성술과 같은 행성 엔진으로 계산한 뒤 라히리 아야남샤를 빼어 항성황도로 바꾼다. 아야남샤는 스피카의 세차를 실측해 J2000 공식값(23°51'11.5")에 맞춘 값이며 2026년 기준 24°13'이다. 라후·케투는 평균 교점, 하우스는 라그나 기준 홀사인, 다샤는 빔쇼타리 120년 체계를 쓴다.<br>
+  <b>밝혀 둘 것</b> · 신강·신약과 용신, 그리고 흐름 점수는 널리 쓰이는 간이 기준으로 계산한 참고값이며 유파에 따라 달라진다. 흐름 점수는 용신·희신과 기신의 오행 비중만으로 셈한 것이라, 형충회합과 격국의 변화까지는 담지 못한다. 해외 출생은 경도를 직접 넣되 현지 표준시가 아닌 <b>한국 시각으로 환산한 시각</b>을 입력해야 한다.<br>
+  <span style="opacity:.75">萬歲曆 神託</span></details>
+</footer>
+</div>
+
+<script>const TB=7384,TD="0gd40gek0ghl0gl90gq50gv20h0m0h5g0haa0hdm0hgd0hh60hh20hf30hc50h7x0h330gxt0gsi0gnl0gj80gfw0gdm0gcn0gcz0geo0ghh0gle0gq10gv80h0i0h5p0ha20hdw0hg30hhg0hgs0hfa0hby0h820h2z0gxy0gsf0gnp0gj60gg00gdk0gcq0gcx0geq0ghe0glg0gpx0gv90h0e0h5n0ha30hdq0hg70hh80hgz0hf00hc70h7u0h380gxq0gsr0gni0gjh0gfu0gdu0gcl0gd50gei0ghm0gl60gq40guz0h0l0h5f0ha70hdm0hga0hh80hgy0hf50hc20h800h320gxy0gsh0gnq0gj80gg20gdl0gct0gcx0geq0ghd0glf0gpv0gv80h0b0h5p0h9y0hdw0hg30hhg0hgu0hfa0hc10h810h320gxw0gsj0gnm0gjb0gfx0gdp0gcp0gd10geo0ghh0gld0gq00gv50h0h0h5i0ha50hdn0hga0hh40hh20hez0hc80h7t0h380gxq0gso0gni0gjf0gfu0gdt0gcl0gd60gel0ghm0gla0gq50gv20h0k0h5i0ha40hdo0hg50hha0hgt0hf70hby0h820h2z0gy00gsg0gns0gj70gg30gdk0gcu0gcw0ges0ghb0glh0gpu0gva0h0a0h5p0h9x0hdu0hg20hhc0hgv0hf60hc40h7y0h370gxu0gsp0gnk0gjg0gfv0gds0gcm0gd30gej0ghj0gl80gq10gv10h0j0h5g0ha70hdl0hgc0hh50hh20hf10hc60h7v0h360gxt0gsm0gnl0gjd0gfx0gdp0gco0gd20gem0ghh0glb0gq00gv50h0g0h5l0ha20hdt0hg40hhe0hgt0hfa0hbx0h830h2y0gxy0gsg0gnq0gj70gg30gdl0gcu0gcx0ges0ghd0glh0gpu0gv80h0b0h5m0h9y0hdr0hg40hh80hgy0hf20hc70h7u0h390gxq0gsq0gni0gji0gfu0gdv0gcl0gd60gej0ghm0gl70gq30guz0h0j0h5c0ha70hdj0hga0hh50hh00hf40hc40h800h350gxx0gsj0gnp0gj90gg00gdl0gcq0gcy0geo0ghf0gld0gpw0gv70h0c0h5n0h9y0hdv0hg10hhg0hgt0hfb0hc10h840h320gxz0gsj0gnp0gj90gfz0gdm0gcp0gcx0geo0ghd0gld0gpx0gv60h0f0h5k0ha30hdo0hg80hh50hh10hf00hc80h7v0h3a0gxr0gsr0gnj0gjh0gfu0gdu0gck0gd50geh0ghl0gl60gq30guz0h0j0h5f0ha60hdm0hg70hh80hgw0hf60hc10h830h310gy10gsi0gnu0gj90gg50gdl0gcu0gcv0geq0gha0gld0gpr0gv60h080h5m0h9w0hdt0hg20hhe0hgv0hf90hc30h820h370gxx0gsp0gno0gjf0gfz0gds0gco0gd20gek0ghg0gl70gpy0guz0h0f0h5d0ha40hdk0hgb0hh50hh30hf20hca0h7w0h3a0gxt0gsp0gnl0gjg0gfw0gds0gcn0gd40gel0ghj0gl80gq00gv10h0g0h5g0ha10hdo0hg40hhb0hgu0hfa0hc00h860h300gy20gsi0gnt0gj80gg40gdl0gcu0gcw0get0ghc0glg0gpt0gv70h090h5k0h9w0hdp0hg10hh80hgw0hf40hc50h7z0h3a0gxu0gst0gnm0gjj0gfw0gdv0gcm0gd60gei0ghk0gl70gq10guy0h0i0h5b0ha50hdi0hg90hh30hh00hf10hc60h800h370gxy0gso0gnr0gjd0gg10gdp0gcq0gcz0gem0ghf0gla0gpw0gv40h0c0h5k0h9z0hdt0hg10hhf0hgs0hfb0hbz0h860h310gy10gsk0gns0gja0gg30gdn0gct0gcx0gep0ghc0gld0gpu0gv60h0b0h5k0ha10hdp0hg60hh70hgz0hf20hc70h7v0h3a0gxr0gsr0gnj0gjj0gfv0gdw0gcm0gd70gei0ghm0gl60gq30gux0h0j0h5c0ha50hdl0hg80hh70hgy0hf50hc30h820h340gxz0gsk0gns0gja0gg40gdm0gct0gcx0gep0ghc0glc0gpt0gv50h080h5k0h9v0hdu0hg00hhf0hgv0hfc0hc30h850h370gxz0gso0gnp0gje0gfz0gdo0gco0gcz0gem0ghd0gl90gpw0gv10h0e0h5f0ha30hdl0hga0hh60hh40hf20hcc0h7y0h3c0gxu0gss0gnl0gjh0gfv0gds0gck0gd30geh0ghi0gl50gq00guz0h0g0h5f0ha30hdo0hg50hhb0hgw0hfa0hc20h870h330gy40gsk0gnv0gj90gg50gdl0gct0gcu0geq0gh90gld0gpp0gv50h060h5k0h9v0hdr0hg00hhc0hgv0hf70hc60h820h3b0gxy0gst0gnq0gjj0gg00gdu0gco0gd30gei0ghg0gl40gpx0guv0h0e0h590ha30hdh0hg90hh40hh30hf30hca0h800h3b0gxy0gss0gnq0gjh0gg00gds0gcp0gd20gej0ghf0gl60gpv0guz0h0a0h5f0h9w0hdp0hg20hhd0hgu0hfe0hc10h890h340gy40gsl0gnv0gja0gg50gdn0gcu0gcw0ger0gha0gld0gpr0gv40h070h5i0h9w0hdn0hg20hh70hgx0hf40hc80h7z0h3c0gxv0gsu0gnm0gjl0gfw0gdx0gcl0gd70gei0ghl0gl50gq10guv0h0h0h590ha30hdg0hg70hh30hgy0hf30hc50h830h370gy20gso0gnu0gje0gg50gdo0gct0gcx0geo0ghb0gla0gps0gv20h080h5i0h9u0hdq0hfy0hhe0hgs0hfb0hc10h870h360gy40gso0gnv0gjf0gg30gdp0gcs0gcy0gem0ghb0gl90gpt0gv00h0a0h5f0ha00hdl0hg70hh50hh20hf20hca0h7x0h3d0gxu0gsu0gnm0gjk0gfw0gdw0gcl0gd60geg0ghj0gl30gq00guw0h0f0h5c0ha30hdl0hg60hh90hgx0hf80hc30h850h330gy30gsk0gnv0gja0gg60gdm0gcv0gcx0ger0gha0glc0gpq0gv40h040h5j0h9s0hdr0hfy0hhd0hgt0hfa0hc40h840h390gy00gsr0gnr0gjh0gg00gdt0gcp0gd20gel0ghf0gl60gpw0guw0h0c0h5a0ha10hdh0hg80hh40hh30hf30hcc0h800h3e0gxy0gst0gnp0gjh0gfy0gds0gcm0gd10geh0ghg0gl40gpx0gux0h0c0h5e0h9z0hdn0hg30hhc0hgw0hfd0hc40h8a0h350gy70gsl0gnx0gja0gg50gdl0gct0gct0geo0gh80glb0gpp0gv40h060h5k0h9u0hdq0hg10hha0hgx0hf70hc80h820h3d0gxy0gsw0gno0gjl0gfy0gdw0gcl0gd40geg0ghh0gl20gpx0guu0h0e0h580ha30hdh0hg90hh40hh10hf40hc90h820h3c0gy10gst0gnu0gji0gg40gdr0gcr0gcz0gej0ghb0gl50gpq0gux0h060h5e0h9u0hdp0hg00hhf0hgu0hff0hc30h8b0h380gy70gsp0gny0gje0gg70gdp0gcu0gcw0gen0gh90gl80gpo0guz0h040h5d0h9v0hdl0hg50hh70hh20hf60hcd0h800h3h0gxw0gsx0gno0gjm0gfx0gdx0gcl0gd60geg0ghi0gl20gpy0gut0h0e0h570ha10hdg0hg60hh60hgz0hf80hc70h870h390gy50gsp0gnx0gje0gg60gdo0gcu0gcx0gep0ghb0gla0gpq0gv10h030h5g0h9q0hdo0hfv0hhc0hgs0hfa0hc40h880h3b0gy50gst0gnw0gjj0gg50gds0gcs0gd00gel0ghc0gl70gps0guw0h090h590h9y0hdg0hg50hh30hh20hf20hcc0h800h3h0gxz0gsx0gnr0gjm0gg00gdw0gcm0gd40geg0ghg0gl10gpx0gut0h0c0h5a0h9z0hdk0hg30hha0hgw0hfb0hc40h890h360gy70gsn0gnz0gjc0gg90gdn0gcv0gcw0gep0gh80glb0gpn0gv30h030h5i0h9r0hdq0hfy0hhb0hgv0hf70hc60h830h3c0gxz0gsv0gnq0gjl0gg10gdv0gcp0gd50gej0ghg0gl50gpw0guu0h0b0h580ha00hdf0hg80hh20hh20hf30hca0h820h3d0gy00gsu0gns0gjj0gg20gdt0gcp0gd10gej0ghe0gl40gpt0guv0h070h5c0h9u0hdm0hg00hhd0hgu0hff0hc40h8c0h380gy80gsp0gny0gje0gg60gdn0gct0gcu0geo0gh70gl90gpn0gv00h040h5f0h9u0hdn0hg20hh90hh00hf60hcd0h820h3h0gxy0gsy0gnp0gjm0gfx0gdv0gck0gd30gef0ghg0gl00gpx0gus0h0d0h580ha20hdg0hg80hh50hh10hf60hc90h860h3c0gy50gss0gnx0gjg0gg50gdq0gcs0gcx0gel0gh80gl60gpo0gux0h030h5e0h9q0hdo0hfx0hhd0hgt0hfd0hc40h8b0h3a0gy80gst0gnz0gji0gg80gdr0gct0gcy0gel0gh90gl50gpn0guv0h030h590h9v0hdh0hg40hh50hh30hf50hce0h820h3j0gxz0gt00gnr0gjo0gfz0gdy0gcm0gd40gef0ghg0gky0gpv0gup0h0a0h550h9y0hdh0hg40hh80hgz0hfb0hc80h8b0h3a0gy80gsq0go00gje0gg70gdo0gcv0gcv0gep0gh70gl90gpm0gv10h000h5f0h9p0hdn0hfw0hhb0hgt0hfb0hc60h880h3d0gy40gsw0gnv0gjl0gg30gdu0gcq0gd20gek0ghd0gl50gps0guu0h090h560h9y0hdd0hg50hh10hh20hf20hcd0h820h3h0gy20gsz0gnv0gjn0gg20gdw0gco0gd20geg0ghd0gl00gps0gus0h070h580h9u0hdk0hg00hha0hgv0hfd0hc50h8d0h390gyb0gsr0go20gjg0gga0gdo0gcv0gcu0geo0gh50gl70gpk0guz0h010h5e0h9r0hdn0hg00hha0hgy0hf80hcb0h840h3g0gy10gsy0gns0gjo0gg00gdx0gcn0gd50geg0ghf0gl00gpu0gur0h0a0h550ha10hde0hg80hh30hh30hf50hcc0h840h3e0gy40gsu0gnw0gjj0gg50gdt0gcr0gd00gel0ghb0gl50gpp0guu0h030h5a0h9q0hdl0hfx0hhd0hgt0hfe0hc50h8d0h3a0gya0gss0go10gjh0gg90gdq0gcu0gcx0gen0gh70gl80gpm0guw0h020h5a0h9r0hdi0hg20hh60hh20hf60hcg0h840h3k0gy20gt10gnr0gjp0gfy0gdx0gck0gd40ged0ghf0gky0gpv0gup0h0a0h550h9z0hdf0hg50hh70hh10hfa0hcb0h8a0h3e0gya0gst0go00gjg0gg80gdo0gct0gcu0gel0gh60gl70gpl0guy0h010h5e0h9p0hdo0hfw0hhd0hgt0hfd0hc60h8a0h3d0gy90gsw0gnz0gjm0gg60gdt0gcs0gcz0gej0gha0gl20gpp0gus0h050h570h9v0hde0hg50hh30hh30hf40hcf0h820h3k0gy30gt20gnv0gjr0gg30gdy0gcn0gd40gee0ghd0gkw0gpr0gun0h050h540h9u0hdh0hg10hha0hgx0hff0hc80h8e0h3c0gyc0gst0go30gjh0ggc0gdp0gcw0gcv0geo0gh40gl70gpi0guw0gzx0h5c0h9n0hdm0hfx0hhb0hgx0hfb0hcb0h890h3h0gy50gsz0gnu0gjo0gg20gdw0gcp0gd30geh0ghe0gl10gps0guq0h070h540h9w0hdc0hg60hh20hh20hf50hce0h850h3i0gy50gsz0gnx0gjm0gg40gdv0gcq0gd20gei0ghc0gl10gpq0gus0h030h570h9p0hdi0hfw0hh90hgs0hfe0hc50h8e0h3b0gye0gsu0go40gjj0ggc0gdq0gcw0gcv0geo0gh50gl60gpj0guw0gzy0h5b0h9o0hdi0hfz0hh60hgz0hf70hce0h850h3k0gy30gt30gnt0gjr0gg10gdz0gcm0gd40ged0ghe0gkx0gps0gun0h080h530h9y0hdd0hg60hh50hh20hf70hcc0h890h3e0gy80gsw0gnz0gjj0gg80gds0gct0gcx0gel0gh70gl50gpl0guv0h000h5b0h9o0hdm0hfv0hhd0hgs0hfe0hc50h8c0h3c0gya0gsu0go00gjk0gg80gdt0gcu0gcy0gem0gh80gl40gpm0guu0h010h570h9r0hdf0hg30hh40hh20hf50hcg0h840h3l0gy30gt20gnu0gjq0gg10gdz0gcl0gd40gec0ghe0gkw0gpr0gum0h060h520h9v0hde0hg30hh70hh00hfd0hcb0h8f0h3f0gye0gsu0go40gjh0gga0gdo0gcu0gct0gel0gh30gl50gph0guw0gzx0h5b0h9n0hdm0hfw0hhd0hgw0hfe0hca0h8c0h3i0gy90gsz0gny0gjo0gg40gdu0gco0gcz0geg0gh90gl00gpn0guq0h040h540h9w0hdd0hg60hh30hh40hf50hch0h850h3m0gy60gt30gny0gjq0gg40gdy0gco0gd20gee0ghb0gkw0gpo0gum0h020h530h9q0hdg0hfy0hh90hgv0hff0hc80h8g0h3d0gyh0gsw0go70gjk0ggf0gdr0gcx0gcv0gen0gh30gl40gpf0gut0gzt0h580h9l0hdi0hfx0hh90hgy0hfb0hcf0h890h3m0gy70gt40gnx0gjs0gg30gdz0gco0gd40gee0ghd0gkw0gpq0guk0h050h500h9u0hda0hg50hh30hh40hf70hcg0h8a0h3k0gya0gt00go10gjm0gg80gdu0gcs0gcz0gej0gh90gl20gpm0gus0gzz0h570h9n0hdh0hfu0hha0hgs0hfe0hc60h8g0h3d0gyf0gsx0go50gjl0ggc0gds0gcw0gcx0gen0gh60gl50gpk0gut0gzz0h570h9o0hde0hfz0hh30hgz0hf60hcf0h850h3n0gy60gt60gnx0gju0gg40ge10gcm0gd50gec0ghd0gkv0gpq0guk0h050h500h9v0hdb0hg30hh50hh00hfa0hcc0h8d0h3g0gye0gsy0go50gjl0ggc0gds0gcv0gcv0gel0gh50gl20gpi0gut0gzw0h5a0h9l0hdm0hfv0hhd0hgu0hff0hc80h8d0h3f0gya0gsy0go10gjn0gg80gdv0gct0gcz0gej0gh90gl10gpm0guq0h020h540h9t0hdd0hg40hh30hh40hf50hch0h850h3m0gy50gt30gnv0gjs0gg30gdz0gco0gd50gee0ghd0gkx0gpp0gul0h030h500h9r0hdd0hfz0hh80hgx0hfe0hc90h8h0h3e0gyg0gsw0go60gjj0ggd0gdq0gcx0gcu0gen0gh20gl50gpg0gut0gzu0h590h9k0hdj0hfv0hha0hgx0hfe0hce0h8c0h3m0gy90gt30gny0gjq0gg40gdw0gcn0gd00gee0gh90gkx0gpn0gum0h040h510h9v0hdb0hg50hh30hh50hf80hci0h8a0h3n0gya0gt30gnz0gjq0gg50gdv0gco0gcy0gef0gh70gkx0gpm0guo0h000h550h9o0hdh0hfw0hhb0hgu0hff0hc80h8h0h3e0gyi0gsx0go70gjm0ggd0gds0gcw0gcu0gem0gh10gl30gpf0gur0gzu0h570h9l0hdh0hfx0hh70hh00hf90hcg0h890h3o0gy80gt70gnz0gjv0gg50ge10gcn0gd30gec0gha0gks0gpm0gug0h020h4w0h9s0hd90hg40hh40hh30hfb0hch0h8e0h3l0gyf0gt10go50gjn0ggb0gdu0gct0gcx0gej0gh40gl00gpg0guo0gzu0h550h9j0hdi0hfu0hhc0hgu0hfh0hca0h8i0h3h0gyg0gsz0go50gjn0gga0gdu0gcu0gcx0gek0gh50gl20gpi0guq0gzx0h530h9o0hdb0hg00hh30hh20hf60hci0h880h3q0gy70gt80gny0gjw0gg40ge10gcn0gd40ged0ghc0gkt0gpo0gui0h020h4x0h9q0hd80hfz0hh40hgx0hfc0hcb0h8h0h3i0gyi0gt00go90gjo0ggf0gdt0gcx0gcv0gel0gh20gl20gpe0gur0gzr0h570h9h0hdi0hft0hha0hgu0hfe0hcc0h8e0h3l0gyd0gt40go30gjs0gg80gdy0gcq0gd00geg0gh70gkx0gpk0gul0h000h500h9r0hda0hg40hh20hh50hf70hci0h880h3p0gy80gt60go00gjt0gg60gdz0gcp0gd30gee0gha0gkv0gpn0guk0h000h510h9o0hdd0hfx0hh80hgv0hff0hc80h8i0h3e0gyi0gsx0go80gjm0ggf0gds0gcy0gcv0geo0gh30gl40gpe0gus0gzs0h560h9j0hdg0hfv0hh80hgx0hfb0hcg0h8b0h3o0gya0gt70go00gju0gg50ge00gcn0gd20ged0gha0gkt0gpm0gui0h020h4w0h9s0hd90hg40hh20hh50hfa0hcj0h8e0h3o0gye0gt40go40gjq0gg90gdv0gcq0gcx0geg0gh50gkx0gph0gun0gzw0h540h9l0hdi0hfv0hhc0hgv0hfi0hca0h8j0h3i0gyj0gt00go70gjn0ggd0gds0gcu0gcu0gek0gh10gl10gpf0gup0gzv0h550h9m0hdf0hfz0hh60hh20hf80hcj0h8a0h3r0gy90gta0go00gjw0gg60ge20gcn0gd40geb0gha0gkq0gpm0gue0h000h4u0h9r0hd80hg10hh40hh10hfc0hcf0h8h0h3l0gyj0gt30go90gjq0ggf0gdv0gcx0gcw0gek0gh20gkz0gpc0gun0gzp0h530h9g0hdg0hfs0hhc0hgv0hfi0hcd0h8j0h3m0gyg0gt40go60gjr0gga0gdx0gct0gcy0geh0gh50gky0gpg0gul0gzw0h4y0h9o0hd90hg10hh20hh50hf80hcm0h8a0h3t0gya0gt90go10gjv0gg60ge00gco0gd30ged0gha0gkt0gpn0guh0h000h4x0h9n0hda0hfw0hh50hgv0hfe0hcb0h8j0h3i0gyl0gt10gob0gjn0ggh0gds0gcy0gcv0gem0gh10gl20gpd0guq0gzq0h550h9g0hdg0hfs0hh70hgv0hfc0hce0h8e0h3o0gye0gt90go40gjw0gg80ge00gcq0gd00ged0gh70gkt0gpj0guh0gzy0h4w0h9q0hd70hg30hh10hh40hf80hck0h8c0h3r0gye0gt70go50gju0gga0gdz0gcq0gd00gee0gh60gku0gph0gui0gzv0h510h9k0hdf0hfv0hha0hgv0hfi0hc90h8k0h3h0gyj0gt00go90gjo0ggf0gds0gcy0gcu0gem0gh10gl10gpc0gup0gzr0h540h9j0hde0hfw0hh70hh00hfb0hci0h8b0h3q0gya0gt90go00gjx0gg60ge20gco0gd40gec0gha0gks0gpl0gud0gzz0h4t0h9p0hd50hg10hh20hh20hfb0hci0h8g0h3o0gyi0gt50go90gjr0ggd0gdv0gcu0gcx0geh0gh30gkx0gpd0gum0gzq0h510h9g0hdf0hfs0hhb0hgu0hfj0hcd0h8m0h3l0gyk0gt40go90gjq0ggc0gdu0gct0gcu0geh0gh10gky0gpd0gum0gzt0h510h9l0hdb0hg00hh30hh40hf90hcm0h8c0h3u0gyd0gtc0go10gjy0gg60ge20gcm0gd20gea0gh80gkp0gpl0gue0gzy0h4v0h9o0hd80hfz0hh40hgy0hfd0hce0h8j0h3l0gyl0gt30god0gjq0ggi0gdv0gcy0gcv0gek0gh00gky0gpa0gum0gzo0h520h9e0hdg0hfr0hha0hgu0hfg0hce0h8i0h3o0gyh0gt90go70gjw0ggc0ge00gcs0gd00gef0gh40gkt0gpf0guf0gzt0h4u0h9m0hd70hg10hh10hh60hfa0hcn0h8d0h3v0gye0gtb0go50gjx0gg90ge10gcq0gd20gec0gh70gks0gph0gug0gzu0h4w0h9k0hda0hfv0hh80hgw0hfi0hcc0h8m0h3k0gyn0gt20goc0gjo0ggh0gds0gcz0gcu0gel0gh00gl20gpb0guo0gzp0h530h9g0hdd0hft0hh70hgx0hfd0hch0h8e0h3s0gye0gtc0go40gjy0gg80ge30gcp0gd30gec0gh80gkr0gpj0gue0gzx0h4s0h9n0hd40hg00hh00hh30hf90hcj0h8g0h3r0gyj0gt90goa0gjv0gge0gdz0gct0gcz0gef0gh40gku0gpd0gui0gzr0h4z0h9g0hdd0hfs0hha0hgv0hfj0hcb0h8n0h3l0gym0gt40goc0gjq0ggg0gdv0gcw0gcv0gej0gh00gkx0gpb0gum0gzp0h510h9j0hdc0hfx0hh60hh20hfb0hcm0h8c0h3u0gyc0gtd0go20gjy0gg70ge30gco0gd30geb0gh90gkq0gpk0guc0gzy0h4s0h9o0hd60hfz0hh30hh10hfc0hcg0h8j0h3n0gyk0gt50gob0gjr0ggg0gdv0gcx0gcw0gej0gh20gky0gpb0gum0gzo0h500h9e0hde0hfq0hhb0hgu0hfj0hce0h8l0h3o0gyl0gt70goa0gjt0ggd0gdx0gcs0gcw0gef0gh20gku0gpc0guh0gzs0h4w0h9k0hd80hfz0hh30hh60hfa0hcp0h8f0h3x0gyg0gte0go40gjz0gg70ge10gcn0gd10ge80gh60gko0gph0guc0gzv0h4u0h9m0hda0hfx0hh70hgy0hfh0hcf0h8n0h3n0gyo0gt40gof0gjq0ggh0gdt0gcx0gct0gej0ggx0gky0gp70gum0gzm0h520h9e0hdf0hfs0hha0hgx0hff0hch0h8i0h3s0gyi0gtc0go80gjz0ggb0ge20gcr0gd10gec0gh40gkp0gpd0gub0gzs0h4q0h9l0hd30hg00hh00hh50hfa0hcn0h8g0h3w0gyi0gte0go90gjz0gge0ge20gct0gd00ged0gh40gkq0gpc0gud0gzp0h4t0h9e0hd90hfs0hh90hgw0hfk0hce0h8q0h3n0gyq0gt50goe0gjs0ggi0gdu0gcy0gcu0gek0ggy0gky0gp70guk0gzm0h4y0h9e0hda0hft0hh50hh00hfd0hcm0h8g0h3x0gyg0gtf0go50gk00gg90ge30gcp0gd30gea0gh80gkp0gpi0gub0gzw0h4p0h9m0hd20hfx0hgz0hh10hfa0hci0h8i0h3r0gym0gta0god0gjv0ggh0gdz0gcw0gcy0geh0gh20gkv0gpb0gui0gzn0h4y0h9c0hdb0hfp0hh80hgs0hfi0hcc0h8m0h3o0gyo0gt90goe0gjv0ggh0gdy0gcw0gcw0geg0ggz0gku0gpa0gug0gzp0h4v0h9h0hd80hfx0hh20hh40hfa0hcn0h8e0h3y0gyf0gtg0go50gk20gg90ge50gco0gd40ge90gh70gkn0gpg0gua0gzu0h4r0h9m0hd60hfy0hh40hh00hff0hcg0h8l0h3n0gyn0gt50goe0gjr0ggi0gdv0gcz0gcv0gej0gh00gkx0gp90guk0gzm0h500h9c0hde0hfq0hha0hgw0hfi0hcg0h8k0h3q0gyk0gta0go90gjw0ggd0ge00gcs0gd00gee0gh40gkr0gpd0gud0gzq0h4r0h9j0hd30hfz0hh00hh60hfa0hcp0h8h0h3y0gyi0gtf0go80gk00ggb0ge20gcq0gd10gea0gh50gko0gpe0gub0gzr0h4s0h9h0hd80hft0hh80hgx0hfl0hcg0h8r0h3p0gys0gt60gog0gjr0ggj0gds0gcx0gcr0gei0ggv0gkw0gp60guj0gzl0h500h9d0hdd0hft0hh80hh00hfg0hcl0h8k0h3x0gyj0gtg0go80gk10gga0ge30gco0gd00ge90gh40gkn0gpe0gua0gzt0h4p0h9l0hd20hg00hh00hh40hfb0hcm0h8i0h3v0gyn0gtd0goe0gjz0ggh0ge10gcu0gcz0gee0gh10gkq0gp90gud0gzm0h4t0h9c0hda0hfp0hha0hgu0hfl0hcf0h8q0h3p0gys0gt90goh0gjw0ggj0gdy0gcx0gcv0geh0ggx0gkt0gp50gug0gzj0h4u0h9c0hd80hfu0hh40hh40hfd0hcq0h8i0h410gyi0gtj0go80gk30gga0ge50gcp0gd40ge80gh70gkl0gpg0gu70gzs0h4n0h9k0hd20hfx0hh10hh20hfe0hcj0h8n0h3s0gyq0gta0gof0gjv0ggj0gdw0gcy0gcv0gei0gh00gkv0gp80gui0gzk0h4x0h9a0hdc0hfn0hh90hgt0hfj0hcf0h8n0h3s0gyo0gtd0goe0gjy0ggh0ge00gcv0gcy0gef0gh10gkr0gp90gud0gzn0h4r0h9f0hd30hfw0hgz0hh40hf90hcp0h8g0h400gyj0gtj0goa0gk50ggd0ge60gcq0gd30ge90gh50gkm0gpd0gu70gzq0h4p0h9h0hd40hfu0hh50hgy0hfi0hcg0h8q0h3p0gys0gt80goh0gju0ggl0gdv0gcz0gcu0gei0ggw0gkw0gp40gui0gzi0h4y0h9a0hdd0hfq0hh90hgy0hfh0hcj0h8l0h3v0gyk0gte0goa0gk00ggd0ge20gcs0gd10gec0gh40gko0gpd0gua0gzr0h4n0h9j0hd10hfy0hgy0hh40hfa0hco0h8h0h3x0gyl0gtf0gob0gk00gge0ge30gct0gd10gec0gh40gkp0gpc0gub0gzn0h4s0h9c0hd70hfq0hh70hgv0hfl0hcf0h8r0h3q0gyt0gt90goi0gju0ggk0gdv0gcx0gcs0geh0ggv0gku0gp40guh0gzi0h4w0h9b0hd90hfs0hh60hh10hff0hcp0h8l0h410gyk0gtj0go90gk40gga0ge40gcn0gd10ge70gh30gkk0gpd0gu70gzr0h4n0h9l0hd20hfz0hh10hh30hfd0hcm0h8m0h3v0gyq0gtd0gof0gjy0ggi0gdy0gcv0gcw0gee0ggy0gkr0gp60gue0gzj0h4v0h9b0hdb0hfp0hha0hgu0hfl0hcg0h8q0h3r0gys0gtc0goh0gjy0ggk0ge00gcw0gcw0gef0ggx0gkq0gp40gub0gzi0h4q0h9c0hd40hfu0hh20hh40hfd0hcr0h8j0h420gyl0gtl0gob0gk60ggd0ge70gcq0gd30ge80gh50gkj0gpb0gu40gzo0h4k0h9g0hd10hfu0hh30hh10hfj0hck0h8s0h3u0gyt0gtb0goj0gjv0ggk0gdx0gcy0gct0gei0ggw0gku0gp30gug0gzg0h4v0h980hda0hfo0hh80hgx0hfj0hck0h8q0h3w0gyq0gtg0goe0gk10ggf0ge20gcs0gcz0gec0gh10gko0gpa0gua0gzn0h4n0h9f0hd00hfw0hgx0hh40hfa0hcp0h8i0h410gym0gtl0god0gk50ggf0ge50gcs0gd20gea0gh30gkm0gpb0gu80gzn0h4o0h9c0hd40hfr0hh40hgw0hfj0hcg0h8s0h3s0gyw0gtb0gom0gjx0ggn0gdx",TY0=1900,LS=0,LY0=1899,LM0=12,LL="00000000010000000000000000000000000000000001000000000000000000000000000000000001000000000000000000000000000000000010000000000000000000000000000100000000000000000000000000000000000100000000000000000000000000000000010000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000000000000100000000000000000000000000000000001000000000000000000000000000010000000000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000001000000000000000000000000000000000001000000000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000000100000000000000000000000000000000001000000000000000000000000000000000010000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000000000001000000000000000000000000000000000001000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000000000000100000000000000000000000000001000000000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000000010000000000000000000000000000000010000000000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000000100000000000000000000000000000000010000000000000000000000000000000000010000000000000000000000000000000000100000000000000000000000000000100000000000000000000000000000000001000000000000000000000000000000000010000000000000000000000000000001000000000000000000000000000000001000000000000000000000000000000000001000000000000000000000000000000000010000000000000000000000000000100000000000000000000000000000000000100000000000000000000000000000000001000000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000000010000000000000000000000000000000001000000000000000000000000000001000000000000000000000000000000000010000000000000000000000000000000000100000000",LD="1010010110110101001010111010100101011101010010011011101001001101101100101010110101010101010101101010100110101101010010101110101001010111010100100110111010010011011101001001011101100101001101101010101010101101010100101101101010010101110101001010110110100100110111010010010111011001001011011010101001101011010100101101011010100101011011010010101101101001001101110100100101110110010010110111001001010111010100101011011010100101011011010100101011011010010101011101001001011101100100101101110010010101110101001010110110100101010110110100101010110110100101010110110010010111011001001011011100100101011101010010101110101001010110110100101010110101010101010110101010100110110110010010110111001001010111010100101011101010010101101101001010101101010101010101101010101010101101010100101101101010010101110101001010111010100100111011010010011011011001010101101010101010101011010101001101011010100101011101010010101110101001001110110100100110111010010010111010101010011011010101001101011010101001011011010100101011011010010011011101001001101110100100101110110010010110110101001010110110101001011010110101001010110110100101011011010010011011101001001011101100100101101101010010101110101001010110110101001010110101101001010110110100100110111010010010111011001001011011100100101011101010010101101101001010101101010101010101101100101010101101100100101110110010010110111001001010111010100101011011010010101011101001010101101010101010101011010101001011101010100101101101010010101110101001010111010100101011011010010101011010101010101011010101010101011010101001011011010100101011101010010101110101001001110110100100110110110010011010110101010101010110101010010110110101001010111010100101011101010010011011101001001101110100100101110101010010110110101010010110110101010010110110101001010110110100100110111010010010111101001001011101100100101101101010010101101101010010101101101010010101101";
+</script>
+<script>/* ===== 만세력 엔진 (PBS 사주웹) =====
+   표: TB/TD(절기), LS/LY0/LM0/LL/LD(음력)  ← tables.js 에서 주입
+   모든 시각은 KST 벽시계 기준 분(minute) 단위, EPOCH = 1900-01-01 00:00 KST
+*/
+const GAN  = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+const GANK = ["갑","을","병","정","무","기","경","신","임","계"];
+const JI   = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+const JIK  = ["자","축","인","묘","진","사","오","미","신","유","술","해"];
+const JI_ANIMAL = ["쥐","소","범","토끼","용","뱀","말","양","원숭이","닭","개","돼지"];
+const GAN_OH = [0,0,1,1,2,2,3,3,4,4];              // 0木 1火 2土 3金 4水
+const JI_OH  = [4,2,0,0,2,1,1,2,3,3,2,4];
+const GAN_YIN= [0,1,0,1,0,1,0,1,0,1];              // 0양 1음
+const JI_YIN = [0,1,0,1,0,1,0,1,0,1,0,1];
+const OH_NAME= ["木","火","土","金","水"];
+const OH_KOR = ["목","화","토","금","수"];
+const OH_HAN = ["나무","불","흙","쇠","물"];
+const TERM_NAME = ["소한","대한","입춘","우수","경칩","춘분","청명","곡우","입하","소만","망종","하지",
+                   "소서","대서","입추","처서","백로","추분","한로","상강","입동","소설","대설","동지"];
+/* 절(節) = 짝수 index. 월지: 소한→丑(1), 입춘→寅(2) ... 대설→子(0) */
+const SETSU_JI = [1,2,3,4,5,6,7,8,9,10,11,0];      // k/2 순서
+
+/* ---------- 표 해제 ---------- */
+let _terms = null;
+function termsFlat(){
+  if(_terms) return _terms;
+  const n = TD.length/4, a = new Int32Array(n+1);
+  a[0] = TB;
+  for(let i=0;i<n;i++) a[i+1] = a[i] + parseInt(TD.substr(i*4,4),36);
+  _terms = a; return a;
+}
+/** year(1900~2050), k(0~23) → EPOCH로부터의 분 */
+function termMin(year,k){
+  const i=(year-TY0)*24+k;
+  const a=termsFlat();
+  if(i<0||i>=a.length) return null;
+  return a[i];
+}
+let _lunar=null;
+function lunarTable(){
+  if(_lunar) return _lunar;
+  const out=[]; let day=LS, y=LY0, mo=LM0;
+  for(let i=0;i<LL.length;i++){
+    out.push({d:day,y:y,m:mo,leap:LL[i]==="1"});
+    if(i<LD.length) day += (LD[i]==="1"?30:29);
+    const nxt = (i+1<LL.length)? LL[i+1] : "0";
+    if(nxt==="0"){ mo++; if(mo===13){mo=1;y++;} }
+  }
+  _lunar=out; return out;
+}
+
+/* ---------- 날짜 유틸 ---------- */
+function jdn(y,m,d){const a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;
+  return d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045;}
+const JDN1900 = jdn(1900,1,1);
+function dayIndex(y,m,d){ return jdn(y,m,d)-JDN1900; }             // 1900-01-01 = 0
+function fromDayIndex(n){
+  let j=n+JDN1900, a=j+32044, b=Math.floor((4*a+3)/146097), c=a-Math.floor(146097*b/4),
+      dd=Math.floor((4*c+3)/1461), e=c-Math.floor(1461*dd/4), mm=Math.floor((5*e+2)/153);
+  return {y:100*b+dd-4800+Math.floor((mm+2)/12), m:(mm+2)%12+1, d:e-Math.floor((153*mm+2)/5)+1};
+}
+function absMin(y,m,d,hh,mi){ return dayIndex(y,m,d)*1440 + hh*60 + mi; }
+
+/* ---------- 한국 표준시 역사 + 서머타임 ---------- */
+/* 표준자오선: 1908-04-01~1911-12-31 = 127.5 / 1912-01-01~1954-03-20 = 135
+   1954-03-21~1961-08-09 = 127.5 / 1961-08-10~ = 135 (그 이전은 135으로 처리) */
+function stdMeridian(y,m,d){
+  const n=dayIndex(y,m,d);
+  if(n>=dayIndex(1908,4,1) && n<=dayIndex(1911,12,31)) return 127.5;
+  if(n>=dayIndex(1954,3,21) && n<=dayIndex(1961,8,9))  return 127.5;
+  return 135;
+}
+const DST_RANGES = [
+  [1948,6,1,1948,9,13],[1949,4,3,1949,9,11],[1950,4,1,1950,9,10],[1951,5,6,1951,9,9],
+  [1955,5,5,1955,9,9],[1956,5,20,1956,9,30],[1957,5,5,1957,9,22],[1958,5,4,1958,9,21],
+  [1959,5,3,1959,9,20],[1960,5,1,1960,9,18],[1987,5,10,1987,10,11],[1988,5,8,1988,10,9]
+];
+function isDST(y,m,d){
+  const n=dayIndex(y,m,d);
+  return DST_RANGES.some(r=> n>=dayIndex(r[0],r[1],r[2]) && n<=dayIndex(r[3],r[4],r[5]));
+}
+/* 균시차(분) — Meeus 근사, ±10초 수준이면 충분 */
+function eqTime(y,m,d){
+  const n = dayIndex(y,m,d) - dayIndex(y,1,1) + 1;
+  const B = 2*Math.PI*(n-81)/364;
+  return 9.87*Math.sin(2*B) - 7.53*Math.cos(B) - 1.5*Math.sin(B);
+}
+
+/* ---------- 간지 ---------- */
+function gz(i){ i=((i%60)+60)%60; return {i, gan:i%10, ji:i%12,
+  han:GAN[i%10]+JI[i%12], kor:GANK[i%10]+JIK[i%12]}; }
+
+/* 납음오행 60 */
+const NAPEUM = ["해중금","해중금","노중화","노중화","대림목","대림목","노방토","노방토","검봉금","검봉금",
+"산두화","산두화","간하수","간하수","성두토","성두토","백랍금","백랍금","양류목","양류목",
+"정천수","정천수","옥상토","옥상토","벽력화","벽력화","송백목","송백목","장류수","장류수",
+"사중금","사중금","산하화","산하화","평지목","평지목","벽상토","벽상토","금박금","금박금",
+"복등화","복등화","천하수","천하수","대역토","대역토","차천금","차천금","상자목","상자목",
+"대계수","대계수","사중토","사중토","천상화","천상화","석류목","석류목","대해수","대해수"];
+
+/* 지장간 [천간index, 일수] */
+const JIJANG = [
+ [[8,10],[9,20]],                 // 子
+ [[9,9],[7,3],[5,18]],            // 丑
+ [[4,7],[2,7],[0,16]],            // 寅
+ [[0,10],[1,20]],                 // 卯
+ [[1,9],[9,3],[4,18]],            // 辰
+ [[4,7],[6,7],[2,16]],            // 巳
+ [[2,10],[5,9],[3,11]],           // 午
+ [[3,9],[1,3],[5,18]],            // 未
+ [[4,7],[8,7],[6,16]],            // 申
+ [[6,10],[7,20]],                 // 酉
+ [[7,9],[3,3],[4,18]],            // 戌
+ [[4,7],[0,7],[8,16]]             // 亥
+];
+
+/* 십성 */
+const SIP = ["비견","겁재","식신","상관","편재","정재","편관","정관","편인","정인"];
+function sipsung(dayGan, oh, yin){
+  const dOh=GAN_OH[dayGan], dYin=GAN_YIN[dayGan], same = (yin===dYin);
+  if(oh===dOh)            return same?"비견":"겁재";
+  if(oh===(dOh+1)%5)      return same?"식신":"상관";   // 내가 생함
+  if(oh===(dOh+2)%5)      return same?"편재":"정재";   // 내가 극함
+  if(oh===(dOh+3)%5)      return same?"편관":"정관";   // 나를 극함
+  return same?"편인":"정인";                            // 나를 생함
+}
+const sipGan = (dg,g)=> sipsung(dg, GAN_OH[g], GAN_YIN[g]);
+/* 지지의 십성은 지장간 정기(본기)의 음양·오행으로 매긴다 (子→癸, 午→丁, 亥→壬 …) */
+const jiBongi = j => JIJANG[j][JIJANG[j].length-1][0];
+const sipJi  = (dg,j)=>{ const g=jiBongi(j); return sipsung(dg, GAN_OH[g], GAN_YIN[g]); };
+
+/* 12운성 */
+const UNSUNG=["장생","목욕","관대","건록","제왕","쇠","병","사","묘","절","태","양"];
+const JANGSAENG=[11,6,2,9,2,9,5,0,8,3];   // 甲亥 乙午 丙寅 丁酉 戊寅 己酉 庚巳 辛子 壬申 癸卯
+function unsung(dayGan, j){
+  const s=JANGSAENG[dayGan], fwd = GAN_YIN[dayGan]===0;
+  const k = fwd ? ((j-s)%12+12)%12 : ((s-j)%12+12)%12;
+  return UNSUNG[k];
+}
+/* 공망 */
+function gongmang(i60){
+  const head=i60-(i60%10), hj=head%12;
+  return [JI[(hj+10)%12], JI[(hj+11)%12]];
+}
+/* 신살 */
+const CHEONEUL={0:[1,7],4:[1,7],6:[1,7],1:[0,8],5:[0,8],2:[11,9],3:[11,9],7:[6,2],8:[3,5],9:[3,5]};
+const SAMHAP_GROUP = j => (j===2||j===6||j===10)?0 : (j===8||j===0||j===4)?1 : (j===5||j===9||j===1)?2 : 3;
+const DOHWA=[3,9,6,0], YEOKMA=[8,2,11,5], HWAGAE=[10,4,1,7];
+const YANGIN={0:3,2:6,4:6,6:9,8:0};
+const MUNGOK={0:11,1:0,2:2,4:2,3:3,5:3,6:5,7:6,8:8,9:9};
+const MUNCHANG={0:5,1:6,2:8,4:8,3:9,5:9,6:11,7:0,8:2,9:3};
+const HYEONCHIM_G=[0,7], HYEONCHIM_J=[3,6,8];
+const BAEKHO=["甲辰","乙未","丙戌","丁丑","戊辰","壬戌","癸丑"];
+const GOERANG=["庚辰","庚戌","壬辰","壬戌","戊戌"];
+const GORAN=["甲寅","乙巳","丁巳","戊申","辛亥"];
+const WONJIN={0:7,7:0,1:6,6:1,2:9,9:2,3:8,8:3,4:11,11:4,5:10,10:5};
+const GWIMUN={0:9,9:0,1:6,6:1,2:7,7:2,3:8,8:3,4:11,11:4,5:10,10:5};
+
+/* ===== 메인 ===== */
+function buildSaju(opt){
+  // opt: {y,m,d,hh,mi, unknownTime, gender:'M'|'F', lon, useLon, useEot, useDst, yajasi}
+  const lon = (opt.lon==null?126.978:opt.lon);
+  let corr = 0, notes=[];
+  if(opt.useDst!==false && isDST(opt.y,opt.m,opt.d)){ corr -= 60; notes.push("서머타임 −60분"); }
+  const std = stdMeridian(opt.y,opt.m,opt.d);
+  if(opt.useLon!==false){
+    const c = (lon - std)*4;
+    corr += c; notes.push(`경도보정 ${c>=0?"+":""}${c.toFixed(1)}분 (표준자오선 ${std}°)`);
+  } else if(std!==135){ notes.push(`당시 표준자오선 ${std}°`); }
+  if(opt.useEot!==false){ const e=eqTime(opt.y,opt.m,opt.d); corr += e; notes.push(`균시차 ${e>=0?"+":""}${e.toFixed(1)}분`); }
+
+  const clockMin = absMin(opt.y,opt.m,opt.d, opt.unknownTime?12:opt.hh, opt.unknownTime?0:opt.mi);
+  const trueMin  = Math.round(clockMin + (opt.unknownTime?0:corr));
+  // 절기 판정 기준 시각: 보정된 진태양시(시 모름이면 정오)
+  const refMin = opt.unknownTime ? clockMin : trueMin;
+
+  /* --- 년주 --- */
+  let yy = opt.y;
+  const ipchun = termMin(yy,2);
+  if(ipchun===null) throw new Error("1900~2050년만 지원한다");
+  if(refMin < ipchun) yy = yy-1;
+  const yearGZ = gz(yy-1984);
+
+  /* --- 월주 --- */
+  let setsuIdx=null, sYear=yy;
+  for(let k=22;k>=0;k-=2){
+    const t=termMin(opt.y,k);
+    if(t!==null && refMin>=t){ setsuIdx=k; sYear=opt.y; break; }
+  }
+  if(setsuIdx===null){ setsuIdx=22; sYear=opt.y-1; }   // 1월 초 대설(前년) 구간
+  const monthJi = SETSU_JI[setsuIdx/2];
+  const firstGan = (yearGZ.gan%5)*2+2;                 // 寅월 천간 (五虎遁)
+  const steps = ((monthJi-2)%12+12)%12;
+  const monthGZ = gz(idx60((firstGan+steps)%10, monthJi));
+
+  /* --- 일주 (진태양시 기준, 일자 경계는 자정) --- */
+  let dIdx = Math.floor(trueMin/1440);                 // 보정 후 실제 날짜
+  let hourJi=null;
+  if(opt.unknownTime){ dIdx = dayIndex(opt.y,opt.m,opt.d); }
+  else {
+    const tm = ((trueMin%1440)+1440)%1440;
+    hourJi = Math.floor((tm+60)/120)%12;
+    if(tm>=1380 && opt.yajasi!=="keep") dIdx += 1;     // 23시 이후 = 다음 날 子시(기본)
+  }
+  const DAYBASE = ((JDN1900+49)%60+60)%60;             // 1900-01-01 의 60갑자 index
+  const dayGZ = gz(dIdx + DAYBASE);
+  const dg = dayGZ.gan;
+
+  /* --- 시주 --- */
+  let hourGZ=null;
+  if(hourJi!==null){
+    const zGan=(dg%5)*2;
+    hourGZ = gz(idx60((zGan+hourJi)%10, hourJi));
+  }
+
+  /* --- 음력 --- */
+  const lt=lunarTable(); const dnow=dayIndex(opt.y,opt.m,opt.d);
+  let li=0; for(let i=0;i<lt.length;i++){ if(lt[i].d<=dnow) li=i; else break; }
+  const lun={y:lt[li].y,m:lt[li].m,leap:lt[li].leap,d:dnow-lt[li].d+1};
+  /* 자미두수용 — 23시 이후를 다음 날로 본 일진 기준 음력 */
+  let lz=0; for(let i=0;i<lt.length;i++){ if(lt[i].d<=dIdx) lz=i; else break; }
+  const lunZ={y:lt[lz].y,m:lt[lz].m,leap:lt[lz].leap,d:dIdx-lt[lz].d+1};
+
+  /* --- 대운 --- */
+  const yangYear = GAN_YIN[yearGZ.gan]===0;
+  const male = opt.gender!=="F";
+  const forward = (yangYear===male);
+  let bound;
+  if(forward){
+    let nk=setsuIdx+2, ny=sYear;
+    if(nk>22){ nk=0; ny=sYear+1; }
+    bound = termMin(ny,nk);
+  } else {
+    bound = termMin(sYear,setsuIdx);
+  }
+  const diffMin = forward ? (bound-refMin) : (refMin-bound);
+  const daewoonYears = diffMin/1440/3;                   // 3일 = 1년
+  const startAge = daewoonYears;
+  const daewoon=[];
+  for(let n=0;n<10;n++){
+    const g = gz(monthGZ.i + (forward? (n+1) : -(n+1)));
+    daewoon.push({age: startAge + n*10, gz:g});
+  }
+
+  /* --- 오행 분포 --- */
+  const cnt=[0,0,0,0];  // placeholder
+  const oh=[0,0,0,0,0];
+  const pillars=[];
+  if(hourGZ) pillars.push({name:"시주",gz:hourGZ}); else pillars.push({name:"시주",gz:null});
+  pillars.push({name:"일주",gz:dayGZ});
+  pillars.push({name:"월주",gz:monthGZ});
+  pillars.push({name:"년주",gz:yearGZ});
+  pillars.forEach(p=>{ if(!p.gz) return; oh[GAN_OH[p.gz.gan]]++; oh[JI_OH[p.gz.ji]]++; });
+
+  /* 지장간 가중 오행 */
+  const ohW=[0,0,0,0,0];
+  pillars.forEach(p=>{ if(!p.gz) return;
+    ohW[GAN_OH[p.gz.gan]] += 1;
+    const jj=JIJANG[p.gz.ji]; const tot=jj.reduce((a,b)=>a+b[1],0);
+    jj.forEach(x=> ohW[GAN_OH[x[0]]] += x[1]/tot );
+  });
+
+  /* --- 신강/신약 (간이 점수) --- */
+  const W={"년간":1.0,"년지":1.0,"월간":1.5,"월지":3.0,"일지":2.0,"시간":1.0,"시지":1.5};
+  let score=0;
+  const addScore=(key,ss)=>{ const s=(ss==="비견"||ss==="겁재"||ss==="편인"||ss==="정인")?1:-1; score += s*W[key]; };
+  addScore("년간", sipGan(dg,yearGZ.gan)); addScore("년지", sipJi(dg,yearGZ.ji));
+  addScore("월간", sipGan(dg,monthGZ.gan)); addScore("월지", sipJi(dg,monthGZ.ji));
+  addScore("일지", sipJi(dg,dayGZ.ji));
+  if(hourGZ){ addScore("시간", sipGan(dg,hourGZ.gan)); addScore("시지", sipJi(dg,hourGZ.ji)); }
+  const strong = score>0;
+
+  /* --- 용신 (간이) --- */
+  const dOh=GAN_OH[dg];
+  const inOh=(dOh+4)%5, bigeop=dOh, sikOh=(dOh+1)%5, jaeOh=(dOh+2)%5, gwanOh=(dOh+3)%5;
+  let yong, hui, reason;
+  const winter=[11,0,1].includes(monthJi), summer=[5,6,7].includes(monthJi);
+  if(winter && ohW[1]<1.2){ yong=1; hui=0; reason="겨울에 태어나 언 땅을 녹일 불이 급하다 (조후용신)"; }
+  else if(summer && ohW[4]<1.2){ yong=4; hui=3; reason="여름에 태어나 메마른 기운을 적실 물이 급하다 (조후용신)"; }
+  else if(!strong){ yong=inOh; hui=bigeop; reason="일간이 약하니 나를 낳아 주는 기운과 같은 편이 필요하다 (억부용신)"; }
+  else {
+    const c=[[sikOh,ohW[sikOh]],[jaeOh,ohW[jaeOh]],[gwanOh,ohW[gwanOh]]].sort((a,b)=>b[1]-a[1]);
+    yong=c[0][0]; hui=c[1][0];
+    reason="일간이 강하니 넘치는 힘을 밖으로 흘려보낼 기운이 필요하다 (억부용신)";
+  }
+
+  /* --- 신살 --- */
+  const gm=gongmang(dayGZ.i);
+  const yGroup=SAMHAP_GROUP(yearGZ.ji), dGroup=SAMHAP_GROUP(dayGZ.ji);
+  const allJi=pillars.filter(p=>p.gz).map(p=>p.gz.ji);
+  const sinsal=[];
+  const push=(n,desc)=>sinsal.push({n,desc});
+  const ce=CHEONEUL[dg]||[]; if(allJi.some(j=>ce.includes(j))) push("천을귀인","하늘이 붙여 준 귀인 — 위기에서 사람이 나타나 길을 열어 준다");
+  if(allJi.includes(DOHWA[yGroup])||allJi.includes(DOHWA[dGroup])) push("도화살","사람을 끌어당기는 매력 — 미(美)·연예·서비스업에서 힘이 된다");
+  if(allJi.includes(YEOKMA[yGroup])||allJi.includes(YEOKMA[dGroup])) push("역마살","움직여야 풀리는 사주 — 이동·출장·해외·유통에서 기회가 온다");
+  if(allJi.includes(HWAGAE[yGroup])||allJi.includes(HWAGAE[dGroup])) push("화개살","홀로 파고드는 기운 — 학문·예술·종교·전문기술에 깊이 들어간다");
+  if(YANGIN[dg]!==undefined && allJi.includes(YANGIN[dg])) push("양인살","칼날 같은 추진력 — 결단은 빠르나 과격함을 눌러야 한다");
+  if(allJi.includes(MUNCHANG[dg])) push("문창귀인","글과 공부의 별 — 배우면 바로 제 것으로 만든다");
+  if(allJi.includes(MUNGOK[dg])) push("문곡귀인","재주와 표현의 별 — 가르치고 쓰는 일에서 빛난다");
+  pillars.forEach(p=>{ if(!p.gz) return;
+    if(BAEKHO.includes(p.gz.han) && !sinsal.find(s=>s.n==="백호대살")) push("백호대살","기운이 거칠게 몰린 자리 — 건강과 안전을 미리 챙기면 큰 추진력이 된다");
+    if(GOERANG.includes(p.gz.han) && !sinsal.find(s=>s.n==="괴강살")) push("괴강살","극단으로 강한 기운 — 크게 되거나 크게 꺾이니 중심을 잡아야 한다");
+    if(GORAN.includes(p.gz.han) && !sinsal.find(s=>s.n==="고란살")) push("고란살","홀로 서는 기운 — 배우자나 동업자에게 기대기보다 제 이름으로 서야 한다");
+  });
+  const hc = pillars.filter(p=>p.gz).some(p=>HYEONCHIM_G.includes(p.gz.gan)||HYEONCHIM_J.includes(p.gz.ji));
+  if(hc) push("현침살","바늘·칼·침처럼 뾰족한 것을 다루는 손 — 미용·의료·수예·정밀기술의 표식이다");
+
+  /* 형충회합 (지지 쌍) */
+  const rel=[];
+  const CHUNG={0:6,6:0,1:7,7:1,2:8,8:2,3:9,9:3,4:10,10:4,5:11,11:5};
+  const YUKHAP={0:1,1:0,2:11,11:2,3:10,10:3,4:9,9:4,5:8,8:5,6:7,7:6};
+  const names=["시지","일지","월지","년지"];
+  for(let a=0;a<pillars.length;a++) for(let b=a+1;b<pillars.length;b++){
+    if(!pillars[a].gz||!pillars[b].gz) continue;
+    const x=pillars[a].gz.ji, y=pillars[b].gz.ji, lab=`${names[a]}·${names[b]}`;
+    if(CHUNG[x]===y) rel.push({lab,k:"충(沖)",t:`${JI[x]}${JI[y]} 충 — 부딪쳐 흔들리는 자리`});
+    if(YUKHAP[x]===y) rel.push({lab,k:"육합(六合)",t:`${JI[x]}${JI[y]} 합 — 묶이고 끌어안는 자리`});
+    if(WONJIN[x]===y) rel.push({lab,k:"원진(怨嗔)",t:`${JI[x]}${JI[y]} 원진 — 까닭 없이 거슬리는 자리`});
+    if(GWIMUN[x]===y) rel.push({lab,k:"귀문(鬼門)",t:`${JI[x]}${JI[y]} 귀문 — 예민하고 직관이 날카로운 자리`});
+  }
+  /* 삼합 */
+  const SH=[[8,0,4,"水"],[2,6,10,"火"],[5,9,1,"金"],[11,3,7,"木"]];
+  SH.forEach(s=>{
+    const has=[s[0],s[1],s[2]].filter(j=>allJi.includes(j));
+    if(has.length===3) rel.push({lab:"삼합",k:"삼합(三合)",t:`${has.map(j=>JI[j]).join("")} 삼합 — ${s[3]} 기운이 크게 뭉친다`});
+    else if(has.length===2 && has.includes(s[1])) rel.push({lab:"반합",k:"반합(半合)",t:`${has.map(j=>JI[j]).join("")} 반합 — ${s[3]} 기운이 절반쯤 뭉친다`});
+  });
+
+  /* 삼재 */
+  const SAMJAE=[[11,0,1],[2,3,4],[5,6,7],[8,9,10]];
+  const sjGroup = yGroup; // 0:寅午戌 1:申子辰 2:巳酉丑 3:亥卯未
+  const sjMap=[ [8,9,10], [2,3,4], [11,0,1], [5,6,7] ];
+  const samjaeJi = sjMap[sjGroup];
+
+  return {
+    input:opt, corrNotes:notes, corrMin:corr,
+    trueTime: opt.unknownTime? null : fmtMin(trueMin),
+    yearPillar:yearGZ, monthPillar:monthGZ, dayPillar:dayGZ, hourPillar:hourGZ,
+    pillars, lunar:lun, lunarZ:lunZ, hourJi, dayIdx:dIdx, solarYear:yy, monthJi, setsuName:TERM_NAME[setsuIdx],
+    setsuTime: fmtMin(termMin(sYear,setsuIdx)),
+    nextSetsu: fmtMin(bound),
+    oh, ohW, strong, score, yong, hui, yongReason:reason,
+    gongmang:gm, sinsal, rel, samjaeJi,
+    forward, daewoon, startAge,
+    napeum:{year:NAPEUM[yearGZ.i],month:NAPEUM[monthGZ.i],day:NAPEUM[dayGZ.i],hour:hourGZ?NAPEUM[hourGZ.i]:null}
+  };
+}
+function idx60(g,j){ for(let i=0;i<60;i++) if(i%10===g && i%12===j) return i; return 0; }
+function fmtMin(m){ if(m==null) return null; const d=fromDayIndex(Math.floor(m/1440)); const t=((m%1440)+1440)%1440;
+  return `${d.y}-${String(d.m).padStart(2,"0")}-${String(d.d).padStart(2,"0")} ${String(Math.floor(t/60)).padStart(2,"0")}:${String(t%60).padStart(2,"0")}`; }
+
+/* 세운 */
+function seun(year){ return gz(year-1984); }
+
+if(typeof module!=="undefined") module.exports={buildSaju,gz,seun,GAN,JI,GANK,JIK,sipGan,sipJi,unsung,JIJANG,OH_KOR,GAN_OH,JI_OH,termMin,TERM_NAME,fmtMin,lunarTable,NAPEUM,SIP};
+</script>
+<script>/* ===== 흐름 계산 (평생흐름 · 대운 · 세운 · 월운) ===== */
+/* 용신 기준 오행 적합도
+   X=용신:+2.0 / (X+4)희신:+1.2 / (X+1)설기:+0.2 / (X+2):0 / (X+3)기신:-1.8 */
+function ohFit(oh, yong){
+  const d=((oh-yong)%5+5)%5;
+  return [2.0, 0.2, 0.0, -1.8, 1.2][d];
+}
+function pairScore(g, j, yong){
+  return ohFit(GAN_OH[g], yong)*1.0 + ohFit(JI_OH[j], yong)*1.4;   // 지지 비중을 높게 본다
+}
+const SCORE_MAX = 2.0*1.0 + 2.0*1.4;      // +4.8
+const SCORE_MIN = -1.8*1.0 + -1.8*1.4;    // -4.32
+function norm100(s){ return Math.round( (s - SCORE_MIN) / (SCORE_MAX - SCORE_MIN) * 100 ); }
+function gradeOf(p){
+  if(p>=78) return {t:"순풍", c:"var(--green)", m:"바라던 쪽으로 바람이 분다. 큰일을 벌이기 좋은 때란다"};
+  if(p>=63) return {t:"순조", c:"var(--green)", m:"애쓴 만큼 돌아온다. 하던 일을 넓히거라"};
+  if(p>=45) return {t:"평탄", c:"var(--sub)",   m:"크게 오르내리지 않는다. 기반을 다지기 좋은 때다"};
+  if(p>=30) return {t:"고비", c:"var(--gold)",  m:"일은 커지나 그만큼 나간다. 벌이기보다 지키고 고르거라"};
+  return      {t:"담금질", c:"var(--red)", m:"애쓴 것이 바로 남지 않는 때다. 배우고 몸을 챙기며 다음을 준비하거라"};
+}
+
+/* 12 절기월 (입춘~입춘) */
+function monthPillars(year){
+  const seq=[[2,year],[4,year],[6,year],[8,year],[10,year],[12,year],
+             [14,year],[16,year],[18,year],[20,year],[22,year],[0,year+1]];
+  const yGan = gz(year-1984).gan;
+  const first = (yGan%5)*2+2;
+  const out=[];
+  seq.forEach((s,i)=>{
+    const k=s[0], yy=s[1];
+    const ji=SETSU_JI[k/2], gan=(first+i)%10;
+    const nx = i<11 ? seq[i+1] : [2,year+1];
+    out.push({ gzv: gz(idx60(gan,ji)), start: termMin(yy,k), end: termMin(nx[1],nx[0]),
+               term: TERM_NAME[k], ji });
+  });
+  return out;
+}
+
+/* 지지 관계 한 줄 (일지 기준) */
+const _CHUNG={0:6,6:0,1:7,7:1,2:8,8:2,3:9,9:3,4:10,10:4,5:11,11:5};
+const _HAP  ={0:1,1:0,2:11,11:2,3:10,10:3,4:9,9:4,5:8,8:5,6:7,7:6};
+function jiRel(a,b){
+  if(_CHUNG[a]===b) return {k:"충", t:"일지를 정면으로 치니 자리·몸·거처가 흔들린다. 큰 계약은 미루거라"};
+  if(_HAP[a]===b)   return {k:"합", t:"일지와 손을 잡으니 사람과 인연이 들어온다"};
+  if(WONJIN[a]===b) return {k:"원진", t:"까닭 없이 거슬리는 일이 생기니 말을 아끼거라"};
+  return null;
+}
+
+if(typeof module!=="undefined") Object.assign(module.exports||{}, {ohFit,pairScore,norm100,gradeOf,monthPillars});
+</script>
+<script>/* ===== 해석 데이터 (규칙 기반) ===== */
+const ILGAN_TXT = [
+ {t:"甲木(갑목) — 곧게 자라는 큰 나무",
+  b:"그대의 본질은 甲木(갑목), 하늘을 향해 곧게 뻗는 아름드리 나무란다. 굽히지 않는 기둥이요, 누가 시키지 않아도 스스로 위로 자라는 기운이다. 甲木은 시작하는 힘이라, 남이 가지 않은 길에 먼저 발을 들이고 길을 내는 사람이란다. 그래서 그대 주위에는 늘 그대를 따라오는 사람이 생긴다.\n다만 나무는 한번 뿌리내린 자리를 바꾸기 어렵다. 그대 또한 한번 정한 뜻을 꺾기 싫어하고, 틀린 줄 알면서도 끝까지 가려는 고집이 있구나. 곧은 것이 그대의 힘이자 그대의 함정이란다. 큰 나무가 오래 서 있으려면 가지를 쳐 주어야 한다. 1년에 한 번은 벌여 놓은 일 중 하나를 스스로 접는 연습을 하거라.",
+  k:["주도적","정직","추진력","고집"]},
+ {t:"乙木(을목) — 바람에 눕되 꺾이지 않는 넝쿨",
+  b:"그대의 본질은 乙木(을목), 담장을 타고 오르는 넝쿨이자 들에 핀 풀이란다. 甲木이 혼자 서는 나무라면 乙木은 기대어 오르는 나무다. 기댄다는 말을 약하다는 뜻으로 듣지 말거라 — 큰 바람에 부러지는 것은 늘 굵은 나무요, 끝까지 살아남는 것은 눕는 풀이란다.\n그대는 환경을 읽는 눈이 빠르고, 사람 사이를 부드럽게 통과하는 재주가 있다. 어떤 자리에 놓여도 그 자리에 맞게 모양을 바꾸어 결국 꽃을 피운다. 다만 기댈 곳이 마땅치 않을 때 크게 흔들리니, 의지할 사람이 아니라 의지할 '체계'를 만들어 두어야 한단다. 혼자서도 돌아가는 일의 틀을 하나 가지고 있으면 그대는 어디서든 산다.",
+  k:["유연함","친화력","생존력","의존"]},
+ {t:"丙火(병화) — 온 세상을 비추는 태양",
+  b:"그대의 본질은 丙火(병화), 하늘 한가운데 떠서 가리지 않고 비추는 태양이란다. 숨길 줄 모르고, 속에 담아 두지 못하며, 좋은 것도 싫은 것도 얼굴에 그대로 드러나는 사람이다. 그 투명함이 사람을 모은다 — 그대 곁에 있으면 따뜻하고 환하기 때문이란다.\n丙火는 '드러나는 자리'에 설 때 가장 크게 산다. 무대, 강단, 카메라 앞, 사람들이 바라보는 자리가 그대의 자리다. 다만 태양은 쉬지 않고 타니 번아웃이 그대의 평생 숙제로구나. 해도 밤에는 진다. 하루에 한 번, 아무도 그대를 보지 않는 시간을 반드시 만들어 두거라. 그 시간이 없으면 그대의 빛은 반드시 꺼진다.",
+  k:["개방적","열정","리더십","소진"]},
+ {t:"丁火(정화) — 어둠 속 한 사람을 밝히는 촛불",
+  b:"그대의 본질은 丁火(정화), 태양이 아니라 촛불이자 화롯불이란다. 세상을 통째로 태우는 불이 아니라, 어두운 방 안에서 마주 앉은 한 사람의 얼굴을 환하게 밝히는 불이다. 그래서 그대는 넓게 아는 사람보다 깊게 아는 사람이고, 많은 사람보다 한 사람에게 강하게 남는 사람이란다.\n丁火는 손끝과 집중의 불이다. 세밀한 것을 오래 들여다보는 일, 사람을 하나하나 상대하는 일에서 그대의 값이 매겨진다. 다만 촛불은 바람에 약하다. 주위가 시끄럽고 요구가 쏟아지면 그대의 불은 쉽게 흔들리니, 그대만의 조용한 공간과 정해진 시간이 반드시 필요하단다. 따뜻한 빛이 있는 곳에서 일하거라 — 조명이 곧 그대의 기운이다.",
+  k:["섬세함","집중력","헌신","예민함"]},
+ {t:"戊土(무토) — 움직이지 않는 산",
+  b:"그대의 본질은 戊土(무토), 비바람이 쳐도 자리를 지키는 큰 산이자 넓은 땅이란다. 급히 가지 않고, 쉽게 흔들리지 않으며, 사람들이 결국 기대러 오는 자리가 그대로구나. 말이 많지 않아도 그대가 있으면 판이 안정된다.\n戊土는 '담는 그릇'의 기운이다. 사람도 돈도 일도 그대 안에 쌓였다가 나간다. 그래서 중개·부동산·조직 관리·교육처럼 가운데 서서 양쪽을 잇는 일에서 크게 된단다. 다만 산은 스스로 움직이지 못하니, 변화가 필요한 때조차 버티는 쪽을 고르기 쉽다. 3년에 한 번은 반드시 스스로 판을 흔들어 보거라. 땅은 갈아엎어야 다시 곡식이 난다.",
+  k:["안정감","포용력","신용","완고함"]},
+ {t:"己土(기토) — 씨앗을 품는 기름진 밭",
+  b:"그대의 본질은 己土(기토), 산이 아니라 사람이 일구는 논밭이란다. 戊土가 버티는 흙이라면 己土는 길러 내는 흙이다. 무엇을 심어도 받아들이고, 받아들인 것을 반드시 자라게 만드는 힘이 그대에게 있구나.\n그래서 그대는 가르치고 돌보고 키우는 자리에서 가장 빛난다. 사람을 길러 내는 일, 남의 재능을 알아보고 자리를 만들어 주는 일이 그대의 천직이란다. 다만 밭은 모든 것을 받아들이느라 자기 모양을 잃기 쉽다. 남의 사정을 다 들어주다 정작 그대의 밭이 비는 일이 평생 반복되니, '여기까지'라는 선을 글로 적어 두고 지키거라. 경계가 있어야 수확이 남는다.",
+  k:["포용","양육","실속","자기희생"]},
+ {t:"庚金(경금) — 아직 벼려지지 않은 무쇠",
+  b:"그대의 본질은 庚金(경금), 제련을 기다리는 무쇠덩이이자 도끼와 칼의 원석이란다. 타고난 힘이 세고 결단이 빠르며, 옳고 그름을 가르는 데 망설임이 없다. 어수선한 판을 한칼에 정리하는 사람이 그대로구나.\n庚金은 반드시 불(火)을 만나야 그릇이 된다. 고생과 단련 없이 편하게만 자란 庚金은 그저 무거운 쇳덩이로 남는단다. 그대가 지금까지 겪은 고된 일들이 헛되지 않았다는 뜻이다. 다만 쇠는 날카로워 가까운 사람을 베기 쉽다. 그대의 직언은 늘 옳지만, 옳은 말을 옳은 때에 하는 법을 익혀야 그 힘이 온전히 쓰인다.",
+  k:["결단력","의리","추진","직설"]},
+ {t:"辛金(신금) — 이미 다듬어진 보석",
+  b:"그대의 본질은 辛金(신금), 무쇠가 아니라 이미 깎이고 세공을 마친 보석이자 비녀란다. 그래서 거친 일보다 정교한 일, 값을 매기고 구별하는 일, 아름다움을 가려내는 일에 그대의 자리가 있구나. 눈이 높고 기준이 분명하며, 어설픈 것을 견디지 못한다.\n辛金은 오직 맑은 물(水)을 만나야 빛난다. 말하고 쓰고 표현하는 일이 그대에게는 재능이 아니라 생존 조건이란다. 입을 닫고 혼자 삭이면 보석에 먼지가 앉는다. 다만 보석은 불에 약하니, 거친 압박과 다그침 속에 오래 두면 상한다. 그대를 함부로 다루는 자리에는 머물지 말거라 — 그대는 그런 곳에서 쓰이도록 만들어지지 않았다.",
+  k:["예리함","심미안","자존","섬세"]},
+ {t:"壬水(임수) — 쉬지 않고 흐르는 큰 강",
+  b:"그대의 본질은 壬水(임수), 바다로 흘러드는 큰 강이란다. 한자리에 고이지 않고, 막히면 돌아가며, 결국 어디로든 길을 찾아낸다. 머리 회전이 빠르고 상황을 통째로 읽는 눈이 있어, 남들이 복잡하다고 할 때 그대는 이미 다음 수를 보고 있구나.\n壬水는 담는 그릇이 클수록 커진다. 좁은 일에 묶이면 답답해 병이 나고, 판이 커질수록 살아나는 사람이란다. 무역·유통·기획·컨설팅처럼 멀리 보고 넓게 움직이는 일이 맞다. 다만 물은 모양이 없어 흐르다 방향을 잃기 쉽다. 반드시 둑을 만들어 두거라 — 마감일, 숫자 목표, 함께 가는 사람. 그 셋이 그대의 둑이란다.",
+  k:["총명","유연","포부","산만"]},
+ {t:"癸水(계수) — 만물을 적시는 이슬비",
+  b:"그대의 본질은 癸水(계수), 큰 강이 아니라 새벽에 내리는 이슬이자 가는 빗줄기란다. 소리 없이 스며들어 결국 땅을 적시는 물이다. 그래서 그대의 힘은 세기가 아니라 '닿는 깊이'에 있구나. 상대가 말하지 않은 것까지 알아채는 감각, 공기의 변화를 먼저 느끼는 촉이 그대에게 있다.\n癸水는 드러내지 않고 돕는 자리에서 가장 크다. 상담·기획·연구·보조·중재처럼 뒤에서 판을 움직이는 일이 맞단다. 다만 물이 가늘어 쉽게 마른다. 생각이 너무 많아 혼자 소진되는 것이 그대의 평생 숙제이니, 머릿속에 든 것을 반드시 밖으로 꺼내 적거라. 쓰지 않은 생각은 그대를 갉아먹는다.",
+  k:["직관","공감","기획력","소모"]}
+];
+
+const SIP_DESC = {
+ "비견":"같은 편이자 경쟁자 — 스스로 서려는 힘이 강하고 남에게 지시받는 것을 견디지 못한다",
+ "겁재":"힘을 나누는 기운 — 사람을 끌어모으는 힘이 크나 돈과 지분을 나누면 반드시 샌다",
+ "식신":"꾸준히 만들어 내는 기운 — 먹고사는 복이 두텁고 한 분야를 오래 파면 반드시 열매가 난다",
+ "상관":"드러내고 표현하는 기운 — 재주와 말솜씨가 뛰어나나 윗사람과 부딪치기 쉽다",
+ "편재":"크게 움직이는 돈 — 기회를 잡는 감각이 빠르고 사업·투자에 눈이 밝다",
+ "정재":"정해진 날의 정해진 돈 — 성실하게 쌓는 재물이며 관리와 반복에 강하다",
+ "편관":"나를 긴장시키는 책임 — 압박 속에서 힘을 내며 위기에 강하다",
+ "정관":"질서와 명예 — 규칙을 지키고 신용을 쌓아 자리를 얻는다",
+ "편인":"남다른 시각의 배움 — 희소한 기술과 깊은 몰입, 남들이 못 보는 것을 본다",
+ "정인":"반듯한 배움과 보호 — 자격·문서·스승의 덕이 평생을 받쳐 준다"
+};
+
+/* 월지 십성 = 격국 */
+const GYEOK_TXT = {
+ "비견":{n:"건록격·비견격", b:"태어난 달이 그대와 같은 기운이니, 남 밑에서 오래 있을 팔자가 아니란다. 조직에 있어도 결국 제 이름을 걸게 되는 구조다. 다만 혼자 다 하려다 몸이 먼저 무너지니, 사람이 아니라 '시스템'을 늘려야 한다."},
+ "겁재":{n:"양인격·겁재격", b:"기운이 거세고 승부욕이 강하다. 판을 뒤집는 힘이 있어 위기에서 오히려 두각을 나타내지만, 돈과 지분을 남과 나누는 순간 반드시 새는 구조란다. 계약서와 단독 명의, 이 둘이 그대의 방패다."},
+ "식신":{n:"식신격", b:"한 가지를 꾸준히 만들어 내어 먹고사는 구조다. 급히 크지 않으나 끊기지도 않는다. 손으로 만들든 글로 쓰든 '내가 만든 결과물'이 그대의 밥이란다. 전문성을 한 분야에 10년 쌓으면 그다음은 저절로 굴러간다."},
+ "상관":{n:"상관격", b:"타고난 재주와 표현력으로 먹고사는 구조다. 남들이 못 하는 것을 해내고, 그것을 알리는 능력까지 갖췄다. 다만 윗사람·규칙과 부딪치기 쉬우니 조직보다 제 간판이 맞고, 재능을 돈으로 바꾸는 통로(재성)를 반드시 만들어야 한단다."},
+ "편재":{n:"편재격", b:"큰 돈이 드나드는 구조다. 기회를 보는 눈이 빠르고 판을 키우는 데 능하다. 사업·영업·투자에서 크게 되나, 들어온 만큼 나가는 것이 편재의 성질이니 번 돈의 일부를 반드시 '움직이지 않는 자산'으로 묶어 두거라."},
+ "정재":{n:"정재격", b:"정해진 날에 정해진 돈이 들어오는 구조다. 한 방에 크게 버는 팔자가 아니라 꾸준히 쌓아 결국 큰 것을 이루는 팔자란다. 관리·회계·반복 운영에 강하니, 단발 거래보다 정기 계약·회원제·구독 구조로 가야 그대의 복이 터진다."},
+ "편관":{n:"편관격·칠살격", b:"책임과 압박이 몰려드는 구조다. 사람들이 그대에게 자꾸 일을 맡기고, 그 일을 감당하며 그대의 자리가 만들어진다. 인성(배움·자격)이 함께 있으면 그 압박이 권위로 바뀌니, 자격증과 문서가 그대에게는 갑옷이란다."},
+ "정관":{n:"정관격", b:"질서와 신용으로 서는 구조다. 반듯하게 쌓아 올린 이력이 곧 재산이며, 조직·공직·전문직처럼 규칙이 분명한 곳에서 크게 된다. 다만 틀을 벗어나는 결정 앞에서 크게 망설이니, 작은 모험을 정기적으로 섞어 주어야 녹슬지 않는다."},
+ "편인":{n:"편인격", b:"남들과 다른 시각으로 배우고 파고드는 구조다. 대중적인 것보다 희소한 것, 넓은 것보다 깊은 것에서 값이 나온다. 전문기술·연구·상담·예술이 맞으며, 한 분야의 '아무도 안 하는 틈'을 찾는 순간 그대의 시대가 열린단다."},
+ "정인":{n:"정인격", b:"배움과 문서로 서는 구조다. 자격·학위·면허·저작처럼 종이에 남는 것이 그대의 힘이 된다. 가르치는 자리가 특히 잘 맞고, 손윗사람의 덕을 평생 받는다. 다만 준비만 하다 때를 놓치기 쉬우니, 60%만 되면 세상에 내놓는 연습을 하거라."}
+};
+
+const OH_GUIDE = [
+ {oh:"木", c:"초록·연두·청록", dir:"동(東)", sea:"봄", job:"교육·출판·목재·섬유·디자인·기획·의료",
+  life:"아침 햇살을 쬐고, 자라는 식물을 곁에 두거라. 새로 배우는 일이 그대를 살린다."},
+ {oh:"火", c:"빨강·주황·분홍·보라", dir:"남(南)", sea:"여름", job:"미용·조명·요리·방송·예술·전기·강의",
+  life:"따뜻한 조명 아래에서 일하고, 사람 앞에 서는 자리를 피하지 말거라. 차가운 형광등은 그대의 기운을 꺾는다."},
+ {oh:"土", c:"노랑·베이지·황토·갈색", dir:"중앙·남서·북동", sea:"환절기", job:"부동산·건축·중개·농식품·교육·컨설팅",
+  life:"흙과 도자기, 자연 소재를 가까이 두고, 한자리에 오래 머무르거라. 자주 옮기면 기운이 깎인다."},
+ {oh:"金", c:"흰색·은색·회색", dir:"서(西)", sea:"가을", job:"금융·기계·금속·법률·의료·정밀기술",
+  life:"쇠붙이 장신구 하나를 늘 지니고, 정리정돈을 습관으로 삼거라. 어지러운 공간이 그대의 판단을 흐린다."},
+ {oh:"水", c:"검정·남색·짙은 회색", dir:"북(北)", sea:"겨울", job:"유통·무역·수산·음료·연구·상담·IT",
+  life:"물을 자주 마시고, 밤에 생각을 글로 적어 두거라. 흐르지 않고 고인 생각이 그대를 지치게 한다."}
+];
+
+const DAEWOON_TXT = {
+ "비견":"스스로 서려는 힘이 강해지는 10년이다. 독립·창업·이직처럼 제 이름을 거는 일이 일어난다. 동업과 보증만은 피하거라.",
+ "겁재":"사람이 몰리고 돈도 함께 몰려 나가는 10년이다. 벌이는 늘어도 남는 것이 적으니, 들어온 돈의 일부를 먼저 묶어 두는 습관을 만들어야 한다.",
+ "식신":"먹고사는 길이 넓어지는 10년이다. 꾸준히 만들어 낸 것이 쌓여 자리를 잡는다. 몸이 편안해지고 인상이 부드러워지는 시기이기도 하다.",
+ "상관":"재능이 밖으로 터져 나오는 10년이다. 이름이 나고 기회가 오나, 윗사람·거래처와 부딪치기 쉽다. 말을 줄이고 결과로 보여 주거라.",
+ "편재":"큰 돈이 움직이는 10년이다. 기회가 여럿 오고 판이 커진다. 다만 벌이는 만큼 쓰게 되니, 반드시 한 가지에 집중해야 남는다.",
+ "정재":"꾸준히 쌓이는 10년이다. 월급이든 단골이든 정기적인 수입 구조가 자리를 잡는다. 이 시기에 만든 반복 구조가 평생을 받쳐 준다.",
+ "편관":"책임과 압박이 커지는 10년이다. 일이 몰리고 요구가 많아지나, 그것을 감당하면서 그대의 그릇이 커진다. 건강 관리가 이 10년의 승부처다.",
+ "정관":"자리와 신용이 세워지는 10년이다. 직책·자격·공적인 인정이 따라온다. 반듯하게 처신할수록 크게 열리는 시기란다.",
+ "편인":"깊이 파고드는 10년이다. 새로운 기술과 공부에 눈이 열리고, 남들이 안 하는 분야에서 길이 보인다. 다만 생각이 많아져 결정을 미루기 쉽다.",
+ "정인":"배움과 문서의 10년이다. 자격·계약·부동산·가르침이 따라온다. 손윗사람의 도움이 크고, 이 시기에 딴 자격증 한 장이 다음 10년을 먹여 살린다."
+};
+
+const SEUN_TXT = {
+ "비견":"스스로 결정하고 움직이게 되는 해다. 독립심이 커지고 경쟁자도 함께 나타난다.",
+ "겁재":"사람과 돈이 함께 움직이는 해다. 동업 제안과 금전 요청이 들어오니 거절할 줄 알아야 한다.",
+ "식신":"몸과 마음이 편안해지고 새로운 일거리가 생기는 해다. 꾸준히 하던 것에서 결실이 보인다.",
+ "상관":"말과 재주가 앞서는 해다. 이름이 나고 기회가 오나 구설도 따르니 문서와 말을 조심하거라.",
+ "편재":"돈이 크게 움직이는 해다. 기회도 지출도 함께 커지니 큰 투자는 신중히 하거라.",
+ "정재":"안정된 수입과 실속이 생기는 해다. 계약·거래·결혼 같은 '정해지는 일'이 일어난다.",
+ "편관":"책임이 늘고 압박이 커지는 해다. 건강과 안전을 특히 챙기되, 이겨 내면 자리가 올라간다.",
+ "정관":"인정과 자리가 따라오는 해다. 승진·임명·공식적인 역할이 주어질 수 있다.",
+ "편인":"배우고 준비하는 해다. 겉으로는 조용하나 속으로 크게 바뀐다. 자격 공부에 좋은 때다.",
+ "정인":"문서와 귀인의 해다. 계약·자격·부동산·가르침에서 좋은 소식이 온다."
+};
+
+const JOB_BY_SIP = {
+ "비견":"독립 사업, 프리랜서, 전문직 개업",
+ "겁재":"영업, 경쟁이 치열한 현장, 스포츠, 중개",
+ "식신":"요식·식품, 제조, 콘텐츠 제작, 돌봄, 기술 장인",
+ "상관":"강의·교육, 방송·미디어, 디자인, 미용, 공연, 마케팅",
+ "편재":"사업, 유통·무역, 투자, 영업 총괄",
+ "정재":"회계·재무, 관리, 정기 서비스, 소매, 공무",
+ "편관":"군·경·소방, 의료, 감사·수사, 위기관리, 현장 책임자",
+ "정관":"공직, 대기업, 법률·행정, 조직 관리",
+ "편인":"연구, 상담·심리, 역학·종교, 전문기술, 예술",
+ "정인":"교육자, 연구직, 출판·문서, 자격·라이선스 사업, 부동산"
+};
+
+const MWOON_TXT = {
+ "비견":"스스로 결정하고 직접 챙겨야 하는 달이다. 남에게 맡긴 일에서 탈이 나기 쉽단다.",
+ "겁재":"지출이 늘고 사람이 꼬이는 달이다. 돈 이야기와 동업 제안은 다음 달로 미루거라.",
+ "식신":"몸과 마음이 편안하고 일이 순하게 풀리는 달이다. 하던 것을 꾸준히 밀고 나가거라.",
+ "상관":"재주와 말이 앞서는 달이다. 좋은 생각이 쏟아지나 구설도 따르니 글과 말을 조심하거라.",
+ "편재":"돈이 크게 들고 나는 달이다. 기회가 보이거든 작게 시작해 보거라.",
+ "정재":"실속이 붙는 달이다. 계약·정산·거래를 매듭짓기에 좋은 때란다.",
+ "편관":"일이 몰리고 압박이 커지는 달이다. 몸을 먼저 챙기고 무리하지 말거라.",
+ "정관":"인정과 자리가 따라오는 달이다. 공식적인 자리에 나서기 좋단다.",
+ "편인":"생각이 깊어지는 달이다. 배우고 정리하기에 좋으나 큰 결정은 미루거라.",
+ "정인":"문서와 귀인의 달이다. 계약·자격·배움에서 좋은 소식이 온단다."
+};
+</script>
+<script>/* ===== 휴먼컬러 10색 바이오리듬 =====
+   일간 기준 십성 → 컬러. (JCLTA 휴먼컬러 체계, 대표님 강의자료 기준)
+   검증: 2027 丁未년 일간별 연 컬러 10/10 일치, 갑목 2027 월별 12/12 일치
+*/
+const HC=[
+ {c:"Y", n:"옐로우", en:"A New Beginning", hex:"#FFCD4A", sip:"비견",
+  k:"싹이 트는 때",
+  t:"씨앗이 흙을 밀고 올라오는 색이다. 한 바퀴가 새로 시작되는 자리이니, <b>무엇을 시작해도 되는 때</b>로구나. 아직 열매는 없으나 방향이 정해지는 때란다.",
+  do:"새로 벌이거라. 시작이 늦으면 이 열 해의 리듬 전체가 한 박자 밀린다. 명함·간판·계정·이름처럼 <b>앞으로 쓸 것을 지금 만들어 두거라.</b>",
+  no:"당장 돈이 안 된다고 접지 말거라. 옐로우 해의 수확은 뒤에 오는 법이란다.", e:"땅속에서는 이미 뿌리가 자랐으나 밖에서 보이는 것은 싹 하나뿐이란다. 남 보기에 초라해도 괜찮구나 — <b>이 해는 거두는 해가 아니라 심는 해</b>이기 때문이다. 올해 벌여 둔 것의 값은 서너 해 뒤에 돌아온단다.", m:"새로 시작하기 좋은 달이다. 미뤄 둔 첫걸음을 이달에 떼거라."},
+ {c:"YG", n:"옐로우그린", en:"A Call to Take Care of Me", hex:"#8FD93C", sip:"겁재",
+  k:"나를 돌보라는 신호",
+  t:"새싹이 자라느라 힘을 쓰는 색이다. 밖으로 뻗는 기운이 세나 <b>속이 먼저 비는 때</b>로구나. 사람과 돈이 같이 움직이는 자리라 들고 나는 것이 많아진단다.",
+  do:"<b>몸과 자기 자신에게 투자하거라.</b> 배우고, 치료하고, 쉬는 데 쓴 돈이 가장 크게 돌아오는 때란다.",
+  no:"무리하지 말거라. 남의 일을 떠맡거나 보증·동업을 벌이면 이 해에 가장 크게 샌다.", e:"새싹이 하루가 다르게 크는 때라 흙 속의 양분이 빠르게 빠져나간다. <b>그대 몸이 그 흙</b>이로구나. 밖으로 쓰는 만큼 안을 채워 넣지 않으면 이 해에 반드시 탈이 나니, 쉬는 것이 게으름이 아니라 <b>농사의 일부</b>란다.", m:"몸을 돌보는 달이다. 쉬고 배우고 치료하는 데 쓰거라."},
+ {c:"BG", n:"블루그린", en:"Embodies Balance and Check", hex:"#0D6D62", sip:"식신",
+  k:"자유롭게 자라는 때",
+  t:"잎이 넓게 펴지는 색이다. 숨통이 트이고 <b>사람이 모이며 제안이 들어오는 때</b>로구나. 억지로 애쓰지 않아도 일이 굴러가는 자리란다.",
+  do:"<b>내가 좋아하는 것을 내놓거라.</b> 강의·콘텐츠·작품처럼 즐기며 하는 일이 가장 잘 먹히는 때다. 들어오는 제안은 일단 만나 보거라.",
+  no:"좋다고 다 받지 말거라. 넓게 퍼지기 쉬운 색이라 <b>하나를 깊게</b>가 숙제로구나.", e:"잎이 넓어지면 그늘이 생기고, 그늘이 생기면 사람이 와서 쉰다. <b>애써 부르지 않아도 사람이 오는 해</b>이니, 그대가 할 일은 부르는 것이 아니라 <b>앉을 자리를 마련해 두는 것</b>이로구나. 연락이 늘고 제안이 들어오는 것이 그 신호란다.", m:"사람이 모이는 달이다. 들어오는 제안을 일단 만나 보거라."},
+ {c:"P", n:"퍼플", en:"Flying After Growth", hex:"#9A30AE", sip:"상관",
+  k:"환경이 바뀌고, 그래서 자라는 때",
+  t:"<b>번데기가 나비가 되는 색</b>이다. 겉은 조용하나 껍질 안에서는 모든 것이 다시 짜이는 중이란다. 장마철에 비가 퍼붓는 때와 같아서 — <b>그 비를 머금어야 다음에 꽃이 피는 법</b>이로구나. 자라던 길이 한 번 바뀌니 낯설고 남의 간섭이 거슬리나, <b>이것은 멈춤이 아니라 다음 단계로 넘어가는 중</b>이란다. 열 해 가운데 가장 창의적인 해이기도 하구나.",
+  do:"<b>남과 다른 방식을 꺼내 보거라.</b> 늘 하던 대로만 가면 길이 좁아지는 해다. 글·영상·디자인처럼 표현하는 쪽으로 여는 것이 이 색을 쓰는 법이란다. 그리고 바뀌어 가는 사람과 환경을 <b>붙들지 말고 보내 주거라</b> — 자리가 비어야 새것이 들어오는 법이로구나.",
+  no:"말로 사람을 치지 말거라. 퍼플 해에 뱉은 말이 가장 오래 남는단다. 그리고 <b>이 해의 더딤을 실패로 읽지 말거라.</b> 비 오는 날 꽃이 안 핀다고 나무가 죽은 것이 아니듯, 올해의 더딤은 <b>다음 해에 피우려고 머금는 것</b>이란다.", e:"<b>이 해에는 바깥 환경이 크게 바뀐다.</b> 다니던 곳이 달라지거나, 곁에 있던 사람이 떠나고 새 사람이 들어오거나, 늘 통하던 방식이 더는 안 먹히게 되는구나. 그것이 불운이 아니라 <b>번데기가 껍질을 벗고 자라는 과정</b>이란다. 지금 더딘 것은 <b>날개가 아직 젖어 있기 때문이지 날지 못하는 것이 아니로구나.</b>", m:"환경이 바뀌고 자라는 달이다. 방식을 바꾸면 길이 열린단다."},
+ {c:"O", n:"오렌지", en:"Enjoyment with People", hex:"#FD6F23", sip:"편재",
+  k:"사람과 어울려 즐기는 때",
+  t:"꽃이 피어 벌이 모이는 색이다. <b>사교와 홍보, 작은 기회가 여럿 들어오는 때</b>로구나. 돈이 활발히 돌되 크게 고이지는 않는 자리란다.",
+  do:"<b>사람을 만나고 알리거라.</b> 모임·행사·SNS·영업에 가장 좋은 해다. 작은 투자와 새 거래처를 여러 개 벌여 두면 다음 레드 해에 거둔단다.",
+  no:"벌린 것을 세어 두거라. 즐겁다고 흘려보내면 남는 것이 없는 색이로구나.", e:"꽃이 피면 벌과 나비가 저절로 모인다. 다만 꽃은 오래가지 않으니, <b>이 해에 만난 사람은 그 자리에서 이름과 연락처를 남겨 두어야</b> 한단다. 만남은 많되 남는 것은 적기 쉬운 색이라, 적어 두는 사람만 다음 해에 거두는구나.", m:"사교의 달이다. 모임과 홍보를 이달에 몰아 잡거라."},
+ {c:"R", n:"레드", en:"Focus", hex:"#C72800", sip:"정재",
+  k:"거두고 모으는 때",
+  t:"열매가 익는 색이다. <b>지금까지 벌여 둔 것을 거두는 때</b>로구나. 가장 현실적이고 가장 바쁜 해이니, 한눈팔지 말고 한곳에 모으라는 색이란다.",
+  do:"<b>평소의 세 배로 움직이거라.</b> 계약을 맺고, 받을 돈을 받고, 저축하고, 집·차·자산을 정리하기 가장 좋은 해다.",
+  no:"새로 벌이지 말거라. 레드는 거두는 색이지 뿌리는 색이 아니란다.", e:"열매가 익으면 하루이틀 사이에 따야 한다. 늦으면 떨어지고 썩는 법이지. <b>이 해에 '다음에 하자'는 말이 가장 비싼 말</b>이란다. 받을 돈을 받고, 미룬 계약을 맺고, 흩어진 것을 한곳에 모으는 것이 올해의 전부로구나.", m:"거두는 달이다. 받을 것을 받고 계약을 매듭짓거라."},
+ {c:"RO", n:"레드오렌지", en:"Challenge", hex:"#FE512F", sip:"편관",
+  k:"크게 흔들리고 크게 바뀌는 때",
+  t:"열 해 가운데 <b>가장 강한 색</b>이다. 큰 기회와 큰 압박이 함께 온다. 승진·이직·개업·이사처럼 <b>판이 바뀌는 일</b>이 이 해에 일어나는구나.",
+  do:"<b>겁내지 말고 받거라.</b> 부담스러운 제안일수록 이 해의 것이다. 몸이 고되니 체력을 미리 만들어 두거라.",
+  no:"혼자 떠안지 말거라. 사고·수술·과로를 가장 조심해야 하는 색이란다.", e:"큰 바람이 부는 해다. 바람은 나무를 흔들어 약한 가지를 꺾지만, 동시에 <b>씨앗을 가장 멀리 보내 준다.</b> 흔들리는 것이 나쁜 징조가 아니라 <b>멀리 가고 있다는 신호</b>이니, 이 해에 오는 부담스러운 제안이 곧 기회의 다른 이름이란다.", m:"크게 움직이는 달이다. 부담스러운 제안일수록 이달의 것이란다."},
+ {c:"M", n:"마젠타", en:"Completion", hex:"#FA0DD7", sip:"정관",
+  k:"끝맺고 완성하는 때",
+  t:"열매를 거두어 갈무리하는 색이다. 벌여 둔 것이 모양을 갖추고 <b>정점에 오르는 때</b>로구나. 이름과 자리가 분명해지고 책임이 따라붙으며, 그동안 해 온 일이 <b>가장 높은 성과로 올라서는 해</b>란다.",
+  do:"<b>하던 일로 성과를 끌어올리거라.</b> 규모를 키우고, 값을 올리고, 미뤄 둔 것을 마무리하고, 자격·등록·계약을 매듭짓기에 가장 좋은 해다. 그동안 쌓은 것을 <b>제값 받는 자리까지 올려놓는 것</b>이 올해의 일이로구나.",
+  no:"<b>해 본 적 없는 분야를 새로 열지는 말거라.</b> 올해 벌이는 판은 하던 일의 연장이어야 힘을 받는단다. 낯선 것은 다음 옐로우 해에 시작하면 되니, 이 해에는 <b>넓히지 말고 높이거라.</b>", e:"끝맺는 색이라 하여 손을 놓으라는 뜻이 아니다. <b>하던 일을 키워 정점을 찍는 해</b>이니 오히려 판을 벌여야 할 때로구나. 다만 그 판이 <b>'새 분야'가 아니라 '하던 일의 확장'이어야</b> 한다는 것이 이 색의 조건이란다. <b>같은 밭에서 수확을 늘리는 것은 맞고, 낯선 밭을 새로 사는 것은 다음 바퀴의 일</b>이로구나.", m:"마무리하는 달이다. 벌여 둔 것을 끝내고 값을 올리거라."},
+ {c:"I", n:"인디고", en:"Insight and Organization", hex:"#2F3D86", sip:"편인",
+  k:"안으로 정리하는 때",
+  t:"해가 지고 안을 들여다보는 색이다. 밖으로는 조용하나 <b>속에서 가치관이 다시 짜이는 때</b>로구나. 묵은 것을 버리고 싶어지는 해란다.",
+  do:"<b>정리정돈하거라.</b> 짐·파일·관계·사업 품목을 덜어내는 데 가장 좋은 해다. 혼자 공부하거나 자격을 준비하기에도 맞는 때로구나.",
+  no:"큰 결정을 밖에서 찾지 말거라. 인디고 해의 답은 안에 있단다.", e:"해가 지면 밖이 안 보이는 대신 <b>집 안이 보인다.</b> 이 해에 눈에 들어오는 것은 바깥 기회가 아니라 <b>내 안의 어수선함</b>이란다. 그것이 보이는 것이 이 색의 선물이니, 보기 싫다고 덮지 말고 하나씩 치우거라.", m:"정리하는 달이다. 짐과 관계와 파일을 덜어내거라."},
+ {c:"B", n:"블루", en:"Step by Step", hex:"#1187CF", sip:"정인",
+  k:"배우고 씨앗을 고르는 때",
+  t:"겨울 물빛의 색이다. 한 바퀴가 끝나고 <b>다음 바퀴의 씨앗을 고르는 때</b>로구나. 급하지 않게, 한 걸음씩 가라는 색이란다.",
+  do:"<b>배우고 방향을 정하거라.</b> 다음 옐로우 해에 무엇을 시작할지 이 해에 정해 두면, 열 해가 수월해진단다. 사람에게 배우고 문서를 갖추거라.",
+  no:"조급해하지 말거라. 블루 해에 무리하게 벌인 일은 대개 남지 않는단다.", e:"겨울 논은 비어 있는 것이 아니라 쉬는 것이다. <b>쉬어 둔 논이 이듬해 가장 잘 자라는 법</b>이지. 이 해에 아무 일도 없다고 느껴지거든, 그것이 <b>잘못 가고 있다는 뜻이 아니라 제대로 가고 있다는 뜻</b>이란다.", m:"배우는 달이다. 다음에 시작할 것을 이달에 고르거라."}];
+const SIP2HC={"비견":0,"겁재":1,"식신":2,"상관":3,"편재":4,"정재":5,"편관":6,"정관":7,"편인":8,"정인":9};
+function hcOf(dayGan, gan){ const s=sipGan(dayGan,gan); return s==null?null:HC[SIP2HC[s]]; }
+/* 달력 기준 열두 달 — 소한(1월)부터 대설(12월)까지 */
+function colorMonths(year){ return [monthPillars(year-1)[11], ...monthPillars(year).slice(0,11)]; }
+const HC_CYCLE_T="휴먼컬러 바이오리듬은 <b>열 해에 한 바퀴</b>를 돈다. 천간이 열 개이기 때문이란다. 옐로우에서 싹이 트고, 레드오렌지에서 크게 흔들리고, 블루에서 다음 씨앗을 고른 뒤 다시 옐로우로 돌아오는 것이로구나. 달도 같은 원리로 돌되, 열두 달이라 해마다 두 색이 두 번씩 온단다.";
+
+/* ===== 인생의 봄·여름·가을·겨울 =====
+   색 차례는 고정이다: 옐로우→옐로우그린→블루그린→퍼플→오렌지→레드→레드오렌지→마젠타→인디고→블루
+   철의 가름은 대표님 체계를 따른다 — 여름은 블루그린·퍼플, 마젠타는 수확의 완성이라 가을이란다. */
+const HC_SEASON=[
+ {n:"봄",   i:[0,1],     t:"싹이 트는 때",        bg:"#EEF5DE",
+  d:"씨를 뿌리고 나를 세우는 철이란다. 거두려 들지 말고 <b>심는 데</b> 힘을 쓰거라."},
+ {n:"여름", i:[2,3],     t:"무성하게 자라는 때",   bg:"#E0EFEC",
+  d:"잎이 넓게 퍼지고 환경이 바뀌는 철이다. 비를 머금는 때이니 <b>더딤을 실패로 읽지 말거라.</b>"},
+ {n:"가을", i:[4,5,6,7], t:"거두고 완성하는 때",   bg:"#FBE8DC",
+  d:"심은 것을 거두어 <b>맛보는 철</b>이란다. 받을 것을 받고, 값을 올리고, 벌인 것을 매듭지어라."},
+ {n:"겨울", i:[8,9],     t:"갈무리하고 배우는 때", bg:"#E6E9F3",
+  d:"덜어내고 씨앗을 품는 철이다. 다음 봄에 심을 것을 <b>이 철에 고르거라.</b>"}];
+function seasonOf(code){ const k=HC.findIndex(h=>h.c===code);
+  return HC_SEASON.find(s=>s.i.includes(k))||null; }
+
+
+/* ===== 나의 재물 색 =====
+   근거: 재성(財星) = 내가 剋하는 오행 (고전 명리) → 오방정색 (동양 전통 색채론)
+   「화이트·실버」는 백(白)을 오늘 색말로 옮긴 것 — Claude가 정하고 대표님 승인을 받았다. */
+const OH_JAE_COL=[
+ {n:"그린",        hex:"#1E8E4A", oh:"목(木)", hj:"靑", d:"쇠가 나무를 베어 재목으로 쓰듯, 다듬어 값을 만드는 재물이란다"},
+ {n:"레드",        hex:"#C72800", oh:"화(火)", hj:"赤", d:"물이 불을 다스리듯, 뜨거운 자리를 가라앉혀 얻는 재물이로구나"},
+ {n:"옐로우",      hex:"#FFCD4A", oh:"토(土)", hj:"黃", d:"나무뿌리가 흙을 뚫듯, 터를 일구어 거두는 재물이란다"},
+ {n:"화이트·실버", hex:"#C9CDD2", oh:"금(金)", hj:"白", d:"불이 쇠를 녹이듯, 벼려서 그릇을 만드는 재물이로구나"},
+ {n:"인디고",      hex:"#2F3D86", oh:"수(水)", hj:"黑", d:"흙이 물을 가두듯, 모아 두어 불어나는 재물이란다"}];
+/* 일간 → 나의 재물 색 (내가 剋하는 오행 = 상생 차례로 두 칸 뒤) */
+function jaeColOf(dayGan){ const me=GAN_OH[dayGan]; return {...OH_JAE_COL[(me+2)%5], jaeOh:(me+2)%5}; }
+
+if(typeof module!=="undefined") Object.assign(module.exports||{},{HC,hcOf,colorMonths,SIP2HC,HC_SEASON,seasonOf,OH_JAE_COL,jaeColOf});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+const CONCERT=true;   /* 컬러콘서트 당일판 — 늘 콘서트 모드 */
+if(CONCERT) document.body.classList.add('concert');
+/* 이 결과지가 중심으로 삼는 해 — 콘서트 선물이 2027년 운세이므로 2027로 둔다 */
+const FOCUS_YEAR=2027;
+let FOCUS_AGE=0;
+const PTOOLS_HTML=document.getElementById('ptools').innerHTML;
+const CITIES=[["서울",126.978,37.567],["인천",126.705,37.456],["수원",127.029,37.263],
+["성남",127.127,37.420],["고양",126.832,37.658],["춘천",127.730,37.881],["강릉",128.896,37.752],
+["원주",127.947,37.342],["청주",127.489,36.642],["천안",127.114,36.815],["세종",127.289,36.480],
+["대전",127.385,36.351],["전주",127.148,35.824],["광주",126.852,35.160],["목포",126.392,34.812],
+["여수",127.662,34.760],["순천",127.487,34.951],["대구",128.601,35.871],["안동",128.729,36.568],
+["포항",129.365,36.019],["구미",128.344,36.120],["울산",129.311,35.539],["부산",129.075,35.180],
+["창원",128.682,35.228],["진주",128.108,35.180],["제주",126.531,33.500],["서귀포",126.566,33.254]];
+(function(){const s=document.getElementById('city');
+  CITIES.forEach(c=>{const o=document.createElement('option');o.value=c[1];o.textContent=c[0];o.dataset.lat=c[2];s.appendChild(o);});
+  const o=document.createElement('option');o.value="custom";o.textContent="직접 입력 (해외 등)";s.appendChild(o);
+  s.value=126.978;
+  s.onchange=()=>document.getElementById('lonWrap').classList.toggle('hidden',s.value!=='custom');})();
+function seg(id){const el=document.getElementById(id);
+  el.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+    [...el.querySelectorAll('button')].forEach(x=>x.setAttribute('aria-pressed',x===b));};
+  return ()=>el.querySelector('[aria-pressed="true"]').dataset.v;}
+const getGender=seg('genderSeg'), getCal=seg('calSeg');
+document.getElementById('noTime').onchange=e=>{['bh','bmin'].forEach(i=>{document.getElementById(i).disabled=e.target.checked;});};
+document.getElementById('themeBtn').onclick=()=>{const cur=document.documentElement.getAttribute('data-theme');
+  const dark=cur? cur==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme', dark?'light':'dark');};
+
+function lunarToSolar(y,m,d,leap){
+  const T=lunarTable();
+  for(let i=0;i<T.length;i++){ const r=T[i];
+    if(r.y===y && r.m===m && r.leap===!!leap){
+      const len=(i+1<T.length? T[i+1].d-r.d : 30);
+      if(d<1||d>len) return {tooBig:len};
+      return fromDayIndex(r.d+d-1);
+    } }
+  return null;
+}
+const OHCLASS=["ohmok","ohhwa","ohto","ohgeum","ohsu"];
+const OHVAR=["--w-mok","--w-hwa","--w-to","--w-geum","--w-su"];
+const JOSA=o=>[`목은`,`화는`,`토는`,`금은`,`수는`][o];
+function hasBatchim(w){
+  w=String(w).replace(/[)\]」』>]+$/,''); const ch=w[w.length-1]; const c=ch.charCodeAt(0);
+  if(c>=0xAC00&&c<=0xD7A3) return ((c-0xAC00)%28)!==0;
+  if(/[0-9]/.test(ch)) return [0,1,3,6,7,8].includes(+ch);
+  return true;
+}
+const GanJ=(g,p)=>GAN[g]+J(GANK[g],p).slice(GANK[g].length);
+const JiJ=(j,p)=>JI[j]+J(JIK[j],p).slice(JIK[j].length);
+function rieul(w){ w=String(w).replace(/[)\]」』>]+$/,''); const c=w.charCodeAt(w.length-1);
+  return c>=0xAC00&&c<=0xD7A3 && ((c-0xAC00)%28)===8; }
+function J(w,pair){let b=hasBatchim(w);
+  if(pair==="으로로"&&rieul(w)) b=false;            // ㄹ 받침은 '로'
+  const m={"은는":["은","는"],"이가":["이","가"],"을를":["을","를"],"와과":["과","와"],"으로로":["으로","로"]};
+  return w+(m[pair]?m[pair][b?0:1]:"");}
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let R=null, DG=0, SRC=null, AGE=0, CH=null, VD=null, ZW=null, LATV=37.567, LONV=126.978, HOUSEMODE='placidus';
+
+document.getElementById('systabs').onclick=e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  [...e.currentTarget.querySelectorAll('button')].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  document.getElementById('outCross').classList.toggle('hidden', b.dataset.t!=='cross');
+  document.getElementById('outColor').classList.toggle('hidden', b.dataset.t!=='color');
+  document.getElementById('outWise').classList.toggle('hidden', b.dataset.t!=='wise');
+  document.getElementById('out').classList.toggle('hidden', b.dataset.t!=='saju');
+  document.getElementById('outAstro').classList.toggle('hidden', b.dataset.t!=='astro');
+  document.getElementById('outVedic').classList.toggle('hidden', b.dataset.t!=='vedic');
+  document.getElementById('outZiwei').classList.toggle('hidden', b.dataset.t!=='ziwei');
+  window.scrollTo({top:document.getElementById('systabs').offsetTop-10,behavior:'smooth'});
+};
+/* ===== 결과 저장 =====
+   액자(iframe) 안에서는 인쇄 창이 막히는 일이 잦다.
+   그래서 결과만 따로 떼어 낸 문서를 만들어 새 창으로 열거나 파일로 내려받게 한다. */
+function buildPrintDoc(mode){
+  const outs=['outCross','outColor','outWise','out','outAstro','outVedic','outZiwei'];
+  const css=[...document.querySelectorAll('style')].map(s=>s.textContent).join('\n');
+  const head=document.getElementById('printhead').innerHTML;
+  let body='';
+  if(mode==='concert'){
+    body=`<div class="pgsec">${document.getElementById('outConcert').innerHTML}</div>`;
+  } else if(mode==='all'){
+    outs.forEach((id,i)=>{ const el=document.getElementById(id);
+      if(!el||!el.innerHTML.trim()) return;
+      body+=`<div class="pgsec"${i?' style="break-before:page;page-break-before:always"':''}>${el.innerHTML}</div>`; });
+  } else {
+    const on=outs.find(id=>!document.getElementById(id).classList.contains('hidden'))||'outCross';
+    body=`<div class="pgsec">${document.getElementById(on).innerHTML}</div>`;
+  }
+  let dig=''; if(mode==='all'){ try{ dig=renderDigest(); }catch(e){} }
+  const t=(SRC&&SRC.name?SRC.name+' ':'')+(mode==='concert'?'2027 나의 컬러':'만세력 신탁');
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${t.replace(/[<>&]/g,'')}</title><style>${css}
+/* 저장본 전용 */
+html,body{background:#fff}
+body{margin:0;padding:26px 20px;font-size:14px}
+.wrap{max-width:860px;margin:0 auto;padding:0}
+.nav,.ybar button,.theme,.cmore{display:none !important}
+.printonly{display:block !important}
+.scroll{overflow:visible;border:0}
+.savebar{position:sticky;top:0;z-index:9;display:flex;gap:9px;justify-content:center;
+  padding:12px;margin:-26px -20px 20px;background:#1a1714;flex-wrap:wrap}
+.savebar button{border:0;border-radius:9px;padding:11px 18px;font:inherit;font-size:14.5px;
+  font-weight:700;background:#fff;color:#1a1714;cursor:pointer}
+.savebar span{color:#cfc7b7;font-size:12px;align-self:center}
+@media print{.savebar{display:none !important}body{padding:0}
+  .pgsec+.pgsec{break-before:page;page-break-before:always}
+  /* 표지 */
+  .pcover{text-align:center;padding:38mm 0 0;break-after:page;page-break-after:always}
+  .pcb{font-size:10pt;letter-spacing:.5em;color:var(--gold);font-weight:700}
+  .pct{font-size:30pt;font-weight:800;letter-spacing:-.02em;margin:10px 0 6px}
+  .pcs{font-size:10pt;color:var(--sub)}
+  .pcg{display:flex;justify-content:center;gap:7mm;margin:16mm 0 12mm}
+  .pcg span{display:block}
+  .pcg b{display:block;font-size:26pt;font-weight:800;line-height:1.1}
+  .pcg i{display:block;font-size:8.5pt;font-style:normal;color:var(--sub);margin-top:3px}
+  .pcd{font-size:13pt;font-weight:700;margin:0 0 4mm}
+  .pcf{font-size:8.5pt;color:var(--sub);margin-top:24mm}
+  /* 엑기스 */
+  .pdh{font-size:14pt;margin:0 0 3px}
+  .pdn{font-size:9.5pt;color:var(--sub);margin:0 0 7px}
+  .pdt{width:100%;border-collapse:collapse;font-size:9.6pt}
+  .pdt th{width:26mm;text-align:left;vertical-align:top;background:var(--tint);
+    border:1px solid var(--line);padding:6px 7px;font-size:9pt;white-space:nowrap}
+  .pdt td{border:1px solid var(--line);padding:6px 8px;line-height:1.55}
+  .pdt tr.pdhi th{background:var(--ink);color:var(--bg)}
+  .pdt tr.pdhi td{font-weight:700}
+  .pdn2{font-size:8.5pt;color:var(--sub);margin:7px 0 0}
+  .pdt td{text-align:left}
+  #pdigest:not(:empty) ~ #printhead{display:none !important}
+  .pdg{break-after:page;page-break-after:always}
+  @page{size:A4;margin:11mm 11mm 13mm}}
+</style></head><body>
+<div class="savebar">
+  <button type="button" onclick="window.print()">📄 인쇄 / PDF로 저장</button>
+  <span>인쇄 창에서 <b style="color:#fff">「PDF로 저장」</b>을 고르면 된단다</span>
+</div>
+<script>addEventListener('load',()=>setTimeout(()=>{try{window.print();}catch(e){}},700));<\/script>
+<div class="wrap">${dig||`<div class="printonly">${head}</div>`}${body}</div>
+</body></html>`;
+}
+let DLCAP=undefined;
+async function getDL(){
+  if(DLCAP!==undefined) return DLCAP;
+  try{ DLCAP = (window.claude && claude.use) ? await claude.use("downloads") : null; }
+  catch(e){ DLCAP=null; }
+  return DLCAP;
+}
+function msg(t,ms){ const e=document.getElementById('err');
+  e.innerHTML=t; e.classList.remove('hidden'); e.scrollIntoView({block:'center'});
+  setTimeout(()=>e.classList.add('hidden'), ms||10000); }
+async function downloadResult(mode){
+  const html=buildPrintDoc(mode);
+  const name=((SRC&&SRC.name?SRC.name+'_':'')+(mode==='concert'?'2027나의컬러':'만세력신탁')+'.html');
+  const dl=await getDL();
+  if(dl){
+    try{ await dl.save({filename:name, data:new Blob([html],{type:'text/html;charset=utf-8'})});
+         return true; }
+    catch(err){
+      const c=err&&err.code;
+      if(c==='declined') return false;
+      if(c==='rate_limited'){ msg('잠시 뒤에 다시 눌러 주거라.',6000); return false; }
+    }
+  }
+  try{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+    a.download=name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),60000);
+    return true;
+  }catch(e){ return false; }
+}
+function openPrintView(mode){
+  try{
+    const html=buildPrintDoc(mode);
+    const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+    const w=window.open(url,'_blank');
+    if(!w || w.closed || typeof w.closed==='undefined'){ URL.revokeObjectURL(url); return false; }
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+    return true;
+  }catch(e){ return false; }
+}
+async function savePDF(mode){
+  const btns=[...document.querySelectorAll('.ptools button')];
+  btns.forEach(b=>b.disabled=true);
+  try{
+    /* 내려받기 권한이 있으면 = claude.ai 미리보기 안이다.
+       그 안에서는 새 창이 막히니 곧바로 파일로 내려받는다. */
+    const dl=await getDL();
+    if(dl){
+      const ok=await downloadResult(mode);
+      if(ok) msg('<b>저장본을 내려받았단다.</b> 그 파일을 열면 <b>인쇄 창이 저절로 뜨니</b>, 거기서 <b>「PDF로 저장」</b>을 고르면 끝이로구나.<br><span class="sub">지금 보고 계신 미리보기 안에서는 인쇄 창이 막혀 있어 이렇게 돌아가는 것이란다. 홈페이지에 올라가면 단추 한 번으로 바로 열린다.</span>',16000);
+      else msg('내려받기를 취소하셨구나. 다시 누르면 된단다.',6000);
+      return;
+    }
+    /* 보통 웹페이지에서는 새 창으로 연다 */
+    if(openPrintView(mode)) return;
+    const ok=await downloadResult(mode);
+    if(ok) msg('새 창이 막혀 있어 <b>파일로 내려받았단다.</b> 그 파일을 열면 인쇄 창이 저절로 뜨는구나.',12000);
+    else msg('저장이 막혀 있구나. 브라우저 주소창의 <b>팝업 차단</b>을 풀고 다시 눌러 보거라.',12000);
+  }catch(e){
+    msg('저장 중에 문제가 생겼구나: '+e.message,10000);
+  }finally{
+    btns.forEach(b=>b.disabled=false);
+  }
+}
+
+document.getElementById('goBtn').onclick=run;
+function run(){
+  const E=document.getElementById('err'); E.classList.add('hidden');
+  const fail=m=>{E.textContent=m;E.classList.remove('hidden');E.scrollIntoView({block:'center'});};
+  let y=+document.getElementById('by').value, m=+document.getElementById('bm').value, d=+document.getElementById('bd').value;
+  const hv=document.getElementById('bh').value, mv=document.getElementById('bmin').value;
+  const noTime=document.getElementById('noTime').checked || (hv==='' && mv==='');
+  let hh=+hv||0, mi=+mv||0;
+  if(!y||!m||!d) return fail("생년월일을 모두 넣어 주거라.");
+  const cal=getCal();
+  if(m<1||m>12||d<1||d>31) return fail("월은 1~12, 일은 1~31로 넣어 주거라.");
+  if(cal==='S'){
+    const dim=[31,(y%4===0&&y%100!==0)||y%400===0?29:28,31,30,31,30,31,31,30,31,30,31][m-1];
+    if(d>dim) return fail(`${y}년 ${m}월은 ${dim}일까지만 있단다. 날짜를 다시 확인하거라.`);
+  }
+  if(cal!=='S'){ const g=lunarToSolar(y,m,d,cal==='LL');
+    if(!g) return fail("그 음력 날짜는 찾을 수 없구나. 윤달 여부와 날짜를 다시 확인하거라.");
+    if(g.tooBig) return fail(`음력 ${y}년 ${cal==='LL'?'윤':''}${m}월은 ${g.tooBig}일까지만 있단다.`);
+    y=g.y;m=g.m;d=g.d; }
+  if(y<1900||y>2050) return fail("1900년부터 2050년까지만 풀 수 있단다.");
+  if(m<1||m>12||d<1||d>31) return fail("월과 일을 다시 확인하거라.");
+  if(!noTime && (hh<0||hh>23||mi<0||mi>59)) return fail("시각은 0~23시, 0~59분으로 넣어 주거라.");
+  const cv=document.getElementById('city').value;
+  const lon = cv==='custom' ? (+document.getElementById('lon').value||126.978) : +cv;
+  try{ R=buildSaju({y,m,d,hh,mi,unknownTime:noTime,gender:getGender(),lon,
+      useLon:document.getElementById('useLon').checked,
+      useEot:document.getElementById('useEot').checked,
+      useDst:document.getElementById('useDst').checked,
+      yajasi:document.getElementById('yajasi').checked?'keep':'next'}); }
+  catch(e){ return fail("계산 중 문제가 생겼구나: "+e.message); }
+  DG=R.dayPillar.gan;
+  SRC={y,m,d,hh,mi,noTime,cityName: cv==='custom'?'직접입력':document.getElementById('city').selectedOptions[0].textContent,
+       name:document.getElementById('name').value.trim()};
+  const t=new Date();
+  AGE = t.getFullYear()-y + (((t.getMonth()+1)*100+t.getDate())>=(m*100+d)?0:-1);
+  FOCUS_AGE = FOCUS_YEAR - y;   /* 중심 해(2027)에 맞이하는 만나이 — 대운을 고를 때 쓴다 */
+  const sel=document.getElementById('city').selectedOptions[0];
+  LATV = cv==='custom' ? (+document.getElementById('lat').value||37.567) : +sel.dataset.lat;
+  LONV = lon;
+  document.getElementById('printhead').innerHTML=
+    `<div class="phead"><div class="pht">2027, 나의 컬러</div>
+     <div class="phs">${SRC.name?esc(SRC.name)+' · ':''}${y}년 ${m}월 ${d}일 ${noTime?'(시각 모름)':hh+'시 '+mi+'분'} · ${esc(SRC.cityName)} · ${getGender()==='F'?'여자':'남자'}</div></div>`;
+  if(CONCERT){
+    try{ document.getElementById('outConcert').innerHTML=renderConcert();
+      document.getElementById('outConcert').classList.remove('hidden');
+      ['outCross','outColor','outWise','out','outAstro','outVedic','outZiwei']
+        .forEach(id=>document.getElementById(id).classList.add('hidden'));
+      const pt=document.getElementById('ptools');
+      pt.innerHTML='<button type="button" onclick="savePDF(\'concert\')">📄 내 2027 컬러를 PDF로 저장</button>';
+      pt.classList.remove('hidden');
+      document.getElementById('outConcert').scrollIntoView({behavior:'smooth',block:'start'});
+      return;
+    }catch(e){ document.getElementById('outConcert').innerHTML='<p class="err">컬러 계산 오류: '+e.message+'</p>'; }
+  }
+}
+
+/* ===== 평생흐름 그래프 ===== */
+
+
+/* ===== 월운 ===== */
+
+
+
+
+/* ===== 차트 휠 ===== */
+
+
+
+/* ===== 인도 점성학 렌더 ===== */
+
+function fmtJD(jd){ const d=jdToDate(jd); return `${d.y}.${String(d.m).padStart(2,'0')}`; }
+/* ===== 자미두수 =====*/
+const ZWMAIN_MAP={};   /* 콘서트 당일판에는 자미두수를 싣지 않는다 */
+function zwSihwaTag(nm){
+  if(!ZW||ZW.sihwa[nm]==null) return '';
+  const k=ZW.sihwa[nm];
+  return `<span class="sh sh${k}" title="${ZW_SIHWA_N[k]}">${["록","권","과","기"][k]}</span>`;
+}
+
+/* ===== PDF 전용 — 표지와 엑기스 한 장 ===== */
+
+/* ===== 컬러콘서트 전용 ===== */
+function renderConcert(){
+  const dg=R.dayPillar.gan, Y=2027;
+  const yGan=gz(Y-1984).gan, yJi=gz(Y-1984).ji, yc=hcOf(dg,yGan);
+  const ms=colorMonths(Y);
+  let h='';
+  h+=`<div class="takecard"><span class="tkchip" style="background:${yc.hex}"></span>
+    <div><div class="tkk">오늘 받아 가실 종이</div>
+      <div class="tkn">${["木","火","土","金","水"][GAN_OH[dg]]}${dg%2===0?"＋":"－"} ${(dg%2===0?"양":"음")+["목","화","토","금","수"][GAN_OH[dg]]} · ${yc.n}</div>
+      <div class="tkd">열 장 가운데 <b>${dg+1}번</b> — 같은 색의 종이를 받아 가거라. 뒷면에 2027년 열세 달이 들어 있단다.</div></div></div>`;
+  h+=`<h2 id="k1"><span class="n">1</span>${SRC.name?esc(SRC.name)+'님의 ':''}2027년 컬러</h2>`;
+  h+=`<div class="hcyear" style="--hc:${yc.hex}">
+    <div class="hcchip" style="background:${yc.hex}"></div>
+    <div class="hcyt"><div class="hcyk">2027년 ${GANK[yGan]}${JIK[yJi]}(${GAN[yGan]}${JI[yJi]})년 · 나의 컬러</div>
+      <div class="hcyn">${yc.n} <span class="hcc">${yc.c}</span></div>
+      <div class="hcye">${yc.en}</div></div></div>`;
+  h+=`<div class="box"><h4>${yc.n} — ${yc.k}</h4>
+    <p>${yc.t}</p><p>${yc.e}</p>
+    <div class="wdo"><div class="wdoh">2027년에 하거라</div><ul><li>${yc.do}</li></ul></div>
+    <p><b>조심할 것 —</b> ${yc.no}</p>
+    <p class="sub">2027년의 천간은 <b>${GAN[yGan]}(${GANK[yGan]})</b>이고, 그대의 일간 <b>${GAN[dg]}(${GANK[dg]})</b>에 대해 <b>${sipGan(dg,yGan)}</b>이 되는구나. 그래서 색이 ${J(yc.n,'이가')} 되는 것이란다. <b>같은 2027년이라도 일간이 다르면 색이 달라지니</b>, 이것은 그대만의 색이로구나.</p></div>`;
+  /* 인생의 사계 */
+  try{ const S=seasonOf(yc.c);
+    if(S) h+=`<div class="box"><h4>2027년은 그대 인생의 <b style="color:${yc.hex}">${S.n}</b> — ${S.t}</h4>
+      <p>${S.d}</p>
+      <p class="sub">사람의 운은 <b>열 해에 한 바퀴</b>, 네 철을 돈단다. 봄에 싹이 트고(옐로우·옐로우그린), 여름에 무성히 자라고(블루그린·퍼플), 가을에 거두어 맛보고(오렌지·레드·레드오렌지·마젠타), 겨울에 갈무리하는(인디고·블루) 것이 한 바퀴로구나.</p></div>`;
+  }catch(e){}
+  /* 나를 살리는 색 — 종이에 적을 것 */
+  try{
+    const ohCols=oh=>[...Array(10).keys()].filter(g=>GAN_OH[g]===oh)
+      .map(g=>HC[SIP2HC[sipGan(dg,g)]]).filter(Boolean);
+    const yCols=ohCols(R.yong), hCols=ohCols(R.hui);
+    if(yCols.length) h+=`<div class="box gold"><h4>✎ 나를 살리는 색 — ${yCols.map(c=>c.n).join(' · ')}</h4>
+      <p>${R.strong?'타고난 기운이 센 편이니 <b>넘치는 힘을 밖으로 흘려보낼 색</b>이 필요하단다.'
+        :'타고난 기운이 여린 편이니 <b>나를 채워 주는 색</b>이 필요하단다.'}
+      지치는 날과 중요한 날에는 이 색을 <b>몸 가까이</b> 두거라 — 안감·스카프·속옷·가방처럼 살에 닿는 자리가 좋구나.</p>
+      ${hCols.length?`<p class="sub">다음으로 좋은 색 — ${hCols.map(c=>c.n).join(' · ')}</p>`:''}
+      <p class="sub"><b>받아 가신 종이의 「나를 살리는 색」 칸에 이 색을 적어 두거라.</b> 이 색만은 사주 여덟 글자를 모두 보아야 나오는 것이라 미리 찍어 둘 수 없었단다.</p></div>`;
+    const JC=jaeColOf(dg);
+    h+=`<div class="box"><h4><span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:${JC.hex};vertical-align:-1px;margin-right:5px"></span>나의 재물 색 — ${JC.n}</h4>
+      <p>그대의 일간 <b>${GAN[dg]}(${GANK[dg]})</b>이 <b>剋(극)하는 오행</b>이 ${JC.oh}이니, 그것이 그대의 <b>재성(財星)</b> 곧 재물이란다. 오방정색으로 ${JC.oh}은 <b>${JC.hj}</b>이요, 오늘의 색말로는 <b>${JC.n}</b>이 되는구나. ${JC.d}.</p>
+      <div class="wdo"><div class="wdoh">이렇게 쓰거라</div><ul>
+        <li><b>값을 매기고 계약하고 거두는 자리</b>에 이 색을 두르거라. 명함·가방·그날의 옷에 들어가면 기운이 맞는단다.</li>
+        <li>앞서 나온 <b>「나를 살리는 색」은 평소에</b>, <b>이 재물 색은 벌 때만</b> 쓰는 것이 옳다. 힘을 채워 두고 거두러 나가는 법이로구나.</li></ul></div>
+      <p class="sub">앞의 열두 달 색이 <b>「언제」 버는가</b>를 말한다면, 이 색은 <b>「무엇으로」 버는가</b>를 말하는 것이란다. 열두 달 색은 누구에게나 같으나 <b>이 색은 일간마다 다르구나.</b></p></div>`;
+  }catch(e){}
+  /* 열두 달 */
+  h+=`<h2 id="k2"><span class="n">2</span>열두 달의 에너지</h2>`;
+  h+=`<p class="sub">달의 경계는 달력 1일이 아니라 <b>절기</b>란다. 칸의 날짜가 그 색이 시작되는 날이로구나.</p>`;
+  h+=`<div class="cmg">`;
+  ms.forEach((m,i)=>{ const c=hcOf(dg,m.gzv.gan);
+    const st=fmtMin(m.start).slice(5,10).replace('-','/');
+    h+=`<div class="cmc"><div class="cmh"><b>${i+1}월</b><span>${st}~</span></div>
+      <div class="cbar" style="background:${c.hex}"></div>
+      <div class="cmn">${c.n}</div><div class="cmt">${c.m}</div></div>`; });
+  h+=`</div>`;
+  /* 가장 중요한 달 */
+  const pick=(code)=>{const i=ms.findIndex(m=>hcOf(dg,m.gzv.gan).c===code);return i<0?null:i+1;};
+  const mY=pick('Y'), mRO=pick('RO'), mR=pick('R'), mP=pick('P');
+  h+=`<div class="box gold"><h4>2027년, 이 넉 달만 기억하거라</h4><ul>
+    ${mY?`<li><b style="color:${HC[0].hex}">${mY}월 옐로우</b> — 새로 시작하기 가장 좋은 달이란다. 올해 벌일 것이 있거든 이달에 떼거라.</li>`:''}
+    ${mRO?`<li><b style="color:${HC[6].hex}">${mRO}월 레드오렌지</b> — 가장 크게 움직이는 달이다. 큰 제안이 오거든 겁내지 말고 받거라.</li>`:''}
+    ${mR?`<li><b style="color:${HC[5].hex}">${mR}월 레드</b> — 거두는 달이다. 받을 돈과 미룬 계약을 이달에 매듭지어라.</li>`:''}
+    ${mP?`<li><b style="color:${HC[3].hex}">${mP}월 퍼플</b> — 환경이 바뀌고 자라는 달이다. 번데기가 나비가 되는 때이니 <b>실패로 읽지 말거라.</b></li>`:''}
+  </ul></div>`;
+  h+=`<div class="box blue"><h4>컬러리듬은 열 해에 한 바퀴를 돈단다</h4>
+    <p>${HC_CYCLE_T}</p>
+    <div class="hcrow">${[...Array(10)].map((_,i)=>{const y=2027+i,c=hcOf(dg,gz(y-1984).gan);
+      const n=parseInt(c.hex.slice(1),16), m=v=>Math.round(v+(255-v)*0.52);
+      const fz='#'+[m(n>>16&255),m(n>>8&255),m(n&255)].map(v=>v.toString(16).padStart(2,'0')).join('');
+      return `<div class="hcy${y===2027?' on':''}"><div class="hcbar" style="background:${y===2027?c.hex:fz}"></div>
+        <div class="hcyy">${y}</div><div class="hcyc">${y===2027?c.c:'·'}</div></div>`;}).join('')}</div>
+    <p class="sub"><b>칸은 해마다 하나씩 열린단다.</b> 올해 칸만 색이 들어와 있고 나머지가 아직 흐린 것이 그 까닭이로구나. 내년 이맘때 <b>2028년 칸</b>을 함께 열어 보자꾸나.</p></div>`;
+  return h;
+}
+
+/* ===== 나의 컬러 ===== */
+
+/* ===== 다섯 질문 ===== */
+/* 다섯 질문에 들어갈 컬러 한 줄 — 색은 '언제'를 맡는다 */
+function hcFind(dg, from, code, n){
+  const out=[];
+  for(let i=0;i<=n;i++){ const y=from+i; if(hcOf(dg,gz(y-1984).gan).c===code) out.push(y); }
+  return out;
+}
+function hcMonths(dg, year, codes){
+  const ms=colorMonths(year), out=[];
+  ms.forEach((m,i)=>{ const c=hcOf(dg,m.gzv.gan); if(codes.includes(c.c)) out.push({m:i+1,c}); });
+  return out;
+}
+
+function sysRow(i,txt){ return `<div class="qs"><span class="qsb" style="--c:${SYS[i][1]}">${SYS[i][0]}</span><span class="qst">${txt}</span></div>`; }
+
+
+
+
+
+
+/* ===== 때(트랜짓·솔라리턴) ===== */
+let TRY_=null;
+
+
+
+
+
+
+
+
+/* ===== 삶의 지혜 렌더 ===== */
+
+
+/* ===== 전체 렌더 ===== */
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

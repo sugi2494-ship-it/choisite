@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#E6007E" />
+<title>참석 체크 · PBS COLOR LAB</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta property="og:title" content="참석 체크 (운영 전용)" />
+<meta property="og:image" content="https://www.pbscolor.com/assets/live-og.jpg?v=20261126" />
+<link rel="icon" href="/assets/pbs-logo.png" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{--pbs:#E6007E;--ink:#1E1622;--ink2:#4A3F50;--ink3:#8B7F90;--line:#EADDE6;--ok:#12A15A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Pretendard Variable","Pretendard",system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);background:#F7F2F6;font-size:15px;line-height:1.45;word-break:keep-all;-webkit-font-smoothing:antialiased}
+button,input{font-family:inherit;font-size:inherit;color:inherit;border:0;background:none}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.login{max-width:360px;margin:16vh auto 0;padding:28px;background:#fff;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.08)}
+.login h1{font-size:22px;margin-bottom:4px}.login p{color:var(--ink3);font-size:14px;margin-bottom:18px}
+.login input{width:100%;height:52px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;font-size:18px;text-align:center;letter-spacing:.2em}
+.login button{width:100%;height:52px;border-radius:12px;background:var(--pbs);color:#fff;font-weight:800;font-size:16px;margin-top:10px}
+.err{color:#D21;font-size:13px;margin-top:8px;min-height:18px}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:3px solid var(--pbs);padding:14px 22px 12px}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.top h1{font-size:20px;font-weight:900}.top h1 small{font-size:13px;color:var(--pbs);margin-left:6px}
+.stats{display:flex;gap:10px;margin-left:auto;flex-wrap:wrap}
+.st{background:#FBF5F9;border-radius:12px;padding:6px 14px;text-align:center;min-width:92px}
+.st b{display:block;font-size:24px;font-weight:900;line-height:1.15}.st span{font-size:12px;color:var(--ink3);font-weight:600}
+.st.ok b{color:var(--ok)}.st.wk b{color:#D97706}.st.bk b{color:#B4530A}
+.tools{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.search{flex:1;min-width:220px;height:48px;border:2px solid var(--line);border-radius:12px;padding:0 16px;font-size:18px;background:#fff}
+.search:focus{outline:none;border-color:var(--pbs)}
+.flt{display:flex;background:#F1E8EE;border-radius:12px;padding:4px}
+.flt button{height:40px;padding:0 14px;border-radius:9px;font-weight:700;font-size:14px;color:var(--ink2)}
+.flt button.on{background:#fff;color:var(--pbs);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.voice{height:48px;padding:0 16px;border-radius:12px;background:#F1E8EE;color:var(--ink2);font-weight:800}
+.voice.on{background:#7B2FBE;color:#fff}
+.welcome{position:fixed;left:50%;top:30%;transform:translate(-50%,-50%) scale(.7);opacity:0;z-index:40;background:linear-gradient(135deg,#E6007E,#7B2FBE);color:#fff;border-radius:28px;padding:34px 54px;text-align:center;box-shadow:0 30px 80px rgba(230,0,126,.35);transition:.35s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.welcome.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.welcome small{display:block;font-size:18px;font-weight:700;opacity:.85;margin-bottom:6px}
+.welcome b{display:block;font-size:46px;font-weight:900;line-height:1.2}
+.welcome em{display:block;font-style:normal;font-size:16px;margin-top:10px;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 14px}
+.add{height:48px;padding:0 18px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800}
+main{padding:14px 22px 80px;max-width:1100px;margin:0 auto}
+.row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:10px 14px;margin-bottom:8px;border:2px solid transparent}
+.row.on{border-color:#BFE8D0;background:#F3FBF6}
+.row .nm{flex:1;min-width:0}
+.row .nm b{font-size:19px;font-weight:800}
+.tag{display:inline-block;font-size:12px;font-weight:800;border-radius:7px;padding:2px 8px;margin-left:8px;vertical-align:3px}
+.t-cp{background:#FDE8F3;color:#C0006A}.t-wk{background:#FFF1D6;color:#B45309}.t-bk{background:#FFE9D6;color:#B4530A}
+.row .sub{font-size:13px;color:var(--ink3);margin-top:2px}
+.row .tel{font-size:16px;font-weight:700;color:var(--ink2);width:56px;text-align:center;letter-spacing:.05em}
+.btn{height:50px;min-width:112px;padding:0 16px;border-radius:12px;font-weight:800;font-size:16px;background:#F1E8EE;color:var(--ink2)}
+.btn.chk.on{background:var(--ok);color:#fff}
+.btn.bk{min-width:96px;background:#FFF4EA;color:#B4530A;border:2px dashed #F3C79A}
+.btn.bk.on{background:#B4530A;color:#fff;border-style:solid;border-color:#B4530A}
+.btn.del{min-width:0;width:44px;padding:0;background:none;color:#C8B9C3;font-size:20px}
+.time{font-size:12px;color:var(--ok);font-weight:700;width:104px;text-align:right;white-space:nowrap}
+.empty{text-align:center;color:var(--ink3);padding:40px}
+.modal{position:fixed;inset:0;background:rgba(22,18,27,.5);display:flex;align-items:center;justify-content:center;z-index:20}
+.modal>div{background:#fff;border-radius:18px;padding:22px;width:min(380px,92vw)}
+.modal h3{font-size:18px;margin-bottom:12px}
+.modal input[type=text]{width:100%;height:50px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;font-size:17px;margin-bottom:10px}
+.modal label{display:flex;align-items:center;gap:8px;font-size:15px;margin:4px 0 12px}
+.modal .mb{display:flex;gap:8px}.modal .mb button{flex:1;height:48px;border-radius:12px;font-weight:800}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;opacity:0;transition:.25s;z-index:30}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.live{font-size:12px;color:var(--ink3);margin-left:4px}
+@media (max-width:640px){header,main{padding-left:12px;padding-right:12px}.row{flex-wrap:wrap}.time{display:none}.btn{min-width:96px}}
+</style>
+</head>
+<body>
+<section class="login" id="login">
+  <h1>📋 참석 체크</h1>
+  <p>운영 전용 · 강의 진행 화면과 같은 비밀번호</p>
+  <input id="pwIn" type="password" inputmode="numeric" autocomplete="current-password" placeholder="비밀번호" />
+  <button id="pwBtn">들어가기</button>
+  <p class="err" id="loginErr"></p>
+</section>
+
+<div id="app" hidden>
+  <header>
+    <div class="top">
+      <h1>📋 참석 체크<small id="roomTitle"></small></h1>
+      <div class="stats">
+        <div class="st ok"><b id="sIn">0</b><span>명단 출석 / <em id="sAll" style="font-style:normal">0</em></span></div>
+        <div class="st wk"><b id="sWk">0</b><span>현장 등록</span></div>
+        <div class="st"><b id="sTot">0</b><span>총 입장</span></div>
+        <div class="st bk"><b id="sBk">0</b><span>책 드림 / <em id="sBkAll" style="font-style:normal">0</em></span></div>
+      </div>
+    </div>
+    <div class="tools">
+      <input class="search" id="q" placeholder="🔍 이름 또는 전화 뒤 4자리" autocomplete="off" />
+      <div class="flt" id="flt">
+        <button data-f="all" class="on">전체</button><button data-f="no">미출석</button><button data-f="in">출석</button><button data-f="wk">현장 등록</button><button data-f="bk">📕 책</button>
+      </div>
+      <button class="add" id="addBtn">+ 현장 등록</button>
+      <button class="voice" id="voiceBtn">🔇 환영 음성 켜기</button>
+    </div>
+  </header>
+  <main><div id="list"></div><p class="live" id="sync"></p></main>
+</div>
+
+<div class="modal" id="addM" hidden><div>
+  <h3>현장 등록 (명단에 없는 분)</h3>
+  <input type="text" id="aName" placeholder="이름" maxlength="20" />
+  <input type="text" id="aTel" placeholder="전화 뒤 4자리 (선택)" maxlength="4" inputmode="numeric" />
+  <label><input type="checkbox" id="aBook" /> 📕 현장에서 책을 드리는 분</label>
+  <div class="mb"><button id="aNo" style="background:#F1E8EE">취소</button><button id="aOk" style="background:#E6007E;color:#fff">등록 + 출석</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<div class="welcome" id="welcome"><small>QR 입장</small><b id="wName"></b><span id="wMsg" style="font-size:24px;font-weight:800">환영합니다 🎉</span><em id="wBook" hidden>📕 책 드릴 분이에요</em></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const SB_URL = 'https://oqxlsnyuwtmjmbhgzjoz.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8';
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const ss = { get(k){ try{return sessionStorage.getItem(k)}catch(e){return null} }, set(k,v){ try{ v==null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v)}catch(e){} } };
+  const toast = t => { const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); };
+  const hm = ts => new Date(ts).toLocaleTimeString('ko-KR',{hour:'numeric',minute:'2-digit'});
+  const key = s => String(s||'').replace(/\s/g,'').toLowerCase();
+  let pw = ss.get('pbs_live_pw') || '', room = null, list = [], flt = 'all', timer = null, busy = false;
+
+  async function login(p){
+    $('#loginErr').textContent = '';
+    const { data, error } = await sb.rpc('live_host_rooms', { p_pw: p });
+    if (error) { $('#loginErr').textContent = '비밀번호 확인'; ss.set('pbs_live_pw', null); return; }
+    pw = p; ss.set('pbs_live_pw', p);
+    const rooms = Array.isArray(data) ? data : [];
+    room = rooms.find(r => r.is_open && r.code === '20271004') || rooms.find(r => r.is_open) || rooms[0];
+    if (!room) { $('#loginErr').textContent = '열린 강의방이 없어요'; return; }
+    $('#roomTitle').textContent = room.title || '';
+    $('#login').hidden = true; $('#app').hidden = false;
+    await load(); clearInterval(timer); timer = setInterval(() => { if (!busy && !document.hidden) load(); }, 4000);
+    $('#q').focus();
+  }
+  $('#pwBtn').onclick = () => login($('#pwIn').value.trim());
+  $('#pwIn').addEventListener('keydown', e => { if (e.key === 'Enter') login($('#pwIn').value.trim()); });
+  if (pw) login(pw);
+
+  /* ── 환영 음성 (QR로 새로 들어온 분) ── */
+  let voiceOn = false, seen = null, queue = [], playing = false, koVoice = null;
+  const pickVoice = () => { try { const v = speechSynthesis.getVoices(); koVoice = v.find(x => /ko[-_]KR/i.test(x.lang) && /female|여|Heami|SunHi|Yuna|Google/i.test(x.name)) || v.find(x => /^ko/i.test(x.lang)) || null; } catch(e){} };
+  if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  const callName = n => String(n||'').replace(/\(.*?\)/g,'').trim();
+  function say(text){ return new Promise(res => { try { const u = new SpeechSynthesisUtterance(text); u.lang = 'ko-KR'; if (koVoice) u.voice = koVoice; u.rate = 1; u.pitch = 1.1; u.onend = u.onerror = () => res(); speechSynthesis.speak(u); setTimeout(res, 6000); } catch(e){ res(); } }); }
+  async function nextWelcome(){
+    if (playing || !queue.length) return; playing = true;
+    const a = queue.shift(); const nm = callName(a.name);
+    $('#wName').textContent = nm + '님'; $('#wBook').hidden = !a.book; $('#welcome').classList.add('show');
+    await Promise.all([voiceOn ? say(`${nm}님, 환영합니다!`) : null, new Promise(r => setTimeout(r, 3000))]);
+    $('#welcome').classList.remove('show'); await new Promise(r => setTimeout(r, 450));
+    playing = false; nextWelcome();
+  }
+  function detectNew(){
+    const qrIn = list.filter(a => a.checked_at && a.checked_by === 'QR');
+    if (seen === null) { seen = new Set(qrIn.map(a => a.id)); return; }
+    qrIn.forEach(a => { if (!seen.has(a.id)) { seen.add(a.id); queue.push(a); } });
+    nextWelcome();
+  }
+  $('#voiceBtn').onclick = () => {
+    voiceOn = !voiceOn; $('#voiceBtn').classList.toggle('on', voiceOn);
+    $('#voiceBtn').textContent = voiceOn ? '🔊 환영 음성 켜짐' : '🔇 환영 음성 켜기';
+    if (voiceOn) { if (!('speechSynthesis' in window)) { toast('이 브라우저는 음성을 지원하지 않아요 — 크롬을 써 주세요'); return; } pickVoice(); say('환영 음성이 켜졌습니다'); }
+    else { try { speechSynthesis.cancel(); } catch(e){} }
+  };
+
+  async function load(){
+    const { data, error } = await sb.rpc('live_host_att', { p_pw: pw, p_room: room.id });
+    if (error) { $('#sync').textContent = '⚠ 연결 확인 중…'; return; }
+    list = Array.isArray(data) ? data : [];
+    $('#sync').textContent = '자동 새로고침 · ' + new Date().toLocaleTimeString('ko-KR');
+    render(); detectNew();
+  }
+  function render(){
+    const reg = list.filter(a => !a.walkin), wk = list.filter(a => a.walkin);
+    const books = list.filter(a => a.book);
+    $('#sIn').textContent = reg.filter(a => a.checked_at).length; $('#sAll').textContent = reg.length;
+    $('#sWk').textContent = wk.length;
+    $('#sTot').textContent = list.filter(a => a.checked_at).length;
+    $('#sBk').textContent = books.filter(a => a.book_given_at).length; $('#sBkAll').textContent = books.length;
+    const q = key($('#q').value);
+    let L = list.filter(a => !q || key(a.name).includes(q) || (a.tel4 || '').includes(q));
+    if (flt === 'no') L = L.filter(a => !a.checked_at);
+    if (flt === 'in') L = L.filter(a => a.checked_at);
+    if (flt === 'wk') L = L.filter(a => a.walkin);
+    if (flt === 'bk') L = L.filter(a => a.book);
+    L.sort((a,b) => a.name.localeCompare(b.name, 'ko'));
+    $('#list').innerHTML = L.length ? L.map(a => `
+      <div class="row${a.checked_at ? ' on' : ''}">
+        <div class="nm"><b>${esc(a.name)}</b>${a.companion ? `<span class="tag t-cp">${esc(a.companion)} 동반</span>` : ''}${a.walkin ? '<span class="tag t-wk">현장 등록</span>' : ''}${a.book ? '<span class="tag t-bk">📕 책</span>' : ''}
+          ${a.org ? `<div class="sub">${esc(a.org)}</div>` : ''}</div>
+        <span class="tel">${esc(a.tel4 || '')}</span>
+        <span class="time">${a.checked_at ? hm(a.checked_at) + (a.checked_by === 'QR' ? ' · QR' : ' · 직접') : ''}</span>
+        ${a.book ? `<button class="btn bk${a.book_given_at ? ' on' : ''}" data-id="${a.id}" data-f="book">${a.book_given_at ? '📕 드림 ✓' : '📕 책 드리기'}</button>` : ''}
+        <button class="btn chk${a.checked_at ? ' on' : ''}" data-id="${a.id}" data-f="check">${a.checked_at ? '출석 ✓' : '출석 체크'}</button>
+        ${a.walkin ? `<button class="btn del" data-id="${a.id}" data-f="del" title="현장 등록 지우기">✕</button>` : ''}
+      </div>`).join('') : `<p class="empty">${q ? '검색 결과가 없어요 — 명단에 없는 분이면 "+ 현장 등록"' : '명단이 비어 있어요'}</p>`;
+  }
+  $('#q').addEventListener('input', render);
+  $('#q').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value=''; render(); } });
+  $('#flt').addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; flt = b.dataset.f; document.querySelectorAll('#flt button').forEach(x => x.classList.toggle('on', x === b)); render(); });
+  $('#list').addEventListener('click', async e => {
+    const b = e.target.closest('[data-id]'); if (!b) return;
+    const a = list.find(x => x.id === +b.dataset.id); if (!a) return;
+    const f = b.dataset.f;
+    let on;
+    if (f === 'check') { on = !a.checked_at; if (!on && !confirm(`${a.name}님 출석을 취소할까요?`)) return; }
+    else if (f === 'book') { on = !a.book_given_at; if (!on && !confirm(`${a.name}님 책 드림 표시를 취소할까요?`)) return; }
+    else if (f === 'del') { if (!confirm(`현장 등록 '${a.name}'을(를) 지울까요?`)) return; on = true; }
+    busy = true;
+    if (f === 'check') { a.checked_at = on ? new Date().toISOString() : null; a.checked_by = on ? '직접' : null; }
+    if (f === 'book') a.book_given_at = on ? new Date().toISOString() : null;
+    if (f === 'del') list = list.filter(x => x !== a);
+    render();
+    const { error } = await sb.rpc('live_host_att_set', { p_pw: pw, p_room: room.id, p_id: a.id, p_field: f, p_on: on });
+    busy = false;
+    if (error) toast('저장 실패 — 다시 눌러 주세요'); else if (f === 'check' && on) { toast(`✅ ${a.name}님 출석`); $('#q').value=''; $('#q').focus(); }
+    load();
+  });
+  $('#addBtn').onclick = () => { $('#addM').hidden = false; $('#aName').value = $('#q').value.replace(/\d/g,'').trim(); $('#aTel').value=''; $('#aBook').checked=false; $('#aName').focus(); };
+  $('#aNo').onclick = () => $('#addM').hidden = true;
+  $('#aOk').onclick = async () => {
+    const n = $('#aName').value.trim(); if (n.length < 2) return toast('이름 입력');
+    const { error } = await sb.rpc('live_host_att_add', { p_pw: pw, p_room: room.id, p_name: n, p_tel4: $('#aTel').value.trim(), p_book: $('#aBook').checked });
+    if (error) return toast('등록 실패');
+    $('#addM').hidden = true; $('#q').value=''; toast(`✅ ${n}님 현장 등록 + 출석`); load();
+  };
+})();
+</script>
+</body>
+</html>
