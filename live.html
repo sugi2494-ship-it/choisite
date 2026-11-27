@@ -46,6 +46,7 @@ button{cursor:pointer;border:0;background:none}
 .top-row{display:flex;align-items:center;gap:10px;padding:12px 18px 10px}
 .top-row img{height:24px;width:auto;object-fit:contain}
 .brand{font-size:13px;font-weight:800;letter-spacing:.1em}
+#liveN{margin-left:6px;padding:2px 8px;border-radius:20px;background:var(--pbs);color:#fff;font-size:12px;letter-spacing:0}
 .live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--pbs)}
 .live i{width:8px;height:8px;border-radius:50%;background:var(--pbs);animation:pulse 1.6s infinite}
 .live.off{color:var(--ink4)} .live.off i{background:var(--ink4);animation:none}
@@ -223,7 +224,7 @@ button{cursor:pointer;border:0;background:none}
       <div class="top-row">
         <img src="/assets/pbs-logo.png" alt="" />
         <span class="brand">LIVE CLASS</span>
-        <span class="live" id="liveDot"><i></i>LIVE</span>
+        <span class="live" id="liveDot"><i></i>LIVE<b id="liveN" hidden></b></span>
       </div>
       <h1 class="title" id="roomTitle"></h1>
       <p class="me" id="roomSub" style="margin-top:-8px;color:var(--pbs-deep);font-weight:600"></p>
@@ -288,6 +289,7 @@ button{cursor:pointer;border:0;background:none}
       sb.rpc('live_join2', { p_code: room.code, p_client: clientId, p_nick: nick, p_engine: engine }).then(() => {}, () => {});
       if (presCh) sb.removeChannel(presCh);
       presCh = sb.channel('pres-' + room.id, { config: { presence: { key: clientId } } });
+      presCh.on('presence', { event: 'sync' }, () => { const n = Object.keys(presCh.presenceState()).length; const el = $('#liveN'); if (el) { el.textContent = `👥 ${n}명`; el.hidden = !n; } });
       presCh.subscribe(st => { if (st === 'SUBSCRIBED') presCh.track({ nick, engine, at: Date.now() }); });
     } catch(e) {}
   }
