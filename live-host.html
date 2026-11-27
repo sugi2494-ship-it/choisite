@@ -373,6 +373,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   <div class="tools" id="tools">
     <button class="tb" id="pdfBtn">PDF 올리기</button>
     <button class="tb" id="vidBtn" style="background:#16121B;color:#fff;border:1px solid #fff3">🎬 오프닝 영상</button>
+    <button class="tb" id="signBtn" style="background:#B8860B;color:#fff">✍️ 사인회 음악 켜기</button>
     <button class="tb" id="bgmBtn" style="background:#7B2FBE;color:#fff">🎵 대기 음악 켜기</button>
     <button class="tb" id="grpBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff">🎨 엔진 그룹</button>
     <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B">🎁 행운권 추첨</button>
@@ -944,6 +945,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     const v = $('#vid');
     if (on) {
       if (BGM.playing) { BGM.stop(); bgmLabel(); }
+      if (SIGN.playing) { SIGN.stop(); signLabel(); }
       if (TOUCH.playing) TOUCH.stop(1);
       if (!v.src) v.src = VID_SRC;
       $('#vidFull').hidden = false; $('#qrFull').hidden = true;
@@ -1032,13 +1034,13 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   }
 
   /* 대기 음악 — 직접 작곡·합성한 반복 음악 (외부 음원 없음) */
-  /* 대기 음악 — 대표님 곡 「너의 색으로 빛나」 반복 재생 */
-  const BGM = (() => {
-    const au = new Audio('/assets/live/waiting.mp3'); au.loop = true; au.preload = 'auto'; au.volume = 0.85;
+  /* 대기 음악 — 대표님 곡 「너의 색으로 빛나」 반복 재생 / 사인회 음악 */
+  const mkLoop = src => (() => {
+    const au = new Audio(src); au.loop = true; au.preload = 'auto'; au.volume = 0.85;
     let playing = false, fadeT = null;
     function start(){
       clearInterval(fadeT); au.volume = 0.85; playing = true;
-      au.play().catch(() => { playing = false; try { bgmLabel(); } catch(e){} toast('음악 재생이 막혔어요 — 버튼을 한 번 더 눌러 주세요'); });
+      au.play().catch(() => { playing = false; try { bgmLabel(); } catch(e){} toast('음악 재생이 막혔어요 — 버튼을 한 번 더 눌러 주세요'); try { signLabel(); } catch(e){} });
     }
     function stop(fade){
       playing = false; clearInterval(fadeT);
@@ -1047,6 +1049,8 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     }
     return { start, stop, get playing(){ return playing; } };
   })();
+  const BGM = mkLoop('/assets/live/waiting.mp3');
+  const SIGN = mkLoop('/assets/live/signing.mp3');
   const TOUCH = (() => {
     let master = null, timer = null, step = 0, nextT = 0, playing = false;
     const BPM = 66, S8 = 60 / BPM / 2;
@@ -1108,7 +1112,9 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   }
 
   const bgmLabel = () => $('#bgmBtn').textContent = BGM.playing ? '🎵 대기 음악 끄기' : '🎵 대기 음악 켜기';
-  $('#bgmBtn').onclick = () => { if (TOUCH.playing) TOUCH.stop(1); BGM.playing ? BGM.stop() : BGM.start(); bgmLabel(); };
+  $('#bgmBtn').onclick = () => { if (TOUCH.playing) TOUCH.stop(1); if (SIGN.playing) { SIGN.stop(); signLabel(); } BGM.playing ? BGM.stop() : BGM.start(); bgmLabel(); };
+  const signLabel = () => $('#signBtn').textContent = SIGN.playing ? '✍️ 사인회 음악 끄기' : '✍️ 사인회 음악 켜기';
+  $('#signBtn').onclick = () => { if (TOUCH.playing) TOUCH.stop(1); if (BGM.playing) { BGM.stop(); bgmLabel(); } SIGN.playing ? SIGN.stop() : SIGN.start(); signLabel(); };
 
   /* 오도방정 축하: 관중 환호 + 박수 + 휘파람 + 에어혼 (직접 합성) */
   function party(c, t){
