@@ -172,8 +172,8 @@ button{cursor:pointer;border:0;background:none}
 .ck-pop.out{opacity:0}
 .ck-lead{font-size:15px;font-weight:800;color:var(--pbs);margin:2px 0 12px}
 .ck-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ck-row .field span em{font-style:normal;font-weight:500;color:var(--ink3)}
-#ckTel,#ckNo{text-align:center;letter-spacing:.12em;font-weight:800;font-size:20px}
+.ck-row .field span em,#ckBox .field span em{font-style:normal;font-weight:500;color:var(--ink3)}
+#ckTel{text-align:center;letter-spacing:.12em;font-weight:800;font-size:20px}
 .btn{width:100%;height:56px;border-radius:14px;background:var(--pbs);color:#fff;font-size:17px;font-weight:800;margin-top:6px}
 .btn:active{background:var(--pbs-deep)}
 .err{min-height:22px;color:#D72C2C;font-size:13.5px;font-weight:600;margin-top:10px;text-align:center}
@@ -206,10 +206,10 @@ button{cursor:pointer;border:0;background:none}
     </label>
     <div id="ckBox" hidden>
       <p class="ck-lead">✅ 참석 확인을 하고 바로 입장해요</p>
-      <label class="field"><span>이름</span><input id="ckName" maxlength="20" autocomplete="name" placeholder="예) 최해숙" /></label>
+      <label class="field"><span>이름 <em>(참석 확인용)</em></span><input id="ckName" maxlength="20" autocomplete="name" placeholder="예) 최해숙" /></label>
       <div class="ck-row">
         <label class="field"><span>전화번호 뒤 4자리</span><input id="ckTel" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="1234" /></label>
-        <label class="field"><span>행운권 번호 <em>(있으면)</em></span><input id="ckNo" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="27" /></label>
+        <label class="field"><span>채팅방 닉네임 <em>(추첨 이름)</em></span><input id="ckNick" maxlength="14" autocomplete="nickname" placeholder="비우면 이름으로" /></label>
       </div>
     </div>
     <button class="btn" id="enterBtn">입장하기</button>
@@ -346,20 +346,20 @@ button{cursor:pointer;border:0;background:none}
   function ckMode(on){
     ckOn = on; $('#ckBox').hidden = !on; $('#nickField').hidden = on;
     $('#enterBtn').textContent = on ? '참석 확인하고 입장하기' : '입장하기';
-    $('#gateNote').textContent = on ? '전화번호는 뒤 4자리만 · 명단에 없어도 현장 참석으로 등록돼요' : '이름 대신 닉네임 사용 가능 · 연락처 입력 없음';
-    if (on) { $('#ckName').value = ck.name || ''; $('#ckTel').value = ck.tel || ''; $('#ckNo').value = ck.no || ''; }
+    $('#gateNote').textContent = on ? '행운권 추첨은 채팅방 닉네임으로 해요 · 전화번호는 뒤 4자리만' : '이름 대신 닉네임 사용 가능 · 연락처 입력 없음';
+    if (on) { $('#ckName').value = ck.name || ''; $('#ckTel').value = ck.tel || ''; $('#ckNick').value = ck.nick || ''; }
   }
-  ['ckTel','ckNo'].forEach(id => $('#'+id).addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g,'').slice(0,4); }));
+  ['ckTel'].forEach(id => $('#'+id).addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g,'').slice(0,4); }));
   async function enter(){
     const code = $('#codeIn').value.toUpperCase().replace(/\s+/g,'');
     let n = $('#nickIn').value.trim();
     $('#gateErr').textContent = '';
     if (code.length < 4) return $('#gateErr').textContent = '입장 코드 확인';
     if (ckOn) {
-      const nm = $('#ckName').value.trim(), tel = $('#ckTel').value.trim(), no = $('#ckNo').value.trim();
+      const nm = $('#ckName').value.trim(), tel = $('#ckTel').value.trim();
       if (nm.length < 2) return $('#gateErr').textContent = '이름을 입력해 주세요';
       if (tel.length !== 4) return $('#gateErr').textContent = '전화번호 뒤 4자리를 입력해 주세요';
-      n = no ? `${no} ${nm}` : nm;
+      n = $('#ckNick').value.trim() || nm;
     }
     if (!n) return $('#gateErr').textContent = '닉네임 입력';
     $('#enterBtn').disabled = true;
@@ -369,11 +369,12 @@ button{cursor:pointer;border:0;background:none}
     if (data.checkin_on && !ckOn) { ckMode(true); return $('#gateErr').textContent = '참석 확인을 위해 이름과 전화번호 뒤 4자리를 입력해 주세요'; }
     let ckMsg = '';
     if (ckOn) {
-      const nm = $('#ckName').value.trim(), tel = $('#ckTel').value.trim(), no = $('#ckNo').value.trim();
-      store.set('pbs_live_ck', { name: nm, tel, no });
+      const nm = $('#ckName').value.trim(), tel = $('#ckTel').value.trim();
+      const nkk = $('#ckNick').value.trim();
+      store.set('pbs_live_ck', { name: nm, tel, nick: nkk });
       $('#enterBtn').disabled = true;
       try {
-        const { data: r } = await sb.rpc('live_checkin', { p_code: code, p_name: nm, p_tel4: tel, p_client: clientId });
+        const { data: r } = await sb.rpc('live_checkin2', { p_code: code, p_name: nm, p_tel4: tel, p_client: clientId, p_nick: n });
         const st = r && r.status;
         ckMsg = st === 'ok' ? `✅ ${esc(nm)}님, 참석 확인 완료! 반가워요` : st === 'already' ? `✅ ${esc(nm)}님은 이미 참석 확인됐어요` : st === 'walkin' ? `✅ 현장 참석으로 등록됐어요. 환영합니다!` : '';
       } catch(e) {}
@@ -392,7 +393,7 @@ button{cursor:pointer;border:0;background:none}
   }
   function ckPop(html){ const el = document.createElement('div'); el.className = 'ck-pop'; el.innerHTML = `<div>${html}</div>`; document.body.appendChild(el); setTimeout(() => el.classList.add('out'), 3200); setTimeout(() => el.remove(), 3800); el.onclick = () => el.remove(); }
   $('#enterBtn').onclick = enter;
-  [$('#codeIn'), $('#nickIn'), $('#ckName'), $('#ckTel'), $('#ckNo')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') enter(); }));
+  [$('#codeIn'), $('#nickIn'), $('#ckName'), $('#ckTel'), $('#ckNick')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') enter(); }));
   $('#renameBtn').onclick = () => { $('#renameBox').hidden = false; $('#renameIn').value = nick; $('#renameIn').focus(); };
   $('#renameNo').onclick = () => { $('#renameBox').hidden = true; };
   const doRename = () => { const n = $('#renameIn').value.trim(); if (!n) return; nick = n.slice(0,20); store.set('pbs_live_nick', nick); $('#meNick').textContent = nick; $('#renameBox').hidden = true; if (room) presence(); toast('이름 변경 완료'); };

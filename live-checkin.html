@@ -42,17 +42,29 @@ table{width:100%;border-collapse:separate;border-spacing:0 4px}
 thead th{position:sticky;top:var(--hh,108px);z-index:3;background:#2A2030;color:#fff;font-size:12px;font-weight:700;padding:7px 6px;text-align:center;white-space:nowrap}
 thead th:first-child{border-radius:8px 0 0 8px}thead th:last-child{border-radius:0 8px 8px 0}
 thead th.l{text-align:left}
-tbody td{background:#fff;padding:5px 6px;text-align:center;vertical-align:middle}
+tbody td{background:#fff;padding:3px 6px;text-align:center;vertical-align:middle}
 tbody td:first-child{border-radius:10px 0 0 10px}tbody td:last-child{border-radius:0 10px 10px 0}
 tr.in td{background:#F1FAF4}
 .no{font-weight:800;color:var(--ink3);width:38px}
 .nm{text-align:left!important;min-width:170px}
-.nm b{font-size:16px;font-weight:800}
-.nm .org{display:block;font-size:11px;color:var(--ink3);max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nm b{font-size:16px;font-weight:800;vertical-align:-1px}
+.nm .org{display:inline-block;margin-left:8px;font-size:12.5px;font-weight:600;color:#6B5F70;max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:-2px}
+.nm .org::before{content:"· ";color:#C8B9C3}
+.nm{white-space:nowrap}
+.t-cp.off,.nm .org.off{opacity:.45}tr:hover .t-cp.off,tr:hover .nm .org.off{opacity:1}
+.nm .memo{display:inline-block;margin-left:8px;font-size:12.5px;font-weight:700;color:#92400E;background:#FEF3C7;border-radius:6px;padding:1px 7px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:-2px;cursor:pointer}
+.nm .memo.off{background:none;color:#B9ABB5;border:1px dashed #E7DDE4;font-weight:600;font-size:11px;opacity:.45}tr:hover .nm .memo.off{opacity:1}
+.nm .org{cursor:pointer;border-radius:5px;padding:0 3px}.nm .org:hover{background:#F4EEF2}
+.nm .org.off{font-weight:600;color:#B9ABB5;border:1px dashed #E7DDE4;font-size:11px}.nm .org.off::before{content:""}
 .tag{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:1px 6px;margin-left:5px;vertical-align:2px}
-.t-cp{background:#FDE8F3;color:#C0006A}.t-wk{background:#FFF1D6;color:#B45309}
+.t-vip{background:#FDF3D6;color:#8A6508;border:1px solid #F1D98A}
+.t-cp{background:#FDE8F3;color:#C0006A;cursor:pointer}.t-cp.off{background:none;color:#D3C7CF;border:1px dashed #E7DDE4;font-weight:600}.t-wk{background:#FFF1D6;color:#B45309}
 .t-vp{background:#F1E6FB;color:var(--cf)}.t-vp.off{background:none;color:#D3C7CF;border:1px dashed #E7DDE4;font-weight:600}
-.tel{font-weight:700;color:var(--ink2);width:48px;letter-spacing:.04em}
+.tel{width:178px}
+.phw{display:inline-flex;align-items:center;gap:3px}
+.ph{font-weight:700;color:var(--ink2);font-size:13px;letter-spacing:.02em;padding:2px 4px;border-radius:6px;white-space:nowrap}.ph:hover{background:#F4EEF2}.ph.bad{color:#B91C1C;background:#FEE2E2}.ph.off{color:#B9ABB5;border:1px dashed #E7DDE4;font-size:12px}
+.pa{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#F1E8EE;text-decoration:none;font-size:14px}.pa:hover{background:#E6007E22}
+.nk{display:inline-block;margin-left:8px;font-size:12px;font-weight:800;color:#0E7490;background:#ECFEFF;border-radius:6px;padding:1px 7px;vertical-align:-1px}
 .seg{display:inline-flex;border-radius:9px;overflow:hidden;border:1.5px solid #E7DEE5}
 .seg button{height:34px;padding:0 8px;font-size:12px;font-weight:800;color:#A99BA6;background:#fff;white-space:nowrap}
 .seg button+button{border-left:1.5px solid #E7DEE5}
@@ -123,12 +135,12 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
   </header>
   <main>
     <table>
-      <thead><tr><th>No</th><th class="l">이름</th><th>전화</th><th>참가 구분</th><th>출석</th><th>참가비 받음</th><th>책 드림</th><th>현장 책 구매</th><th></th></tr></thead>
+      <thead><tr><th>No</th><th class="l">이름</th><th>연락처 (📞 전화 · 💬 문자)</th><th>참가 구분</th><th>출석</th><th>참가비 받음</th><th>책 드림</th><th>현장 책 구매</th><th></th></tr></thead>
       <tbody id="list"></tbody>
       <tbody>
         <tr class="add">
           <td class="no" id="nextNo">+</td>
-          <td class="nm"><input id="aName" maxlength="20" placeholder="➕ 현장 참가자 이름" /></td>
+          <td class="nm" style="display:flex;gap:6px"><input id="aName" maxlength="20" placeholder="➕ 현장 참가자 이름" /><input id="aComp" maxlength="20" placeholder="초대자 (있으면)" style="max-width:130px" /></td>
           <td><input id="aTel" maxlength="4" inputmode="numeric" placeholder="뒤4" style="width:64px;text-align:center" /></td>
           <td><div class="seg" id="aTier"><button data-t="30000">3만원·책</button><button data-t="5000">5천원</button><button data-t="free">초대</button><button data-t="vip">내빈</button></div></td>
           <td colspan="4" style="text-align:left;color:#92400E;font-size:12px;font-weight:700">등록하면 바로 출석 체크 · 참가비·책은 등록 후 그 줄에서 체크</td>
@@ -175,7 +187,7 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
     await load(); clearInterval(timer); timer = setInterval(() => { if (!busy && !document.hidden && !isTyping()) load(); }, 4000);
     segSet('aTier', aTier);
   }
-  const isTyping = () => ['aName','aTel'].includes(document.activeElement && document.activeElement.id) && ($('#aName').value || $('#aTel').value);
+  const isTyping = () => ['aName','aTel','aComp'].includes(document.activeElement && document.activeElement.id) && ($('#aName').value || $('#aTel').value || $('#aComp').value);
   async function login(p){
     $('#loginErr').textContent = '';
     const { data, error } = await sb.rpc('live_host_rooms', { p_pw: p });
@@ -213,12 +225,20 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
     $('#sFree').textContent = T('free').length + '명'; $('#sFreeSub').textContent = `초대 · 출석 ${IN('free')}`;
     $('#sVip').textContent = T('vip').length + '명'; $('#sVipSub').textContent = `내빈 · 출석 ${IN('vip')}`;
     $('#sMoney').textContent = won(P('30000') * 30000 + P('5000') * 5000);
-    const given = list.filter(a => a.tier === '30000' && a.book_given_at).length;
+    const given = list.filter(a => a.book && a.book_given_at).length;
     const sold = list.reduce((n, a) => n + (a.sale_qty || 0), 0);
     const sc = p => list.filter(a => a.sale_pay === p).reduce((n, a) => n + a.sale_qty, 0);
     $('#sBooks').textContent = (given + sold) + '권';
-    $('#sBooksSub').textContent = `책 나감 · 3만원 ${given} · 현장 판매 ${sold} (현금 ${sc('현금')} · 카드 ${sc('카드')})`;
+    $('#sBooksSub').textContent = `책 나감 · 드림 ${given}/${list.filter(a => a.book).length} · 현장 판매 ${sold} (현금 ${sc('현금')} · 카드 ${sc('카드')})`;
     $('#nextNo').textContent = (list.reduce((m, a) => Math.max(m, a.seq || 0), 63) + 1);
+  }
+  const fmtTel = d => d.length === 11 ? `${d.slice(0,3)}-${d.slice(3,7)}-${d.slice(7)}` : d.length === 10 ? `${d.slice(0,3)}-${d.slice(3,6)}-${d.slice(6)}` : d;
+  function telCell(a){
+    const d = String(a.phone || '').replace(/\D/g, '');
+    if (!d) return `<button class="ph off" data-id="${a.id}" data-f="phone">${a.tel4 ? '…' + esc(a.tel4) : '+번호'}</button>`;
+    const ok = d.length === 11 && d.startsWith('010');
+    return `<div class="phw"><button class="ph${ok ? '' : ' bad'}" data-id="${a.id}" data-f="phone" title="${ok ? '번호 고치기' : '번호가 이상해요 — 눌러서 고치기'}">${ok ? '' : '⚠ '}${fmtTel(d)}</button>` +
+      (ok ? `<a class="pa" href="tel:${d}" title="전화">📞</a><a class="pa" href="sms:${d}" title="문자">💬</a>` : '') + '</div>';
   }
   function tierSeg(a){
     return `<div class="seg${a.tier ? '' : ' none'}" title="${a.tier ? '' : '구분 미정 — 확인 후 눌러 주세요'}">` +
@@ -232,19 +252,19 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
   function render(){
     stats();
     const q = key($('#q').value);
-    let L = list.filter(a => !q || key(a.name).includes(q) || (a.tel4 || '').includes(q) || String(a.seq) === q);
+    let L = list.filter(a => !q || key(a.name).includes(q) || (a.tel4 || '').includes(q) || String(a.phone || '').includes(q) || key(a.nick).includes(q) || String(a.seq) === q || key(a.org).includes(q) || key(a.memo).includes(q) || key(a.companion).includes(q));
     const F = { no: a => !a.checked_at, in: a => a.checked_at, '30000': a => a.tier === '30000', '5000': a => a.tier === '5000', free: a => a.tier === 'free', vip: a => a.tier === 'vip', none: a => !a.tier, unpaid: a => FEE[a.tier] && !a.fee_paid_at, wk: a => a.walkin };
     if (F[flt]) L = L.filter(F[flt]);
     $('#list').innerHTML = L.length ? L.map(a => {
       const fee = FEE[a.tier];
       return `<tr class="${a.checked_at ? 'in' : ''}">
         <td class="no">${a.seq || ''}</td>
-        <td class="nm"><b>${esc(a.name)}</b>${a.companion ? `<span class="tag t-cp">${esc(a.companion)} 동반</span>` : ''}${a.walkin ? '<span class="tag t-wk">현장</span>' : ''}${a.org ? `<span class="org">${esc(a.org)}</span>` : ''}</td>
-        <td class="tel">${esc(a.tel4 || '')}</td>
+        <td class="nm"><b>${esc(a.name)}</b>${a.tier === 'vip' ? '<span class="tag t-vip">🎖 내빈</span>' : ''}<button class="tag t-cp${a.companion ? '' : ' off'}" data-id="${a.id}" data-f="comp" title="초대한 분 이름 적기/고치기">${a.companion ? `${esc(a.companion)} 동반 ✎` : '+초대자'}</button>${a.walkin ? '<span class="tag t-wk">현장</span>' : ''}${a.nick ? `<span class="nk" title="채팅방 닉네임">💬 ${esc(a.nick)}</span>` : ''}<button class="org${a.org ? '' : ' off'}" data-id="${a.id}" data-f="org" title="소속 적기/고치기">${a.org ? esc(a.org) : '+소속'}</button><button class="memo${a.memo ? '' : ' off'}" data-id="${a.id}" data-f="memo" title="비고 적기/고치기">${a.memo ? '📝 ' + esc(a.memo) : '+비고'}</button></td>
+        <td class="tel">${telCell(a)}</td>
         <td>${tierSeg(a)}</td>
         <td><button class="ck c-in${a.checked_at ? ' on' : ''}" data-id="${a.id}" data-f="check">${a.checked_at ? `출석✓<small>${hm(a.checked_at)}${a.checked_by === 'QR' ? ' QR' : ''}</small>` : '출석'}</button></td>
         <td>${fee ? `<button class="ck c-paid${a.fee_paid_at ? ' on' : ''}" data-id="${a.id}" data-f="paid">${a.fee_paid_at ? `받음✓<small>${won(fee)}</small>` : `${fee / 10000 >= 1 ? '3만' : '5천'} 받기`}</button>` : '<span class="na">—</span>'}</td>
-        <td>${a.tier === '30000' ? `<button class="ck c-book${a.book_given_at ? ' on' : ''}" data-id="${a.id}" data-f="book">${a.book_given_at ? '📕드림✓' : '📕 책'}</button>` : '<span class="na">—</span>'}</td>
+        <td>${a.book ? `<button class="ck c-book${a.book_given_at ? ' on' : ''}" data-id="${a.id}" data-f="book">${a.book_given_at ? '📕드림✓' : '📕 책'}</button>` : '<span class="na">—</span>'}</td>
         <td>${saleCell(a)}</td>
         <td>${a.walkin ? `<button class="del" data-id="${a.id}" data-f="del" title="현장 등록 지우기">✕</button>` : ''}</td>
       </tr>`;
@@ -263,10 +283,34 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
     const b = e.target.closest('[data-id]'); if (!b) return;
     const a = list.find(x => x.id === +b.dataset.id); if (!a) return;
     const f = b.dataset.f, nm = a.name;
+    if (f === 'comp') {
+      const v = prompt(`${nm}님을 초대한 분 이름 (지우려면 비워 두고 확인)`, a.companion || '');
+      if (v === null) return;
+      a.companion = v.trim() || null; render();
+      return rpc('live_host_att_comp', { p_id: a.id, p_comp: v.trim() }, v.trim() ? `${nm}님 · ${v.trim()} 동반` : '초대자 지움');
+    }
+    if (f === 'org') {
+      const v = prompt(`${nm}님 소속 (지우려면 비워 두고 확인)`, a.org || '');
+      if (v === null) return;
+      a.org = v.trim() || null; render();
+      return rpc('live_host_att_org', { p_id: a.id, p_org: v.trim() }, v.trim() ? `${nm}님 소속 저장` : '소속 지움');
+    }
+    if (f === 'phone') {
+      const v = prompt(`${nm}님 전화번호 (숫자만, 지우려면 비워 두고 확인)`, a.phone || '');
+      if (v === null) return;
+      a.phone = v.replace(/\D/g, '') || null; render();
+      return rpc('live_host_att_phone', { p_id: a.id, p_phone: v }, '번호 저장');
+    }
+    if (f === 'memo') {
+      const v = prompt(`${nm}님 비고 (지우려면 비워 두고 확인)`, a.memo || '');
+      if (v === null) return;
+      a.memo = v.trim() || null; render();
+      return rpc('live_host_att_memo', { p_id: a.id, p_memo: v.trim() }, v.trim() ? `${nm}님 비고 저장` : '비고 지움');
+    }
     if (f === 'tier') {
       const t = b.dataset.t; if (a.tier === t) return;
       if (a.tier && (a.fee_paid_at || a.book_given_at) && !confirm(`${nm}님 구분을 바꾸면 참가비·책 체크가 바뀔 수 있어요. 바꿀까요?`)) return;
-      a.tier = t; a.book = t === '30000'; if (!FEE[t]) a.fee_paid_at = null; if (t !== '30000') a.book_given_at = null; render();
+      a.tier = t; a.book = t === '30000'; if (!FEE[t]) a.fee_paid_at = null; if (!a.book) a.book_given_at = null; render();
       return rpc('live_host_att_tier', { p_id: a.id, p_tier: t });
     }
     if (f === 'sq') { const cur = pend[a.id] != null ? pend[a.id] : (a.sale_qty || 0); const n = Math.max(0, Math.min(50, cur + +b.dataset.d));
@@ -276,7 +320,7 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
       delete pend[a.id]; a.sale_qty = n; a.sale_pay = m; render();
       return rpc('live_host_att_sale', { p_id: a.id, p_qty: n, p_pay: m }, `💳 ${nm}님 ${n}권 · ${m}`); }
     let on;
-    if (f === 'check' && !a.checked_at && a.tier === '30000' && !a.book_given_at) return askBook(a);
+    if (f === 'check' && !a.checked_at && a.book && !a.book_given_at) return askBook(a);
     if (f === 'check') { on = !a.checked_at; if (!on && !confirm(`${nm}님 출석을 취소할까요?`)) return; a.checked_at = on ? new Date().toISOString() : null; a.checked_by = on ? '직접' : null; }
     else if (f === 'paid') { on = !a.fee_paid_at; if (!on && !confirm(`${nm}님 참가비 받음을 취소할까요?`)) return; a.fee_paid_at = on ? new Date().toISOString() : null; }
     else if (f === 'book') { on = !a.book_given_at; if (!on && !confirm(`${nm}님 책 드림을 취소할까요?`)) return; a.book_given_at = on ? new Date().toISOString() : null; }
@@ -312,12 +356,15 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
   async function addWalkin(){
     const n = $('#aName').value.trim(); if (!n) { $('#aName').focus(); return toast('이름을 넣어 주세요'); }
     if (list.some(a => key(a.name) === key(n)) && !confirm(`'${n}'님이 이미 명단에 있어요. 그래도 새로 등록할까요?`)) return;
-    busy++; const { error } = await sb.rpc('live_host_att_add3', { p_pw: pw, p_room: room.id, p_name: n, p_tel4: $('#aTel').value.trim(), p_tier: aTier }); busy--;
+    busy++; const { data: nid, error } = await sb.rpc('live_host_att_add3', { p_pw: pw, p_room: room.id, p_name: n, p_tel4: $('#aTel').value.trim(), p_tier: aTier });
+    const comp = $('#aComp').value.trim();
+    if (!error && comp && nid) await sb.rpc('live_host_att_comp', { p_pw: pw, p_room: room.id, p_id: nid, p_comp: comp });
+    busy--;
     if (error) return toast('등록 실패 — 다시 눌러 주세요');
-    $('#aName').value = ''; $('#aTel').value = ''; toast(`✅ ${n}님 현장 등록 + 출석`); load();
+    $('#aName').value = ''; $('#aTel').value = ''; $('#aComp').value = ''; toast(`✅ ${n}님 현장 등록 + 출석`); load();
   }
   $('#aGo').onclick = addWalkin;
-  ['aName','aTel'].forEach(id => $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) addWalkin(); }));
+  ['aName','aTel','aComp'].forEach(id => $('#' + id).addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) addWalkin(); }));
 
   /* 환영 음성 (QR로 새로 들어온 분) */
   let voiceOn = false, seen = null, queue = [], playing = false, koVoice = null;
@@ -328,7 +375,7 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
   async function nextWelcome(){
     if (playing || !queue.length) return; playing = true;
     const a = queue.shift(); const nm = callName(a.name);
-    $('#wName').textContent = nm + '님'; $('#wBook').hidden = a.tier !== '30000'; $('#welcome').classList.add('show');
+    $('#wName').textContent = nm + '님'; $('#wBook').hidden = !a.book; $('#welcome').classList.add('show');
     await Promise.all([voiceOn ? say(`${nm}님, 환영합니다!`) : null, new Promise(r => setTimeout(r, 3000))]);
     $('#welcome').classList.remove('show'); await new Promise(r => setTimeout(r, 450));
     playing = false; nextWelcome();
