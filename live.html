@@ -365,7 +365,7 @@ button{cursor:pointer;border:0;background:none}
     }
     if (!n) return $('#gateErr').textContent = '닉네임 입력';
     $('#enterBtn').disabled = true;
-    const { data, error } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text,group_call,checkin_on').eq('code', code).maybeSingle();
+    const { data, error } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text,group_call,checkin_on,chat_since').eq('code', code).maybeSingle();
     $('#enterBtn').disabled = false;
     if (error || !data) return $('#gateErr').textContent = '강의방을 찾을 수 없음 · 코드 확인';
     if (data.checkin_on && !ckOn) { ckMode(true); return $('#gateErr').textContent = '참석 확인을 위해 이름과 전화번호 뒤 4자리를 입력해 주세요'; }
@@ -470,7 +470,7 @@ button{cursor:pointer;border:0;background:none}
 
   async function loadAll(){
     const [m, a] = await Promise.all([
-      sb.from('live_messages').select('*').eq('room_id', room.id).order('created_at').limit(1000),
+      (room.chat_since ? sb.from('live_messages').select('*').eq('room_id', room.id).gte('created_at', room.chat_since) : sb.from('live_messages').select('*').eq('room_id', room.id)).order('created_at').limit(1000),
       sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at', {ascending:false})
     ]);
     msgs = new Map((m.data || []).map(x => [x.id, x]));
@@ -493,12 +493,12 @@ button{cursor:pointer;border:0;background:none}
       .on('postgres_changes', {event:'*', schema:'public', table:'live_materials'}, () => reloadMats()).subscribe());
     channels.push(sb.channel('lr-' + room.id)
       .on('postgres_changes', {event:'UPDATE', schema:'public', table:'live_rooms'}, p => {
-        if (p.new && p.new.id === room.id) { Object.assign(room, p.new); applyRoom(); renderAll(); }
+        if (p.new && p.new.id === room.id) { const cs = room.chat_since; Object.assign(room, p.new); applyRoom(); if ('chat_since' in p.new && p.new.chat_since !== cs) loadAll(); else renderAll(); }
       }).subscribe());
   }
   async function refreshRoom(){
-    const { data } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text,group_call').eq('id', room.id).maybeSingle();
-    if (data) { Object.assign(room, data); applyRoom(); }
+    const { data } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text,group_call,chat_since').eq('id', room.id).maybeSingle();
+    if (data) { const cs = room.chat_since; Object.assign(room, data); applyRoom(); if (data.chat_since !== cs) loadAll(); }
   }
   async function reloadMats(){
     const { data } = await sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at', {ascending:false});

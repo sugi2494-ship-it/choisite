@@ -142,6 +142,14 @@ button{cursor:pointer;border:0;background:none}
 .draw-full .close{position:absolute}
 .sound-sw{font-size:12.5px;color:#BDB3C6;text-decoration:underline;text-underline-offset:3px}
 .draw-set{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.08);padding:12px 14px;border-radius:14px}
+.draw-set .cnt{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:#fff}
+.draw-set .cnt button{width:40px;height:40px;border-radius:10px;background:#fff;color:var(--ink);font-size:22px;font-weight:900;border:0;cursor:pointer}
+.draw-set .cnt b{min-width:34px;text-align:center;font-size:24px}
+.win-box{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;max-width:900px;margin:6px auto 0;font-size:13px;color:#EDE6F2}
+.win-box .wc{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border-radius:20px;padding:4px 6px 4px 12px;font-weight:700}
+.win-box .wc button{width:22px;height:22px;border-radius:50%;border:0;background:#fff3;color:#fff;cursor:pointer;font-weight:900}
+.win-box .wc button:hover{background:#E6007E}
+.win-box .rs{border:1px solid #fff6;background:none;color:#fff;border-radius:20px;padding:5px 12px;font-weight:800;cursor:pointer}
 .draw-set label{font-size:14px;font-weight:700;color:#EDE6F2;display:flex;align-items:center;gap:6px}
 .draw-set input{height:40px;width:74px;border-radius:9px;border:0;padding:0 10px;font-size:16px;font-weight:700;color:var(--ink)}
 .draw-set .wide input{width:200px;font-weight:500}
@@ -369,6 +377,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     <button class="tb" id="grpBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff">🎨 엔진 그룹</button>
     <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B">🎁 행운권 추첨</button>
     <a class="tb" href="/live-checkin.html" target="_blank" rel="noopener" style="background:#12A15A;color:#fff;text-decoration:none;display:inline-flex;align-items:center">📋 출석 체크</a>
+    <button class="tb" id="chatReset" style="background:#3A2F40;color:#fff">🧹 채팅 비우기</button>
     <button class="tb pink" id="qrBtn">QR 크게</button>
     <button class="tb" id="sideBtn">소통 칸 숨기기</button>
     <button class="tb" id="fsBtn">전체화면</button>
@@ -419,10 +428,12 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
         <div class="draw-set" id="drawSet">
           <span class="pool" id="poolInfo">참가자 0명</span>
           <label><input type="checkbox" id="poolOnline"> 지금 접속 중만</label>
+          <span class="cnt">이번에 <button type="button" id="cMinus">−</button><b id="cNum">1</b><button type="button" id="cPlus">＋</button>명 뽑기</span>
           <input id="dCnt" type="hidden" value="1">
           <button class="btn" id="drawGo">추첨하기 (리모컨 ▶)</button>
         </div>
         <p class="draw-note" id="drawNote"></p>
+        <div class="win-box" id="winBox" hidden></div>
         <div class="draw-foot"><button class="sound-sw" id="soundSw">🔊 소리 켜짐</button><button id="drawClear">청중 화면에서 내리기</button><button id="drawReset">당첨 기록 초기화</button></div>
       </section>
     </div>
@@ -622,11 +633,17 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   }
   $('#openSw').onclick = () => { if (room.is_open && !confirm('강의를 종료할까요? 청중 입력창이 닫힘')) return; hostRoom('is_open', !room.is_open); };
   $('#chatSw').onclick = () => hostRoom('chat_on', !room.chat_on);
+  $('#chatReset').onclick = async () => {
+    if (!confirm('채팅창을 비울까요?\n지금까지의 채팅이 진행 화면과 모든 참가자 휴대폰에서 사라져요.\n(기록은 지워지지 않고 숨겨져요)')) return;
+    const { data, error } = await sb.rpc('live_host_chat_reset', { p_pw: pw, p_room: room.id });
+    if (error) return toast('채팅 비우기 실패 — 다시 눌러 주세요');
+    room.chat_since = data; room.spotlight_id = null; applyRoom(); await loadAll(); toast('🧹 채팅창을 비웠어요');
+  };
 
   /* ── 데이터 ── */
   async function loadAll(){
     const [m, a] = await Promise.all([
-      sb.from('live_messages').select('*').eq('room_id', room.id).order('created_at').limit(2000),
+      (room.chat_since ? sb.from('live_messages').select('*').eq('room_id', room.id).gte('created_at', room.chat_since) : sb.from('live_messages').select('*').eq('room_id', room.id)).order('created_at').limit(2000),
       sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at', {ascending:false})
     ]);
     msgs = new Map((m.data||[]).map(x => [x.id, x])); mats = a.data || [];
@@ -641,7 +658,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     }).subscribe());
     channels.push(sb.channel('ha-'+room.id).on('postgres_changes',{event:'*',schema:'public',table:'live_materials'}, () => reloadMats()).subscribe());
     channels.push(sb.channel('hr-'+room.id).on('postgres_changes',{event:'UPDATE',schema:'public',table:'live_rooms'}, p => {
-      if (room && p.new.id === room.id) { Object.assign(room, p.new); applyRoom(); renderAll(); }
+      if (room && p.new.id === room.id) { const cs = room.chat_since; Object.assign(room, p.new); applyRoom(); if ('chat_since' in p.new && p.new.chat_since !== cs) loadAll(); else renderAll(); }
     }).subscribe());
   }
   async function reloadMats(){ const { data } = await sb.from('live_materials').select('*').eq('room_id', room.id).order('created_at',{ascending:false}); mats = data||[]; renderM(); counts(); }
@@ -1188,10 +1205,31 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   function showGift(){
     const g = giftSel;
     $('#drawGift').textContent = g ? '🎁 ' + g.name : '선물을 골라 주세요';
-    $('#giftSponsor').textContent = g && g.sponsor ? `협찬: ${g.sponsor}님 · 남은 수량 ${giftLeft(g)}개` : (g ? `남은 수량 ${giftLeft(g)}개` : '');
+    $('#giftSponsor').textContent = g && g.sponsor ? `협찬: ${g.sponsor}${/님\s*$/.test(g.sponsor) ? '' : '님'} · 남은 수량 ${giftLeft(g)}개` : (g ? `남은 수량 ${giftLeft(g)}개` : '');
     if (g && g.image_url) { $('#giftImg').src = g.image_url; $('#giftImg').hidden = false; } else $('#giftImg').hidden = true;
-    if (g) $('#dCnt').value = giftLeft(g);
+    setCnt(g ? Math.min(giftLeft(g), 10) : 1);
+    renderWinBox();
   }
+  function setCnt(v){ const g = giftSel, mx = g ? Math.max(1, giftLeft(g)) : 1; const n = Math.max(1, Math.min(mx, v)); $('#dCnt').value = n; $('#cNum').textContent = n; }
+  $('#cMinus').onclick = () => setCnt(+$('#dCnt').value - 1);
+  $('#cPlus').onclick = () => setCnt(+$('#dCnt').value + 1);
+  function renderWinBox(){
+    const g = giftSel, w = g ? (g.winners || []) : [];
+    $('#winBox').hidden = !w.length;
+    $('#winBox').innerHTML = w.length ? `<span>당첨자 (안 계시면 ✕ → 다시 뽑기):</span>` + w.map((x, i) => `<span class="wc">${esc(x.nick)}<button data-wdel="${i}" title="당첨 취소">✕</button></span>`).join('') + `<button class="rs" id="wReset">↺ 이 선물 전체 다시 추첨</button>` : '';
+  }
+  async function setWinners(list, msg){
+    const g = giftSel; if (!g) return;
+    const { error } = await sb.rpc('live_host_gift_setwin', { p_pw: pw, p_room: room.id, p_id: g.id, p_winners: list });
+    if (error) return toast('저장 실패 — 다시 눌러 주세요');
+    toast(msg); await loadGifts(); updatePool();
+  }
+  $('#winBox').addEventListener('click', e => {
+    const g = giftSel; if (!g) return;
+    const d = e.target.closest('[data-wdel]');
+    if (d) { const w = [...(g.winners || [])]; const x = w[+d.dataset.wdel]; if (!x || !confirm(`'${x.nick}'님 당첨을 취소할까요?\n(다시 추첨할 수 있게 1자리가 비어요)`)) return; w.splice(+d.dataset.wdel, 1); return setWinners(w, `${x.nick}님 당첨 취소 — 다시 뽑을 수 있어요`); }
+    if (e.target.closest('#wReset')) { if (!confirm(`'${g.name}' 당첨자를 모두 지우고 처음부터 다시 추첨할까요?`)) return; return setWinners([], '전체 다시 추첨할 수 있어요'); }
+  });
   $('#giftList').addEventListener('click', async e => {
     const del = e.target.closest('[data-gdel]');
     if (del) { e.stopPropagation(); const g = gifts.find(x => x.id === +del.dataset.gdel); if (!g || !confirm(`'${g.name}' 선물을 목록에서 지울까요?`)) return;
@@ -1199,7 +1237,9 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
       if (error) return toast('삭제 실패 — 다시 눌러 주세요');
       if (giftSel && giftSel.id === g.id) giftSel = null; toast('선물 삭제 완료'); return loadGifts(); }
     const b = e.target.closest('[data-gift]'); if (!b) return;
+    const prev = giftSel && giftSel.id;
     giftSel = gifts.find(g => g.id === +b.dataset.gift) || null; renderGifts(); showGift(); updatePool();
+    if (giftSel && giftSel.id !== prev) { $('#drawNums').innerHTML = ''; $('#drawNums').className = 'draw-nums'; if (room && room.draw_text) hostRoom('draw', ''); }
   });
   let gPhotoUrl = '';
   $('#gPhotoBtn').onclick = () => $('#gPhoto').click();
@@ -1213,7 +1253,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   };
 
   /* 추첨 대상: 입장한 참가자 닉네임 */
-  function poolList(){
+  function poolList(ignoreWon){
     // 닉네임 기준: 입장 기록 + 지금 접속 + 채팅 쓴 사람 (같은 닉네임은 한 명)
     const byNick = new Map();
     const add = (nick, cid, on) => { const k = String(nick||'').trim(); if (!k) return; const p = byNick.get(k) || { nick: k, cid: cid || 'n:' + k, on: false }; if (cid && p.cid.startsWith('n:')) p.cid = cid; p.on = p.on || !!on; byNick.set(k, p); };
@@ -1226,7 +1266,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     if ($('#poolOnline').checked) list = list.filter(p => p.on);
     const wonC = new Set(), wonN = new Set();
     gifts.forEach(g => (g.winners || []).forEach(w => { wonC.add(w.cid); wonN.add(String(w.nick).trim()); }));
-    return { all: list.length, list: list.filter(p => !wonC.has(p.cid) && !wonN.has(p.nick)) };
+    return { all: list.length, list: ignoreWon ? list : list.filter(p => !wonC.has(p.cid) && !wonN.has(p.nick)) };
   }
   function updatePool(){ const p = poolList(); $('#poolInfo').textContent = `추첨 대상 ${p.list.length}명` + (p.all !== p.list.length ? ` (당첨자 ${p.all - p.list.length}명 제외)` : ''); }
   $('#poolOnline').onchange = updatePool;
@@ -1242,9 +1282,14 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     await loadJoins();
     const left = giftLeft(giftSel);
     if (left < 1) return toast('이 선물은 추첨 완료');
-    const n = Math.min(left, 10);
-    await loadAll(); const pool = poolList().list;
-    if (pool.length < n) return toast(`추첨 대상이 ${pool.length}명뿐`);
+    await loadAll(); let pool = poolList().list;
+    if (!pool.length) {
+      const allP = poolList(true).list;
+      if (!allP.length) return toast('추첨할 사람이 없어요 — 입장한 사람이 있어야 해요');
+      if (!confirm('입장한 분들이 모두 한 번씩 당첨됐어요.\n이미 당첨된 분까지 다시 넣고 뽑을까요?')) return;
+      pool = allP;
+    }
+    const n = Math.min(left, Math.max(1, +$('#dCnt').value || 1), pool.length);
     const pick = [...pool]; const picks = [];
     for (let k = 0; k < n; k++) picks.push(pick.splice(rnd(pick.length), 1)[0]);
     const colors = [...PAL].sort(() => Math.random()-.5);
