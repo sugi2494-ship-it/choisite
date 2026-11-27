@@ -161,7 +161,7 @@ button{cursor:pointer;border:0;background:none}
 .gift{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:9px;border-radius:12px;background:rgba(255,255,255,.07);border:2px solid transparent;margin-bottom:8px;color:#fff;position:relative}
 .gift:hover{background:rgba(255,255,255,.13)}
 .gift.on{border-color:#FFC94D;background:rgba(255,201,77,.15)}
-.gift.done{opacity:.5}
+.gift.done{opacity:.6}
 .gift img,.gift .noimg{width:52px;height:52px;border-radius:9px;object-fit:cover;flex:none;background:#fff}
 .gift .noimg{display:grid;place-items:center;font-size:24px;background:rgba(255,255,255,.15)}
 .gift .gt{flex:1;min-width:0}
@@ -169,8 +169,8 @@ button{cursor:pointer;border:0;background:none}
 .gift .gt small{display:block;font-size:11.5px;color:#D9CCE0;margin-top:2px}
 .gift .gt em{display:block;font-style:normal;font-size:11.5px;color:#FFC94D;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gift .left{flex:none;font-size:12px;font-weight:900;background:#FFC94D;color:#16121B;border-radius:8px;padding:3px 7px}
-.gift .gx{position:absolute;top:4px;right:6px;font-size:11px;color:#BDB3C6;visibility:hidden}
-.gift:hover .gx{visibility:visible}
+.gift .gx{position:absolute;top:-6px;right:-6px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:900;color:#fff;background:#E6007E;box-shadow:0 2px 6px rgba(0,0,0,.35);cursor:pointer;z-index:2}
+.gift .gx:hover{transform:scale(1.12)}
 .gp-add{padding:10px 12px 14px;border-top:1px solid rgba(255,255,255,.12);display:grid;gap:7px}
 .gp-add summary{cursor:pointer;font-weight:800;font-size:14px;color:#FFC94D}
 .gp-add input:not([type=file]){width:100%;height:36px;border-radius:8px;border:0;padding:0 10px;font-size:14px;color:var(--ink);margin-top:6px}
@@ -183,7 +183,7 @@ button{cursor:pointer;border:0;background:none}
 .draw-stage .eyebrow{display:none}
 .draw-set input[type=checkbox]{width:18px;height:18px;padding:0}
 .gift-now{display:flex;align-items:center;gap:16px;margin:4px 0 1.5vh}
-.gift-now img{width:clamp(70px,8vh,110px);height:clamp(70px,8vh,110px);border-radius:14px;object-fit:cover;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.gift-now img{width:clamp(90px,14vh,170px);height:clamp(90px,14vh,170px);border-radius:14px;object-fit:cover;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 .gift-now h2{margin:0!important;text-align:left}
 .gift-now p{text-align:left;color:#F3D6E8;font-size:clamp(13px,1.2vw,18px);font-weight:600;margin-top:4px}
 .ball.name{font-size:clamp(24px,2.8vw,44px);padding:0 14px;text-align:center;word-break:keep-all;line-height:1.15}
@@ -1193,7 +1193,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
         ${g.image_url ? `<img src="${esc(g.image_url)}" alt="">` : '<span class="noimg">🎁</span>'}
         <span class="gt"><b>${esc(g.name)}</b>${g.sponsor ? `<small>협찬 ${esc(g.sponsor)}</small>` : ''}${w ? `<em>당첨 ${esc(w)}</em>` : ''}</span>
         <span class="left">${left===0 ? '완료' : left + '/' + g.qty}</span>
-        <span class="gx" data-gdel="${g.id}">삭제</span></button>`; }).join('')
+        <span class="gx" data-gdel="${g.id}" title="삭제">✕</span></button>`; }).join('')
       : '<p style="color:#BDB3C6;font-size:13px;padding:8px">아래 "+ 선물 추가"로 등록</p>';
   }
   function showGift(){
@@ -1206,7 +1206,9 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   $('#giftList').addEventListener('click', async e => {
     const del = e.target.closest('[data-gdel]');
     if (del) { e.stopPropagation(); const g = gifts.find(x => x.id === +del.dataset.gdel); if (!g || !confirm(`'${g.name}' 선물을 목록에서 지울까요?`)) return;
-      await sb.rpc('live_host_gift_remove', { p_pw: pw, p_room: room.id, p_id: g.id }); if (giftSel && giftSel.id === g.id) giftSel = null; return loadGifts(); }
+      const { error } = await sb.rpc('live_host_gift_remove', { p_pw: pw, p_room: room.id, p_id: g.id });
+      if (error) return toast('삭제 실패 — 다시 눌러 주세요');
+      if (giftSel && giftSel.id === g.id) giftSel = null; toast('선물 삭제 완료'); return loadGifts(); }
     const b = e.target.closest('[data-gift]'); if (!b) return;
     giftSel = gifts.find(g => g.id === +b.dataset.gift) || null; renderGifts(); showGift(); updatePool();
   });
@@ -1280,7 +1282,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     $('#drawGo').disabled = false; $('#drawSet').style.visibility = '';
     $('#drawGift').textContent = `🎁 ${giftSel.name} 당첨`;
     await sb.rpc('live_host_gift_win', { p_pw: pw, p_room: room.id, p_id: giftSel.id, p_winners: picks.map(p => ({ cid: p.cid, nick: p.nick })), p_reset: false });
-    await hostRoom('draw', `${giftSel.name} · ` + picks.map(p => p.nick).join(' · '));
+    await hostRoom('draw', `${giftSel.name} · ` + picks.map(p => p.nick).join(' · ') + (giftSel.image_url ? ` ⟦img:${giftSel.image_url}⟧` : ''));
     await loadGifts(); $('#drawGift').textContent = `🎁 ${giftSel ? giftSel.name : ''} 당첨`; updatePool();
   };
   $('#drawClear').onclick = () => hostRoom('draw', '').then(ok => ok && toast('청중 화면에서 내림'));

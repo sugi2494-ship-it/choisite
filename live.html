@@ -76,6 +76,7 @@ button{cursor:pointer;border:0;background:none}
 .wp-card{width:100%;max-width:420px;background:#fff;border-radius:22px;padding:26px 22px;text-align:center;animation:popIn .5s cubic-bezier(.2,1.6,.4,1)}
 @keyframes popIn{from{transform:scale(.6)}to{transform:scale(1)}}
 .wp-ey{font-size:13px;font-weight:900;letter-spacing:.12em;color:var(--pbs)}
+#wpImg:not([hidden]){display:block}
 .wp-card h2{font-size:22px;font-weight:900;margin:6px 0 14px;line-height:1.3}
 #wpNames{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 #wpNames span{font-size:22px;font-weight:900;color:#fff;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,var(--pbs),#7B2FBE)}
@@ -242,7 +243,7 @@ button{cursor:pointer;border:0;background:none}
   </div>
 </div>
 <div class="win-pop" id="grpPop" hidden><div class="wp-card"><p class="wp-ey" id="gpEy"></p><h2 id="gpTitle"></h2><div id="gpNames"></div><p class="wp-me" id="gpMe" hidden></p><button id="gpClose">닫기</button></div></div>
-<div class="win-pop" id="winPop" hidden><div class="wp-card"><p class="wp-ey" id="wpEy">🎁 행운권 당첨</p><h2 id="wpGift"></h2><div id="wpNames"></div><p class="wp-me" id="wpMe" hidden>축하합니다! 무대 앞으로 와 주세요 🎉</p><button id="wpClose">닫기</button></div></div>
+<div class="win-pop" id="winPop" hidden><div class="wp-card"><p class="wp-ey" id="wpEy">🎁 행운권 당첨</p><img id="wpImg" alt="" hidden style="width:150px;height:150px;object-fit:cover;border-radius:16px;margin:8px auto 4px;box-shadow:0 6px 18px rgba(0,0,0,.15)"><h2 id="wpGift"></h2><div id="wpNames"></div><p class="wp-me" id="wpMe" hidden>축하합니다! 무대 앞으로 와 주세요 🎉</p><button id="wpClose">닫기</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -391,7 +392,11 @@ button{cursor:pointer;border:0;background:none}
     if (called && navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
   }
   let lastDraw;
-  function showWin(t){
+  const IMG_RE = /\s*⟦img:(https:\/\/oqxlsnyuwtmjmbhgzjoz\.supabase\.co\/storage\/[^⟧\s]+)⟧/;
+  const drawClean = t => String(t || '').replace(/\s*⟦img:[^⟧]*⟧/g, '');
+  function showWin(raw){
+    const im = String(raw).match(IMG_RE); const t = drawClean(raw);
+    if (im) { $('#wpImg').src = im[1]; $('#wpImg').hidden = false; } else $('#wpImg').hidden = true;
     const parts = t.split(' · '); const gift = parts.length > 1 ? parts.shift() : '';
     $('#wpGift').textContent = gift ? gift : '행운권 추첨';
     const meWon = parts.some(n => n.trim() === nick.trim());
@@ -407,7 +412,7 @@ button{cursor:pointer;border:0;background:none}
     $('#liveDot').classList.toggle('off', !room.is_open);
     $('#liveDot').lastChild.textContent = room.is_open ? 'LIVE' : '종료';
     $('#closedNote').classList.toggle('show', !room.is_open);
-    $('#draw').classList.toggle('show', !!room.draw_text); $('#drawText').textContent = room.draw_text || '';
+    $('#draw').classList.toggle('show', !!room.draw_text); $('#drawText').textContent = drawClean(room.draw_text);
     if (room.draw_text && room.draw_text !== lastDraw) { if (lastDraw !== undefined) showWin(room.draw_text); }
     lastDraw = room.draw_text || null;
     if (room.group_call && room.group_call !== lastGroup && lastGroup !== undefined) showGroup(room.group_call);
