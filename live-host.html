@@ -378,6 +378,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     <button class="tb" id="grpBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff">🎨 엔진 그룹</button>
     <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B">🎁 행운권 추첨</button>
     <a class="tb" href="/live-checkin.html" target="_blank" rel="noopener" style="background:#12A15A;color:#fff;text-decoration:none;display:inline-flex;align-items:center">📋 출석 체크</a>
+    <button class="tb" id="nameBtn" style="background:#3A2F40;color:#fff">✎ 내 이름</button>
     <button class="tb" id="chatReset" style="background:#3A2F40;color:#fff">🧹 채팅 비우기</button>
     <button class="tb pink" id="qrBtn">QR 크게</button>
     <button class="tb" id="sideBtn">소통 칸 숨기기</button>
@@ -634,6 +635,14 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   }
   $('#openSw').onclick = () => { if (room.is_open && !confirm('강의를 종료할까요? 청중 입력창이 닫힘')) return; hostRoom('is_open', !room.is_open); };
   $('#chatSw').onclick = () => hostRoom('chat_on', !room.chat_on);
+  $('#nameBtn').onclick = async () => {
+    const cur = room.host_name || '최해숙 작가';
+    const v = prompt('채팅에 보일 내 이름 (예: 최해숙 작가)', cur);
+    if (v === null || v.trim() === cur) return;
+    const { data, error } = await sb.rpc('live_host_set_name', { p_pw: pw, p_room: room.id, p_name: v.trim() });
+    if (error) return toast('이름 바꾸기 실패');
+    room.host_name = data; await loadAll(); toast(`✎ 이제 '${data}'(으)로 보여요`);
+  };
   $('#chatReset').onclick = async () => {
     if (!confirm('채팅창을 비울까요?\n지금까지의 채팅이 진행 화면과 모든 참가자 휴대폰에서 사라져요.\n(기록은 지워지지 않고 숨겨져요)')) return;
     const { data, error } = await sb.rpc('live_host_chat_reset', { p_pw: pw, p_room: room.id });
@@ -829,7 +838,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   const ENGC = { RED:'#FF3366', YELLOW:'#E0951A', GREEN:'#00A878', BLUE:'#0077B6' };
   function engBadge(e){ return ENGC[e] ? `<span class="eb" style="background:${ENGC[e]}">${e}</span>` : ''; }
   /* 링크 버튼 */
-  function getLinks(){ const D = [{ t: '컬러강점 진단 시작하기 (48문항)', u: 'https://www.pbscolor.com/book48.html' }, { t: '📕 나의 컬러강점 엔진 결과지 보기', u: 'https://www.pbscolor.com/assets/live/concert-engine.pdf' }, { t: '🔮 2027 나의 컬러리듬 보기', u: 'https://www.pbscolor.com/2027color/color/' }];
+  function getLinks(){ const D = [{ t: '컬러강점 진단 시작하기 (48문항)', u: 'https://www.pbscolor.com/book48.html' }, { t: '📕 나의 컬러강점 엔진 결과지 보기', u: 'https://www.pbscolor.com/assets/live/concert-engine.pdf' }, { t: '🔮 2027 나의 컬러리듬 보기', u: 'https://www.pbscolor.com/2027color/color/' }, { t: '🌀 나의 10년 대운 보기', u: 'https://www.pbscolor.com/2027color/' }];
     const L = ls.get('pbs_live_links', null); if (!L) return D;
     D.forEach(d => { if (!L.some(x => x.u === d.u) && !ls.get('pbs_live_links_seen_' + d.u, false)) { L.push(d); ls.set('pbs_live_links_seen_' + d.u, true); } }); ls.set('pbs_live_links', L); return L; }
   function renderLinks(){
