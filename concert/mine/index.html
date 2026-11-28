@@ -45,7 +45,7 @@ document.getElementById('go').onclick=()=>{
  if(o==null){err.textContent=cal==='ll'?'그해에는 그 달의 윤달이 없어요. 음력(평달)로 넣어 주세요':'없는 날짜예요. 다시 확인해 주세요';return;}
  const k=((o%10)+10)%10,x=D[k],r=document.getElementById('res');
  r.style.setProperty('--c',x.c);
- r.innerHTML=`<img src="${x.f}.webp" alt="${x.n} 자료 표지"><div class="rt"><small>나의 일간(천간)</small><b>${x.n} <em>${x.h}</em></b><span>${x.nat}</span><i>2027 ${x.col}</i><a class="dl" href="${x.f}.pdf" download="2027_나의색_${x.n}.pdf">↓ 내 자료 받기 (PDF 2쪽)</a></div>`;
+ r.innerHTML=`<img src="/concert/mine/${x.f}.webp" alt="${x.n} 자료 표지"><div class="rt"><small>나의 일간(천간)</small><b>${x.n} <em>${x.h}</em></b><span>${x.nat}</span><i>2027 ${x.col}</i><a class="dl" href="/concert/mine/${x.f}.pdf" download="2027_나의색_${x.n}.pdf">↓ 내 자료 받기 (PDF 2쪽)</a></div>`;
  r.hidden=false;r.scrollIntoView({behavior:'smooth',block:'start'});
 };
 </script></body></html>
