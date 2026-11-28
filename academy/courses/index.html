@@ -1492,7 +1492,7 @@ function submitApp(e){e.preventDefault();
 // 바로 신청 링크: ?apply=... → 과정·일정이 미리 선택된 신청칸으로 이동
 (function(){var M={'golgyeok-1114':['체형골격진단 원데이 세미나 (수료과정)','11.14'],'cs-1220':['컬러강점 2급 자격과정','12.20(일)'],'cs-ulsan':['컬러강점 2급 자격과정','1.9(토)']};
 var q='';try{q=new URLSearchParams(location.search).get('apply')||'';}catch(e){}
-function go(m){if(typeof pick!=='function')return;pick(m[0]);
+function go(m){if(typeof pick!=='function')return;pick(m[0]);var en=document.querySelector('#apMode .apm[data-mode="enroll"]');if(en)en.click();
 var w=document.getElementById('ap_when');if(!w)return;
 for(var i=0;i<w.options.length;i++){if(w.options[i].text.indexOf(m[1])>=0){w.selectedIndex=i;w.dispatchEvent(new Event('change'));break;}}}
 if(q==='cs'){window.addEventListener('load',function(){setTimeout(function(){

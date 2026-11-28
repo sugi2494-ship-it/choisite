@@ -1346,8 +1346,50 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     $('#drawGift').textContent = `🎁 ${giftSel.name} 당첨`;
     await sb.rpc('live_host_gift_win', { p_pw: pw, p_room: room.id, p_id: giftSel.id, p_winners: picks.map(p => ({ cid: p.cid, nick: p.nick })), p_reset: false });
     await hostRoom('draw', `${giftSel.name} · ` + picks.map(p => p.nick).join(' · ') + (giftSel.image_url ? ` ⟦img:${giftSel.image_url}⟧` : ''));
+    postWinChat(giftSel, picks);
     await loadGifts(); $('#drawGift').textContent = `🎁 ${giftSel ? giftSel.name : ''} 당첨`; updatePool();
   };
+
+  /* ── 당첨 결과를 소통방 채팅에 이미지로 ── */
+  async function winCard(g, picks){
+    const W = 1080, H = 1080, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+    const gr = x.createLinearGradient(0, 0, W, H); gr.addColorStop(0, '#E5007F'); gr.addColorStop(1, '#4A0E78'); x.fillStyle = gr; x.fillRect(0, 0, W, H);
+    for (let i = 0; i < 70; i++) { x.fillStyle = ['#FFC94D','#fff','#FF7AB8','#7FD4FF','#9BE37A'][i%5]; x.globalAlpha = .55; x.fillRect(Math.random()*W, Math.random()*H, 8+Math.random()*14, 4+Math.random()*8); }
+    x.globalAlpha = 1; x.textAlign = 'center'; x.fillStyle = '#fff';
+    const F = '"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif';
+    x.font = `800 46px ${F}`; x.fillStyle = '#FFE08A'; x.fillText('🎉 행운권 당첨 🎉', W/2, 150);
+    let img = null;
+    if (g.image_url) { img = await new Promise(r => { const i = new Image(); i.crossOrigin = 'anonymous'; i.onload = () => r(i); i.onerror = () => r(null); i.src = g.image_url; }); }
+    let y = 230;
+    if (img) { const s = Math.min(360/img.width, 300/img.height); const w = img.width*s, h = img.height*s; x.fillStyle = '#fff'; x.fillRect(W/2-w/2-14, y-14, w+28, h+28); x.drawImage(img, W/2-w/2, y, w, h); y += h + 70; } else { y = 300; }
+    const wrap = (t, max, size, weight) => { x.font = `${weight} ${size}px ${F}`; const out = []; let line = ''; for (const ch of t) { if (x.measureText(line+ch).width > max) { out.push(line); line = ch; } else line += ch; } if (line) out.push(line); return out; };
+    x.fillStyle = '#fff';
+    for (const l of wrap('🎁 ' + g.name, 920, img ? 54 : 70, 800).slice(0,3)) { x.fillText(l, W/2, y); y += img ? 66 : 86; }
+    if (g.sponsor) { x.font = `500 32px ${F}`; x.fillStyle = '#FFD3E9'; x.fillText('협찬 · ' + g.sponsor, W/2, y); y += 56; }
+    y += 20; const names = picks.map(p => p.nick + ' 님');
+    const big = names.length <= 2 ? 84 : names.length <= 4 ? 66 : names.length <= 8 ? 54 : 42;
+    x.fillStyle = '#fff'; x.fillRect(90, y, W-180, H - y - 90); x.fillStyle = '#4A0E78';
+    const lines = []; let cur = '';
+    x.font = `800 ${big}px ${F}`;
+    for (const n of names) { const t = cur ? cur + '  ·  ' + n : n; if (x.measureText(t).width > W-260) { lines.push(cur); cur = n; } else cur = t; }
+    if (cur) lines.push(cur);
+    const L6 = lines.slice(0, 6), bh = H - y - 90 - 70; let ny = y + (bh - L6.length*(big+22))/2 + big;
+    for (const l of L6) { x.fillText(l, W/2, ny); ny += big + 22; }
+    x.font = `600 30px ${F}`; x.fillStyle = '#E5007F'; x.fillText('축하드려요!', W/2, H - 120);
+    return await new Promise(r => c.toBlob(r, 'image/jpeg', .9));
+  }
+  async function postWinChat(g, picks){
+    if (!g || !picks || !picks.length) return;
+    const body = `🎉 행운권 당첨 · 🎁 ${g.name} — ${picks.map(p => p.nick + '님').join(', ')} 축하드려요!`;
+    try {
+      const blob = await winCard(g, picks);
+      const a = await uploadChatFile(room.id, new File([blob], 'lucky.jpg', { type: 'image/jpeg' }));
+      const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: body, p_attach_url: a.url, p_attach_name: '행운권 당첨', p_attach_kind: 'image' });
+      if (error) throw error; loadAll();
+    } catch(e) {
+      try { await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: body }); loadAll(); } catch(_){}
+    }
+  }
   $('#drawClear').onclick = () => hostRoom('draw', '').then(ok => ok && toast('청중 화면에서 내림'));
   $('#drawReset').onclick = async () => { if (!confirm('모든 선물의 당첨 기록을 지울까요? 이미 뽑힌 사람도 다시 뽑힐 수 있음')) return; await sb.rpc('live_host_gift_win', { p_pw: pw, p_room: room.id, p_id: null, p_winners: [], p_reset: true }); loadGifts(); updatePool(); toast('당첨 기록 초기화'); };
 
@@ -1479,7 +1521,11 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     $('#qrFull').hidden = false; $('#qrBtn').textContent = 'QR 닫기';
   }
   $('#csQrBtn').onclick = () => $('#qrFull').hidden || $('#qrLinkInfo').hidden ? showLinkQR('컬러강점 전문가 자격과정 신청 · 서울 12.20 / 울산 1.9', 'https://www.pbscolor.com/academy/courses/?apply=cs') : toggleQR(false);
-  $('#dwQrBtn').onclick = () => $('#qrFull').hidden || $('#qrLinkInfo').hidden ? showLinkQR('나의 10년 대운 보기', 'https://www.pbscolor.com/2027color/') : toggleQR(false);
+  $('#dwQrBtn').onclick = async () => {
+    if (!($('#qrFull').hidden || $('#qrLinkInfo').hidden)) return toggleQR(false);
+    showLinkQR('나의 10년 대운 보기', 'https://www.pbscolor.com/2027color/');
+    try { const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: '', p_attach_url: 'https://www.pbscolor.com/2027color/', p_attach_name: '🌀 나의 10년 대운 보기', p_attach_kind: 'link' }); if (error) throw error; toast('채팅방에도 링크 보냄'); loadAll(); } catch(e) { toast('채팅 링크 보내기 실패 · 채팅이 켜져 있는지 확인'); }
+  };
   $('#qrBtn').onclick = () => toggleQR(); $('#qrClose').onclick = () => toggleQR(false); $('#qrSmall').onclick = () => toggleQR(true);
   $('#sideBtn').onclick = () => {
     const h = $('#host'); h.classList.toggle('no-side');
