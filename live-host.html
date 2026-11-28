@@ -374,6 +374,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   <div class="tools" id="tools">
     <button class="tb" id="pdfBtn">PDF 올리기</button>
     <button class="tb" id="vidBtn" style="background:#16121B;color:#fff;border:1px solid #fff3">🎬 오프닝 영상</button>
+    <button class="tb" id="vidBtn2" style="background:#16121B;color:#fff;border:1px solid #E5007F">🎬 클로징 인사영상</button>
     <button class="tb" id="signBtn" style="background:#B8860B;color:#fff">✍️ 사인회 음악 켜기</button>
     <button class="tb" id="bgmBtn" style="background:#7B2FBE;color:#fff">🎵 대기 음악 켜기</button>
     <button class="tb" id="grpBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff">🎨 엔진 그룹</button>
@@ -961,9 +962,10 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   $('#navL').onclick = () => go(-1); $('#navR').onclick = () => go(1);
   /* ── 오프닝 영상 ── */
   const VID_SRC = '/assets/live/opening.mp4';
-  function showVid(on){
+  function showVid(on, src){
     const v = $('#vid');
     if (on) {
+      const want = src || VID_SRC; if (v.getAttribute('src') !== want) v.src = want;
       if (BGM.playing) { BGM.stop(); bgmLabel(); }
       if (SIGN.playing) { SIGN.stop(); signLabel(); }
       if (TOUCH.playing) TOUCH.stop(1);
@@ -974,6 +976,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     } else { v.pause(); $('#vidFull').hidden = true; }
   }
   $('#vidBtn').onclick = () => showVid(true);
+  $('#vidBtn2').onclick = () => showVid(true, '/assets/live/closing.mp4');
   $('#vidClose').onclick = e => { e.stopPropagation(); showVid(false); };
   $('#vid').onclick = () => { const v = $('#vid'); v.paused ? v.play() : v.pause(); };
   $('#vid').onplay = () => $('#vidFull').classList.remove('paused');
