@@ -317,6 +317,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
 #vidFull .vid-bar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff9;font-size:13px;opacity:0;transition:opacity .3s}
 #vidFull:hover .vid-bar,#vidFull.paused .vid-bar{opacity:1}
 #vidFull .vid-bar button{background:#fff2;color:#fff;border:0;border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer}
+.lk .send{min-width:0;flex:1 1 auto}.lk .send small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lk .del{flex:0 0 auto;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -380,6 +381,8 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     <a class="tb" href="/live-checkin.html" target="_blank" rel="noopener" style="background:#12A15A;color:#fff;text-decoration:none;display:inline-flex;align-items:center">📋 출석 체크</a>
     <button class="tb" id="nameBtn" style="background:#3A2F40;color:#fff">✎ 내 이름</button>
     <button class="tb" id="chatReset" style="background:#3A2F40;color:#fff">🧹 채팅 비우기</button>
+    <button class="tb" id="dwQrBtn" style="background:#7B2FBE;color:#fff">🌀 대운 QR</button>
+    <button class="tb" id="csQrBtn" style="background:#E5007F;color:#fff">🎓 과정신청 QR</button>
     <button class="tb pink" id="qrBtn">QR 크게</button>
     <button class="tb" id="sideBtn">소통 칸 숨기기</button>
     <button class="tb" id="fsBtn">전체화면</button>
@@ -454,13 +457,20 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
       <button class="tb close" id="qrClose" style="background:var(--ink)">닫기</button>
       <div class="qrbox" id="qrBig"></div>
       <div>
-        <p class="eyebrow">LIVE CLASS</p>
+        <p class="eyebrow" id="qrEye">LIVE CLASS</p>
         <h2 id="qrTitle"></h2>
+        <div id="qrRoomInfo">
         <p class="step">① 휴대폰 카메라로 QR 찍기</p>
-        <p class="step">② 닉네임 입력</p>
-        <p class="step">③ 질문 · 채팅 · 강의 자료</p>
+        <p class="step">② 이름 · 전화 뒤 4자리 · 닉네임</p>
+        <p class="step">③ 채팅 · 강의 자료 · 행운권 추첨</p>
         <span class="bigcode" id="qrCode"></span>
         <p class="url">pbscolor.com/live.html · 입장 코드</p>
+        </div>
+        <div id="qrLinkInfo" hidden>
+        <p class="step">① 휴대폰 카메라로 QR 찍기</p>
+        <p class="step" id="qrStep2">② 생년월일을 넣고 결과 보기</p>
+        <p class="url" id="qrLinkUrl"></p>
+        </div>
       </div>
     </div>
   </main>
@@ -838,15 +848,16 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   const ENGC = { RED:'#FF3366', YELLOW:'#E0951A', GREEN:'#00A878', BLUE:'#0077B6' };
   function engBadge(e){ return ENGC[e] ? `<span class="eb" style="background:${ENGC[e]}">${e}</span>` : ''; }
   /* 링크 버튼 */
-  function getLinks(){ const D = [{ t: '컬러강점 진단 시작하기 (48문항)', u: 'https://www.pbscolor.com/book48.html' }, { t: '📕 나의 컬러강점 엔진 결과지 보기', u: 'https://www.pbscolor.com/assets/live/concert-engine.pdf' }, { t: '🔮 2027 나의 컬러리듬 보기', u: 'https://www.pbscolor.com/2027color/color/' }, { t: '🌀 나의 10년 대운 보기', u: 'https://www.pbscolor.com/2027color/' }];
+  function getLinks(){ const D = [{ t: '컬러강점 진단 시작하기 (48문항)', u: 'https://www.pbscolor.com/book48.html' }, { t: '📕 나의 컬러강점 엔진 결과지 보기', u: 'https://www.pbscolor.com/assets/live/concert-engine.pdf' }, { t: '🔮 2027 나의 컬러리듬 보기', u: 'https://www.pbscolor.com/2027color/color/' }, { t: '🌀 나의 10년 대운 보기', u: 'https://www.pbscolor.com/2027color/' }, { t: '🎓 컬러강점 자격과정 신청', u: 'https://www.pbscolor.com/academy/courses/?apply=cs' }];
     const L = ls.get('pbs_live_links', null); if (!L) return D;
     D.forEach(d => { if (!L.some(x => x.u === d.u) && !ls.get('pbs_live_links_seen_' + d.u, false)) { L.push(d); ls.set('pbs_live_links_seen_' + d.u, true); } }); ls.set('pbs_live_links', L); return L; }
   function renderLinks(){
     const L = getLinks();
-    $('#linkList').innerHTML = L.map((l, i) => `<div class="lk"><button class="send" data-li="${i}">${esc(l.t)}<small>${esc(l.u)}</small></button><button class="del" data-ld="${i}">삭제</button></div>`).join('') || '<p class="empty">저장된 링크 없음</p>';
+    $('#linkList').innerHTML = L.map((l, i) => `<div class="lk"><button class="send" data-li="${i}">${esc(l.t)}<small>${esc(l.u)}</small></button><button class="del" data-lq="${i}" title="큰 화면에 QR 띄우기">QR</button><button class="del" data-ld="${i}">삭제</button></div>`).join('') || '<p class="empty">저장된 링크 없음</p>';
   }
   $('#linkBtn').onclick = () => { const p = $('#linkPop'); p.hidden = !p.hidden; if (!p.hidden) renderLinks(); };
   $('#linkList').addEventListener('click', async e => {
+    const qq = e.target.closest('[data-lq]'); if (qq) { const l = getLinks()[+qq.dataset.lq]; if (l) { showLinkQR(l.t, l.u); $('#linkPop').hidden = true; } return; }
     const d = e.target.closest('[data-ld]'); if (d) { const L = getLinks(); L.splice(+d.dataset.ld, 1); ls.set('pbs_live_links', L); return renderLinks(); }
     const b = e.target.closest('[data-li]'); if (!b) return;
     const l = getLinks()[+b.dataset.li];
@@ -1454,7 +1465,18 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   $('#grpClear').onclick = () => hostRoom('group', '').then(ok => ok && toast('청중 휴대폰에서 내림'));
 
   /* ── 화면 전환 ── */
-  function toggleQR(force){ const h = $('#qrFull'); h.hidden = force === undefined ? !h.hidden : !force; $('#qrBtn').textContent = h.hidden ? 'QR 크게' : 'QR 닫기'; }
+  function roomQRMode(){ $('#qrRoomInfo').hidden = false; $('#qrLinkInfo').hidden = true; $('#qrEye').textContent = 'LIVE CLASS'; $('#qrTitle').innerHTML = esc(room.title) + (room.subtitle ? '<br><span style="font-size:.5em;font-weight:700;color:var(--ink3)">' + esc(room.subtitle) + '</span>' : ''); drawQR(); }
+  function toggleQR(force){ const h = $('#qrFull'); const open = force === undefined ? h.hidden : !!force; if (open) roomQRMode(); h.hidden = !open; $('#qrBtn').textContent = h.hidden ? 'QR 크게' : 'QR 닫기'; }
+  function showLinkQR(title, url){
+    const q = qrcode(0, 'M'); q.addData(url); q.make();
+    $('#qrBig').innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+    $('#qrEye').textContent = 'SCAN ME'; $('#qrTitle').textContent = title.replace(/^[^\w가-힣]+/, '');
+    $('#qrRoomInfo').hidden = true; $('#qrLinkInfo').hidden = false; $('#qrLinkUrl').textContent = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+    const s2 = $('#qrStep2'); if (s2) s2.textContent = /apply=/.test(url) ? '② 서울 · 울산 중 선택하고 신청하기' : /2027color|book48|\.pdf/.test(url) ? (/2027color/.test(url) ? '② 생년월일을 넣고 결과 보기' : '② 화면을 열어 확인하기') : '② 화면을 열어 확인하기';
+    $('#qrFull').hidden = false; $('#qrBtn').textContent = 'QR 닫기';
+  }
+  $('#csQrBtn').onclick = () => $('#qrFull').hidden || $('#qrLinkInfo').hidden ? showLinkQR('컬러강점 전문가 자격과정 신청 · 서울 12.20 / 울산 1.9', 'https://www.pbscolor.com/academy/courses/?apply=cs') : toggleQR(false);
+  $('#dwQrBtn').onclick = () => $('#qrFull').hidden || $('#qrLinkInfo').hidden ? showLinkQR('나의 10년 대운 보기', 'https://www.pbscolor.com/2027color/') : toggleQR(false);
   $('#qrBtn').onclick = () => toggleQR(); $('#qrClose').onclick = () => toggleQR(false); $('#qrSmall').onclick = () => toggleQR(true);
   $('#sideBtn').onclick = () => {
     const h = $('#host'); h.classList.toggle('no-side');
