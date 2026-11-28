@@ -266,7 +266,7 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
         <td>${fee ? `<button class="ck c-paid${a.fee_paid_at ? ' on' : ''}" data-id="${a.id}" data-f="paid">${a.fee_paid_at ? `받음✓<small>${won(fee)}</small>` : `${fee / 10000 >= 1 ? '3만' : '5천'} 받기`}</button>` : '<span class="na">—</span>'}</td>
         <td>${a.book ? `<button class="ck c-book${a.book_given_at ? ' on' : ''}" data-id="${a.id}" data-f="book">${a.book_given_at ? '📕드림✓' : '📕 책'}</button>` : '<span class="na">—</span>'}</td>
         <td>${saleCell(a)}</td>
-        <td>${a.walkin ? `<button class="del" data-id="${a.id}" data-f="del" title="현장 등록 지우기">✕</button>` : ''}</td>
+        <td><button class="del" data-id="${a.id}" data-f="del" title="명단에서 지우기">✕</button></td>
       </tr>`;
     }).join('') : `<tr class="empty"><td colspan="9">${q ? '검색 결과가 없어요 — 맨 아래 칸에서 현장 참가자로 등록하세요' : '해당하는 분이 없어요'}</td></tr>`;
   }
@@ -325,7 +325,7 @@ tr.add .go{height:38px;padding:0 16px;border-radius:9px;background:var(--ink);co
     else if (f === 'paid') { on = !a.fee_paid_at; if (!on && !confirm(`${nm}님 참가비 받음을 취소할까요?`)) return; a.fee_paid_at = on ? new Date().toISOString() : null; }
     else if (f === 'book') { on = !a.book_given_at; if (!on && !confirm(`${nm}님 책 드림을 취소할까요?`)) return; a.book_given_at = on ? new Date().toISOString() : null; }
     else if (f === 'vip') { on = !a.vip; if (!on && !confirm(`${nm}님 내빈 표시를 뺄까요?`)) return; a.vip = on; }
-    else if (f === 'del') { if (!confirm(`현장 등록 '${nm}'을(를) 지울까요?`)) return; on = true; list = list.filter(x => x !== a); }
+    else if (f === 'del') { if (!confirm(a.walkin ? `현장 등록 '${nm}'을(를) 지울까요?` : `${a.seq ? a.seq + '번 ' : ''}${nm}님을 명단에서 완전히 지울까요?\n(출석·참가비·책 기록도 함께 지워지고 되돌릴 수 없어요)`)) return; on = true; list = list.filter(x => x !== a); }
     else return;
     render();
     const msg = f === 'check' && on ? `✅ ${nm}님 출석` : f === 'paid' && on ? `💰 ${nm}님 참가비 받음` : f === 'book' && on ? `📕 ${nm}님 책 드림` : '';
