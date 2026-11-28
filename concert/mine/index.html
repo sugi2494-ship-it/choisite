@@ -1,0 +1,51 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>내 천간 자료 받기 · 2027 최해숙의 컬러콘서트</title><meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Pretendard,'Noto Sans KR',sans-serif;background:#FAF6F0;color:#16121B;padding:24px 16px 40px}
+.w{max-width:460px;margin:0 auto}.ey{font-size:12px;letter-spacing:.28em;color:#E5007F;font-weight:800;text-align:center}h1{font-size:26px;font-weight:900;text-align:center;margin-top:8px}
+.sub{text-align:center;color:#6B5F70;font-size:14.5px;line-height:1.6;margin-top:8px}.sub b{color:#16121B}
+.box{background:#fff;border-radius:18px;padding:18px;margin-top:18px;box-shadow:0 3px 14px rgba(60,20,60,.07)}
+label{display:block;font-size:13px;font-weight:800;color:#4A3F50;margin:10px 0 6px}
+.seg{display:flex;border:1.5px solid #E7DCE3;border-radius:12px;overflow:hidden}.seg button{flex:1;padding:11px 0;font:inherit;font-size:14px;font-weight:700;background:#FBF8F5;border:0;color:#4A3F50}.seg button.on{background:#E5007F;color:#fff}
+.row{display:flex;gap:8px}.row input{flex:1;min-width:0;padding:13px 10px;font:inherit;font-size:17px;font-weight:700;border:1.5px solid #E7DCE3;border-radius:12px;text-align:center;background:#FBF8F5}
+.go{width:100%;margin-top:16px;padding:15px 0;border:0;border-radius:14px;background:#16121B;color:#fff;font:inherit;font-size:17px;font-weight:900}
+.err{color:#C0006A;font-size:13.5px;margin-top:10px;min-height:1em;text-align:center}
+.note{font-size:12px;color:#8A7F8C;line-height:1.6;margin-top:12px}
+.res{margin-top:18px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 3px 14px rgba(60,20,60,.08);border-top:6px solid var(--c)}.res[hidden]{display:none}
+.res img{width:100%;display:block}.rt{padding:14px 16px 18px;text-align:center}.rt small{font-size:12.5px;color:#8A7F8C}.rt b{display:block;font-size:30px;font-weight:900;margin-top:2px}.rt b em{font-style:normal;font-size:16px;color:#8A7F8C;font-weight:600}
+.rt span{display:block;font-size:15px;color:#4A3F50;margin-top:2px}.rt i{display:block;font-style:normal;font-size:12.5px;font-weight:800;color:var(--c);margin-top:4px}
+.dl{display:block;margin-top:14px;background:var(--c);color:#fff;text-decoration:none;border-radius:14px;padding:15px 0;font-size:17px;font-weight:900}
+.ft{text-align:center;color:#8A7F8C;font-size:12.5px;margin-top:22px}
+</style></head><body><div class="w">
+<p class="ey">2027 최해숙의 컬러콘서트</p><h1>내 천간 자료 받기</h1>
+<p class="sub">10년 만에 낸 출간기념회에 오신 분께 드리는<br><b>2027 나의 색 · 나와 열세 달</b></p>
+<div class="box">
+<label>생년월일</label>
+<div class="seg" id="cal"><button data-v="s" class="on">양력</button><button data-v="l">음력(평달)</button><button data-v="ll">음력(윤달)</button></div>
+<div class="row" style="margin-top:8px"><input id="y" inputmode="numeric" maxlength="4" placeholder="연도"><input id="m" inputmode="numeric" maxlength="2" placeholder="월"><input id="d" inputmode="numeric" maxlength="2" placeholder="일"></div>
+<button class="go" id="go">내 자료 찾기</button><p class="err" id="err"></p>
+<p class="note">· 넣은 생년월일은 이 휴대폰 안에서만 계산되고 저장·전송되지 않아요.<br>· 밤 11시~12시에 태어난 분은 사주 풀이에 따라 다음 날로 볼 수도 있어요. 사주 QR 결과의 일간과 다르면 진행자에게 말씀해 주세요.</p>
+</div>
+<div class="res" id="res" hidden></div>
+<p class="ft">PBS COLOR LAB · 최해숙 · @pbscolor_ceo</p></div>
+<script>
+const D=[{"f": "bb7496a69914", "n": "갑목", "h": "甲木", "nat": "큰 나무", "col": "PURPLE", "c": "#7B3FA0"}, {"f": "808920d8aac3", "n": "을목", "h": "乙木", "nat": "넝쿨", "col": "BLUE GREEN", "c": "#1E8C8C"}, {"f": "b33b387f51cb", "n": "병화", "h": "丙火", "nat": "태양", "col": "YELLOW GREEN", "c": "#8DB43A"}, {"f": "fc0e61f97fd0", "n": "정화", "h": "丁火", "nat": "촛불", "col": "YELLOW", "c": "#E8B400"}, {"f": "24ec2c98ca5c", "n": "무토", "h": "戊土", "nat": "산", "col": "BLUE", "c": "#2F6FD6"}, {"f": "2efdcf8d86c1", "n": "기토", "h": "己土", "nat": "밭", "col": "INDIGO", "c": "#3B3DBF"}, {"f": "dc12056e91b4", "n": "경금", "h": "庚金", "nat": "무쇠", "col": "MAGENTA", "c": "#E5007F"}, {"f": "19c125d19530", "n": "신금", "h": "辛金", "nat": "보석", "col": "RED ORANGE", "c": "#F0582A"}, {"f": "84ef26a7a186", "n": "임수", "h": "壬水", "nat": "강", "col": "RED", "c": "#E0262E"}, {"f": "c394437cad70", "n": "계수", "h": "癸水", "nat": "이슬", "col": "ORANGE", "c": "#F08A00"}];
+const LT={"1920":[7354,"010010011011",0],"1921":[7708,"101001001011",0],"1922":[8062,"1011001001011",5],"1923":[8446,"011010101001",0],"1924":[8800,"101011010100",0],"1925":[9154,"1011010110101",4],"1926":[9539,"001010110110",0],"1927":[9893,"100101011011",0],"1928":[10248,"0100100110111",2],"1929":[10632,"010010010111",0],"1930":[10986,"0110010010110",6],"1931":[11369,"111001001010",0],"1932":[11723,"111010100101",0],"1933":[12078,"0110110101001",5],"1934":[12462,"010110110101",0],"1935":[12817,"001010110110",0],"1936":[13171,"1001010101110",3],"1937":[13555,"100100101110",0],"1938":[13909,"1100100101101",7],"1939":[14293,"110010010101",0],"1940":[14647,"110101001010",0],"1941":[15001,"1101101001010",6],"1942":[15385,"101101101001",0],"1943":[15740,"010101101101",0],"1944":[16095,"0010101011011",4],"1945":[16479,"001001011101",0],"1946":[16833,"100100101101",0],"1947":[17187,"1100100101011",2],"1948":[17571,"101010010101",0],"1949":[17925,"1101010010101",7],"1950":[18309,"101101001010",0],"1951":[18663,"101101010101",0],"1952":[19018,"0101011010101",5],"1953":[19402,"010011011011",0],"1954":[19757,"001001011011",0],"1955":[20111,"1001001010111",3],"1956":[20495,"010100101011",0],"1957":[20849,"1010100101011",8],"1958":[21233,"011010010101",0],"1959":[21587,"011010101010",0],"1960":[21941,"1010110101010",6],"1961":[22325,"101010110101",0],"1962":[22680,"010010110110",0],"1963":[23034,"1010010101110",4],"1964":[23418,"101001010111",0],"1965":[23773,"010100100111",0],"1966":[24127,"0110100100110",3],"1967":[24510,"110110010101",0],"1968":[24865,"0110101010101",7],"1969":[25249,"010101101010",0],"1970":[25603,"100110101101",0],"1971":[25958,"0100101011101",5],"1972":[26342,"010010101110",0],"1973":[26696,"101001001110",0],"1974":[27050,"1101001001101",4],"1975":[27434,"110100100101",0],"1976":[27788,"1101010101001",8],"1977":[28172,"101101010100",0],"1978":[28526,"110101101010",0],"1979":[28881,"1001011011010",6],"1980":[29265,"100101011011",0],"1981":[29620,"010010011011",0],"1982":[29974,"1010010011011",4],"1983":[30358,"101001001011",0],"1984":[30712,"1011001001011",10],"1985":[31096,"011010100101",0],"1986":[31450,"011011010100",0],"1987":[31804,"1011010110101",6],"1988":[32189,"001010110110",0],"1989":[32543,"100101011011",0],"1990":[32898,"0100100110111",5],"1991":[33282,"010010010111",0],"1992":[33636,"011001001011",0],"1993":[33990,"0110101001010",3],"1994":[34373,"111010100101",0],"1995":[34728,"0110110101001",8],"1996":[35112,"010110101101",0],"1997":[35467,"001010110110",0],"1998":[35821,"1001001101110",5],"1999":[36205,"100100101110",0],"2000":[36559,"110010010110",0],"2001":[36913,"1110010010101",4],"2002":[37297,"110101001010",0],"2003":[37651,"110110100101",0],"2004":[38006,"0101101010101",2],"2005":[38390,"010101101100",0],"2006":[38744,"1010101011011",7],"2007":[39129,"001001011101",0],"2008":[39483,"100100101101",0],"2009":[39837,"1100100101011",5],"2010":[40221,"101010010101",0],"2011":[40575,"101101001010",0],"2012":[40929,"1011101001010",3],"2013":[41313,"101101010101",0],"2014":[41668,"0101010110101",9],"2015":[42052,"010010111010",0]};
+let cal='s';
+document.querySelectorAll('#cal button').forEach(b=>b.onclick=()=>{cal=b.dataset.v;document.querySelectorAll('#cal button').forEach(x=>x.classList.toggle('on',x===b));});
+['y','m','d'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'');}));
+const B=Date.UTC(1900,0,1),DAY=86400000;
+function solarOrd(y,m,d){const t=Date.UTC(y,m-1,d);const dt=new Date(t);if(dt.getUTCFullYear()!==y||dt.getUTCMonth()!==m-1||dt.getUTCDate()!==d)return null;return Math.round((t-B)/DAY);}
+function lunarOrd(y,m,d,leap){const r=LT[y];if(!r)return null;const [s,bits,lp]=r;if(leap&&lp!==m)return null;let off=0,i=0;
+ for(let mm=1;mm<=12;mm++){const seq=[[mm,false]];if(lp===mm)seq.push([mm,true]);for(const [a,l] of seq){const len=bits[i]==='1'?30:29;if(a===m&&l===!!leap){if(d<1||d>len)return null;return s+off+d-1;}off+=len;i++;}}return null;}
+document.getElementById('go').onclick=()=>{
+ const y=+document.getElementById('y').value,m=+document.getElementById('m').value,d=+document.getElementById('d').value,err=document.getElementById('err');err.textContent='';
+ if(!(y>=1920&&y<=2015)||!m||!d){err.textContent='생년월일을 정확히 넣어 주세요 (1920~2015년)';return;}
+ const o=cal==='s'?solarOrd(y,m,d):lunarOrd(y,m,d,cal==='ll');
+ if(o==null){err.textContent=cal==='ll'?'그해에는 그 달의 윤달이 없어요. 음력(평달)로 넣어 주세요':'없는 날짜예요. 다시 확인해 주세요';return;}
+ const k=((o%10)+10)%10,x=D[k],r=document.getElementById('res');
+ r.style.setProperty('--c',x.c);
+ r.innerHTML=`<img src="${x.f}.webp" alt="${x.n} 자료 표지"><div class="rt"><small>나의 일간(천간)</small><b>${x.n} <em>${x.h}</em></b><span>${x.nat}</span><i>2027 ${x.col}</i><a class="dl" href="${x.f}.pdf" download="2027_나의색_${x.n}.pdf">↓ 내 자료 받기 (PDF 2쪽)</a></div>`;
+ r.hidden=false;r.scrollIntoView({behavior:'smooth',block:'start'});
+};
+</script></body></html>
