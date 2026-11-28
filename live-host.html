@@ -84,10 +84,12 @@ button{cursor:pointer;border:0;background:none}
 .b-txt em{font-style:normal;font-size:11.5px;color:var(--ink3)}
 .b-qr{width:76px;height:76px}
 .b-qr svg{width:100%;height:100%;display:block}
-.tools{position:fixed;top:100px;left:14px;z-index:20;display:flex;gap:6px;flex-wrap:wrap;opacity:0;transition:opacity .3s;pointer-events:none}
+.tools{position:fixed;top:100px;left:14px;z-index:20;display:flex;flex-direction:column;gap:6px;max-width:calc(100vw - 404px);opacity:0;transition:opacity .3s;pointer-events:none}
 .tools.show,.tools:hover{opacity:1;pointer-events:auto}
 .tb{height:34px;padding:0 12px;border-radius:9px;background:#2A2232;color:#EDE6F2;font-size:13px;font-weight:700;white-space:nowrap}
-.tb:hover{background:#3A2F45}
+.tb:hover{filter:brightness(1.15)}
+.trow{display:flex;gap:5px;flex-wrap:wrap}.trow .tb{padding:0 10px}.trow[hidden]{display:none}.tset{padding:6px;border-radius:12px;background:rgba(20,14,26,.85)}
+.tn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.9);color:#16121B;font-style:normal;font-size:11px;font-weight:900;margin-right:6px}
 .tb.pink{background:var(--pbs);color:#fff}.tb.pink:hover{background:var(--pbs-deep)}
 .tb.on{background:#fff;color:var(--ink)}
 
@@ -372,22 +374,30 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     </div>
   </header>
   <div class="tools" id="tools">
-    <button class="tb" id="pdfBtn">PDF 올리기</button>
-    <button class="tb" id="vidBtn" style="background:#16121B;color:#fff;border:1px solid #fff3">🎬 오프닝 영상</button>
-    <button class="tb" id="vidBtn2" style="background:#16121B;color:#fff;border:1px solid #E5007F">🎬 클로징 인사영상</button>
-    <button class="tb" id="signBtn" style="background:#B8860B;color:#fff">✍️ 사인회 음악 켜기</button>
-    <button class="tb" id="bgmBtn" style="background:#7B2FBE;color:#fff">🎵 대기 음악 켜기</button>
-    <button class="tb" id="grpBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff">🎨 엔진 그룹</button>
-    <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B">🎁 행운권 추첨</button>
-    <a class="tb" href="/live-checkin.html" target="_blank" rel="noopener" style="background:#12A15A;color:#fff;text-decoration:none;display:inline-flex;align-items:center">📋 출석 체크</a>
-    <button class="tb" id="nameBtn" style="background:#3A2F40;color:#fff">✎ 내 이름</button>
-    <button class="tb" id="chatReset" style="background:#3A2F40;color:#fff">🧹 채팅 비우기</button>
-    <button class="tb" id="dwQrBtn" style="background:#7B2FBE;color:#fff">🌀 대운 QR</button>
-    <button class="tb" id="csQrBtn" style="background:#E5007F;color:#fff">🎓 과정신청 QR</button>
-    <button class="tb pink" id="qrBtn">QR 크게</button>
-    <button class="tb" id="sideBtn">소통 칸 숨기기</button>
-    <button class="tb" id="fsBtn">전체화면</button>
-    <button class="tb" id="backBtn" hidden>방 목록</button>
+    <div class="trow">
+      <button class="tb" id="nameBtn" style="background:#3A2F40;color:#fff">✎ 이름</button>
+      <button class="tb" id="bgmBtn" style="background:#7B2FBE;color:#fff"><i class="tn">1</i>🎵 대기 음악</button>
+      <button class="tb" id="vidBtn" style="background:#16121B;color:#fff;border:1px solid #fff3"><i class="tn">2</i>🎬 오프닝</button>
+      <button class="tb" id="dxQrBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff"><i class="tn">3</i>🎨 진단 QR</button>
+      <button class="tb" id="dwQrBtn" style="background:#7B2FBE;color:#fff"><i class="tn">4</i>🌀 대운 QR</button>
+      <button class="tb" id="csQrBtn" style="background:#E5007F;color:#fff"><i class="tn">5</i>🎓 과정신청 QR</button>
+      <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B"><i class="tn">6</i>🎁 행운권</button>
+      <button class="tb" id="vidBtn2" style="background:#16121B;color:#fff;border:1px solid #E5007F"><i class="tn">7</i>🎬 클로징</button>
+      <button class="tb" id="signVidBtn" style="background:#B8860B;color:#fff"><i class="tn">8</i>✍️ 사인회 영상</button>
+      <button class="tb" id="setBtn" title="설정" style="background:#2A2232;color:#fff;border:1px solid #fff4">⚙️</button>
+    </div>
+    <div class="trow tset" id="setRow" hidden>
+      <button class="tb" id="pdfBtn">PDF 올리기</button>
+      <button class="tb" id="grpBtn">🎨 엔진 그룹</button>
+      <a class="tb" href="/live-checkin.html" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center">📋 출석 체크</a>
+      <button class="tb" id="signBtn">✍️ 사인회 음악 켜기</button>
+      <button class="tb" id="chatReset">🧹 채팅 비우기</button>
+      <button class="tb" id="qrBtn">입장 QR 크게</button>
+      <button class="tb" id="sideBtn">소통 칸 숨기기</button>
+      <button class="tb" id="fsBtn">전체화면</button>
+      <button class="tb" id="resetBtn" style="background:#7A1030;color:#fff">🔄 리셋하기</button>
+      <button class="tb" id="backBtn" hidden>방 목록</button>
+    </div>
     <input type="file" id="pdfFile" accept="application/pdf,.pdf" hidden />
   </div>
 
@@ -963,10 +973,12 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   $('#navL').onclick = () => go(-1); $('#navR').onclick = () => go(1);
   /* ── 오프닝 영상 ── */
   const VID_SRC = '/assets/live/opening.mp4';
-  function showVid(on, src){
+  let vidLoop = false;
+  function showVid(on, src, loop){
     const v = $('#vid');
     if (on) {
       const want = src || VID_SRC; if (v.getAttribute('src') !== want) v.src = want;
+      vidLoop = !!loop; v.loop = vidLoop;
       if (BGM.playing) { BGM.stop(); bgmLabel(); }
       if (SIGN.playing) { SIGN.stop(); signLabel(); }
       if (TOUCH.playing) TOUCH.stop(1);
@@ -974,10 +986,12 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
       $('#vidFull').hidden = false; $('#qrFull').hidden = true;
       try { v.currentTime = 0; } catch(e){}
       v.play().catch(() => { $('#vidFull').classList.add('paused'); toast('화면을 한 번 클릭하면 재생돼요'); });
-    } else { v.pause(); $('#vidFull').hidden = true; }
+    } else { v.pause(); v.loop = false; vidLoop = false; $('#vidFull').hidden = true; }
   }
   $('#vidBtn').onclick = () => showVid(true);
   $('#vidBtn2').onclick = () => showVid(true, '/assets/live/closing.mp4');
+  $('#signVidBtn').onclick = () => showVid(true, '/assets/live/signing-video.mp4', true);
+  $('#setBtn').onclick = () => { const r = $('#setRow'); r.hidden = !r.hidden; $('#setBtn').classList.toggle('on', !r.hidden); };
   $('#vidClose').onclick = e => { e.stopPropagation(); showVid(false); };
   $('#vid').onclick = () => { const v = $('#vid'); v.paused ? v.play() : v.pause(); };
   $('#vid').onplay = () => $('#vidFull').classList.remove('paused');
@@ -988,7 +1002,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     if (!$('#vidFull').hidden) {
       e.preventDefault();
       if (e.key === ' ' || e.key === 'Enter') { const v = $('#vid'); v.paused ? v.play() : v.pause(); }
-      else if (['Escape','PageDown','ArrowRight'].includes(e.key)) showVid(false);
+      else if (e.key === 'Escape' || (!vidLoop && ['PageDown','ArrowRight'].includes(e.key))) showVid(false);
       return;
     }
     if (!$('#grpFull').hidden && grpSel === 'TEAM' && teams && ['PageDown','ArrowRight',' ','Enter'].includes(e.key) && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); focusTeam(teamCur === null ? 0 : Math.min(teamCur + 1, teams.length - 1)); return; }
@@ -1135,7 +1149,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     else if (TOUCH.playing) TOUCH.stop();
   }
 
-  const bgmLabel = () => $('#bgmBtn').textContent = BGM.playing ? '🎵 대기 음악 끄기' : '🎵 대기 음악 켜기';
+  const bgmLabel = () => $('#bgmBtn').innerHTML = '<i class="tn">1</i>' + (BGM.playing ? '🎵 음악 끄기' : '🎵 대기 음악');
   $('#bgmBtn').onclick = () => { if (TOUCH.playing) TOUCH.stop(1); if (SIGN.playing) { SIGN.stop(); signLabel(); } BGM.playing ? BGM.stop() : BGM.start(); bgmLabel(); };
   const signLabel = () => $('#signBtn').textContent = SIGN.playing ? '✍️ 사인회 음악 끄기' : '✍️ 사인회 음악 켜기';
   $('#signBtn').onclick = () => { if (TOUCH.playing) TOUCH.stop(1); if (BGM.playing) { BGM.stop(); bgmLabel(); } SIGN.playing ? SIGN.stop() : SIGN.start(); signLabel(); };
@@ -1521,7 +1535,24 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     const s2 = $('#qrStep2'); if (s2) s2.textContent = /apply=/.test(url) ? '② 서울 · 울산 중 선택하고 신청하기' : /2027color|pages\.dev|book48|\.pdf/.test(url) ? (/2027color|pages\.dev/.test(url) ? '② 생년월일을 넣고 결과 보기' : '② 화면을 열어 확인하기') : '② 화면을 열어 확인하기';
     $('#qrFull').hidden = false; $('#qrBtn').textContent = 'QR 닫기';
   }
-  $('#csQrBtn').onclick = () => $('#qrFull').hidden || $('#qrLinkInfo').hidden ? showLinkQR('컬러강점 전문가 자격과정 신청 · 서울 12.20 / 울산 1.9', 'https://www.pbscolor.com/academy/courses/?apply=cs') : toggleQR(false);
+  async function qrAndLink(btnTitle, url, chatBody, chatName){
+    if (!($('#qrFull').hidden || $('#qrLinkInfo').hidden)) return toggleQR(false);
+    showLinkQR(btnTitle, url);
+    try { const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: chatBody, p_attach_url: url, p_attach_name: chatName, p_attach_kind: 'link' }); if (error) throw error; toast('채팅방에도 링크 보냄'); loadAll(); } catch(e) { toast('채팅 링크 보내기 실패 · 채팅이 켜져 있는지 확인'); }
+  }
+  $('#dxQrBtn').onclick = () => qrAndLink('컬러강점 진단 (48문항)', 'https://www.pbscolor.com/book48.html', '🎨 지금 컬러강점 진단을 해 보세요 — 아래 버튼을 누르면 바로 시작돼요', '🎨 컬러강점 진단 시작하기 (48문항)');
+  /* 리셋: 출석·닉네임·책·현장구매·채팅·추첨을 행사 전 상태로 (입금 체크·명단은 유지) */
+  $('#resetBtn').onclick = async () => {
+    if (!confirm('행사 전 상태로 리셋할까요?\n\n지우는 것: 출석, 닉네임, 책 드림, 현장 책 구매, 현장 등록(명단 번호 뒤에 추가된 분), 채팅, 행운권 당첨\n남는 것: 명단, 참가 구분, 입금 체크, 비고, 선물 목록')) return;
+    if (!confirm('정말 리셋할까요? 되돌릴 수 없어요.')) return;
+    try { const { error } = await sb.rpc('live_host_reset_event', { p_pw: pw, p_room: room.id }); if (error) throw error; toast('리셋 완료 — 행사 전 상태예요'); loadAll(); try { await loadGifts(); } catch(_){} } catch(e) { toast('리셋 실패: ' + (e.message || e)); }
+  };
+  $('#csQrBtn').onclick = async () => {
+    if (!($('#qrFull').hidden || $('#qrLinkInfo').hidden)) return toggleQR(false);
+    const U = 'https://www.pbscolor.com/academy/courses/?apply=cs';
+    showLinkQR('컬러강점 전문가 자격과정 신청 · 서울 12.20 / 울산 1.9', U);
+    try { const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: '🎓 컬러강점 전문가 자격과정 · 서울 12.20(일) / 울산 1.9(토) — 아래 버튼으로 바로 신청하세요', p_attach_url: U, p_attach_name: '🎓 컬러강점 자격과정 신청하기', p_attach_kind: 'link' }); if (error) throw error; toast('채팅방에도 신청 링크 보냄'); loadAll(); } catch(e) { toast('채팅 링크 보내기 실패 · 채팅이 켜져 있는지 확인'); }
+  };
   $('#dwQrBtn').onclick = async () => {
     if (!($('#qrFull').hidden || $('#qrLinkInfo').hidden)) return toggleQR(false);
     showLinkQR('나의 2027 컬러리듬 · 사주 보기', 'https://pbscolor-2027.pages.dev/?c=1');
