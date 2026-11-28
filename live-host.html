@@ -380,7 +380,6 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
       <button class="tb" id="vidBtn" style="background:#16121B;color:#fff;border:1px solid #fff3"><i class="tn">2</i>🎬 오프닝</button>
       <button class="tb" id="dxQrBtn" style="background:linear-gradient(90deg,#FF3366,#E0951A,#00A878,#0077B6);color:#fff"><i class="tn">3</i>🎨 진단</button>
       <button class="tb" id="dwQrBtn" style="background:#7B2FBE;color:#fff"><i class="tn">4</i>🌀 대운</button>
-      <button class="tb" id="mineQrBtn" style="background:#4A0E78;color:#fff"><i class="tn">4+</i>📥 천간자료</button>
       <button class="tb" id="csQrBtn" style="background:#E5007F;color:#fff"><i class="tn">5</i>🎓 과정신청</button>
       <button class="tb" id="drawBtn" style="background:#FFC94D;color:#16121B"><i class="tn">6</i>🎁 행운권</button>
       <button class="tb" id="vidBtn2" style="background:#16121B;color:#fff;border:1px solid #E5007F"><i class="tn">7</i>🎬 클로징</button>
@@ -860,9 +859,9 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   const ENGC = { RED:'#FF3366', YELLOW:'#E0951A', GREEN:'#00A878', BLUE:'#0077B6' };
   function engBadge(e){ return ENGC[e] ? `<span class="eb" style="background:${ENGC[e]}">${e}</span>` : ''; }
   /* 링크 버튼 */
-  function getLinks(){ const D = [{ t: '컬러강점 진단 시작하기 (48문항)', u: 'https://www.pbscolor.com/book48.html' }, { t: '📕 나의 컬러강점 엔진 결과지 보기', u: 'https://www.pbscolor.com/assets/live/concert-engine.pdf' }, { t: '🔮 2027 나의 컬러리듬 보기', u: 'https://www.pbscolor.com/2027color/color/' }, { t: '🌀 나의 2027 컬러리듬 · 사주 보기', u: 'https://pbscolor-2027.pages.dev/?c=1' }, { t: '🎓 컬러강점 자격과정 신청', u: 'https://www.pbscolor.com/academy/courses/?apply=cs' }];
+  function getLinks(){ const D = [{ t: '컬러강점 진단 시작하기 (48문항)', u: 'https://www.pbscolor.com/book48.html' }, { t: '📕 나의 컬러강점 엔진 결과지 보기', u: 'https://www.pbscolor.com/assets/live/concert-engine.pdf' }, { t: '🔮 2027 나의 컬러리듬 보기', u: 'https://www.pbscolor.com/2027color/color/' }, { t: '🌀 10년 대운과 귀인 지혜 받기', u: 'https://www.pbscolor.com/concert/mine/' }, { t: '🎓 컬러강점 자격과정 신청', u: 'https://www.pbscolor.com/academy/courses/?apply=cs' }];
     const L = ls.get('pbs_live_links', null); if (!L) return D;
-    L.forEach(x => { if (x.u === 'https://www.pbscolor.com/2027color/') { x.u = 'https://pbscolor-2027.pages.dev/?c=1'; x.t = '🌀 나의 2027 컬러리듬 · 사주 보기'; } });
+    L.forEach(x => { if (x.u === 'https://www.pbscolor.com/2027color/' || x.u === 'https://pbscolor-2027.pages.dev/?c=1') { x.u = 'https://www.pbscolor.com/concert/mine/'; x.t = '🌀 10년 대운과 귀인 지혜 받기'; } });
     D.forEach(d => { if (!L.some(x => x.u === d.u) && !ls.get('pbs_live_links_seen_' + d.u, false)) { L.push(d); ls.set('pbs_live_links_seen_' + d.u, true); } }); ls.set('pbs_live_links', L); return L; }
   function renderLinks(){
     const L = getLinks();
@@ -1533,7 +1532,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     $('#qrBig').innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
     $('#qrEye').textContent = 'SCAN ME'; $('#qrTitle').textContent = title.replace(/^[^\w가-힣]+/, '');
     $('#qrRoomInfo').hidden = true; $('#qrLinkInfo').hidden = false; $('#qrLinkUrl').textContent = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
-    const s2 = $('#qrStep2'); if (s2) s2.textContent = /apply=/.test(url) ? '② 서울 · 울산 중 선택하고 신청하기' : /2027color|pages\.dev|book48|\.pdf/.test(url) ? (/2027color|pages\.dev/.test(url) ? '② 생년월일을 넣고 결과 보기' : '② 화면을 열어 확인하기') : '② 화면을 열어 확인하기';
+    const s2 = $('#qrStep2'); if (s2) s2.textContent = /apply=/.test(url) ? '② 서울 · 울산 중 선택하고 신청하기' : /2027color|pages\.dev|concert\/mine|book48|\.pdf/.test(url) ? (/2027color|pages\.dev|concert\/mine/.test(url) ? '② 생년월일을 넣고 결과 보기' : '② 화면을 열어 확인하기') : '② 화면을 열어 확인하기';
     $('#qrFull').hidden = false; $('#qrBtn').textContent = 'QR 닫기';
   }
   async function qrAndLink(btnTitle, url, chatBody, chatName){
@@ -1541,7 +1540,7 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
     showLinkQR(btnTitle, url);
     try { const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: chatBody, p_attach_url: url, p_attach_name: chatName, p_attach_kind: 'link' }); if (error) throw error; toast('채팅방에도 링크 보냄'); loadAll(); } catch(e) { toast('채팅 링크 보내기 실패 · 채팅이 켜져 있는지 확인'); }
   }
-  $('#mineQrBtn').onclick = () => qrAndLink('내 천간 자료 받기 · 2027 나의 색', 'https://www.pbscolor.com/concert/mine/', '📥 사주 QR에서 확인한 나의 천간(일간)을 골라 내 자료를 받아 가세요', '📥 내 천간 자료 받기 (10종)');
+  if ($('#mineQrBtn')) $('#mineQrBtn').onclick = () => qrAndLink('내 천간 자료 받기 · 2027 나의 색', 'https://www.pbscolor.com/concert/mine/', '📥 사주 QR에서 확인한 나의 천간(일간)을 골라 내 자료를 받아 가세요', '📥 내 천간 자료 받기 (10종)');
   $('#dxQrBtn').onclick = () => qrAndLink('컬러강점 진단 (48문항)', 'https://www.pbscolor.com/book48.html', '🎨 지금 컬러강점 진단을 해 보세요 — 아래 버튼을 누르면 바로 시작돼요', '🎨 컬러강점 진단 시작하기 (48문항)');
   /* 리셋: 출석·닉네임·책·현장구매·채팅·추첨을 행사 전 상태로 (입금 체크·명단은 유지) */
   $('#resetBtn').onclick = async () => {
@@ -1557,8 +1556,8 @@ button.team-btn{background:linear-gradient(135deg,#FF3366,#E0951A 35%,#00A878 65
   };
   $('#dwQrBtn').onclick = async () => {
     if (!($('#qrFull').hidden || $('#qrLinkInfo').hidden)) return toggleQR(false);
-    showLinkQR('나의 2027 컬러리듬 · 사주 보기', 'https://pbscolor-2027.pages.dev/?c=1');
-    try { const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: '', p_attach_url: 'https://pbscolor-2027.pages.dev/?c=1', p_attach_name: '🌀 나의 2027 컬러리듬 · 사주 보기', p_attach_kind: 'link' }); if (error) throw error; toast('채팅방에도 링크 보냄'); loadAll(); } catch(e) { toast('채팅 링크 보내기 실패 · 채팅이 켜져 있는지 확인'); }
+    showLinkQR('10년 대운과 귀인 지혜 · 생년월일 넣기', 'https://www.pbscolor.com/concert/mine/');
+    try { const { error } = await sb.rpc('live_host_say2', { p_pw: pw, p_room: room.id, p_body: '', p_attach_url: 'https://www.pbscolor.com/concert/mine/', p_attach_name: '🌀 10년 대운과 귀인 지혜 받기', p_attach_kind: 'link' }); if (error) throw error; toast('채팅방에도 링크 보냄'); loadAll(); } catch(e) { toast('채팅 링크 보내기 실패 · 채팅이 켜져 있는지 확인'); }
   };
   $('#qrBtn').onclick = () => toggleQR(); $('#qrClose').onclick = () => toggleQR(false); $('#qrSmall').onclick = () => toggleQR(true);
   $('#sideBtn').onclick = () => {
