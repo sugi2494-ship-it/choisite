@@ -156,6 +156,26 @@ button{cursor:pointer;border:0;background:none}
 .send:disabled{background:#F2A6CC}
 .composer .hint{position:absolute;left:0;right:0;bottom:100%;text-align:center;pointer-events:none}
 .composer.hide{display:none}
+/* 후기 탭 */
+.tabs{grid-template-columns:repeat(auto-fit,minmax(0,1fr))!important}
+.rv-form{margin:14px 12px;padding:18px 16px;background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.rv-h{font-size:18px;font-weight:800}
+.rv-s{font-size:13px;color:var(--ink3);margin:4px 0 12px}
+.rv-stars{display:flex;gap:4px;margin-bottom:12px}
+.rv-stars button{font-size:32px;line-height:1;color:#E3DCE0;padding:2px}
+.rv-stars button.on{color:#FFB800}
+.rv-form input,.rv-form textarea{width:100%;border:1.5px solid #D9D1D6;border-radius:12px;padding:12px 14px;font:inherit;font-size:16px;margin-bottom:8px;background:#fff;color:var(--ink);resize:vertical}
+.rv-form input:focus,.rv-form textarea:focus{outline:none;border-color:var(--pbs);box-shadow:0 0 0 3px rgba(229,0,127,.12)}
+.rv-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rv-row span{font-size:12.5px;color:var(--ink4)}
+#rvSend{background:var(--pbs);color:#fff;font-weight:800;font-size:16px;padding:13px 22px;border-radius:999px}
+#rvSend:disabled{opacity:.5}
+.rv-all{display:block;text-align:center;margin-top:14px;font-size:14px;font-weight:700;color:var(--pbs)}
+.rv-card{margin:10px 12px;padding:14px 16px;background:#fff;border-radius:16px}
+.rv-card .st{color:#FFB800;font-size:14px;letter-spacing:1px}
+.rv-card p{font-size:15px;line-height:1.6;margin:6px 0;white-space:pre-wrap;word-break:break-word}
+.rv-card small{font-size:12.5px;color:var(--ink4)}
+
 .counter{font-size:11px;color:var(--ink4);text-align:right;padding:0 16px 2px;max-width:640px;margin:0 auto;background:#fff}
 
 /* 입장 화면 */
@@ -237,6 +257,7 @@ button{cursor:pointer;border:0;background:none}
       <nav class="tabs" role="tablist">
         <button class="tab on" data-tab="c" role="tab" id="chatTab">채팅<span class="badge" id="bc"></span></button>
         <button class="tab" data-tab="m" hidden style="display:none" role="tab">자료실<span class="badge" id="bm"></span></button>
+        <button class="tab" data-tab="r" role="tab" id="revTab">✍️ 후기</button>
       </nav>
       <div class="draw" id="draw"><small>🎁 행운권 당첨</small><p id="drawText"></p></div>
       <div class="spot" id="spot"><small>지금 소개하는 글</small><p id="spotText"></p><a class="spot-link" id="spotLink" target="_blank" rel="noopener" hidden></a><em id="spotWho"></em></div>
@@ -247,6 +268,20 @@ button{cursor:pointer;border:0;background:none}
 
     <section class="pane on" id="pane-c"><div id="cList"></div></section>
     <section class="pane" id="pane-m"><div id="mList"></div></section>
+    <section class="pane" id="pane-r">
+      <div class="rv-form">
+        <p class="rv-h">오늘 강의 어떠셨나요?</p>
+        <p class="rv-s">남겨 주신 후기는 PBS 홈페이지 후기 모음에 바로 올라갑니다.</p>
+        <div class="rv-stars" id="rvStars" role="radiogroup" aria-label="별점">
+          <button type="button" data-v="1" aria-label="1점">★</button><button type="button" data-v="2" aria-label="2점">★</button><button type="button" data-v="3" aria-label="3점">★</button><button type="button" data-v="4" aria-label="4점">★</button><button type="button" data-v="5" aria-label="5점">★</button>
+        </div>
+        <input id="rvName" maxlength="20" placeholder="이름 또는 닉네임 (예: 김OO)">
+        <textarea id="rvMsg" rows="4" maxlength="500" placeholder="알게 된 점, 좋았던 점을 자유롭게 적어 주세요 (5자 이상)"></textarea>
+        <div class="rv-row"><span id="rvCnt">0 / 500</span><button type="button" id="rvSend">후기 올리기</button></div>
+        <a class="rv-all" href="/reviews.html" target="_blank" rel="noopener">홈페이지 후기 모음 보기 →</a>
+      </div>
+      <div id="rvList"></div>
+    </section>
     <p class="foot">PBS COLOR LAB · 최해숙</p>
   </div>
 </div>
@@ -586,6 +621,33 @@ button{cursor:pointer;border:0;background:none}
   }
   document.querySelectorAll('.tab').forEach(b => b.onclick = () => setTab(b.dataset.tab));
   
+
+  // ===== 후기 탭 (live_reviews) =====
+  let rvRating = 5;
+  const paintStars = () => document.querySelectorAll('#rvStars button').forEach(b => b.classList.toggle('on', +b.dataset.v <= rvRating));
+  document.querySelectorAll('#rvStars button').forEach(b => b.onclick = () => { rvRating = +b.dataset.v; paintStars(); });
+  paintStars();
+  $('#rvMsg').addEventListener('input', () => { $('#rvCnt').textContent = $('#rvMsg').value.length + ' / 500'; });
+  const fmtD = d => { const x = new Date(d); return x.getFullYear() + '.' + String(x.getMonth()+1).padStart(2,'0') + '.' + String(x.getDate()).padStart(2,'0'); };
+  async function loadReviews(){
+    if (!room) return;
+    const { data } = await sb.from('live_reviews').select('name,rating,msg,created_at').eq('room_code', room.code).order('created_at', { ascending: false }).limit(50);
+    $('#rvList').innerHTML = (data||[]).map(r => `<div class="rv-card"><span class="st">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span><p>${esc(r.msg)}</p><small><b>${esc(r.name)}</b> · ${fmtD(r.created_at)}</small></div>`).join('');
+  }
+  $('#rvSend').onclick = async () => {
+    const msg = $('#rvMsg').value.trim(), name = ($('#rvName').value.trim() || nick || '익명').slice(0,20);
+    if (msg.length < 5) { toast('후기를 5자 이상 적어 주세요'); return; }
+    if (!room) return;
+    $('#rvSend').disabled = true;
+    const { data, error } = await sb.rpc('live_review_post', { p_code: room.code, p_client: clientId, p_name: name, p_rating: rvRating, p_msg: msg });
+    $('#rvSend').disabled = false;
+    if (error || !data || !data.ok) { toast(data && data.err === 'rate' ? '잠시 후 다시 올려 주세요' : '올리지 못했어요. 다시 시도해 주세요'); return; }
+    $('#rvMsg').value = ''; $('#rvCnt').textContent = '0 / 500';
+    toast('후기가 홈페이지에 올라갔습니다. 감사합니다! 💗');
+    loadReviews();
+  };
+  document.getElementById('revTab').addEventListener('click', () => { if (!$('#rvName').value && nick) $('#rvName').value = nick; loadReviews(); });
+
   function updateComposer(){
     const show = room && room.is_open && tab === 'c' && room.chat_on;
     $('#composer').classList.toggle('hide', !show);

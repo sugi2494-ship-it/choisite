@@ -952,6 +952,11 @@ html.cspop-on .bar{visibility:hidden}
 @keyframes cpPulse{50%{transform:scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.cspop-gift .cp-ev{animation:none}}
 
+/* 후기 모두 보기 링크 */
+.v-all{text-align:center;margin-top:28px}
+.v-all a{display:inline-block;border:1.5px solid #17131B;border-radius:999px;padding:13px 26px;font-weight:800;font-size:15px;color:#17131B}
+.v-all a:hover{background:#17131B;color:#fff}
+
 </style>
 </head>
 <body>
@@ -1193,7 +1198,30 @@ html.cspop-on .bar{visibility:hidden}
     <figure class="vc"><span class="st">★★★★★</span><q lang="ko">퍼스널컬러에 맞는 립까지 추천해 주셔서 너무 유용했어요! 자료까지 주셔서 더 좋아요. 최고!</q><figcaption class="who"><span><b>여름뮤트</b> · 2026.07</span><span class="tag"><span data-t="v.t2">퍼스널컬러 진단</span></span></figcaption></figure>
   </div>
   <p class="v-ko" id="vKo"><span data-t="v.ko">실제 후기 원문(한국어)</span></p>
+  <p class="v-all"><a href="/reviews.html">후기 모두 보기 →</a></p>
 </section>
+<script>
+// 소통방 후기(live_reviews) 최신순으로 메인 후기 칸에 반영 (없으면 기존 후기 그대로)
+(function(){var SU='https://oqxlsnyuwtmjmbhgzjoz.supabase.co',SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xeGxzbnl1d3Rtam1iaGd6am96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NTc5NDksImV4cCI6MjA5MjMzMzk0OX0.C-PPch12eVru2xhuU80WPYdBj5CJb1Py8m1-OsaGZW8',H={apikey:SK,Authorization:'Bearer '+SK};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+fetch(SU+'/rest/v1/live_reviews?select=name,rating,msg,room_title,created_at&order=created_at.desc&limit=3',{headers:H}).then(function(r){return r.json()}).then(function(rows){
+ if(!Array.isArray(rows)||!rows.length)return;var g=document.querySelector('#voices .v-grid');if(!g)return;
+ var old=[].slice.call(g.querySelectorAll('figure.vc'));
+ rows.forEach(function(r,i){var t=new Date(r.created_at),dt=t.getFullYear()+'.'+('0'+(t.getMonth()+1)).slice(-2);
+  var f=document.createElement('figure');f.className='vc'+(i===0?' big':'');
+  f.innerHTML='<span class="st">'+'★'.repeat(r.rating)+'☆'.repeat(5-r.rating)+'</span><q lang="ko">'+esc(r.msg)+'</q><figcaption class="who"><span><b>'+esc(r.name)+'</b> · '+dt+'</span>'+(r.room_title?'<span class="tag">'+esc(r.room_title)+'</span>':'')+'</figcaption>';
+  g.insertBefore(f,g.firstChild&&old[0]?old[0]:null);});
+ // 최신 3개만 보이게: 기존 후기는 밀려난 만큼 숨김
+ old.forEach(function(o,i){if(i<rows.length)o.style.display='none';else o.classList.remove('big')});
+ var figs=g.querySelectorAll('figure.vc');figs.forEach(function(f,i){if(i>0)f.classList.remove('big')});figs[0]&&figs[0].classList.add('big');
+}).catch(function(){});
+fetch(SU+'/rest/v1/live_reviews?select=rating',{headers:H}).then(function(r){return r.json()}).then(function(a){
+ if(!Array.isArray(a)||!a.length)return;var t=0;a.forEach(function(x){t+=x.rating});var v=(t/a.length).toFixed(1);
+ var sc=document.querySelector('#voices .score');if(!sc)return;sc.querySelector('b').textContent=v;sc.setAttribute('aria-label','후기 평균 별점 '+v);
+ var r=Math.round(+v);sc.querySelector('.st').textContent='★'.repeat(r)+'☆'.repeat(5-r);
+ var sm=sc.querySelector('small span');if(sm){sm.removeAttribute('data-t');sm.textContent='참여자 후기 '+a.length+'개 평균';}
+}).catch(function(){});})();
+</script>
 
 <!-- ⑥-1 현장 · 교구 -->
 <section class="site" id="gallery">
