@@ -910,6 +910,40 @@ html[data-theme="light"] .hero .sub{color:var(--ink-mute)}
 .v2pic .bookcard:hover .bk-buy{color:var(--mag)}
 @media (max-width:900px){.v2pic .bookcard .bk-buy{font-size:11.5px;margin-top:1px}}
 
+/* 컬러강점 원데이 과정 팝업 */
+.cspop{position:fixed;inset:0;z-index:9000;background:rgba(22,35,59,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+.cspop[hidden]{display:none}
+.cspop-box{position:relative;background:#F4F1EC;color:#16233B;width:100%;max-width:520px;max-height:calc(100vh - 40px);overflow:auto;border-radius:24px;padding:28px 24px 20px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+.cspop-x{position:absolute;right:14px;top:12px;width:38px;height:38px;border:0;background:transparent;font-size:28px;line-height:1;color:#16233B;cursor:pointer}
+.cspop-k{font-size:12.5px;letter-spacing:.2em;color:#E5007F;font-weight:700}
+.cspop h2{font-size:22px;font-weight:900;margin:6px 0 4px;letter-spacing:-.02em}
+.cspop-s{font-size:15px;color:rgba(22,35,59,.7);margin-bottom:12px}
+.cspop-gift{background:#fff;border:2px solid #E5007F;border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.cspop-gift .cp-1{font-size:13.5px;font-weight:800;color:#E5007F}
+.cspop-gift .cp-2{display:flex;white-space:nowrap;align-items:center;gap:8px;margin:8px 0 6px;font-size:13px;font-weight:700}
+.cspop-gift .csCd{white-space:nowrap;font-variant-numeric:tabular-nums;background:#16233B;color:#fff;border-radius:8px;padding:5px 11px;font-size:17px;font-weight:800}
+.cspop-gift .cp-3{font-size:16px;font-weight:800;margin-top:2px}
+.cspop-gift .cp-3 small{font-size:13px;font-weight:600;color:rgba(22,35,59,.6)}
+.cspop-gift .cp-4{font-size:12.5px;color:#E5007F;font-weight:600;margin-top:6px}
+.cspop-cn{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
+.cspop-cn img{width:84px;height:105px;object-fit:cover;border-radius:8px;flex:0 0 auto;border:1px solid rgba(22,35,59,.1);cursor:zoom-in}
+.cspop-b{display:block;border-radius:16px;padding:17px 20px;margin-bottom:10px;font-size:19px;font-weight:800;color:#fff;text-decoration:none}
+.cspop-b small{display:block;font-size:14px;font-weight:600;opacity:.9;margin-top:4px}
+.cspop-b.mg{background:#E5007F}.cspop-b.mg:hover{background:#C2006A}
+.cspop-b.nv{background:#16233B}.cspop-b.nv:hover{background:#0d1626}
+.cspop-today{display:block;margin:6px auto 0;border:0;background:none;color:rgba(22,35,59,.6);font-size:13.5px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
+.cslb{position:fixed;inset:0;z-index:9100;background:rgba(0,0,0,.86);display:flex;align-items:center;justify-content:center}
+.cslb[hidden]{display:none}
+.cslb img{max-width:92vw;max-height:88vh;border-radius:10px}
+.cslb button{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;width:48px;height:48px;border-radius:50%;font-size:30px;line-height:1;cursor:pointer}
+.cslb-x{top:16px;right:16px}.cslb-p{left:12px;top:50%;transform:translateY(-50%)}.cslb-n{right:12px;top:50%;transform:translateY(-50%)}
+html.cspop-on .bar{visibility:hidden}
+@media (max-width:640px){
+ .cspop{align-items:flex-end;padding:0}
+ .cspop-box{border-radius:24px 24px 0 0;max-height:92vh;padding:24px 18px 16px}
+ .cspop h2{font-size:20px}
+}
+
 </style>
 </head>
 <body>
@@ -1350,6 +1384,59 @@ var T={"ko": {"n.1": "대표 소개", "n.2": "개인 컨설팅", "n.3": "기업�
   if(location.hash==='#consulting'){setTimeout(function(){document.getElementById('contact').scrollIntoView()},60)}
 })();
 
+</script>
+
+<!-- 컬러강점 원데이 전문가 과정 팝업 (2026-11) -->
+<div id="csPop" class="cspop" role="dialog" aria-modal="true" aria-labelledby="csPopT" hidden>
+ <div class="cspop-box">
+  <button type="button" class="cspop-x" aria-label="닫기">×</button>
+  <p class="cspop-k">COLOR STRENGTH EXPERT</p>
+  <h2 id="csPopT">컬러강점 원데이 전문가 교육과정</h2>
+  <p class="cspop-s">교육비 495,000원 · 신청할 과정을 눌러 주세요</p>
+  <div id="csGift" class="cspop-gift">
+   <div class="cp-1">🎁 참가자 혜택 · 11/30(월) 낮 12시 마감</div>
+   <div class="cp-2">남은 시간 <span class="csCd">--:--:--</span></div>
+   <div class="cp-3">컬러강점 진단지 100장 <small>50만원 상당</small></div>
+   <div class="cp-3">+ 컬러카드 10세트 <small>10만원 상당</small></div>
+   <div class="cp-4">시간이 지나면 혜택이 사라집니다</div>
+  </div>
+  <div class="cspop-cn" title="카드뉴스 크게 보기"><img src="/assets/cardnews/csday-01.webp" alt="컬러강점 원데이 과정 카드뉴스 1" loading="lazy" data-i="0"><img src="/assets/cardnews/csday-02.webp" alt="컬러강점 원데이 과정 카드뉴스 2" loading="lazy" data-i="1"><img src="/assets/cardnews/csday-03.webp" alt="컬러강점 원데이 과정 카드뉴스 3" loading="lazy" data-i="2"><img src="/assets/cardnews/csday-04.webp" alt="컬러강점 원데이 과정 카드뉴스 4" loading="lazy" data-i="3"><img src="/assets/cardnews/csday-05.webp" alt="컬러강점 원데이 과정 카드뉴스 5" loading="lazy" data-i="4"></div>
+  <a class="cspop-b mg" href="/academy/courses/?apply=cs-1220">12.20(일) 서울 원데이<small><span class="csGiftTag">참가자 혜택 적용 과정</span><span class="csNoGift" style="display:none">서울 과정</span></small></a>
+  <a class="cspop-b nv" href="/academy/courses/?apply=cs-ulsan">2027. 1.9(토) 울산 원데이<small>1월 과정</small></a>
+  <button type="button" class="cspop-today">오늘 하루 보지 않기</button>
+ </div>
+</div>
+<div id="csLb" class="cslb" hidden><button type="button" class="cslb-x" aria-label="닫기">×</button><button type="button" class="cslb-p" aria-label="이전">‹</button><img alt=""><button type="button" class="cslb-n" aria-label="다음">›</button></div>
+<script>
+(function(){
+var END=new Date('2026-11-30T12:00:00+09:00').getTime();
+var pop=document.getElementById('csPop');if(!pop)return;
+function pad(n){return(n<10?'0':'')+n}
+function tick(){var left=END-Date.now(),g=document.getElementById('csGift');
+ if(left<=0){if(g)g.remove();pop.querySelectorAll('.csGiftTag').forEach(function(e){e.style.display='none'});pop.querySelectorAll('.csNoGift').forEach(function(e){e.style.display=''});clearInterval(t);return}
+ var h=Math.floor(left/3600000),m=Math.floor(left%3600000/60000),s=Math.floor(left%60000/1000);
+ pop.querySelectorAll('.csCd').forEach(function(e){e.textContent=pad(h)+'시간 '+pad(m)+'분 '+pad(s)+'초'})}
+var t=setInterval(tick,1000);tick();
+var KEY='pbs-cspop-hide';
+function hidden(){try{return localStorage.getItem(KEY)===new Date().toDateString()}catch(e){return false}}
+function close(){pop.hidden=true;document.documentElement.classList.remove('cspop-on')}
+pop.querySelector('.cspop-x').onclick=close;
+pop.addEventListener('click',function(e){if(e.target===pop)close()});
+pop.querySelector('.cspop-today').onclick=function(){try{localStorage.setItem(KEY,new Date().toDateString())}catch(e){}close()};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pop.hidden)close()});
+// 카드뉴스 크게 보기
+var lb=document.getElementById('csLb'),li=lb.querySelector('img'),srcs=[].map.call(pop.querySelectorAll('.cspop-cn img'),function(i){return i.src}),cur=0;
+function show(i){cur=(i+srcs.length)%srcs.length;li.src=srcs[cur];li.alt='카드뉴스 '+(cur+1)}
+pop.querySelectorAll('.cspop-cn img').forEach(function(im,i){im.onclick=function(){show(i);lb.hidden=false}});
+lb.querySelector('.cslb-x').onclick=function(){lb.hidden=true};
+lb.querySelector('.cslb-p').onclick=function(){show(cur-1)};
+lb.querySelector('.cslb-n').onclick=function(){show(cur+1)};
+lb.addEventListener('click',function(e){if(e.target===lb)lb.hidden=true});
+if(document.documentElement.lang&&document.documentElement.lang!=='ko')return;
+if(hidden())return;
+function open(){if(document.documentElement.classList.contains('intro-on')){return setTimeout(open,500)}pop.hidden=false;document.documentElement.classList.add('cspop-on')}
+window.addEventListener('load',function(){setTimeout(open,1200)});
+})();
 </script>
 </body>
 </html>
