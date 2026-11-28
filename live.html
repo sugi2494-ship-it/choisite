@@ -210,7 +210,7 @@ button{cursor:pointer;border:0;background:none}
       <p class="ck-lead">✅ 참석 확인을 하고 바로 입장해요</p>
       <label class="field"><span>이름 <em>(참석 확인용)</em></span><input id="ckName" maxlength="20" autocomplete="name" placeholder="예) 최해숙" /></label>
       <div class="ck-row">
-        <label class="field"><span>전화번호 뒤 4자리</span><input id="ckTel" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="1234" /></label>
+        <label class="field"><span>전화번호 뒤 4자리 <small style="font-weight:500;opacity:.7">(없으면 비워 두세요)</small></span><input id="ckTel" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="1234" /></label>
         <label class="field"><span>채팅방 닉네임 <em>(추첨 이름)</em></span><input id="ckNick" maxlength="14" autocomplete="nickname" placeholder="비우면 이름으로" /></label>
       </div>
     </div>
@@ -361,7 +361,7 @@ button{cursor:pointer;border:0;background:none}
     if (ckOn) {
       const nm = $('#ckName').value.trim(), tel = $('#ckTel').value.trim();
       if (nm.length < 2) return $('#gateErr').textContent = '이름을 입력해 주세요';
-      if (tel.length !== 4) return $('#gateErr').textContent = '전화번호 뒤 4자리를 입력해 주세요';
+      if (tel.length && tel.length !== 4) return $('#gateErr').textContent = '전화번호 뒤 4자리를 입력해 주세요 (없으면 비워 두세요)';
       n = $('#ckNick').value.trim() || nm;
     }
     if (!n) return $('#gateErr').textContent = '닉네임 입력';
@@ -369,7 +369,7 @@ button{cursor:pointer;border:0;background:none}
     const { data, error } = await sb.from('live_rooms').select('id,code,title,subtitle,is_open,chat_on,spotlight_id,draw_text,group_call,checkin_on,chat_since').eq('code', code).maybeSingle();
     $('#enterBtn').disabled = false;
     if (error || !data) return $('#gateErr').textContent = '강의방을 찾을 수 없음 · 코드 확인';
-    if (data.checkin_on && !ckOn) { ckMode(true); return $('#gateErr').textContent = '참석 확인을 위해 이름과 전화번호 뒤 4자리를 입력해 주세요'; }
+    if (data.checkin_on && !ckOn) { ckMode(true); return $('#gateErr').textContent = '참석 확인을 위해 이름을 입력해 주세요 (전화번호 뒤 4자리는 있으면 함께)'; }
     let ckMsg = '';
     if (ckOn) {
       const nm = $('#ckName').value.trim(), tel = $('#ckTel').value.trim();
