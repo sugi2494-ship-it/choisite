@@ -767,6 +767,27 @@ function cheer(done){
 }
 
 /* ============ 결과 ============ */
+
+/* ==== 12기어: 문항별 기어 배정 (엔진마다 기어 1·2·3에 4문항씩) ==== */
+// 기어 번호 뜻(책 기준): 1 = 개인 · 2 = 소통·함께 · 3 = 결과물·완성
+const GEAR_MAP = {
+  RED:   [1,1,2,3,2,1,3,1,2,3,3,2],
+  YELLOW:[2,3,2,3,3,1,1,2,3,2,1,1],
+  GREEN: [1,1,2,3,1,3,2,2,1,3,2,3],
+  BLUE:  [2,3,1,2,2,2,1,3,1,1,3,3]
+};
+const GEAR_NAMES = {
+  RED:['도전','열정','성과'], YELLOW:['발견','공감','창의'], GREEN:['배려','평화','밸런스'], BLUE:['신뢰','분석','체계']
+};
+const GEAR_SCOPE = ['개인','소통·함께','결과물·완성'];
+const GEAR_LETTER = {RED:'R',YELLOW:'Y',GREEN:'G',BLUE:'B'};
+function calcGears(){
+  const list=[];
+  ORDER.forEach(ek=>{ [1,2,3].forEach(g=>{ let sc=0; QUESTIONS[ek].forEach((q,i)=>{ if(GEAR_MAP[ek][i]===g) sc+=STATE.answers[ek+'_'+i]||0; }); list.push({ek,g,code:GEAR_LETTER[ek]+g,name:GEAR_NAMES[ek][g-1],score:sc}); }); });
+  const er={}; [...ORDER].sort((a,b)=>STATE.result.sums[b]-STATE.result.sums[a]).forEach((e,i)=>er[e]=i);
+  list.sort((a,b)=>b.score-a.score || er[a.ek]-er[b.ek] || a.g-b.g);
+  return list;
+}
 function bandOf(score){ for(const b of BANDS){ if(score>=b.min) return b; } return BANDS[3]; }
 function goResult(){
   if(Object.keys(STATE.answers).length<48){ toast('아직 응답하지 않은 문항이 있습니다'); return; }
@@ -774,6 +795,7 @@ function goResult(){
   ORDER.forEach(ek=>{ sums[ek]=0; QUESTIONS[ek].forEach((q,i)=>{ sums[ek]+=STATE.answers[ek+'_'+i]||0; }); });
   const ranked=[...ORDER].sort((a,b)=>sums[b]-sums[a]);
   STATE.result={ sums, first:ranked[0], second:ranked[1] };
+  STATE.result.gears=calcGears();
   renderResult();
   show('result');
   saveRecord();
@@ -807,6 +829,22 @@ function renderResult(){
     <div class="subtitle">${E1.sub} · ${E1.power}</div>
     <div class="band">${r.sums[r.first]}점 / 60 · ${b1.label}</div>
   </div>`;
+  // ==== 나의 최고 컬러강점 (12기어 중 상위 2개) ====
+  if(r.gears && r.gears.length){
+    const top=r.gears.slice(0,2);
+    h+=`<div class="card"><div class="eyebrow" style="color:${E1.hex}">나의 최고 컬러강점</div>
+      <h2 style="font-size:17px;margin-top:4px;">12가지 강점 기어 중 가장 강한 ${top.length}개</h2>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+      ${top.map((t,i)=>{const C=ENGINES[t.ek].hex;return `<div style="flex:1;min-width:140px;background:${C}12;border:2px solid ${C}66;border-radius:16px;padding:16px 14px;text-align:center;">
+        <div style="font-size:11.5px;color:var(--text-muted);font-weight:700;">${i+1}순위 강점</div>
+        <div style="font-size:30px;font-weight:800;color:${C};line-height:1.2;margin-top:4px;">${t.name}</div>
+        <div style="font-size:13px;font-weight:700;color:${C};margin-top:2px;">${t.code} · ${ENGINES[t.ek].name} ${ENGINES[t.ek].sub}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:6px;">${GEAR_SCOPE[t.g-1]} 기어 · ${t.score}점 / 20</div>
+      </div>`}).join('')}
+      </div>
+      <p style="font-size:11.5px;color:var(--text-muted);margin-top:10px;">기어 번호: 1 = 개인 · 2 = 소통·함께 · 3 = 결과물·완성 · 각 기어 4문항 합계</p>
+    </div>`;
+  }
   h+=`<div class="card"><h2 style="font-size:16px;">4가지 엔진 점수</h2><div style="margin-top:14px;">`;
   ORDER.forEach(ek=>{
     const E=ENGINES[ek], s=r.sums[ek], pct=Math.round((s-12)/48*100);
@@ -871,20 +909,10 @@ function renderResult(){
       ${BANDS.map(b=>`<tr style="border-bottom:1px solid var(--border-default)"><td style="padding:8px 6px;font-weight:600;white-space:nowrap;">${b.range}</td><td style="padding:8px 6px;font-weight:600;white-space:nowrap;">${b.label}</td><td style="padding:8px 6px;color:var(--text-secondary)">${b.desc}</td></tr>`).join('')}
     </table></div>`;
   // ===== 다음 단계 — 엔진별 단일 CTA =====
-  const NEXT={
-    RED:{line:'추진 엔진이 1순위인 분들은 배운 것을 바로 현장에서 쓰고 싶어 합니다.',
-         sub:'자격 취득에서 끝나지 않고, 실제로 활동하는 강사가 되는 과정입니다.',
-         label:'PBS 인증강사 과정 알아보기', href:'/academy/instructor'},
-    YELLOW:{line:'관계 엔진이 1순위인 분들은 사람 앞에서 설명할 때 가장 살아납니다.',
-         sub:'컬러강점을 나누는 강사로 활동하는 길을 안내합니다.',
-         label:'PBS 인증강사 과정 알아보기', href:'/academy/instructor'},
-    GREEN:{line:'조화 엔진이 1순위인 분들은 나를 충분히 이해한 뒤에 움직입니다.',
-         sub:'색과 골격, 얼굴을 함께 보는 1:1 통합 진단입니다.',
-         label:'퍼스널컬러 진단 예약하기', href:'https://naver.me/GSD0VrvO'},
-    BLUE:{line:'분석 엔진이 1순위인 분들은 근거와 체계가 잡힌 학습을 선호합니다.',
-         sub:'퍼스널컬러와 골격진단을 기초부터 체계적으로 배웁니다.',
-         label:'전문가 자격과정 알아보기', href:'/academy'}
-  };
+  const CS={line:'내 컬러강점을 알았다면, 이제 다른 사람의 강점을 찾아 주는 사람이 될 차례입니다.',
+         sub:'컬러강점 원데이 전문가 교육과정 · 12.20(일) 서울 / 2027. 1.9(토) 울산',
+         label:'컬러강점 전문가 자격과정 신청하기', href:'/academy/courses/?apply=cs'};
+  const NEXT={RED:CS,YELLOW:CS,GREEN:CS,BLUE:CS};
   const nx = NEXT[r.first] || NEXT.GREEN;
   const nxExt = nx.href.indexOf('http')===0 ? ' target="_blank" rel="noopener"' : '';
   h+=`<div class="card no-print" style="border:2px solid ${E1.hex}55;background:${E1.hex}0A;">
@@ -896,7 +924,6 @@ function renderResult(){
       ${[
         {t:'퍼스널컬러 진단 예약', u:'https://naver.me/GSD0VrvO'},
         {t:'전문가 자격과정', u:'/academy'},
-        {t:'인증강사 과정', u:'/academy/instructor'},
         {t:'기업, 기관 교육', u:'/business'}
       ].filter(o=>o.u!==nx.href)
        .map(o=>`<a href="${o.u}"${o.u.indexOf('http')===0?' target="_blank" rel="noopener"':''} style="font-size:12.5px;color:var(--text-muted);">${o.t}</a>`)
@@ -1006,7 +1033,7 @@ async function saveRecord(){
       user_consent:true, marketing_consent:!!u.mkConsent,
       job_group:u.jobGroup, age_band:u.ageBand,
       answers:STATE.answers, scores:{engines:r.sums, job_group:u.jobGroupLabel},
-      top_engine:r.first, second_engine:r.second, top_gear:null,
+      top_engine:r.first, second_engine:r.second, top_gear:(r.gears&&r.gears[0]?r.gears[0].code:null),
       duration_sec:Math.max(1,Math.round((Date.now()-STATE.startTs)/1000)),
       lang:'ko', device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop',
       referrer:document.referrer?document.referrer.slice(0,200):null,
